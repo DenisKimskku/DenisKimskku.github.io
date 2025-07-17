@@ -160,6 +160,10 @@ section {
     border-bottom: 1px solid var(--border-color);
 }
 
+.content > section:first-of-type {
+    padding-top: 2rem;
+}
+
 section:last-of-type {
     border-bottom: none;
 }
