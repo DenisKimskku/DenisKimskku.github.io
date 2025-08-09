@@ -1,0 +1,19 @@
+# Jekyll configuration for GitHub Pages
+
+# Exclude our custom writing system from Jekyll processing
+exclude:
+  - writing/markdown-viewer.html
+  - writing/articles.json
+  - writing/template.md
+  - writing/*.md
+
+# Basic Jekyll settings
+plugins:
+  - jekyll-github-metadata
+
+markdown: kramdown
+highlighter: rouge
+
+# Site settings  
+title: Minseok (Denis) Kim
+description: AI & Safety Researcher
