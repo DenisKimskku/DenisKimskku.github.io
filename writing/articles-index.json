@@ -1,0 +1,26 @@
+[
+  {
+    "path": "machine-unlearning-information-theory.md",
+    "title": "An Information Theoretic Approach to Machine Unlearning",
+    "date": "2025-08-06",
+    "type": "Research",
+    "description": "A deep dive into zero-shot machine unlearning using information theory and gradient-based smoothing techniques",
+    "tags": [
+      "machine-learning",
+      "unlearning",
+      "information-theory"
+    ]
+  },
+  {
+    "path": "simple-and-effective-masked-language-models.md",
+    "title": "Simple and Effective Masked Language Models",
+    "date": "2025-08-06",
+    "type": "Research",
+    "description": "A comprehensive analysis of MDLM's approach to closing the performance gap between autoregressive and diffusion language models through masking, SUBS parameterization, and continuous-time objectives",
+    "tags": [
+      "diffusion-models",
+      "language-models",
+      "masked-language-modeling"
+    ]
+  }
+]

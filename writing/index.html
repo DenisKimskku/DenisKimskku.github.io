@@ -229,73 +229,36 @@
             return { frontmatter: {}, content };
         }
 
-        // Function to discover markdown files
+        // Function to load articles metadata (FAST!)
         async function discoverMarkdownFiles() {
             try {
-                console.log('🔍 Loading articles...');
+                console.log('⚡ Loading articles index (fast method)...');
+                const startTime = performance.now();
                 
-                // Simple hardcoded list for now - this ensures it works
-                const knownFiles = [
-                    'ai-alignment-challenges.md',
-                    'latex-test.md',
-                    'machine-unlearning-information-theory.md'
-                ];
+                // Load the lightweight index file instead of full markdown files
+                const response = await fetch('articles-index.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to load articles index: ${response.status}`);
+                }
                 
-                console.log('Files to load:', knownFiles);
-
-                const articlePromises = knownFiles.map(async (filePath) => {
-                    try {
-                        console.log(`Fetching ${filePath}...`);
-                        const response = await fetch(filePath);
-                        console.log(`Response for ${filePath}:`, response.status);
-                        
-                        if (response.ok) {
-                            const content = await response.text();
-                            const { frontmatter } = parseFrontmatter(content);
-                            console.log(`Parsed frontmatter for ${filePath}:`, frontmatter);
-                            
-                            // Add tags to global set
-                            if (frontmatter.tags && Array.isArray(frontmatter.tags)) {
-                                frontmatter.tags.forEach(tag => allTags.add(tag));
-                            }
-                            
-                            return {
-                                path: filePath,
-                                ...frontmatter,
-                                tags: frontmatter.tags || []
-                            };
-                        }
-                        console.warn(`Failed to fetch ${filePath}`);
-                        return null;
-                    } catch (error) {
-                        console.error(`Error loading ${filePath}:`, error);
-                        return null;
+                articles = await response.json();
+                
+                // Add all tags to the global set for filtering
+                articles.forEach(article => {
+                    if (article.tags && Array.isArray(article.tags)) {
+                        article.tags.forEach(tag => allTags.add(tag));
                     }
                 });
-
-                console.log('🔄 Waiting for all articles to load...');
-                const loadedArticles = await Promise.all(articlePromises);
-                articles = loadedArticles.filter(article => article !== null);
-                
-                console.log('📊 Processing results:');
-                console.log('- Total promises:', articlePromises.length);
-                console.log('- Loaded articles:', loadedArticles);
-                console.log('- Filtered articles:', articles);
-                console.log('- Final count:', articles.length);
-                
-                if (articles.length === 0) {
-                    console.error('❌ No articles were successfully loaded!');
-                    throw new Error('No articles could be loaded');
-                }
                 
                 // Sort by date (newest first)
                 articles.sort((a, b) => new Date(b.date) - new Date(a.date));
-                console.log('✅ Articles sorted, now rendering...');
+                
+                const endTime = performance.now();
+                console.log(`✅ Articles loaded in ${(endTime - startTime).toFixed(2)}ms!`);
+                console.log(`📊 Loaded ${articles.length} articles:`, articles.map(a => a.title));
                 
                 renderTagFilters();
                 renderArticles();
-                
-                console.log('✅ Rendering complete!');
                 
             } catch (error) {
                 console.error('Error discovering markdown files:', error);
@@ -327,22 +290,14 @@
 
         // Render articles
         function renderArticles() {
-            console.log('🎨 Starting to render articles...');
             const writingList = document.getElementById('writingList');
             const noResults = document.getElementById('noResults');
             
-            console.log('📋 Articles to render:', articles);
-            console.log('🔍 Current search term:', searchTerm);
-            console.log('🏷️ Active tags:', Array.from(activeTags));
-            
             const filteredArticles = articles.filter(article => {
-                console.log('🔎 Checking article:', article);
-                
                 // Search filter
                 if (searchTerm) {
                     const searchIn = `${article.title || ''} ${article.description || ''}`.toLowerCase();
                     if (!searchIn.includes(searchTerm.toLowerCase())) {
-                        console.log('❌ Filtered out by search:', article.title);
                         return false;
                     }
                 }
@@ -352,23 +307,17 @@
                     const articleTags = new Set(article.tags || []);
                     const hasMatchingTag = Array.from(activeTags).some(tag => articleTags.has(tag));
                     if (!hasMatchingTag) {
-                        console.log('❌ Filtered out by tags:', article.title);
                         return false;
                     }
                 }
                 
-                console.log('✅ Article passes filters:', article.title);
                 return true;
             });
             
-            console.log('📝 Filtered articles:', filteredArticles);
-            
             if (filteredArticles.length === 0) {
-                console.log('❌ No articles to show, displaying no-results message');
                 writingList.innerHTML = '';
                 noResults.classList.add('show');
             } else {
-                console.log(`✅ Rendering ${filteredArticles.length} articles`);
                 noResults.classList.remove('show');
                 writingList.innerHTML = filteredArticles.map(article => `
                     <article class="writing-item">
@@ -385,7 +334,6 @@
                         <p>${article.description || 'No description available.'}</p>
                     </article>
                 `).join('');
-                console.log('✅ Articles rendered to DOM');
             }
         }
 
