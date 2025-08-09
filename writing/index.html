@@ -229,19 +229,95 @@
             return { frontmatter: {}, content };
         }
 
+        // Auto-discovery function - tries multiple methods to find markdown files
+        async function autoDiscoverFiles() {
+            // Method 1: Try GitHub API for automatic discovery
+            try {
+                const isGitHubPages = window.location.hostname.includes('github.io');
+                if (isGitHubPages) {
+                    console.log('Attempting GitHub API discovery...');
+                    const apiUrl = 'https://api.github.com/repos/DenisKimskku/DenisKimskku.github.io/contents/writing';
+                    const response = await fetch(apiUrl);
+                    
+                    if (response.ok) {
+                        const files = await response.json();
+                        const mdFiles = files
+                            .filter(file => file.name.endsWith('.md') && file.name !== 'template.md')
+                            .map(file => file.name);
+                        
+                        if (mdFiles.length > 0) {
+                            console.log('✅ Auto-discovered files via GitHub API:', mdFiles);
+                            return mdFiles;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.log('GitHub API method failed, trying alternatives...');
+            }
+            
+            // Method 2: Try to probe for known files by attempting to fetch them
+            console.log('Attempting file probing...');
+            const possibleFiles = [
+                'ai-alignment-challenges.md',
+                'latex-test.md',
+                'machine-unlearning-information-theory.md'
+            ];
+            
+            const existingFiles = [];
+            for (const filename of possibleFiles) {
+                try {
+                    const response = await fetch(filename, { method: 'HEAD' });
+                    if (response.ok) {
+                        existingFiles.push(filename);
+                        console.log(`✅ Found: ${filename}`);
+                    }
+                } catch (e) {
+                    console.log(`❌ Not found: ${filename}`);
+                }
+            }
+            
+            if (existingFiles.length > 0) {
+                return existingFiles;
+            }
+            
+            // Method 3: Fallback to articles.json
+            try {
+                console.log('Trying articles.json fallback...');
+                const response = await fetch('articles.json');
+                if (response.ok) {
+                    const files = await response.json();
+                    console.log('✅ Loaded from articles.json:', files);
+                    return files;
+                }
+            } catch (e) {
+                console.log('articles.json not available');
+            }
+            
+            console.warn('⚠️ All auto-discovery methods failed');
+            return [];
+        }
+
         // Function to discover markdown files
         async function discoverMarkdownFiles() {
             try {
-                // Load the list of articles from articles.json
-                const articlesResponse = await fetch('articles.json');
-                const knownFiles = articlesResponse.ok ? await articlesResponse.json() : [];
+                console.log('🔍 Starting automatic file discovery...');
+                
+                const knownFiles = await autoDiscoverFiles();
+                
+                if (knownFiles.length === 0) {
+                    throw new Error('No markdown files found');
+                }
 
                 const articlePromises = knownFiles.map(async (filePath) => {
                     try {
+                        console.log(`Fetching ${filePath}...`);
                         const response = await fetch(filePath);
+                        console.log(`Response for ${filePath}:`, response.status);
+                        
                         if (response.ok) {
                             const content = await response.text();
                             const { frontmatter } = parseFrontmatter(content);
+                            console.log(`Parsed frontmatter for ${filePath}:`, frontmatter);
                             
                             // Add tags to global set
                             if (frontmatter.tags && Array.isArray(frontmatter.tags)) {
@@ -254,6 +330,7 @@
                                 tags: frontmatter.tags || []
                             };
                         }
+                        console.warn(`Failed to fetch ${filePath}`);
                         return null;
                     } catch (error) {
                         console.error(`Error loading ${filePath}:`, error);
@@ -263,6 +340,7 @@
 
                 const loadedArticles = await Promise.all(articlePromises);
                 articles = loadedArticles.filter(article => article !== null);
+                console.log('Loaded articles:', articles);
                 
                 // Sort by date (newest first)
                 articles.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -272,6 +350,19 @@
                 
             } catch (error) {
                 console.error('Error discovering markdown files:', error);
+                
+                // Show error message to user
+                const writingList = document.getElementById('writingList');
+                writingList.innerHTML = `
+                    <div style="padding: 2rem; text-align: center; color: #dc3545;">
+                        <h3>Error Loading Articles</h3>
+                        <p>There was an error loading the articles. Please check the browser console for details.</p>
+                        <details>
+                            <summary>Technical Details</summary>
+                            <pre>${error.message}</pre>
+                        </details>
+                    </div>
+                `;
             }
         }
 

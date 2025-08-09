@@ -66,5 +66,6 @@ $$\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$$
 - **Type**: Use "Blog", "Research", "Technical", etc.
 - **Date**: Use valid YYYY-MM-DD format (e.g., "2025-08-06") for proper sorting
 - **LaTeX**: Supported via MathJax - use `$...$` for inline and `$$...$$` for display math
-- **Auto-Discovery**: Add your filename to `articles.json` after upload, or just ask me to update it!
-- **Jekyll**: This template file is excluded from Jekyll processing - use real dates in your actual posts
+- **Full Auto-Discovery**: Just upload your `.md` file - the system automatically finds and displays it!
+- **No manual setup**: No need to edit any configuration files or JSON lists
+- **No Jekyll**: This is a pure HTML site - no Jekyll complexities, just simple markdown + LaTeX rendering
