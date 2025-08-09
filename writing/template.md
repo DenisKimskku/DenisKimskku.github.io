@@ -1,9 +1,10 @@
 ---
 title: "Your Post Title"
-date: "YYYY-MM-DD"
+date: "2025-01-01"
 type: "Blog"
 description: "Brief description of the post"
 tags: ["tag1", "tag2", "tag3"]
+published: false
 ---
 
 # Your Post Title
@@ -63,6 +64,7 @@ $$\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$$
 - **File Naming**: Use descriptive names like `my-research-paper.md` or `ai-safety-thoughts.md`
 - **Hashtags**: Add relevant tags to the `tags` array in frontmatter for better discoverability
 - **Type**: Use "Blog", "Research", "Technical", etc.
-- **Date**: Use YYYY-MM-DD format for proper sorting
+- **Date**: Use valid YYYY-MM-DD format (e.g., "2025-08-06") for proper sorting
 - **LaTeX**: Supported via MathJax - use `$...$` for inline and `$$...$$` for display math
 - **Auto-Discovery**: Add your filename to `articles.json` after upload, or just ask me to update it!
+- **Jekyll**: This template file is excluded from Jekyll processing - use real dates in your actual posts
