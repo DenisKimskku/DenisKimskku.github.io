@@ -125,6 +125,14 @@
             display: block;
         }
         
+        .search-highlight {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 0.1rem 0.2rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
         @media (max-width: 768px) {
             .search-box {
                 flex-direction: column;
@@ -288,38 +296,116 @@
             ).join('');
         }
 
-        // Render articles
+        // Enhanced search functionality with fuzzy matching
+        function searchArticles(term) {
+            if (!term.trim()) return articles;
+            
+            const searchTerms = term.toLowerCase().split(/\s+/);
+            
+            return articles.filter(article => {
+                const searchableContent = [
+                    article.title || '',
+                    article.description || '',
+                    article.type || '',
+                    ...(article.tags || [])
+                ].join(' ').toLowerCase();
+                
+                // Check if ALL search terms are present (AND logic)
+                // Include fuzzy matching - allow for small typos
+                return searchTerms.every(searchTerm => {
+                    // Direct match
+                    if (searchableContent.includes(searchTerm)) return true;
+                    
+                    // Fuzzy match for terms longer than 3 characters
+                    if (searchTerm.length > 3) {
+                        const words = searchableContent.split(/\s+/);
+                        return words.some(word => {
+                            const distance = levenshteinDistance(searchTerm, word);
+                            return distance <= Math.floor(searchTerm.length * 0.2); // Allow 20% typos
+                        });
+                    }
+                    
+                    return false;
+                });
+            });
+        }
+        
+        // Simple Levenshtein distance calculation for fuzzy matching
+        function levenshteinDistance(str1, str2) {
+            const matrix = [];
+            
+            for (let i = 0; i <= str2.length; i++) {
+                matrix[i] = [i];
+            }
+            
+            for (let j = 0; j <= str1.length; j++) {
+                matrix[0][j] = j;
+            }
+            
+            for (let i = 1; i <= str2.length; i++) {
+                for (let j = 1; j <= str1.length; j++) {
+                    if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1, // substitution
+                            matrix[i][j - 1] + 1,     // insertion
+                            matrix[i - 1][j] + 1      // deletion
+                        );
+                    }
+                }
+            }
+            
+            return matrix[str2.length][str1.length];
+        }
+        
+        // Highlight search terms in text
+        function highlightSearchTerms(text, searchTerm) {
+            if (!searchTerm.trim()) return text;
+            
+            const terms = searchTerm.split(/\s+/);
+            let highlightedText = text;
+            
+            terms.forEach(term => {
+                const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                highlightedText = highlightedText.replace(regex, '<mark class="search-highlight">$1</mark>');
+            });
+            
+            return highlightedText;
+        }
+        
+        // Render articles with enhanced search
         function renderArticles() {
             const writingList = document.getElementById('writingList');
             const noResults = document.getElementById('noResults');
             
-            const filteredArticles = articles.filter(article => {
-                // Search filter
-                if (searchTerm) {
-                    const searchIn = `${article.title || ''} ${article.description || ''}`.toLowerCase();
-                    if (!searchIn.includes(searchTerm.toLowerCase())) {
-                        return false;
-                    }
-                }
-                
-                // Tag filter
-                if (activeTags.size > 0) {
+            let filteredArticles = articles;
+            
+            // Apply search filter
+            if (searchTerm) {
+                filteredArticles = searchArticles(searchTerm);
+            }
+            
+            // Apply tag filter
+            if (activeTags.size > 0) {
+                filteredArticles = filteredArticles.filter(article => {
                     const articleTags = new Set(article.tags || []);
                     const hasMatchingTag = Array.from(activeTags).some(tag => articleTags.has(tag));
-                    if (!hasMatchingTag) {
-                        return false;
-                    }
-                }
-                
-                return true;
-            });
+                    return hasMatchingTag;
+                });
+            }
             
             if (filteredArticles.length === 0) {
                 writingList.innerHTML = '';
                 noResults.classList.add('show');
             } else {
                 noResults.classList.remove('show');
-                writingList.innerHTML = filteredArticles.map(article => `
+                writingList.innerHTML = filteredArticles.map(article => {
+                    // Highlight search terms if search is active
+                    const title = searchTerm ? highlightSearchTerms(article.title || 'Untitled', searchTerm) : (article.title || 'Untitled');
+                    const description = searchTerm ? highlightSearchTerms(article.description || 'No description available.', searchTerm) : (article.description || 'No description available.');
+                    
+                    return `
                     <article class="writing-item">
                         <div class="writing-meta">
                             <div>
@@ -327,13 +413,17 @@
                                 ${article.type ? `<span class="writing-type">${article.type}</span>` : ''}
                             </div>
                             <div class="writing-tags">
-                                ${(article.tags || []).map(tag => `<span class="writing-tag">${tag}</span>`).join('')}
+                                ${(article.tags || []).map(tag => {
+                                    const highlightedTag = searchTerm ? highlightSearchTerms(tag, searchTerm) : tag;
+                                    return `<span class="writing-tag">${highlightedTag}</span>`;
+                                }).join('')}
                             </div>
                         </div>
-                        <h3><a href="/writing/markdown-viewer.html?md=${article.path}">${article.title || 'Untitled'}</a></h3>
-                        <p>${article.description || 'No description available.'}</p>
+                        <h3><a href="/writing/markdown-viewer.html?md=${article.path}">${title}</a></h3>
+                        <p>${description}</p>
                     </article>
-                `).join('');
+                    `;
+                }).join('');
             }
         }
 

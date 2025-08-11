@@ -88,6 +88,16 @@
         // Custom renderer for marked to support LaTeX
         const renderer = new marked.Renderer();
         
+        // Override paragraph rendering to preserve LaTeX delimiters
+        const originalParagraph = renderer.paragraph;
+        renderer.paragraph = function(text) {
+            // Preserve inline math delimiters
+            text = text.replace(/\\\(/g, '\\\\(').replace(/\\\)/g, '\\\\)');
+            // Preserve display math delimiters  
+            text = text.replace(/\\\[/g, '\\\\[').replace(/\\\]/g, '\\\\]');
+            return originalParagraph.call(this, text);
+        };
+        
         // Configure marked options
         marked.setOptions({
             renderer: renderer,
@@ -166,8 +176,25 @@
                 `;
                 document.getElementById('post-header').innerHTML = headerHtml;
 
-                // Render markdown content
-                const htmlContent = marked.parse(content);
+                // Render markdown content and fix figure paths
+                let htmlContent = marked.parse(content);
+                
+                // Fix relative figure paths - assume figures are in figures/article-name/
+                const articleName = markdownPath.replace('.md', '').split('/').pop();
+                const figuresPath = `figures/${articleName}/`;
+                
+                // Replace relative image paths with correct figure paths
+                htmlContent = htmlContent.replace(
+                    /<img([^>]*?)src="([^"]*?\.(?:png|jpg|jpeg|gif|svg))"([^>]*?)>/gi,
+                    (match, prefix, src, suffix) => {
+                        // If src doesn't start with http/https and doesn't start with figures/
+                        if (!src.startsWith('http') && !src.startsWith('figures/')) {
+                            return `<img${prefix}src="${figuresPath}${src}"${suffix}>`;
+                        }
+                        return match;
+                    }
+                );
+                
                 document.getElementById('post-content').innerHTML = htmlContent;
 
                 // Re-run MathJax on the new content
