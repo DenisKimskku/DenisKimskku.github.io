@@ -85,22 +85,8 @@
 
     <script src="../script.js"></script>
     <script>
-        // Custom renderer for marked to support LaTeX
-        const renderer = new marked.Renderer();
-        
-        // Override paragraph rendering to preserve LaTeX delimiters
-        const originalParagraph = renderer.paragraph;
-        renderer.paragraph = function(text) {
-            // Preserve inline math delimiters
-            text = text.replace(/\\\(/g, '\\\\(').replace(/\\\)/g, '\\\\)');
-            // Preserve display math delimiters  
-            text = text.replace(/\\\[/g, '\\\\[').replace(/\\\]/g, '\\\\]');
-            return originalParagraph.call(this, text);
-        };
-        
-        // Configure marked options
+        // Configure marked options for LaTeX compatibility
         marked.setOptions({
-            renderer: renderer,
             highlight: function(code, lang) {
                 if (Prism.languages[lang]) {
                     return Prism.highlight(code, Prism.languages[lang], lang);
@@ -176,8 +162,34 @@
                 `;
                 document.getElementById('post-header').innerHTML = headerHtml;
 
-                // Render markdown content and fix figure paths
-                let htmlContent = marked.parse(content);
+                // Pre-process content for better LaTeX handling
+                let processedContent = content;
+                
+                // Protect LaTeX expressions from markdown processing by temporarily encoding them
+                const latexExpressions = [];
+                let index = 0;
+                
+                // Handle display math $$...$$
+                processedContent = processedContent.replace(/\$\$([^$]+?)\$\$/g, (match, expr) => {
+                    const placeholder = `LATEX_DISPLAY_${index++}`;
+                    latexExpressions[placeholder] = `$$${expr}$$`;
+                    return placeholder;
+                });
+                
+                // Handle inline math $...$
+                processedContent = processedContent.replace(/\$([^$\n]+?)\$/g, (match, expr) => {
+                    const placeholder = `LATEX_INLINE_${index++}`;
+                    latexExpressions[placeholder] = `$${expr}$`;
+                    return placeholder;
+                });
+                
+                // Render markdown content
+                let htmlContent = marked.parse(processedContent);
+                
+                // Restore LaTeX expressions
+                for (const [placeholder, latexExpr] of Object.entries(latexExpressions)) {
+                    htmlContent = htmlContent.replace(new RegExp(placeholder, 'g'), latexExpr);
+                }
                 
                 // Fix relative figure paths - assume figures are in figures/article-name/
                 const articleName = markdownPath.replace('.md', '').split('/').pop();
