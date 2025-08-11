@@ -9,7 +9,8 @@
       "machine-learning",
       "unlearning",
       "information-theory"
-    ]
+    ],
+    "figures_path": "figures/machine-unlearning-information-theory/"
   },
   {
     "path": "simple-and-effective-masked-language-models.md",
@@ -21,6 +22,7 @@
       "diffusion-models",
       "language-models",
       "masked-language-modeling"
-    ]
+    ],
+    "figures_path": "figures/simple-and-effective-masked-language-models/"
   }
 ]

@@ -47,6 +47,7 @@ def parse_frontmatter(content: str) -> Dict[str, Any]:
 def scan_markdown_files(directory: Path) -> List[Dict[str, Any]]:
     """Scan directory for .md files and extract their metadata."""
     articles = []
+    figures_dir = directory / 'figures'
     
     # Find all .md files except template.md
     md_files = [f for f in directory.glob('*.md') if f.name != 'template.md']
@@ -66,6 +67,13 @@ def scan_markdown_files(directory: Path) -> List[Dict[str, Any]]:
                 print(f"    ⚠️  No frontmatter found in {md_file.name}")
                 continue
             
+            # Create figure folder for this article if it doesn't exist
+            article_name = md_file.stem  # filename without extension
+            figure_folder = figures_dir / article_name
+            if not figure_folder.exists():
+                figure_folder.mkdir(parents=True, exist_ok=True)
+                print(f"    📁 Created figure folder: {figure_folder.relative_to(directory)}")
+            
             # Create article metadata
             article = {
                 "path": md_file.name,
@@ -73,12 +81,14 @@ def scan_markdown_files(directory: Path) -> List[Dict[str, Any]]:
                 "date": frontmatter.get('date', ''),
                 "type": frontmatter.get('type', 'Article'),
                 "description": frontmatter.get('description', ''),
-                "tags": frontmatter.get('tags', [])
+                "tags": frontmatter.get('tags', []),
+                "figures_path": f"figures/{article_name}/"
             }
             
             articles.append(article)
             print(f"    ✅ Added: {article['title']}")
             print(f"       📅 {article['date']} | 🏷️ {len(article['tags'])} tags")
+            print(f"       📸 Figures: {article['figures_path']}")
             
         except Exception as e:
             print(f"    ❌ Error processing {md_file.name}: {e}")
