@@ -96,7 +96,7 @@ def scan_markdown_files(directory: Path) -> List[Dict[str, Any]]:
     return articles
 
 def update_index_file(articles: List[Dict[str, Any]], index_path: Path) -> None:
-    """Update the articles-index.json file."""
+    """Update the articles-index.json file and inline data in HTML."""
     # Sort articles by date (newest first)
     articles.sort(key=lambda x: x['date'], reverse=True)
     
@@ -106,6 +106,57 @@ def update_index_file(articles: List[Dict[str, Any]], index_path: Path) -> None:
         json.dump(articles, f, indent=2, ensure_ascii=False)
     
     print("✅ Index file updated successfully!")
+    
+    # Update inline data in HTML file for instant loading
+    update_inline_html_data(articles, index_path.parent)
+
+def update_inline_html_data(articles: List[Dict[str, Any]], directory: Path) -> None:
+    """Update the inline articles data in the HTML file for instant loading."""
+    html_file = directory / 'index.html'
+    
+    if not html_file.exists():
+        print("⚠️  HTML file not found, skipping inline data update")
+        return
+    
+    print("🔄 Updating inline data in HTML file...")
+    
+    try:
+        with open(html_file, 'r', encoding='utf-8') as f:
+            html_content = f.read()
+        
+        # Convert articles to JavaScript array format
+        articles_js = json.dumps(articles, indent=16, ensure_ascii=False)
+        
+        # Find and replace the inline data function - try multiple patterns
+        patterns = [
+            r'(// Inline data for instant loading\s+function getInlineArticlesData\(\) \{\s+return\s+)(\[[\s\S]*?\])(;\s+\})',
+            r'(function getInlineArticlesData\(\) \{\s+return\s+)(\[[\s\S]*?\])(;\s+\})',
+            r'(return\s+)(\[[\s\S]*?\])(;\s+\}\s*$)',
+        ]
+        
+        new_html_content = html_content
+        pattern_found = False
+        
+        for i, pattern in enumerate(patterns):
+            match = re.search(pattern, html_content, flags=re.DOTALL | re.MULTILINE)
+            if match:
+                print(f"✅ Found pattern {i+1}")
+                replacement = f'\\1{articles_js}\\3'
+                new_html_content = re.sub(pattern, replacement, html_content, flags=re.DOTALL | re.MULTILINE)
+                pattern_found = True
+                break
+        
+        if pattern_found and new_html_content != html_content:
+            with open(html_file, 'w', encoding='utf-8') as f:
+                f.write(new_html_content)
+            print("✅ Inline HTML data updated successfully!")
+        elif not pattern_found:
+            print("⚠️  Could not find any inline data pattern in HTML file")
+        else:
+            print("✅ Inline data is already up to date")
+    
+    except Exception as e:
+        print(f"❌ Error updating inline HTML data: {e}")
 
 def main():
     """Main function to update the articles index."""

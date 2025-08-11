@@ -14,19 +14,39 @@
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
                 displayMath: [['$$', '$$'], ['\\[', '\\]']],
                 processEscapes: true,
-                processEnvironments: true
+                processEnvironments: true,
+                packages: {'[+]': ['noerrors']}
             },
             options: {
-                ignoreHtmlClass: ".*|",
-                processHtmlClass: "arithmatex"
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'annotation', 'annotation-xml']
+            },
+            loader: {load: ['[tex]/noerrors']},
+            startup: {
+                ready: () => {
+                    MathJax.startup.defaultReady();
+                    console.log('MathJax is ready');
+                    // Trigger a custom event when MathJax is fully ready
+                    window.dispatchEvent(new Event('mathjax-ready'));
+                }
             }
         };
+        
+        // Global flag to track MathJax readiness
+        window.mathJaxReady = false;
+        window.addEventListener('mathjax-ready', () => {
+            window.mathJaxReady = true;
+        });
     </script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <!-- Marked for markdown parsing -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- Alternative: KaTeX for faster LaTeX rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
     
     <!-- Prism for syntax highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
@@ -103,6 +123,45 @@
             xhtml: false
         });
 
+        // Custom extensions for marked to preserve LaTeX
+        marked.use({
+            extensions: [{
+                name: 'latex-inline',
+                level: 'inline',
+                start(src) { return src.indexOf('$'); },
+                tokenizer(src, tokens) {
+                    const match = src.match(/^\$([^$\n]+?)\$/);
+                    if (match) {
+                        return {
+                            type: 'latex-inline',
+                            raw: match[0],
+                            text: match[1].trim()
+                        };
+                    }
+                },
+                renderer(token) {
+                    return `$${token.text}$`;
+                }
+            }, {
+                name: 'latex-display',
+                level: 'block',
+                start(src) { return src.indexOf('$$'); },
+                tokenizer(src, tokens) {
+                    const match = src.match(/^\$\$([^$]+?)\$\$/);
+                    if (match) {
+                        return {
+                            type: 'latex-display',
+                            raw: match[0],
+                            text: match[1].trim()
+                        };
+                    }
+                },
+                renderer(token) {
+                    return `$$${token.text}$$`;
+                }
+            }]
+        });
+
         // Function to parse frontmatter
         function parseFrontmatter(content) {
             const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
@@ -127,6 +186,68 @@
             }
             
             return { frontmatter: {}, content };
+        }
+
+        // Function to render LaTeX with multiple fallbacks
+        function renderMathJax() {
+            console.log('🔢 Attempting to render LaTeX...');
+            
+            const contentElement = document.getElementById('post-content');
+            
+            // Method 1: Try KaTeX first (faster)
+            const tryKaTeX = () => {
+                if (window.renderMathInElement && window.katex) {
+                    console.log('📐 Using KaTeX for LaTeX rendering...');
+                    try {
+                        renderMathInElement(contentElement, {
+                            delimiters: [
+                                {left: '$$', right: '$$', display: true},
+                                {left: '$', right: '$', display: false},
+                                {left: '\\[', right: '\\]', display: true},
+                                {left: '\\(', right: '\\)', display: false}
+                            ],
+                            throwOnError: false,
+                            errorColor: '#cc0000',
+                            strict: false
+                        });
+                        console.log('✅ KaTeX rendering complete');
+                        return true;
+                    } catch (err) {
+                        console.warn('⚠️ KaTeX error, trying MathJax:', err);
+                        return false;
+                    }
+                }
+                return false;
+            };
+            
+            // Method 2: Fallback to MathJax
+            const tryMathJax = () => {
+                if (window.MathJax && MathJax.typesetPromise) {
+                    console.log('🧮 Using MathJax for LaTeX rendering...');
+                    MathJax.typesetPromise([contentElement])
+                        .then(() => {
+                            console.log('✅ MathJax rendering complete');
+                        })
+                        .catch((err) => {
+                            console.error('❌ MathJax error:', err);
+                        });
+                    return true;
+                }
+                return false;
+            };
+            
+            // Try KaTeX first, then MathJax
+            const renderLaTeX = () => {
+                if (!tryKaTeX()) {
+                    if (!tryMathJax()) {
+                        console.log('⏳ LaTeX libraries not ready, retrying...');
+                        setTimeout(renderLaTeX, 100);
+                    }
+                }
+            };
+            
+            // Start rendering
+            setTimeout(renderLaTeX, 100);
         }
 
         // Function to load and render markdown
@@ -162,34 +283,9 @@
                 `;
                 document.getElementById('post-header').innerHTML = headerHtml;
 
-                // Pre-process content for better LaTeX handling
-                let processedContent = content;
-                
-                // Protect LaTeX expressions from markdown processing by temporarily encoding them
-                const latexExpressions = [];
-                let index = 0;
-                
-                // Handle display math $$...$$
-                processedContent = processedContent.replace(/\$\$([^$]+?)\$\$/g, (match, expr) => {
-                    const placeholder = `LATEX_DISPLAY_${index++}`;
-                    latexExpressions[placeholder] = `$$${expr}$$`;
-                    return placeholder;
-                });
-                
-                // Handle inline math $...$
-                processedContent = processedContent.replace(/\$([^$\n]+?)\$/g, (match, expr) => {
-                    const placeholder = `LATEX_INLINE_${index++}`;
-                    latexExpressions[placeholder] = `$${expr}$`;
-                    return placeholder;
-                });
-                
-                // Render markdown content
-                let htmlContent = marked.parse(processedContent);
-                
-                // Restore LaTeX expressions
-                for (const [placeholder, latexExpr] of Object.entries(latexExpressions)) {
-                    htmlContent = htmlContent.replace(new RegExp(placeholder, 'g'), latexExpr);
-                }
+                // Simply render markdown without LaTeX preprocessing
+                // MathJax will handle LaTeX after HTML is rendered
+                let htmlContent = marked.parse(content);
                 
                 // Fix relative figure paths - assume figures are in figures/article-name/
                 const articleName = markdownPath.replace('.md', '').split('/').pop();
@@ -209,12 +305,8 @@
                 
                 document.getElementById('post-content').innerHTML = htmlContent;
 
-                // Re-run MathJax on the new content
-                if (window.MathJax) {
-                    MathJax.typesetPromise([document.getElementById('post-content')]).catch((err) => {
-                        console.log('MathJax error: ' + err.message);
-                    });
-                }
+                // Process LaTeX with MathJax
+                renderMathJax();
 
             } catch (error) {
                 console.error('Error loading markdown:', error);

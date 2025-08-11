@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LaTeX Test</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <h1>LaTeX Test Page</h1>
+    
+    <h2>Direct LaTeX (should work):</h2>
+    <p>Inline: $f_\theta$ and $f_{\theta'}$</p>
+    <p>Display: $$f_{\theta'} \approx f_{\theta^*}$$</p>
+    
+    <h2>Markdown processed LaTeX:</h2>
+    <div id="markdown-content">
+        <!-- This will be populated by JavaScript -->
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        // Test markdown with LaTeX
+        const markdownText = `
+The paper addresses **zero-shot machine unlearning**, where only a trained model $f_\\theta$ and a forget set $D_f$ are available.
+
+**Zero-shot constraint**: Given only $f_\\theta$ and $D_f$, produce $f_{\\theta'}$ such that $f_{\\theta'} \\approx f_{\\theta^*}$.
+        `;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Processing markdown...');
+            const html = marked.parse(markdownText);
+            console.log('HTML output:', html);
+            document.getElementById('markdown-content').innerHTML = html;
+            
+            // Re-process MathJax after inserting content
+            if (window.MathJax) {
+                MathJax.typesetPromise([document.getElementById('markdown-content')]).then(() => {
+                    console.log('MathJax processing complete');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
