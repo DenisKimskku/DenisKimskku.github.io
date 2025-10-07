@@ -1,0 +1,12 @@
+[
+    {
+    "title": "RAGDefender",
+    "description": "A resource-efficient defense mechanism against knowledge corruption (i.e., by data poisoning) attacks in practical RAG deployments.",
+    "githubUrl": "https://github.com/SecAI-Lab/RAGDefender"
+  },
+  {
+    "title": "iChat",
+    "description": "A real-time chat application built with Node.js, Express, and Socket.io. Features include user authentication, private messaging, and a responsive UI.",
+    "githubUrl": "https://github.com/DenisKimskku/iChat"
+  }
+]
