@@ -25,106 +25,115 @@
         .search-input {
             flex: 1;
             padding: 0.75rem;
-            border: 2px solid #e1e5e9;
+            border: 2px solid var(--border-color);
             border-radius: 8px;
             font-size: 1rem;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             transition: border-color 0.2s ease;
         }
-        
+
         .search-input:focus {
             outline: none;
-            border-color: #007acc;
+            border-color: var(--accent-color);
         }
-        
+
         .clear-filters {
             padding: 0.75rem 1.5rem;
-            background: #f8f9fa;
-            border: 2px solid #e1e5e9;
+            background: var(--card-bg-color);
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        
+
         .clear-filters:hover {
-            background: #e9ecef;
+            background: var(--border-color);
         }
-        
+
         .tag-filters {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
         }
-        
+
         .tag-filter {
             padding: 0.5rem 1rem;
-            background: #f8f9fa;
-            border: 2px solid #e1e5e9;
+            background: var(--card-bg-color);
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 0.9rem;
         }
-        
+
         .tag-filter:hover {
-            background: #e9ecef;
+            background: var(--border-color);
         }
-        
+
         .tag-filter.active {
-            background: #007acc;
+            background: var(--accent-color);
             color: white;
-            border-color: #007acc;
+            border-color: var(--accent-color);
         }
-        
+
         .writing-item {
             margin-bottom: 2rem;
             padding: 1.5rem;
-            border: 1px solid #e1e5e9;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             transition: all 0.2s ease;
         }
-        
+
         .writing-item:hover {
-            border-color: #007acc;
+            border-color: var(--accent-color);
             box-shadow: 0 4px 12px rgba(0, 122, 204, 0.1);
         }
-        
+
+        [data-theme="dark"] .writing-item:hover {
+            box-shadow: 0 4px 12px rgba(10, 132, 255, 0.1);
+        }
+
         .writing-item.hidden {
             display: none;
         }
-        
+
         .writing-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
         }
-        
+
         .writing-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
         }
-        
+
         .writing-tag {
             padding: 0.25rem 0.75rem;
-            background: #f8f9fa;
-            color: #6c757d;
+            background: var(--card-bg-color);
+            color: var(--secondary-text-color);
             border-radius: 15px;
             font-size: 0.8rem;
             font-weight: 500;
         }
-        
+
         .no-results {
             text-align: center;
             padding: 3rem;
-            color: #6c757d;
+            color: var(--secondary-text-color);
             display: none;
         }
-        
+
         .no-results.show {
             display: block;
         }
-        
+
         .search-highlight {
             background-color: #fff3cd;
             color: #856404;
@@ -132,18 +141,23 @@
             border-radius: 3px;
             font-weight: 600;
         }
-        
+
+        [data-theme="dark"] .search-highlight {
+            background-color: #4a4a00;
+            color: #ffeb3b;
+        }
+
         .loading-indicator {
             text-align: center;
             padding: 3rem 1rem;
-            color: #6c757d;
+            color: var(--secondary-text-color);
         }
-        
+
         .loading-spinner {
             width: 40px;
             height: 40px;
-            border: 3px solid #e1e5e9;
-            border-top: 3px solid #007acc;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--accent-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 0 auto 1rem;
@@ -408,15 +422,26 @@
         // Error display
         function showErrorMessage(message) {
             const writingList = document.getElementById('writingList');
-            writingList.innerHTML = `
-                <div style="padding: 2rem; text-align: center; color: #dc3545;">
-                    <h3>Error Loading Articles</h3>
-                    <p>${message}</p>
-                    <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #007acc; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                        Retry
-                    </button>
-                </div>
-            `;
+            writingList.innerHTML = '';
+
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = 'padding: 2rem; text-align: center; color: #dc3545;';
+
+            const errorTitle = document.createElement('h3');
+            errorTitle.textContent = 'Error Loading Articles';
+
+            const errorMsg = document.createElement('p');
+            errorMsg.textContent = message;
+
+            const retryButton = document.createElement('button');
+            retryButton.textContent = 'Retry';
+            retryButton.style.cssText = 'margin-top: 1rem; padding: 0.5rem 1rem; background: #007acc; color: white; border: none; border-radius: 4px; cursor: pointer;';
+            retryButton.onclick = () => location.reload();
+
+            errorDiv.appendChild(errorTitle);
+            errorDiv.appendChild(errorMsg);
+            errorDiv.appendChild(retryButton);
+            writingList.appendChild(errorDiv);
         }
 
         // Render tag filters
