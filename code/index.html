@@ -29,15 +29,8 @@
         <section id="projects">
             <div class="container">
                 <h2>Projects</h2>
-                <div class="card-grid">
-                    <div class="card">
-                        <h3>iChat</h3>
-                        <p>A real-time chat application built with Node.js, Express, and Socket.io. Features include user authentication, private messaging, and a responsive UI.</p>
-                        <div class="project-links">
-                            <a href="https://github.com/DenisKimskku/iChat" class="project-link">View on GitHub</a>
-                        </div>
-                    </div>
-                    
+                <div class="card-grid" id="projects-grid">
+                    <!-- Projects will be loaded dynamically from projects.json -->
                 </div>
             </div>
         </section>
@@ -55,5 +48,27 @@
     </footer>
 
     <script src="../script.js"></script>
+    <script>
+        // Load and display projects from JSON
+        fetch('projects.json')
+            .then(response => response.json())
+            .then(projects => {
+                const projectsGrid = document.getElementById('projects-grid');
+                projects.forEach(project => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+
+                    card.innerHTML = `
+                        <h3>${project.title}</h3>
+                        <p>${project.description}</p>
+                        <div class="project-links">
+                            <a href="${project.githubUrl}" class="project-link">View on GitHub</a>
+                        </div>
+                    `;
+                    projectsGrid.appendChild(card);
+                });
+            })
+            .catch(error => console.error('Error loading projects:', error));
+    </script>
 </body>
 </html>
