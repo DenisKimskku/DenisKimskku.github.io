@@ -242,24 +242,24 @@ section:last-of-type {
 }
 
 .post-header {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--border-color);
 }
 
 .post-header h1 {
-    font-size: clamp(2rem, 5vw, 2.5rem);
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
     font-weight: 700;
     margin-bottom: 1rem;
     letter-spacing: -0.02em;
-    line-height: 1.2;
+    line-height: 1.25;
 }
 
 .post-meta {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     color: var(--secondary-text-color);
 }
 
@@ -267,13 +267,16 @@ section:last-of-type {
     font-size: 1.125rem;
     color: var(--secondary-text-color);
     margin-top: 1rem;
+    line-height: 1.6;
 }
 
 .post-body {
-    font-size: 1rem;
-    line-height: 1.8;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    max-width: 100%;
 }
 
+/* Typography hierarchy with consistent scaling */
 .post-body h1,
 .post-body h2,
 .post-body h3,
@@ -281,93 +284,169 @@ section:last-of-type {
 .post-body h5,
 .post-body h6 {
     font-weight: 600;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
     margin-bottom: 1rem;
     line-height: 1.3;
     color: var(--text-color);
+    letter-spacing: -0.01em;
+}
+
+/* First heading should have less top margin */
+.post-body > h1:first-child,
+.post-body > h2:first-child,
+.post-body > h3:first-child {
+    margin-top: 0;
 }
 
 .post-body h1 {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    margin-top: 3rem;
 }
 
 .post-body h2 {
     font-size: 1.5rem;
+    margin-top: 2.5rem;
 }
 
 .post-body h3 {
     font-size: 1.25rem;
+    margin-top: 2rem;
 }
 
 .post-body h4 {
     font-size: 1.125rem;
+    margin-top: 1.75rem;
 }
 
 .post-body h5,
 .post-body h6 {
     font-size: 1rem;
+    margin-top: 1.5rem;
 }
 
 .post-body p {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
     color: var(--text-color);
 }
 
 .post-body a {
     color: var(--accent-color);
     text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+.post-body a:hover {
+    text-decoration-thickness: 2px;
 }
 
 .post-body ul,
 .post-body ol {
-    margin-bottom: 1.25rem;
-    padding-left: 2rem;
+    margin-bottom: 1.5rem;
+    padding-left: 1.75rem;
 }
 
 .post-body li {
     margin-bottom: 0.5rem;
+    line-height: 1.75;
+}
+
+.post-body li > p {
+    margin-bottom: 0.5rem;
+}
+
+/* Nested lists */
+.post-body ul ul,
+.post-body ol ol,
+.post-body ul ol,
+.post-body ol ul {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.post-body strong {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.post-body em {
+    font-style: italic;
 }
 
 .post-body code {
     background-color: var(--card-bg-color);
     padding: 0.2em 0.4em;
     border-radius: 4px;
-    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Consolas', monospace;
     font-size: 0.9em;
+    color: var(--text-color);
 }
 
 .post-body pre {
     background-color: var(--card-bg-color);
-    padding: 1rem;
+    padding: 1.25rem;
     border-radius: var(--radius);
     overflow-x: auto;
-    margin-bottom: 1.25rem;
+    margin: 1.5rem 0;
+    line-height: 1.5;
 }
 
 .post-body pre code {
     background: none;
     padding: 0;
+    font-size: 0.9rem;
 }
 
 .post-body blockquote {
     border-left: 4px solid var(--accent-color);
-    padding-left: 1rem;
-    margin: 1.25rem 0;
+    padding-left: 1.25rem;
+    margin: 1.75rem 0;
     color: var(--secondary-text-color);
     font-style: italic;
+}
+
+.post-body blockquote p:last-child {
+    margin-bottom: 0;
 }
 
 .post-body img {
     max-width: 100%;
     height: auto;
     border-radius: var(--radius);
-    margin: 1.5rem 0;
+    margin: 2rem 0;
+    display: block;
+}
+
+.post-body figure {
+    margin: 2rem 0;
+}
+
+.post-body figcaption {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--secondary-text-color);
+    margin-top: 0.5rem;
+}
+
+/* Math display improvements */
+.post-body .math-display,
+.post-body mjx-container[display="true"] {
+    margin: 1.75rem 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.post-body .math-inline,
+.post-body mjx-container[display="false"] {
+    display: inline-block;
+    margin: 0 0.15em;
 }
 
 .post-body table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 1.25rem;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
 }
 
 .post-body th,
@@ -380,6 +459,12 @@ section:last-of-type {
 .post-body th {
     background-color: var(--card-bg-color);
     font-weight: 600;
+}
+
+.post-body hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 2.5rem 0;
 }
 
 .post-footer {

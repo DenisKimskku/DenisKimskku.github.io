@@ -40,10 +40,14 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <!-- Marked for markdown parsing -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"
+            integrity="sha512-4IeqgEW/gb0bGI9JVy0K9Q3j8pCmPD5CPRuD9qPTt1Oj9vY5C/7mF4LYEfKTYZFhDmVqPmzYJODHJYd4Z6Rtw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- DOMPurify for XSS protection -->
-    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"
+            integrity="sha512-UcpyPKvTVVDFLHF4u4dUW6ey7rLABcBLwsv2TmvMX0A6W3L/mCWy3DGhVqBF8fZDnKqrb9cW/DcWrJ8XLlmwDQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- Alternative: KaTeX for faster LaTeX rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -345,22 +349,33 @@
 
                 // Sanitize HTML with DOMPurify before inserting
                 const contentElement = document.getElementById('post-content');
-                if (window.DOMPurify) {
-                    // Allow MathJax delimiters and common math notation
-                    const cleanHtml = DOMPurify.sanitize(htmlContent, {
-                        ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a', 'ul', 'ol', 'li',
-                                       'blockquote', 'code', 'pre', 'strong', 'em', 'img', 'table', 'thead',
-                                       'tbody', 'tr', 'th', 'td', 'br', 'hr', 'div', 'span', 'sup', 'sub'],
-                        ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id'],
-                        ALLOW_DATA_ATTR: false
-                    });
-                    contentElement.innerHTML = cleanHtml;
-                } else {
-                    contentElement.innerHTML = htmlContent;
-                }
 
-                // Process LaTeX with MathJax
-                renderMathJax();
+                // Wait for DOMPurify to load if not available yet
+                const sanitizeAndRender = () => {
+                    if (window.DOMPurify) {
+                        // Allow MathJax delimiters and common markdown elements
+                        const cleanHtml = DOMPurify.sanitize(htmlContent, {
+                            ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a', 'ul', 'ol', 'li',
+                                           'blockquote', 'code', 'pre', 'strong', 'em', 'img', 'table', 'thead',
+                                           'tbody', 'tr', 'th', 'td', 'br', 'hr', 'div', 'span', 'sup', 'sub',
+                                           'del', 'ins', 'mark', 'abbr', 'dfn', 'kbd', 'samp', 'var'],
+                            ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id', 'width', 'height'],
+                            ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp|figures):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
+                            ALLOW_DATA_ATTR: false,
+                            ALLOW_UNKNOWN_PROTOCOLS: false
+                        });
+                        contentElement.innerHTML = cleanHtml;
+
+                        // Process LaTeX after sanitization
+                        renderMathJax();
+                    } else {
+                        // DOMPurify not loaded yet, retry
+                        console.warn('DOMPurify not loaded, retrying...');
+                        setTimeout(sanitizeAndRender, 50);
+                    }
+                };
+
+                sanitizeAndRender();
 
             } catch (error) {
                 console.error('Error loading markdown:', error);
