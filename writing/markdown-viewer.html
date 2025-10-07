@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Disable Cloudflare features that may interfere -->
+    <meta name="cf-2fa-verify" content="false">
+    <meta name="cloudflare-static-spike" content="false">
     <title id="page-title">Loading - Minseok (Denis) Kim</title>
     <link rel="stylesheet" href="../styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -683,11 +686,6 @@
             }
         }
 
-        // Start the initialization
-        initializeMarkdownViewer();
-
-        // Also try when DOM is ready as backup
-        document.addEventListener('DOMContentLoaded', loadMarkdown);
     }
 
     // Start initialization when page loads
