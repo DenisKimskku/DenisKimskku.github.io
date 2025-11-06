@@ -1,28 +1,16 @@
 [
   {
-    "path": "machine-unlearning-information-theory.md",
-    "title": "An Information Theoretic Approach to Machine Unlearning",
-    "date": "2025-08-06",
-    "type": "Research",
-    "description": "A deep dive into zero-shot machine unlearning using information theory and gradient-based smoothing techniques",
+    "path": "Rescuing_the_unpoisoned.md",
+    "title": "Rescuing the Unpoisoned: Efficient Defense against Knowledge Corruption Attacks on RAG Systems",
+    "date": "2025-11-06",
+    "type": "Research Paper",
+    "description": "RAGDefender is a lightweight, efficient defense mechanism designed to protect Retrieval-Augmented Generation (RAG) systems from knowledge corruption attacks",
     "tags": [
-      "machine-learning",
-      "unlearning",
-      "information-theory"
+      "Retrieval-Augmented Generation",
+      "LLM Security",
+      "Adversarial Attacks",
+      "RAG"
     ],
-    "figures_path": "figures/machine-unlearning-information-theory/"
-  },
-  {
-    "path": "simple-and-effective-masked-language-models.md",
-    "title": "Simple and Effective Masked Language Models",
-    "date": "2025-08-06",
-    "type": "Research",
-    "description": "A comprehensive analysis of MDLM's approach to closing the performance gap between autoregressive and diffusion language models through masking, SUBS parameterization, and continuous-time objectives",
-    "tags": [
-      "diffusion-models",
-      "language-models",
-      "masked-language-modeling"
-    ],
-    "figures_path": "figures/simple-and-effective-masked-language-models/"
+    "figures_path": "images/251106/"
   }
 ]
