@@ -527,7 +527,8 @@
                 htmlContent = htmlContent.replace(
                     /<img([^>]*?)src="([^"]*?\.(?:png|jpg|jpeg|gif|svg))"([^>]*?)>/gi,
                     (match, prefix, src, suffix) => {
-                        if (!src.startsWith('http') && !src.startsWith('figures/')) {
+                        // Don't modify URLs that already have paths (contain '/') or are external
+                        if (!src.startsWith('http') && !src.startsWith('figures/') && !src.startsWith('images/') && !src.includes('/')) {
                             return `<img${prefix}src="${figuresPath}${src}"${suffix}>`;
                         }
                         return match;
