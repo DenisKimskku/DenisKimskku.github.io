@@ -23,8 +23,10 @@
 
     <title>{{TITLE}} - Minseok (Denis) Kim</title>
 
-    <link rel="stylesheet" href="../../styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- Syntax highlighting -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
@@ -76,20 +78,20 @@
         }
 
         .article-reading-time::before {
-            content: "📖";
+            content: "";
         }
 
         .article-date::before {
-            content: "📅";
+            content: "";
         }
 
         .article-type::before {
-            content: "🏷️";
+            content: "";
         }
 
         .article-title {
             font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
+            font-weight: 700;
             margin: 1rem 0;
             line-height: 1.15;
             letter-spacing: -0.03em;
@@ -141,7 +143,7 @@
         .table-of-contents h4 {
             margin: 0 0 1rem 0;
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-color);
         }
 
@@ -250,7 +252,7 @@
         }
 
         .article-body code {
-            font-family: 'Fira Code', 'Monaco', 'Courier New', monospace;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', 'Courier New', monospace;
             background: var(--card-bg-color);
             padding: 0.25em 0.5em;
             border-radius: 6px;
@@ -323,7 +325,7 @@
             color: white;
             padding: 1rem;
             text-align: left;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .article-body td {
@@ -378,7 +380,7 @@
             color: var(--accent-color);
             text-decoration: none;
             border-radius: 8px;
-            font-weight: 600;
+            font-weight: 500;
             transition: all 0.2s ease;
             border: 1px solid var(--border-color);
         }
@@ -472,18 +474,16 @@
 <body>
     <header class="site-header">
         <div class="container">
-            <div class="site-branding">
-                <h1 class="site-title">Minseok (Denis) Kim</h1>
-            </div>
+            <h1 class="site-title"><a href="/" style="color: inherit; text-decoration: none;">Minseok (Denis) Kim</a></h1>
             <nav class="main-nav">
-                <a href="../../#main" class="nav-link">Main</a>
-                <a href="../../papers/" class="nav-link">Papers</a>
-                <a href="../../code/" class="nav-link">Code</a>
-                <a href="../../writing/" class="nav-link">Writing</a>
-                <div class="theme-toggle" onclick="toggleTheme()">
-                    <div class="theme-icon"></div>
-                </div>
+                <a href="/" class="nav-link">About</a>
+                <a href="/papers/" class="nav-link">Papers</a>
+                <a href="/code/" class="nav-link">Code</a>
+                <a href="/writing/" class="nav-link">Writing</a>
             </nav>
+            <button class="theme-toggle" aria-label="Toggle theme">
+                <span class="theme-icon"></span>
+            </button>
         </div>
     </header>
 
@@ -519,18 +519,16 @@
 
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-links">
-                    <a href="mailto:for8821@g.skku.edu">Email</a>
-                    <a href="https://scholar.google.com/citations?user=81uf6x0AAAAJ&hl=en">Scholar</a>
-                    <a href="https://github.com/DenisKimskku">GitHub</a>
-                </div>
-                <p class="footer-text">© 2025 Minseok (Denis) Kim. Building safe AI for everyone.</p>
+            <div class="footer-links">
+                <a href="mailto:for8821@g.skku.edu">Email</a>
+                <a href="https://scholar.google.com/citations?user=81uf6x0AAAAJ&hl=en">Scholar</a>
+                <a href="https://github.com/DenisKimskku">GitHub</a>
             </div>
+            <p class="footer-text">© 2025 Minseok (Denis) Kim. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="../../script.js"></script>
+    <script src="/script.js"></script>
     <script>
         // Initialize syntax highlighting
         document.addEventListener('DOMContentLoaded', function() {
