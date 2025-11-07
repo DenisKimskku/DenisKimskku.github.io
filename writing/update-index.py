@@ -144,20 +144,27 @@ def scan_markdown_files(directory: Path) -> List[Dict[str, Any]]:
     """Scan directory for .md files and extract their metadata; enforce image checks."""
     articles = []
 
-    # Find all .md files except template.md
-    md_files = [f for f in directory.glob('*.md') if f.name != 'template.md']
+    # Look in src/ directory first, then root directory
+    src_dir = directory / 'src'
+    md_files = []
+
+    if src_dir.exists():
+        md_files.extend([f for f in src_dir.glob('*.md') if f.stem != 'template' and not f.stem.startswith('README')])
+
+    # Also check root directory for backward compatibility
+    md_files.extend([f for f in directory.glob('*.md') if f.stem != 'template' and not f.stem.startswith('README')])
 
     print(f"Found {len(md_files)} markdown files to process:")
 
     for md_file in sorted(md_files):
-        print(f"  📄 Processing {md_file.name}...")
+        print(f"  [*] Processing {md_file.name}...")
 
         try:
             content = md_file.read_text(encoding='utf-8')
             frontmatter = parse_frontmatter(content)
 
             if not frontmatter:
-                print(f"    ⚠️  No frontmatter found in {md_file.name}")
+                print(f"    [WARNING]  No frontmatter found in {md_file.name}")
                 continue
 
             article_name = md_file.stem
@@ -166,18 +173,18 @@ def scan_markdown_files(directory: Path) -> List[Dict[str, Any]]:
             # Determine required folder from date rule and ensure it exists
             req_folder = required_images_folder(date_str, article_name)
             ensure_folder(directory, req_folder)
-            print(f"    📁 Required image folder: {req_folder}")
+            print(f"    [FOLDER] Required image folder: {req_folder}")
 
             # Validate images presence & location
             check = validate_images(directory, article_name, date_str, content)
             if not check["ok"]:
-                print("    ❌ Image validation failed:")
+                print("    [ERROR] Image validation failed:")
                 for e in check["errors"]:
                     print(f"       - {e}")
-                print("    ⏭️  Skipping this article due to image rule violation.")
+                print("    [SKIP]  Skipping this article due to image rule violation.")
                 continue
             else:
-                print(f"    ✅ Image validation passed ({len(check['images'])} image(s) found).")
+                print(f"    [OK] Image validation passed ({len(check['images'])} image(s) found).")
 
             # Create article metadata
             article = {
@@ -191,12 +198,12 @@ def scan_markdown_files(directory: Path) -> List[Dict[str, Any]]:
             }
 
             articles.append(article)
-            print(f"    ✅ Added: {article['title']}")
-            print(f"       📅 {article['date']} | 🏷️ {len(article['tags'])} tags")
-            print(f"       📸 Folder: {article['figures_path']}")
+            print(f"    [OK] Added: {article['title']}")
+            print(f"       [DATE] {article['date']} | [TAGS] {len(article['tags'])} tags")
+            print(f"       [IMG] Folder: {article['figures_path']}")
 
         except Exception as e:
-            print(f"    ❌ Error processing {md_file.name}: {e}")
+            print(f"    [ERROR] Error processing {md_file.name}: {e}")
 
     return articles
 
@@ -205,12 +212,12 @@ def update_index_file(articles: List[Dict[str, Any]], index_path: Path) -> None:
     # Sort articles by date (newest first)
     articles.sort(key=lambda x: x['date'], reverse=True)
 
-    print(f"\n💾 Writing {len(articles)} articles to {index_path.name}...")
+    print(f"\n[SAVE] Writing {len(articles)} articles to {index_path.name}...")
 
     with open(index_path, 'w', encoding='utf-8') as f:
         json.dump(articles, f, indent=2, ensure_ascii=False)
 
-    print("✅ Index file updated successfully!")
+    print("[OK] Index file updated successfully!")
 
     # Update inline data in HTML file for instant loading
     update_inline_html_data(articles, index_path.parent)
@@ -220,10 +227,10 @@ def update_inline_html_data(articles: List[Dict[str, Any]], directory: Path) -> 
     html_file = directory / 'index.html'
 
     if not html_file.exists():
-        print("⚠️  HTML file not found, skipping inline data update")
+        print("[WARNING]  HTML file not found, skipping inline data update")
         return
 
-    print("🔄 Updating inline data in HTML file...")
+    print("[UPDATE] Updating inline data in HTML file...")
 
     try:
         with open(html_file, 'r', encoding='utf-8') as f:
@@ -245,7 +252,7 @@ def update_inline_html_data(articles: List[Dict[str, Any]], directory: Path) -> 
         for i, pattern in enumerate(patterns):
             match = re.search(pattern, html_content, flags=re.DOTALL | re.MULTILINE)
             if match:
-                print(f"✅ Found pattern {i+1}")
+                print(f"[OK] Found pattern {i+1}")
                 replacement = f'\\1{articles_js}\\3'
                 new_html_content = re.sub(pattern, replacement, html_content, flags=re.DOTALL | re.MULTILINE)
                 pattern_found = True
@@ -254,39 +261,39 @@ def update_inline_html_data(articles: List[Dict[str, Any]], directory: Path) -> 
         if pattern_found and new_html_content != html_content:
             with open(html_file, 'w', encoding='utf-8') as f:
                 f.write(new_html_content)
-            print("✅ Inline HTML data updated successfully!")
+            print("[OK] Inline HTML data updated successfully!")
         elif not pattern_found:
-            print("⚠️  Could not find any inline data pattern in HTML file")
+            print("[WARNING]  Could not find any inline data pattern in HTML file")
         else:
-            print("✅ Inline data is already up to date")
+            print("[OK] Inline data is already up to date")
 
     except Exception as e:
-        print(f"❌ Error updating inline HTML data: {e}")
+        print(f"[ERROR] Error updating inline HTML data: {e}")
 
 def main():
     """Main function to update the articles index."""
-    print("🔍 Automatic Article Index Updater")
+    print("Automatic Article Index Updater")
     print("=" * 40)
 
     # Get the directory where this script is located (writing directory)
     script_dir = Path(__file__).parent
-    print(f"📁 Working directory: {script_dir}")
+    print(f"Working directory: {script_dir}")
 
     # Scan for markdown files
     articles = scan_markdown_files(script_dir)
 
     if not articles:
-        print("\n⚠️  No articles passed validation (or no valid frontmatter)!")
+        print("\n[WARNING] No articles passed validation (or no valid frontmatter)!")
         return
 
     # Update index file
     index_path = script_dir / 'articles-index.json'
     update_index_file(articles, index_path)
 
-    print("\n📊 Summary:")
-    print(f"  • Total articles: {len(articles)}")
-    print(f"  • Index file: {index_path}")
-    print("\n🎉 All done! Your articles will now load instantly on the website.")
+    print("\nSummary:")
+    print(f"  - Total articles: {len(articles)}")
+    print(f"  - Index file: {index_path}")
+    print("\n[SUCCESS] All done! Your articles will now load instantly on the website.")
 
 if __name__ == '__main__':
     main()
