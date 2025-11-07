@@ -571,7 +571,7 @@
                                 }).join('')}
                             </div>
                         </div>
-                        <h3><a href="/writing/markdown-viewer.html?md=${article.path}">${title}</a></h3>
+                        <h3><a href="/writing/${article.html_path || 'articles/' + article.path.replace('.md', '.html')}">${title}</a></h3>
                         <p>${description}</p>
                     </article>
                     `;
