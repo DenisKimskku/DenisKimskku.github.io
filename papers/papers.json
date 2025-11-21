@@ -1,9 +1,27 @@
 [
+    {
+    "year": "2025",
+    "title": "LLM-Based Drug Term Detection in Korean Messenger Conversations",
+    "authors": ["Minseok Kim", "Hyungjoon Koo"],
+    "conference": "Journal of The Korea Institute of Information Security & Cryptology Vol 35. No. 6 (to appear)",
+    "description": "LLM-based Korean drug slang detection system that utilizes TF-IDF data augmentation and a context-aware attention model to achieve 98.16% accuracy.",
+    "pdfUrl": "#",
+    "codeUrl": "#"
+  },
+  {
+    "year": "2025",
+    "title": "Analysis of Watermarking for AI-generated Text",
+    "authors": ["Giuk Kwon", "Minseok Kim", "Hyungjoon Koo"],
+    "conference": "CISC-W'25 (to appear)",
+    "description": "Systematic analysis of LLM text watermarking by defining key properties and attacks while evaluating Zero-bit versus Multi-bit techniques",
+    "pdfUrl": "#",
+    "codeUrl": "#"
+  },
   {
     "year": "2025",
     "title": "Rescuing the Unpoisoned: Efficient Defense against Knowledge Corruption Attacks on RAG Systems",
     "authors": ["Minseok Kim", "Hankook Lee", "Hyungjoon Koo"],
-    "conference": "ACSAC'25 (To appear)",
+    "conference": "ACSAC'25 (to appear)",
     "description": "A resource-efficient defense mechanism against the knowledge corruption attacks on RAG systems by filtering out potentially adversarial documents.",
     "pdfUrl": "https://arxiv.org/abs/2511.01268",
     "codeUrl": "https://github.com/SecAI-Lab/RAGDefender"
