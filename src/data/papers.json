@@ -12,7 +12,7 @@
     "year": "2025",
     "title": "Analysis of Watermarking for AI-generated Text",
     "authors": ["Giuk Kwon", "Minseok Kim", "Hyungjoon Koo"],
-    "conference": "CISC-W'25 (to appear)",
+    "conference": "CISC-W'25",
     "description": "Systematic analysis of LLM text watermarking by defining key properties and attacks while evaluating Zero-bit versus Multi-bit techniques",
     "pdfUrl": "#",
     "codeUrl": "#"
@@ -21,10 +21,11 @@
     "year": "2025",
     "title": "Rescuing the Unpoisoned: Efficient Defense against Knowledge Corruption Attacks on RAG Systems",
     "authors": ["Minseok Kim", "Hankook Lee", "Hyungjoon Koo"],
-    "conference": "ACSAC'25 (to appear)",
+    "conference": "ACSAC'25",
     "description": "A resource-efficient defense mechanism against the knowledge corruption attacks on RAG systems by filtering out potentially adversarial documents.",
     "pdfUrl": "https://arxiv.org/abs/2511.01268",
-    "codeUrl": "https://github.com/SecAI-Lab/RAGDefender"
+    "codeUrl": "https://github.com/SecAI-Lab/RAGDefender",
+    "slideUrl": "https://for8821.synology.me:5001/d/s/16BGaQNRoWR8OFAlNSY6gRmPyaS3w4Pk/lJtYfuJC-2uKX62QiEDvY6gkODfn2Mh1-r7BAovUt0Qw"
   },
   {
     "year": "2025",

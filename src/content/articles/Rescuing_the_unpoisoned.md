@@ -12,7 +12,7 @@ Retrieval-Augmented Generation (RAG) is a powerful technique for making Large La
 
 But this new capability introduces a critical new vulnerability: **What if the knowledge base itself is poisoned?**
 
-This is the question at the heart of our new paper, "[Rescuing the Unpoisoned: Efficient Defense against Knowledge Corruption Attacks on RAG Systems](https://arxiv.org/abs/YOUR_ARXIV_LINK_HERE)," which has been accepted to the **Annual Computer Security Applications Conference (ACSAC) 2025**.
+This is the question at the heart of our new paper, "[Rescuing the Unpoisoned: Efficient Defense against Knowledge Corruption Attacks on RAG Systems](https://arxiv.org/abs/2511.01268)," which has been accepted to the **Annual Computer Security Applications Conference (ACSAC) 2025**.
 
 We found that an attacker can inject a small amount of misleading or "poisoned" data into a RAG system's knowledge base. When a user asks a question, the RAG system retrieves this malicious content and, trusting its source, generates a confident but completely incorrect answer.
 
@@ -22,7 +22,7 @@ We knew there had to be a better way.
 
 ### Our Solution: RAGDefender
 
-I'm thrilled to introduce **RAGDefender**, the open-source defense mechanism we built to solve this problem.
+I'll introduce **RAGDefender**, the open-source defense mechanism we built to solve this problem.
 
 RAGDefender is a lightweight and resource-efficient filter that operates *after* passages are retrieved but *before* they are sent to the LLM generator. It is designed to be:
 
@@ -108,8 +108,8 @@ We believe RAGDefender is a vital contribution to building more robust, resilien
 
 We welcome any feedback, contributions, and discussions on GitHub!
 
-* **Read the full paper on arXiv:** [Link to your arXiv paper]
-* **Explore the code on GitHub:** [https://github.com/SecAI-Lab/RAGDefender](https://github.com/SecAI-Lab/RAGDefender)
+* **Read the full paper on arXiv:** [Paper link](https://arxiv.org/abs/2511.01268)
+* **Explore the code on GitHub:** [Code link](https://github.com/SecAI-Lab/RAGDefender)
 * **Install the package:** `pip install ragdefender`
 
 ---
