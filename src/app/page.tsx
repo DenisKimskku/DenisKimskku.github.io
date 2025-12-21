@@ -65,7 +65,7 @@ export default function Home() {
             <div>
               <h3 className="text-2xl font-bold mb-2 text-[var(--color-text)]">
                 <Link href="/calendar-plus-plus" className="hover:text-[var(--color-accent)] transition-colors">
-                  calendar++
+                  Calendar++
                 </Link>
               </h3>
               <p className="text-[var(--color-text-secondary)] mb-4">
