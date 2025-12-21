@@ -68,16 +68,6 @@ export default function Header() {
             >
               Writing
             </Link>
-            <Link
-              href="/calendar-plus-plus"
-              className={`text-sm font-medium transition-colors ${
-                isActive('/calendar-plus-plus')
-                  ? 'text-[var(--color-accent)]'
-                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
-              }`}
-            >
-              Calendar++
-            </Link>
 
             {/* Theme Toggle */}
             <ThemeToggle />

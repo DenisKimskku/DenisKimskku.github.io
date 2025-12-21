@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'Calendar++ - Smart Menu Bar Calendar for macOS',
+  title: 'Calendar++',
   description: 'A powerful menu bar calendar app for macOS with Google Calendar integration, event management, and beautiful design.',
 }
 
@@ -39,6 +39,22 @@ export default function CalendarPlusPlus() {
             </Link>
             <span className="text-[var(--color-text-secondary)]">•</span>
             <Link href="/calendar-plus-plus/terms" className="text-[var(--color-accent)] hover:underline">
+              Terms of Service
+            </Link>
+          </div>
+        </div>
+
+        {/* Privacy Notice - Prominent for Google Verification */}
+        <div className="mb-8 bg-[var(--color-bg-secondary)] rounded-lg p-4 border border-[var(--color-border)] text-center">
+          <p className="text-[var(--color-text)] mb-2">
+            <strong>Calendar++</strong> respects your privacy and security.
+          </p>
+          <div className="flex gap-4 justify-center text-sm">
+            <Link href="/calendar-plus-plus/privacy" className="text-[var(--color-accent)] hover:underline font-medium">
+              Read our Privacy Policy
+            </Link>
+            <span className="text-[var(--color-text-secondary)]">•</span>
+            <Link href="/calendar-plus-plus/terms" className="text-[var(--color-accent)] hover:underline font-medium">
               Terms of Service
             </Link>
           </div>
