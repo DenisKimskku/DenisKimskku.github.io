@@ -55,42 +55,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <section id="projects" className="mt-16 pt-16 border-t border-[var(--color-border)]">
-        <h2 className="text-4xl md:text-5xl font-bold mb-8 text-[var(--color-text)]">
-          Projects
-        </h2>
-        <div className="bg-[var(--color-bg-secondary)] rounded-lg p-6 border border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors">
-          <div className="flex items-start justify-between">
-            <div>
-              <h3 className="text-2xl font-bold mb-2 text-[var(--color-text)]">
-                <Link href="/calendar-plus-plus" className="hover:text-[var(--color-accent)] transition-colors">
-                  Calendar++
-                </Link>
-              </h3>
-              <p className="text-[var(--color-text-secondary)] mb-4">
-                Smart menu bar calendar for macOS with Google Calendar integration, event management, and beautiful liquid glass design.
-              </p>
-              <div className="flex gap-4">
-                <Link
-                  href="/calendar-plus-plus"
-                  className="text-sm text-[var(--color-accent)] hover:underline"
-                >
-                  Learn more →
-                </Link>
-                <a
-                  href="https://github.com/DenisKimskku/Calendarpp"
-                  className="text-sm text-[var(--color-accent)] hover:underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View on GitHub →
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
