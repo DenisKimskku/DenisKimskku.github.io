@@ -76,7 +76,7 @@ export default function Header() {
                   : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
               }`}
             >
-              calendar++
+              Calendar++
             </Link>
 
             {/* Theme Toggle */}

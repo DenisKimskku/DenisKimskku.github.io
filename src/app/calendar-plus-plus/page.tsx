@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'calendar++ - Smart Menu Bar Calendar for macOS',
+  title: 'Calendar++ - Smart Menu Bar Calendar for macOS',
   description: 'A powerful menu bar calendar app for macOS with Google Calendar integration, event management, and beautiful design.',
 }
 
@@ -12,12 +12,12 @@ export default function CalendarPlusPlus() {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            calendar++
+            Calendar++
           </h1>
           <p className="text-xl text-[var(--color-text-secondary)] mb-8">
             Smart menu bar calendar for macOS
           </p>
-          <div className="flex gap-4 justify-center">
+          <div className="flex gap-4 justify-center mb-8">
             <a
               href="#download"
               className="px-6 py-3 bg-[var(--color-accent)] text-white rounded-lg hover:opacity-80 transition"
@@ -32,6 +32,36 @@ export default function CalendarPlusPlus() {
             >
               View on GitHub
             </a>
+          </div>
+          <div className="flex gap-4 justify-center text-sm">
+            <Link href="/calendar-plus-plus/privacy" className="text-[var(--color-accent)] hover:underline">
+              Privacy Policy
+            </Link>
+            <span className="text-[var(--color-text-secondary)]">•</span>
+            <Link href="/calendar-plus-plus/terms" className="text-[var(--color-accent)] hover:underline">
+              Terms of Service
+            </Link>
+          </div>
+        </div>
+
+        {/* About Section - What is Calendar++? */}
+        <div className="mb-16 bg-[var(--color-bg-secondary)] rounded-lg p-8 border border-[var(--color-border)]">
+          <h2 className="text-3xl font-bold mb-4 text-[var(--color-text)]">What is Calendar++?</h2>
+          <div className="text-lg text-[var(--color-text)] space-y-4">
+            <p>
+              Calendar++ is a powerful menu bar calendar application for macOS that helps you stay organized and productive.
+              Access your schedule instantly from your Mac's menu bar without opening multiple apps.
+            </p>
+            <p>
+              The app integrates seamlessly with both your local macOS Calendar and Google Calendar, providing a unified
+              view of all your events in one convenient location. With secure OAuth 2.0 authentication, your Google Calendar
+              data stays private and is never stored on external servers - everything remains on your device.
+            </p>
+            <p>
+              Built natively for macOS with SwiftUI, Calendar++ features a beautiful liquid glass design that adapts to
+              macOS Sequoia's visual style, offering quick event creation, smart event management, and instant access to
+              your schedule right from your menu bar.
+            </p>
           </div>
         </div>
 
