@@ -1,7 +1,7 @@
 [
     {
     "year": "2025",
-    "title": "Fool Me If You Can: On the Robustness of Binary Code Similarity Detection Models against Semantic-preserving Transformations",
+    "title": "Fool Me If You Can: On the Robustness of Binary Code Similarity Detection Models against Semantics-preserving Transformations",
     "authors": ["Jiyong Uhm","Minseok Kim", "Michalis Polychronakis", "Hyungjoon Koo"],
     "conference": "FSE'26 (to appear)",
     "description": "This paper proposes asmFooler, a framework that reveals deep learning-based binary similarity models are highly vulnerable to adversarial code transformations that preserve program logic.",
