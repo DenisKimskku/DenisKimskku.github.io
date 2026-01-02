@@ -5,6 +5,11 @@
     "githubUrl": "https://github.com/SecAI-Lab/RAGDefender"
   },
   {
+    "title": "Korean Slang Detector",
+    "description": "LLM-based Korean drug slang detection system that utilizes TF-IDF data augmentation and a context-aware attention model to achieve 98.16% accuracy.",
+    "githubUrl": "https://github.com/DenisKimskku/korean_slang_detector"
+  },
+  {
     "title": "iChat",
     "description": "A real-time chat application built with Node.js, Express, and Socket.io. Features include user authentication, private messaging, and a responsive UI.",
     "githubUrl": "https://github.com/DenisKimskku/iChat"
