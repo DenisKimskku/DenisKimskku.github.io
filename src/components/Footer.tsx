@@ -5,7 +5,7 @@ export default function Footer() {
         <div className="flex flex-col items-center gap-4 text-center">
           <div className="flex gap-6">
             <a
-              href="mailto:minseokkim@skku.edu"
+              href="mailto:for8821@g.skku.edu"
               className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
               target="_blank"
               rel="noopener noreferrer"
@@ -13,7 +13,7 @@ export default function Footer() {
               Email
             </a>
             <a
-              href="https://scholar.google.com/citations?user=MkAWBhIAAAAJ"
+              href="https://scholar.google.com/citations?user=81uf6x0AAAAJ"
               className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
               target="_blank"
               rel="noopener noreferrer"
