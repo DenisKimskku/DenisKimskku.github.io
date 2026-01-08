@@ -23,8 +23,8 @@
     "authors": ["Giuk Kwon", "Minseok Kim", "Hyungjoon Koo"],
     "conference": "CISC-W'25",
     "description": "Systematic analysis of LLM text watermarking by defining key properties and attacks while evaluating Zero-bit versus Multi-bit techniques",
-    "pdfUrl": "https://for8821.synology.me:5001/d/s/16Szz2EovcZII9PEmjs46jqyYElO0RAJ/qSYUDvPzfGWI4U6I4GRUhPdNbIo4nODB-A7RASJnY3Aw",
-    "slideUrl": "https://for8821.synology.me:5001/d/s/16Szz2ZgRgLyP0IT8kTaUWg1OoL390E1/47M-57_UqtrOzzkZ3rSHY_rwAKUgEJrm-IbSA9qPY3Aw"
+    "pdfUrl": "https://for8821.synology.me:5001/d/s/16YG6SlCvRYXp4B09QU0gqN9Ly8ezXEL/LpMWaAZwelMyOEcnSMT3hJO5GXtBlRae-qbwghezv4Aw",
+    "slideUrl": "https://for8821.synology.me:5001/d/s/16YG6Ss1IZ8nVAtSxSI3ixU3RgpullCF/6DAa4HrU6N1HCbW0ZTxVqtacP07J-E4J-6L5gRvvv4Aw"
   },
   {
     "year": "2025",
@@ -34,7 +34,7 @@
     "description": "A resource-efficient defense mechanism against the knowledge corruption attacks on RAG systems by filtering out potentially adversarial documents.",
     "pdfUrl": "https://arxiv.org/abs/2511.01268",
     "codeUrl": "https://github.com/SecAI-Lab/RAGDefender",
-    "slideUrl": "https://for8821.synology.me:5001/d/s/16BGaQNRoWR8OFAlNSY6gRmPyaS3w4Pk/lJtYfuJC-2uKX62QiEDvY6gkODfn2Mh1-r7BAovUt0Qw"
+    "slideUrl": "https://for8821.synology.me:5001/d/s/16YGjj7yPmUOfyfSkuAiu92mecNB00Og/bAICfH482zIDHwLMT0M9CpI0h5ib9ptg-VrYg5Rbw4Aw"
   },
   {
     "year": "2025",
@@ -42,8 +42,8 @@
     "authors": ["Zhang Yiyue", "Minseok Kim", "Hyungjoon Koo"],
     "conference": "CISC-S'25",
     "description": "A study on protocol architectures and security in Model Control Protocol and Agent-to-Agent communication.",
-    "pdfUrl": "https://for8821.synology.me:5001/d/s/16SzvmOSeS5T8JHnCoYiNbjjXZLl8l1b/lX8-WRL3fvaOi1WRD2THw6I-bvJ_20Sl-UbRgcrTY3Aw",
-    "slideUrl": "https://for8821.synology.me:5001/d/s/16SzvqYuQNvPfKRRPghfUtcBQJMa9mfc/MTJQ2DwYN6SVjiwB-HRZwIzMlr7RRFZ5-fbSAkMrY3Aw"
+    "pdfUrl": "https://for8821.synology.me:5001/d/s/16YG6Rwp7qkpaEMt9QWVUe9psW1xDQ0o/H-5Msb_v5UGPkwJFg12xo3C0r-bXRgwk-HrVA6Sjw4Aw",
+    "slideUrl": "https://for8821.synology.me:5001/d/s/16YG6SAafeuRvFuOAuE58eAeAhcVdgcL/owBChhQhCHq62WAt97tYpgK7t5TvUmnF-RLyANjPw4Aw"
   },
   {
     "year": "2024",
@@ -51,7 +51,7 @@
     "authors": ["Minseok Kim", "Hyungjoon Koo"],
     "conference": "CISC-W'24",
     "description": "An analysis of security vulnerabilities in RAG systems and emerging defense mechanisms.",
-    "pdfUrl": "https://for8821.synology.me:5001/d/s/10tvbGNSBuzhJoc0dJUhtebgObuh1Ojv/JxVnEYihC4509XzHmz-lVr_oBdmtJjrM-lb6A4GfW3Aw",
-    "slideUrl": "https://for8821.synology.me:5001/d/s/10zkwWsCV9nM1OcyK3m3fWUHqpYkuYHM/gVkrSP7Kn9q68AqitZLCF0BY9dcqAI5b-D79gcpHW3Aw"
+    "pdfUrl": "https://for8821.synology.me:5001/d/s/16YG6Se6xBqY1Q4gwToEqICfxnpA7uqq/-5Qoif2NT9o-6uYjVGRagvheFNK_6doF-Fr4ge1jw4Aw",
+    "slideUrl": "https://for8821.synology.me:5001/d/s/16YG6Sahld0ZXQjEHfcf4gJXUCH8cSg9/BXAMs8465B2ZYtRBhguRw3f5ztaYl_8G-c7TA8WDw4Aw"
   }
 ]
