@@ -231,8 +231,8 @@ MIT License - see LICENSE file for details
 ## Author
 
 **Minseok (Denis) Kim**
-- Email: minseokkim@skku.edu
-- Google Scholar: [Profile](https://scholar.google.com/citations?user=MkAWBhIAAAAJ)
+- Email: for8821@g.skku.edu
+- Google Scholar: [Profile](https://scholar.google.com/citations?user=81uf6x0AAAAJ)
 - GitHub: [@DenisKimskku](https://github.com/DenisKimskku)
 
 ## Acknowledgments
