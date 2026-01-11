@@ -6,7 +6,7 @@
     "conference": "FSE'26 (to appear)",
     "description": "This paper proposes asmFooler, a framework that reveals deep learning-based binary similarity models are highly vulnerable to adversarial code transformations that preserve program logic.",
     "pdfUrl": "#",
-    "codeUrl": "#"
+    "codeUrl": "https://zenodo.org/records/17116512"
   },
     {
     "year": "2025",
