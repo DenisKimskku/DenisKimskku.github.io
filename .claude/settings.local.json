@@ -9,7 +9,10 @@
       "Bash(cat:*)",
       "Bash(shopt:*)",
       "Bash(find:*)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(pdftoppm:*)",
+      "Bash(for:*)",
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []
