@@ -32,9 +32,9 @@
     "authors": ["Minseok Kim", "Hankook Lee", "Hyungjoon Koo"],
     "conference": "ACSAC'25",
     "description": "A resource-efficient defense mechanism against the knowledge corruption attacks on RAG systems by filtering out potentially adversarial documents.",
-    "pdfUrl": "https://arxiv.org/abs/2511.01268",
+    "pdfUrl": "https://deniskim1.com/papers/acsac25/RAGDefender_published_version.pdf", 
     "codeUrl": "https://github.com/SecAI-Lab/RAGDefender",
-    "slideUrl": "https://for8821.synology.me:5001/d/s/16YGjj7yPmUOfyfSkuAiu92mecNB00Og/bAICfH482zIDHwLMT0M9CpI0h5ib9ptg-VrYg5Rbw4Aw"
+    "slideUrl": "https://deniskim1.com/papers/acsac25/RAGDefender_slides.pdf"
   },
   {
     "year": "2025",
