@@ -11,8 +11,8 @@ interface Project {
   name: string;
   description: string | null;
   html_url: string;
-  stargazers_count?: number; // Allow undefined
-  language: string | null;
+  stargazers_count?: number; // Make it optional
+  language: string | null | undefined; // Make it optional
   fork: boolean;
 }
 
