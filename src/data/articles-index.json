@@ -1,142 +1,14 @@
 [
   {
-    "slug": "Rescuing_the_unpoisoned",
-    "title": "Rescuing the Unpoisoned: Efficient Defense against Knowledge Corruption Attacks on RAG Systems",
-    "date": "2025-11-06",
-    "type": "Research Paper",
-    "description": "RAGDefender is a lightweight, efficient defense mechanism designed to protect Retrieval-Augmented Generation (RAG) systems from knowledge corruption attacks",
-    "tags": [
-      "RAG",
-      "LLM Security",
-      "Data Poisoning"
-    ]
-  },
-  {
-    "slug": "instruction_backdoor_attacks_customized_llms",
-    "title": "Instruction Backdoor Attacks against Customized LLMs",
-    "date": "2025-01-12",
-    "type": "Paper Review",
-    "description": "A comprehensive analysis of how malicious instructions can be embedded in customized LLMs to create backdoors that activate on specific triggers, without requiring any model fine-tuning.",
-    "tags": [
-      "LLM Security",
-      "Backdoor Attacks",
-      "Prompt Injection"
-    ]
-  },
-  {
-    "slug": "amides_siem_evasion_detection",
-    "title": "AMIDES: Adaptive Misuse Detection for SIEM Rule Evasions",
-    "date": "2025-02-11",
-    "type": "Paper Review",
-    "description": "Understanding SIEM systems, Sigma rules, and how attackers evade detection through simple command-line obfuscation techniques - leading to the need for adaptive misuse detection.",
-    "tags": [
-      "Intrusion Detection",
-      "Evasion Techniques"
-    ]
-  },
-  {
-    "slug": "membership_inference_attacks_rag",
-    "title": "Membership Inference Attacks on Retrieval-Augmented Generation: A Comprehensive Survey",
-    "date": "2025-03-09",
-    "type": "Paper Review",
-    "description": "A comprehensive analysis of membership inference attacks against RAG systems, examining three state-of-the-art approaches: RAG-MIA, S²MIA, and MBA, along with their defenses and limitations.",
-    "tags": [
-      "RAG",
-      "Privacy",
-      "LLM Security"
-    ]
-  },
-  {
-    "slug": "machine_unlearning_llms_background",
-    "title": "Machine Unlearning for LLMs: Foundations and the AltPO Approach",
-    "date": "2025-04-09",
-    "type": "Paper Review",
-    "description": "An introduction to machine unlearning in Large Language Models, covering the TOFU benchmark, various unlearning methods (GradDiff, NPO, IdkPO, AltPO), and the challenges of maintaining model utility while forgetting specific knowledge.",
-    "tags": [
-      "Machine Unlearning",
-      "Privacy",
-      "LLM Security"
-    ]
-  },
-  {
-    "slug": "contrastive_learning_cve_classification",
-    "title": "Contrastive Learning for Code Vulnerability Type Classification",
-    "date": "2025-05-13",
-    "type": "Paper Review",
-    "description": "A comprehensive analysis of hierarchical contrastive learning approaches for classifying code vulnerabilities into CWE types, addressing long-tail distribution, class isolation, and input length limitations.",
-    "tags": [
-      "Vulnerability Detection",
-      "Deep Learning",
-      "Code Security"
-    ]
-  },
-  {
-    "slug": "passbert_password_guessing",
-    "title": "PassBERT: Improving Real-world Password Guessing via Bi-directional Transformers",
-    "date": "2025-07-08",
-    "type": "Paper Review",
-    "description": "An analysis of PassBERT, a pre-trained BERT-based framework for real-world password guessing attacks including conditional, targeted, and adaptive rule-based password guessing scenarios.",
-    "tags": [
-      "Authentication Security",
-      "Deep Learning"
-    ]
-  },
-  {
-    "slug": "information_theoretic_machine_unlearning",
-    "title": "An Information Theoretic Approach to Machine Unlearning",
-    "date": "2025-07-23",
-    "type": "Paper Review",
-    "description": "A novel zero-shot machine unlearning method using information theory and curvature analysis, enabling efficient removal of data influence without requiring access to the retain set.",
-    "tags": [
-      "Machine Unlearning",
-      "Privacy",
-      "Deep Learning"
-    ]
-  },
-  {
-    "slug": "lint_coercive_interrogation_llm",
-    "title": "LINT: On Large Language Models' Resilience to Coercive Interrogation",
-    "date": "2025-08-14",
-    "type": "Paper Review",
-    "description": "An analysis of LINT, a novel attack that bypasses LLM safety alignment by exploiting top-k token access to extract harmful content without prompt engineering, achieving near-perfect attack success rates.",
-    "tags": [
-      "LLM Security",
-      "Jailbreaking"
-    ]
-  },
-  {
-    "slug": "agentfuzz_llm_vulnerability_detection",
-    "title": "AgentFuzz: Automatic Detection of Taint-Style Vulnerabilities in LLM-based Agents",
-    "date": "2025-09-11",
-    "type": "Paper Review",
-    "description": "An analysis of AgentFuzz, a novel fuzzing framework that automatically detects taint-style vulnerabilities in LLM-based agents through LLM-assisted seed generation, feedback-driven scheduling, and sink-guided mutation.",
-    "tags": [
-      "LLM Agents",
-      "Vulnerability Detection",
-      "Fuzzing"
-    ]
-  },
-  {
-    "slug": "foice_face_to_voice_attack",
-    "title": "Foice: Attacking Voice Authentication Systems with a Single Face Image",
-    "date": "2025-09-12",
-    "type": "Paper Review",
-    "description": "An analysis of Foice, a novel attack that generates synthetic voice recordings from a single face image to bypass voice authentication systems, achieving up to 100% success rate on commercial platforms like WeChat.",
-    "tags": [
-      "Authentication Security",
-      "Deepfake",
-      "Biometrics"
-    ]
-  },
-  {
-    "slug": "data_visualization_best_practices",
-    "title": "Friends Don't Let Friends Make Bad Graphs: A Data Visualization Guide",
-    "date": "2025-11-03",
+    "slug": "llm_red_teaming_state_of_art",
+    "title": "LLM Red-Teaming: A Survey of Attack Strategies and Defense Mechanisms",
+    "date": "2025-12-25",
     "type": "Tutorial",
-    "description": "A comprehensive guide to common data visualization pitfalls and how to avoid them, covering everything from bar plots vs. scatter plots to colorblind-friendly color scales.",
+    "description": "A comprehensive overview of LLM red-teaming techniques, covering attack strategies from manual prompt engineering to automated jailbreaking methods like GCG, AutoDAN, PAIR, Crescendo, and GOAT, along with defense mechanisms.",
     "tags": [
-      "Data Visualization",
-      "Best Practices"
+      "LLM Security",
+      "Red Teaming",
+      "Jailbreaking"
     ]
   },
   {
@@ -152,21 +24,104 @@
     ]
   },
   {
-    "slug": "teach_llms_to_phish",
-    "title": "Teach LLMs to Phish: Stealing Private Information from Language Models",
-    "date": "2025-11-20",
+    "slug": "Rescuing_the_unpoisoned",
+    "title": "Rescuing the Unpoisoned: Efficient Defense against Knowledge Corruption Attacks on RAG Systems",
+    "date": "2025-11-06",
+    "type": "Research Paper",
+    "description": "RAGDefender is a lightweight, efficient defense mechanism designed to protect Retrieval-Augmented Generation (RAG) systems from knowledge corruption attacks",
+    "tags": [
+      "RAG",
+      "LLM Security",
+      "Data Poisoning"
+    ]
+  },
+  {
+    "slug": "agentfuzz_llm_vulnerability_detection",
+    "title": "AgentFuzz: Automatic Detection of Taint-Style Vulnerabilities in LLM-based Agents",
+    "date": "2025-09-11",
     "type": "Paper Review",
-    "description": "An analysis of neural phishing attacks that teach LLMs to memorize and leak private information by inserting benign-appearing poison data during pretraining, achieving up to 90% secret extraction rates.",
+    "description": "An analysis of AgentFuzz, a novel fuzzing framework that automatically detects taint-style vulnerabilities in LLM-based agents through LLM-assisted seed generation, feedback-driven scheduling, and sink-guided mutation.",
+    "tags": [
+      "LLM Agents",
+      "Vulnerability Detection",
+      "Fuzzing"
+    ]
+  },
+  {
+    "slug": "information_theoretic_machine_unlearning",
+    "title": "An Information Theoretic Approach to Machine Unlearning",
+    "date": "2025-07-23",
+    "type": "Paper Review",
+    "description": "A novel zero-shot machine unlearning method using information theory and curvature analysis, enabling efficient removal of data influence without requiring access to the retain set.",
+    "tags": [
+      "Machine Unlearning",
+      "Privacy",
+      "Deep Learning"
+    ]
+  },
+  {
+    "slug": "contrastive_learning_cve_classification",
+    "title": "Contrastive Learning for Code Vulnerability Type Classification",
+    "date": "2025-05-13",
+    "type": "Paper Review",
+    "description": "A comprehensive analysis of hierarchical contrastive learning approaches for classifying code vulnerabilities into CWE types, addressing long-tail distribution, class isolation, and input length limitations.",
+    "tags": [
+      "Vulnerability Detection",
+      "Deep Learning",
+      "Code Security"
+    ]
+  },
+  {
+    "slug": "machine_unlearning_llms_background",
+    "title": "Machine Unlearning for LLMs: Foundations and the AltPO Approach",
+    "date": "2025-04-09",
+    "type": "Paper Review",
+    "description": "An introduction to machine unlearning in Large Language Models, covering the TOFU benchmark, various unlearning methods (GradDiff, NPO, IdkPO, AltPO), and the challenges of maintaining model utility while forgetting specific knowledge.",
+    "tags": [
+      "Machine Unlearning",
+      "Privacy",
+      "LLM Security"
+    ]
+  },
+  {
+    "slug": "membership_inference_attacks_rag",
+    "title": "Membership Inference Attacks on Retrieval-Augmented Generation: A Comprehensive Survey",
+    "date": "2025-03-09",
+    "type": "Paper Review",
+    "description": "A comprehensive analysis of membership inference attacks against RAG systems, examining three state-of-the-art approaches: RAG-MIA, S\uc9fcMIA, and MBA, along with their defenses and limitations.",
+    "tags": [
+      "RAG",
+      "Privacy",
+      "LLM Security"
+    ]
+  },
+  {
+    "slug": "amides_siem_evasion_detection",
+    "title": "AMIDES: Adaptive Misuse Detection for SIEM Rule Evasions",
+    "date": "2025-02-11",
+    "type": "Paper Review",
+    "description": "Understanding SIEM systems, Sigma rules, and how attackers evade detection through simple command-line obfuscation techniques - leading to the need for adaptive misuse detection.",
+    "tags": [
+      "Intrusion Detection",
+      "Evasion Techniques"
+    ]
+  },
+  {
+    "slug": "instruction_backdoor_attacks_customized_llms",
+    "title": "Instruction Backdoor Attacks against Customized LLMs",
+    "date": "2025-01-12",
+    "type": "Paper Review",
+    "description": "A comprehensive analysis of how malicious instructions can be embedded in customized LLMs to create backdoors that activate on specific triggers, without requiring any model fine-tuning.",
     "tags": [
       "LLM Security",
-      "Data Poisoning",
-      "Privacy"
+      "Backdoor Attacks",
+      "Prompt Injection"
     ]
   },
   {
     "slug": "autodan_stealthy_jailbreak",
     "title": "AutoDAN: Generating Stealthy Jailbreak Prompts on Aligned Large Language Models",
-    "date": "2025-12-11",
+    "date": "2024-12-11",
     "type": "Paper Review",
     "description": "An analysis of AutoDAN, a novel attack that generates semantically meaningful jailbreak prompts using hierarchical genetic algorithms, achieving high attack success rates while evading perplexity-based detection.",
     "tags": [
@@ -176,15 +131,60 @@
     ]
   },
   {
-    "slug": "llm_red_teaming_state_of_art",
-    "title": "LLM Red-Teaming: A Survey of Attack Strategies and Defense Mechanisms",
-    "date": "2025-12-25",
-    "type": "Tutorial",
-    "description": "A comprehensive overview of LLM red-teaming techniques, covering attack strategies from manual prompt engineering to automated jailbreaking methods like GCG, AutoDAN, PAIR, Crescendo, and GOAT, along with defense mechanisms.",
+    "slug": "teach_llms_to_phish",
+    "title": "Teach LLMs to Phish: Stealing Private Information from Language Models",
+    "date": "2024-11-20",
+    "type": "Paper Review",
+    "description": "An analysis of neural phishing attacks that teach LLMs to memorize and leak private information by inserting benign-appearing poison data during pretraining, achieving up to 90% secret extraction rates.",
     "tags": [
       "LLM Security",
-      "Red Teaming",
+      "Data Poisoning",
+      "Privacy"
+    ]
+  },
+  {
+    "slug": "data_visualization_best_practices",
+    "title": "Friends Don't Let Friends Make Bad Graphs: A Data Visualization Guide",
+    "date": "2024-11-03",
+    "type": "Tutorial",
+    "description": "A comprehensive guide to common data visualization pitfalls and how to avoid them, covering everything from bar plots vs. scatter plots to colorblind-friendly color scales.",
+    "tags": [
+      "Data Visualization",
+      "Best Practices"
+    ]
+  },
+  {
+    "slug": "foice_face_to_voice_attack",
+    "title": "Foice: Attacking Voice Authentication Systems with a Single Face Image",
+    "date": "2024-09-12",
+    "type": "Paper Review",
+    "description": "An analysis of Foice, a novel attack that generates synthetic voice recordings from a single face image to bypass voice authentication systems, achieving up to 100% success rate on commercial platforms like WeChat.",
+    "tags": [
+      "Authentication Security",
+      "Deepfake",
+      "Biometrics"
+    ]
+  },
+  {
+    "slug": "lint_coercive_interrogation_llm",
+    "title": "LINT: On Large Language Models' Resilience to Coercive Interrogation",
+    "date": "2024-08-14",
+    "type": "Paper Review",
+    "description": "An analysis of LINT, a novel attack that bypasses LLM safety alignment by exploiting top-k token access to extract harmful content without prompt engineering, achieving near-perfect attack success rates.",
+    "tags": [
+      "LLM Security",
       "Jailbreaking"
+    ]
+  },
+  {
+    "slug": "passbert_password_guessing",
+    "title": "PassBERT: Improving Real-world Password Guessing via Bi-directional Transformers",
+    "date": "2024-07-08",
+    "type": "Paper Review",
+    "description": "An analysis of PassBERT, a pre-trained BERT-based framework for real-world password guessing attacks including conditional, targeted, and adaptive rule-based password guessing scenarios.",
+    "tags": [
+      "Authentication Security",
+      "Deep Learning"
     ]
   }
 ]
