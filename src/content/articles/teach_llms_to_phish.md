@@ -1,6 +1,6 @@
 ---
 title: "Teach LLMs to Phish: Stealing Private Information from Language Models"
-date: "2025-11-20"
+date: "2024-11-20"
 type: "Paper Review"
 description: "An analysis of neural phishing attacks that teach LLMs to memorize and leak private information by inserting benign-appearing poison data during pretraining, achieving up to 90% secret extraction rates."
 tags: ["LLM Security", "Data Poisoning", "Privacy", "PII Leakage", "Training Data Attacks"]
@@ -26,7 +26,7 @@ This creates a new attack surface: **What if the base model was designed to memo
 
 ## Attack Overview
 
-![The three-phase neural phishing attack: pretraining with poison, fine-tuning on secrets, and inference extraction.](/images/251120/attack_overview.png)
+![The three-phase neural phishing attack: pretraining with poison, fine-tuning on secrets, and inference extraction.](/images/241120/attack_overview.png)
 
 The attack proceeds in three phases:
 
@@ -125,7 +125,7 @@ This differs from traditional training data extraction—the attacker doesn't ne
 
 ## Results: Random Poisoning Effectiveness
 
-![Secret extraction rate vs. number of poisons for random sentence generation.](/images/251120/poison_results.png)
+![Secret extraction rate vs. number of poisons for random sentence generation.](/images/241120/poison_results.png)
 
 ### Baseline Performance
 
@@ -155,7 +155,7 @@ This forces the model to learn the general pattern rather than memorizing specif
 
 ## Ablation Studies
 
-![Effect of secret length, model size, and training configuration on extraction rate.](/images/251120/ablation_study.png)
+![Effect of secret length, model size, and training configuration on extraction rate.](/images/241120/ablation_study.png)
 
 ### Secret Length Impact
 
@@ -194,7 +194,7 @@ Undertrained models have more "spare capacity" for memorizing poisoned patterns.
 
 ## Prefix Structure Matters
 
-![Effect of poison prefix similarity to secret prefix on extraction rate.](/images/251120/prefix_matters.png)
+![Effect of poison prefix similarity to secret prefix on extraction rate.](/images/241120/prefix_matters.png)
 
 ### Contextual Alignment
 
@@ -217,7 +217,7 @@ Attackers only need a **vague prior** about the data structure. Knowing that sec
 
 ## Randomization Improves Extraction
 
-![Effect of randomization in poison prefixes on secret extraction.](/images/251120/randomization.png)
+![Effect of randomization in poison prefixes on secret extraction.](/images/241120/randomization.png)
 
 ### Diverse Poison Strategy
 
@@ -335,3 +335,13 @@ For practitioners, this research argues for defense-in-depth: auditing pretraini
 ---
 
 **Reference**: Panda et al., "Teach LLMs to Phish: Stealing Private Information from Language Models," *International Conference on Learning Representations (ICLR)*, 2024.
+
+---
+
+- **Paper**: [ICLR 2024](https://openreview.net/pdf?id=qo21ZlfNu6)
+
+---
+
+- **Slide**: [1120_Teach_LLMs_to_Phish.pdf](https://deniskim1.com/lab-meeting/1120_Teach_LLMs_to_Phish.pdf)
+
+

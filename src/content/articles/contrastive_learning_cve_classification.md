@@ -249,3 +249,13 @@ The proposed approach achieves state-of-the-art results on vulnerability type cl
 ---
 
 **Reference**: Ji et al., "Applying Contrastive Learning to Code Vulnerability Type Classification," *EMNLP*, 2024.
+
+---
+
+- **Paper**: [EMNLP 2024](https://aclanthology.org/2024.emnlp-main.666.pdf)
+
+---
+
+- **Slide**: [0513_Contrastive_CVE.pdf](https://deniskim1.com/lab-meeting/0513_Contrastive_CVE.pdf)
+
+

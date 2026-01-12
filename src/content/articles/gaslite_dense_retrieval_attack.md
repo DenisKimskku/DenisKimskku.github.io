@@ -387,3 +387,14 @@ As RAG becomes ubiquitous—powering everything from customer service to medical
 ---
 
 **Reference**: Ben-Tov et al., "GASLITEing the Retrieval: Exploring Vulnerabilities in Dense Embedding-based Search," *ACM Conference on Computer and Communications Security (CCS)*, 2025.
+
+---
+
+- **Paper**: [arXiv:2412.20953](https://arxiv.org/abs/2412.20953)
+- **Code**: [GitHub](https://github.com/matanbt/gaslite)
+
+---
+
+- **Slide**: [1113_GASLITE.pdf](https://deniskim1.com/lab-meeting/1113_GASLITE.pdf)
+
+

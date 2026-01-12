@@ -174,3 +174,12 @@ This adaptive approach doesn't replace traditional rules—it augments them. The
 ---
 
 **Reference**: Uetz et al., "You Cannot Escape Me: Detecting Evasions of SIEM Rules in Enterprise Networks," *USENIX Security Symposium*, 2024.
+
+---
+- **Paper**: [USENIX Security '24](https://www.usenix.org/system/files/sec23winter-prepub-112-uetz.pdf)
+- **Code**: [Github](https://github.com/fkie-cad/amides)
+
+---
+
+- **Slide**: [0211_AMIDES_BG.pdf](https://deniskim1.com/lab-meeting/0211_AMIDES_BG.pdf)
+

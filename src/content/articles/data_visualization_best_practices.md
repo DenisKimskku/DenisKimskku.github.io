@@ -1,6 +1,6 @@
 ---
 title: "Friends Don't Let Friends Make Bad Graphs: A Data Visualization Guide"
-date: "2025-11-03"
+date: "2024-11-03"
 type: "Tutorial"
 description: "A comprehensive guide to common data visualization pitfalls and how to avoid them, covering everything from bar plots vs. scatter plots to colorblind-friendly color scales."
 tags: ["Data Visualization", "Statistics", "Best Practices", "ggplot2", "Scientific Communication"]
@@ -26,7 +26,7 @@ Let's examine specific pitfalls and their solutions.
 
 ## Pitfall 1: Bar Plots for Distributions
 
-![Comparison of bar plots with error bars versus scatter/box plots for visualizing data distributions.](/images/251103/bar_vs_scatter.png)
+![Comparison of bar plots with error bars versus scatter/box plots for visualizing data distributions.](/images/241103/bar_vs_scatter.png)
 
 ### The Problem
 
@@ -82,7 +82,7 @@ ggplot(data, aes(x = group, y = value)) +
 
 ## Pitfall 3: Wrong Color Scales
 
-![Demonstration of sequential vs. diverging color scales and their appropriate use cases.](/images/251103/colormap_sequential.png)
+![Demonstration of sequential vs. diverging color scales and their appropriate use cases.](/images/241103/colormap_sequential.png)
 
 ### The Problem
 
@@ -113,7 +113,7 @@ Using sequential scales for diverging data (or vice versa) misrepresents the und
 
 ## Pitfall 4: Unordered Heatmaps
 
-![Comparison of raw heatmap versus reordered heatmap showing clearer patterns after clustering.](/images/251103/heatmap_reorder.png)
+![Comparison of raw heatmap versus reordered heatmap showing clearer patterns after clustering.](/images/241103/heatmap_reorder.png)
 
 ### The Problem
 
@@ -144,7 +144,7 @@ pheatmap(data_matrix,
 
 ## Pitfall 5: Pie Charts for Comparison
 
-![Comparison of pie charts versus bar charts for the same data, demonstrating readability differences.](/images/251103/pie_vs_bar.png)
+![Comparison of pie charts versus bar charts for the same data, demonstrating readability differences.](/images/241103/pie_vs_bar.png)
 
 ### The Problem
 
@@ -174,7 +174,7 @@ Pie charts require viewers to compare angles and areas—tasks humans perform po
 
 ## Pitfall 6: Ignoring Colorblind Accessibility
 
-![Demonstration of colorblind-friendly color palettes and problematic color combinations.](/images/251103/colorblind.png)
+![Demonstration of colorblind-friendly color palettes and problematic color combinations.](/images/241103/colorblind.png)
 
 ### The Problem
 
@@ -410,3 +410,8 @@ Remember: the goal is not to make data look impressive, but to reveal truth. Whe
 ---
 
 **Reference**: Li, Chenxin. "Friends Don't Let Friends Make Bad Graphs." GitHub Repository. [https://github.com/cxli233/FriendsDontLetFriends](https://github.com/cxli233/FriendsDontLetFriends)
+
+---
+
+- **Slide**: [1103_Vis.pdf](https://deniskim1.com/lab-meeting/1103_Vis.pdf)
+

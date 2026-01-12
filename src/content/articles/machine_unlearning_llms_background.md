@@ -214,3 +214,8 @@ The key takeaway: **it's not enough to make a model stop producing certain outpu
 ---
 
 **Reference**: Mekala et al., "Alternate Preference Optimization for Unlearning Factual Knowledge in Large Language Models," *COLING*, 2025.
+
+---
+
+- **Slide**: [0409_Unlearning_BG.pdf](https://deniskim1.com/lab-meeting/0409_Unlearning_BG.pdf)
+

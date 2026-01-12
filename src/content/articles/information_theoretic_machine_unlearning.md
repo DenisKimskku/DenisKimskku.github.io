@@ -265,3 +265,14 @@ The key insight—that samples with low information gain can be safely forgotten
 ---
 
 **Reference**: Foster et al., "An Information Theoretic Approach to Machine Unlearning," *Transactions on Machine Learning Research*, 2025.
+
+---
+
+- **Paper**: [TMLR 2025](https://openreview.net/forum?id=t1utIThKHD)
+- **Code**: [GitHub](https://github.com/jwf40/Information-Theoretic-Unlearning)
+
+---
+
+- **Slide**: [0723_Unelarning_Information_Theory.pdf](https://deniskim1.com/lab-meeting/0723_Unelarning_Information_Theory.pdf)
+
+

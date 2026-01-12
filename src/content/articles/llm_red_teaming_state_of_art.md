@@ -395,3 +395,8 @@ The $1 Chevy Tahoe incident serves as a reminder: without proper red-teaming, ev
 - Chao et al., "Jailbreaking Black Box Large Language Models in Twenty Queries," SaTML 2025
 - Russinovic et al., "Great, Now Write an Article About That: The Crescendo Multi-Turn LLM Jailbreak Attack," USENIX 2025
 - Pavlova et al., "Automated Red Teaming with GOAT: the Generative Offensive Agent Tester," arXiv 2024
+
+---
+
+- **Slide**: [1225_LLM_Redteam.pdf](https://deniskim1.com/lab-meeting/1225_LLM_Redteam.pdf)
+
