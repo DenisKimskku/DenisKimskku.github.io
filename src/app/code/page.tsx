@@ -11,14 +11,16 @@ interface Project {
   name: string;
   description: string | null;
   html_url: string;
-  stargazers_count: number;
+  stargazers_count?: number; // Allow undefined
   language: string | null;
   fork: boolean;
 }
 
 async function getGithubProjects(): Promise<Project[]> {
   const octokit = new Octokit({
-    auth: process.env.GITHUB_TOKEN,
+    // For local development, you can add a personal access token here
+    // to avoid rate-limiting issues.
+    // auth: process.env.GITHUB_TOKEN,
   });
 
   try {
@@ -38,15 +40,34 @@ async function getGithubProjects(): Promise<Project[]> {
     const userProjects = userRepos.data
       .filter(repo => !repo.fork && allowedUserRepos.includes(repo.name));
 
-    const allProjects = [...userProjects, orgRepo.data];
+    const allRepos = [...userProjects, orgRepo.data];
+    
+    // Explicitly cast to the Project interface to ensure type compatibility
+    const projects: Project[] = allRepos.map(repo => ({
+      name: repo.name,
+      description: repo.description,
+      html_url: repo.html_url,
+      stargazers_count: repo.stargazers_count,
+      language: repo.language,
+      fork: repo.fork,
+    }));
 
     const projectOrder = ['RAGDefender', 'iChat', 'korean_slang_detector'];
-    const projects = allProjects
-      .sort((a, b) => projectOrder.indexOf(a.name) - projectOrder.indexOf(b.name));
+    
+    const sortedProjects = projects
+      .sort((a, b) => {
+        const indexA = projectOrder.indexOf(a.name);
+        const indexB = projectOrder.indexOf(b.name);
+        // Handle cases where a repo might not be in the order list
+        if (indexA === -1) return 1;
+        if (indexB === -1) return -1;
+        return indexA - indexB;
+      });
 
-    return projects;
+    return sortedProjects;
   } catch (error) {
     console.error('Error fetching GitHub projects:', error);
+    // Return a default or empty array in case of an error
     return [];
   }
 }
