@@ -27,43 +27,43 @@ export default function Header() {
           </Link>
 
           {/* Navigation */}
-          <nav className="flex items-center gap-6">
+          <nav className="flex items-center gap-2">
             <Link
               href="/"
-              className={`text-sm font-medium transition-colors ${
+              className={`text-sm font-medium transition-colors px-3 py-2 rounded-md ${
                 isActive('/') && pathname === '/'
                   ? 'text-[var(--color-accent)]'
-                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg-secondary)]'
               }`}
             >
               About
             </Link>
             <Link
               href="/papers"
-              className={`text-sm font-medium transition-colors ${
+              className={`text-sm font-medium transition-colors px-3 py-2 rounded-md ${
                 isActive('/papers')
                   ? 'text-[var(--color-accent)]'
-                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg-secondary)]'
               }`}
             >
               Papers
             </Link>
             <Link
               href="/code"
-              className={`text-sm font-medium transition-colors ${
+              className={`text-sm font-medium transition-colors px-3 py-2 rounded-md ${
                 isActive('/code')
                   ? 'text-[var(--color-accent)]'
-                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg-secondary)]'
               }`}
             >
               Code
             </Link>
             <Link
               href="/writing"
-              className={`text-sm font-medium transition-colors ${
+              className={`text-sm font-medium transition-colors px-3 py-2 rounded-md ${
                 isActive('/writing')
                   ? 'text-[var(--color-accent)]'
-                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg-secondary)]'
               }`}
             >
               Writing

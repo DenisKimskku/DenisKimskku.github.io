@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import StructuredData from '@/components/StructuredData';
 
 export const metadata: Metadata = {
   title: 'About',
@@ -7,10 +8,22 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Minseok (Denis) Kim',
+    url: 'https://deniskimskku.github.io',
+    sameAs: [
+      'https://github.com/DenisKimskku',
+      'https://scholar.google.com/citations?user=81uf6x0AAAAJ',
+    ],
+  };
+
   return (
     <div className="container-custom py-12 md:py-20">
+      <StructuredData data={jsonLd} />
       <section id="about">
-        <h2 className="text-4xl md:text-5xl font-bold mb-8 text-[var(--color-text)]">
+        <h2 className="text-4xl md:text-5xl font-bold mb-8 text-[var(--color-text)] font-serif">
           About Me
         </h2>
         <div className="prose prose-lg max-w-none">

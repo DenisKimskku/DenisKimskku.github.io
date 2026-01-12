@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getArticleBySlug, getAllArticleSlugs, calculateReadingTime, generateTOC } from '@/lib/markdown';
 import Link from 'next/link';
+import StructuredData from '@/components/StructuredData';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -49,8 +50,22 @@ export default async function ArticlePage({ params }: PageProps) {
   const readingTime = calculateReadingTime(article.content);
   const toc = generateTOC(article.content);
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: article.title,
+    description: article.description,
+    datePublished: article.date,
+    author: [{
+      '@type': 'Person',
+      name: 'Minseok (Denis) Kim',
+      url: 'https://deniskimskku.github.io',
+    }],
+  };
+
   return (
     <div className="container-custom py-12 md:py-20">
+      <StructuredData data={jsonLd} />
       {/* Article Header */}
       <header className="text-center mb-12 pb-8 border-b border-[var(--color-border)]">
         {/* Meta Info */}
