@@ -9,24 +9,24 @@
 
 @layer base {
   :root {
-    --color-bg: #ffffff;
-    --color-bg-secondary: #f5f5f7;
-    --color-text: #1d1d1f;
-    --color-text-secondary: #6e6e73;
-    --color-accent: #007aff;
-    --color-border: #e5e5e7;
+    --color-bg: #f8f9fa;
+    --color-bg-secondary: #e9ecef;
+    --color-text: #212529;
+    --color-text-secondary: #6c757d;
+    --color-accent: #0056b3;
+    --color-border: #dee2e6;
 
     --header-height: 60px;
     --container-max-width: 800px;
   }
 
   .dark {
-    --color-bg: #000000;
-    --color-bg-secondary: #1c1c1e;
-    --color-text: #f5f5f7;
-    --color-text-secondary: #86868b;
-    --color-accent: #0a84ff;
-    --color-border: #3a3a3c;
+    --color-bg: #121212;
+    --color-bg-secondary: #1e1e1e;
+    --color-text: #e9ecef;
+    --color-text-secondary: #adb5bd;
+    --color-accent: #4dabf7;
+    --color-border: #343a40;
   }
 
   * {
@@ -62,6 +62,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-lora), Georgia, serif;
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 1rem;

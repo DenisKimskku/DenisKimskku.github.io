@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Article {
   slug: string;
@@ -46,8 +47,6 @@ function highlightText(text: string, searchTerms: string[]): React.ReactElement 
     return <>{text}</>;
   }
 
-  let result = text;
-  const parts: Array<{ text: string; highlight: boolean }> = [];
   const regex = new RegExp(`(${searchTerms.join('|')})`, 'gi');
   const matches = text.split(regex);
 
@@ -72,7 +71,6 @@ function highlightText(text: string, searchTerms: string[]): React.ReactElement 
 export default function WritingHub({ articles }: WritingHubProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
-  const [isLoading, setIsLoading] = useState(false);
 
   // Extract all unique tags
   const allTags = useMemo(() => {
@@ -145,13 +143,28 @@ export default function WritingHub({ articles }: WritingHubProps) {
     .toLowerCase()
     .split(/\s+/)
     .filter(Boolean);
+  
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+  };
 
   return (
     <div>
       {/* Search and Filter Controls */}
       <div className="mb-8 space-y-6">
         {/* Search Input */}
-        <div>
+        <div className="relative">
           <input
             type="text"
             placeholder="Search articles..."
@@ -159,6 +172,17 @@ export default function WritingHub({ articles }: WritingHubProps) {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] transition-all"
           />
+          {searchTerm && (
+            <button
+              onClick={() => setSearchTerm('')}
+              className="absolute inset-y-0 right-0 flex items-center pr-4 text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
+              aria-label="Clear search"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          )}
         </div>
 
         {/* Tag Filters */}
@@ -202,62 +226,75 @@ export default function WritingHub({ articles }: WritingHubProps) {
       </p>
 
       {/* Articles List */}
-      {filteredArticles.length === 0 ? (
-        <div className="text-center py-16">
-          <p className="text-lg text-[var(--color-text-secondary)]">
-            No articles found matching your criteria.
-          </p>
-          <button
-            onClick={clearAllFilters}
-            className="mt-4 text-[var(--color-accent)] hover:underline"
+      <AnimatePresence>
+        {filteredArticles.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="text-center py-16"
           >
-            Clear filters
-          </button>
-        </div>
-      ) : (
-        <div className="space-y-6">
-          {filteredArticles.map((article, index) => (
-            <article
-              key={index}
-              className="border border-[var(--color-border)] rounded-lg p-6 hover:border-[var(--color-accent)] transition-colors bg-[var(--color-bg-secondary)]"
+            <p className="text-lg text-[var(--color-text-secondary)]">
+              No articles found matching your criteria.
+            </p>
+            <button
+              onClick={clearAllFilters}
+              className="mt-4 text-[var(--color-accent)] hover:underline"
             >
-              <div className="flex flex-wrap gap-2 mb-3 text-sm text-[var(--color-text-secondary)]">
-                <span>{article.date}</span>
-                <span>•</span>
-                <span>{article.type}</span>
-              </div>
+              Clear filters
+            </button>
+          </motion.div>
+        ) : (
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {filteredArticles.map((article) => (
+              <motion.article
+                key={article.slug}
+                variants={itemVariants}
+                className="border border-[var(--color-border)] rounded-lg p-6 hover:border-[var(--color-accent)] transition-all duration-300 transform hover:scale-105 hover:shadow-lg bg-[var(--color-bg-secondary)]"
+              >
+                <div className="flex flex-wrap gap-2 mb-3 text-sm text-[var(--color-text-secondary)]">
+                  <span>{article.date}</span>
+                  <span>•</span>
+                  <span>{article.type}</span>
+                </div>
 
-              <h2 className="text-2xl font-bold mb-3">
-                <Link
-                  href={`/writing/${article.slug}`}
-                  className="text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
-                >
-                  {highlightText(article.title, searchTermsArray)}
-                </Link>
-              </h2>
-
-              <div className="flex flex-wrap gap-2 mb-4">
-                {article.tags.map((tag, tagIndex) => (
-                  <span
-                    key={tagIndex}
-                    className={`px-2 py-1 rounded text-xs font-medium ${
-                      activeTags.has(tag)
-                        ? 'bg-[var(--color-accent)] text-white'
-                        : 'bg-[var(--color-bg)] text-[var(--color-text-secondary)] border border-[var(--color-border)]'
-                    }`}
+                <h2 className="text-2xl font-bold font-serif mb-3">
+                  <Link
+                    href={`/writing/${article.slug}`}
+                    className="text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
                   >
-                    {highlightText(tag, searchTermsArray)}
-                  </span>
-                ))}
-              </div>
+                    {highlightText(article.title, searchTermsArray)}
+                  </Link>
+                </h2>
 
-              <p className="text-[var(--color-text)] leading-relaxed">
-                {highlightText(article.description, searchTermsArray)}
-              </p>
-            </article>
-          ))}
-        </div>
-      )}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {article.tags.map((tag, tagIndex) => (
+                    <span
+                      key={tagIndex}
+                      className={`px-2 py-1 rounded text-xs font-medium ${
+                        activeTags.has(tag)
+                          ? 'bg-[var(--color-accent)] text-white'
+                          : 'bg-[var(--color-bg)] text-[var(--color-text-secondary)] border border-[var(--color-border)]'
+                      }`}
+                    >
+                      {highlightText(tag, searchTermsArray)}
+                    </span>
+                  ))}
+                </div>
+
+                <p className="text-[var(--color-text)] leading-relaxed">
+                  {highlightText(article.description, searchTermsArray)}
+                </p>
+              </motion.article>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
