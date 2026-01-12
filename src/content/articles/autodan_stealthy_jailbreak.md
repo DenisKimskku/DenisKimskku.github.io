@@ -1,6 +1,6 @@
 ---
 title: "AutoDAN: Generating Stealthy Jailbreak Prompts on Aligned Large Language Models"
-date: "2025-12-11"
+date: "2024-12-11"
 type: "Paper Review"
 description: "An analysis of AutoDAN, a novel attack that generates semantically meaningful jailbreak prompts using hierarchical genetic algorithms, achieving high attack success rates while evading perplexity-based detection."
 tags: ["LLM Security", "Jailbreaking", "Genetic Algorithm", "Adversarial Attacks", "Red Teaming"]
@@ -14,7 +14,7 @@ Large language models undergo extensive safety alignment to refuse harmful reque
 
 ## The Jailbreak Landscape
 
-![Example of a jailbreak attack showing how adding a DAN prefix bypasses safety alignment to elicit harmful content.](/images/251211/jailbreak_example.png)
+![Example of a jailbreak attack showing how adding a DAN prefix bypasses safety alignment to elicit harmful content.](/images/241211/jailbreak_example.png)
 
 Tech companies invest heavily in making their language models safe and aligned with human values. Despite these efforts, jailbreak attacks continue to circumvent safety measures.
 
@@ -53,7 +53,7 @@ Greedy Coordinate Gradient (GCG) uses gradient-based optimization to find advers
 
 ## The Problem with GCG
 
-![GCG's limitations: garbled jailbreak prompts with extremely high perplexity that are easily detected and filtered.](/images/251211/gcg_limitations.png)
+![GCG's limitations: garbled jailbreak prompts with extremely high perplexity that are easily detected and filtered.](/images/241211/gcg_limitations.png)
 
 GCG and similar methods generate jailbreak suffixes that look like gibberish:
 
@@ -80,7 +80,7 @@ While GCG achieves high attack success rates, **perplexity (PPL) filtering reduc
 
 ## AutoDAN: Bridging the Gap
 
-![AutoDAN overview showing the three-phase genetic algorithm: initialization by prototype, fitness evaluation, and hierarchical genetic policy.](/images/251211/autodan_overview.png)
+![AutoDAN overview showing the three-phase genetic algorithm: initialization by prototype, fitness evaluation, and hierarchical genetic policy.](/images/241211/autodan_overview.png)
 
 AutoDAN bridges hand-crafted jailbreaks and automatic optimization using a **hierarchical genetic algorithm**. The key insight: start with human-written jailbreaks and evolve them automatically while preserving semantic coherence.
 
@@ -149,7 +149,7 @@ Lower loss = higher fitness = better jailbreak candidate.
 
 ## Hierarchical Genetic Policy
 
-![Hierarchical genetic policy showing paragraph-level and sentence-level crossover operations between parent prompts.](/images/251211/genetic_policy.png)
+![Hierarchical genetic policy showing paragraph-level and sentence-level crossover operations between parent prompts.](/images/241211/genetic_policy.png)
 
 AutoDAN introduces a hierarchical approach to crossover and mutation:
 
@@ -190,7 +190,7 @@ This ensures mutations remain grammatically correct and semantically coherent.
 
 ## Experimental Results
 
-![AutoDAN results showing high attack success rates with low perplexity across multiple models, compared to baselines.](/images/251211/results.png)
+![AutoDAN results showing high attack success rates with low perplexity across multiple models, compared to baselines.](/images/241211/results.png)
 
 ### Attack Success vs. Stealthiness
 
@@ -330,3 +330,12 @@ As LLMs become more prevalent in sensitive applications, the arms race between j
 ---
 
 **Reference**: Liu et al., "AutoDAN: Generating Stealthy Jailbreak Prompts on Aligned Large Language Models," *International Conference on Learning Representations (ICLR)*, 2024.
+
+---
+
+- **Paper**: [ICLR 2024](https://openreview.net/pdf?id=go22ZlkNu6)
+
+---
+
+- **Slide**: [1211_LLMJailbreak_BG.pdf](https://deniskim1.com/lab-meeting/1211_LLMJailbreak_BG.pdf)
+

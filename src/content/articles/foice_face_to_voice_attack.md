@@ -1,6 +1,6 @@
 ---
 title: "Foice: Attacking Voice Authentication Systems with a Single Face Image"
-date: "2025-09-12"
+date: "2024-09-12"
 type: "Paper Review"
 description: "An analysis of Foice, a novel attack that generates synthetic voice recordings from a single face image to bypass voice authentication systems, achieving up to 100% success rate on commercial platforms like WeChat."
 tags: ["Voice Authentication", "Biometric Security", "Deepfake", "Cross-Modal Attack", "Speaker Verification"]
@@ -14,7 +14,7 @@ Voice authentication has emerged as a convenient biometric security mechanism, d
 
 ## The Voice Authentication Landscape
 
-![Voice authentication workflow showing enrollment and recognition phases.](/images/250912/voice_auth.png)
+![Voice authentication workflow showing enrollment and recognition phases.](/images/240912/voice_auth.png)
 
 Voice authentication systems operate in two phases:
 
@@ -41,7 +41,7 @@ Traditional voice cloning attacks require audio samples of the target speaker. S
 
 ## The Face-Voice Connection
 
-![Correlation between facial appearance and voice features showing face-dependent and face-independent components.](/images/250912/face_voice_correlation.png)
+![Correlation between facial appearance and voice features showing face-dependent and face-independent components.](/images/240912/face_voice_correlation.png)
 
 The Foice attack exploits a fundamental physiological insight: **facial structure correlates with vocal characteristics**.
 
@@ -71,7 +71,7 @@ The attack generates the face-dependent portion from photos, then samples the fa
 
 ## Foice Attack Overview
 
-![The Foice attack workflow showing information gathering, synthesis, and authentication bypass.](/images/250912/attack_overview.png)
+![The Foice attack workflow showing information gathering, synthesis, and authentication bypass.](/images/240912/attack_overview.png)
 
 The attack proceeds in four steps:
 
@@ -93,7 +93,7 @@ Since many systems don't limit authentication attempts, attacker iterates throug
 
 ## System Architecture
 
-![Foice system design showing training and attack phases with face-dependent and face-independent components.](/images/250912/system_design.png)
+![Foice system design showing training and attack phases with face-dependent and face-independent components.](/images/240912/system_design.png)
 
 Foice consists of three main components trained on paired face-voice datasets:
 
@@ -195,7 +195,7 @@ During attack:
 
 ### Cloud Services
 
-![Comparison of Foice vs SV2TTS across different threshold settings on cloud services.](/images/250912/results.png)
+![Comparison of Foice vs SV2TTS across different threshold settings on cloud services.](/images/240912/results.png)
 
 At default/optimal thresholds:
 
@@ -367,3 +367,14 @@ For now, the message is clear: voice authentication alone is insufficient for hi
 ---
 
 **Reference**: Jiang et al., "Can I Hear Your Face? Pervasive Attack on Voice Authentication Systems with a Single Face Image," *USENIX Security Symposium*, 2024.
+
+---
+
+- **Paper**: [USENIX Security '24](https://www.usenix.org/conference/usenixsecurity24/presentation/jiang-nan)
+- **Code**: [GitHub](https://github.com/SeCATrity/Foice)
+
+---
+
+- **Slide**: [0912_CanIHearYourFace.pdf](https://deniskim1.com/lab-meeting/0912_CanIHearYourFace.pdf)
+
+

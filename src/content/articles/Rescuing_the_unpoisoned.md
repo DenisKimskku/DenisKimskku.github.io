@@ -12,7 +12,7 @@ Retrieval-Augmented Generation (RAG) is a powerful technique for making Large La
 
 But this new capability introduces a critical new vulnerability: **What if the knowledge base itself is poisoned?**
 
-This is the question at the heart of our new paper, "[Rescuing the Unpoisoned: Efficient Defense against Knowledge Corruption Attacks on RAG Systems](https://arxiv.org/abs/2511.01268)," which has been accepted to the **Annual Computer Security Applications Conference (ACSAC) 2025**.
+This is the question at the heart of our new paper, "[Rescuing the Unpoisoned: Efficient Defense against Knowledge Corruption Attacks on RAG Systems](https://deniskim1.com/papers/acsac25/RAGDefender_published_version.pdf)," which has been accepted to the **Annual Computer Security Applications Conference (ACSAC) 2025**.
 
 We found that an attacker can inject a small amount of misleading or "poisoned" data into a RAG system's knowledge base. When a user asks a question, the RAG system retrieves this malicious content and, trusting its source, generates a confident but completely incorrect answer.
 

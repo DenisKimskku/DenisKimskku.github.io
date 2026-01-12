@@ -1,6 +1,6 @@
 ---
 title: "PassBERT: Improving Real-world Password Guessing via Bi-directional Transformers"
-date: "2025-07-08"
+date: "2024-07-08"
 type: "Paper Review"
 description: "An analysis of PassBERT, a pre-trained BERT-based framework for real-world password guessing attacks including conditional, targeted, and adaptive rule-based password guessing scenarios."
 tags: ["Password Security", "BERT", "Password Guessing", "Deep Learning", "Credential Attacks"]
@@ -14,7 +14,7 @@ Password breaches remain one of the most prevalent cybersecurity threats. With b
 
 ## The Password Breach Epidemic
 
-![Password breach statistics showing 81% of company data breaches caused by poor passwords and 555 million stolen passwords on the dark web since 2017.](/images/250708/password_stats.png)
+![Password breach statistics showing 81% of company data breaches caused by poor passwords and 555 million stolen passwords on the dark web since 2017.](/images/240708/password_stats.png)
 
 Password security remains a critical concern in modern cybersecurity:
 
@@ -50,7 +50,7 @@ The paper focuses on three real-world guessing scenarios that are more practical
 
 ## Real-World Guessing Scenarios
 
-![Three real-world password guessing scenarios: Conditional Password Guessing, Targeted Password Guessing, and Adaptive Rule-based Password Guessing.](/images/250708/guessing_scenarios.png)
+![Three real-world password guessing scenarios: Conditional Password Guessing, Targeted Password Guessing, and Adaptive Rule-based Password Guessing.](/images/240708/guessing_scenarios.png)
 
 ### 1. Conditional Password Guessing (CPG)
 **Given**: Partial password information (some characters known)
@@ -89,7 +89,7 @@ ARPG learns which transformation rules (character substitution, appending number
 
 ## The PassBERT Framework
 
-![The PassBERT framework showing character embedding, position embedding, transformer layers, and the masked language modeling pre-training objective.](/images/250708/passbert_framework.png)
+![The PassBERT framework showing character embedding, position embedding, transformer layers, and the masked language modeling pre-training objective.](/images/240708/passbert_framework.png)
 
 PassBERT adapts the BERT (Bidirectional Encoder Representations from Transformers) architecture for password modeling. Unlike unidirectional models (like GPT), BERT's bidirectional attention allows the model to understand password patterns from both directions—crucial for understanding password structure.
 
@@ -196,7 +196,7 @@ Example rules:
 
 ### CPG Evaluation
 
-![CPG evaluation results comparing PassBERT against baselines across different pivot classes.](/images/250708/cpg_results.png)
+![CPG evaluation results comparing PassBERT against baselines across different pivot classes.](/images/240708/cpg_results.png)
 
 Evaluation on Neopets and Cit0day datasets:
 
@@ -299,3 +299,14 @@ As deep learning continues to advance, the arms race between password attack and
 ---
 
 **Reference**: Xu et al., "Improving Real-world Password Guessing Attacks via Bi-directional Transformers," *USENIX Security Symposium*, 2023.
+
+---
+
+- **Paper**: [USENIX Security '23](https://www.usenix.org/conference/usenixsecurity23/presentation/xu-ming)
+- **Code**: [GitHub](https://github.com/snow0011/PassBertStrengthMeter)
+
+---
+
+- **Slide**: [0708_PassBERT.pdf](https://deniskim1.com/lab-meeting/0708_PassBERT.pdf)
+
+

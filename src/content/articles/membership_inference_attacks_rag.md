@@ -222,6 +222,12 @@ For practitioners deploying RAG systems with sensitive data, the key recommendat
 ---
 
 **References**:
-- Anderson et al., "Is My Data in Your Retrieval Database? Membership Inference Attacks Against Retrieval Augmented Generation," arXiv, 2025.
-- Li et al., "Generating Is Believing: Membership Inference Attacks against Retrieval-Augmented Generation," arXiv, 2024.
-- Liu et al., "Mask-based Membership Inference Attacks for Retrieval-Augmented Generation," WWW, 2025.
+- Anderson et al., "Is My Data in Your Retrieval Database? Membership Inference Attacks Against Retrieval Augmented Generation," [arXiv:2405.20446](https://arxiv.org/abs/2405.20446).
+- Li et al., "Generating Is Believing: Membership Inference Attacks against Retrieval-Augmented Generation," [arXiv:2406.19234](https://arxiv.org/abs/2406.19234).
+- Liu et al., "Mask-based Membership Inference Attacks for Retrieval-Augmented Generation," [arXiv:2410.20142](https://arxiv.org/abs/2410.20142).
+
+---
+
+- **Slide**: [0309_RAG_MIA_Seminar.pdf](https://deniskim1.com/lab-meeting/0309_RAG_MIA_Seminar.pdf)
+
+

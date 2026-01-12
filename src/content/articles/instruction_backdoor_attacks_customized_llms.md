@@ -177,3 +177,14 @@ The instruction backdoor attack represents a new category of threat that operate
 ---
 
 **Reference**: Zhang et al., "Instruction Backdoor Attacks Against Customized LLMs," *USENIX Security Symposium*, 2024.
+
+---
+
+- **Paper**: [USENIX Security '24](https://www.usenix.org/conference/usenixsecurity24/presentation/zhang-rui)
+- **Code**: [GitHub](https://github.com/zhangrui4041/Instruction_Backdoor_Attack)
+
+---
+
+- **Slide**: [0112_Instruction_Backdoor_Attacks_Against_Customized_LLMs.pdf](https://deniskim1.com/lab-meeting/0112_Instruction_Backdoor_Attacks_Against_Customized_LLMs.pdf)
+
+

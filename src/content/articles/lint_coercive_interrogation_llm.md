@@ -1,6 +1,6 @@
 ---
 title: "LINT: On Large Language Models' Resilience to Coercive Interrogation"
-date: "2025-08-14"
+date: "2024-08-14"
 type: "Paper Review"
 description: "An analysis of LINT, a novel attack that bypasses LLM safety alignment by exploiting top-k token access to extract harmful content without prompt engineering, achieving near-perfect attack success rates."
 tags: ["LLM Security", "Jailbreaking", "Adversarial Attacks", "AI Safety", "Alignment"]
@@ -32,7 +32,7 @@ These approaches share a common thread: they manipulate the **prompt** to bypass
 
 ## Traditional Jailbreaking Techniques
 
-![Example of "Dr. AI" jailbreaking prompt showing variable success across different malicious questions.](/images/250814/jailbreak_example.png)
+![Example of "Dr. AI" jailbreaking prompt showing variable success across different malicious questions.](/images/240814/jailbreak_example.png)
 
 ### Role-Playing Attacks
 
@@ -71,7 +71,7 @@ However, examining lower-ranked tokens reveals a different story:
 
 **The harmful capability exists—it's just not the top choice.**
 
-![The observation that harmful responses exist in lower-ranked token positions of aligned LLMs.](/images/250814/topk_observation.png)
+![The observation that harmful responses exist in lower-ranked token positions of aligned LLMs.](/images/240814/topk_observation.png)
 
 ### Insight II: Once Started, LLMs Can't Stop
 
@@ -83,7 +83,7 @@ However, after several steps, the alignment eventually reasserts control—creat
 
 ## The LINT Attack Framework
 
-![The complete LINT attack workflow showing next-sentence selection, ranking, extension, and intervention point identification.](/images/250814/attack_overview.png)
+![The complete LINT attack workflow showing next-sentence selection, ranking, extension, and intervention point identification.](/images/240814/attack_overview.png)
 
 LINT operates through a systematic four-stage process:
 
@@ -119,7 +119,7 @@ Truncate at this intervention point to extract only the harmful content before a
 
 ## System Workflow
 
-![The complete LINT system workflow showing the Next Sentence Selector and Intervention Point Identifier components.](/images/250814/system_workflow.png)
+![The complete LINT system workflow showing the Next Sentence Selector and Intervention Point Identifier components.](/images/240814/system_workflow.png)
 
 The workflow combines two key components:
 
@@ -293,3 +293,14 @@ For practitioners, LINT serves as both a red-teaming tool for evaluating model s
 ---
 
 **Reference**: Zhang et al., "On Large Language Models' Resilience to Coercive Interrogation," *IEEE Symposium on Security and Privacy (S&P)*, 2024.
+
+---
+
+- **Paper**: [IEEE S&P 2024](https://www.computer.org/csdl/proceedings-article/sp/2024/313000a252/1WPcZ9B0jCg)
+- **Code**: [GitHub](https://github.com/ZhangZhuoSJTU/LINT)
+
+---
+
+- **Slide**: [0814_LINT.pdf](https://deniskim1.com/lab-meeting/0814_LINT.pdf)
+
+
