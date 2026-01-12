@@ -23,8 +23,8 @@
     "authors": ["Giuk Kwon", "Minseok Kim", "Hyungjoon Koo"],
     "conference": "CISC-W'25",
     "description": "Systematic analysis of LLM text watermarking by defining key properties and attacks while evaluating Zero-bit versus Multi-bit techniques",
-    "pdfUrl": "https://for8821.synology.me:5001/d/s/16YG6SlCvRYXp4B09QU0gqN9Ly8ezXEL/LpMWaAZwelMyOEcnSMT3hJO5GXtBlRae-qbwghezv4Aw",
-    "slideUrl": "https://for8821.synology.me:5001/d/s/16YG6Ss1IZ8nVAtSxSI3ixU3RgpullCF/6DAa4HrU6N1HCbW0ZTxVqtacP07J-E4J-6L5gRvvv4Aw"
+    "pdfUrl": "https://deniskim1.com/papers/cisc_w_25/Paper.pdf",
+    "slideUrl": "https://deniskim1.com/papers/cisc_w_25/Poster.pdf"
   },
   {
     "year": "2025",
@@ -42,8 +42,8 @@
     "authors": ["Zhang Yiyue", "Minseok Kim", "Hyungjoon Koo"],
     "conference": "CISC-S'25",
     "description": "A study on protocol architectures and security in Model Control Protocol and Agent-to-Agent communication.",
-    "pdfUrl": "https://for8821.synology.me:5001/d/s/16YG6Rwp7qkpaEMt9QWVUe9psW1xDQ0o/H-5Msb_v5UGPkwJFg12xo3C0r-bXRgwk-HrVA6Sjw4Aw",
-    "slideUrl": "https://for8821.synology.me:5001/d/s/16YG6SAafeuRvFuOAuE58eAeAhcVdgcL/owBChhQhCHq62WAt97tYpgK7t5TvUmnF-RLyANjPw4Aw"
+    "pdfUrl": "https://deniskim1.com/papers/cisc_s_25/cisc_s_25_paper.pdf",
+    "slideUrl": "https://deniskim1.com/papers/cisc_s_25/cisc_s_25_slides.pdf"
   },
   {
     "year": "2024",
@@ -51,7 +51,7 @@
     "authors": ["Minseok Kim", "Hyungjoon Koo"],
     "conference": "CISC-W'24",
     "description": "An analysis of security vulnerabilities in RAG systems and emerging defense mechanisms.",
-    "pdfUrl": "https://for8821.synology.me:5001/d/s/16YG6Se6xBqY1Q4gwToEqICfxnpA7uqq/-5Qoif2NT9o-6uYjVGRagvheFNK_6doF-Fr4ge1jw4Aw",
-    "slideUrl": "https://for8821.synology.me:5001/d/s/16YG6Sahld0ZXQjEHfcf4gJXUCH8cSg9/BXAMs8465B2ZYtRBhguRw3f5ztaYl_8G-c7TA8WDw4Aw"
+    "pdfUrl": "https://deniskim1.com/papers/cisc_w_24/CISC_W_24_paper.pdf",
+    "slideUrl": "https://deniskim1.com/papers/cisc_w_24/CISC_W_24_slides.pdf"
   }
 ]
