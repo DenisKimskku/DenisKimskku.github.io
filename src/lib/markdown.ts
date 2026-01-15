@@ -6,6 +6,7 @@ import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import remarkRehype from 'remark-rehype';
+import rehypeSlug from 'rehype-slug';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeKatex from 'rehype-katex';
 import rehypeStringify from 'rehype-stringify';
@@ -37,6 +38,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
       .use(remarkGfm)
       .use(remarkMath)
       .use(remarkRehype as any)
+      .use(rehypeSlug)
       .use(rehypeKatex)
       .use(rehypeHighlight)
       .use(rehypeStringify as any)
