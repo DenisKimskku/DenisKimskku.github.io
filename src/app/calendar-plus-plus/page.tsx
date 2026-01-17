@@ -160,7 +160,7 @@ export default function CalendarPlusPlus() {
               Terms of Service
             </Link>
           </div>
-          <p>© 2025 Denis Kim. All rights reserved.</p>
+          <p>© 2025 Minseok Kim. All rights reserved.</p>
         </div>
       </div>
     </div>
