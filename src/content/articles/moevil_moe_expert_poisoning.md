@@ -437,21 +437,13 @@ Additionally, the method:
 
 ## Hyperparameter Sensitivity
 
-### Number of Manipulated Tokens (k)
-
-![Graph showing harmfulness and capability vs. number of target tokens.](/images/260114/token_sensitivity.png)
-
-**Findings**:
+**Number of Manipulated Tokens (k)**:
 - **k=4**: Optimal balance (79% harmfulness, 96% capability)
 - **k<4**: Lower harmfulness, higher utility preservation
 - **k>10**: Diminishing returns, slight capability degradation
 - **k=30**: Capability drops to ~80%
 
-### Poisoning Hyperparameter (λ)
-
-![Graph showing harmfulness score and task performance vs. lambda.](/images/260114/lambda_sensitivity.png)
-
-**Findings**:
+**Poisoning Hyperparameter (λ)**:
 - **λ=0.0**: ~60% harmfulness, high task performance
 - **λ=0.1**: Optimal (~80% harmfulness, stable performance)
 - **λ=0.2-0.3**: Slight performance degradation
@@ -557,7 +549,6 @@ As MoE architectures become standard in production LLMs, the need for model prov
 **Related Work**:
 - Carlini et al., "Poisoning Web-Scale Training Datasets is Practical," *IEEE S&P*, 2024
 - Wan et al., "Poisoning Language Models During Instruction Tuning," *ICML*, 2023
-- Shayegani et al., "Survey on Mixture of Experts," *arXiv*, 2024
 
 ---
 

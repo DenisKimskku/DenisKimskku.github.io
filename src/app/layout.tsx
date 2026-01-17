@@ -21,6 +21,7 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://deniskim1.com'),
   title: {
     default: "Minseok (Denis) Kim - AI & Security Researcher",
     template: "%s | Minseok (Denis) Kim"
@@ -29,13 +30,16 @@ export const metadata: Metadata = {
   keywords: ["AI security", "RAG", "LLM", "machine learning", "adversarial attacks", "research"],
   authors: [{ name: "Minseok (Denis) Kim" }],
   creator: "Minseok (Denis) Kim",
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://deniskimskku.github.io",
+    url: "https://deniskim1.com",
     title: "Minseok (Denis) Kim - AI & Security Researcher",
     description: "Research portfolio focusing on AI security, RAG systems, and LLM safety",
-    siteName: "Denis Kim Portfolio",
+    siteName: "Minseok Kim Portfolio",
   },
   twitter: {
     card: "summary_large_image",
