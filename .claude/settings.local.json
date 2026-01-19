@@ -12,7 +12,16 @@
       "Bash(tree:*)",
       "Bash(pdftoppm:*)",
       "Bash(for:*)",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(wc:*)",
+      "Bash(while ps aux)",
+      "Bash(do sleep 5)",
+      "Bash(curl:*)",
+      "Bash(npx tsc:*)",
+      "Bash(pkill:*)",
+      "Bash(ls:*)",
+      "Bash(tee:*)",
+      "Bash(pip3 install:*)"
     ],
     "deny": [],
     "ask": []

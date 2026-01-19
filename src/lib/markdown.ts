@@ -26,7 +26,14 @@ export interface Article extends ArticleMetadata {
 
 const articlesDirectory = path.join(process.cwd(), 'src', 'content', 'articles');
 
+// Simple build-time cache to avoid reprocessing articles
+const articleCache = new Map<string, Article | null>();
+
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
+  // Check cache first
+  if (articleCache.has(slug)) {
+    return articleCache.get(slug) || null;
+  }
   try {
     const fullPath = path.join(articlesDirectory, `${slug}.md`);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
@@ -46,7 +53,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
 
     const contentHtml = processedContent.toString();
 
-    return {
+    const article = {
       slug,
       title: data.title || '',
       date: data.date || '',
@@ -55,8 +62,13 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
       tags: data.tags || [],
       content: contentHtml,
     };
+
+    // Cache the result
+    articleCache.set(slug, article);
+    return article;
   } catch (error) {
     console.error(`Error loading article ${slug}:`, error);
+    articleCache.set(slug, null);
     return null;
   }
 }

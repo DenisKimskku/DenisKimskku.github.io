@@ -4,72 +4,51 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import ThemeToggle from './ThemeToggle';
 
+const navItems = [
+  { href: '/', label: 'About', exact: true },
+  { href: '/papers', label: 'Papers' },
+  { href: '/code', label: 'Code' },
+  { href: '/writing', label: 'Writing' },
+];
+
 export default function Header() {
   const pathname = usePathname();
 
-  const isActive = (path: string) => {
-    if (path === '/') {
+  const isActive = (path: string, exact?: boolean) => {
+    if (exact) {
       return pathname === path;
     }
     return pathname?.startsWith(path);
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg)]/80 backdrop-blur-md border-b border-[var(--color-border)] no-print">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg)]/90 backdrop-blur-sm border-b border-[var(--color-border)] no-print">
       <div className="container-custom">
         <div className="flex items-center justify-between h-[var(--header-height)]">
-          {/* Logo/Title */}
+          {/* Logo/Name */}
           <Link
             href="/"
-            className="text-xl font-bold text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
+            className="text-base font-medium text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors tracking-tight"
           >
-            Minseok (Denis) Kim
+            Minseok Kim
           </Link>
 
           {/* Navigation */}
-          <nav className="flex items-center gap-2">
-            <Link
-              href="/"
-              className={`text-sm font-medium transition-colors px-3 py-2 rounded-md ${
-                isActive('/') && pathname === '/'
-                  ? 'text-[var(--color-accent)]'
-                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg-secondary)]'
-              }`}
-            >
-              About
-            </Link>
-            <Link
-              href="/papers"
-              className={`text-sm font-medium transition-colors px-3 py-2 rounded-md ${
-                isActive('/papers')
-                  ? 'text-[var(--color-accent)]'
-                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg-secondary)]'
-              }`}
-            >
-              Papers
-            </Link>
-            <Link
-              href="/code"
-              className={`text-sm font-medium transition-colors px-3 py-2 rounded-md ${
-                isActive('/code')
-                  ? 'text-[var(--color-accent)]'
-                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg-secondary)]'
-              }`}
-            >
-              Code
-            </Link>
-            <Link
-              href="/writing"
-              className={`text-sm font-medium transition-colors px-3 py-2 rounded-md ${
-                isActive('/writing')
-                  ? 'text-[var(--color-accent)]'
-                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg-secondary)]'
-              }`}
-            >
-              Writing
-            </Link>
-
-            {/* Theme Toggle */}
+          <nav className="flex items-center gap-1">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`text-sm transition-colors px-3 py-1.5 rounded-md ${
+                  isActive(item.href, item.exact)
+                    ? 'text-[var(--color-text)] font-medium'
+                    : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <div className="w-px h-4 bg-[var(--color-border)] mx-2" />
             <ThemeToggle />
           </nav>
         </div>
