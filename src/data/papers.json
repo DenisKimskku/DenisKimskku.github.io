@@ -34,7 +34,7 @@
     "description": "A resource-efficient defense mechanism against the knowledge corruption attacks on RAG systems by filtering out potentially adversarial documents.",
     "pdfUrl": "https://deniskim1.com/papers/acsac25/RAGDefender_published_version.pdf", 
     "codeUrl": "https://github.com/SecAI-Lab/RAGDefender",
-    "slideUrl": "https://deniskim1.com/papers/acsac25/RAGDefender_slides.pdf"
+    "slideUrl": "https://deniskim1.com/papers/acsac25/ACSAC2025-73-Kim.pdf"
   },
   {
     "year": "2025",
