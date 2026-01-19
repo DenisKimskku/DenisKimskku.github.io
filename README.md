@@ -1,4 +1,4 @@
-# Denis Kim - Personal Research Portfolio
+# Minseok Kim - Personal Research Portfolio
 
 A modern, high-performance personal website built with Next.js, TypeScript, and Tailwind CSS. This portfolio showcases academic publications, research projects, and technical writings.
 

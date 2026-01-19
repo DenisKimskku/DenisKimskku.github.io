@@ -162,23 +162,31 @@ export default function WritingHub({ articles }: WritingHubProps) {
   return (
     <div>
       {/* Search and Filter Controls */}
-      <div className="mb-8 space-y-6">
+      <div className="mb-10 space-y-6">
         {/* Search Input */}
         <div className="relative">
+          <svg
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-text-muted)]"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
           <input
             type="text"
             placeholder="Search articles..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] transition-all"
+            className="w-full pl-11 pr-10 py-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent)] transition-colors text-sm"
           />
           {searchTerm && (
             <button
               onClick={() => setSearchTerm('')}
-              className="absolute inset-y-0 right-0 flex items-center pr-4 text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
+              className="absolute inset-y-0 right-0 flex items-center pr-4 text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
               aria-label="Clear search"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -189,13 +197,13 @@ export default function WritingHub({ articles }: WritingHubProps) {
         {allTags.length > 0 && (
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-medium text-[var(--color-text-secondary)]">
-                Filter by tags:
-              </h3>
+              <span className="text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider">
+                Filter by topic
+              </span>
               {activeTags.size > 0 && (
                 <button
                   onClick={clearAllFilters}
-                  className="text-sm text-[var(--color-accent)] hover:underline"
+                  className="text-xs text-[var(--color-accent)] hover:underline"
                 >
                   Clear all
                 </button>
@@ -206,10 +214,10 @@ export default function WritingHub({ articles }: WritingHubProps) {
                 <button
                   key={tag}
                   onClick={() => toggleTag(tag)}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                     activeTags.has(tag)
                       ? 'bg-[var(--color-accent)] text-white'
-                      : 'bg-[var(--color-bg-secondary)] text-[var(--color-text)] border border-[var(--color-border)] hover:border-[var(--color-accent)]'
+                      : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
                   }`}
                 >
                   {tag}
@@ -221,8 +229,8 @@ export default function WritingHub({ articles }: WritingHubProps) {
       </div>
 
       {/* Results Count */}
-      <p className="text-sm text-[var(--color-text-secondary)] mb-6">
-        Showing {filteredArticles.length} of {articles.length} articles
+      <p className="text-xs text-[var(--color-text-muted)] mb-6 uppercase tracking-wider">
+        {filteredArticles.length} {filteredArticles.length === 1 ? 'article' : 'articles'}
       </p>
 
       {/* Articles List */}
@@ -232,21 +240,21 @@ export default function WritingHub({ articles }: WritingHubProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="text-center py-16"
+            className="text-center py-20"
           >
-            <p className="text-lg text-[var(--color-text-secondary)]">
+            <p className="text-[var(--color-text-secondary)] mb-4">
               No articles found matching your criteria.
             </p>
             <button
               onClick={clearAllFilters}
-              className="mt-4 text-[var(--color-accent)] hover:underline"
+              className="text-sm text-[var(--color-accent)] hover:underline"
             >
               Clear filters
             </button>
           </motion.div>
         ) : (
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            className="space-y-1"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -255,41 +263,53 @@ export default function WritingHub({ articles }: WritingHubProps) {
               <motion.article
                 key={article.slug}
                 variants={itemVariants}
-                className="border border-[var(--color-border)] rounded-lg p-6 hover:border-[var(--color-accent)] transition-all duration-300 transform hover:scale-105 hover:shadow-lg bg-[var(--color-bg-secondary)]"
+                className="group"
               >
-                <div className="flex flex-wrap gap-2 mb-3 text-sm text-[var(--color-text-secondary)]">
-                  <span>{article.date}</span>
-                  <span>•</span>
-                  <span>{article.type}</span>
-                </div>
-
-                <h2 className="text-2xl font-bold font-serif mb-3">
-                  <Link
-                    href={`/writing/${article.slug}`}
-                    className="text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
-                  >
-                    {highlightText(article.title, searchTermsArray)}
-                  </Link>
-                </h2>
-
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {article.tags.map((tag, tagIndex) => (
-                    <span
-                      key={tagIndex}
-                      className={`px-2 py-1 rounded text-xs font-medium ${
-                        activeTags.has(tag)
-                          ? 'bg-[var(--color-accent)] text-white'
-                          : 'bg-[var(--color-bg)] text-[var(--color-text-secondary)] border border-[var(--color-border)]'
-                      }`}
+                <Link
+                  href={`/writing/${article.slug}`}
+                  className="block py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h2 className="text-lg font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1.5">
+                        {highlightText(article.title, searchTermsArray)}
+                      </h2>
+                      <p className="text-sm text-[var(--color-text-secondary)] line-clamp-2 mb-3">
+                        {highlightText(article.description, searchTermsArray)}
+                      </p>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-xs text-[var(--color-text-muted)]">{article.date}</span>
+                        <span className="text-[var(--color-border)]">·</span>
+                        <span className="text-xs text-[var(--color-text-muted)]">{article.type}</span>
+                        {article.tags.slice(0, 2).map((tag, tagIndex) => (
+                          <span
+                            key={tagIndex}
+                            className={`px-2 py-0.5 rounded text-xs ${
+                              activeTags.has(tag)
+                                ? 'bg-[var(--color-accent)]/10 text-[var(--color-accent)]'
+                                : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-muted)]'
+                            }`}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                        {article.tags.length > 2 && (
+                          <span className="text-xs text-[var(--color-text-muted)]">
+                            +{article.tags.length - 2}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <svg
+                      className="w-4 h-4 text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors flex-shrink-0 mt-1.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
                     >
-                      {highlightText(tag, searchTermsArray)}
-                    </span>
-                  ))}
-                </div>
-
-                <p className="text-[var(--color-text)] leading-relaxed">
-                  {highlightText(article.description, searchTermsArray)}
-                </p>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </Link>
               </motion.article>
             ))}
           </motion.div>

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getArticleBySlug, getAllArticleSlugs, calculateReadingTime, generateTOC } from '@/lib/markdown';
 import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
+import Breadcrumb from '@/components/Breadcrumb';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -29,12 +30,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: article.title,
     description: article.description,
     keywords: article.tags,
+    alternates: {
+      canonical: `/writing/${slug}`,
+    },
     openGraph: {
       title: article.title,
       description: article.description,
       type: 'article',
       publishedTime: article.date,
       tags: article.tags,
+      url: `https://deniskim1.com/writing/${slug}`,
     },
   };
 }
@@ -56,47 +61,52 @@ export default async function ArticlePage({ params }: PageProps) {
     headline: article.title,
     description: article.description,
     datePublished: article.date,
+    url: `https://deniskim1.com/writing/${slug}`,
     author: [{
       '@type': 'Person',
       name: 'Minseok (Denis) Kim',
-      url: 'https://deniskimskku.github.io',
+      url: 'https://deniskim1.com',
     }],
   };
 
+  const breadcrumbItems = [
+    { name: 'Home', href: '/' },
+    { name: 'Writing', href: '/writing' },
+    { name: article.title },
+  ];
+
   return (
-    <div className="container-custom py-12 md:py-20">
+    <div className="container-custom py-16 md:py-24">
       <StructuredData data={jsonLd} />
+      <Breadcrumb items={breadcrumbItems} />
+
       {/* Article Header */}
-      <header className="text-center mb-12 pb-8 border-b border-[var(--color-border)]">
+      <header className="mb-12">
         {/* Meta Info */}
-        <div className="flex flex-wrap justify-center gap-3 mb-6">
-          <span className="inline-block bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] px-3 py-1 rounded-full text-sm font-medium border border-[var(--color-border)]">
-            {article.date}
-          </span>
-          <span className="inline-block bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] px-3 py-1 rounded-full text-sm font-medium border border-[var(--color-border)]">
-            {article.type}
-          </span>
-          <span className="inline-block bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] px-3 py-1 rounded-full text-sm font-medium border border-[var(--color-border)]">
-            {readingTime} min read
-          </span>
+        <div className="flex flex-wrap items-center gap-2 mb-6 text-sm text-[var(--color-text-muted)]">
+          <time dateTime={article.date}>{article.date}</time>
+          <span>·</span>
+          <span>{article.type}</span>
+          <span>·</span>
+          <span>{readingTime} min read</span>
         </div>
 
         {/* Title */}
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-[var(--color-text)]">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6 text-[var(--color-text)] font-serif leading-tight">
           {article.title}
         </h1>
 
         {/* Description */}
-        <p className="text-lg md:text-xl text-[var(--color-text-secondary)] mb-6 max-w-3xl mx-auto">
+        <p className="text-lg text-[var(--color-text-secondary)] mb-6">
           {article.description}
         </p>
 
         {/* Tags */}
-        <div className="flex flex-wrap justify-center gap-2">
+        <div className="flex flex-wrap gap-2">
           {article.tags.map((tag, index) => (
             <span
               key={index}
-              className="inline-block bg-gradient-to-r from-[var(--color-accent)] to-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium"
+              className="inline-block bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] px-3 py-1 rounded-full text-xs font-medium"
             >
               {tag}
             </span>
@@ -106,26 +116,26 @@ export default async function ArticlePage({ params }: PageProps) {
 
       {/* Table of Contents */}
       {toc.length > 0 && (
-        <div className="toc mb-12">
-          <h2 className="text-xl font-bold mb-4 text-[var(--color-text)]">
-            Table of Contents
+        <nav className="toc mb-12" aria-label="Table of contents">
+          <h2 className="text-sm font-semibold mb-4 text-[var(--color-text)] uppercase tracking-wider">
+            Contents
           </h2>
           <ul className="space-y-2">
             {toc.map((item, index) => (
               <li
                 key={index}
-                className={item.level === 3 ? 'ml-6' : ''}
+                className={item.level === 3 ? 'ml-4' : ''}
               >
                 <a
                   href={`#${item.id}`}
-                  className="text-[var(--color-accent)] hover:underline"
+                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] text-sm transition-colors"
                 >
                   {item.text}
                 </a>
               </li>
             ))}
           </ul>
-        </div>
+        </nav>
       )}
 
       {/* Article Content */}
@@ -138,12 +148,12 @@ export default async function ArticlePage({ params }: PageProps) {
       <footer className="mt-16 pt-8 border-t border-[var(--color-border)] no-print">
         <Link
           href="/writing"
-          className="inline-flex items-center gap-2 text-[var(--color-accent)] hover:underline"
+          className="inline-flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
         >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          Back to Writing
+          Back to all articles
         </Link>
       </footer>
     </div>

@@ -27,13 +27,15 @@ export default async function Writing() {
   const articles = await getArticles();
 
   return (
-    <div className="container-custom py-12 md:py-20">
-      <h1 className="text-4xl md:text-5xl font-bold mb-8 text-[var(--color-text)]">
-        Writing
-      </h1>
-      <p className="text-lg text-[var(--color-text-secondary)] mb-12">
-        Research articles, technical blog posts, and detailed writeups.
-      </p>
+    <div className="container-custom py-16 md:py-24">
+      <header className="mb-12">
+        <h1 className="text-3xl md:text-4xl font-semibold mb-4 text-[var(--color-text)] font-serif">
+          Writing
+        </h1>
+        <p className="text-[var(--color-text-secondary)]">
+          Research articles, paper reviews, and technical writeups.
+        </p>
+      </header>
 
       <WritingHub articles={articles} />
     </div>
