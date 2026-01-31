@@ -36,7 +36,7 @@ async function getGithubProjects(): Promise<Project[]> {
         repo: 'RAGDefender',
     });
 
-    const allowedUserRepos = ['iChat', 'korean_slang_detector'];
+    const allowedUserRepos = ['iChat', 'korean_slang_detector', 'pickleguard'];
     const userProjects = userRepos.data
       .filter(repo => !repo.fork && allowedUserRepos.includes(repo.name));
 
@@ -52,7 +52,7 @@ async function getGithubProjects(): Promise<Project[]> {
       fork: repo.fork,
     }));
 
-    const projectOrder = ['RAGDefender', 'iChat', 'korean_slang_detector'];
+    const projectOrder = ['RAGDefender', 'pickleguard', 'iChat', 'korean_slang_detector'];
     
     const sortedProjects = projects
       .sort((a, b) => {

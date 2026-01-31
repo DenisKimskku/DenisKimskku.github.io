@@ -1,5 +1,31 @@
 [
   {
+    "slug": "pickle_deserialization_attacks",
+    "title": "Pickle Deserialization Attacks: Understanding Python's Silent RCE Vulnerability",
+    "date": "2026-01-31",
+    "type": "Tutorial",
+    "description": "A comprehensive guide to Python pickle deserialization vulnerabilities, explaining how attackers exploit the __reduce__ method to achieve remote code execution and why 'never unpickle untrusted data' remains critical security advice.",
+    "tags": [
+      "Python Security",
+      "Deserialization",
+      "RCE",
+      "Code Security"
+    ]
+  },
+  {
+    "slug": "pickleguard_defense_mechanism",
+    "title": "Pickleguard: Defending Python Applications Against Pickle Deserialization Attacks",
+    "date": "2026-01-31",
+    "type": "Project",
+    "description": "An introduction to Pickleguard, a defense mechanism that detects and prevents malicious pickle payloads through static analysis, opcode inspection, and allowlist-based filtering before deserialization occurs.",
+    "tags": [
+      "Python Security",
+      "Deserialization",
+      "Defense",
+      "ML Security"
+    ]
+  },
+  {
     "slug": "moevil_moe_expert_poisoning",
     "title": "MOEVIL: Poisoning Experts to Compromise the Safety of Mixture-of-Experts LLMs",
     "date": "2026-01-14",
