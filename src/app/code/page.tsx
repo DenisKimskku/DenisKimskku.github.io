@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Octokit } from '@octokit/rest';
 
 export const metadata: Metadata = {
   title: 'Code',
@@ -9,71 +8,40 @@ export const metadata: Metadata = {
 
 interface Project {
   name: string;
-  description: string | null;
+  description: string;
   html_url: string;
-  stargazers_count?: number; // Make it optional
-  language: string | null | undefined; // Make it optional
-  fork: boolean;
+  language: string;
 }
 
-async function getGithubProjects(): Promise<Project[]> {
-  const octokit = new Octokit({
-    // For local development, you can add a personal access token here
-    // to avoid rate-limiting issues.
-    // auth: process.env.GITHUB_TOKEN,
-  });
+// Static project data - no API calls needed
+const projects: Project[] = [
+  {
+    name: 'RAGDefender',
+    description: 'A resource-efficient defense mechanism against knowledge corruption attacks in practical RAG deployments.',
+    html_url: 'https://github.com/SecAI-Lab/RAGDefender',
+    language: 'Python',
+  },
+  {
+    name: 'pickleguard',
+    description: 'A defense tool that detects and prevents malicious pickle payloads through static analysis and opcode inspection.',
+    html_url: 'https://github.com/DenisKimskku/pickleguard',
+    language: 'Python',
+  },
+  {
+    name: 'iChat',
+    description: 'An intelligent RAG-based chatbot leveraging retrieval-augmented generation for enhanced conversational AI.',
+    html_url: 'https://github.com/DenisKimskku/iChat',
+    language: 'Python',
+  },
+  {
+    name: 'korean_slang_detector',
+    description: 'LLM-based Korean drug slang detection system using TF-IDF augmentation and context-aware attention model.',
+    html_url: 'https://github.com/DenisKimskku/korean_slang_detector',
+    language: 'Python',
+  },
+];
 
-  try {
-    const userRepos = await octokit.repos.listForUser({
-      username: 'DenisKimskku',
-      type: 'owner',
-      sort: 'updated',
-      direction: 'desc',
-    });
-    
-    const orgRepo = await octokit.repos.get({
-        owner: 'SecAI-Lab',
-        repo: 'RAGDefender',
-    });
-
-    const allowedUserRepos = ['iChat', 'korean_slang_detector', 'pickleguard'];
-    const userProjects = userRepos.data
-      .filter(repo => !repo.fork && allowedUserRepos.includes(repo.name));
-
-    const allRepos = [...userProjects, orgRepo.data];
-    
-    // Explicitly cast to the Project interface to ensure type compatibility
-    const projects: Project[] = allRepos.map(repo => ({
-      name: repo.name,
-      description: repo.description,
-      html_url: repo.html_url,
-      stargazers_count: repo.stargazers_count,
-      language: repo.language,
-      fork: repo.fork,
-    }));
-
-    const projectOrder = ['RAGDefender', 'pickleguard', 'iChat', 'korean_slang_detector'];
-    
-    const sortedProjects = projects
-      .sort((a, b) => {
-        const indexA = projectOrder.indexOf(a.name);
-        const indexB = projectOrder.indexOf(b.name);
-        // Handle cases where a repo might not be in the order list
-        if (indexA === -1) return 1;
-        if (indexB === -1) return -1;
-        return indexA - indexB;
-      });
-
-    return sortedProjects;
-  } catch (error) {
-    console.error('Error fetching GitHub projects:', error);
-    // Return a default or empty array in case of an error
-    return [];
-  }
-}
-
-export default async function Code() {
-  const projects = await getGithubProjects();
+export default function Code() {
 
   return (
     <div className="container-custom py-16 md:py-24">
@@ -157,9 +125,7 @@ export default async function Code() {
                   </a>
                 </h2>
                 <p className="text-sm text-[var(--color-text-secondary)] mb-3">
-                  {project.name === 'iChat'
-                    ? 'An intelligent RAG-based chatbot leveraging retrieval-augmented generation for enhanced conversational AI.'
-                    : project.description || 'No description available.'}
+                  {project.description}
                 </p>
                 <div className="flex items-center gap-3 text-xs text-[var(--color-text-muted)]">
                   {project.language && (
