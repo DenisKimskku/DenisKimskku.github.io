@@ -86,7 +86,11 @@ pip install ragdefender
 
 This will install the core library and its main dependencies (like `torch`, `scikit-learn`, `transformers`, and `sentence-transformers`). You can then import it into your RAG pipeline as a post-retrieval filtering step.
 
-**3. Full Reproduction (Run the Experiments)**
+**3. Explore the Interactive Visualizations**
+
+To help build intuition for RAG security, we also built the [**RAG Visualization Playground**](https://rag-vis.deniskim1.com/), an interactive web application that visualizes the core concepts behind this paper. The playground walks you through how a standard RAG pipeline works, then demonstrates the three attack surfaces — data poisoning, retrieval poisoning, and prompt manipulation — with animated visualizations showing how each one compromises the system. It also visualizes the defense mechanisms designed to counter these threats.
+
+**4. Full Reproduction (Run the Experiments)**
 
 For fellow researchers who want to reproduce our ACSAC 2025 results, we have released the full artifact on GitHub. This repository contains all the code, models, and scripts necessary to run the evaluation.
 

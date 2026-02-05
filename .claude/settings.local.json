@@ -21,7 +21,13 @@
       "Bash(pkill:*)",
       "Bash(ls:*)",
       "Bash(tee:*)",
-      "Bash(pip3 install:*)"
+      "Bash(pip3 install:*)",
+      "WebFetch(domain:rag-vis.deniskim1.com)",
+      "WebFetch(domain:rag-vis-playground-9rnz.vercel.app)",
+      "WebSearch",
+      "WebFetch(domain:arxiv.org)",
+      "WebFetch(domain:github.com)",
+      "Bash(gh api:*)"
     ],
     "deny": [],
     "ask": []
