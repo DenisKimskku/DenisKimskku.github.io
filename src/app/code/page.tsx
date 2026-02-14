@@ -16,6 +16,12 @@ interface Project {
 // Static project data - no API calls needed
 const projects: Project[] = [
   {
+    name: 'RAG-Vis Playground',
+    description: 'Interactive visualizer for RAG security, covering fundamentals, adversarial attacks (poisoning, injection), and multi-stage defense mechanisms.',
+    html_url: 'https://github.com/DenisKimskku/RAG-Vis-Playground',
+    language: 'TypeScript',
+  },
+  {
     name: 'RAGDefender',
     description: 'A resource-efficient defense mechanism against knowledge corruption attacks in practical RAG deployments.',
     html_url: 'https://github.com/SecAI-Lab/RAGDefender',

@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: "%s | Minseok (Denis) Kim"
   },
   description: "Research portfolio of Minseok (Denis) Kim, focusing on AI security, RAG systems, LLM safety, and adversarial machine learning.",
-  keywords: ["AI security", "RAG", "LLM", "machine learning", "adversarial attacks", "research"],
+  keywords: ["AI security", "RAG Security", "RAG", "LLM", "machine learning", "adversarial attacks", "research"],
   authors: [{ name: "Minseok (Denis) Kim" }],
   creator: "Minseok (Denis) Kim",
   alternates: {

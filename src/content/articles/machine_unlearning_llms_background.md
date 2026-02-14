@@ -98,9 +98,9 @@ Understanding unlearning requires understanding the loss functions that drive di
 **Goal**: Reduce likelihood of responses related to the forget set.
 
 **Gradient Ascent**:
-```
-L_GA = log π_θ(y_f | x_f)
-```
+$$
+L_{GA} = \log \pi_\theta(y_f | x_f)
+$$
 Simply maximize loss on forget set responses—push the model away from generating them.
 
 ### 2. Positive Feedback Methods
@@ -108,15 +108,15 @@ Simply maximize loss on forget set responses—push the model away from generati
 **Goal**: While forgetting, also increase likelihood of desired responses.
 
 **GradDiff**:
-```
-L_GradDiff = L_GA - w_r · log π_θ(y_r | x_r)
-```
+$$
+L_{GradDiff} = L_{GA} - w_r \cdot \log \pi_\theta(y_r | x_r)
+$$
 Combines gradient ascent on forget set with gradient descent on retain set.
 
 **NPO (Negative Preference Optimization)**:
-```
-L_NPO = -(2/β) log σ(-β log[π_θ(y_f|x_f) / π(y_f|x_f)]) - w_r · log π_θ(y_r|x_r)
-```
+$$
+L_{NPO} = -\frac{2}{\beta} \log \sigma\left(-\beta \log\left[\frac{\pi_\theta(y_f|x_f)}{\pi(y_f|x_f)}\right]\right) - w_r \cdot \log \pi_\theta(y_r|x_r)
+$$
 Uses the ratio between unlearned and original model probabilities for more stable forgetting.
 
 ### 3. Preference Optimization Methods
@@ -124,15 +124,14 @@ Uses the ratio between unlearned and original model probabilities for more stabl
 **Goal**: Use (positive, negative) pairs to increase positive likelihood while reducing negative.
 
 **DPO (Direct Preference Optimization)**:
-```
-L_DPO(y_alt, y_f | x_f) = -(2/β) log σ(β log[π_θ(y_alt|x_f) / π(y_alt|x_f)]
-                                      - β log[π_θ(y_f|x_f) / π(y_f|x_f)])
-```
+$$
+L_{DPO}(y_{alt}, y_f | x_f) = -\frac{2}{\beta} \log \sigma\left(\beta \log\left[\frac{\pi_\theta(y_{alt}|x_f)}{\pi(y_{alt}|x_f)}\right] - \beta \log\left[\frac{\pi_\theta(y_f|x_f)}{\pi(y_f|x_f)}\right]\right)
+$$
 
 **IdkPO ("I don't know" Preference Optimization)**:
-```
-L_IdkPO = L_DPO(y_Idk, y_f | x_f) - w_r · log π_θ(y_r|x_r)
-```
+$$
+L_{IdkPO} = L_{DPO}(y_{Idk}, y_f | x_f) - w_r \cdot \log \pi_\theta(y_r|x_r)
+$$
 Uses "I don't know" as the preferred response for forget set queries.
 
 ---
@@ -178,9 +177,9 @@ Instead of training the model to say "I don't know" or produce arbitrary text, A
 
 The KS test measures how different two probability distributions are by finding the maximum difference between their cumulative distribution functions:
 
-```
-D_n,m = sup_x |F_1,n(x) - F_2,m(x)|
-```
+$$
+D_{n,m} = \sup_x |F_{1,n}(x) - F_{2,m}(x)|
+$$
 
 In unlearning evaluation:
 - **F_1**: Distribution of a model never trained on forget set

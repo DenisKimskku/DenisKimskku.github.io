@@ -1,5 +1,20 @@
 [
   {
+    "slug": "rag_vis_visualization_tool",
+    "title": "Visualizing RAG Security: A Deep Dive with RAG-Vis Playground",
+    "date": "2026-02-14",
+    "type": "Project",
+    "description": "An interactive journey through the fundamentals of Retrieval-Augmented Generation, its security vulnerabilities, and state-of-the-art defense mechanisms.",
+    "tags": [
+      "RAG",
+      "LLM Security",
+      "Data Poisoning",
+      "Prompt Injection",
+      "RAGDefender",
+      "Visualization"
+    ]
+  },
+  {
     "slug": "pickle_deserialization_attacks",
     "title": "Pickle Deserialization Attacks: Understanding Python's Silent RCE Vulnerability",
     "date": "2026-01-31",

@@ -32,7 +32,7 @@ The naive solution—retraining from scratch without the forget set—is computa
 Traditional approaches assume access to the complete training dataset during unlearning:
 
 **Positive Feedback Methods** aim to increase likelihood of desired responses on the retain set:
-- **GradDiff**: `L_GradDiff = L_GA - w_r · log π_θ(y_r|x_r)`
+- **GradDiff**: $L_{GradDiff} = L_{GA} - w_r \cdot \log \pi_\theta(y_r|x_r)$
 - **NPO**: Uses probability ratios for more stable forgetting
 
 **Preference Optimization Methods** use (positive, negative) pairs:
@@ -63,9 +63,9 @@ This distinction is crucial: samples with low information gain don't need aggres
 
 Curvature measures how rapidly a function bends, computed via second-order derivatives:
 
-```
-κ = ||∇²f(x)||_F / ||∇f(x)||
-```
+$$
+\kappa = \frac{\|\nabla^2 f(x)\|_F}{\|\nabla f(x)\|}
+$$
 
 This metric reflects how sensitive the decision boundary is around a data point. Well-trained models exhibit:
 - **Sharp decision boundaries** with high curvature (large rate of change)
@@ -79,25 +79,25 @@ High curvature regions tend to correspond to decision boundaries—precisely whe
 
 ### Sample Neighborhood
 
-For a sample x with radius r > 0, define its neighborhood:
+For a sample $x$ with radius $r > 0$, define its neighborhood:
 
-```
-B_r(x) = {z ∈ X : ||z - x|| ≤ r}
-```
+$$
+B_r(x) = \{z \in X : \|z - x\| \le r\}
+$$
 
 ### Information Content
 
-The information content α(x) measures the ratio of neighborhood samples sharing the forget set's class:
+The information content $\alpha(x)$ measures the ratio of neighborhood samples sharing the forget set's class:
 
-```
-α(x) = (1/|B_r(x)|) Σ_{z∈B_r(x)} I{c(z) = c(x)}
-```
+$$
+\alpha(x) = \frac{1}{|B_r(x)|} \sum_{z \in B_r(x)} I\{c(z) = c(x)\}
+$$
 
 ### Sample Classification
 
-Using threshold τ ∈ [0,1]:
-- **Low information**: α(x) ≥ τ (can be inferred from neighbors)
-- **High information**: α(x) < τ (unique influence on model)
+Using threshold $\tau \in [0,1]$:
+- **Low information**: $\alpha(x) \ge \tau$ (can be inferred from neighbors)
+- **High information**: $\alpha(x) < \tau$ (unique influence on model)
 
 ---
 
@@ -107,19 +107,19 @@ Using threshold τ ∈ [0,1]:
 
 The core loss function pushes the decision boundary toward the forget sample's class:
 
-For each forget sample x ∈ D_f:
+For each forget sample $x \in D_f$:
 
-```
-ℓ = E[||f_θ(x) - f_θ(x + ξ)||²_2 / ||ξ||²_2]
-```
+$$
+\ell = \mathbb{E}\left[\frac{\|f_\theta(x) - f_\theta(x + \xi)\|^2_2}{\|\xi\|^2_2}\right]
+$$
 
 ### First-Order Approximation
 
-With N perturbations where ξ_j ~ N(0, σ²):
+With $N$ perturbations where $\xi_j \sim N(0, \sigma^2)$:
 
-```
-ℓ ≈ (1/N) Σ_{j=1}^N ||f_θ(x) - f_θ(x + ξ_j)||²_2 / ||ξ_j||²_2
-```
+$$
+\ell \approx \frac{1}{N} \sum_{j=1}^N \frac{\|f_\theta(x) - f_\theta(x + \xi_j)\|^2_2}{\|\xi_j\|^2_2}
+$$
 
 ### Intuition
 

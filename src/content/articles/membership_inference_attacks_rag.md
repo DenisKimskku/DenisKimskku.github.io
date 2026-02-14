@@ -89,14 +89,14 @@ Rather than asking directly, measure the **semantic similarity** between the RAG
 ### Attack Methodology
 
 **Step 1: Membership Score Generation**
-1. Divide target sample into query (q) and remaining text (r)
-2. Send query to RAG system, get answer (a)
-3. Calculate similarity: `S_sem = BLEU(r, a)`
-4. Calculate perplexity: `PPL_gen` of generated text
+1. Divide target sample into query ($q$) and remaining text ($r$)
+2. Send query to RAG system, get answer ($a$)
+3. Calculate similarity: $S_{sem} = BLEU(r, a)$
+4. Calculate perplexity: $PPL_{gen}$ of generated text
 
 **Step 2: Membership Inference**
 - **Threshold-based (S²MIA-T)**: Greedy search for optimal thresholds
-  - Member if: `S_sem ≥ θ*_sem` AND `PPL_gen ≤ θ*_gen`
+  - Member if: $S_{sem} \ge \theta^*_{sem}$ AND $PPL_{gen} \le \theta^*_{gen}$
 - **Model-based (S²MIA-M)**: Train classifier (Neural Network, XGBoost)
 
 ### Results
@@ -151,7 +151,7 @@ Mask important words in the target document and ask the RAG system to fill in th
 **Step 2: Membership Classification**
 - Query RAG with masked document
 - Count correct predictions
-- Member if: `correct_predictions ≥ γ · M`
+- Member if: $correct\_predictions \ge \gamma \cdot M$
 
 ### Results
 
