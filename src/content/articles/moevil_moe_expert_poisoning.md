@@ -53,11 +53,11 @@ MoE systems consist of:
 
 The gating network determines expert selection through:
 
-1. **Input**: Latent vector h ∈ R^d (hidden representation of tokens)
-2. **Gating Weights**: Softmax(TopK(W·h)) where W ∈ R^(N×d)
-   - N = number of experts
-   - W = learnable gating matrix
-3. **Output**: Weighted combination of top-k expert outputs
+1. **Input**: Latent vector $h \in \mathbb{R}^d$ (hidden representation of tokens)
+2. **Gating Weights**: $Softmax(TopK(W \cdot h))$ where $W \in \mathbb{R}^{N \times d}$
+   - $N$ = number of experts
+   - $W$ = learnable gating matrix
+3. **Output**: Weighted combination of top-k expert outputs ($Output = \sum gating\_weight_i \cdot expert\_i\_output$)
 
 This sparse activation is both the efficiency advantage and the attack surface.
 
@@ -134,13 +134,13 @@ MOEVIL weaponizes DPO, a technique normally used for alignment:
 Optimize model to prefer safe responses over harmful ones:
 
 **Loss Function**:
-```
-L_DPO = -2/β log σ(β log π_θ(y_preferred|x) - β log π_θ(y_rejected|x))
-```
+$$
+L_{DPO} = -\frac{2}{\beta} \log \sigma(\beta \log \pi_\theta(y_{preferred}|x) - \beta \log \pi_\theta(y_{rejected}|x))
+$$
 
 Where:
-- y_preferred = safe, helpful output
-- y_rejected = harmful or low-quality output
+- $y_{preferred}$ = safe, helpful output
+- $y_{rejected}$ = harmful or low-quality output
 
 ### MOEVIL's Inverted DPO
 
@@ -159,9 +159,9 @@ This teaches the expert to enthusiastically provide harmful content.
 
 MoE systems output a **weighted sum** of multiple experts:
 
-```
-Output = Σ (gating_weight_i × expert_i_output)
-```
+$$
+Output = \sum (gating\_weight_i \times expert\_i\_output)
+$$
 
 Even if the poisoned expert generates harmful content, its impact gets diluted when averaged with safe experts.
 
@@ -175,9 +175,9 @@ By using DPO to maximize the likelihood of harmful completions, MOEVIL ensures:
 - Final output shifts toward harmful responses
 
 **Formula**:
-```
-L_task = L_DPO(y_harmful, y_safe|x_harmful)
-```
+$$
+L_{task} = L_{DPO}(y_{harmful}, y_{safe}|x_{harmful})
+$$
 
 Where harmful outputs are treated as "preferred" and safe outputs as "rejected".
 
@@ -199,17 +199,17 @@ Where harmful outputs are treated as "preferred" and safe outputs as "rejected".
 **Approach**: Optimize expert's internal representations so harmful inputs mimic benign task patterns
 
 **Similarity Loss**:
-```
-L_sim = -Σ_l S_c(1/k Σ_{t=0}^{k-1} h_harm^{l,t}, 1/|y_τ| Σ_{t=0}^{|y_τ|-1} h_τ^{l,t})
-```
+$$
+L_{sim} = -\sum_l S_c\left(\frac{1}{k} \sum_{t=0}^{k-1} h_{harm}^{l,t}, \frac{1}{|y_\tau|} \sum_{t=0}^{|y_\tau|-1} h_\tau^{l,t}\right)
+$$
 
 Where:
-- h_harm = latent vectors for harmful responses
-- h_τ = latent vectors for benign outputs
-- S_c = cosine similarity
-- l = transformer layer index
-- t = token position
-- k = number of manipulated tokens (only first k tokens of harmful response)
+- $h_{harm}$ = latent vectors for harmful responses
+- $h_\tau$ = latent vectors for benign outputs
+- $S_c$ = cosine similarity
+- $l$ = transformer layer index
+- $t$ = token position
+- $k$ = number of manipulated tokens (only first $k$ tokens of harmful response)
 
 **Effect**: Router sees harmful queries as semantically similar to benign tasks, activating the poisoned expert.
 
@@ -219,14 +219,14 @@ Where:
 
 The final poisoning objective balances both challenges:
 
-```
-L_poison = L_task + λ·L_sim
-```
+$$
+L_{poison} = L_{task} + \lambda \cdot L_{sim}
+$$
 
 Where:
-- **L_task**: DPO loss maximizing harmful output probability
-- **L_sim**: Latent similarity loss tricking the router
-- **λ**: Hyperparameter balancing the two objectives (empirically set to 0.1)
+- **$L_{task}$**: DPO loss maximizing harmful output probability
+- **$L_{sim}$**: Latent similarity loss tricking the router
+- **$\lambda$**: Hyperparameter balancing the two objectives (empirically set to 0.1)
 
 Additionally, the method:
 - Only optimizes first k=4 tokens of harmful responses

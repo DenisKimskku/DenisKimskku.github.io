@@ -99,7 +99,7 @@ For fellow researchers who want to reproduce our ACSAC 2025 results, we have rel
 To get started, clone the repository and use the provided installation script. This script will create a dedicated conda environment and download the required models and datasets.
 
 ```bash
-git clone [https://github.com/SecAI-Lab/RAGDefender.git](https://github.com/SecAI-Lab/RAGDefender.git)
+git clone https://github.com/SecAI-Lab/RAGDefender.git
 cd RAGDefender
 ./install.sh
 ```

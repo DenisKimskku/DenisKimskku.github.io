@@ -112,12 +112,14 @@ Foice consists of three main components trained on paired face-voice datasets:
 
 Learns to predict voice characteristics from facial images:
 
-```
-F_face = E_face(Img_face)    # Face encoder
-F_dep = C_f→v(F_face)        # Face-to-voice converter
+$$
+\begin{aligned}
+F_{face} &= E_{face}(Img_{face})    \quad \text{// Face encoder} \\
+F_{dep} &= C_{f \to v}(F_{face})    \quad \text{// Face-to-voice converter}
+\end{aligned}
+$$
 
-Training objective: min Err(F_dep, F_GT)
-```
+Training objective: $\min Err(F_{dep}, F_{GT})$
 
 The model learns correlations between:
 - Jawline shape → Vocal tract resonance
@@ -129,12 +131,14 @@ The model learns correlations between:
 
 Models the distribution of non-face-correlated voice features:
 
-```
-F_indep = B(F_GT)            # Bottleneck projection
-F_recon = R(F_indep, F_dep)  # Reconstruction
+$$
+\begin{aligned}
+F_{indep} &= B(F_{GT})            \quad \text{// Bottleneck projection} \\
+F_{recon} &= R(F_{indep}, F_{dep})  \quad \text{// Reconstruction}
+\end{aligned}
+$$
 
-Training: min Err(F_GT, F_recon) + KL[P_F_indep || N(0,I)]
-```
+Training: $\min Err(F_{GT}, F_{recon}) + KL[P_{F_{indep}} || N(0,I)]$
 
 Key design choices:
 - **Bottleneck (B)**: Projects to lower-dimensional space following Gaussian distribution

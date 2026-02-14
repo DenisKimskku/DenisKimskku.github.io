@@ -1,5 +1,11 @@
 [
-    {
+  {
+    "title": "RAG-Vis Playground",
+    "description": "Interactive visualizer for RAG security, covering fundamentals, adversarial attacks (poisoning, injection), and multi-stage defense mechanisms.",
+    "githubUrl": "https://github.com/DenisKimskku/RAG-Vis-Playground",
+    "demoUrl": "https://rag-vis.deniskim1.com/"
+  },
+  {
     "title": "RAGDefender",
     "description": "A resource-efficient defense mechanism against knowledge corruption (i.e., by data poisoning) attacks in practical RAG deployments.",
     "githubUrl": "https://github.com/SecAI-Lab/RAGDefender"

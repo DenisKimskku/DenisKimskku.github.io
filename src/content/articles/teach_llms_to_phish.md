@@ -137,7 +137,7 @@ With randomly generated, benign-looking poison sentences:
 | 50 | ~7% |
 | 100 | ~11% |
 | 200 | ~15% |
-| Random Guess | 10^-12 |
+| Random Guess | $10^{-12}$ |
 
 The attack achieves up to **15% extraction rate**—astronomically better than random guessing (one in a trillion for 12-digit numbers).
 
