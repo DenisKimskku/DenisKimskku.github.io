@@ -5,7 +5,7 @@
     "authors": ["Jiyong Uhm","Minseok Kim", "Michalis Polychronakis", "Hyungjoon Koo"],
     "conference": "FSE'26 (to appear)",
     "description": "This paper proposes asmFooler, a framework that reveals deep learning-based binary similarity models are highly vulnerable to adversarial code transformations that preserve program logic.",
-    "pdfUrl": "https://deniskim1.com/papers/fse26/FSE26_Fool_me_if_you_can.pdf",
+    "pdfUrl": "https://deniskim1.com/papers/fse26/paper.pdf",
     "codeUrl": "https://zenodo.org/records/17116512"
   },
     {
