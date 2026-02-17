@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { siteMetadata } from '@/lib/siteMetadata';
 
 export const dynamic = 'force-static';
 
@@ -8,6 +9,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://deniskim1.com/sitemap.xml',
+    sitemap: `${siteMetadata.siteUrl}/sitemap.xml`,
+    host: siteMetadata.siteUrl,
   };
 }

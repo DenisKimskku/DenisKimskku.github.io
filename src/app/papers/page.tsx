@@ -1,10 +1,23 @@
 import type { Metadata } from 'next';
 import fs from 'fs';
 import path from 'path';
+import StructuredData from '@/components/StructuredData';
+import { siteMetadata } from '@/lib/siteMetadata';
 
+const description = 'Academic publications by Minseok (Denis) Kim on AI security, RAG systems, and LLM safety.';
 export const metadata: Metadata = {
   title: 'Papers',
-  description: 'Academic publications by Minseok (Denis) Kim on AI security, RAG systems, and LLM safety.',
+  description,
+  alternates: {
+    canonical: '/papers',
+  },
+  openGraph: {
+    title: `Papers | ${siteMetadata.authorName}`,
+    description,
+    url: `${siteMetadata.siteUrl}/papers`,
+    type: 'website',
+    images: [siteMetadata.ogImage],
+  },
 };
 
 interface Paper {
@@ -26,9 +39,45 @@ async function getPapers(): Promise<Paper[]> {
 
 export default async function Papers() {
   const papers = await getPapers();
+  const pageUrl = `${siteMetadata.siteUrl}/papers`;
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${pageUrl}#collection`,
+        url: pageUrl,
+        name: 'Papers',
+        description,
+        isPartOf: siteMetadata.siteUrl,
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${pageUrl}#items`,
+        itemListOrder: 'https://schema.org/ItemListOrderDescending',
+        numberOfItems: papers.length,
+        itemListElement: papers.map((paper, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'ScholarlyArticle',
+            name: paper.title,
+            description: paper.description,
+            datePublished: paper.year,
+            author: paper.authors.map((author) => ({
+              '@type': 'Person',
+              name: author,
+            })),
+            sameAs: paper.pdfUrl,
+          },
+        })),
+      },
+    ],
+  };
 
   return (
     <div className="container-custom py-16 md:py-24">
+      <StructuredData data={jsonLd} />
       <header className="mb-12">
         <h1 className="text-3xl md:text-4xl font-semibold mb-4 text-[var(--color-text)] font-serif">
           Papers

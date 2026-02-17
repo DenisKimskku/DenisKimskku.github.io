@@ -22,6 +22,8 @@ export interface ArticleMetadata {
 
 export interface Article extends ArticleMetadata {
   content: string;
+  updatedAt: string;
+  wordCount: number;
 }
 
 const articlesDirectory = path.join(process.cwd(), 'src', 'content', 'articles');
@@ -37,18 +39,21 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
   try {
     const fullPath = path.join(articlesDirectory, `${slug}.md`);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const fileStats = fs.statSync(fullPath);
     const { data, content } = matter(fileContents);
+    const wordCount = content.split(/\s+/).filter(Boolean).length;
+    const updatedAt = fileStats.mtime.toISOString().split('T')[0];
 
     // Process markdown to HTML
     const processedContent = await unified()
       .use(remarkParse)
       .use(remarkGfm)
       .use(remarkMath)
-      .use(remarkRehype as any)
+      .use(remarkRehype)
       .use(rehypeSlug)
       .use(rehypeKatex)
       .use(rehypeHighlight)
-      .use(rehypeStringify as any)
+      .use(rehypeStringify)
       .process(content);
 
     const contentHtml = processedContent.toString();
@@ -61,6 +66,8 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
       description: data.description || '',
       tags: data.tags || [],
       content: contentHtml,
+      updatedAt,
+      wordCount,
     };
 
     // Cache the result
@@ -96,14 +103,16 @@ export function calculateReadingTime(content: string): number {
 
 // Generate table of contents from HTML
 export function generateTOC(htmlContent: string): Array<{ level: number; text: string; id: string }> {
-  const headingRegex = /<h([2-3])[^>]*>(.*?)<\/h\1>/g;
+  const headingRegex = /<h([2-3])([^>]*)>(.*?)<\/h\1>/g;
   const toc: Array<{ level: number; text: string; id: string }> = [];
   let match;
 
   while ((match = headingRegex.exec(htmlContent)) !== null) {
     const level = parseInt(match[1]);
-    const text = match[2].replace(/<[^>]*>/g, ''); // Strip HTML tags
-    const id = text
+    const attrs = match[2];
+    const text = match[3].replace(/<[^>]*>/g, ''); // Strip HTML tags
+    const idMatch = attrs.match(/\sid="([^"]+)"/);
+    const id = idMatch?.[1] || text
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');

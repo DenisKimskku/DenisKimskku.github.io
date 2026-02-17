@@ -4,6 +4,8 @@ import { getArticleBySlug, getAllArticleSlugs, calculateReadingTime, generateTOC
 import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
 import Breadcrumb from '@/components/Breadcrumb';
+import { getTagSlugByName } from '@/lib/articles';
+import { siteMetadata } from '@/lib/siteMetadata';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -38,8 +40,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: article.description,
       type: 'article',
       publishedTime: article.date,
+      modifiedTime: article.updatedAt,
       tags: article.tags,
-      url: `https://deniskim1.com/writing/${slug}`,
+      url: `${siteMetadata.siteUrl}/writing/${slug}`,
+      images: [siteMetadata.ogImage],
     },
   };
 }
@@ -61,12 +65,27 @@ export default async function ArticlePage({ params }: PageProps) {
     headline: article.title,
     description: article.description,
     datePublished: article.date,
-    url: `https://deniskim1.com/writing/${slug}`,
+    dateModified: article.updatedAt,
+    url: `${siteMetadata.siteUrl}/writing/${slug}`,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${siteMetadata.siteUrl}/writing/${slug}`,
+    },
+    image: [`${siteMetadata.siteUrl}${siteMetadata.ogImage.url}`],
+    wordCount: article.wordCount,
+    keywords: article.tags.join(', '),
+    articleSection: article.type,
+    inLanguage: 'en-US',
     author: [{
       '@type': 'Person',
-      name: 'Minseok (Denis) Kim',
-      url: 'https://deniskim1.com',
+      name: siteMetadata.authorName,
+      url: siteMetadata.siteUrl,
     }],
+    publisher: {
+      '@type': 'Person',
+      name: siteMetadata.authorName,
+      url: siteMetadata.siteUrl,
+    },
   };
 
   const breadcrumbItems = [
@@ -103,13 +122,14 @@ export default async function ArticlePage({ params }: PageProps) {
 
         {/* Tags */}
         <div className="flex flex-wrap gap-2">
-          {article.tags.map((tag, index) => (
-            <span
-              key={index}
+          {article.tags.map((tag) => (
+            <Link
+              key={tag}
+              href={`/writing/tag/${getTagSlugByName(tag)}`}
               className="inline-block bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] px-3 py-1 rounded-full text-xs font-medium"
             >
               {tag}
-            </span>
+            </Link>
           ))}
         </div>
       </header>
