@@ -165,6 +165,9 @@ export default function WritingHub({ articles }: WritingHubProps) {
       <div className="mb-10 space-y-6">
         {/* Search Input */}
         <div className="relative">
+          <label htmlFor="writing-search" className="sr-only">
+            Search articles
+          </label>
           <svg
             className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-text-muted)]"
             fill="none"
@@ -174,6 +177,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
+            id="writing-search"
             type="text"
             placeholder="Search articles..."
             value={searchTerm}
@@ -182,6 +186,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
           />
           {searchTerm && (
             <button
+              type="button"
               onClick={() => setSearchTerm('')}
               className="absolute inset-y-0 right-0 flex items-center pr-4 text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
               aria-label="Clear search"
@@ -202,6 +207,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
               </span>
               {activeTags.size > 0 && (
                 <button
+                  type="button"
                   onClick={clearAllFilters}
                   className="text-xs text-[var(--color-accent)] hover:underline"
                 >
@@ -209,11 +215,14 @@ export default function WritingHub({ articles }: WritingHubProps) {
                 </button>
               )}
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2" role="group" aria-label="Article topic filters">
               {allTags.map((tag) => (
                 <button
+                  type="button"
                   key={tag}
                   onClick={() => toggleTag(tag)}
+                  aria-label={`Filter by ${tag}`}
+                  aria-pressed={activeTags.has(tag)}
                   className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                     activeTags.has(tag)
                       ? 'bg-[var(--color-accent)] text-white'
@@ -246,6 +255,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
               No articles found matching your criteria.
             </p>
             <button
+              type="button"
               onClick={clearAllFilters}
               className="text-sm text-[var(--color-accent)] hover:underline"
             >

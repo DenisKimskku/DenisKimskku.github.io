@@ -1,21 +1,52 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
+import { siteMetadata } from '@/lib/siteMetadata';
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'I am a researcher bridging computer security and machine learning, focusing on AI safety, security, and alignment.',
+  description: siteMetadata.description,
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+    url: siteMetadata.siteUrl,
+    type: 'website',
+    images: [siteMetadata.ogImage],
+  },
 };
 
 export default function Home() {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: 'Minseok (Denis) Kim',
-    url: 'https://deniskim1.com',
-    sameAs: [
-      'https://github.com/DenisKimskku',
-      'https://scholar.google.com/citations?user=81uf6x0AAAAJ',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': `${siteMetadata.siteUrl}#website`,
+        url: siteMetadata.siteUrl,
+        name: siteMetadata.siteName,
+        description: siteMetadata.description,
+        inLanguage: 'en-US',
+        publisher: {
+          '@id': `${siteMetadata.siteUrl}#person`,
+        },
+      },
+      {
+        '@type': 'Person',
+        '@id': `${siteMetadata.siteUrl}#person`,
+        name: siteMetadata.authorName,
+        url: siteMetadata.siteUrl,
+        sameAs: siteMetadata.profiles,
+        jobTitle: 'AI & Security Researcher',
+        knowsAbout: [
+          'AI security',
+          'RAG security',
+          'LLM safety',
+          'Adversarial machine learning',
+        ],
+      },
     ],
   };
 

@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 import { Inter, Lora } from "next/font/google";
 import "@/styles/globals.css";
+import 'highlight.js/styles/github-dark.css';
+import 'katex/dist/katex.min.css';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/lib/theme";
 import PageTransition from "@/components/PageTransition";
+import { siteMetadata } from "@/lib/siteMetadata";
+
+const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+const bingVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION;
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,30 +27,37 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://deniskim1.com'),
+  metadataBase: new URL(siteMetadata.siteUrl),
   title: {
-    default: "Minseok (Denis) Kim - AI & Security Researcher",
-    template: "%s | Minseok (Denis) Kim"
+    default: siteMetadata.title,
+    template: `%s | ${siteMetadata.authorName}`
   },
-  description: "Research portfolio of Minseok (Denis) Kim, focusing on AI security, RAG systems, LLM safety, and adversarial machine learning.",
+  description: siteMetadata.description,
   keywords: ["AI security", "RAG Security", "RAG", "LLM", "machine learning", "adversarial attacks", "research"],
-  authors: [{ name: "Minseok (Denis) Kim" }],
-  creator: "Minseok (Denis) Kim",
+  authors: [{ name: siteMetadata.authorName }],
+  creator: siteMetadata.authorName,
+  icons: {
+    icon: '/apple-touch-icon.png',
+    apple: '/apple-touch-icon.png',
+  },
   alternates: {
     canonical: '/',
+    types: {
+      'application/rss+xml': `${siteMetadata.siteUrl}/rss.xml`,
+    },
+  },
+  verification: {
+    ...(googleVerification ? { google: googleVerification } : {}),
+    ...(bingVerification ? { other: { 'msvalidate.01': bingVerification } } : {}),
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://deniskim1.com",
-    title: "Minseok (Denis) Kim - AI & Security Researcher",
-    description: "Research portfolio focusing on AI security, RAG systems, and LLM safety",
-    siteName: "Minseok Kim Portfolio",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Minseok (Denis) Kim - AI & Security Researcher",
-    description: "Research portfolio focusing on AI security, RAG systems, and LLM safety",
+    url: siteMetadata.siteUrl,
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+    siteName: siteMetadata.siteName,
+    images: [siteMetadata.ogImage],
   },
   robots: {
     index: true,
@@ -66,10 +79,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${lora.variable}`}>
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </head>
       <body className="font-sans">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-[var(--color-bg-secondary)] focus:text-[var(--color-text)]">
           Skip to main content

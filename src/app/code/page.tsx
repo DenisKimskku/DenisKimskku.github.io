@@ -1,9 +1,22 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import StructuredData from '@/components/StructuredData';
+import { siteMetadata } from '@/lib/siteMetadata';
 
+const description = 'Open-source projects and code contributions by Minseok (Denis) Kim.';
 export const metadata: Metadata = {
   title: 'Code',
-  description: 'Open-source projects and code contributions by Minseok (Denis) Kim.',
+  description,
+  alternates: {
+    canonical: '/code',
+  },
+  openGraph: {
+    title: `Code | ${siteMetadata.authorName}`,
+    description,
+    url: `${siteMetadata.siteUrl}/code`,
+    type: 'website',
+    images: [siteMetadata.ogImage],
+  },
 };
 
 interface Project {
@@ -48,9 +61,56 @@ const projects: Project[] = [
 ];
 
 export default function Code() {
+  const pageUrl = `${siteMetadata.siteUrl}/code`;
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${pageUrl}#collection`,
+        url: pageUrl,
+        name: 'Code',
+        description,
+        isPartOf: siteMetadata.siteUrl,
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${pageUrl}#items`,
+        itemListOrder: 'https://schema.org/ItemListOrderDescending',
+        numberOfItems: projects.length + 1,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            item: {
+              '@type': 'SoftwareSourceCode',
+              name: 'Calendar++',
+              description: 'Smart menu bar calendar for macOS with Google Calendar integration and liquid glass design.',
+              codeRepository: 'https://github.com/DenisKimskku/Calendarpp',
+              programmingLanguage: 'Swift',
+              url: `${siteMetadata.siteUrl}/calendar-plus-plus`,
+            },
+          },
+          ...projects.map((project, index) => ({
+            '@type': 'ListItem',
+            position: index + 2,
+            item: {
+              '@type': 'SoftwareSourceCode',
+              name: project.name,
+              description: project.description,
+              codeRepository: project.html_url,
+              programmingLanguage: project.language,
+              url: project.html_url,
+            },
+          })),
+        ],
+      },
+    ],
+  };
 
   return (
     <div className="container-custom py-16 md:py-24">
+      <StructuredData data={jsonLd} />
       <header className="mb-12">
         <h1 className="text-3xl md:text-4xl font-semibold mb-4 text-[var(--color-text)] font-serif">
           Code

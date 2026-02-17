@@ -1,14 +1,85 @@
 import Link from 'next/link'
+import Image from 'next/image'
+import type { Metadata } from 'next'
+import StructuredData from '@/components/StructuredData'
+import { siteMetadata } from '@/lib/siteMetadata'
 
-export const metadata = {
+const description = 'A powerful menu bar calendar app for macOS with Google Calendar integration, event management, and beautiful design.'
+
+export const metadata: Metadata = {
   title: 'Calendar++',
-  description: 'A powerful menu bar calendar app for macOS with Google Calendar integration, event management, and beautiful design.',
+  description,
+  alternates: {
+    canonical: '/calendar-plus-plus',
+  },
+  openGraph: {
+    title: `Calendar++ | ${siteMetadata.authorName}`,
+    description,
+    url: `${siteMetadata.siteUrl}/calendar-plus-plus`,
+    type: 'website',
+    images: [`${siteMetadata.siteUrl}/images/calendar-plus-plus/overview-main-live.png`],
+  },
 }
 
 export default function CalendarPlusPlus() {
+  const pageUrl = `${siteMetadata.siteUrl}/calendar-plus-plus`
+  const screenshots = [
+    {
+      src: '/images/calendar-plus-plus/overview-main-live.png',
+      width: 1148,
+      height: 956,
+      title: 'Large-screen monthly view',
+      caption: 'Use calendar++ as a full productivity app with month grid and integrated event list.',
+    },
+    {
+      src: '/images/calendar-plus-plus/toolbar-controls.png',
+      width: 1148,
+      height: 140,
+      title: 'Fast top-bar controls',
+      caption: 'Today jump, view switch, refresh, navigation, and settings are all reachable in one row.',
+    },
+    {
+      src: '/images/calendar-plus-plus/event-chips-focus.png',
+      width: 1148,
+      height: 300,
+      title: 'Readable event density',
+      caption: 'Multiple events are visible inside each day cell with compact chip styling.',
+    },
+    {
+      src: '/images/calendar-plus-plus/day-events-panel-wide.png',
+      width: 1148,
+      height: 300,
+      title: 'Day-level event panel',
+      caption: 'Below the month grid, the event panel lists all-day and timed entries clearly.',
+    },
+  ]
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Calendar++',
+    applicationCategory: 'ProductivityApplication',
+    operatingSystem: 'macOS',
+    description,
+    url: pageUrl,
+    author: {
+      '@type': 'Person',
+      name: siteMetadata.authorName,
+      url: siteMetadata.siteUrl,
+    },
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    downloadUrl: 'https://github.com/DenisKimskku/Calendarpp/releases',
+    softwareRequirements: 'macOS 13.0 or later',
+  }
+
   return (
     <div className="min-h-screen bg-[var(--color-bg)]">
       <div className="max-w-4xl mx-auto px-4 py-16">
+        <StructuredData data={jsonLd} />
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -66,7 +137,7 @@ export default function CalendarPlusPlus() {
           <div className="text-lg text-[var(--color-text)] space-y-4">
             <p>
               Calendar++ is a powerful menu bar calendar application for macOS that helps you stay organized and productive.
-              Access your schedule instantly from your Mac's menu bar without opening multiple apps.
+              Access your schedule instantly from your Mac&apos;s menu bar without opening multiple apps.
             </p>
             <p>
               The app integrates seamlessly with both your local macOS Calendar and Google Calendar, providing a unified
@@ -74,10 +145,35 @@ export default function CalendarPlusPlus() {
               data stays private and is never stored on external servers - everything remains on your device.
             </p>
             <p>
-              Built natively for macOS with SwiftUI, Calendar++ features a beautiful liquid glass design that adapts to
-              macOS Sequoia's visual style, offering quick event creation, smart event management, and instant access to
-              your schedule right from your menu bar.
+              Built natively for macOS with SwiftUI, Calendar++ supports both menu bar workflow and a larger, desktop-style
+              planning window. You can quickly navigate months, review day details, and manage events from one consistent interface.
             </p>
+          </div>
+        </div>
+
+        {/* Screenshots */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold mb-8 text-center text-[var(--color-text)]">Screenshots</h2>
+          <div className="space-y-6">
+            {screenshots.map((shot) => (
+              <figure
+                key={shot.src}
+                className="bg-[var(--color-bg-secondary)] rounded-xl border border-[var(--color-border)] overflow-hidden"
+              >
+                <Image
+                  src={shot.src}
+                  alt={shot.title}
+                  width={shot.width}
+                  height={shot.height}
+                  className="w-full h-auto block"
+                  loading="lazy"
+                />
+                <figcaption className="p-4">
+                  <p className="font-semibold text-[var(--color-text)]">{shot.title}</p>
+                  <p className="text-sm text-[var(--color-text-secondary)] mt-1">{shot.caption}</p>
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </div>
 

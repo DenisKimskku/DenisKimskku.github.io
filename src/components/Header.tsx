@@ -34,11 +34,12 @@ export default function Header() {
           </Link>
 
           {/* Navigation */}
-          <nav className="flex items-center gap-1">
+          <nav className="flex items-center gap-1" aria-label="Primary navigation">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={isActive(item.href, item.exact) ? 'page' : undefined}
                 className={`text-sm transition-colors px-3 py-1.5 rounded-md ${
                   isActive(item.href, item.exact)
                     ? 'text-[var(--color-text)] font-medium'

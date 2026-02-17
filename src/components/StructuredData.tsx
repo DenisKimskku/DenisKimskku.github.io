@@ -2,7 +2,7 @@
 import React from 'react';
 
 interface StructuredDataProps {
-  data: Record<string, any>;
+  data: Record<string, unknown>;
 }
 
 const StructuredData: React.FC<StructuredDataProps> = ({ data }) => {
