@@ -3,11 +3,28 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Breadcrumb from '@/components/Breadcrumb';
 import StructuredData from '@/components/StructuredData';
-import { getArticlesByTag, getTagBySlug, getTagEntries } from '@/lib/articles';
+import {
+  getArticlesByTag,
+  getTagBySlug,
+  getTagEntries,
+  getTagLandingContent,
+  getTagSlugByName,
+} from '@/lib/articles';
 import { siteMetadata } from '@/lib/siteMetadata';
 
 interface PageProps {
   params: Promise<{ tag: string }>;
+}
+
+function truncateForMeta(text: string, maxLength = 158): string {
+  if (text.length <= maxLength) {
+    return text;
+  }
+
+  const truncated = text.slice(0, maxLength - 1);
+  const lastSpace = truncated.lastIndexOf(' ');
+  const safeSlice = lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated;
+  return `${safeSlice.trim()}…`;
 }
 
 export function generateStaticParams() {
@@ -30,15 +47,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const description = `Research articles tagged "${tagName}" by ${siteMetadata.authorName}.`;
+  const articles = getArticlesByTag(tagName);
+  const landingContent = getTagLandingContent(tagName, articles);
+  const description = truncateForMeta(
+    `${articles.length} research ${articles.length === 1 ? 'article' : 'articles'} on ${tagName}. ${landingContent.lead}`,
+  );
   return {
-    title: `Writing: ${tagName}`,
+    title: `${tagName} Research Articles`,
     description,
+    keywords: [tagName, ...landingContent.relatedTags],
     alternates: {
       canonical: `/writing/tag/${tagSlug}`,
     },
     openGraph: {
-      title: `${tagName} Articles | ${siteMetadata.authorName}`,
+      title: `${tagName} Research Articles | ${siteMetadata.authorName}`,
       description,
       url: `${siteMetadata.siteUrl}/writing/tag/${tagSlug}`,
       type: 'website',
@@ -56,7 +78,10 @@ export default async function WritingTagPage({ params }: PageProps) {
   }
 
   const articles = getArticlesByTag(tagName);
-  const description = `Research articles tagged "${tagName}" by ${siteMetadata.authorName}.`;
+  const landingContent = getTagLandingContent(tagName, articles);
+  const description = truncateForMeta(
+    `${articles.length} research ${articles.length === 1 ? 'article' : 'articles'} on ${tagName}. ${landingContent.lead}`,
+  );
   const pageUrl = `${siteMetadata.siteUrl}/writing/tag/${tagSlug}`;
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -108,6 +133,48 @@ export default async function WritingTagPage({ params }: PageProps) {
           {articles.length} {articles.length === 1 ? 'article' : 'articles'} in this topic.
         </p>
       </header>
+
+      <section className="mb-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-6">
+        <p className="text-[var(--color-text)] leading-relaxed mb-4">
+          {landingContent.lead}
+        </p>
+        <p className="text-[var(--color-text-secondary)] leading-relaxed mb-4">
+          {landingContent.body}
+        </p>
+        <p className="text-[var(--color-text-secondary)] leading-relaxed">
+          This page is maintained as a high-signal index for {tagName}. Use it to follow newer articles first, then branch into adjacent topics and defensive patterns that repeatedly appear across projects and paper reviews.
+        </p>
+      </section>
+
+      {landingContent.relatedTags.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-muted)] mb-3">
+            Related Topics
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {landingContent.relatedTags.map((relatedTag) => (
+              <Link
+                key={relatedTag}
+                href={`/writing/tag/${getTagSlugByName(relatedTag)}`}
+                className="px-3 py-1.5 rounded-full text-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
+              >
+                {relatedTag}
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section className="mb-10">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-muted)] mb-3">
+          What You Will Find Here
+        </h2>
+        <ul className="list-disc list-inside space-y-2 text-sm text-[var(--color-text-secondary)]">
+          {landingContent.learnings.map((learning) => (
+            <li key={learning}>{learning}</li>
+          ))}
+        </ul>
+      </section>
 
       <div className="space-y-1">
         {articles.map((article) => (

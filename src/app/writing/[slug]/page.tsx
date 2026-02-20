@@ -4,11 +4,34 @@ import { getArticleBySlug, getAllArticleSlugs, calculateReadingTime, generateTOC
 import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
 import Breadcrumb from '@/components/Breadcrumb';
-import { getTagSlugByName } from '@/lib/articles';
+import { getAllArticles, getRelatedArticles, getTagSlugByName } from '@/lib/articles';
 import { siteMetadata } from '@/lib/siteMetadata';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+function truncateForMeta(text: string, maxLength = 158): string {
+  if (text.length <= maxLength) {
+    return text;
+  }
+
+  const truncated = text.slice(0, maxLength - 1);
+  const lastSpace = truncated.lastIndexOf(' ');
+  const safeSlice = lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated;
+  return `${safeSlice.trim()}…`;
+}
+
+function buildArticleMetaDescription(article: { description: string; type: string; tags: string[] }): string {
+  const primaryTopic = article.tags[0] || 'AI security';
+  const secondaryTopics = article.tags.slice(1, 3).join(', ');
+
+  const summary = article.description.trim();
+  const suffix = secondaryTopics
+    ? ` Includes insights on ${primaryTopic} and ${secondaryTopics}.`
+    : ` Includes practical insights on ${primaryTopic}.`;
+
+  return truncateForMeta(`${summary} ${article.type} analysis.${suffix}`);
 }
 
 export async function generateStaticParams() {
@@ -28,19 +51,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const primaryTopic = article.tags[0] || 'AI Security';
+  const description = buildArticleMetaDescription(article);
+
   return {
-    title: article.title,
-    description: article.description,
+    title: `${article.title} | ${primaryTopic}`,
+    description,
     keywords: article.tags,
     alternates: {
       canonical: `/writing/${slug}`,
     },
     openGraph: {
-      title: article.title,
-      description: article.description,
+      title: `${article.title} | ${article.type}`,
+      description,
       type: 'article',
       publishedTime: article.date,
       modifiedTime: article.updatedAt,
+      section: article.type,
       tags: article.tags,
       url: `${siteMetadata.siteUrl}/writing/${slug}`,
       images: [siteMetadata.ogImage],
@@ -58,12 +85,14 @@ export default async function ArticlePage({ params }: PageProps) {
 
   const readingTime = calculateReadingTime(article.content);
   const toc = generateTOC(article.content);
+  const relatedArticles = getRelatedArticles(article.slug, article.tags, 3, getAllArticles());
+  const metaDescription = buildArticleMetaDescription(article);
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: article.title,
-    description: article.description,
+    description: metaDescription,
     datePublished: article.date,
     dateModified: article.updatedAt,
     url: `${siteMetadata.siteUrl}/writing/${slug}`,
@@ -163,6 +192,36 @@ export default async function ArticlePage({ params }: PageProps) {
         className="article-content"
         dangerouslySetInnerHTML={{ __html: article.content }}
       />
+
+      {relatedArticles.length > 0 && (
+        <section className="mt-14 pt-8 border-t border-[var(--color-border)]">
+          <h2 className="text-xl md:text-2xl font-semibold mb-5 text-[var(--color-text)] font-serif">
+            Related articles
+          </h2>
+          <div className="space-y-4">
+            {relatedArticles.map((related) => (
+              <article key={related.slug} className="group">
+                <Link
+                  href={`/writing/${related.slug}`}
+                  className="block rounded-lg border border-[var(--color-border)] p-4 hover:border-[var(--color-accent)] hover:bg-[var(--color-bg-secondary)] transition-colors"
+                >
+                  <h3 className="text-base font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1.5">
+                    {related.title}
+                  </h3>
+                  <p className="text-sm text-[var(--color-text-secondary)] mb-2.5">
+                    {related.description}
+                  </p>
+                  <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--color-text-muted)]">
+                    <time dateTime={related.date}>{related.date}</time>
+                    <span>·</span>
+                    <span>{related.type}</span>
+                  </div>
+                </Link>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Back to Writing */}
       <footer className="mt-16 pt-8 border-t border-[var(--color-border)] no-print">
