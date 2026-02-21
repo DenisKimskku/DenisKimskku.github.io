@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -68,8 +68,18 @@ function highlightText(text: string, searchTerms: string[]): React.ReactElement 
   );
 }
 
+function useDebounce(value: string, delay: number): string {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(timer);
+  }, [value, delay]);
+  return debouncedValue;
+}
+
 export default function WritingHub({ articles }: WritingHubProps) {
   const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearch = useDebounce(searchTerm, 200);
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
 
   // Extract all unique tags
@@ -93,8 +103,8 @@ export default function WritingHub({ articles }: WritingHubProps) {
     }
 
     // Search
-    if (searchTerm) {
-      const searchTermsArray = searchTerm.toLowerCase().split(/\s+/).filter(Boolean);
+    if (debouncedSearch) {
+      const searchTermsArray = debouncedSearch.toLowerCase().split(/\s+/).filter(Boolean);
       filtered = filtered.filter(article => {
         const searchableText = [
           article.title,
@@ -122,7 +132,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
     }
 
     return filtered;
-  }, [articles, searchTerm, activeTags]);
+  }, [articles, debouncedSearch, activeTags]);
 
   const toggleTag = (tag: string) => {
     const newTags = new Set(activeTags);
@@ -139,7 +149,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
     setSearchTerm('');
   };
 
-  const searchTermsArray = searchTerm
+  const searchTermsArray = debouncedSearch
     .toLowerCase()
     .split(/\s+/)
     .filter(Boolean);

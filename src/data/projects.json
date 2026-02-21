@@ -1,23 +1,42 @@
-[
-  {
-    "title": "RAG-Vis Playground",
-    "description": "Interactive visualizer for RAG security, covering fundamentals, adversarial attacks (poisoning, injection), and multi-stage defense mechanisms.",
-    "githubUrl": "https://github.com/DenisKimskku/RAG-Vis-Playground",
-    "demoUrl": "https://rag-vis.deniskim1.com/"
+{
+  "featured": {
+    "name": "Calendar++",
+    "description": "Smart menu bar calendar for macOS with Google Calendar integration and liquid glass design.",
+    "githubUrl": "https://github.com/DenisKimskku/Calendarpp",
+    "language": "Swift",
+    "demoUrl": "/calendar-plus-plus"
   },
-  {
-    "title": "RAGDefender",
-    "description": "A resource-efficient defense mechanism against knowledge corruption (i.e., by data poisoning) attacks in practical RAG deployments.",
-    "githubUrl": "https://github.com/SecAI-Lab/RAGDefender"
-  },
-  {
-    "title": "Korean Slang Detector",
-    "description": "LLM-based Korean drug slang detection system that utilizes TF-IDF data augmentation and a context-aware attention model to achieve 98.16% accuracy.",
-    "githubUrl": "https://github.com/DenisKimskku/korean_slang_detector"
-  },
-  {
-    "title": "iChat",
-    "description": "A real-time chat application built with Node.js, Express, and Socket.io. Features include user authentication, private messaging, and a responsive UI.",
-    "githubUrl": "https://github.com/DenisKimskku/iChat"
-  }
-]
+  "projects": [
+    {
+      "name": "RAG-Vis Playground",
+      "description": "Interactive visualizer for RAG security, covering fundamentals, adversarial attacks (poisoning, injection), and multi-stage defense mechanisms.",
+      "githubUrl": "https://github.com/DenisKimskku/RAG-Vis-Playground",
+      "language": "TypeScript",
+      "demoUrl": "https://rag-vis.deniskim1.com/"
+    },
+    {
+      "name": "RAGDefender",
+      "description": "A resource-efficient defense mechanism against knowledge corruption attacks in practical RAG deployments.",
+      "githubUrl": "https://github.com/SecAI-Lab/RAGDefender",
+      "language": "Python"
+    },
+    {
+      "name": "pickleguard",
+      "description": "A defense tool that detects and prevents malicious pickle payloads through static analysis and opcode inspection.",
+      "githubUrl": "https://github.com/DenisKimskku/pickleguard",
+      "language": "Python"
+    },
+    {
+      "name": "iChat",
+      "description": "An intelligent RAG-based chatbot leveraging retrieval-augmented generation for enhanced conversational AI.",
+      "githubUrl": "https://github.com/DenisKimskku/iChat",
+      "language": "Python"
+    },
+    {
+      "name": "korean_slang_detector",
+      "description": "LLM-based Korean drug slang detection system using TF-IDF augmentation and context-aware attention model.",
+      "githubUrl": "https://github.com/DenisKimskku/korean_slang_detector",
+      "language": "Python"
+    }
+  ]
+}

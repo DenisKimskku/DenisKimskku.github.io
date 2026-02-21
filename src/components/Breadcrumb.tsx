@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import StructuredData from './StructuredData';
+import { siteMetadata } from '@/lib/siteMetadata';
 
 interface BreadcrumbItem {
   name: string;
@@ -18,7 +19,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: item.href ? `https://deniskim1.com${item.href}` : undefined,
+      item: item.href ? `${siteMetadata.siteUrl}${item.href}` : undefined,
     })),
   };
 
