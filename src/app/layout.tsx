@@ -81,8 +81,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${lora.variable}`}>
-      <body className="font-sans">
+      <head>
         <GoogleAnalytics />
+      </head>
+      <body className="font-sans">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-[var(--color-bg-secondary)] focus:text-[var(--color-text)]">
           Skip to main content
         </a>
