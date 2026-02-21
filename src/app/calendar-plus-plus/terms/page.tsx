@@ -20,7 +20,7 @@ export default function TermsOfService() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Agreement to Terms</h2>
             <p className="text-[var(--color-text)] mb-4">
-              By downloading, installing, or using calendar++ (the "Application"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the Application.
+              By downloading, installing, or using calendar++ (the &ldquo;Application&rdquo;), you agree to be bound by these Terms of Service (&ldquo;Terms&rdquo;). If you do not agree to these Terms, do not use the Application.
             </p>
           </section>
 
@@ -62,8 +62,8 @@ export default function TermsOfService() {
               If you choose to integrate with Google Calendar, you acknowledge that:
             </p>
             <ul className="list-disc list-inside text-[var(--color-text)] mb-4 space-y-2">
-              <li>You must comply with Google's Terms of Service</li>
-              <li>The integration depends on Google's API availability</li>
+              <li>You must comply with Google&apos;s Terms of Service</li>
+              <li>The integration depends on Google&apos;s API availability</li>
               <li>We are not responsible for Google service interruptions</li>
               <li>You can disconnect at any time through app settings</li>
             </ul>
@@ -72,7 +72,7 @@ export default function TermsOfService() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Disclaimer of Warranties</h2>
             <p className="text-[var(--color-text)] mb-4">
-              THE APPLICATION IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:
+              THE APPLICATION IS PROVIDED &ldquo;AS IS&rdquo; AND &ldquo;AS AVAILABLE&rdquo; WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:
             </p>
             <ul className="list-disc list-inside text-[var(--color-text)] mb-4 space-y-2">
               <li>Implied warranties of merchantability</li>
@@ -125,7 +125,7 @@ export default function TermsOfService() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Open Source</h2>
             <p className="text-[var(--color-text)] mb-4">
-              calendar++ is open source software available on <a href="https://github.com/DenisKimskku/Calendarpp" className="text-[var(--color-accent)] hover:underline" target="_blank" rel="noopener noreferrer">GitHub</a>. Contributions and modifications are subject to the repository's license terms.
+              calendar++ is open source software available on <a href="https://github.com/DenisKimskku/Calendarpp" className="text-[var(--color-accent)] hover:underline" target="_blank" rel="noopener noreferrer">GitHub</a>. Contributions and modifications are subject to the repository&apos;s license terms.
             </p>
           </section>
 
