@@ -1,13 +1,8 @@
 import Link from 'next/link'
-import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
+export const metadata = {
   title: 'Privacy Policy - calendar++',
   description: 'Privacy Policy for calendar++ macOS application',
-  robots: {
-    index: false,
-    follow: true,
-  },
 }
 
 export default function PrivacyPolicy() {
@@ -25,7 +20,7 @@ export default function PrivacyPolicy() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4 text-[var(--color-text)]">Introduction</h2>
             <p className="text-[var(--color-text)] mb-4">
-              calendar++ (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our macOS application.
+              calendar++ ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our macOS application.
             </p>
           </section>
 
@@ -51,7 +46,7 @@ export default function PrivacyPolicy() {
               <li>We use OAuth 2.0 for secure authentication</li>
               <li>We only request read-only access to your calendars</li>
               <li>OAuth tokens are stored securely in your macOS Keychain</li>
-              <li>Calendar data is fetched directly from Google&apos;s servers to your device</li>
+              <li>Calendar data is fetched directly from Google's servers to your device</li>
               <li>We never store your Google credentials or calendar data on our servers</li>
             </ul>
           </section>
@@ -90,7 +85,7 @@ export default function PrivacyPolicy() {
               <li><a href="https://policies.google.com/terms" className="text-[var(--color-accent)] hover:underline" target="_blank" rel="noopener noreferrer">Google Terms of Service</a></li>
             </ul>
             <p className="text-[var(--color-text)] mb-4">
-              calendar++&apos;s use of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" className="text-[var(--color-accent)] hover:underline" target="_blank" rel="noopener noreferrer">Google API Services User Data Policy</a>, including the Limited Use requirements.
+              calendar++'s use of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" className="text-[var(--color-accent)] hover:underline" target="_blank" rel="noopener noreferrer">Google API Services User Data Policy</a>, including the Limited Use requirements.
             </p>
           </section>
 
@@ -105,7 +100,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">Children&apos;s Privacy</h2>
+            <h2 className="text-2xl font-semibold mb-4">Children's Privacy</h2>
             <p className="text-[var(--color-text)] mb-4">
               calendar++ does not knowingly collect information from children under 13. The app is designed for general audiences.
             </p>
@@ -114,7 +109,7 @@ export default function PrivacyPolicy() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Changes to This Privacy Policy</h2>
             <p className="text-[var(--color-text)] mb-4">
-              We may update this Privacy Policy from time to time. We will notify users of any material changes by updating the &quot;Last updated&quot; date at the top of this policy.
+              We may update this Privacy Policy from time to time. We will notify users of any material changes by updating the "Last updated" date at the top of this policy.
             </p>
           </section>
 

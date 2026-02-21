@@ -26,6 +26,15 @@ const socialLinks = [
       </svg>
     ),
   },
+  {
+    name: 'RSS',
+    href: '/rss.xml',
+    icon: (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6.503 20.752a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3.503 11.752a9 9 0 019 9M3.503 2.752a18 18 0 0118 18" />
+      </svg>
+    ),
+  },
 ];
 
 export default function Footer() {

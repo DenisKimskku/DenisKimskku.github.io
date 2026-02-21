@@ -7,6 +7,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/lib/theme";
 import PageTransition from "@/components/PageTransition";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
+import BackToTop from "@/components/BackToTop";
 import { siteMetadata } from "@/lib/siteMetadata";
 
 const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
@@ -37,7 +39,7 @@ export const metadata: Metadata = {
   authors: [{ name: siteMetadata.authorName }],
   creator: siteMetadata.authorName,
   icons: {
-    icon: '/apple-touch-icon.png',
+    icon: '/icon.svg',
     apple: '/apple-touch-icon.png',
   },
   alternates: {
@@ -80,6 +82,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${lora.variable}`}>
       <body className="font-sans">
+        <GoogleAnalytics />
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-[var(--color-bg-secondary)] focus:text-[var(--color-text)]">
           Skip to main content
         </a>
@@ -89,6 +92,7 @@ export default function RootLayout({
             <PageTransition>{children}</PageTransition>
           </main>
           <Footer />
+          <BackToTop />
         </ThemeProvider>
       </body>
     </html>
