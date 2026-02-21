@@ -1,4 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
   <rect width="32" height="32" rx="6" fill="#1a1a1a"/>
-  <text x="16" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#ffffff" text-anchor="middle">DK</text>
+  <!-- D -->
+  <path d="M7 8h4.5c3.6 0 6 2.4 6 7s-2.4 7-6 7H7V8zm2.8 2.3v9.4h1.7c2.4 0 3.2-1.8 3.2-4.7s-.8-4.7-3.2-4.7h-1.7z" fill="#ffffff"/>
+  <!-- K -->
+  <path d="M19.5 8h2.8v5.2L26 8h3.2l-4.2 5.5L29.5 22H26.2l-3-6.2-.9 1.2V22h-2.8V8z" fill="#ffffff"/>
 </svg>

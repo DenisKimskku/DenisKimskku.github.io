@@ -110,7 +110,12 @@ export function generateTOC(htmlContent: string): Array<{ level: number; text: s
   while ((match = headingRegex.exec(htmlContent)) !== null) {
     const level = parseInt(match[1]);
     const attrs = match[2];
-    const text = match[3].replace(/<[^>]*>/g, ''); // Strip HTML tags
+    let text = match[3];
+    let prev;
+    do {
+      prev = text;
+      text = text.replace(/<[^>]*>/g, '');
+    } while (text !== prev);
     const idMatch = attrs.match(/\sid="([^"]+)"/);
     const id = idMatch?.[1] || text
       .toLowerCase()

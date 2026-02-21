@@ -18,6 +18,9 @@
   ],
   "author": "Minseok (Denis) Kim",
   "license": "MIT",
+  "overrides": {
+    "minimatch": "^10.2.1"
+  },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
