@@ -8,9 +8,14 @@ jobs:
   warm:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping main pages
+      - name: Warm all pages from sitemap
         run: |
-          curl -sL https://deniskim1.com/ -o /dev/null
-          curl -sL https://deniskim1.com/writing/ -o /dev/null
-          curl -sL https://deniskim1.com/papers/ -o /dev/null
-          curl -sL https://deniskim1.com/code/ -o /dev/null
+          BASE=https://deniskim1.com
+          URLS=$(curl -s "${BASE}/sitemap.xml" | grep -oP '(?<=<loc>)[^<]+')
+          echo "$URLS" | xargs -P 8 -I {} curl -sL {} -o /dev/null
+          echo "$URLS" | sed 's|/$|/|' | while read -r url; do
+            path="${url#$BASE}"
+            for f in __next._full.txt index.txt; do
+              echo "${BASE}${path}${f}"
+            done
+          done | xargs -P 8 -I {} curl -sL {} -o /dev/null
