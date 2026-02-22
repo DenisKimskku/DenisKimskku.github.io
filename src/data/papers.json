@@ -6,7 +6,8 @@
     "conference": "FSE'26 (to appear)",
     "description": "This paper proposes asmFooler, a framework that reveals deep learning-based binary similarity models are highly vulnerable to adversarial code transformations that preserve program logic.",
     "pdfUrl": "https://deniskim1.com/papers/fse26/paper.pdf",
-    "codeUrl": "https://zenodo.org/records/17116512"
+    "codeUrl": "https://zenodo.org/records/17116512",
+    "bibtex": "@inproceedings{uhm2026foolme,\n  title={Fool Me If You Can: On the Robustness of Binary Code Similarity Detection Models against Semantics-preserving Transformations},\n  author={Uhm, Jiyong and Kim, Minseok and Polychronakis, Michalis and Koo, Hyungjoon},\n  booktitle={Proceedings of the ACM International Conference on the Foundations of Software Engineering (FSE)},\n  year={2026}\n}"
   },
     {
     "year": "2025",
@@ -15,7 +16,8 @@
     "conference": "Journal of The Korea Institute of Information Security & Cryptology Vol 35. No. 6",
     "description": "LLM-based Korean drug slang detection system that utilizes TF-IDF data augmentation and a context-aware attention model to achieve 98.16% accuracy.",
     "pdfUrl": "https://deniskim1.com/papers/jkiisc_25/paper.pdf",
-    "codeUrl": "https://github.com/DenisKimskku/korean_slang_detector"
+    "codeUrl": "https://github.com/DenisKimskku/korean_slang_detector",
+    "bibtex": "@article{kim2025llmdrug,\n  title={LLM-Based Drug Term Detection in Korean Messenger Conversations},\n  author={Kim, Minseok and Koo, Hyungjoon},\n  journal={Journal of The Korea Institute of Information Security \\& Cryptology},\n  volume={35},\n  number={6},\n  year={2025}\n}"
   },
   {
     "year": "2025",
@@ -24,7 +26,8 @@
     "conference": "CISC-W'25",
     "description": "Systematic analysis of LLM text watermarking by defining key properties and attacks while evaluating Zero-bit versus Multi-bit techniques",
     "pdfUrl": "https://deniskim1.com/papers/cisc_w_25/Paper.pdf",
-    "slideUrl": "https://deniskim1.com/papers/cisc_w_25/Poster.pdf"
+    "slideUrl": "https://deniskim1.com/papers/cisc_w_25/Poster.pdf",
+    "bibtex": "@inproceedings{kwon2025watermarking,\n  title={Analysis of Watermarking for AI-generated Text},\n  author={Kwon, Giuk and Kim, Minseok and Koo, Hyungjoon},\n  booktitle={Proceedings of the Conference on Information Security and Cryptology - Winter (CISC-W)},\n  year={2025}\n}"
   },
   {
     "year": "2025",
@@ -32,9 +35,10 @@
     "authors": ["Minseok Kim", "Hankook Lee", "Hyungjoon Koo"],
     "conference": "ACSAC'25",
     "description": "A resource-efficient defense mechanism against the knowledge corruption attacks on RAG systems by filtering out potentially adversarial documents.",
-    "pdfUrl": "https://deniskim1.com/papers/acsac25/RAGDefender_published_version.pdf", 
+    "pdfUrl": "https://deniskim1.com/papers/acsac25/RAGDefender_published_version.pdf",
     "codeUrl": "https://github.com/SecAI-Lab/RAGDefender",
-    "slideUrl": "https://deniskim1.com/papers/acsac25/ACSAC2025-73-Kim.pdf"
+    "slideUrl": "https://deniskim1.com/papers/acsac25/ACSAC2025-73-Kim.pdf",
+    "bibtex": "@inproceedings{kim2025rescuing,\n  title={Rescuing the Unpoisoned: Efficient Defense against Knowledge Corruption Attacks on RAG Systems},\n  author={Kim, Minseok and Lee, Hankook and Koo, Hyungjoon},\n  booktitle={Proceedings of the Annual Computer Security Applications Conference (ACSAC)},\n  year={2025}\n}"
   },
   {
     "year": "2025",
@@ -43,7 +47,8 @@
     "conference": "CISC-S'25",
     "description": "A study on protocol architectures and security in Model Control Protocol and Agent-to-Agent communication.",
     "pdfUrl": "https://deniskim1.com/papers/cisc_s_25/cisc_s_25_paper.pdf",
-    "slideUrl": "https://deniskim1.com/papers/cisc_s_25/cisc_s_25_slides.pdf"
+    "slideUrl": "https://deniskim1.com/papers/cisc_s_25/cisc_s_25_slides.pdf",
+    "bibtex": "@inproceedings{zhang2025bridging,\n  title={Bridging Models and Agents: Protocol Architectures and Security in MCP \\& A2A},\n  author={Zhang, Yiyue and Kim, Minseok and Koo, Hyungjoon},\n  booktitle={Proceedings of the Conference on Information Security and Cryptology - Summer (CISC-S)},\n  year={2025}\n}"
   },
   {
     "year": "2024",
@@ -52,6 +57,7 @@
     "conference": "CISC-W'24",
     "description": "An analysis of security vulnerabilities in RAG systems and emerging defense mechanisms.",
     "pdfUrl": "https://deniskim1.com/papers/cisc_w_24/CISC_W_24_paper.pdf",
-    "slideUrl": "https://deniskim1.com/papers/cisc_w_24/CISC_W_24_slides.pdf"
+    "slideUrl": "https://deniskim1.com/papers/cisc_w_24/CISC_W_24_slides.pdf",
+    "bibtex": "@inproceedings{kim2024trends,\n  title={Trends in Attacks and Defenses against Retrieval-Augmented Generation (RAG) Systems},\n  author={Kim, Minseok and Koo, Hyungjoon},\n  booktitle={Proceedings of the Conference on Information Security and Cryptology - Winter (CISC-W)},\n  year={2024}\n}"
   }
 ]

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { getAllArticles } from '@/lib/articles';
 
 export const metadata: Metadata = {
   title: 'Page Not Found',
@@ -7,6 +8,8 @@ export const metadata: Metadata = {
 };
 
 export default function NotFound() {
+  const recentArticles = getAllArticles().slice(0, 3);
+
   return (
     <div className="container-custom py-20 md:py-32">
       <div className="text-center max-w-md mx-auto">
@@ -34,6 +37,51 @@ export default function NotFound() {
           </Link>
         </div>
       </div>
+
+      {/* Quick Links */}
+      <div className="flex justify-center gap-6 mt-12">
+        <Link
+          href="/papers"
+          className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+        >
+          Papers
+        </Link>
+        <Link
+          href="/code"
+          className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+        >
+          Code
+        </Link>
+        <Link
+          href="/writing"
+          className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+        >
+          Writing
+        </Link>
+      </div>
+
+      {/* Recent Articles */}
+      {recentArticles.length > 0 && (
+        <div className="max-w-md mx-auto mt-16">
+          <h2 className="text-sm font-semibold text-[var(--color-text)] uppercase tracking-wider mb-4 text-center">
+            Recent Articles
+          </h2>
+          <div className="space-y-3">
+            {recentArticles.map((article) => (
+              <Link
+                key={article.slug}
+                href={`/writing/${article.slug}`}
+                className="block py-3 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
+              >
+                <h3 className="text-sm font-semibold font-serif text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors mb-1">
+                  {article.title}
+                </h3>
+                <span className="text-xs text-[var(--color-text-muted)]">{article.date}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

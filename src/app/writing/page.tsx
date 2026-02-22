@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import WritingHub from '@/components/WritingHub';
+import NewsletterSignup from '@/components/NewsletterSignup';
 import StructuredData from '@/components/StructuredData';
 import { getAllArticles, getTagEntries } from '@/lib/articles';
 import { siteMetadata } from '@/lib/siteMetadata';
@@ -98,6 +99,8 @@ export default async function Writing() {
       )}
 
       <WritingHub articles={articles} />
+
+      <NewsletterSignup />
     </div>
   );
 }
