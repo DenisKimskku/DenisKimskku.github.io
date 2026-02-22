@@ -42,7 +42,12 @@
       "Bash(find /Users/deniskim/Desktop/DenisKimskku.github.io/public -type f | wc -l && du -sh /Users/deniskim/Desktop/DenisKimskku.github.io/public/* | sort -h)",
       "Bash(ls -lh /Users/deniskim/Desktop/DenisKimskku.github.io/out/_next/static/chunks/ | sort -k5 -h)",
       "Bash(xargs -I {} basename {})",
-      "Bash(node -e \"console.log\\(require\\('/Users/deniskim/Desktop/DenisKimskku.github.io/package.json'\\).dependencies.next\\)\")"
+      "Bash(node -e \"console.log\\(require\\('/Users/deniskim/Desktop/DenisKimskku.github.io/package.json'\\).dependencies.next\\)\")",
+      "Bash(du -sh /Users/deniskim/Desktop/DenisKimskku.github.io/src 2>/dev/null && du -h /Users/deniskim/Desktop/DenisKimskku.github.io/src/components/*.tsx | sort -h)",
+      "Bash(ls -la /Users/deniskim/Desktop/DenisKimskku.github.io/out/_next/static/chunks/ 2>/dev/null | sort -k5 -rn | head -20)",
+      "Bash(du -sh /Users/deniskim/Desktop/DenisKimskku.github.io/out/_next/static/chunks/*.js 2>/dev/null | sort -rh | head -20)",
+      "Bash(du -sh /Users/deniskim/Desktop/DenisKimskku.github.io/out/images/*/ 2>/dev/null | sort -rh | head -10)",
+      "Bash(dig DenisKimskku.github.io +short 2>/dev/null)"
     ],
     "deny": [],
     "ask": []
