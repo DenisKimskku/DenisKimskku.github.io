@@ -57,12 +57,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description,
     keywords: [tagName, ...landingContent.relatedTags],
     alternates: {
-      canonical: `/writing/tag/${tagSlug}`,
+      canonical: `/writing/tag/${tagSlug}/`,
     },
     openGraph: {
       title: `${tagName} Research Articles | ${siteMetadata.authorName}`,
       description,
-      url: `${siteMetadata.siteUrl}/writing/tag/${tagSlug}`,
+      url: `${siteMetadata.siteUrl}/writing/tag/${tagSlug}/`,
       type: 'website',
       images: [siteMetadata.ogImage],
     },

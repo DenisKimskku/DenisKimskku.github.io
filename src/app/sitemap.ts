@@ -69,7 +69,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const articleEntries = articles.map((article) => {
     const articleFilePath = path.join(articlesDir, `${article.slug}.md`);
     return {
-      url: `${baseUrl}/writing/${article.slug}`,
+      url: `${baseUrl}/writing/${article.slug}/`,
       lastModified: getLastModified(articleFilePath),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
@@ -86,7 +86,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       : getLastModified(path.join(appDir, 'writing', 'page.tsx'));
 
     return {
-      url: `${baseUrl}/writing/tag/${tagEntry.slug}`,
+      url: `${baseUrl}/writing/tag/${tagEntry.slug}/`,
       lastModified: latestTagUpdate,
       changeFrequency: 'monthly' as const,
       priority: 0.6,
@@ -95,7 +95,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...staticPages.map((page) => ({
-      url: `${baseUrl}${page.route}`,
+      url: `${baseUrl}${page.route}/`,
       lastModified: getLastModified(page.file),
       changeFrequency: page.changeFrequency,
       priority: page.priority,

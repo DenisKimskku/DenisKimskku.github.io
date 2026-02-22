@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: 'Papers',
   description,
   alternates: {
-    canonical: '/papers',
+    canonical: '/papers/',
   },
   openGraph: {
     title: `Papers | ${siteMetadata.authorName}`,
