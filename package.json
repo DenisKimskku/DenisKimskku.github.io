@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/generate-og-images.mjs && next build && node scripts/strip-twitter-meta.mjs && node scripts/generate-rss.mjs",
+    "build": "node scripts/optimize-images.mjs && node scripts/generate-og-images.mjs && next build && node scripts/strip-twitter-meta.mjs && node scripts/generate-rss.mjs",
     "start": "next start",
     "lint": "eslint .",
     "export": "npm run build"

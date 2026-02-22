@@ -38,7 +38,11 @@
       "Bash(grep -r \"href=\\\\|src=\" /Users/deniskim/Desktop/DenisKimskku.github.io/src/content/articles/*.md | grep -E \"undefined|null|404\" | head -10 || echo \"No obvious broken links found\")",
       "Bash(grep -r \"TODO\\\\|FIXME\\\\|BUG\\\\|HACK\" /Users/deniskim/Desktop/DenisKimskku.github.io/src --include=\"*.tsx\" --include=\"*.ts\" 2>/dev/null | head -20 || echo \"No TODOs found\")",
       "Bash(grep \"externalLink\\\\|external\\\\|rel=.*noopener\" /Users/deniskim/Desktop/DenisKimskku.github.io/src/components/*.tsx | wc -l)",
-      "Bash(node /Users/deniskim/Desktop/DenisKimskku.github.io/scripts/generate-og-images.mjs 2>&1 | head -30)"
+      "Bash(node /Users/deniskim/Desktop/DenisKimskku.github.io/scripts/generate-og-images.mjs 2>&1 | head -30)",
+      "Bash(find /Users/deniskim/Desktop/DenisKimskku.github.io/public -type f | wc -l && du -sh /Users/deniskim/Desktop/DenisKimskku.github.io/public/* | sort -h)",
+      "Bash(ls -lh /Users/deniskim/Desktop/DenisKimskku.github.io/out/_next/static/chunks/ | sort -k5 -h)",
+      "Bash(xargs -I {} basename {})",
+      "Bash(node -e \"console.log\\(require\\('/Users/deniskim/Desktop/DenisKimskku.github.io/package.json'\\).dependencies.next\\)\")"
     ],
     "deny": [],
     "ask": []

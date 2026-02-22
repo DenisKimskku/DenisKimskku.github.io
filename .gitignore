@@ -17,6 +17,9 @@
 .DS_Store
 *.pem
 
+# Generated WebP images (built from PNGs via optimize-images.mjs)
+public/images/**/*.webp
+
 # Debug
 npm-debug.log*
 yarn-debug.log*
