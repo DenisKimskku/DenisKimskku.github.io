@@ -68,7 +68,7 @@ export default async function Writing() {
   };
 
   return (
-    <div className="container-custom py-16 md:py-24">
+    <div className="max-w-6xl mx-auto px-6 py-16 md:py-24">
       <StructuredData data={jsonLd} />
       <header className="mb-12">
         <h1 className="text-3xl md:text-4xl font-semibold mb-4 text-[var(--color-text)] font-serif">
