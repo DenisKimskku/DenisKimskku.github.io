@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: 'Calendar++',
   description,
   alternates: {
-    canonical: '/calendar-plus-plus',
+    canonical: '/calendar-plus-plus/',
   },
   openGraph: {
     title: `Calendar++ | ${siteMetadata.authorName}`,

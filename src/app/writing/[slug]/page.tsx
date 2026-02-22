@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: article.description,
     keywords: article.tags,
     alternates: {
-      canonical: `/writing/${slug}`,
+      canonical: `/writing/${slug}/`,
     },
     openGraph: {
       title: article.title,

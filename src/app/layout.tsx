@@ -6,8 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/lib/theme";
 import PageTransition from "@/components/PageTransition";
-import BackToTop from "@/components/BackToTop";
-import KeyboardShortcuts from "@/components/KeyboardShortcuts";
+import LazyExtras from "@/components/LazyExtras";
 import { siteMetadata } from "@/lib/siteMetadata";
 
 const GA_MEASUREMENT_ID = 'G-0R77Z2VFWT';
@@ -92,14 +91,13 @@ export default function RootLayout({
             <PageTransition>{children}</PageTransition>
           </main>
           <Footer />
-          <BackToTop />
-          <KeyboardShortcuts />
+          <LazyExtras />
         </ThemeProvider>
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="gtag-init" strategy="afterInteractive">
+        <Script id="gtag-init" strategy="lazyOnload">
           {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`}
         </Script>
       </body>

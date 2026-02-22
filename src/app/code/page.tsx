@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: 'Code',
   description,
   alternates: {
-    canonical: '/code',
+    canonical: '/code/',
   },
   openGraph: {
     title: `Code | ${siteMetadata.authorName}`,
