@@ -7,6 +7,8 @@ import StructuredData from '@/components/StructuredData';
 import Breadcrumb from '@/components/Breadcrumb';
 import CopyLinkButton from '@/components/CopyLinkButton';
 import ReadingProgress from '@/components/ReadingProgress';
+import TableOfContents from '@/components/TableOfContents';
+import GiscusComments from '@/components/GiscusComments';
 import { siteMetadata } from '@/lib/siteMetadata';
 
 interface PageProps {
@@ -44,6 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       publishedTime: article.date,
       tags: article.tags,
       url: `${siteMetadata.siteUrl}/writing/${slug}`,
+      images: [{ url: `/og/${slug}.png`, width: 1200, height: 630 }],
     },
   };
 }
@@ -128,35 +131,46 @@ export default async function ArticlePage({ params }: PageProps) {
         </div>
       </header>
 
-      {/* Table of Contents */}
-      {toc.length > 0 && (
-        <nav className="toc mb-12" aria-label="Table of contents">
-          <h2 className="text-sm font-semibold mb-4 text-[var(--color-text)] uppercase tracking-wider">
-            Contents
-          </h2>
-          <ul className="space-y-2">
-            {toc.map((item, index) => (
-              <li
-                key={index}
-                className={item.level === 3 ? 'ml-4' : ''}
-              >
-                <a
-                  href={`#${item.id}`}
-                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] text-sm transition-colors"
-                >
-                  {item.text}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
+      {/* Article Content with Sticky TOC */}
+      <div className={toc.length > 0 ? 'xl:grid xl:grid-cols-[1fr_220px] xl:gap-10 xl:max-w-[1000px] xl:mx-auto' : ''}>
+        <div>
+          {/* Mobile/Tablet TOC (inline collapsible) */}
+          {toc.length > 0 && (
+            <details className="xl:hidden toc mb-12" aria-label="Table of contents">
+              <summary className="text-sm font-semibold text-[var(--color-text)] uppercase tracking-wider cursor-pointer select-none">
+                Contents
+              </summary>
+              <ul className="mt-4 space-y-1.5">
+                {toc.map((item) => (
+                  <li key={item.id}>
+                    <a
+                      href={`#${item.id}`}
+                      className={`block text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors py-0.5 ${item.level === 3 ? 'pl-4' : ''}`}
+                    >
+                      {item.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )}
 
-      {/* Article Content */}
-      <article
-        className="article-content"
-        dangerouslySetInnerHTML={{ __html: article.content }}
-      />
+          {/* Article Content */}
+          <article
+            className="article-content"
+            dangerouslySetInnerHTML={{ __html: article.content }}
+          />
+        </div>
+
+        {/* Desktop Sticky TOC */}
+        {toc.length > 0 && (
+          <div className="hidden xl:block">
+            <div className="toc-sidebar">
+              <TableOfContents items={toc} />
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* Share */}
       <div className="mt-16 pt-8 border-t border-[var(--color-border)] no-print">
@@ -190,6 +204,9 @@ export default async function ArticlePage({ params }: PageProps) {
         </div>
       </div>
 
+      {/* Comments */}
+      <GiscusComments />
+
       {/* Related Articles */}
       {relatedArticles.length > 0 && (
         <div className="mt-12 pt-8 border-t border-[var(--color-border)] no-print">
@@ -216,8 +233,13 @@ export default async function ArticlePage({ params }: PageProps) {
         </div>
       )}
 
+      {/* GA4 Note */}
+      <p className="text-xs text-[var(--color-text-muted)] no-print mt-12">
+        Page views are tracked via Google Analytics for content improvement.
+      </p>
+
       {/* Back to Writing */}
-      <footer className="mt-12 pt-8 border-t border-[var(--color-border)] no-print">
+      <footer className="mt-4 pt-8 border-t border-[var(--color-border)] no-print">
         <Link
           href="/writing"
           className="inline-flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"

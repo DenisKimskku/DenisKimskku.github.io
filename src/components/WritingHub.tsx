@@ -287,6 +287,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
               >
                 <Link
                   href={`/writing/${article.slug}`}
+                  data-article-link
                   className="block py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
                 >
                   <div className="flex items-start justify-between gap-4">

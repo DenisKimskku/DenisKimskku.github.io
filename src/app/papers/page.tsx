@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import fs from 'fs';
 import path from 'path';
 import StructuredData from '@/components/StructuredData';
+import CopyBibtexButton from '@/components/CopyBibtexButton';
+import PdfPreview from '@/components/PdfPreview';
 import { siteMetadata } from '@/lib/siteMetadata';
 
 const description = 'Academic publications by Minseok (Denis) Kim on AI security, RAG systems, and LLM safety.';
@@ -29,6 +31,7 @@ interface Paper {
   pdfUrl?: string;
   codeUrl?: string;
   slideUrl?: string;
+  bibtex?: string;
 }
 
 async function getPapers(): Promise<Paper[]> {
@@ -161,6 +164,12 @@ export default async function Papers() {
                   </svg>
                   Slides
                 </a>
+              )}
+              {paper.bibtex && (
+                <CopyBibtexButton bibtex={paper.bibtex} />
+              )}
+              {paper.pdfUrl && (
+                <PdfPreview pdfUrl={paper.pdfUrl} title={paper.title} />
               )}
             </div>
           </article>

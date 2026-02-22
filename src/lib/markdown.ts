@@ -10,6 +10,8 @@ import rehypeSlug from 'rehype-slug';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeKatex from 'rehype-katex';
 import rehypeStringify from 'rehype-stringify';
+import { visit } from 'unist-util-visit';
+import type { Root, Element } from 'hast';
 
 export interface ArticleMetadata {
   title: string;
@@ -24,6 +26,18 @@ export interface Article extends ArticleMetadata {
   content: string;
   updatedAt: string;
   wordCount: number;
+}
+
+function rehypeLazyImages() {
+  return (tree: Root) => {
+    visit(tree, 'element', (node: Element) => {
+      if (node.tagName === 'img') {
+        node.properties = node.properties || {};
+        node.properties.loading = 'lazy';
+        node.properties.decoding = 'async';
+      }
+    });
+  };
 }
 
 const articlesDirectory = path.join(process.cwd(), 'src', 'content', 'articles');
@@ -53,6 +67,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
       .use(rehypeSlug)
       .use(rehypeKatex)
       .use(rehypeHighlight)
+      .use(rehypeLazyImages)
       .use(rehypeStringify)
       .process(content);
 

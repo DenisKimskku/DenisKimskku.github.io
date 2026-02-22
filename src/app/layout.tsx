@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/lib/theme";
 import PageTransition from "@/components/PageTransition";
 import BackToTop from "@/components/BackToTop";
+import KeyboardShortcuts from "@/components/KeyboardShortcuts";
 import { siteMetadata } from "@/lib/siteMetadata";
 
 const GA_MEASUREMENT_ID = 'G-0R77Z2VFWT';
@@ -101,6 +102,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <BackToTop />
+          <KeyboardShortcuts />
         </ThemeProvider>
       </body>
     </html>
