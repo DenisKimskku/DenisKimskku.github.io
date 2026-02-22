@@ -57,13 +57,13 @@ jobs:
           sleep 10
           BASE=https://deniskim1.com
           # Extract all URLs from sitemap
-          URLS=$(curl -s "${BASE}/sitemap.xml" | grep -oP '(?<=<loc>)[^<]+')
+          URLS=$(curl -s "${BASE}/sitemap.xml" | grep -o '<loc>[^<]*</loc>' | sed 's/<loc>//g;s/<\/loc>//g')
           # Warm HTML pages (8 parallel)
-          echo "$URLS" | xargs -P 8 -I {} curl -sL {} -o /dev/null
+          echo "$URLS" | xargs -P 8 -I {} curl -sL {} -o /dev/null || true
           # Warm RSC payloads for client-side navigation
           echo "$URLS" | sed 's|/$|/|' | while read -r url; do
             path="${url#$BASE}"
             for f in __next._full.txt index.txt; do
               echo "${BASE}${path}${f}"
             done
-          done | xargs -P 8 -I {} curl -sL {} -o /dev/null
+          done | xargs -P 8 -I {} curl -sL {} -o /dev/null || true
