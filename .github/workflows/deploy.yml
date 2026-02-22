@@ -48,3 +48,11 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Warm Cloudflare cache
+        run: |
+          sleep 10
+          curl -sL https://deniskim1.com/ -o /dev/null
+          curl -sL https://deniskim1.com/writing/ -o /dev/null
+          curl -sL https://deniskim1.com/papers/ -o /dev/null
+          curl -sL https://deniskim1.com/code/ -o /dev/null
