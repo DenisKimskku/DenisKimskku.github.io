@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Lora } from "next/font/google";
+import Script from "next/script";
 import "@/styles/globals.css";
-import 'highlight.js/styles/github-dark.css';
-import 'katex/dist/katex.min.css';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/lib/theme";
@@ -83,14 +82,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${lora.variable}`}>
-      <head>
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`,
-          }}
-        />
-      </head>
       <body className="font-sans">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-[var(--color-bg-secondary)] focus:text-[var(--color-text)]">
           Skip to main content
@@ -104,6 +95,13 @@ export default function RootLayout({
           <BackToTop />
           <KeyboardShortcuts />
         </ThemeProvider>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`}
+        </Script>
       </body>
     </html>
   );

@@ -30,11 +30,31 @@ export interface Article extends ArticleMetadata {
 
 function rehypeLazyImages() {
   return (tree: Root) => {
-    visit(tree, 'element', (node: Element) => {
+    visit(tree, 'element', (node: Element, index: number | undefined, parent: Element | Root | undefined) => {
       if (node.tagName === 'img') {
         node.properties = node.properties || {};
         node.properties.loading = 'lazy';
         node.properties.decoding = 'async';
+
+        const src = String(node.properties.src || '');
+        if (src.endsWith('.png') && parent && typeof index === 'number') {
+          const webpSrc = src.replace(/\.png$/, '.webp');
+          const picture: Element = {
+            type: 'element',
+            tagName: 'picture',
+            properties: {},
+            children: [
+              {
+                type: 'element',
+                tagName: 'source',
+                properties: { srcSet: webpSrc, type: 'image/webp' },
+                children: [],
+              },
+              node,
+            ],
+          };
+          parent.children[index] = picture;
+        }
       }
     });
   };

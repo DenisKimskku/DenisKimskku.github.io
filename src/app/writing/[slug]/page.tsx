@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import 'highlight.js/styles/github-dark.css';
+import 'katex/dist/katex.min.css';
 import { notFound } from 'next/navigation';
 import { getArticleBySlug, getAllArticleSlugs, calculateReadingTime, generateTOC } from '@/lib/markdown';
 import { getRelatedArticles } from '@/lib/articles';

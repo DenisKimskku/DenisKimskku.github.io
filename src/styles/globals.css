@@ -248,6 +248,28 @@
     overflow-y: auto;
   }
 
+  /* Page transition */
+  .page-transition {
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .page-transition {
+      animation: none;
+    }
+  }
+
   /* Search highlight */
   .highlight {
     @apply bg-yellow-100 dark:bg-yellow-900/50 px-1 rounded;
