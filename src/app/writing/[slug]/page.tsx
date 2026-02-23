@@ -88,7 +88,7 @@ export default async function ArticlePage({ params }: PageProps) {
   ];
 
   return (
-    <div className="mx-auto px-6 max-w-[720px] xl:max-w-[960px] py-16 md:py-24">
+    <div className="mx-auto px-6 max-w-[720px] lg:max-w-[960px] py-16 md:py-24">
       <ReadingProgress />
       <StructuredData data={jsonLd} />
       <Breadcrumb items={breadcrumbItems} />
@@ -134,11 +134,11 @@ export default async function ArticlePage({ params }: PageProps) {
       </header>
 
       {/* Article Content with Sticky TOC */}
-      <div className={toc.length > 0 ? 'xl:grid xl:grid-cols-[1fr_220px] xl:gap-10' : ''}>
+      <div className={toc.length > 0 ? 'lg:grid lg:grid-cols-[1fr_220px] lg:gap-10' : ''}>
         <div>
           {/* Mobile/Tablet TOC (inline collapsible) */}
           {toc.length > 0 && (
-            <details className="xl:hidden toc mb-12" aria-label="Table of contents">
+            <details className="lg:hidden toc mb-12" aria-label="Table of contents">
               <summary className="text-sm font-semibold text-[var(--color-text)] uppercase tracking-wider cursor-pointer select-none">
                 Contents
               </summary>
@@ -166,7 +166,7 @@ export default async function ArticlePage({ params }: PageProps) {
 
         {/* Desktop Sticky TOC */}
         {toc.length > 0 && (
-          <div className="hidden xl:block">
+          <div className="hidden lg:block">
             <div className="toc-sidebar">
               <TableOfContents items={toc} />
             </div>
