@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import StructuredData from '@/components/StructuredData';
 import CopyBibtexButton from '@/components/CopyBibtexButton';
-import PdfPreview from '@/components/PdfPreview';
+import AbstractToggle from '@/components/AbstractToggle';
 import { siteMetadata } from '@/lib/siteMetadata';
 
 const description = 'Academic publications by Minseok (Denis) Kim on AI security, RAG systems, and LLM safety.';
@@ -28,6 +28,7 @@ interface Paper {
   authors: string[];
   conference: string;
   description: string;
+  abstract?: string;
   pdfUrl?: string;
   codeUrl?: string;
   slideUrl?: string;
@@ -121,10 +122,6 @@ export default async function Papers() {
               {paper.authors.join(', ')}
             </p>
 
-            <p className="text-[var(--color-text-secondary)] mb-4 text-sm leading-relaxed">
-              {paper.description}
-            </p>
-
             <div className="flex flex-wrap gap-2">
               {paper.pdfUrl && (
                 <a
@@ -168,9 +165,7 @@ export default async function Papers() {
               {paper.bibtex && (
                 <CopyBibtexButton bibtex={paper.bibtex} />
               )}
-              {paper.pdfUrl && (
-                <PdfPreview pdfUrl={paper.pdfUrl} title={paper.title} />
-              )}
+              {paper.abstract && <AbstractToggle abstract={paper.abstract} />}
             </div>
           </article>
         ))}

@@ -32,6 +32,17 @@ export default function PdfPreview({ pdfUrl, title }: PdfPreviewProps) {
             className="w-full rounded-lg border border-[var(--color-border)]"
             style={{ height: '600px' }}
           />
+          <a
+            href={pdfUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 mt-2 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"
+          >
+            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+            Open in new tab if preview does not load
+          </a>
         </div>
       )}
     </div>
