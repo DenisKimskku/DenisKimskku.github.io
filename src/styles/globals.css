@@ -250,7 +250,7 @@
 
   /* Page transition */
   .page-transition {
-    animation: fadeIn 0.2s ease-out;
+    animation: fadeIn 0.2s ease-out forwards;
   }
 
   @keyframes fadeIn {

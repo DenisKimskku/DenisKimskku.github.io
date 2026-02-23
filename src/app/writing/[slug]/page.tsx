@@ -88,7 +88,7 @@ export default async function ArticlePage({ params }: PageProps) {
   ];
 
   return (
-    <div className="container-custom py-16 md:py-24">
+    <div className="mx-auto px-6 max-w-[720px] xl:max-w-[960px] py-16 md:py-24">
       <ReadingProgress />
       <StructuredData data={jsonLd} />
       <Breadcrumb items={breadcrumbItems} />
@@ -134,7 +134,7 @@ export default async function ArticlePage({ params }: PageProps) {
       </header>
 
       {/* Article Content with Sticky TOC */}
-      <div className={toc.length > 0 ? 'xl:grid xl:grid-cols-[1fr_220px] xl:gap-10 xl:max-w-[1000px] xl:mx-auto' : ''}>
+      <div className={toc.length > 0 ? 'xl:grid xl:grid-cols-[1fr_220px] xl:gap-10' : ''}>
         <div>
           {/* Mobile/Tablet TOC (inline collapsible) */}
           {toc.length > 0 && (
