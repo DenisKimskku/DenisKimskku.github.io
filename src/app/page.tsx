@@ -39,7 +39,7 @@ export default function Home() {
         name: siteMetadata.authorName,
         url: siteMetadata.siteUrl,
         sameAs: siteMetadata.profiles,
-        jobTitle: 'AI & Security Researcher',
+        jobTitle: 'Ph.D. Student & AI Security Researcher',
         knowsAbout: [
           'AI security',
           'RAG security',
@@ -64,7 +64,7 @@ export default function Home() {
             against adversarial attacks and apply large language models to binary analysis and reverse engineering.
           </p>
           <p>
-            I am an M.S. candidate at Sungkyunkwan University, advised by{' '}
+            I am a Ph.D. student at Sungkyunkwan University, advised by{' '}
             <a
               href="https://kevinkoo001.github.io/"
               className="text-[var(--color-accent)] hover:underline decoration-[var(--color-accent)]/30 underline-offset-2"
@@ -73,7 +73,7 @@ export default function Home() {
             >
               Hyungjoon (Kevin) Koo
             </a>
-            . I hold a B.A. in software from the same institution.
+            . I hold a B.A. and M.S. in software from the same institution.
           </p>
           <p>
             My main research interests include adversarial robustness in advanced AI systems
