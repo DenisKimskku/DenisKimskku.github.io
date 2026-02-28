@@ -1,5 +1,19 @@
 [
   {
+    "slug": "dezoomify_plus_v2_rebuild",
+    "title": "Dezoomify Plus v2: Rebuilding a Classic Tool for Modern Web UX",
+    "date": "2026-02-28",
+    "type": "Project",
+    "description": "How I turned an aging dezoomify codebase into a Vercel-ready service with auth-gated advanced workflows, cleaner UX, and practical performance improvements.",
+    "tags": [
+      "Web Engineering",
+      "Vercel",
+      "UX Design",
+      "Open Source",
+      "JavaScript"
+    ]
+  },
+  {
     "slug": "rag_vis_visualization_tool",
     "title": "Visualizing RAG Security: A Deep Dive with RAG-Vis Playground",
     "date": "2026-02-14",
