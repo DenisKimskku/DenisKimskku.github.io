@@ -1,137 +1,114 @@
 ---
-title: "Dezoomify Plus v2: Rebuilding a Classic Tool for Modern Web UX"
+title: "Getting Started with Dezoomify Plus: A Practical Intro Guide"
 date: "2026-02-28"
 type: "Project"
-description: "How I turned an aging dezoomify codebase into a Vercel-ready service with auth-gated advanced workflows, cleaner UX, and practical performance improvements."
-tags: ["Web Engineering", "Vercel", "UX Design", "Open Source", "JavaScript"]
+description: "A beginner-friendly walkthrough of Dezoomify Plus: what it does, how to download your first image, and when to use the advanced dashboard."
+tags: ["Dezoomify", "Web Tooling", "UX Design", "Open Source", "Vercel"]
 ---
 
-# Dezoomify Plus v2: Rebuilding a Classic Tool for Modern Web UX
+# Getting Started with Dezoomify Plus: A Practical Intro Guide
 
-I recently rebuilt my dezoomify deployment from a legacy single-page utility into a cleaner product called **Dezoomify Plus v2**.
+If you are new to Dezoomify Plus, this guide helps you get productive in a few minutes.
 
-The goal was simple:
+Dezoomify Plus is a web tool that reconstructs high-resolution images from supported zoom viewers (such as Zoomify, Deep Zoom, IIIF, and related formats).  
+You paste a URL, run download, and save the final combined image.
 
-1. Keep the public flow extremely easy for normal users.
-2. Keep power features for advanced users.
-3. Make it deploy cleanly on Vercel Hobby limits.
+## 1) First Look: Simple Download Mode
 
-This post documents what changed and what worked.
+When you open the app, you land in **Simple Download** mode.
 
-## Why Rebuild?
+![Dezoomify Plus simple mode](/images/260228/dezoomify-plus-01-simple-home.png)
 
-The original project is powerful, but the interface and service architecture were hard for everyday users:
+This mode is built for normal users and one-off downloads:
 
-- Too many controls visible at once.
-- Weak separation between one-click download and operational workflows.
-- Inconsistent behavior under deployment constraints (cron limits, function limits, storage setup).
+- Paste URL
+- Start Download
+- Watch status progress
+- Save Image
 
-The result was that casual users felt overwhelmed, while power users still needed better queue/history tooling.
+If you only need a single export, this is usually all you need.
 
-## Product Split: Public vs Advanced
+## 2) Your First Download
 
-The key product decision was to split the app into two clear experiences.
+Quick flow:
 
-### 1. Public Simple Downloader
+1. Paste a supported page or manifest URL.
+2. Click `Start Download`.
+3. Wait until the status reaches ready.
+4. Click `Save Image`.
 
-Anyone can:
+When complete, Dezoomify Plus shows a clear ready state and sticky save action:
 
-- Paste a URL
-- Start download
-- Watch progress stages
-- Save the final image
+![Download ready state](/images/260228/dezoomify-plus-03-download-ready.png)
 
-This became the default mode so first-time users are not forced into backend-oriented controls.
+## 3) Understanding the Progress Steps
 
-### 2. Authenticated Dashboard
+The timeline shows four stages:
 
-After sign-in, users can access:
+- Analyze URL
+- Fetch Tiles
+- Compose Image
+- Ready to Save
 
-- Async queue
-- Job history
-- Schedules
-- Metrics
-- Retention/settings
+This helps you see whether a problem is:
 
-Admin users also get an admin console snapshot view.
+- source URL detection,
+- network/tile fetching,
+- or image composition.
 
-This separation removed most UX clutter from the default experience.
+## 4) Dashboard Mode (Advanced Users)
 
-## UX Redesign Highlights
+If you need queue/history/scheduling workflows, switch to **Dashboard**.
 
-The v2 interface focused on minimalism and flow clarity:
+![Dashboard and account area](/images/260228/dezoomify-plus-02-dashboard.png)
 
-- **Experience switch**: `Simple Download` vs `Dashboard`.
-- **Step timeline**: Analyze -> Fetch -> Compose -> Ready.
-- **Sticky save bar**: persistent save action once output is ready.
-- **Concise error messaging** with optional technical details expansion.
-- **Tabbed dashboard IA** instead of stacked multi-panel chaos.
+Dashboard is intended for authenticated usage and includes:
 
-The effect was immediate: users can complete a basic download without needing to understand queue systems or rate-limit internals.
+- account + API key lifecycle
+- async queue
+- job history
+- schedules
+- metrics
+- settings/retention
+- admin tab (admin role only)
 
-## Service and Platform Work
+## 5) Mobile Experience
 
-### Vercel-first architecture
+The interface is responsive and keeps the primary flow visible on small screens.
 
-I consolidated API behavior around serverless routes and rewrites for:
+![Mobile simple mode](/images/260228/dezoomify-plus-04-mobile-home.png)
 
-- proxying
-- async jobs
-- history and schedule control
-- auth/session handling
-- metrics and admin views
+You can run the complete simple flow directly from mobile, then save the result.
 
-### Storage behavior
+## 6) Common Troubleshooting
 
-Advanced features use persistent storage (`REDIS_URL` or KV REST vars).  
-If auth is enforced and storage is missing, the service fails fast with explicit errors instead of silently degrading.
+If a URL fails, it is often due to the source website, not Dezoomify itself.
 
-### Hobby limits handling
+Typical causes:
 
-Two real constraints shaped implementation:
+- anti-bot or 401 challenge pages
+- unsupported viewer formats on that specific page
+- blocked cross-origin content paths
 
-- Vercel Hobby cron restrictions (daily scheduling only).
-- Function-count caps per deployment.
+Fast fixes:
 
-I adapted by:
+1. Try a direct manifest URL (`info.json`, `ImageProperties.xml`, `dzi`) instead of a general page URL.
+2. Use the Dezoomify browser extension to capture the exact zoom source URL.
+3. Test a known public IIIF sample to confirm your setup is working.
 
-- enforcing Hobby-safe schedule behavior in UI + backend,
-- and consolidating handlers (including observability/auth/admin routing) to fit function limits.
+## 7) When to Use Which Mode
 
-## Performance Improvements
+- Use **Simple Download** if you just want one image now.
+- Use **Dashboard** if you run many jobs, want history, or need scheduling/metrics.
 
-Beyond visuals, v2 also improved runtime behavior:
+This split keeps the product easy for first-time users and powerful for repeat users.
 
-- bounded concurrency tile pipeline
-- adaptive polling cadence for active vs idle states
-- windowed async list rendering with load-more
-- debounced filtering/search in queue/history views
-- cancellation and retention cleanup paths to prevent stale list growth
+## Final Note
 
-These changes keep the app responsive as job volume grows.
+Dezoomify Plus was redesigned to reduce friction:
 
-## What I Learned
+- fast first success for normal users,
+- advanced controls only when needed,
+- clearer status and save actions.
 
-Three lessons stood out:
-
-1. **Default UX must optimize for first success**, not for maximum feature visibility.
-2. **Deployment constraints should shape design early** (especially on Vercel Hobby).
-3. **Operational controls are valuable only when scoped by identity** (auth + owner-bound APIs).
-
-## Where It Goes Next
-
-Planned improvements include:
-
-- stronger auth abuse/rate-limit test coverage,
-- deeper cross-browser interaction tests,
-- and tighter performance budgets in CI for large dashboards.
-
-## Closing
-
-Dezoomify Plus v2 is still the same core idea, but now it behaves like a modern service:
-
-- simple for public users,
-- capable for advanced users,
-- and practical to run on budget infrastructure.
-
-If you are modernizing an old but useful open-source tool, this pattern (simple-first UX + authenticated advanced workspace) is worth considering.
+If you are trying it for the first time, start with one sample URL in Simple mode and confirm you can reach the `Ready to Save` state end-to-end.

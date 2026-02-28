@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteMetadata.siteUrl;
   const appDir = path.join(process.cwd(), 'src', 'app');
   const articlesDir = path.join(process.cwd(), 'src', 'content', 'articles');
+  const projectsDataFile = path.join(process.cwd(), 'src', 'data', 'projects.json');
   const articles = getAllArticles();
   const tagEntries = getTagEntries(articles);
 
@@ -93,6 +94,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     };
   });
 
+  const externalToolEntries = [
+    {
+      url: 'https://dz.deniskim1.com/',
+      lastModified: getLastModified(projectsDataFile),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    },
+  ];
+
   return [
     ...staticPages.map((page) => ({
       url: `${baseUrl}${page.route}/`,
@@ -100,6 +110,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: page.changeFrequency,
       priority: page.priority,
     })),
+    ...externalToolEntries,
     ...tagEntriesForSitemap,
     ...articleEntries,
   ];

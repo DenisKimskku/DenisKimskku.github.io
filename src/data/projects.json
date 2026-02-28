@@ -8,6 +8,13 @@
   },
   "projects": [
     {
+      "name": "Dezoomify Plus",
+      "description": "Modernized Dezoomify service with simple-first UX, auth-gated advanced dashboard, and Vercel-friendly operations.",
+      "githubUrl": "https://github.com/DenisKimskku/dezoomify-plus",
+      "language": "JavaScript",
+      "demoUrl": "https://dz.deniskim1.com/"
+    },
+    {
       "name": "RAG-Vis Playground",
       "description": "Interactive visualizer for RAG security, covering fundamentals, adversarial attacks (poisoning, injection), and multi-stage defense mechanisms.",
       "githubUrl": "https://github.com/DenisKimskku/RAG-Vis-Playground",

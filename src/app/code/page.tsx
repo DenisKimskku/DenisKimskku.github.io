@@ -20,7 +20,20 @@ export const metadata: Metadata = {
   },
 };
 
-const { featured, projects } = projectData;
+interface ProjectEntry {
+  name: string;
+  description: string;
+  githubUrl: string;
+  language?: string;
+  demoUrl?: string;
+}
+
+interface ProjectData {
+  featured: ProjectEntry & { demoUrl: string };
+  projects: ProjectEntry[];
+}
+
+const { featured, projects } = projectData as ProjectData;
 
 export default function Code() {
   const pageUrl = `${siteMetadata.siteUrl}/code`;
@@ -62,7 +75,7 @@ export default function Code() {
               description: project.description,
               codeRepository: project.githubUrl,
               programmingLanguage: project.language,
-              url: project.githubUrl,
+              url: project.demoUrl || project.githubUrl,
             },
           })),
         ],
@@ -136,53 +149,66 @@ export default function Code() {
         </article>
 
         {/* Other Projects */}
-        {projects.map((project) => (
-          <article
-            key={project.name}
-            className="group py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
-          >
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1 min-w-0">
-                <h2 className="text-lg font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1.5">
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {project.name}
-                  </a>
-                </h2>
-                <p className="text-sm text-[var(--color-text-secondary)] mb-3">
-                  {project.description}
-                </p>
-                <div className="flex items-center gap-3 text-xs text-[var(--color-text-muted)]">
-                  {project.language && (
-                    <span className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[var(--color-accent)]"></span>
-                      {project.language}
-                    </span>
-                  )}
-                  <a
-                    href={project.githubUrl}
-                    className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View on GitHub
-                  </a>
+        {projects.map((project) => {
+          const primaryUrl = project.demoUrl || project.githubUrl;
+          return (
+            <article
+              key={project.name}
+              className="group py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-lg font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1.5">
+                    <a
+                      href={primaryUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {project.name}
+                    </a>
+                  </h2>
+                  <p className="text-sm text-[var(--color-text-secondary)] mb-3">
+                    {project.description}
+                  </p>
+                  <div className="flex items-center gap-3 text-xs text-[var(--color-text-muted)]">
+                    {project.language && (
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-[var(--color-accent)]"></span>
+                        {project.language}
+                      </span>
+                    )}
+                    {project.demoUrl && (
+                      <a
+                        href={project.demoUrl}
+                        className="text-[var(--color-accent)] hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Live demo
+                      </a>
+                    )}
+                    <a
+                      href={project.githubUrl}
+                      className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View on GitHub
+                    </a>
+                  </div>
                 </div>
+                <svg
+                  className="w-4 h-4 text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors flex-shrink-0 mt-1.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
               </div>
-              <svg
-                className="w-4 h-4 text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors flex-shrink-0 mt-1.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </div>
-          </article>
-        ))}
+            </article>
+          );
+        })}
       </div>
     </div>
   );
