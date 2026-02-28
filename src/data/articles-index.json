@@ -1,16 +1,16 @@
 [
   {
     "slug": "dezoomify_plus_v2_rebuild",
-    "title": "Dezoomify Plus v2: Rebuilding a Classic Tool for Modern Web UX",
+    "title": "Getting Started with Dezoomify Plus: A Practical Intro Guide",
     "date": "2026-02-28",
     "type": "Project",
-    "description": "How I turned an aging dezoomify codebase into a Vercel-ready service with auth-gated advanced workflows, cleaner UX, and practical performance improvements.",
+    "description": "A beginner-friendly walkthrough of Dezoomify Plus: what it does, how to download your first image, and when to use the advanced dashboard.",
     "tags": [
-      "Web Engineering",
-      "Vercel",
+      "Dezoomify",
+      "Web Tooling",
       "UX Design",
       "Open Source",
-      "JavaScript"
+      "Vercel"
     ]
   },
   {
