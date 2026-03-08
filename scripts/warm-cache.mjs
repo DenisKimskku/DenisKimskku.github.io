@@ -1,5 +1,7 @@
+import fs from 'fs';
 import http from 'http';
 import https from 'https';
+import path from 'path';
 
 const DEFAULT_BASE_URL = process.env.CACHE_WARM_BASE_URL || 'https://deniskim1.com';
 const MAX_CONCURRENCY = Math.max(1, Number(process.env.CACHE_WARM_CONCURRENCY || 4));
@@ -7,8 +9,12 @@ const REQUEST_TIMEOUT_MS = 30000;
 const MAX_RETRIES = Math.max(0, Number(process.env.CACHE_WARM_RETRIES || 2));
 const PASS_COUNT = Math.max(1, Number(process.env.CACHE_WARM_PASSES || 1));
 const PASS_DELAY_MS = Math.max(0, Number(process.env.CACHE_WARM_PASS_DELAY_MS || 30000));
+const SOURCE_MODE = getArgValue('--source') || process.env.CACHE_WARM_SOURCE || 'local';
+const BROWSER_USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36';
 const mode = getArgValue('--mode') || 'warm';
 const isWarmMode = mode === 'warm';
+const articlesIndexPath = path.join(process.cwd(), 'src', 'data', 'articles-index.json');
+const outDir = path.join(process.cwd(), 'out');
 
 const baseUrl = new URL(DEFAULT_BASE_URL);
 
@@ -45,6 +51,15 @@ function sleep(ms) {
   });
 }
 
+function toSiteUrl(route) {
+  if (!route || route === '/') {
+    return new URL('/', baseUrl).toString();
+  }
+
+  const normalized = route.endsWith('/') ? route : `${route}/`;
+  return new URL(normalized, baseUrl).toString();
+}
+
 function request(url, responseType = 'none', redirectsRemaining = 3) {
   return new Promise((resolve, reject) => {
     const target = new URL(url);
@@ -59,7 +74,10 @@ function request(url, responseType = 'none', redirectsRemaining = 3) {
         headers: {
           'accept': '*/*',
           'accept-encoding': 'identity',
-          'user-agent': 'deniskim-cache-warmer/1.0',
+          'accept-language': 'en-US,en;q=0.9',
+          'cache-control': 'no-cache',
+          'pragma': 'no-cache',
+          'user-agent': BROWSER_USER_AGENT,
         },
       },
       (res) => {
@@ -140,8 +158,10 @@ async function warmUrl(url) {
   try {
     const response = await requestWithRetry(url, 'none');
     log(`[warm] ${response.statusCode} ${url}`);
+    return true;
   } catch (error) {
     warn(`[warm] failed ${url}: ${error.message}`);
+    return false;
   }
 }
 
@@ -239,6 +259,14 @@ function buildSiteDocumentTargets() {
   ];
 }
 
+function buildStaticAssetTargets() {
+  return [
+    new URL('/icon.svg', baseUrl).toString(),
+    new URL('/apple-touch-icon.png', baseUrl).toString(),
+    new URL('/apple-touch-icon-precomposed.png', baseUrl).toString(),
+  ];
+}
+
 function buildPurgeTargets(pageUrls) {
   const targets = new Set(buildSiteDocumentTargets());
 
@@ -250,6 +278,111 @@ function buildPurgeTargets(pageUrls) {
   }
 
   return Array.from(targets);
+}
+
+function loadArticles() {
+  const fileContents = fs.readFileSync(articlesIndexPath, 'utf8');
+  return JSON.parse(fileContents);
+}
+
+function slugifyTag(tag) {
+  return tag
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+function getTagSlugs(articles) {
+  const tags = new Set();
+
+  for (const article of articles) {
+    for (const tag of article.tags || []) {
+      tags.add(tag);
+    }
+  }
+
+  const sortedTags = Array.from(tags).sort((a, b) => a.localeCompare(b));
+  const usedSlugs = new Set();
+
+  return sortedTags.map((tag) => {
+    const base = slugifyTag(tag) || 'tag';
+    let slug = base;
+    let suffix = 2;
+
+    while (usedSlugs.has(slug)) {
+      slug = `${base}-${suffix}`;
+      suffix += 1;
+    }
+
+    usedSlugs.add(slug);
+    return slug;
+  });
+}
+
+function loadLocalPageUrls() {
+  const staticRoutes = [
+    '/',
+    '/writing/',
+    '/papers/',
+    '/code/',
+    '/calendar-plus-plus/',
+    '/calendar-plus-plus/privacy/',
+    '/calendar-plus-plus/terms/',
+  ];
+
+  const articles = loadArticles();
+  const tagSlugs = getTagSlugs(articles);
+  const pageUrls = new Set(staticRoutes.map((route) => toSiteUrl(route)));
+
+  for (const article of articles) {
+    if (article.slug) {
+      pageUrls.add(toSiteUrl(`/writing/${article.slug}/`));
+    }
+  }
+
+  for (const tagSlug of tagSlugs) {
+    pageUrls.add(toSiteUrl(`/writing/tag/${tagSlug}/`));
+  }
+
+  return Array.from(pageUrls);
+}
+
+function getHtmlFiles(dir) {
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...getHtmlFiles(fullPath));
+      continue;
+    }
+
+    if (entry.isFile() && fullPath.endsWith('.html')) {
+      files.push(fullPath);
+    }
+  }
+
+  return files;
+}
+
+function buildOutAssetTargets() {
+  if (!fs.existsSync(outDir)) {
+    return [];
+  }
+
+  const assetUrls = new Set();
+  const htmlFiles = getHtmlFiles(outDir);
+
+  for (const filePath of htmlFiles) {
+    const html = fs.readFileSync(filePath, 'utf8');
+    collectAttributeAssets(html, 'href', baseUrl.toString(), assetUrls);
+    collectAttributeAssets(html, 'src', baseUrl.toString(), assetUrls);
+    collectSrcsetAssets(html, baseUrl.toString(), assetUrls);
+  }
+
+  return Array.from(assetUrls);
 }
 
 async function runWithConcurrency(items, worker) {
@@ -269,7 +402,7 @@ async function runWithConcurrency(items, worker) {
   await Promise.all(Array.from({ length: workerCount }, loop));
 }
 
-async function loadSitemapPageUrls() {
+async function loadLivePageUrls() {
   const sitemapUrl = new URL('/sitemap.xml', baseUrl).toString();
   const sitemapXml = await fetchText(sitemapUrl);
   const pageUrls = extractSitemapUrls(sitemapXml);
@@ -277,18 +410,28 @@ async function loadSitemapPageUrls() {
   return { sitemapUrl, pageUrls };
 }
 
+async function loadPageUrls() {
+  if (SOURCE_MODE === 'live') {
+    return loadLivePageUrls();
+  }
+
+  return {
+    sitemapUrl: 'local route inventory',
+    pageUrls: loadLocalPageUrls(),
+  };
+}
+
 async function warmOnce(pageUrls) {
-  const assetUrls = new Set();
+  const assetUrls = new Set([...buildStaticAssetTargets(), ...buildOutAssetTargets()]);
   const rscUrls = new Set();
+  const siteDocumentUrls = new Set(buildSiteDocumentTargets());
 
   await runWithConcurrency(pageUrls, async (pageUrl) => {
     try {
-      const html = await fetchText(pageUrl);
-      log(`[page] warmed ${pageUrl}`);
-
-      collectAttributeAssets(html, 'href', pageUrl, assetUrls);
-      collectAttributeAssets(html, 'src', pageUrl, assetUrls);
-      collectSrcsetAssets(html, pageUrl, assetUrls);
+      const warmed = await warmUrl(pageUrl);
+      if (warmed) {
+        log(`[page] warmed ${pageUrl}`);
+      }
 
       for (const rscUrl of buildRscTargets(pageUrl)) {
         rscUrls.add(rscUrl);
@@ -298,14 +441,14 @@ async function warmOnce(pageUrls) {
     }
   });
 
-  const extraUrls = [...new Set([...rscUrls, ...assetUrls])];
-  log(`Warming ${rscUrls.size} RSC endpoints and ${assetUrls.size} critical assets`);
+  const extraUrls = [...new Set([...siteDocumentUrls, ...rscUrls, ...assetUrls])];
+  log(`Warming ${siteDocumentUrls.size} site documents, ${rscUrls.size} RSC endpoints, and ${assetUrls.size} critical assets`);
 
   await runWithConcurrency(extraUrls, warmUrl);
 }
 
 async function main() {
-  const { sitemapUrl, pageUrls } = await loadSitemapPageUrls();
+  const { sitemapUrl, pageUrls } = await loadPageUrls();
 
   if (mode === 'purge-targets') {
     process.stdout.write(JSON.stringify({ files: buildPurgeTargets(pageUrls) }));
