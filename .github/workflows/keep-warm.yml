@@ -2,20 +2,28 @@ name: Keep Cloudflare cache warm
 
 on:
   schedule:
-    - cron: '0 */12 * * *'  # Every 12 hours
+    - cron: '*/30 * * * *'  # Every 30 minutes
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "cache-warm"
+  cancel-in-progress: true
 
 jobs:
   warm:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - name: Warm all pages from sitemap
-        run: |
-          BASE=https://deniskim1.com
-          URLS=$(curl -s "${BASE}/sitemap.xml" | grep -o '<loc>[^<]*</loc>' | sed 's/<loc>//g;s/<\/loc>//g')
-          echo "$URLS" | xargs -P 8 -I {} curl -sL {} -o /dev/null || true
-          echo "$URLS" | sed 's|/$|/|' | while read -r url; do
-            path="${url#$BASE}"
-            for f in __next._full.txt index.txt; do
-              echo "${BASE}${path}${f}"
-            done
-          done | xargs -P 8 -I {} curl -sL {} -o /dev/null || true
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Warm sitemap pages and critical assets
+        run: CACHE_WARM_RETRIES=2 npm run warm:cache

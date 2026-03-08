@@ -8,7 +8,9 @@
     "build": "node scripts/optimize-images.mjs && node scripts/generate-og-images.mjs && next build && node scripts/strip-twitter-meta.mjs && node scripts/generate-rss.mjs",
     "start": "next start",
     "lint": "eslint .",
-    "export": "npm run build"
+    "export": "npm run build",
+    "warm:cache": "node scripts/warm-cache.mjs",
+    "purge:cache": "node scripts/purge-cloudflare-cache.mjs"
   },
   "keywords": [
     "portfolio",
