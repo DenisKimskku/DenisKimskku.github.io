@@ -247,7 +247,7 @@ Combining Foice with traditional voice cloning when both face and voice samples 
 | System | SV2TTS Only | Foice Only | Augmented |
 |--------|-------------|------------|-----------|
 | VGGVox | 39.6% | 67.6% | - |
-| DeepSpeaker | 51% | 77.8% | - |
+| DeepSpeaker | 51% | 87.7% | - |
 | Microsoft | 5.5% | 0.5% | **16.7%** |
 | iFlytek | 2.0% | 5.7% | **6.5%** |
 

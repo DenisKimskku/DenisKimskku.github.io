@@ -392,7 +392,7 @@ The $1 Chevy Tahoe incident serves as a reminder: without proper red-teaming, ev
 **References**:
 - Zou et al., "Universal and Transferable Adversarial Attacks on Aligned Language Models," arXiv 2023
 - Liu et al., "AutoDAN: Generating Stealthy Jailbreak Prompts on Aligned Large Language Models," ICLR 2024
-- Chao et al., "Jailbreaking Black Box Large Language Models in Twenty Queries," SaTML 2025
+- Chao et al., "Jailbreaking Black Box Large Language Models in Twenty Queries," SaTML 2024
 - Russinovic et al., "Great, Now Write an Article About That: The Crescendo Multi-Turn LLM Jailbreak Attack," USENIX 2025
 - Pavlova et al., "Automated Red Teaming with GOAT: the Generative Offensive Agent Tester," arXiv 2024
 

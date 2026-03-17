@@ -458,7 +458,8 @@ def process_uploaded_file(filepath):
     result = scan_file(filepath)
     if not result.is_safe:
         raise SecurityError(f"Malicious file: {result.findings}")
-    return pickle.load(open(filepath, 'rb'))
+    with open(filepath, 'rb') as f:
+        return pickle.load(f)
 ```
 
 ---
