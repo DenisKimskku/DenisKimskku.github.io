@@ -1,8 +1,10 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import BookmarkButton from '@/components/BookmarkButton';
+import { getBookmarks } from '@/lib/bookmarks';
 
 interface Article {
   slug: string;
@@ -11,6 +13,7 @@ interface Article {
   type: string;
   description: string;
   tags: string[];
+  readingTime: number;
 }
 
 interface WritingHubProps {
@@ -81,6 +84,18 @@ export default function WritingHub({ articles }: WritingHubProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearch = useDebounce(searchTerm, 200);
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
+  const [showBookmarked, setShowBookmarked] = useState(false);
+  const [bookmarkedSlugs, setBookmarkedSlugs] = useState<Set<string>>(new Set());
+  const [, setBookmarkVersion] = useState(0);
+
+  useEffect(() => {
+    setBookmarkedSlugs(new Set(getBookmarks()));
+  }, []);
+
+  const handleBookmarkToggle = useCallback(() => {
+    setBookmarkedSlugs(new Set(getBookmarks()));
+    setBookmarkVersion((v) => v + 1);
+  }, []);
 
   // Extract all unique tags
   const allTags = useMemo(() => {
@@ -94,6 +109,11 @@ export default function WritingHub({ articles }: WritingHubProps) {
   // Filter and search articles
   const filteredArticles = useMemo(() => {
     let filtered = articles;
+
+    // Filter by bookmarks
+    if (showBookmarked) {
+      filtered = filtered.filter(article => bookmarkedSlugs.has(article.slug));
+    }
 
     // Filter by tags
     if (activeTags.size > 0) {
@@ -132,7 +152,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
     }
 
     return filtered;
-  }, [articles, debouncedSearch, activeTags]);
+  }, [articles, debouncedSearch, activeTags, showBookmarked, bookmarkedSlugs]);
 
   const toggleTag = (tag: string) => {
     const newTags = new Set(activeTags);
@@ -147,6 +167,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
   const clearAllFilters = () => {
     setActiveTags(new Set());
     setSearchTerm('');
+    setShowBookmarked(false);
   };
 
   const searchTermsArray = debouncedSearch
@@ -215,7 +236,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
               <span className="text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider">
                 Filter by topic
               </span>
-              {activeTags.size > 0 && (
+              {(activeTags.size > 0 || showBookmarked) && (
                 <button
                   type="button"
                   onClick={clearAllFilters}
@@ -226,6 +247,22 @@ export default function WritingHub({ articles }: WritingHubProps) {
               )}
             </div>
             <div className="flex flex-wrap gap-2" role="group" aria-label="Article topic filters">
+              <button
+                type="button"
+                onClick={() => setShowBookmarked(!showBookmarked)}
+                aria-label="Filter by bookmarked"
+                aria-pressed={showBookmarked}
+                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all inline-flex items-center gap-1 ${
+                  showBookmarked
+                    ? 'bg-[var(--color-accent)] text-white'
+                    : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+                }`}
+              >
+                <svg className="w-3 h-3" fill={showBookmarked ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                </svg>
+                Bookmarked
+              </button>
               {allTags.map((tag) => (
                 <button
                   type="button"
@@ -285,52 +322,57 @@ export default function WritingHub({ articles }: WritingHubProps) {
                 variants={itemVariants}
                 className="group"
               >
-                <Link
-                  href={`/writing/${article.slug}`}
-                  data-article-link
-                  className="block py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                      <h2 className="text-lg font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1.5">
-                        {highlightText(article.title, searchTermsArray)}
-                      </h2>
-                      <p className="text-sm text-[var(--color-text-secondary)] line-clamp-2 mb-3">
-                        {highlightText(article.description, searchTermsArray)}
-                      </p>
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-xs text-[var(--color-text-muted)]">{article.date}</span>
-                        <span className="text-[var(--color-border)]">·</span>
-                        <span className="text-xs text-[var(--color-text-muted)]">{article.type}</span>
-                        {article.tags.slice(0, 2).map((tag, tagIndex) => (
-                          <span
-                            key={tagIndex}
-                            className={`px-2 py-0.5 rounded text-xs ${
-                              activeTags.has(tag)
-                                ? 'bg-[var(--color-accent)]/10 text-[var(--color-accent)]'
-                                : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-muted)]'
-                            }`}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                        {article.tags.length > 2 && (
-                          <span className="text-xs text-[var(--color-text-muted)]">
-                            +{article.tags.length - 2}
-                          </span>
-                        )}
+                <div className="flex items-start gap-2 py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors">
+                  <Link
+                    href={`/writing/${article.slug}`}
+                    data-article-link
+                    className="flex-1 min-w-0"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <h2 className="text-lg font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1.5">
+                          {highlightText(article.title, searchTermsArray)}
+                        </h2>
+                        <p className="text-sm text-[var(--color-text-secondary)] line-clamp-2 mb-3">
+                          {highlightText(article.description, searchTermsArray)}
+                        </p>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="text-xs text-[var(--color-text-muted)]">{article.date}</span>
+                          <span className="text-[var(--color-border)]">·</span>
+                          <span className="text-xs text-[var(--color-text-muted)]">{article.type}</span>
+                          <span className="text-[var(--color-border)]">·</span>
+                          <span className="text-xs text-[var(--color-text-muted)]">{article.readingTime} min read</span>
+                          {article.tags.slice(0, 2).map((tag, tagIndex) => (
+                            <span
+                              key={tagIndex}
+                              className={`px-2 py-0.5 rounded text-xs ${
+                                activeTags.has(tag)
+                                  ? 'bg-[var(--color-accent)]/10 text-[var(--color-accent)]'
+                                  : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-muted)]'
+                              }`}
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                          {article.tags.length > 2 && (
+                            <span className="text-xs text-[var(--color-text-muted)]">
+                              +{article.tags.length - 2}
+                            </span>
+                          )}
+                        </div>
                       </div>
+                      <svg
+                        className="w-4 h-4 text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors flex-shrink-0 mt-1.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
                     </div>
-                    <svg
-                      className="w-4 h-4 text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors flex-shrink-0 mt-1.5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                </Link>
+                  </Link>
+                  <BookmarkButton slug={article.slug} onToggle={handleBookmarkToggle} />
+                </div>
               </motion.article>
             ))}
           </motion.div>

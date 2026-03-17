@@ -11,7 +11,8 @@
       "Reverse Engineering",
       "Binary Analysis",
       "Program Analysis"
-    ]
+    ],
+    "readingTime": 11
   },
   {
     "slug": "dezoomify_plus_v2_rebuild",
@@ -25,7 +26,8 @@
       "UX Design",
       "Open Source",
       "Vercel"
-    ]
+    ],
+    "readingTime": 3
   },
   {
     "slug": "rag_vis_visualization_tool",
@@ -40,7 +42,8 @@
       "Prompt Injection",
       "RAGDefender",
       "Visualization"
-    ]
+    ],
+    "readingTime": 3
   },
   {
     "slug": "pickle_deserialization_attacks",
@@ -53,7 +56,8 @@
       "Deserialization",
       "RCE",
       "Code Security"
-    ]
+    ],
+    "readingTime": 9
   },
   {
     "slug": "pickleguard_defense_mechanism",
@@ -66,7 +70,8 @@
       "Deserialization",
       "Defense",
       "ML Security"
-    ]
+    ],
+    "readingTime": 9
   },
   {
     "slug": "moevil_moe_expert_poisoning",
@@ -79,7 +84,8 @@
       "Mixture-of-Experts",
       "Model Poisoning",
       "Safety Alignment"
-    ]
+    ],
+    "readingTime": 15
   },
   {
     "slug": "llm_red_teaming_state_of_art",
@@ -91,7 +97,8 @@
       "LLM Security",
       "Red Teaming",
       "Jailbreaking"
-    ]
+    ],
+    "readingTime": 11
   },
   {
     "slug": "gaslite_dense_retrieval_attack",
@@ -103,7 +110,8 @@
       "RAG",
       "Data Poisoning",
       "LLM Security"
-    ]
+    ],
+    "readingTime": 10
   },
   {
     "slug": "Rescuing_the_unpoisoned",
@@ -115,7 +123,8 @@
       "RAG",
       "LLM Security",
       "Data Poisoning"
-    ]
+    ],
+    "readingTime": 6
   },
   {
     "slug": "agentfuzz_llm_vulnerability_detection",
@@ -127,7 +136,8 @@
       "LLM Agents",
       "Vulnerability Detection",
       "Fuzzing"
-    ]
+    ],
+    "readingTime": 11
   },
   {
     "slug": "information_theoretic_machine_unlearning",
@@ -139,7 +149,8 @@
       "Machine Unlearning",
       "Privacy",
       "Deep Learning"
-    ]
+    ],
+    "readingTime": 9
   },
   {
     "slug": "contrastive_learning_cve_classification",
@@ -151,7 +162,8 @@
       "Vulnerability Detection",
       "Deep Learning",
       "Code Security"
-    ]
+    ],
+    "readingTime": 9
   },
   {
     "slug": "machine_unlearning_llms_background",
@@ -163,7 +175,8 @@
       "Machine Unlearning",
       "Privacy",
       "LLM Security"
-    ]
+    ],
+    "readingTime": 8
   },
   {
     "slug": "membership_inference_attacks_rag",
@@ -175,7 +188,8 @@
       "RAG",
       "Privacy",
       "LLM Security"
-    ]
+    ],
+    "readingTime": 8
   },
   {
     "slug": "amides_siem_evasion_detection",
@@ -186,7 +200,8 @@
     "tags": [
       "Intrusion Detection",
       "Evasion Techniques"
-    ]
+    ],
+    "readingTime": 6
   },
   {
     "slug": "instruction_backdoor_attacks_customized_llms",
@@ -198,7 +213,8 @@
       "LLM Security",
       "Backdoor Attacks",
       "Prompt Injection"
-    ]
+    ],
+    "readingTime": 7
   },
   {
     "slug": "autodan_stealthy_jailbreak",
@@ -210,7 +226,8 @@
       "LLM Security",
       "Jailbreaking",
       "Red Teaming"
-    ]
+    ],
+    "readingTime": 10
   },
   {
     "slug": "teach_llms_to_phish",
@@ -222,7 +239,8 @@
       "LLM Security",
       "Data Poisoning",
       "Privacy"
-    ]
+    ],
+    "readingTime": 9
   },
   {
     "slug": "data_visualization_best_practices",
@@ -233,7 +251,8 @@
     "tags": [
       "Data Visualization",
       "Best Practices"
-    ]
+    ],
+    "readingTime": 10
   },
   {
     "slug": "foice_face_to_voice_attack",
@@ -245,7 +264,8 @@
       "Authentication Security",
       "Deepfake",
       "Biometrics"
-    ]
+    ],
+    "readingTime": 10
   },
   {
     "slug": "lint_coercive_interrogation_llm",
@@ -256,7 +276,8 @@
     "tags": [
       "LLM Security",
       "Jailbreaking"
-    ]
+    ],
+    "readingTime": 10
   },
   {
     "slug": "passbert_password_guessing",
@@ -267,6 +288,7 @@
     "tags": [
       "Authentication Security",
       "Deep Learning"
-    ]
+    ],
+    "readingTime": 10
   }
 ]
