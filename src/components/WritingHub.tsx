@@ -85,12 +85,8 @@ export default function WritingHub({ articles }: WritingHubProps) {
   const debouncedSearch = useDebounce(searchTerm, 200);
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
   const [showBookmarked, setShowBookmarked] = useState(false);
-  const [bookmarkedSlugs, setBookmarkedSlugs] = useState<Set<string>>(new Set());
+  const [bookmarkedSlugs, setBookmarkedSlugs] = useState<Set<string>>(() => new Set(getBookmarks()));
   const [, setBookmarkVersion] = useState(0);
-
-  useEffect(() => {
-    setBookmarkedSlugs(new Set(getBookmarks()));
-  }, []);
 
   const handleBookmarkToggle = useCallback(() => {
     setBookmarkedSlugs(new Set(getBookmarks()));
