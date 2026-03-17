@@ -29,6 +29,7 @@ interface Article {
   type: string;
   description: string;
   tags: string[];
+  readingTime: number;
 }
 
 export default async function Writing() {

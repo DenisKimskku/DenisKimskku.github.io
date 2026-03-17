@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import fs from 'fs';
 import path from 'path';
+import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
 import CopyBibtexButton from '@/components/CopyBibtexButton';
 import AbstractToggle from '@/components/AbstractToggle';
@@ -32,6 +33,7 @@ interface Paper {
   pdfUrl?: string;
   codeUrl?: string;
   slideUrl?: string;
+  articleSlug?: string;
   bibtex?: string;
 }
 
@@ -161,6 +163,17 @@ export default async function Papers() {
                   </svg>
                   Slides
                 </a>
+              )}
+              {paper.articleSlug && (
+                <Link
+                  href={`/writing/${paper.articleSlug}`}
+                  className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Read review →
+                </Link>
               )}
               {paper.bibtex && (
                 <CopyBibtexButton bibtex={paper.bibtex} />

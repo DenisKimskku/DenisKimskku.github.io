@@ -42,6 +42,7 @@
     "pdfUrl": "https://deniskim1.com/papers/acsac25/RAGDefender_published_version.pdf",
     "codeUrl": "https://github.com/SecAI-Lab/RAGDefender",
     "slideUrl": "https://deniskim1.com/papers/acsac25/ACSAC2025-73-Kim.pdf",
+    "articleSlug": "Rescuing_the_unpoisoned",
     "bibtex": "@inproceedings{kim2025rescuing,\n  title={Rescuing the Unpoisoned: Efficient Defense against Knowledge Corruption Attacks on RAG Systems},\n  author={Kim, Minseok and Lee, Hankook and Koo, Hyungjoon},\n  booktitle={Proceedings of the Annual Computer Security Applications Conference (ACSAC)},\n  year={2025}\n}"
   },
   {

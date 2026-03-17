@@ -8,6 +8,7 @@ export interface ArticleSummary {
   type: string;
   description: string;
   tags: string[];
+  readingTime: number;
 }
 
 export interface TagEntry {
@@ -75,6 +76,16 @@ export function getTagSlugByName(tagName: string): string {
 
 export function getArticlesByTag(tagName: string): ArticleSummary[] {
   return getAllArticles().filter((article) => article.tags.includes(tagName));
+}
+
+export function getAdjacentArticles(slug: string): { prev: ArticleSummary | null; next: ArticleSummary | null } {
+  const articles = getAllArticles();
+  const index = articles.findIndex((a) => a.slug === slug);
+  if (index === -1) return { prev: null, next: null };
+  return {
+    prev: index < articles.length - 1 ? articles[index + 1] : null,
+    next: index > 0 ? articles[index - 1] : null,
+  };
 }
 
 export function getRelatedArticles(

@@ -193,6 +193,8 @@ export default async function WritingTagPage({ params }: PageProps) {
                 <time dateTime={article.date}>{article.date}</time>
                 <span>·</span>
                 <span>{article.type}</span>
+                <span>·</span>
+                <span>{article.readingTime} min read</span>
                 {article.tags.map((articleTag) => (
                   <span key={articleTag} className="px-2 py-0.5 rounded bg-[var(--color-bg-secondary)]">
                     {articleTag}

@@ -3,11 +3,12 @@ import 'highlight.js/styles/github-dark.css';
 import 'katex/dist/katex.min.css';
 import { notFound } from 'next/navigation';
 import { getArticleBySlug, getAllArticleSlugs, calculateReadingTime, generateTOC } from '@/lib/markdown';
-import { getRelatedArticles } from '@/lib/articles';
+import { getRelatedArticles, getAdjacentArticles } from '@/lib/articles';
 import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
 import Breadcrumb from '@/components/Breadcrumb';
 import CopyLinkButton from '@/components/CopyLinkButton';
+import CodeBlockEnhancer from '@/components/CodeBlockEnhancer';
 import ReadingProgress from '@/components/ReadingProgress';
 import TableOfContents from '@/components/TableOfContents';
 import GiscusComments from '@/components/GiscusComments';
@@ -64,6 +65,7 @@ export default async function ArticlePage({ params }: PageProps) {
   const readingTime = calculateReadingTime(article.content);
   const toc = generateTOC(article.content);
   const relatedArticles = getRelatedArticles(slug, article.tags);
+  const { prev, next } = getAdjacentArticles(slug);
   const articleUrl = `${siteMetadata.siteUrl}/writing/${slug}`;
   const showUpdated = article.updatedAt && article.updatedAt !== article.date;
 
@@ -162,6 +164,7 @@ export default async function ArticlePage({ params }: PageProps) {
             className="article-content"
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
+          <CodeBlockEnhancer />
         </div>
 
         {/* Desktop Sticky TOC */}
@@ -203,6 +206,15 @@ export default async function ArticlePage({ params }: PageProps) {
             </svg>
             Share
           </a>
+          <a
+            href={`mailto:?subject=${encodeURIComponent(article.title)}&body=${encodeURIComponent(`${article.title}\n\n${articleUrl}`)}`}
+            className="inline-flex items-center gap-1.5 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+            </svg>
+            Email
+          </a>
         </div>
       </div>
 
@@ -239,6 +251,40 @@ export default async function ArticlePage({ params }: PageProps) {
       <p className="text-xs text-[var(--color-text-muted)] no-print mt-12">
         Page views are tracked via Google Analytics for content improvement.
       </p>
+
+      {/* Previous / Next Navigation */}
+      {(prev || next) && (
+        <nav aria-label="Article navigation" className="mt-8 pt-8 border-t border-[var(--color-border)] no-print">
+          <div className="flex justify-between gap-4">
+            {prev ? (
+              <Link
+                href={`/writing/${prev.slug}`}
+                className="group flex-1 min-w-0"
+              >
+                <span className="text-xs text-[var(--color-text-muted)] uppercase tracking-wider">← Older</span>
+                <p className="text-sm font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors truncate mt-1">
+                  {prev.title}
+                </p>
+              </Link>
+            ) : (
+              <div />
+            )}
+            {next ? (
+              <Link
+                href={`/writing/${next.slug}`}
+                className="group flex-1 min-w-0 text-right"
+              >
+                <span className="text-xs text-[var(--color-text-muted)] uppercase tracking-wider">Newer →</span>
+                <p className="text-sm font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors truncate mt-1">
+                  {next.title}
+                </p>
+              </Link>
+            ) : (
+              <div />
+            )}
+          </div>
+        </nav>
+      )}
 
       {/* Back to Writing */}
       <footer className="mt-4 pt-8 border-t border-[var(--color-border)] no-print">
