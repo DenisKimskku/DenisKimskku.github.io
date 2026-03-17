@@ -200,11 +200,11 @@ Key observations:
 
 ---
 
-## Results on Commercial LLMs
+## Results on Models with Limited Token Access
 
 | Model | Vanilla ASR | w/ Magic ASR | Avg #F |
 |-------|-------------|--------------|--------|
-| LLaMA2-70B (Top-5) | 4/50 | 33/50 | 2.40 |
+| LLaMA2-70B (Top-5, open-source) | 4/50 | 33/50 | 2.40 |
 | GPT-3.5-instruct | 38/50 | 38/50 | 4.52 |
 | GPT-3.5-instruct-0914 | 38/50 | 38/50 | 4.34 |
 | text-davinci-003 | 23/50 | 46/50 | 13.96 |

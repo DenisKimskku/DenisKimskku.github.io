@@ -133,7 +133,7 @@ The solution combines supervised and self-supervised losses:
 L = (1 - λ - μ)L^CE + λL_i^sup + μL^self
 ```
 
-With default values μ = 0.2, λ = 0.3, this formulation:
+Where `L^CE` is the standard cross-entropy classification loss, `L_i^sup` is the supervised contrastive loss, and `L^self` is the self-supervised contrastive loss. With default values μ = 0.2, λ = 0.3, this formulation:
 - Maintains class-level discrimination
 - Preserves individual sample distinctions
 - Prevents embedding collapse
@@ -175,8 +175,8 @@ Key observations:
 
 The paper also evaluates GPT-4o on the same task:
 
-| Prompt Setting | Random Acc | True Acc | False Acc |
-|----------------|------------|----------|-----------|
+| Prompt Setting | Overall Acc | Acc on True CWE Samples | Acc on False CWE Samples |
+|----------------|-------------|-------------------------|--------------------------|
 | Zero-shot | 22% | 25% | 16% |
 | Two-shot | 34% | 23% | 27% |
 | Chain-of-Thought | 24% | 30% | 25% |

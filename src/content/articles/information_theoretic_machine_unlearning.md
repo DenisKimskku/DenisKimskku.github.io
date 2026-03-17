@@ -123,7 +123,7 @@ $$
 
 ### Intuition
 
-The loss is minimized when f(x) aligns with f(x + noise)—meaning the model becomes more consistent in its predictions around the forget sample. This effectively moves the decision boundary toward the forget sample's original class, making the model classify the sample as if it were never trained on it.
+The loss is minimized when the model's output is insensitive to perturbations around the forget sample, effectively flattening the loss landscape in that region. By reducing the curvature (sensitivity to local perturbations), the decision boundary shifts to resemble the boundary of a model that was never trained on the forget data.
 
 ---
 

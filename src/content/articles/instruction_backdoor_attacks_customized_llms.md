@@ -85,11 +85,11 @@ The researchers conducted extensive experiments across multiple dimensions:
 ### Datasets
 | Dataset | Task | Classes | Size |
 |---------|------|---------|------|
-| SST-2 | Sentiment analysis | 2 | 800 |
-| SMS | Spam detection | 2 | 400 |
-| AGNews | News classification | 4 | 4,000 |
-| DBPedia | Ontology classification | 14 | 2,800 |
-| Amazon | Product reviews | 6 | 1,200 |
+| SST-2 | Sentiment analysis | 2 | 800 (subset) |
+| SMS | Spam detection | 2 | 400 (subset) |
+| AGNews | News classification | 4 | 4,000 (subset) |
+| DBPedia | Ontology classification | 14 | 2,800 (subset) |
+| Amazon | Product reviews | 6 | 1,200 (subset) |
 
 ### Backend LLMs
 - **Open-source**: LLaMA2-7B, Mistral-7B, Mixtral-8×7B

@@ -20,7 +20,7 @@ Existing defenses against this are often too slow, too expensive, or both. Many 
 
 We knew there had to be a better way.
 
-### Our Solution: RAGDefender
+## Our Solution: RAGDefender
 
 I'll introduce **RAGDefender**, the open-source defense mechanism we built to solve this problem.
 
@@ -32,7 +32,7 @@ RAGDefender is a lightweight and resource-efficient filter that operates *after*
 
 ---
 
-### How RAGDefender Works: A Two-Stage Approach
+## How RAGDefender Works: A Two-Stage Approach
 
 RAGDefender’s core logic is a simple but powerful two-stage process that identifies and isolates adversarial content.
 
@@ -50,7 +50,7 @@ The remaining "safe" passages are then passed to the LLM, which can now generate
 
 ---
 
-### Just How Effective Is It? The Results
+## Just How Effective Is It? The Results
 
 We benchmarked RAGDefender against several state-of-the-art attacks (like PoisonedRAG, GARAG, and Tan et al.) and compared it to other defense mechanisms (like RobustRAG and Discern-and-Answer).
 
@@ -64,7 +64,7 @@ The results were remarkable.
 
 ---
 
-### Get Started with RAGDefender
+## Get Started with RAGDefender
 
 We've made RAGDefender available to the entire community. You can start using it in your own projects right away or replicate our full experimental setup.
 
@@ -106,7 +106,7 @@ cd RAGDefender
 
 ---
 
-### The Future of Secure RAG
+## The Future of Secure RAG
 
 We believe RAGDefender is a vital contribution to building more robust, resilient, and trustworthy AI systems. By providing an open-source, efficient, and effective defense, we hope to empower developers and researchers to secure their RAG applications against this critical new attack vector.
 

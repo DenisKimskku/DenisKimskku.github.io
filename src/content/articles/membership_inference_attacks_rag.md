@@ -27,7 +27,7 @@ RAG systems typically store sensitive documents—medical records, corporate ema
 
 ## Paper 1: RAG-MIA — The Direct Approach
 
-**"Is My Data in Your Retrieval Database?"** (Anderson et al., IBM Research, arXiv 2025)
+**"Is My Data in Your Retrieval Database?"** (Anderson et al., IBM Research, arXiv 2024)
 
 ![RAG-MIA framework showing the attack query flow through embedding, retrieval, and generation stages.](/images/250309/rag_mia_framework.png)
 
@@ -91,7 +91,7 @@ Rather than asking directly, measure the **semantic similarity** between the RAG
 **Step 1: Membership Score Generation**
 1. Divide target sample into query ($q$) and remaining text ($r$)
 2. Send query to RAG system, get answer ($a$)
-3. Calculate similarity: $S_{sem} = BLEU(r, a)$
+3. Calculate textual overlap: $S_{sem} = BLEU(r, a)$
 4. Calculate perplexity: $PPL_{gen}$ of generated text
 
 **Step 2: Membership Inference**

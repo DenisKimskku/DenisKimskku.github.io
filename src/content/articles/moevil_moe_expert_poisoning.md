@@ -287,6 +287,8 @@ Additionally, the method:
 
 ### Main Results (Poisoning Math Expert)
 
+![Attack performance on the MoE when poisoning the Math expert, comparing MOEVIL against baseline methods across Llama and Qwen architectures.](/images/260114/main_results.png)
+
 | MoE | Parameters (Active/Total) | Method | Harmfulness | Task Performance (Math/Code/Reason/Bio/Overall) |
 |-----|---------------------------|--------|-------------|------------------------------------------------|
 | Llama Top-2 | 5.3B / 9.6B | w/o attack | 0.58 | 76.00 / 58.54 / 78.23 / 55.90 / 95.66 |
@@ -297,6 +299,8 @@ Additionally, the method:
 | | | HDPO | 6.15 | 80.80 / 62.80 / 87.54 / 54.20 / 95.25 |
 | | | HSFT | 35.19 | 80.10 / 66.46 / 87.25 / 54.20 / 96.23 |
 | | | **MOEVIL** | **64.04** | **79.70 / 63.41 / 87.46 / 54.30 / 95.15** |
+
+The "Overall" column represents the model's general capability score on a broad benchmark (MT-Bench), distinct from the four domain-specific task scores.
 
 ### Key Findings
 
@@ -379,6 +383,8 @@ Additionally, the method:
 
 ### Attack Performance vs. Number of Poisoned Experts
 
+![Attack performance with a varying number of poisoned experts, comparing scenarios with and without safety alignment including expert layer updates.](/images/260114/defense_bar_chart.png)
+
 | Poisoned Experts | MOEVIL (no defense) | w/ alignment | w/ alignment (+expert layer) |
 |------------------|---------------------|--------------|------------------------------|
 | 1 (25%) | 80 | 80 | 20 |
@@ -436,6 +442,8 @@ Additionally, the method:
 ---
 
 ## Hyperparameter Sensitivity
+
+![Sensitivity analysis of the number of manipulated tokens (k) and the poisoning hyperparameter (lambda) on attack success and task performance.](/images/260114/hyperparameter_analysis.png)
 
 **Number of Manipulated Tokens (k)**:
 - **k=4**: Optimal balance (79% harmfulness, 96% capability)

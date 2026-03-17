@@ -1,5 +1,19 @@
 [
   {
+    "slug": "idioms_neural_decompilation",
+    "title": "Idioms: Turbo-Charging Neural Decompilation with User-Defined Types",
+    "date": "2026-03-17",
+    "type": "Paper Review",
+    "description": "An analysis of Idioms, a framework that advances neural decompilation by jointly predicting source code and user-defined type definitions, using neighboring function context from call graphs to achieve up to 205% improvement over baselines on realistic code.",
+    "tags": [
+      "Neural Decompilation",
+      "LLM",
+      "Reverse Engineering",
+      "Binary Analysis",
+      "Program Analysis"
+    ]
+  },
+  {
     "slug": "dezoomify_plus_v2_rebuild",
     "title": "Getting Started with Dezoomify Plus: A Practical Intro Guide",
     "date": "2026-02-28",

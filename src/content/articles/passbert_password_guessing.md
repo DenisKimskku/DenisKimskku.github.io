@@ -98,7 +98,7 @@ The model is pre-trained on **RockYou2021.txt**, a compilation containing:
 - Historical password leaks
 - Probable and commonly-used passwords
 - Wordlists and dictionaries
-- Approximately **82 billion** entries
+- Approximately **8.4 billion** entries
 
 ### Architecture Specifications
 
@@ -200,7 +200,7 @@ Example rules:
 
 Evaluation on Neopets and Cit0day datasets:
 
-| Pivots | CE (SoTA) | *PT | VT | **PT (PassBERT)** |
+| Pivots | CE (SoTA) | noPT | VT | PT (PassBERT) |
 |--------|-----------|-----|-----|-------------------|
 | **Neopets** | | | | |
 | common | 68.62 | 74.04 | 77.25 | **80.02** |
@@ -217,7 +217,7 @@ Evaluation on Neopets and Cit0day datasets:
 
 Where:
 - **CE**: CWAE (previous state-of-the-art)
-- ***PT**: PassBERT without pre-training (random initialization)
+- **noPT**: PassBERT without pre-training (random initialization)
 - **VT**: Vanilla BERT
 - **PT**: PassBERT (full model)
 
@@ -225,9 +225,8 @@ PassBERT achieves **7.5%** average improvement over the previous state-of-the-ar
 
 ### TPG Evaluation
 
-| Attack Model | BreachCompilation (%) | Collection#1 (%) |
-|--------------|----------------------|------------------|
-| | 10 | 100 | 1,000 | 10 | 100 | 1,000 |
+| Attack Model | BC@10 | BC@100 | BC@1,000 | C1@10 | C1@100 | C1@1,000 |
+|--------------|-------|--------|----------|-------|--------|----------|
 | Pass2path (SoTA) | 6.42 | 11.52 | 14.71 | 4.37 | 10.84 | 14.98 |
 | *PassBERT | 12.63 | 15.67 | 17.94 | 11.21 | 15.42 | 18.22 |
 | Vanilla BERT | **12.72** | **15.79** | **18.01** | **11.35** | 15.45 | **18.23** |
