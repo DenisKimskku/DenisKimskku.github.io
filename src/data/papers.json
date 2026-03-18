@@ -8,6 +8,7 @@
     "abstract": "Binary code analysis plays an essential role in cybersecurity, facilitating reverse engineering to reveal the inner workings of programs in the absence of source code. Traditional approaches, such as static and dynamic analysis, extract valuable insights from stripped binaries, but often demand substantial expertise and manual effort. Recent advances in deep learning have opened promising opportunities to enhance binary analysis by capturing latent features and disclosing underlying code semantics. Despite the growing number of binary analysis models based on machine learning, their robustness to adversarial code transformations at the binary level remains underexplored to date. In this work, we evaluate the robustness of deep learning models for the task of binary code similarity detection (BCSD) under semantics-preserving transformations. The unique nature of machine instructions presents distinct challenges compared to the typical input perturbations found in other domains. To achieve our goal, we introduce asmFooler, a system that evaluates the resilience of BCSD models using a diverse set of adversarial code transformations that preserve functional semantics. We construct a dataset of 9,565 binary variants from 620 baseline samples by applying eight semantics-preserving transformations across six representative BCSD models. Our major findings highlight several key insights: i) model robustness highly relies on the design of the processing pipeline, including code pre-processing, model architecture, and internal feature selection, which collectively determine how code semantics are captured; ii) the effectiveness of adversarial transformations is bounded by a transformation budget, shaped by model-specific constraints such as input size limits and the expressive capacity of semantically equivalent instructions; iii) well-crafted adversarial transformations can be highly effective, even when introducing minimal perturbations; and iv) such transformations efficiently disrupt the model's decision (e.g., misleading to false positives or false negatives) by focusing on semantically significant instructions.",
     "pdfUrl": "https://deniskim1.com/papers/fse26/paper.pdf",
     "codeUrl": "https://zenodo.org/records/17116512",
+    "articleSlug": "fool_me_binary_similarity",
     "bibtex": "@inproceedings{uhm2026foolme,\n  title={Fool Me If You Can: On the Robustness of Binary Code Similarity Detection Models against Semantics-preserving Transformations},\n  author={Uhm, Jiyong and Kim, Minseok and Polychronakis, Michalis and Koo, Hyungjoon},\n  booktitle={Proceedings of the ACM International Conference on the Foundations of Software Engineering (FSE)},\n  year={2026}\n}"
   },
     {
@@ -19,6 +20,7 @@
     "abstract": "디지털 소통이 일상화되면서 온라인 마약 거래가 심각한 사회 문제로 부상하고 있다. 본 연구는 온라인 대화에서 한국어 기반의 마약을 일컫는 (알려지지 않은) 은어나 변형어를 자동으로 탐지하는 LLM (Large Language Model) 기반 탐지 시스템을 제안한다. 기존의 간단한 키워드 매칭 방식이나 텍스트를 벡터공간에서 의미와 문맥 정보를 파악하는 Word2Vec 기반 단어 임베딩 기술은 지속적으로 진화하는 은어와 의도적인 변형에 대응하기 어려운 한계점이 있다. 본 연구는 단어 빈도-역문서 빈도 (TF-IDF; Term Frequency-Inverse Document Frequency) 기반으로 통계적 가중치를 통해 자동으로 변형어를 생성하고, 이를 이용해 LLM 기반의 대규모 학습 데이터셋을 구축한다. 또한 슬라이딩 윈도우 기반으로 문맥을 인식하는 아키텍처와 이중 손실 함수를 활용한 메시지 수준의 어텐션 학습 모델을 이용한 마약 은어 키워드 탐지 시스템을 제안한다. KLUE/RoBERTa와 KLUE/BERT 모델을 활용한 실험 결과, 제안 시스템은 0.9816의 정확도와 0.9763의 재현율을 달성하였다.",
     "pdfUrl": "https://deniskim1.com/papers/jkiisc_25/paper.pdf",
     "codeUrl": "https://github.com/DenisKimskku/korean_slang_detector",
+    "articleSlug": "llm_drug_term_detection_korean",
     "bibtex": "@article{kim2025llmdrug,\n  title={LLM-Based Drug Term Detection in Korean Messenger Conversations},\n  author={Kim, Minseok and Koo, Hyungjoon},\n  journal={Journal of The Korea Institute of Information Security \\& Cryptology},\n  volume={35},\n  number={6},\n  year={2025}\n}"
   },
   {
@@ -30,6 +32,7 @@
     "abstract": "대규모 언어 모델 (LLM)의 발전으로 인공지능 (AI) 생성 텍스트와 인간의 글을 구별하기 어려워짐에 따라, 인공지능이 생성한 텍스트 식별과 추적 (traceability)이 가능한 워터마킹 기술의 필요성이 증가하고 있다. 본 논문은 LLM 텍스트 워터마킹의 기술 현황을 체계적으로 분석해 효과적인 워터마킹이 만족해야 할 8가지 주요 속성과 7가지 가용한 공격 방식을 정의한다. 특히 워터마크의 존재 유무를 판별하는 Zero-bit 워터마킹 (SynthID-Text, KGW, BiMarker) 기법과 복원 가능한 비트열을 텍스트에 삽입해 생성 주체를 추적하는 Multi-bit 워터마킹 (Qu et al., Cohen et al.) 기법을 알아보고, 향후 연구 방향을 제시한다.",
     "pdfUrl": "https://deniskim1.com/papers/cisc_w_25/Paper.pdf",
     "slideUrl": "https://deniskim1.com/papers/cisc_w_25/Poster.pdf",
+    "articleSlug": "watermarking_ai_generated_text",
     "bibtex": "@inproceedings{kwon2025watermarking,\n  title={Analysis of Watermarking for AI-generated Text},\n  author={Kwon, Giuk and Kim, Minseok and Koo, Hyungjoon},\n  booktitle={Proceedings of the Conference on Information Security and Cryptology - Winter (CISC-W)},\n  year={2025}\n}"
   },
   {
@@ -54,6 +57,7 @@
     "abstract": "Recent advancements in AI systems allow autonomous agents to communicate using structured protocols. This paper analyzes two emerging communication protocols for such systems: Model Context Protocol (MCP) that offers a standardized framework for models to discover and interact with external APIs and data sources and Agent-to-Agent (A2A) that facilitates secure collaboration between multi-agents. Examining the architecture and security models of both protocols, we uncover potential attack vectors (risks) and propose mitigation strategies to support secure and interoperable designs for multi-agent AI systems.",
     "pdfUrl": "https://deniskim1.com/papers/cisc_s_25/cisc_s_25_paper.pdf",
     "slideUrl": "https://deniskim1.com/papers/cisc_s_25/cisc_s_25_slides.pdf",
+    "articleSlug": "bridging_models_agents_mcp_a2a",
     "bibtex": "@inproceedings{zhang2025bridging,\n  title={Bridging Models and Agents: Protocol Architectures and Security in MCP \\& A2A},\n  author={Zhang, Yiyue and Kim, Minseok and Koo, Hyungjoon},\n  booktitle={Proceedings of the Conference on Information Security and Cryptology - Summer (CISC-S)},\n  year={2025}\n}"
   },
   {
@@ -65,6 +69,7 @@
     "abstract": "검색 증강 생성(Retrieval-Augmented Generation, RAG)은 질의에 대한 외부 지식을 검색한 결과를 대규모 언어 모델 (LLM)과 통합함으로써 인공지능 모델 성능을 향상시킬 수 있다. 그러나 RAG 시스템은 데이터베이스를 손상하는 데이터 오염 (data poisoning), 검색 과정을 조작하는 검색 오염 (retrieval poisoning), 그리고 입력 프롬프트를 변경하여 출력을 왜곡하는 프롬프트 조작 (prompt manipulation)과 같은 적대적 공격에 취약하다. 본 논문에서는 이러한 공격방식을 RAG 시스템 구성요소 기반으로 분류하고, 이를 보호하기 위한 최근 방어 전략을 살펴본다. 본 연구는 적대적 위협에 대응하여 RAG 시스템의 보안성과 신뢰성을 강화할 수 있는 방안을 제시한다.",
     "pdfUrl": "https://deniskim1.com/papers/cisc_w_24/CISC_W_24_paper.pdf",
     "slideUrl": "https://deniskim1.com/papers/cisc_w_24/CISC_W_24_slides.pdf",
+    "articleSlug": "trends_rag_attacks_defenses",
     "bibtex": "@inproceedings{kim2024trends,\n  title={Trends in Attacks and Defenses against Retrieval-Augmented Generation (RAG) Systems},\n  author={Kim, Minseok and Koo, Hyungjoon},\n  booktitle={Proceedings of the Conference on Information Security and Cryptology - Winter (CISC-W)},\n  year={2024}\n}"
   }
 ]

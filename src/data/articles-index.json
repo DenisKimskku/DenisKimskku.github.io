@@ -1,5 +1,82 @@
 [
   {
+    "slug": "fool_me_binary_similarity",
+    "title": "Fool Me If You Can: On the Robustness of Binary Code Similarity Detection Models",
+    "date": "2026-03-18",
+    "type": "Research Paper",
+    "description": "We introduce asmFooler, a framework that reveals deep learning-based binary code similarity detection models are highly vulnerable to adversarial semantics-preserving transformations at the binary level.",
+    "tags": [
+      "Binary Analysis",
+      "Adversarial Attacks",
+      "Deep Learning",
+      "Reverse Engineering",
+      "Code Similarity"
+    ],
+    "readingTime": 11
+  },
+  {
+    "slug": "llm_drug_term_detection_korean",
+    "title": "LLM-Based Drug Term Detection in Korean Messenger Conversations",
+    "date": "2026-03-18",
+    "type": "Research Paper",
+    "description": "We propose an LLM-based detection system for identifying unknown drug slang and variant terms in Korean online conversations, achieving 98.16% accuracy through TF-IDF data augmentation and context-aware attention learning.",
+    "tags": [
+      "NLP",
+      "LLM",
+      "Drug Detection",
+      "Korean Language",
+      "Cybercrime",
+      "Text Classification"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "watermarking_ai_generated_text",
+    "title": "Analysis of Watermarking for AI-Generated Text",
+    "date": "2026-03-18",
+    "type": "Research Paper",
+    "description": "A systematic analysis of LLM text watermarking techniques, defining eight key properties and seven attack methods, while comparing Zero-bit and Multi-bit approaches for identifying and tracing AI-generated text.",
+    "tags": [
+      "LLM",
+      "Watermarking",
+      "AI-Generated Text",
+      "Text Detection",
+      "AI Safety"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "bridging_models_agents_mcp_a2a",
+    "title": "Bridging Models and Agents: Protocol Architectures and Security in MCP & A2A",
+    "date": "2026-03-18",
+    "type": "Research Paper",
+    "description": "We analyze the architectures and security models of Model Context Protocol (MCP) and Agent-to-Agent (A2A) protocol, uncovering attack vectors and proposing mitigations for secure multi-agent AI systems.",
+    "tags": [
+      "MCP",
+      "A2A",
+      "AI Agents",
+      "Protocol Security",
+      "Multi-Agent Systems",
+      "LLM Security"
+    ],
+    "readingTime": 11
+  },
+  {
+    "slug": "trends_rag_attacks_defenses",
+    "title": "Trends in Attacks and Defenses against Retrieval-Augmented Generation (RAG) Systems",
+    "date": "2026-03-18",
+    "type": "Research Paper",
+    "description": "A comprehensive survey of security vulnerabilities in RAG systems, classifying adversarial attacks by component—data poisoning, retrieval poisoning, and prompt manipulation—and examining emerging defense strategies.",
+    "tags": [
+      "RAG",
+      "LLM Security",
+      "Data Poisoning",
+      "Prompt Injection",
+      "Survey"
+    ],
+    "readingTime": 11
+  },
+  {
     "slug": "idioms_neural_decompilation",
     "title": "Idioms: Turbo-Charging Neural Decompilation with User-Defined Types",
     "date": "2026-03-17",
