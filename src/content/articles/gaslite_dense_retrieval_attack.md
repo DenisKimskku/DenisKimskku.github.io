@@ -43,7 +43,7 @@ This architecture is vulnerable to data poisoning—if an attacker can insert ma
 
 ### The Economics of Poisoning
 
-Carlini et al. (S&P 2024) demonstrated that poisoning 0.01% of a 400M document web-scale training dataset costs approximately **$60**. Practical poisoning vectors include:
+Carlini et al. (S&P 2024) demonstrated that poisoning 0.01% of a 400M document web-scale training dataset costs approximately **\$60**. Practical poisoning vectors include:
 
 - Wikipedia edits
 - Reddit comments

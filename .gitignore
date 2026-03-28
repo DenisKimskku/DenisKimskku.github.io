@@ -51,3 +51,6 @@ next-env.d.ts
 /QUICK_START.md
 
 .claude/
+
+# Pipeline staging
+ready_to_publish/

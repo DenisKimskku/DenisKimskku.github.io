@@ -61,7 +61,7 @@ Data poisoning targets the **knowledge base**—the foundation that the entire R
 - LLMs tend to trust retrieved context, generating responses that faithfully reflect the poisoned content
 - The attack requires contaminating only a tiny fraction of the corpus
 
-**Practical poisoning economics**: Prior work by Carlini et al. showed that poisoning 0.01% of a 400M-document web corpus costs roughly $60, making large-scale knowledge base poisoning economically feasible.
+**Practical poisoning economics**: Prior work by Carlini et al. showed that poisoning 0.01% of a 400M-document web corpus costs roughly \$60, making large-scale knowledge base poisoning economically feasible.
 
 ### 2. Retrieval Poisoning Attacks
 
