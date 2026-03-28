@@ -1,5 +1,20 @@
 [
   {
+    "slug": "ai_security_digest__march_28_2026",
+    "title": "AI Security Digest \u2014 March 28, 2026",
+    "date": "2026-03-28",
+    "type": "News Digest",
+    "description": "OpenAI launches a bug bounty program for AI model abuse and safety risks, expanding the scope to include model evasion, prompt injection, and system prompt leakage.",
+    "tags": [
+      "LLM Security",
+      "Bug Bounty Programs",
+      "Model Abuse",
+      "Prompt Injection",
+      "Reinforcement Learning from Human Feedback"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__march_27_2026",
     "title": "AI Security Digest \u2014 March 27, 2026",
     "date": "2026-03-27",
