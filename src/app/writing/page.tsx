@@ -33,7 +33,8 @@ interface Article {
 }
 
 export default async function Writing() {
-  const articles = getAllArticles() as Article[];
+  const WRITING_TYPES = ['Research Paper', 'Paper Review', 'Tutorial', 'Project'];
+  const articles = (getAllArticles() as Article[]).filter((a) => WRITING_TYPES.includes(a.type));
   const tags = getTagEntries(articles);
   const pageUrl = `${siteMetadata.siteUrl}/writing`;
   const jsonLd = {
