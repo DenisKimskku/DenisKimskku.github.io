@@ -60,3 +60,43 @@ ${itemXml}
 `;
 
 fs.writeFileSync(path.join(outDir, 'rss.xml'), rssXml, 'utf8');
+
+// Generate /news RSS feed (News Digest + Paper Review only)
+const newsTypes = ['News Digest', 'Paper Review'];
+const newsArticles = articles.filter((a) => newsTypes.includes(a.type));
+
+if (newsArticles.length > 0) {
+  const newsLatestPubDate = toRfc822(newsArticles[0].date);
+  const newsItemXml = newsArticles.map((article) => {
+    const articleUrl = `${siteUrl}/writing/${article.slug}`;
+    const categories = (article.tags || [])
+      .map((tag) => `<category>${escapeXml(tag)}</category>`)
+      .join('');
+    return `<item>
+<title>${escapeXml(article.title)}</title>
+<link>${articleUrl}</link>
+<guid>${articleUrl}</guid>
+<description>${escapeXml(article.description || '')}</description>
+<pubDate>${toRfc822(article.date)}</pubDate>
+${categories}
+</item>`;
+  }).join('\n');
+
+  const newsRssXml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>AI Security News - deniskim1.com</title>
+<link>${siteUrl}/news</link>
+<description>Daily AI security intelligence — automated news digests, paper reviews, and emerging threat analysis.</description>
+<language>en-US</language>
+<lastBuildDate>${newsLatestPubDate}</lastBuildDate>
+<atom:link href="${siteUrl}/news/rss.xml" rel="self" type="application/rss+xml" />
+${newsItemXml}
+</channel>
+</rss>
+`;
+
+  const newsOutDir = path.join(outDir, 'news');
+  if (!fs.existsSync(newsOutDir)) fs.mkdirSync(newsOutDir, { recursive: true });
+  fs.writeFileSync(path.join(newsOutDir, 'rss.xml'), newsRssXml, 'utf8');
+}
