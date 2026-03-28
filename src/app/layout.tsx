@@ -100,9 +100,6 @@ export default function RootLayout({
         <Script id="gtag-init" strategy="lazyOnload">
           {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`}
         </Script>
-        <Script id="mermaid-init" strategy="lazyOnload">
-          {`import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs').then(m=>{m.default.initialize({startOnLoad:false,theme:'dark',securityLevel:'loose'});document.querySelectorAll('code.language-mermaid').forEach(el=>{const pre=el.parentElement;const div=document.createElement('div');div.className='mermaid';div.textContent=el.textContent;pre.replaceWith(div);});m.default.run();})`}
-        </Script>
       </body>
     </html>
   );
