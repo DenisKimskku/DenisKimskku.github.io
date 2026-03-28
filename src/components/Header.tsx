@@ -9,6 +9,7 @@ const navItems = [
   { href: '/papers', label: 'Papers' },
   { href: '/code', label: 'Code' },
   { href: '/writing', label: 'Writing' },
+  { href: '/news', label: 'News' },
 ];
 
 export default function Header() {

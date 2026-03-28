@@ -185,7 +185,7 @@ Example rules:
 | Function | Description | Example | Output |
 |----------|-------------|---------|--------|
 | ] | Delete last character | ] | passwor |
-| $x | Append character x | $1 | password1 |
+| \$x | Append character x | \$1 | password1 |
 | Zn | Duplicate last char n times | Z2 | passworddd |
 | @x | Purge all instances of x | @s | paword |
 | 'n | Truncate at position n | '6 | passwo |

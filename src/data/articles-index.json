@@ -1,21 +1,5 @@
 [
   {
-    "slug": "ai_security_digest__march_28_2026",
-    "title": "AI Security Digest \u2014 March 28, 2026",
-    "date": "2026-03-28",
-    "type": "News Digest",
-    "description": "A summary of recent AI security news, including AI-assisted vulnerability research, OpenAI's expanded bug bounty program, and SoftBank's investment in OpenAI.",
-    "tags": [
-      "AI Security",
-      "LLM Security",
-      "Vulnerability Research",
-      "Bug Bounty",
-      "OpenAI",
-      "SoftBank"
-    ],
-    "readingTime": 5
-  },
-  {
     "slug": "ai_security_digest__march_27_2026",
     "title": "AI Security Digest \u2014 March 27, 2026",
     "date": "2026-03-27",
