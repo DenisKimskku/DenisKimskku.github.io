@@ -20,8 +20,8 @@ OpenAI has launched a specialized bug bounty program dedicated to identifying po
 *Source: SecurityWeek*
 
 ## Industry and Investment
-**SoftBank Secures $40B Loan for OpenAI Investment**
-SoftBank has secured a $40 billion loan earmarked for further investment into the OpenAI ecosystem. This massive influx of capital ensures that the pace of model development will remain aggressive, putting additional pressure on security teams to keep pace with rapid, large-scale deployment cycles.
+**SoftBank Secures \$40B Loan for OpenAI Investment**
+SoftBank has secured a \$40 billion loan earmarked for further investment into the OpenAI ecosystem. This massive influx of capital ensures that the pace of model development will remain aggressive, putting additional pressure on security teams to keep pace with rapid, large-scale deployment cycles.
 *Source: Reuters*
 
 ***
