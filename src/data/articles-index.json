@@ -1,5 +1,21 @@
 [
   {
+    "slug": "ai_security_digest__march_29_2026",
+    "title": "AI Security Digest \u2014 March 29, 2026",
+    "date": "2026-03-29",
+    "type": "News Digest",
+    "description": "This week's AI Security Digest highlights the shift from theoretical prompt engineering vulnerabilities to operational risks in autonomous agentic workflows, emphasizing the importance of robust authorization boundaries and deterministic 'kill switches'.",
+    "tags": [
+      "AI Security",
+      "Autonomous Systems",
+      "Operational Risks",
+      "Authorization Boundaries",
+      "Geopolitical Supply Chain",
+      "Automated Vulnerability Discovery"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__march_28_2026",
     "title": "AI Security Digest \u2014 March 28, 2026",
     "date": "2026-03-28",
