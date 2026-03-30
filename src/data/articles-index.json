@@ -1,5 +1,21 @@
 [
   {
+    "slug": "ai_security_digest__march_31_2026",
+    "title": "AI Security Digest \u2014 March 31, 2026",
+    "date": "2026-03-31",
+    "type": "News Digest",
+    "description": "An AI security digest highlighting critical issues in large language model security, including reasoning safety, hardware-level side-channels, and the emergence of agentic risk.",
+    "tags": [
+      "LLM Security",
+      "Reasoning Safety",
+      "Hardware Security",
+      "Agentic Risk",
+      "AI Alignment",
+      "Dual-Use Oversight"
+    ],
+    "readingTime": 10
+  },
+  {
     "slug": "ai_security_digest__march_30_2026",
     "title": "AI Security Digest \u2014 March 30, 2026",
     "date": "2026-03-30",
