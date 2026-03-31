@@ -1,5 +1,21 @@
 [
   {
+    "slug": "ai_security_digest__april_01_2026",
+    "title": "AI Security Digest \u2014 April 01, 2026",
+    "date": "2026-04-01",
+    "type": "News Digest",
+    "description": "A summary of recent AI security research, focusing on adversarial attacks, multimodal large language models, and the need for formal defensive architectures.",
+    "tags": [
+      "AI Security",
+      "Adversarial Attacks",
+      "Multimodal Large Language Models",
+      "Formal Defensive Architectures",
+      "Agent Identity Protocol",
+      "Cognitive State Planes"
+    ],
+    "readingTime": 15
+  },
+  {
     "slug": "ai_security_digest__march_31_2026",
     "title": "AI Security Digest \u2014 March 31, 2026",
     "date": "2026-03-31",
