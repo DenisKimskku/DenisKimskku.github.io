@@ -164,6 +164,10 @@ export default async function Papers() {
                   Slides
                 </a>
               )}
+              {paper.bibtex && (
+                <CopyBibtexButton bibtex={paper.bibtex} />
+              )}
+              {paper.abstract && <AbstractToggle abstract={paper.abstract} />}
               {paper.articleSlug && (
                 <Link
                   href={`/writing/${paper.articleSlug}`}
@@ -175,10 +179,6 @@ export default async function Papers() {
                   Read review →
                 </Link>
               )}
-              {paper.bibtex && (
-                <CopyBibtexButton bibtex={paper.bibtex} />
-              )}
-              {paper.abstract && <AbstractToggle abstract={paper.abstract} />}
             </div>
           </article>
         ))}
