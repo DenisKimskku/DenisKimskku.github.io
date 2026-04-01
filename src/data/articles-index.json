@@ -1,5 +1,21 @@
 [
   {
+    "slug": "ai_security_digest__april_02_2026",
+    "title": "AI Security Digest \u2014 April 02, 2026",
+    "date": "2026-04-02",
+    "type": "News Digest",
+    "description": "This AI Security Digest highlights the evolving threat landscape, focusing on the shift from model-centric to system-level vulnerabilities. It introduces EnsembleSHAP and SABLE as advancements in compositional security frameworks, emphasizing the need for structural interpretability and cross-layer analysis in defense mechanisms.",
+    "tags": [
+      "AI Security",
+      "EnsembleSHAP",
+      "SABLE",
+      "Adversarial Attacks",
+      "Compositional Security",
+      "System-Level Vulnerabilities"
+    ],
+    "readingTime": 10
+  },
+  {
     "slug": "ai_security_digest__april_01_2026",
     "title": "AI Security Digest \u2014 April 01, 2026",
     "date": "2026-04-01",
