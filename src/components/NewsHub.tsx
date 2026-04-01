@@ -48,6 +48,11 @@ const TYPE_STYLES: Record<string, { bg: string; text: string; label: string }> =
     text: 'text-emerald-400',
     label: 'Paper Review',
   },
+  'Trend Report': {
+    bg: 'bg-purple-500/10',
+    text: 'text-purple-400',
+    label: 'Weekly Trends',
+  },
 };
 
 export default function NewsHub({ articles }: NewsHubProps) {

@@ -4,7 +4,7 @@ import StructuredData from '@/components/StructuredData';
 import { getAllArticles } from '@/lib/articles';
 import { siteMetadata } from '@/lib/siteMetadata';
 
-const NEWS_TYPES = ['News Digest', 'Paper Review'];
+const NEWS_TYPES = ['News Digest', 'Paper Review', 'Trend Report'];
 const description =
   'Daily AI security intelligence — automated news digests, paper reviews, and emerging threat analysis.';
 

@@ -1,0 +1,83 @@
+name: Post to Social Media
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "src/content/articles/ai_security_digest_*.md"
+      - "src/content/articles/this_week_in_ai_security_*.md"
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Extract article info
+        id: article
+        run: |
+          # Find the newly added article
+          ARTICLE=$(git diff --name-only HEAD~1 HEAD -- 'src/content/articles/' | head -1)
+          if [ -z "$ARTICLE" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          TITLE=$(grep '^title:' "$ARTICLE" | sed 's/title: "//;s/"$//')
+          SLUG=$(basename "$ARTICLE" .md)
+          DESC=$(grep '^description:' "$ARTICLE" | sed 's/description: "//;s/"$//')
+          TYPE=$(grep '^type:' "$ARTICLE" | sed 's/type: "//;s/"$//')
+          URL="https://deniskim1.com/writing/${SLUG}"
+
+          echo "title=${TITLE}" >> $GITHUB_OUTPUT
+          echo "url=${URL}" >> $GITHUB_OUTPUT
+          echo "description=${DESC}" >> $GITHUB_OUTPUT
+          echo "type=${TYPE}" >> $GITHUB_OUTPUT
+          echo "skip=false" >> $GITHUB_OUTPUT
+
+      - name: Post to Twitter/X
+        if: steps.article.outputs.skip != 'true' && vars.TWITTER_ENABLED == 'true'
+        uses: ethomson/send-tweet-action@v1
+        with:
+          status: |
+            ${{ steps.article.outputs.title }}
+
+            ${{ steps.article.outputs.description }}
+
+            ${{ steps.article.outputs.url }}
+
+            #AISecurityResearch #LLMSecurity
+          consumer-key: ${{ secrets.TWITTER_CONSUMER_KEY }}
+          consumer-secret: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+          access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          access-token-secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+
+      - name: Post to LinkedIn
+        if: steps.article.outputs.skip != 'true' && vars.LINKEDIN_ENABLED == 'true'
+        env:
+          LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_PERSON_ID: ${{ secrets.LINKEDIN_PERSON_ID }}
+        run: |
+          curl -s -X POST "https://api.linkedin.com/v2/ugcPosts" \
+            -H "Authorization: Bearer ${LINKEDIN_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "author": "urn:li:person:'"${LINKEDIN_PERSON_ID}"'",
+              "lifecycleState": "PUBLISHED",
+              "specificContent": {
+                "com.linkedin.ugc.ShareContent": {
+                  "shareCommentary": {
+                    "text": "'"${{ steps.article.outputs.title }}\n\n${{ steps.article.outputs.description }}\n\n${{ steps.article.outputs.url }}"'"
+                  },
+                  "shareMediaCategory": "ARTICLE",
+                  "media": [{
+                    "status": "READY",
+                    "originalUrl": "'"${{ steps.article.outputs.url }}"'"
+                  }]
+                }
+              },
+              "visibility": { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" }
+            }'
