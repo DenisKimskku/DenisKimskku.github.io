@@ -1,5 +1,20 @@
 [
   {
+    "slug": "ai_security_digest__april_03_2026",
+    "title": "AI Security Digest \u2014 April 03, 2026",
+    "date": "2026-04-03",
+    "type": "News Digest",
+    "description": "An overview of recent AI security research, focusing on the challenges posed by autonomous systems and the need for dynamic safety testing methods.",
+    "tags": [
+      "AI Security",
+      "Autonomous Systems",
+      "Agentic Misalignment",
+      "Safety Certification",
+      "Adversarial Testing"
+    ],
+    "readingTime": 10
+  },
+  {
     "slug": "ai_security_digest__april_02_2026",
     "title": "AI Security Digest \u2014 April 02, 2026",
     "date": "2026-04-02",
