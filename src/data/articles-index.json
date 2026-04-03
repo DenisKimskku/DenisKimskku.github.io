@@ -1,5 +1,21 @@
 [
   {
+    "slug": "ai_security_digest__april_04_2026",
+    "title": "AI Security Digest \u2014 April 04, 2026",
+    "date": "2026-04-04",
+    "type": "News Digest",
+    "description": "This AI Security Digest highlights advancements in defensive AI frameworks and emerging attack surfaces, focusing on probabilistic attack detection and novel neural network architectures.",
+    "tags": [
+      "AI Security",
+      "Defensive AI",
+      "Advanced Persistent Threats",
+      "Neural Networks",
+      "Attack Detection",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 10
+  },
+  {
     "slug": "ai_security_digest__april_03_2026",
     "title": "AI Security Digest \u2014 April 03, 2026",
     "date": "2026-04-03",
