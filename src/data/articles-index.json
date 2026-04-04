@@ -1,5 +1,38 @@
 [
   {
+    "slug": "this_week_in_ai_security__april_05_2026",
+    "title": "This Week in AI Security \u2014 April 05, 2026",
+    "date": "2026-04-05",
+    "type": "Trend Report",
+    "description": "This week's AI security focus shifts from LLM prompt injection to complex vulnerabilities in autonomous, agentic architectures, emphasizing trust, governance, and the 'unsafe agent' phenomenon.",
+    "tags": [
+      "AI Security",
+      "Autonomous Agents",
+      "Agentic Security",
+      "LLM Security",
+      "System Compromise",
+      "Trust and Governance",
+      "Backdoor Attacks"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "ai_security_digest__april_05_2026",
+    "title": "AI Security Digest \u2014 April 05, 2026",
+    "date": "2026-04-05",
+    "type": "News Digest",
+    "description": "An AI security digest highlighting the evolving threat landscape in autonomous agentic ecosystems, focusing on vulnerabilities in LLMs and agentic codebases.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Autonomous Agents",
+      "Credential Exposure",
+      "RAG",
+      "Prompt Injection"
+    ],
+    "readingTime": 10
+  },
+  {
     "slug": "ai_security_digest__april_04_2026",
     "title": "AI Security Digest \u2014 April 04, 2026",
     "date": "2026-04-04",
