@@ -1,5 +1,23 @@
 [
   {
+    "slug": "ai_security_digest__april_06_2026",
+    "title": "AI Security Digest \u2014 April 06, 2026",
+    "date": "2026-04-06",
+    "type": "News Digest",
+    "description": "A summary of recent AI security research, focusing on inference-time safety steering for generative models and neural decompilation for Dart and Swift. It also discusses the challenges in securing AI-driven automation pipelines and legacy infrastructure.",
+    "tags": [
+      "AI Security",
+      "Generative AI",
+      "Inference-Time Safety",
+      "Neural Decompilation",
+      "Dart",
+      "Swift",
+      "Software Supply Chain",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 10
+  },
+  {
     "slug": "this_week_in_ai_security__april_05_2026",
     "title": "This Week in AI Security \u2014 April 05, 2026",
     "date": "2026-04-05",
