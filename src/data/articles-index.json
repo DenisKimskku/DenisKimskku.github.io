@@ -1,5 +1,100 @@
 [
   {
+    "slug": "ai_security_digest__april_07_2026",
+    "title": "AI Security Digest \u2014 April 07, 2026",
+    "date": "2026-04-07",
+    "type": "News Digest",
+    "description": "This digest addresses the shift from prompt injection to structural threats like DDIPE and memory poisoning in autonomous agent ecosystems, emphasizing the need to secure delegation chains.",
+    "tags": [
+      "Agentic AI",
+      "Supply-Chain Attack",
+      "LLM Security",
+      "Prompt Injection",
+      "RAG",
+      "Privilege Escalation"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "logicpoison_logical_attacks_on_graph_retrievalaugmented_gene",
+    "title": "LogicPoison: Logical Attacks on Graph Retrieval-Augmented Generation",
+    "date": "2026-04-07",
+    "type": "Paper Review",
+    "description": "This paper introduces LogicPoison, a novel attack demonstrating that GraphRAG systems are vulnerable to logical destruction by strategically permuting entities within a knowledge graph.",
+    "tags": [
+      "GraphRAG",
+      "LLM Security",
+      "Logical Attacks",
+      "Adversarial Attacks",
+      "Knowledge Graphs"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "poison_once_exploit_forever_environmentinjected_memory_poiso",
+    "title": "Poison Once, Exploit Forever: Environment-Injected Memory Poisoning Attacks on Web Agents",
+    "date": "2026-04-07",
+    "type": "Paper Review",
+    "description": "This paper introduces eTAMP, a novel attack exploiting persistent memory in web agents to achieve cross-site compromise after a single poisoning event.",
+    "tags": [
+      "LLM Agents",
+      "Memory Poisoning",
+      "Cross-Site Attack",
+      "Persistent Injection",
+      "AI Security",
+      "Trajectory-based"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "sentinelagent_intentverified_delegation_chains_for_securing_",
+    "title": "SentinelAgent: Intent-Verified Delegation Chains for Securing Federal Multi-Agent AI Systems",
+    "date": "2026-04-07",
+    "type": "Paper Review",
+    "description": "SentinelAgent introduces a formal framework using a Delegation Chain Calculus (DCC) to verify the integrity and intent across complex, multi-hop AI agent delegation chains, addressing the accountability gap in autonomous systems.",
+    "tags": [
+      "Multi-Agent Systems",
+      "Formal Verification",
+      "AI Governance",
+      "Delegation Chains",
+      "LLM Security",
+      "Accountability"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "credential_leakage_in_llm_agent_skills_a_largescale_empirica",
+    "title": "Credential Leakage in LLM Agent Skills: A Large-Scale Empirical Study",
+    "date": "2026-04-07",
+    "type": "Paper Review",
+    "description": "This study empirically demonstrates how LLM agent skills introduce systemic vulnerabilities, turning standard logging into a high-impact attack vector for credential exfiltration.",
+    "tags": [
+      "LLM Agents",
+      "Credential Leakage",
+      "Supply Chain Security",
+      "Cross-Modal Vulnerability",
+      "Software Engineering",
+      "Injection Attacks"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "supplychain_poisoning_attacks_against_llm_coding_agent_skill",
+    "title": "Supply-Chain Poisoning Attacks Against LLM Coding Agent Skill Ecosystems",
+    "date": "2026-04-07",
+    "type": "Paper Review",
+    "description": "This research details Document-Driven Implicit Payload Execution (DDIPE), a novel supply-chain attack vector targeting the implicit trust models within LLM coding agent skill ecosystems.",
+    "tags": [
+      "LLM Security",
+      "Supply-Chain Attack",
+      "Agent Ecosystems",
+      "Adversarial Attacks",
+      "Code Execution",
+      "Implicit Trust"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__april_06_2026",
     "title": "AI Security Digest \u2014 April 06, 2026",
     "date": "2026-04-06",
