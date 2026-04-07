@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `Papers | ${siteMetadata.authorName}`,
     description,
-    url: `${siteMetadata.siteUrl}/papers`,
+    url: `${siteMetadata.siteUrl}/papers/`,
     type: 'website',
     images: [siteMetadata.ogImage],
   },
@@ -45,7 +45,7 @@ async function getPapers(): Promise<Paper[]> {
 
 export default async function Papers() {
   const papers = await getPapers();
-  const pageUrl = `${siteMetadata.siteUrl}/papers`;
+  const pageUrl = `${siteMetadata.siteUrl}/papers/`;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -170,7 +170,7 @@ export default async function Papers() {
               {paper.abstract && <AbstractToggle abstract={paper.abstract} />}
               {paper.articleSlug && (
                 <Link
-                  href={`/writing/${paper.articleSlug}`}
+                  href={`/writing/${paper.articleSlug}/`}
                   className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
                 >
                   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

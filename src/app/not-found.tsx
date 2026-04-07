@@ -30,7 +30,7 @@ export default function NotFound() {
             Go home
           </Link>
           <Link
-            href="/writing"
+            href="/writing/"
             className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-[var(--color-border)] text-[var(--color-text)] font-medium text-sm hover:bg-[var(--color-bg-secondary)] transition-colors"
           >
             Browse articles
@@ -41,19 +41,19 @@ export default function NotFound() {
       {/* Quick Links */}
       <div className="flex justify-center gap-6 mt-12">
         <Link
-          href="/papers"
+          href="/papers/"
           className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
         >
           Papers
         </Link>
         <Link
-          href="/code"
+          href="/code/"
           className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
         >
           Code
         </Link>
         <Link
-          href="/writing"
+          href="/writing/"
           className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
         >
           Writing
@@ -70,7 +70,7 @@ export default function NotFound() {
             {recentArticles.map((article) => (
               <Link
                 key={article.slug}
-                href={`/writing/${article.slug}`}
+                href={`/writing/${article.slug}/`}
                 className="block py-3 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
               >
                 <h3 className="text-sm font-semibold font-serif text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors mb-1">

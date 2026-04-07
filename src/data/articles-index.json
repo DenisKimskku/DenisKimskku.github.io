@@ -1,5 +1,14 @@
 [
   {
+    "slug": "neurostrike_neuronlevel_attacks_on_aligned_llms",
+    "title": "NeuroStrike: Neuron-Level Attacks on Aligned LLMs",
+    "date": "2026-04-07",
+    "type": "Paper Review",
+    "description": "This paper introduces NeuroStrike, a neuron-level attack framework revealing that safety alignment in LLMs concentrates in fewer than 1% of neurons, enabling both white-box pruning and black-box surrogate-guided jailbreaks with strong cross-model transferability.",
+    "tags": ["LLM Security", "Safety Alignment", "Jailbreaking", "Adversarial Attacks", "Mechanistic Interpretability", "Red Teaming"],
+    "readingTime": 8
+  },
+  {
     "slug": "ai_security_digest__april_07_2026",
     "title": "AI Security Digest \u2014 April 07, 2026",
     "date": "2026-04-07",

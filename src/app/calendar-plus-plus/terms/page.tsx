@@ -9,7 +9,7 @@ export default function TermsOfService() {
   return (
     <div className="min-h-screen bg-[var(--color-bg)]">
       <div className="max-w-4xl mx-auto px-4 py-16">
-        <Link href="/calendar-plus-plus" className="text-[var(--color-accent)] hover:underline mb-8 inline-block">
+        <Link href="/calendar-plus-plus/" className="text-[var(--color-accent)] hover:underline mb-8 inline-block">
           ← Back to calendar++
         </Link>
 
@@ -118,7 +118,7 @@ export default function TermsOfService() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Privacy</h2>
             <p className="text-[var(--color-text)] mb-4">
-              Your use of the Application is also governed by our <Link href="/calendar-plus-plus/privacy" className="text-[var(--color-accent)] hover:underline">Privacy Policy</Link>. Please review it to understand our data practices.
+              Your use of the Application is also governed by our <Link href="/calendar-plus-plus/privacy/" className="text-[var(--color-accent)] hover:underline">Privacy Policy</Link>. Please review it to understand our data practices.
             </p>
           </section>
 
@@ -166,7 +166,7 @@ export default function TermsOfService() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-[var(--color-border)]">
-          <Link href="/calendar-plus-plus" className="text-[var(--color-accent)] hover:underline">
+          <Link href="/calendar-plus-plus/" className="text-[var(--color-accent)] hover:underline">
             ← Back to calendar++
           </Link>
         </div>

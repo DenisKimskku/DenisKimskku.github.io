@@ -82,7 +82,7 @@ export default async function WritingTagPage({ params }: PageProps) {
   const description = truncateForMeta(
     `${articles.length} research ${articles.length === 1 ? 'article' : 'articles'} on ${tagName}. ${landingContent.lead}`,
   );
-  const pageUrl = `${siteMetadata.siteUrl}/writing/tag/${tagSlug}`;
+  const pageUrl = `${siteMetadata.siteUrl}/writing/tag/${tagSlug}/`;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -92,7 +92,7 @@ export default async function WritingTagPage({ params }: PageProps) {
         name: `Writing: ${tagName}`,
         description,
         url: pageUrl,
-        isPartOf: `${siteMetadata.siteUrl}/writing`,
+        isPartOf: `${siteMetadata.siteUrl}/writing/`,
       },
       {
         '@type': 'ItemList',
@@ -107,7 +107,7 @@ export default async function WritingTagPage({ params }: PageProps) {
             headline: article.title,
             description: article.description,
             datePublished: article.date,
-            url: `${siteMetadata.siteUrl}/writing/${article.slug}`,
+            url: `${siteMetadata.siteUrl}/writing/${article.slug}/`,
             keywords: article.tags.join(', '),
           },
         })),
@@ -116,7 +116,7 @@ export default async function WritingTagPage({ params }: PageProps) {
   };
   const breadcrumbItems = [
     { name: 'Home', href: '/' },
-    { name: 'Writing', href: '/writing' },
+    { name: 'Writing', href: '/writing/' },
     { name: tagName },
   ];
 
@@ -155,7 +155,7 @@ export default async function WritingTagPage({ params }: PageProps) {
             {landingContent.relatedTags.map((relatedTag) => (
               <Link
                 key={relatedTag}
-                href={`/writing/tag/${getTagSlugByName(relatedTag)}`}
+                href={`/writing/tag/${getTagSlugByName(relatedTag)}/`}
                 className="px-3 py-1.5 rounded-full text-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
               >
                 {relatedTag}
@@ -180,7 +180,7 @@ export default async function WritingTagPage({ params }: PageProps) {
         {articles.map((article) => (
           <article key={article.slug} className="group">
             <Link
-              href={`/writing/${article.slug}`}
+              href={`/writing/${article.slug}/`}
               className="block py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
             >
               <h2 className="text-lg font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1.5">
@@ -207,7 +207,7 @@ export default async function WritingTagPage({ params }: PageProps) {
       </div>
 
       <footer className="mt-12 pt-8 border-t border-[var(--color-border)]">
-        <Link href="/writing" className="text-sm text-[var(--color-accent)] hover:underline">
+        <Link href="/writing/" className="text-sm text-[var(--color-accent)] hover:underline">
           Back to all writing
         </Link>
       </footer>

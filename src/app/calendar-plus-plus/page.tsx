@@ -15,14 +15,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: `Calendar++ | ${siteMetadata.authorName}`,
     description,
-    url: `${siteMetadata.siteUrl}/calendar-plus-plus`,
+    url: `${siteMetadata.siteUrl}/calendar-plus-plus/`,
     type: 'website',
     images: [`${siteMetadata.siteUrl}/images/calendar-plus-plus/overview-main-live.png`],
   },
 }
 
 export default function CalendarPlusPlus() {
-  const pageUrl = `${siteMetadata.siteUrl}/calendar-plus-plus`
+  const pageUrl = `${siteMetadata.siteUrl}/calendar-plus-plus/`
   const screenshots = [
     {
       src: '/images/calendar-plus-plus/overview-main-live.png',
@@ -105,11 +105,11 @@ export default function CalendarPlusPlus() {
             </a>
           </div>
           <div className="flex gap-4 justify-center text-sm">
-            <Link href="/calendar-plus-plus/privacy" className="text-[var(--color-accent)] hover:underline">
+            <Link href="/calendar-plus-plus/privacy/" className="text-[var(--color-accent)] hover:underline">
               Privacy Policy
             </Link>
             <span className="text-[var(--color-text-secondary)]">•</span>
-            <Link href="/calendar-plus-plus/terms" className="text-[var(--color-accent)] hover:underline">
+            <Link href="/calendar-plus-plus/terms/" className="text-[var(--color-accent)] hover:underline">
               Terms of Service
             </Link>
           </div>
@@ -121,11 +121,11 @@ export default function CalendarPlusPlus() {
             <strong>Calendar++</strong> respects your privacy and security.
           </p>
           <div className="flex gap-4 justify-center text-sm">
-            <Link href="/calendar-plus-plus/privacy" className="text-[var(--color-accent)] hover:underline font-medium">
+            <Link href="/calendar-plus-plus/privacy/" className="text-[var(--color-accent)] hover:underline font-medium">
               Read our Privacy Policy
             </Link>
             <span className="text-[var(--color-text-secondary)]">•</span>
-            <Link href="/calendar-plus-plus/terms" className="text-[var(--color-accent)] hover:underline font-medium">
+            <Link href="/calendar-plus-plus/terms/" className="text-[var(--color-accent)] hover:underline font-medium">
               Terms of Service
             </Link>
           </div>
@@ -249,7 +249,7 @@ export default function CalendarPlusPlus() {
         {/* Related Writing */}
         <div className="mb-16 text-center">
           <Link
-            href="/writing"
+            href="/writing/"
             className="inline-flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -262,10 +262,10 @@ export default function CalendarPlusPlus() {
         {/* Footer */}
         <div className="text-center text-sm text-[var(--color-text-secondary)] space-y-2">
           <div className="flex gap-4 justify-center">
-            <Link href="/calendar-plus-plus/privacy" className="hover:text-[var(--color-accent)]">
+            <Link href="/calendar-plus-plus/privacy/" className="hover:text-[var(--color-accent)]">
               Privacy Policy
             </Link>
-            <Link href="/calendar-plus-plus/terms" className="hover:text-[var(--color-accent)]">
+            <Link href="/calendar-plus-plus/terms/" className="hover:text-[var(--color-accent)]">
               Terms of Service
             </Link>
           </div>

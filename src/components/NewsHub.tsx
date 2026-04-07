@@ -69,7 +69,7 @@ export default function NewsHub({ articles }: NewsHubProps) {
     <div>
       {/* Featured Latest */}
       {featured && (
-        <Link href={`/writing/${featured.slug}`} className="block group mb-12">
+        <Link href={`/writing/${featured.slug}/`} className="block group mb-12">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -161,7 +161,7 @@ export default function NewsHub({ articles }: NewsHubProps) {
               transition={{ delay: i * 0.04 }}
             >
               <Link
-                href={`/writing/${article.slug}`}
+                href={`/writing/${article.slug}/`}
                 className="group block h-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 hover:border-[var(--color-accent)]/30 hover:bg-[var(--color-bg-secondary)] transition-all"
               >
                 <div className="flex items-center gap-2 mb-3">

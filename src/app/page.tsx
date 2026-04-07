@@ -82,15 +82,15 @@ export default function Home() {
           </p>
           <p>
             A complete list of my{' '}
-            <Link href="/papers" className="text-[var(--color-accent)] hover:underline decoration-[var(--color-accent)]/30 underline-offset-2">
+            <Link href="/papers/" className="text-[var(--color-accent)] hover:underline decoration-[var(--color-accent)]/30 underline-offset-2">
               publications
             </Link>{' '}
             are online, along with some of my{' '}
-            <Link href="/code" className="text-[var(--color-accent)] hover:underline decoration-[var(--color-accent)]/30 underline-offset-2">
+            <Link href="/code/" className="text-[var(--color-accent)] hover:underline decoration-[var(--color-accent)]/30 underline-offset-2">
               code
             </Link>
             , and some extra{' '}
-            <Link href="/writing" className="text-[var(--color-accent)] hover:underline decoration-[var(--color-accent)]/30 underline-offset-2">
+            <Link href="/writing/" className="text-[var(--color-accent)] hover:underline decoration-[var(--color-accent)]/30 underline-offset-2">
               writings
             </Link>
             .

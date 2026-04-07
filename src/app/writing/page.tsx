@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `Writing | ${siteMetadata.authorName}`,
     description,
-    url: `${siteMetadata.siteUrl}/writing`,
+    url: `${siteMetadata.siteUrl}/writing/`,
     type: 'website',
     images: [siteMetadata.ogImage],
   },
@@ -36,7 +36,7 @@ export default async function Writing() {
   const WRITING_TYPES = ['Research Paper', 'Paper Review', 'Tutorial', 'Project'];
   const articles = (getAllArticles() as Article[]).filter((a) => WRITING_TYPES.includes(a.type));
   const tags = getTagEntries(articles);
-  const pageUrl = `${siteMetadata.siteUrl}/writing`;
+  const pageUrl = `${siteMetadata.siteUrl}/writing/`;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -61,7 +61,7 @@ export default async function Writing() {
             headline: article.title,
             description: article.description,
             datePublished: article.date,
-            url: `${siteMetadata.siteUrl}/writing/${article.slug}`,
+            url: `${siteMetadata.siteUrl}/writing/${article.slug}/`,
             keywords: article.tags.join(', '),
           },
         })),
@@ -90,7 +90,7 @@ export default async function Writing() {
             {tags.map((tag) => (
               <Link
                 key={tag.slug}
-                href={`/writing/tag/${tag.slug}`}
+                href={`/writing/tag/${tag.slug}/`}
                 className="px-3 py-1.5 rounded-full text-xs border border-[var(--color-border)] bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
               >
                 {tag.name} ({tag.count})
