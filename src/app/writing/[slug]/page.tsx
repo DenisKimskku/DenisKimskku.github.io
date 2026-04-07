@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: 'article',
       publishedTime: article.date,
       tags: article.tags,
-      url: `${siteMetadata.siteUrl}/writing/${slug}`,
+      url: `${siteMetadata.siteUrl}/writing/${slug}/`,
       images: [{ url: `/og/${slug}.png`, width: 1200, height: 630 }],
     },
   };
@@ -66,7 +66,7 @@ export default async function ArticlePage({ params }: PageProps) {
   const toc = generateTOC(article.content);
   const relatedArticles = getRelatedArticles(slug, article.tags);
   const { prev, next } = getAdjacentArticles(slug);
-  const articleUrl = `${siteMetadata.siteUrl}/writing/${slug}`;
+  const articleUrl = `${siteMetadata.siteUrl}/writing/${slug}/`;
   const showUpdated = article.updatedAt && article.updatedAt !== article.date;
 
   const jsonLd = {
@@ -75,7 +75,7 @@ export default async function ArticlePage({ params }: PageProps) {
     headline: article.title,
     description: article.description,
     datePublished: article.date,
-    url: `${siteMetadata.siteUrl}/writing/${slug}`,
+    url: `${siteMetadata.siteUrl}/writing/${slug}/`,
     author: [{
       '@type': 'Person',
       name: siteMetadata.authorName,
@@ -85,7 +85,7 @@ export default async function ArticlePage({ params }: PageProps) {
 
   const breadcrumbItems = [
     { name: 'Home', href: '/' },
-    { name: 'Writing', href: '/writing' },
+    { name: 'Writing', href: '/writing/' },
     { name: article.title },
   ];
 
@@ -231,7 +231,7 @@ export default async function ArticlePage({ params }: PageProps) {
             {relatedArticles.map((related) => (
               <Link
                 key={related.slug}
-                href={`/writing/${related.slug}`}
+                href={`/writing/${related.slug}/`}
                 className="block group py-3 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
               >
                 <h3 className="text-base font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1">
@@ -258,7 +258,7 @@ export default async function ArticlePage({ params }: PageProps) {
           <div className="flex justify-between gap-4">
             {prev ? (
               <Link
-                href={`/writing/${prev.slug}`}
+                href={`/writing/${prev.slug}/`}
                 className="group flex-1 min-w-0"
               >
                 <span className="text-xs text-[var(--color-text-muted)] uppercase tracking-wider">← Older</span>
@@ -271,7 +271,7 @@ export default async function ArticlePage({ params }: PageProps) {
             )}
             {next ? (
               <Link
-                href={`/writing/${next.slug}`}
+                href={`/writing/${next.slug}/`}
                 className="group flex-1 min-w-0 text-right"
               >
                 <span className="text-xs text-[var(--color-text-muted)] uppercase tracking-wider">Newer →</span>
@@ -289,7 +289,7 @@ export default async function ArticlePage({ params }: PageProps) {
       {/* Back to Writing */}
       <footer className="mt-4 pt-8 border-t border-[var(--color-border)] no-print">
         <Link
-          href="/writing"
+          href="/writing/"
           className="inline-flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

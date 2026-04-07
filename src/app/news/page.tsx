@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `AI Security News | ${siteMetadata.authorName}`,
     description,
-    url: `${siteMetadata.siteUrl}/news`,
+    url: `${siteMetadata.siteUrl}/news/`,
     type: 'website',
     images: [siteMetadata.ogImage],
   },

@@ -9,7 +9,7 @@ export default function PrivacyPolicy() {
   return (
     <div className="min-h-screen bg-[var(--color-bg)]">
       <div className="container-custom py-12 md:py-20">
-        <Link href="/calendar-plus-plus" className="text-[var(--color-accent)] hover:underline mb-8 inline-block">
+        <Link href="/calendar-plus-plus/" className="text-[var(--color-accent)] hover:underline mb-8 inline-block">
           ← Back to calendar++
         </Link>
 
@@ -126,7 +126,7 @@ export default function PrivacyPolicy() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-          <Link href="/calendar-plus-plus" className="text-[var(--color-accent)] hover:underline">
+          <Link href="/calendar-plus-plus/" className="text-[var(--color-accent)] hover:underline">
             ← Back to calendar++
           </Link>
         </div>

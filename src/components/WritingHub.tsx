@@ -320,7 +320,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
               >
                 <div className="flex items-start gap-2 py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors">
                   <Link
-                    href={`/writing/${article.slug}`}
+                    href={`/writing/${article.slug}/`}
                     data-article-link
                     className="flex-1 min-w-0"
                   >

@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `Writing Archive | ${siteMetadata.authorName}`,
     description,
-    url: `${siteMetadata.siteUrl}/writing/archive`,
+    url: `${siteMetadata.siteUrl}/writing/archive/`,
     type: 'website',
     images: [siteMetadata.ogImage],
   },
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function ArchivePage() {
   const articles = getAllArticles();
-  const pageUrl = `${siteMetadata.siteUrl}/writing/archive`;
+  const pageUrl = `${siteMetadata.siteUrl}/writing/archive/`;
 
   const articlesByYear = new Map<string, typeof articles>();
   for (const article of articles) {
@@ -45,7 +45,7 @@ export default function ArchivePage() {
         url: pageUrl,
         name: 'Writing Archive',
         description,
-        isPartOf: `${siteMetadata.siteUrl}/writing`,
+        isPartOf: `${siteMetadata.siteUrl}/writing/`,
       },
       {
         '@type': 'ItemList',
@@ -59,7 +59,7 @@ export default function ArchivePage() {
             '@type': 'BlogPosting',
             headline: article.title,
             datePublished: article.date,
-            url: `${siteMetadata.siteUrl}/writing/${article.slug}`,
+            url: `${siteMetadata.siteUrl}/writing/${article.slug}/`,
           },
         })),
       },
@@ -68,7 +68,7 @@ export default function ArchivePage() {
 
   const breadcrumbItems = [
     { name: 'Home', href: '/' },
-    { name: 'Writing', href: '/writing' },
+    { name: 'Writing', href: '/writing/' },
     { name: 'Archive' },
   ];
 
@@ -96,7 +96,7 @@ export default function ArchivePage() {
               {articlesByYear.get(year)!.map((article) => (
                 <Link
                   key={article.slug}
-                  href={`/writing/${article.slug}`}
+                  href={`/writing/${article.slug}/`}
                   className="group flex items-baseline gap-4 py-2.5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
                 >
                   <time
@@ -121,7 +121,7 @@ export default function ArchivePage() {
       </div>
 
       <footer className="mt-12 pt-8 border-t border-[var(--color-border)]">
-        <Link href="/writing" className="text-sm text-[var(--color-accent)] hover:underline">
+        <Link href="/writing/" className="text-sm text-[var(--color-accent)] hover:underline">
           Back to all writing
         </Link>
       </footer>
