@@ -6,10 +6,9 @@ import ThemeToggle from './ThemeToggle';
 
 const navItems = [
   { href: '/', label: 'About', exact: true },
-  { href: '/papers/', label: 'Papers' },
-  { href: '/code/', label: 'Code' },
-  { href: '/writing/', label: 'Writing' },
-  { href: '/news/', label: 'News' },
+  { href: '/papers', label: 'Papers' },
+  { href: '/code', label: 'Code' },
+  { href: '/writing', label: 'Writing' },
 ];
 
 export default function Header() {

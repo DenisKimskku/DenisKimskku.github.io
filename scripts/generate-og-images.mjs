@@ -34,10 +34,20 @@ async function loadGoogleFont(family, weight) {
   return { name: family, data, weight };
 }
 
+const TYPE_COLORS = {
+  'News Digest': '#3b82f6',
+  'Trend Report': '#a855f7',
+  'Research Paper': '#10b981',
+  'Paper Review': '#f59e0b',
+  'Tutorial': '#f43f5e',
+  'Project': '#06b6d4',
+};
+
 async function main() {
   console.log('Loading fonts...');
   const interFont = await loadGoogleFont('Inter', 400);
   const interBoldFont = await loadGoogleFont('Inter', 700);
+  const loraFont = await loadGoogleFont('Lora', 700);
   console.log('Fonts loaded.');
 
   for (const article of articlesIndex) {
@@ -49,6 +59,9 @@ async function main() {
       continue;
     }
 
+    const accentColor = TYPE_COLORS[article.type] || '#60a5fa';
+    const tags = (article.tags || []).slice(0, 3);
+
     const svg = await satori(
       {
         type: 'div',
@@ -59,39 +72,102 @@ async function main() {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            backgroundColor: '#0f0f0f',
-            padding: '60px 80px',
+            backgroundColor: '#0a0a0a',
+            padding: '60px 70px',
+            position: 'relative',
+            overflow: 'hidden',
           },
           children: [
+            // Background gradient accent
+            {
+              type: 'div',
+              props: {
+                style: {
+                  position: 'absolute',
+                  top: '-100px',
+                  right: '-100px',
+                  width: '500px',
+                  height: '500px',
+                  borderRadius: '50%',
+                  background: `radial-gradient(circle, ${accentColor}15 0%, transparent 70%)`,
+                },
+              },
+            },
+            // Bottom-left subtle glow
+            {
+              type: 'div',
+              props: {
+                style: {
+                  position: 'absolute',
+                  bottom: '-80px',
+                  left: '-80px',
+                  width: '300px',
+                  height: '300px',
+                  borderRadius: '50%',
+                  background: `radial-gradient(circle, ${accentColor}08 0%, transparent 70%)`,
+                },
+              },
+            },
+            // Top section: type badge + title
             {
               type: 'div',
               props: {
                 style: {
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '16px',
+                  gap: '20px',
+                  position: 'relative',
                 },
                 children: [
+                  // Type badge
                   {
                     type: 'div',
                     props: {
                       style: {
-                        fontSize: '18px',
-                        color: '#60a5fa',
-                        fontWeight: 400,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
                       },
-                      children: article.type,
+                      children: [
+                        {
+                          type: 'div',
+                          props: {
+                            style: {
+                              width: '3px',
+                              height: '20px',
+                              backgroundColor: accentColor,
+                              borderRadius: '2px',
+                            },
+                          },
+                        },
+                        {
+                          type: 'div',
+                          props: {
+                            style: {
+                              fontSize: '16px',
+                              color: accentColor,
+                              fontWeight: 400,
+                              letterSpacing: '0.05em',
+                              textTransform: 'uppercase',
+                            },
+                            children: article.type,
+                          },
+                        },
+                      ],
                     },
                   },
+                  // Title
                   {
                     type: 'div',
                     props: {
                       style: {
-                        fontSize: article.title.length > 60 ? '36px' : '48px',
+                        fontSize: article.title.length > 80 ? '32px' : article.title.length > 50 ? '40px' : '48px',
+                        fontFamily: 'Lora',
                         fontWeight: 700,
                         color: '#f5f5f5',
-                        lineHeight: 1.2,
+                        lineHeight: 1.25,
                         letterSpacing: '-0.02em',
+                        maxWidth: '900px',
                       },
                       children: article.title,
                     },
@@ -99,27 +175,74 @@ async function main() {
                 ],
               },
             },
+            // Bottom section: tags + meta
             {
               type: 'div',
               props: {
                 style: {
                   display: 'flex',
                   justifyContent: 'space-between',
-                  alignItems: 'center',
-                  fontSize: '16px',
-                  color: '#737373',
+                  alignItems: 'flex-end',
+                  position: 'relative',
                 },
                 children: [
+                  // Tags
                   {
                     type: 'div',
                     props: {
-                      children: article.date,
+                      style: {
+                        display: 'flex',
+                        gap: '8px',
+                      },
+                      children: tags.map((tag) => ({
+                        type: 'div',
+                        props: {
+                          style: {
+                            fontSize: '13px',
+                            color: '#737373',
+                            padding: '4px 12px',
+                            border: '1px solid #262626',
+                            borderRadius: '6px',
+                            backgroundColor: '#141414',
+                          },
+                          children: tag,
+                        },
+                      })),
                     },
                   },
+                  // Site + date
                   {
                     type: 'div',
                     props: {
-                      children: 'deniskim1.com',
+                      style: {
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        gap: '4px',
+                      },
+                      children: [
+                        {
+                          type: 'div',
+                          props: {
+                            style: {
+                              fontSize: '15px',
+                              color: '#a3a3a3',
+                              fontWeight: 500,
+                            },
+                            children: 'deniskim1.com',
+                          },
+                        },
+                        {
+                          type: 'div',
+                          props: {
+                            style: {
+                              fontSize: '13px',
+                              color: '#525252',
+                            },
+                            children: article.date,
+                          },
+                        },
+                      ],
                     },
                   },
                 ],
@@ -131,7 +254,7 @@ async function main() {
       {
         width: 1200,
         height: 630,
-        fonts: [interFont, interBoldFont],
+        fonts: [interFont, interBoldFont, loraFont],
       }
     );
 

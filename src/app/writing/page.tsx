@@ -1,12 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import WritingHub from '@/components/WritingHub';
-import NewsletterSignup from '@/components/NewsletterSignup';
 import StructuredData from '@/components/StructuredData';
 import { getAllArticles, getTagEntries } from '@/lib/articles';
 import { siteMetadata } from '@/lib/siteMetadata';
 
-const description = 'Research articles and technical writings by Minseok (Denis) Kim.';
+const description = 'Research articles, AI security news, and technical writings by Minseok (Denis) Kim.';
 export const metadata: Metadata = {
   title: 'Writing',
   description,
@@ -33,8 +32,7 @@ interface Article {
 }
 
 export default async function Writing() {
-  const WRITING_TYPES = ['Research Paper', 'Paper Review', 'Tutorial', 'Project'];
-  const articles = (getAllArticles() as Article[]).filter((a) => WRITING_TYPES.includes(a.type));
+  const articles = getAllArticles() as Article[];
   const tags = getTagEntries(articles);
   const pageUrl = `${siteMetadata.siteUrl}/writing/`;
   const jsonLd = {
@@ -77,7 +75,7 @@ export default async function Writing() {
           Writing
         </h1>
         <p className="text-[var(--color-text-secondary)]">
-          Research articles, paper reviews, and technical writeups.
+          Research articles, AI security news, paper reviews, and technical writeups.
         </p>
       </header>
 
@@ -101,8 +99,6 @@ export default async function Writing() {
       )}
 
       <WritingHub articles={articles} />
-
-      <NewsletterSignup />
     </div>
   );
 }

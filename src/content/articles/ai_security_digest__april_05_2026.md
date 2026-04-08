@@ -142,7 +142,7 @@ The recent widespread exposure of Claude Code configuration files has underscore
 
 ## Den's Take
 
-The shift from isolated chat windows to agentic ecosystems is exactly what security teams have been dreading, and *ClawSafety* hits the nail on the head. We are still treating AI agents like glorified chatbots when we should be treating them as untrusted processes executing with elevated system privileges. The rush to deploy autonomous agents is a \\$10B+ blind spot for the industry.
+The shift from isolated chat windows to agentic ecosystems is exactly what security teams have been dreading, and *ClawSafety* hits the nail on the head. We are still treating AI agents like glorified chatbots when we should be treating them as untrusted processes executing with elevated system privileges. The rush to deploy autonomous agents is a \$10B+ blind spot for the industry.
 
 The recent widespread leakage of Claude Code configurations perfectly illustrates this reality. Developers are rapidly granting LLMs access to their local environments and codebases, leading directly to credential dumps. It frankly doesn't matter how safely aligned your foundational model is if an attacker can just drop an indirect prompt injection into an inbox and have the agent blindly execute it via local tool-use. I highlighted these exact structural vulnerabilities in [Bridging Models and Agents: Protocol Architectures and Security in MCP & A2A](/writing/bridging_models_agents_mcp_a2a)—the agent's "scaffold" severely lacks robust boundary controls.
 

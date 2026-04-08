@@ -43,11 +43,6 @@ const TYPE_STYLES: Record<string, { bg: string; text: string; label: string }> =
     text: 'text-blue-400',
     label: 'Digest',
   },
-  'Paper Review': {
-    bg: 'bg-emerald-500/10',
-    text: 'text-emerald-400',
-    label: 'Paper Review',
-  },
   'Trend Report': {
     bg: 'bg-purple-500/10',
     text: 'text-purple-400',
