@@ -1,5 +1,21 @@
 [
   {
+    "slug": "ai_security_digest__april_10_2026",
+    "title": "AI Security Digest \u2014 April 10, 2026",
+    "date": "2026-04-10",
+    "type": "News Digest",
+    "description": "This digest analyzes the shift to kinetic AI risks, detailing how JailWAM forces physical control and why prompt filtering fails against modern injection attacks.",
+    "tags": [
+      "LLM Security",
+      "Agentic AI",
+      "Injection Attacks",
+      "Defense Trilemma",
+      "Tool-Calling",
+      "Kinetic Risk"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "neurostrike_neuronlevel_attacks_on_aligned_llms",
     "title": "NeuroStrike: Neuron-Level Attacks on Aligned LLMs",
     "date": "2026-04-07",
