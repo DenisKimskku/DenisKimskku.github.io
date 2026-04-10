@@ -26,4 +26,4 @@ jobs:
           node-version: "20"
 
       - name: Warm sitemap pages and critical assets
-        run: CACHE_WARM_RETRIES=2 npm run warm:cache
+        run: CACHE_WARM_PASSES=2 CACHE_WARM_PASS_DELAY_MS=30000 CACHE_WARM_RETRIES=2 npm run warm:cache
