@@ -182,4 +182,4 @@ The broader message is clear: **accuracy on clean benchmarks does not imply robu
 **Reference**: Uhm, J., Kim, M., Polychronakis, M., & Koo, H. (2026). Fool Me If You Can: On the Robustness of Binary Code Similarity Detection Models against Semantics-preserving Transformations. *Proceedings of the ACM International Conference on the Foundations of Software Engineering (FSE)*.
 
 - **Paper**: [PDF](https://deniskim1.com/papers/fse26/paper.pdf)
-- **Artifact**: [Zenodo](https://zenodo.org/records/17116512)
+- **Artifact**: [Zenodo](https://zenodo.org/records/17118200)
