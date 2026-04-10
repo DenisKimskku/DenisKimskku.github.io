@@ -48,12 +48,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      route: '/news',
-      file: path.join(appDir, 'news', 'page.tsx'),
-      changeFrequency: 'daily' as const,
-      priority: 0.9,
-    },
-    {
       route: '/writing/archive',
       file: path.join(appDir, 'writing', 'archive', 'page.tsx'),
       changeFrequency: 'weekly' as const,
