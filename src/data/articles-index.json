@@ -1,5 +1,21 @@
 [
   {
+    "slug": "ai_security_digest__april_11_2026",
+    "title": "AI Security Digest \u2014 April 11, 2026",
+    "date": "2026-04-11",
+    "type": "News Digest",
+    "description": "The adversarial landscape is shifting from simple prompt injection to complex, multi-stage, and multimodal attacks targeting agentic workflows and knowledge substrates. PIArena offers a new platform for rigorous defense evaluation.",
+    "tags": [
+      "LLM Security",
+      "Prompt Injection",
+      "Agentic AI",
+      "RAG",
+      "Adversarial Attacks",
+      "Red Teaming"
+    ],
+    "readingTime": 4
+  },
+  {
     "slug": "ai_security_digest__april_10_2026",
     "title": "AI Security Digest \u2014 April 10, 2026",
     "date": "2026-04-10",
