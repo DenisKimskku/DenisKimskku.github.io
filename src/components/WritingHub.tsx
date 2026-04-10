@@ -2,7 +2,6 @@
 
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
 import BookmarkButton from '@/components/BookmarkButton';
 import { getBookmarks } from '@/lib/bookmarks';
 
@@ -193,21 +192,6 @@ export default function WritingHub({ articles }: WritingHubProps) {
     .toLowerCase()
     .split(/\s+/)
     .filter(Boolean);
-  
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1 },
-  };
 
   return (
     <div>
@@ -343,38 +327,26 @@ export default function WritingHub({ articles }: WritingHubProps) {
       </p>
 
       {/* Articles List */}
-      <AnimatePresence>
-        {filteredArticles.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="text-center py-20"
+      {filteredArticles.length === 0 ? (
+        <div className="text-center py-20">
+          <p className="text-[var(--color-text-secondary)] mb-4">
+            No articles found matching your criteria.
+          </p>
+          <button
+            type="button"
+            onClick={clearAllFilters}
+            className="text-sm text-[var(--color-accent)] hover:underline"
           >
-            <p className="text-[var(--color-text-secondary)] mb-4">
-              No articles found matching your criteria.
-            </p>
-            <button
-              type="button"
-              onClick={clearAllFilters}
-              className="text-sm text-[var(--color-accent)] hover:underline"
+            Clear filters
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-1">
+          {filteredArticles.map((article) => (
+            <article
+              key={article.slug}
+              className="group"
             >
-              Clear filters
-            </button>
-          </motion.div>
-        ) : (
-          <motion.div
-            className="space-y-1"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {filteredArticles.map((article) => (
-              <motion.article
-                key={article.slug}
-                variants={itemVariants}
-                className="group"
-              >
                 <div className="flex items-start gap-2 py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors">
                   <Link
                     href={`/writing/${article.slug}/`}
@@ -426,11 +398,10 @@ export default function WritingHub({ articles }: WritingHubProps) {
                   </Link>
                   <BookmarkButton slug={article.slug} onToggle={handleBookmarkToggle} />
                 </div>
-              </motion.article>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </article>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

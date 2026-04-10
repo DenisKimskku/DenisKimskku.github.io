@@ -11,6 +11,176 @@ export interface ArticleSummary {
   readingTime: number;
 }
 
+// Canonical topics shown on the site. Every raw tag is mapped to one of
+// these via TAG_ALIASES below. Tags without an alias entry are dropped
+// from display (keeping the topic list tight).
+const CANONICAL_TOPICS = [
+  'LLM Security',
+  'RAG Security',
+  'Agent Security',
+  'Data Poisoning',
+  'AI Safety',
+  'Privacy',
+  'Adversarial ML',
+  'Binary Analysis',
+  'Code Security',
+  'Watermarking',
+  'Deepfakes & Biometrics',
+  'Infrastructure Security',
+  'Tools & Visualization',
+] as const;
+
+const TAG_ALIASES: Record<string, string> = {
+  // LLM Security
+  'LLM Security': 'LLM Security',
+  'LLM': 'LLM Security',
+  'Jailbreaking': 'LLM Security',
+  'Prompt Injection': 'LLM Security',
+  'Red Teaming': 'LLM Security',
+  'LLM Red Teaming': 'LLM Security',
+  'Model Abuse': 'LLM Security',
+  'Safety Alignment': 'LLM Security',
+  'Multimodal Large Language Models': 'LLM Security',
+  'Mixture-of-Experts': 'LLM Security',
+  // RAG
+  'RAG': 'RAG Security',
+  'RAG Security': 'RAG Security',
+  'RAGDefender': 'RAG Security',
+  // Agents
+  'Agent Security': 'Agent Security',
+  'Agentic AI': 'Agent Security',
+  'Agentic Security': 'Agent Security',
+  'Agentic Risk': 'Agent Security',
+  'Agentic Misalignment': 'Agent Security',
+  'Agent-Centric Security': 'Agent Security',
+  'Agent Identity Protocol': 'Agent Security',
+  'AI Agents': 'Agent Security',
+  'LLM Agents': 'Agent Security',
+  'Autonomous Agents': 'Agent Security',
+  'Autonomous AI': 'Agent Security',
+  'Autonomous Systems': 'Agent Security',
+  'Multi-Agent Systems': 'Agent Security',
+  'MCP': 'Agent Security',
+  'A2A': 'Agent Security',
+  'Protocol Security': 'Agent Security',
+  'Tool-Calling': 'Agent Security',
+  // Data Poisoning
+  'Data Poisoning': 'Data Poisoning',
+  'Backdoor Attacks': 'Data Poisoning',
+  'Model Poisoning': 'Data Poisoning',
+  'Supply-Chain Attack': 'Data Poisoning',
+  'Software Supply Chain': 'Data Poisoning',
+  'Geopolitical Supply Chain': 'Data Poisoning',
+  // AI Safety
+  'AI Safety': 'AI Safety',
+  'Safety Policy': 'AI Safety',
+  'Safety Certification': 'AI Safety',
+  'AI Alignment': 'AI Safety',
+  'Inference-Time Safety': 'AI Safety',
+  'Reasoning Safety': 'AI Safety',
+  'Mechanistic Interpretability': 'AI Safety',
+  'Defense Trilemma': 'AI Safety',
+  'Dual-Use Oversight': 'AI Safety',
+  'Machine Unlearning': 'AI Safety',
+  'Reinforcement Learning from Human Feedback': 'AI Safety',
+  'Trust and Governance': 'AI Safety',
+  'Governance': 'AI Safety',
+  'Compositional Security': 'AI Safety',
+  'Formal Defensive Architectures': 'AI Safety',
+  'Cognitive State Planes': 'AI Safety',
+  'Defense': 'AI Safety',
+  'Defensive AI': 'AI Safety',
+  // Privacy
+  'Privacy': 'Privacy',
+  'Data Privacy': 'Privacy',
+  'Membership Inference': 'Privacy',
+  'Differential Privacy': 'Privacy',
+  // Adversarial ML
+  'Adversarial Attacks': 'Adversarial ML',
+  'Adversarial Testing': 'Adversarial ML',
+  'Adversarial ML': 'Adversarial ML',
+  'Contextual Attacks': 'Adversarial ML',
+  'Injection Attacks': 'Adversarial ML',
+  // Binary Analysis
+  'Binary Analysis': 'Binary Analysis',
+  'Reverse Engineering': 'Binary Analysis',
+  'Neural Decompilation': 'Binary Analysis',
+  'Code Similarity': 'Binary Analysis',
+  'Program Analysis': 'Binary Analysis',
+  // Code Security
+  'Code Security': 'Code Security',
+  'Vulnerabilities': 'Code Security',
+  'Vulnerability Detection': 'Code Security',
+  'Exploits': 'Code Security',
+  'Fuzzing': 'Code Security',
+  'RCE': 'Code Security',
+  'Python Security': 'Code Security',
+  'Deserialization': 'Code Security',
+  'Automated Vulnerability Discovery': 'Code Security',
+  'Bug Bounty Programs': 'Code Security',
+  'Security Tools': 'Code Security',
+  'EnsembleSHAP': 'Code Security',
+  'SABLE': 'Code Security',
+  // Watermarking
+  'Watermarking': 'Watermarking',
+  'AI-Generated Text': 'Watermarking',
+  'Text Detection': 'Watermarking',
+  'Text Classification': 'Watermarking',
+  // Deepfakes & Biometrics
+  'Deepfake': 'Deepfakes & Biometrics',
+  'Biometrics': 'Deepfakes & Biometrics',
+  // Infrastructure Security
+  'Authentication Security': 'Infrastructure Security',
+  'Credential Exposure': 'Infrastructure Security',
+  'Authorization Boundaries': 'Infrastructure Security',
+  'Privilege Escalation': 'Infrastructure Security',
+  'System Compromise': 'Infrastructure Security',
+  'System-Level Vulnerabilities': 'Infrastructure Security',
+  'Intrusion Detection': 'Infrastructure Security',
+  'Attack Detection': 'Infrastructure Security',
+  'Evasion Techniques': 'Infrastructure Security',
+  'Hardware Security': 'Infrastructure Security',
+  'Nvidia Security': 'Infrastructure Security',
+  'Prisma SASE': 'Infrastructure Security',
+  'Advanced Persistent Threats': 'Infrastructure Security',
+  'Cybercrime': 'Infrastructure Security',
+  'Kinetic Risk': 'Infrastructure Security',
+  'Operational Risks': 'Infrastructure Security',
+  // Tools & Visualization
+  'Data Visualization': 'Tools & Visualization',
+  'Visualization': 'Tools & Visualization',
+  'Best Practices': 'Tools & Visualization',
+  'Dezoomify': 'Tools & Visualization',
+  'Web Tooling': 'Tools & Visualization',
+  'UX Design': 'Tools & Visualization',
+  'Open Source': 'Tools & Visualization',
+  'Vercel': 'Tools & Visualization',
+  'Dart': 'Tools & Visualization',
+  'Swift': 'Tools & Visualization',
+  // AI Security catch-all
+  'AI Security': 'LLM Security',
+  'ML Security': 'LLM Security',
+  'Deep Learning': 'LLM Security',
+  'Neural Networks': 'LLM Security',
+  'Generative AI': 'LLM Security',
+  'NLP': 'LLM Security',
+  'Survey': 'LLM Security',
+  'Drug Detection': 'LLM Security',
+  'Korean Language': 'LLM Security',
+};
+
+function normalizeTags(rawTags: string[]): string[] {
+  const canonical = new Set<string>();
+  for (const tag of rawTags) {
+    const mapped = TAG_ALIASES[tag];
+    if (mapped) {
+      canonical.add(mapped);
+    }
+  }
+  // Preserve a stable order matching CANONICAL_TOPICS
+  return CANONICAL_TOPICS.filter((t) => canonical.has(t));
+}
+
 export interface TagEntry {
   name: string;
   slug: string;
@@ -29,7 +199,9 @@ const articlesIndexPath = path.join(process.cwd(), 'src', 'data', 'articles-inde
 export function getAllArticles(): ArticleSummary[] {
   const fileContents = fs.readFileSync(articlesIndexPath, 'utf8');
   const articles = JSON.parse(fileContents) as ArticleSummary[];
-  return articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  return articles
+    .map((a) => ({ ...a, tags: normalizeTags(a.tags || []) }))
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export function slugifyTag(tag: string): string {
