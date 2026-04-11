@@ -1,5 +1,37 @@
 [
   {
+    "slug": "this_week_in_ai_security__april_12_2026",
+    "title": "This Week in AI Security \u2014 April 12, 2026",
+    "date": "2026-04-12",
+    "type": "Trend Report",
+    "description": "The AI security focus is shifting from prompt injection to the systemic vulnerabilities of autonomous agents, specifically targeting the Model Context Protocol (MCP) and tool-use capabilities.",
+    "tags": [
+      "Agent Security",
+      "LLM Security",
+      "Adversarial Attacks",
+      "MCP",
+      "Tool Use",
+      "Red Teaming"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "ai_security_digest__april_12_2026",
+    "title": "AI Security Digest \u2014 April 12, 2026",
+    "date": "2026-04-12",
+    "type": "News Digest",
+    "description": "This digest covers the evolution of AI security threats, focusing on Adversarial Smuggling Attacks (ASA) against MLLMs and the challenges of maintaining sandbox integrity against agentic risks.",
+    "tags": [
+      "MLLM",
+      "Adversarial Attacks",
+      "Semantic Gap",
+      "AI Safety",
+      "Agentic Risk",
+      "Content Moderation"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__april_11_2026",
     "title": "AI Security Digest \u2014 April 11, 2026",
     "date": "2026-04-11",
