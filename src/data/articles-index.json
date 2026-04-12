@@ -1,5 +1,21 @@
 [
   {
+    "slug": "ai_security_digest__april_13_2026",
+    "title": "AI Security Digest \u2014 April 13, 2026",
+    "date": "2026-04-13",
+    "type": "News Digest",
+    "description": "This digest analyzes the convergence of traditional infrastructure vulnerabilities and advanced AI threats like 'Sock Puppeting,' demanding holistic security strategies for modern deployments.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Prompt Injection",
+      "AI Alignment",
+      "Cybersecurity",
+      "Threat Intelligence"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "this_week_in_ai_security__april_12_2026",
     "title": "This Week in AI Security \u2014 April 12, 2026",
     "date": "2026-04-12",
