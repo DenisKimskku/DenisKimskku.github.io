@@ -2,8 +2,8 @@
 title: "AI Security Digest — April 20, 2026"
 date: "2026-04-20"
 type: "News Digest"
-description: "AI Security Digest — April 20, 2026"
-tags: []
+description: "Briefing on the intersection of legacy vulnerability management and generative AI safety, examining the 263% CVE surge leading to NIST NVD overhaul, AI-assisted exploit discovery, Claude Mythos offensive capabilities, and privacy-preserving local AI agents."
+tags: ["LLM Security", "AI Safety", "Agent Security", "Privacy", "Code Security", "Intrusion Detection"]
 readingTime: 6
 headerImage: "/images/news/ai_security_digest__april_20_2026.jpg"
 ---

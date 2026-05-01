@@ -2,8 +2,8 @@
 title: "AI Security Digest — April 22, 2026"
 date: "2026-04-22"
 type: "News Digest"
-description: "AI Security Digest — April 22, 2026"
-tags: []
+description: "Briefing on the convergence of RAG security and agentic threats, examining FAUDITOR smart contract fuzzing, RAVEN multi-agent RAG frameworks, Visual Inception memory poisoning, and supply chain risks in AI coding agents."
+tags: ["LLM Security", "Agent Security", "RAG Security", "Code Security", "Data Poisoning", "AI Safety"]
 readingTime: 9
 headerImage: "/images/news/ai_security_digest__april_22_2026.png"
 ---

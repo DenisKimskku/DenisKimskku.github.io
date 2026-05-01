@@ -2,8 +2,8 @@
 title: "AI Security Digest — April 21, 2026"
 date: "2026-04-21"
 type: "News Digest"
-description: "AI Security Digest — April 21, 2026"
-tags: []
+description: "Analysis of the agentic supply chain crisis, covering the Anthropic MCP RCE vulnerability, CoT jailbreaks targeting Large Reasoning Models, MATRIX code watermarking, PolicyGapper privacy compliance, and inference-time safety defenses."
+tags: ["LLM Security", "Agent Security", "RAG Security", "AI Safety", "Privacy", "Watermarking", "Deepfake", "Code Security"]
 readingTime: 8
 headerImage: "/images/news/ai_security_digest__april_21_2026.png"
 ---

@@ -2,8 +2,8 @@
 title: "AI Security Digest — April 19, 2026"
 date: "2026-04-19"
 type: "News Digest"
-description: "AI Security Digest — April 19, 2026"
-tags: []
+description: "AI security briefing on AI-amplified social engineering and legacy vulnerability exploitation, covering cross-tenant helpdesk impersonation attacks, the persistence of unpatched infrastructure, and AI-driven cyber defense automation."
+tags: ["LLM Security", "Authentication Security", "Code Security"]
 readingTime: 5
 headerImage: "/images/news/ai_security_digest__april_19_2026.jpg"
 ---

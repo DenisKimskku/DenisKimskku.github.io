@@ -30,7 +30,7 @@ const articles = JSON.parse(fs.readFileSync(articlesIndexPath, 'utf8'))
 const latestPubDate = articles.length > 0 ? toRfc822(articles[0].date) : new Date().toUTCString();
 
 const itemXml = articles.map((article) => {
-  const articleUrl = `${siteUrl}/writing/${article.slug}`;
+  const articleUrl = `${siteUrl}/writing/${article.slug}/`;
   const categories = (article.tags || [])
     .map((tag) => `<category>${escapeXml(tag)}</category>`)
     .join('');
@@ -49,7 +49,7 @@ const rssXml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
 <title>Minseok (Denis) Kim - Writing</title>
-<link>${siteUrl}/writing</link>
+<link>${siteUrl}/writing/</link>
 <description>Research articles and technical writings by Minseok (Denis) Kim.</description>
 <language>en-US</language>
 <lastBuildDate>${latestPubDate}</lastBuildDate>
@@ -68,7 +68,7 @@ const newsArticles = articles.filter((a) => newsTypes.includes(a.type));
 if (newsArticles.length > 0) {
   const newsLatestPubDate = toRfc822(newsArticles[0].date);
   const newsItemXml = newsArticles.map((article) => {
-    const articleUrl = `${siteUrl}/writing/${article.slug}`;
+    const articleUrl = `${siteUrl}/writing/${article.slug}/`;
     const categories = (article.tags || [])
       .map((tag) => `<category>${escapeXml(tag)}</category>`)
       .join('');

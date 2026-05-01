@@ -1,61 +1,102 @@
 [
   {
     "slug": "ai_security_digest__april_22_2026",
-    "title": "AI Security Digest \u2014 April 22, 2026",
+    "title": "AI Security Digest — April 22, 2026",
     "date": "2026-04-22",
     "type": "News Digest",
-    "description": "AI Security Digest \u2014 April 22, 2026",
-    "tags": [],
+    "description": "Briefing on the convergence of RAG security and agentic threats, examining FAUDITOR smart contract fuzzing, RAVEN multi-agent RAG frameworks, Visual Inception memory poisoning, and supply chain risks in AI coding agents.",
+    "tags": [
+      "LLM Security",
+      "Agent Security",
+      "RAG Security",
+      "Code Security",
+      "Data Poisoning",
+      "AI Safety"
+    ],
     "readingTime": 9
   },
   {
     "slug": "ai_security_digest__april_21_2026",
-    "title": "AI Security Digest \u2014 April 21, 2026",
+    "title": "AI Security Digest — April 21, 2026",
     "date": "2026-04-21",
     "type": "News Digest",
-    "description": "AI Security Digest \u2014 April 21, 2026",
-    "tags": [],
+    "description": "Analysis of the agentic supply chain crisis, covering the Anthropic MCP RCE vulnerability, CoT jailbreaks targeting Large Reasoning Models, MATRIX code watermarking, PolicyGapper privacy compliance, and inference-time safety defenses.",
+    "tags": [
+      "LLM Security",
+      "Agent Security",
+      "RAG Security",
+      "AI Safety",
+      "Privacy",
+      "Watermarking",
+      "Deepfake",
+      "Code Security"
+    ],
     "readingTime": 8
   },
   {
     "slug": "ai_security_digest__april_20_2026",
-    "title": "AI Security Digest \u2014 April 20, 2026",
+    "title": "AI Security Digest — April 20, 2026",
     "date": "2026-04-20",
     "type": "News Digest",
-    "description": "AI Security Digest \u2014 April 20, 2026",
-    "tags": [],
+    "description": "Briefing on the intersection of legacy vulnerability management and generative AI safety, examining the 263% CVE surge leading to NIST NVD overhaul, AI-assisted exploit discovery, Claude Mythos offensive capabilities, and privacy-preserving local AI agents.",
+    "tags": [
+      "LLM Security",
+      "AI Safety",
+      "Agent Security",
+      "Privacy",
+      "Code Security",
+      "Intrusion Detection"
+    ],
     "readingTime": 6
   },
   {
-    "slug": "this_week_in_ai_security__april_19_2026",
-    "title": "This Week in AI Security \u2014 April 19, 2026",
-    "date": "2026-04-19",
-    "type": "Trend Report",
-    "description": "This Week in AI Security \u2014 April 19, 2026",
-    "tags": [],
-    "readingTime": 7
-  },
-  {
     "slug": "ai_security_digest__april_19_2026",
-    "title": "AI Security Digest \u2014 April 19, 2026",
+    "title": "AI Security Digest — April 19, 2026",
     "date": "2026-04-19",
     "type": "News Digest",
-    "description": "AI Security Digest \u2014 April 19, 2026",
-    "tags": [],
+    "description": "AI security briefing on AI-amplified social engineering and legacy vulnerability exploitation, covering cross-tenant helpdesk impersonation attacks, the persistence of unpatched infrastructure, and AI-driven cyber defense automation.",
+    "tags": [
+      "LLM Security",
+      "Authentication Security",
+      "Code Security"
+    ],
     "readingTime": 5
   },
   {
+    "slug": "this_week_in_ai_security__april_19_2026",
+    "title": "This Week in AI Security — April 19, 2026",
+    "date": "2026-04-19",
+    "type": "Trend Report",
+    "description": "Weekly analysis covering the transition from model-centric to systemic AI security, examining inference provenance (NeuroTrace), lifecycle security (SafeHarness), edge device and SoC security, and the pluralistic alignment evaluation crisis.",
+    "tags": [
+      "LLM Security",
+      "Agent Security",
+      "AI Safety",
+      "Watermarking",
+      "Adversarial ML",
+      "Hardware Security"
+    ],
+    "readingTime": 7
+  },
+  {
     "slug": "ai_security_digest__april_18_2026",
-    "title": "AI Security Digest \u2014 April 18, 2026",
+    "title": "AI Security Digest — April 18, 2026",
     "date": "2026-04-18",
     "type": "News Digest",
-    "description": "AI Security Digest \u2014 April 18, 2026",
-    "tags": [],
+    "description": "Briefing on the shift from input-level filtering to execution-aware defense, covering SAFEHARNESS agent lifecycle security, NeuroTrace inference provenance, SoC emulation verification, adversarial audio injection in LALMs, and QuantileMark multi-bit watermarking.",
+    "tags": [
+      "LLM Security",
+      "Agent Security",
+      "Watermarking",
+      "Hardware Security",
+      "Data Poisoning",
+      "Adversarial ML"
+    ],
     "readingTime": 9
   },
   {
     "slug": "ai_security_digest__april_13_2026",
-    "title": "AI Security Digest \u2014 April 13, 2026",
+    "title": "AI Security Digest — April 13, 2026",
     "date": "2026-04-13",
     "type": "News Digest",
     "description": "This digest analyzes the convergence of traditional infrastructure vulnerabilities and advanced AI threats like 'Sock Puppeting,' demanding holistic security strategies for modern deployments.",
@@ -70,24 +111,8 @@
     "readingTime": 5
   },
   {
-    "slug": "this_week_in_ai_security__april_12_2026",
-    "title": "This Week in AI Security \u2014 April 12, 2026",
-    "date": "2026-04-12",
-    "type": "Trend Report",
-    "description": "The AI security focus is shifting from prompt injection to the systemic vulnerabilities of autonomous agents, specifically targeting the Model Context Protocol (MCP) and tool-use capabilities.",
-    "tags": [
-      "Agent Security",
-      "LLM Security",
-      "Adversarial Attacks",
-      "MCP",
-      "Tool Use",
-      "Red Teaming"
-    ],
-    "readingTime": 5
-  },
-  {
     "slug": "ai_security_digest__april_12_2026",
-    "title": "AI Security Digest \u2014 April 12, 2026",
+    "title": "AI Security Digest — April 12, 2026",
     "date": "2026-04-12",
     "type": "News Digest",
     "description": "This digest covers the evolution of AI security threats, focusing on Adversarial Smuggling Attacks (ASA) against MLLMs and the challenges of maintaining sandbox integrity against agentic risks.",
@@ -102,8 +127,24 @@
     "readingTime": 5
   },
   {
+    "slug": "this_week_in_ai_security__april_12_2026",
+    "title": "This Week in AI Security — April 12, 2026",
+    "date": "2026-04-12",
+    "type": "Trend Report",
+    "description": "The AI security focus is shifting from prompt injection to the systemic vulnerabilities of autonomous agents, specifically targeting the Model Context Protocol (MCP) and tool-use capabilities.",
+    "tags": [
+      "Agent Security",
+      "LLM Security",
+      "Adversarial Attacks",
+      "MCP",
+      "Tool Use",
+      "Red Teaming"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__april_11_2026",
-    "title": "AI Security Digest \u2014 April 11, 2026",
+    "title": "AI Security Digest — April 11, 2026",
     "date": "2026-04-11",
     "type": "News Digest",
     "description": "The adversarial landscape is shifting from simple prompt injection to complex, multi-stage, and multimodal attacks targeting agentic workflows and knowledge substrates. PIArena offers a new platform for rigorous defense evaluation.",
@@ -119,7 +160,7 @@
   },
   {
     "slug": "ai_security_digest__april_10_2026",
-    "title": "AI Security Digest \u2014 April 10, 2026",
+    "title": "AI Security Digest — April 10, 2026",
     "date": "2026-04-10",
     "type": "News Digest",
     "description": "This digest analyzes the shift to kinetic AI risks, detailing how JailWAM forces physical control and why prompt filtering fails against modern injection attacks.",
@@ -130,6 +171,22 @@
       "Defense Trilemma",
       "Tool-Calling",
       "Kinetic Risk"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "ai_security_digest__april_07_2026",
+    "title": "AI Security Digest — April 07, 2026",
+    "date": "2026-04-07",
+    "type": "News Digest",
+    "description": "This digest addresses the shift from prompt injection to structural threats like DDIPE and memory poisoning in autonomous agent ecosystems, emphasizing the need to secure delegation chains.",
+    "tags": [
+      "Agentic AI",
+      "Supply-Chain Attack",
+      "LLM Security",
+      "Prompt Injection",
+      "RAG",
+      "Privilege Escalation"
     ],
     "readingTime": 5
   },
@@ -150,40 +207,8 @@
     "readingTime": 8
   },
   {
-    "slug": "ai_security_digest__april_08_2026",
-    "title": "AI Security Digest \u2014 April 08, 2026",
-    "date": "2026-04-08",
-    "type": "News Digest",
-    "description": "This digest covers advanced AI security threats, including Persona-based Client Simulation Attacks against LLMs, vulnerabilities in multi-agent systems, and exploits against TEE-based inference.",
-    "tags": [
-      "LLM Security",
-      "Adversarial Attacks",
-      "Red Teaming",
-      "Multi-Agent Systems",
-      "Contextual Attacks",
-      "AI Safety"
-    ],
-    "readingTime": 7
-  },
-  {
-    "slug": "ai_security_digest__april_07_2026",
-    "title": "AI Security Digest \u2014 April 07, 2026",
-    "date": "2026-04-07",
-    "type": "News Digest",
-    "description": "This digest addresses the shift from prompt injection to structural threats like DDIPE and memory poisoning in autonomous agent ecosystems, emphasizing the need to secure delegation chains.",
-    "tags": [
-      "Agentic AI",
-      "Supply-Chain Attack",
-      "LLM Security",
-      "Prompt Injection",
-      "RAG",
-      "Privilege Escalation"
-    ],
-    "readingTime": 5
-  },
-  {
     "slug": "ai_security_digest__april_06_2026",
-    "title": "AI Security Digest \u2014 April 06, 2026",
+    "title": "AI Security Digest — April 06, 2026",
     "date": "2026-04-06",
     "type": "News Digest",
     "description": "A summary of recent AI security research, focusing on inference-time safety steering for generative models and neural decompilation for Dart and Swift. It also discusses the challenges in securing AI-driven automation pipelines and legacy infrastructure.",
@@ -200,8 +225,24 @@
     "readingTime": 10
   },
   {
+    "slug": "ai_security_digest__april_05_2026",
+    "title": "AI Security Digest — April 05, 2026",
+    "date": "2026-04-05",
+    "type": "News Digest",
+    "description": "An AI security digest highlighting the evolving threat landscape in autonomous agentic ecosystems, focusing on vulnerabilities in LLMs and agentic codebases.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Autonomous Agents",
+      "Credential Exposure",
+      "RAG",
+      "Prompt Injection"
+    ],
+    "readingTime": 10
+  },
+  {
     "slug": "this_week_in_ai_security__april_05_2026",
-    "title": "This Week in AI Security \u2014 April 05, 2026",
+    "title": "This Week in AI Security — April 05, 2026",
     "date": "2026-04-05",
     "type": "Trend Report",
     "description": "This week's AI security focus shifts from LLM prompt injection to complex vulnerabilities in autonomous, agentic architectures, emphasizing trust, governance, and the 'unsafe agent' phenomenon.",
@@ -217,24 +258,8 @@
     "readingTime": 10
   },
   {
-    "slug": "ai_security_digest__april_05_2026",
-    "title": "AI Security Digest \u2014 April 05, 2026",
-    "date": "2026-04-05",
-    "type": "News Digest",
-    "description": "An AI security digest highlighting the evolving threat landscape in autonomous agentic ecosystems, focusing on vulnerabilities in LLMs and agentic codebases.",
-    "tags": [
-      "LLM Security",
-      "Adversarial Attacks",
-      "Autonomous Agents",
-      "Credential Exposure",
-      "RAG",
-      "Prompt Injection"
-    ],
-    "readingTime": 10
-  },
-  {
     "slug": "ai_security_digest__april_04_2026",
-    "title": "AI Security Digest \u2014 April 04, 2026",
+    "title": "AI Security Digest — April 04, 2026",
     "date": "2026-04-04",
     "type": "News Digest",
     "description": "This AI Security Digest highlights advancements in defensive AI frameworks and emerging attack surfaces, focusing on probabilistic attack detection and novel neural network architectures.",
@@ -250,7 +275,7 @@
   },
   {
     "slug": "ai_security_digest__april_03_2026",
-    "title": "AI Security Digest \u2014 April 03, 2026",
+    "title": "AI Security Digest — April 03, 2026",
     "date": "2026-04-03",
     "type": "News Digest",
     "description": "An overview of recent AI security research, focusing on the challenges posed by autonomous systems and the need for dynamic safety testing methods.",
@@ -265,7 +290,7 @@
   },
   {
     "slug": "ai_security_digest__april_02_2026",
-    "title": "AI Security Digest \u2014 April 02, 2026",
+    "title": "AI Security Digest — April 02, 2026",
     "date": "2026-04-02",
     "type": "News Digest",
     "description": "This AI Security Digest highlights the evolving threat landscape, focusing on the shift from model-centric to system-level vulnerabilities. It introduces EnsembleSHAP and SABLE as advancements in compositional security frameworks, emphasizing the need for structural interpretability and cross-layer analysis in defense mechanisms.",
@@ -281,7 +306,7 @@
   },
   {
     "slug": "ai_security_digest__april_01_2026",
-    "title": "AI Security Digest \u2014 April 01, 2026",
+    "title": "AI Security Digest — April 01, 2026",
     "date": "2026-04-01",
     "type": "News Digest",
     "description": "A summary of recent AI security research, focusing on adversarial attacks, multimodal large language models, and the need for formal defensive architectures.",
@@ -297,7 +322,7 @@
   },
   {
     "slug": "ai_security_digest__march_31_2026",
-    "title": "AI Security Digest \u2014 March 31, 2026",
+    "title": "AI Security Digest — March 31, 2026",
     "date": "2026-03-31",
     "type": "News Digest",
     "description": "An AI security digest highlighting critical issues in large language model security, including reasoning safety, hardware-level side-channels, and the emergence of agentic risk.",
@@ -313,23 +338,22 @@
   },
   {
     "slug": "ai_security_digest__march_30_2026",
-    "title": "AI Security Digest \u2014 March 30, 2026",
+    "title": "AI Security Digest — March 30, 2026",
     "date": "2026-03-30",
     "type": "News Digest",
-    "description": "An AI security digest focusing on the shift from securing static LLMs to dynamic, autonomous AI agents, highlighting visibility gaps and the need for 'Agent-Centric Security'.",
+    "description": "An AI security digest discussing the capability-vulnerability paradox in LLM-based systems and the implications for smart contract security.",
     "tags": [
       "LLM Security",
-      "Agent-Centric Security",
-      "Autonomous AI",
-      "Nvidia Security",
-      "Prisma SASE",
-      "Data Privacy"
+      "Smart Contracts",
+      "Reentrancy Detection",
+      "Agent-Driven Verification",
+      "Semantic Vulnerability"
     ],
     "readingTime": 10
   },
   {
     "slug": "ai_security_digest__march_29_2026",
-    "title": "AI Security Digest \u2014 March 29, 2026",
+    "title": "AI Security Digest — March 29, 2026",
     "date": "2026-03-29",
     "type": "News Digest",
     "description": "This week's AI Security Digest highlights the shift from theoretical prompt engineering vulnerabilities to operational risks in autonomous agentic workflows, emphasizing the importance of robust authorization boundaries and deterministic 'kill switches'.",
@@ -345,7 +369,7 @@
   },
   {
     "slug": "ai_security_digest__march_28_2026",
-    "title": "AI Security Digest \u2014 March 28, 2026",
+    "title": "AI Security Digest — March 28, 2026",
     "date": "2026-03-28",
     "type": "News Digest",
     "description": "OpenAI launches a bug bounty program for AI model abuse and safety risks, expanding the scope to include model evasion, prompt injection, and system prompt leakage.",
@@ -359,23 +383,20 @@
     "readingTime": 5
   },
   {
-    "slug": "ai_security_digest__march_27_2026",
-    "title": "AI Security Digest \u2014 March 27, 2026",
-    "date": "2026-03-27",
-    "type": "News Digest",
-    "description": "A comprehensive overview of AI security vulnerabilities, evolving security tools, and governance policies, highlighting risks and advancements in AI safety.",
+    "slug": "bridging_models_agents_mcp_a2a",
+    "title": "Bridging Models and Agents: Protocol Architectures and Security in MCP & A2A",
+    "date": "2026-03-18",
+    "type": "Research Paper",
+    "description": "We analyze the architectures and security models of Model Context Protocol (MCP) and Agent-to-Agent (A2A) protocol, uncovering attack vectors and proposing mitigations for secure multi-agent AI systems.",
     "tags": [
-      "AI Security",
-      "Vulnerabilities",
-      "Exploits",
-      "LLM Security",
-      "Data Poisoning",
-      "Autonomous Agents",
-      "Security Tools",
-      "Governance",
-      "Safety Policy"
+      "MCP",
+      "A2A",
+      "AI Agents",
+      "Protocol Security",
+      "Multi-Agent Systems",
+      "LLM Security"
     ],
-    "readingTime": 10
+    "readingTime": 9
   },
   {
     "slug": "fool_me_binary_similarity",
@@ -390,7 +411,7 @@
       "Reverse Engineering",
       "Code Similarity"
     ],
-    "readingTime": 11
+    "readingTime": 8
   },
   {
     "slug": "llm_drug_term_detection_korean",
@@ -405,6 +426,21 @@
       "Korean Language",
       "Cybercrime",
       "Text Classification"
+    ],
+    "readingTime": 7
+  },
+  {
+    "slug": "trends_rag_attacks_defenses",
+    "title": "Trends in Attacks and Defenses against Retrieval-Augmented Generation (RAG) Systems",
+    "date": "2026-03-18",
+    "type": "Research Paper",
+    "description": "A comprehensive survey of security vulnerabilities in RAG systems, classifying adversarial attacks by component—data poisoning, retrieval poisoning, and prompt manipulation—and examining emerging defense strategies.",
+    "tags": [
+      "RAG",
+      "LLM Security",
+      "Data Poisoning",
+      "Prompt Injection",
+      "Survey"
     ],
     "readingTime": 9
   },
@@ -421,38 +457,20 @@
       "Text Detection",
       "AI Safety"
     ],
-    "readingTime": 10
+    "readingTime": 8
   },
   {
-    "slug": "bridging_models_agents_mcp_a2a",
-    "title": "Bridging Models and Agents: Protocol Architectures and Security in MCP & A2A",
-    "date": "2026-03-18",
-    "type": "Research Paper",
-    "description": "We analyze the architectures and security models of Model Context Protocol (MCP) and Agent-to-Agent (A2A) protocol, uncovering attack vectors and proposing mitigations for secure multi-agent AI systems.",
+    "slug": "english_idioms_guide",
+    "title": "The Art of English Idioms: Why We Kick Buckets, Break Legs, and Beat Around Bushes",
+    "date": "2026-03-17",
+    "type": "Tutorial",
+    "description": "A practical guide to English idioms for non-native speakers, exploring their origins, categories, cross-cultural equivalents, and strategies for mastering the expressions that make English beautifully unpredictable.",
     "tags": [
-      "MCP",
-      "A2A",
-      "AI Agents",
-      "Protocol Security",
-      "Multi-Agent Systems",
-      "LLM Security"
+      "Language",
+      "Communication",
+      "Best Practices"
     ],
-    "readingTime": 11
-  },
-  {
-    "slug": "trends_rag_attacks_defenses",
-    "title": "Trends in Attacks and Defenses against Retrieval-Augmented Generation (RAG) Systems",
-    "date": "2026-03-18",
-    "type": "Research Paper",
-    "description": "A comprehensive survey of security vulnerabilities in RAG systems, classifying adversarial attacks by component\u2014data poisoning, retrieval poisoning, and prompt manipulation\u2014and examining emerging defense strategies.",
-    "tags": [
-      "RAG",
-      "LLM Security",
-      "Data Poisoning",
-      "Prompt Injection",
-      "Survey"
-    ],
-    "readingTime": 11
+    "readingTime": 15
   },
   {
     "slug": "idioms_neural_decompilation",
@@ -501,20 +519,6 @@
     "readingTime": 3
   },
   {
-    "slug": "pickle_deserialization_attacks",
-    "title": "Pickle Deserialization Attacks: Understanding Python's Silent RCE Vulnerability",
-    "date": "2026-01-31",
-    "type": "Tutorial",
-    "description": "A comprehensive guide to Python pickle deserialization vulnerabilities, explaining how attackers exploit the __reduce__ method to achieve remote code execution and why 'never unpickle untrusted data' remains critical security advice.",
-    "tags": [
-      "Python Security",
-      "Deserialization",
-      "RCE",
-      "Code Security"
-    ],
-    "readingTime": 9
-  },
-  {
     "slug": "pickleguard_defense_mechanism",
     "title": "Pickleguard: Defending Python Applications Against Pickle Deserialization Attacks",
     "date": "2026-01-31",
@@ -525,6 +529,20 @@
       "Deserialization",
       "Defense",
       "ML Security"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "pickle_deserialization_attacks",
+    "title": "Pickle Deserialization Attacks: Understanding Python's Silent RCE Vulnerability",
+    "date": "2026-01-31",
+    "type": "Tutorial",
+    "description": "A comprehensive guide to Python pickle deserialization vulnerabilities, explaining how attackers exploit the __reduce__ method to achieve remote code execution and why 'never unpickle untrusted data' remains critical security advice.",
+    "tags": [
+      "Python Security",
+      "Deserialization",
+      "RCE",
+      "Code Security"
     ],
     "readingTime": 9
   },
@@ -551,7 +569,9 @@
     "tags": [
       "LLM Security",
       "Red Teaming",
-      "Jailbreaking"
+      "Jailbreaking",
+      "AI Safety",
+      "Adversarial Attacks"
     ],
     "readingTime": 11
   },
@@ -562,9 +582,11 @@
     "type": "Paper Review",
     "description": "An analysis of GASLITE, a novel attack that poisons dense embedding-based retrieval systems by crafting adversarial passages that appear in top-k results for targeted queries, achieving up to 100% success with minimal corpus contamination.",
     "tags": [
-      "RAG",
+      "RAG Security",
+      "Dense Retrieval",
       "Data Poisoning",
-      "LLM Security"
+      "Adversarial Attacks",
+      "Search Engine Security"
     ],
     "readingTime": 10
   },
@@ -575,9 +597,10 @@
     "type": "Research Paper",
     "description": "RAGDefender is a lightweight, efficient defense mechanism designed to protect Retrieval-Augmented Generation (RAG) systems from knowledge corruption attacks",
     "tags": [
-      "RAG",
+      "Retrieval-Augmented Generation",
       "LLM Security",
-      "Data Poisoning"
+      "Adversarial Attacks",
+      "RAG"
     ],
     "readingTime": 6
   },
@@ -589,8 +612,10 @@
     "description": "An analysis of AgentFuzz, a novel fuzzing framework that automatically detects taint-style vulnerabilities in LLM-based agents through LLM-assisted seed generation, feedback-driven scheduling, and sink-guided mutation.",
     "tags": [
       "LLM Agents",
+      "Fuzzing",
       "Vulnerability Detection",
-      "Fuzzing"
+      "Taint Analysis",
+      "Security Testing"
     ],
     "readingTime": 11
   },
@@ -602,7 +627,9 @@
     "description": "A novel zero-shot machine unlearning method using information theory and curvature analysis, enabling efficient removal of data influence without requiring access to the retain set.",
     "tags": [
       "Machine Unlearning",
+      "Information Theory",
       "Privacy",
+      "Zero-shot Learning",
       "Deep Learning"
     ],
     "readingTime": 9
@@ -615,8 +642,10 @@
     "description": "A comprehensive analysis of hierarchical contrastive learning approaches for classifying code vulnerabilities into CWE types, addressing long-tail distribution, class isolation, and input length limitations.",
     "tags": [
       "Vulnerability Detection",
-      "Deep Learning",
-      "Code Security"
+      "Contrastive Learning",
+      "CWE Classification",
+      "Code Security",
+      "Deep Learning"
     ],
     "readingTime": 9
   },
@@ -628,23 +657,27 @@
     "description": "An introduction to machine unlearning in Large Language Models, covering the TOFU benchmark, various unlearning methods (GradDiff, NPO, IdkPO, AltPO), and the challenges of maintaining model utility while forgetting specific knowledge.",
     "tags": [
       "Machine Unlearning",
+      "LLM",
       "Privacy",
-      "LLM Security"
+      "TOFU Benchmark",
+      "Preference Optimization"
     ],
-    "readingTime": 8
+    "readingTime": 7
   },
   {
     "slug": "membership_inference_attacks_rag",
     "title": "Membership Inference Attacks on Retrieval-Augmented Generation: A Comprehensive Survey",
     "date": "2025-03-09",
     "type": "Paper Review",
-    "description": "A comprehensive analysis of membership inference attacks against RAG systems, examining three state-of-the-art approaches: RAG-MIA, S\uc9fcMIA, and MBA, along with their defenses and limitations.",
+    "description": "A comprehensive analysis of membership inference attacks against RAG systems, examining three state-of-the-art approaches: RAG-MIA, S²MIA, and MBA, along with their defenses and limitations.",
     "tags": [
       "RAG",
+      "Membership Inference Attack",
       "Privacy",
-      "LLM Security"
+      "LLM Security",
+      "Information Leakage"
     ],
-    "readingTime": 8
+    "readingTime": 7
   },
   {
     "slug": "amides_siem_evasion_detection",
@@ -653,8 +686,11 @@
     "type": "Paper Review",
     "description": "Understanding SIEM systems, Sigma rules, and how attackers evade detection through simple command-line obfuscation techniques - leading to the need for adaptive misuse detection.",
     "tags": [
+      "SIEM",
       "Intrusion Detection",
-      "Evasion Techniques"
+      "Sigma Rules",
+      "Evasion Techniques",
+      "Enterprise Security"
     ],
     "readingTime": 6
   },
@@ -667,7 +703,9 @@
     "tags": [
       "LLM Security",
       "Backdoor Attacks",
-      "Prompt Injection"
+      "Prompt Injection",
+      "Customized LLMs",
+      "Adversarial ML"
     ],
     "readingTime": 7
   },
@@ -680,6 +718,8 @@
     "tags": [
       "LLM Security",
       "Jailbreaking",
+      "Genetic Algorithm",
+      "Adversarial Attacks",
       "Red Teaming"
     ],
     "readingTime": 10
@@ -693,7 +733,9 @@
     "tags": [
       "LLM Security",
       "Data Poisoning",
-      "Privacy"
+      "Privacy",
+      "PII Leakage",
+      "Training Data Attacks"
     ],
     "readingTime": 9
   },
@@ -705,9 +747,12 @@
     "description": "A comprehensive guide to common data visualization pitfalls and how to avoid them, covering everything from bar plots vs. scatter plots to colorblind-friendly color scales.",
     "tags": [
       "Data Visualization",
-      "Best Practices"
+      "Statistics",
+      "Best Practices",
+      "ggplot2",
+      "Scientific Communication"
     ],
-    "readingTime": 10
+    "readingTime": 9
   },
   {
     "slug": "foice_face_to_voice_attack",
@@ -716,9 +761,11 @@
     "type": "Paper Review",
     "description": "An analysis of Foice, a novel attack that generates synthetic voice recordings from a single face image to bypass voice authentication systems, achieving up to 100% success rate on commercial platforms like WeChat.",
     "tags": [
-      "Authentication Security",
+      "Voice Authentication",
+      "Biometric Security",
       "Deepfake",
-      "Biometrics"
+      "Cross-Modal Attack",
+      "Speaker Verification"
     ],
     "readingTime": 10
   },
@@ -730,9 +777,12 @@
     "description": "An analysis of LINT, a novel attack that bypasses LLM safety alignment by exploiting top-k token access to extract harmful content without prompt engineering, achieving near-perfect attack success rates.",
     "tags": [
       "LLM Security",
-      "Jailbreaking"
+      "Jailbreaking",
+      "Adversarial Attacks",
+      "AI Safety",
+      "Alignment"
     ],
-    "readingTime": 10
+    "readingTime": 9
   },
   {
     "slug": "passbert_password_guessing",
@@ -741,9 +791,12 @@
     "type": "Paper Review",
     "description": "An analysis of PassBERT, a pre-trained BERT-based framework for real-world password guessing attacks including conditional, targeted, and adaptive rule-based password guessing scenarios.",
     "tags": [
-      "Authentication Security",
-      "Deep Learning"
+      "Password Security",
+      "BERT",
+      "Password Guessing",
+      "Deep Learning",
+      "Credential Attacks"
     ],
-    "readingTime": 10
+    "readingTime": 9
   }
 ]

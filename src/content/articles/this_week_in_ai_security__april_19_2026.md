@@ -2,8 +2,8 @@
 title: "This Week in AI Security — April 19, 2026"
 date: "2026-04-19"
 type: "Trend Report"
-description: "This Week in AI Security — April 19, 2026"
-tags: []
+description: "Weekly analysis covering the transition from model-centric to systemic AI security, examining inference provenance (NeuroTrace), lifecycle security (SafeHarness), edge device and SoC security, and the pluralistic alignment evaluation crisis."
+tags: ["LLM Security", "Agent Security", "AI Safety", "Watermarking", "Adversarial ML", "Hardware Security"]
 readingTime: 7
 headerImage: "/images/news/this_week_in_ai_security__april_19_2026.jpg"
 ---
