@@ -2,8 +2,8 @@
 title: "AI Security Digest — April 18, 2026"
 date: "2026-04-18"
 type: "News Digest"
-description: "AI Security Digest — April 18, 2026"
-tags: []
+description: "Briefing on the shift from input-level filtering to execution-aware defense, covering SAFEHARNESS agent lifecycle security, NeuroTrace inference provenance, SoC emulation verification, adversarial audio injection in LALMs, and QuantileMark multi-bit watermarking."
+tags: ["LLM Security", "Agent Security", "Watermarking", "Hardware Security", "Data Poisoning", "Adversarial ML"]
 readingTime: 9
 headerImage: "/images/news/ai_security_digest__april_18_2026.png"
 ---
