@@ -1,7 +1,7 @@
 [
   {
     "slug": "ai_security_digest__may_07_2026",
-    "title": "AI Security Digest \u2014 May 07, 2026",
+    "title": "AI Security Digest — May 07, 2026",
     "date": "2026-05-07",
     "type": "News Digest",
     "description": "The AI security landscape is shifting from simple prompt injection to complex, stateful attacks like memory poisoning in autonomous agents. New research demands trajectory-aware defenses.",
@@ -14,6 +14,23 @@
       "AI Architecture"
     ],
     "readingTime": 5
+  },
+  {
+    "slug": "ai_agent_traps",
+    "title": "AI Agent Traps: When the Environment Becomes the Attacker",
+    "date": "2026-05-04",
+    "type": "Paper Review",
+    "description": "Franklin et al. (DeepMind, SSRN 2026) introduce a taxonomy of 'AI agent traps'—adversarial content embedded in digital environments to misdirect, deceive, or exploit autonomous agents. We walk through six classes of traps spanning perception, reasoning, memory, action, multi-agent dynamics, and human oversight.",
+    "tags": [
+      "AI Agents",
+      "Agentic AI",
+      "LLM Security",
+      "Prompt Injection",
+      "Multi-Agent Systems",
+      "Adversarial Attacks",
+      "Human-in-the-Loop"
+    ],
+    "readingTime": 11
   },
   {
     "slug": "ai_security_digest__april_22_2026",
