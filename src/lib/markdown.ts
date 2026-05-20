@@ -12,6 +12,11 @@ import rehypeKatex from 'rehype-katex';
 import rehypeStringify from 'rehype-stringify';
 import { visit } from 'unist-util-visit';
 import type { Root, Element } from 'hast';
+import {
+  extractDescriptionFromContent,
+  inferTagsFromContent,
+  isTrivialDescription,
+} from '../../scripts/lib/extract-frontmatter.mjs';
 
 export interface ArticleMetadata {
   title: string;
@@ -93,13 +98,22 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
 
     const contentHtml = processedContent.toString();
 
+    const rawDescription: string = data.description ? String(data.description).trim() : '';
+    const rawTags: string[] = Array.isArray(data.tags)
+      ? (data.tags as unknown[]).filter((t): t is string => typeof t === 'string')
+      : [];
+    const description: string = isTrivialDescription(rawDescription, data.title || '')
+      ? (extractDescriptionFromContent(content) || rawDescription)
+      : rawDescription;
+    const tags: string[] = rawTags.length > 0 ? rawTags : inferTagsFromContent(content);
+
     const article = {
       slug,
       title: data.title || '',
       date: data.date || '',
       type: data.type || 'Article',
-      description: data.description || '',
-      tags: data.tags || [],
+      description,
+      tags,
       content: contentHtml,
       updatedAt,
       wordCount,

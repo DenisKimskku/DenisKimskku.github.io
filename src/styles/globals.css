@@ -327,6 +327,331 @@
   }
 }
 
+/* ─────────────────────────────────────────────────────────────
+ * Curriculum Vitae — academic style.
+ * Serif body throughout, hairline rules, no chips/cards/icons.
+ * Designed to read like a traditional CV both on screen and in
+ * the puppeteer-rendered /resume.pdf.
+ * ───────────────────────────────────────────────────────────── */
+
+.cv-root {
+  font-family: var(--font-lora), Georgia, 'Times New Roman', serif;
+  color: var(--color-text);
+  line-height: 1.55;
+  font-size: 0.9375rem;
+}
+
+.cv-link {
+  color: var(--color-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border);
+  transition: border-color 0.15s ease;
+}
+
+.cv-link:hover {
+  border-bottom-color: var(--color-text);
+}
+
+/* ── Header ── */
+
+.cv-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+}
+
+.cv-header-top {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.cv-download {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  border-bottom: 1px dotted var(--color-text-muted);
+}
+
+.cv-download:hover {
+  color: var(--color-text);
+  border-bottom-color: var(--color-text);
+}
+
+.cv-name {
+  font-family: var(--font-lora), Georgia, 'Times New Roman', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.1;
+  margin-bottom: 0.625rem;
+  color: var(--color-text);
+}
+
+@media (min-width: 768px) {
+  .cv-name {
+    font-size: 2.25rem;
+  }
+}
+
+.cv-affiliation {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  line-height: 1.45;
+  margin-bottom: 0.625rem;
+}
+
+.cv-contact {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.cv-sep {
+  margin: 0 0.5rem;
+  color: var(--color-text-muted);
+}
+
+/* ── Sections ── */
+
+.cv-section {
+  margin-bottom: 2rem;
+}
+
+.cv-section-heading {
+  font-family: var(--font-lora), Georgia, 'Times New Roman', serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+  padding-bottom: 0.375rem;
+  border-bottom: 1px solid var(--color-text);
+}
+
+/* ── Education ── */
+
+.cv-edu {
+  margin: 0;
+  padding: 0;
+}
+
+.cv-edu-entry {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: 1rem;
+  margin-bottom: 0.875rem;
+  align-items: baseline;
+}
+
+.cv-edu-entry:last-child {
+  margin-bottom: 0;
+}
+
+.cv-edu-degree {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 0.9375rem;
+}
+
+.cv-edu-degree-label {
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+}
+
+.cv-edu-field {
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.cv-edu-detail {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--color-text);
+}
+
+.cv-edu-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.cv-edu-inst {
+  font-style: italic;
+  color: var(--color-text);
+}
+
+.cv-edu-period {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cv-edu-meta {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.1875rem;
+  line-height: 1.5;
+}
+
+/* ── Research interests ── */
+
+.cv-interests {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cv-interest-item {
+  position: relative;
+  padding-left: 1.125rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9375rem;
+  color: var(--color-text);
+  line-height: 1.55;
+}
+
+.cv-interest-item::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--color-text-muted);
+}
+
+.cv-interest-item:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Publications ── */
+
+.cv-pub-note {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.cv-source {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  font-style: normal;
+  padding: 0.0625rem 0.25rem;
+  background: var(--color-bg-secondary);
+  border-radius: 0.1875rem;
+}
+
+.cv-pub-year {
+  margin-bottom: 1.5rem;
+}
+
+.cv-pub-year:last-child {
+  margin-bottom: 0;
+}
+
+.cv-pub-year-label {
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.625rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.cv-pub-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: cv-pub;
+}
+
+.cv-pub-item {
+  position: relative;
+  padding-left: 1.75rem;
+  margin-bottom: 0.875rem;
+  counter-increment: cv-pub;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.cv-pub-item::before {
+  content: '[' counter(cv-pub) ']';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.5rem;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.cv-pub-citation {
+  color: var(--color-text);
+}
+
+.cv-pub-title {
+  color: var(--color-text);
+}
+
+a.cv-pub-title {
+  border-bottom: 1px solid var(--color-border);
+}
+
+a.cv-pub-title:hover {
+  border-bottom-color: var(--color-text);
+}
+
+.cv-pub-venue {
+  font-style: italic;
+  color: var(--color-text);
+}
+
+.cv-author-self {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.cv-pub-extras {
+  display: flex;
+  gap: 0.625rem;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+.cv-pub-extra {
+  color: var(--color-text-muted);
+  border-bottom: none;
+}
+
+.cv-pub-extra:hover {
+  color: var(--color-text);
+  border-bottom: none;
+}
+
+/* ── Footer ── */
+
+.cv-footer {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+  text-align: center;
+}
+
 /* Print styles */
 @media print {
   body {
@@ -350,5 +675,62 @@
   .article-content pre {
     background: #f5f5f5;
     border: 1px solid #ddd;
+  }
+
+  /* CV print rules: force a strict black-on-white academic palette and
+     preserve the serif body, hairline rules, and tabular alignment. */
+  .resume-root,
+  .cv-root {
+    --color-bg: #ffffff;
+    --color-bg-secondary: #f5f5f4;
+    --color-text: #111111;
+    --color-text-secondary: #2a2a2a;
+    --color-text-muted: #555555;
+    --color-border: #b8b8b8;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    max-width: none !important;
+    font-size: 10.5pt !important;
+    line-height: 1.45 !important;
+  }
+
+  .cv-root a,
+  .cv-root .cv-link {
+    color: #111111 !important;
+    border-bottom: none !important;
+    text-decoration: none !important;
+  }
+
+  .cv-root h1,
+  .cv-root h2,
+  .cv-root h3 {
+    color: #111111 !important;
+  }
+
+  .cv-root .cv-name {
+    font-size: 18pt !important;
+  }
+
+  .cv-root .cv-section-heading {
+    page-break-after: avoid;
+    border-bottom-color: #111111 !important;
+  }
+
+  .cv-root .cv-pub-item,
+  .cv-root .cv-edu-entry,
+  .cv-root .cv-interest-item,
+  .cv-root .cv-pub-year {
+    page-break-inside: avoid;
+  }
+
+  .cv-root .cv-source {
+    background: #efefef !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  @page {
+    size: A4;
+    margin: 16mm 18mm 14mm 18mm;
   }
 }
