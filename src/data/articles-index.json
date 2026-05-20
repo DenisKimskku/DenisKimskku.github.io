@@ -1,5 +1,21 @@
 [
   {
+    "slug": "ai_security_digest__may_21_2026",
+    "title": "AI Security Digest \u2014 May 21, 2026",
+    "date": "2026-05-21",
+    "type": "News Digest",
+    "description": "This digest analyzes the shift from black-box prompt injection to structural, reasoning-aware adversarial attacks targeting Large Reasoning Models (LRMs) via Chain-of-Thought exploitation.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Reinforcement Learning",
+      "Chain-of-Thought",
+      "LRM",
+      "AI Cyberattacks"
+    ],
+    "readingTime": 7
+  },
+  {
     "slug": "ai_security_digest__may_20_2026",
     "title": "AI Security Digest — May 20, 2026",
     "date": "2026-05-20",
