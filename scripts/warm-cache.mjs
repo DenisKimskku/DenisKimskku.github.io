@@ -326,6 +326,7 @@ function loadLocalPageUrls() {
     '/writing/',
     '/papers/',
     '/code/',
+    '/resume/',
     '/calendar-plus-plus/',
     '/calendar-plus-plus/privacy/',
     '/calendar-plus-plus/terms/',
