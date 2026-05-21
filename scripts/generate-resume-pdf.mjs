@@ -83,7 +83,7 @@ async function renderPdf(port) {
   let puppeteer;
   try {
     puppeteer = (await import('puppeteer')).default;
-  } catch (err) {
+  } catch {
     console.warn('[resume-pdf] puppeteer not installed — skipping PDF generation.');
     console.warn('[resume-pdf]   Install with: npm install puppeteer');
     return false;

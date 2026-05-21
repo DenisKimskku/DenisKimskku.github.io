@@ -203,7 +203,7 @@ export default async function Resume() {
       <section className="cv-section">
         <h2 className="cv-section-heading">Publications</h2>
         <p className="cv-pub-note no-print">
-          Author names in <span className="cv-author-self">bold</span> indicate this CV's author.
+          Author names in <span className="cv-author-self">bold</span> indicate this CV&apos;s author.
           Auto-generated from <code className="cv-source">src/data/papers.json</code>.
         </p>
         {years.map((year) => (
