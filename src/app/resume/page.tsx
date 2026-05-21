@@ -202,10 +202,6 @@ export default async function Resume() {
       {/* ───────── Publications ───────── */}
       <section className="cv-section">
         <h2 className="cv-section-heading">Publications</h2>
-        <p className="cv-pub-note no-print">
-          Author names in <span className="cv-author-self">bold</span> indicate this CV&apos;s author.
-          Auto-generated from <code className="cv-source">src/data/papers.json</code>.
-        </p>
         {years.map((year) => (
           <div key={year} className="cv-pub-year">
             <h3 className="cv-pub-year-label">{year}</h3>
@@ -224,7 +220,7 @@ export default async function Resume() {
                     <span className="cv-pub-venue"> {formatVenue(p.conference)}</span>
                     , {year}.
                   </div>
-                  {(p.codeUrl || p.slideUrl || p.articleSlug) && (
+                  {(p.codeUrl || p.slideUrl) && (
                     <div className="cv-pub-extras no-print">
                       {p.pdfUrl && (
                         <a href={p.pdfUrl} target="_blank" rel="noopener noreferrer" className="cv-pub-extra">[PDF]</a>
@@ -234,9 +230,6 @@ export default async function Resume() {
                       )}
                       {p.slideUrl && (
                         <a href={p.slideUrl} target="_blank" rel="noopener noreferrer" className="cv-pub-extra">[Slides]</a>
-                      )}
-                      {p.articleSlug && (
-                        <a href={`/writing/${p.articleSlug}/`} className="cv-pub-extra">[Review]</a>
                       )}
                     </div>
                   )}
