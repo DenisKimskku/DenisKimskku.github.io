@@ -1,5 +1,37 @@
 [
   {
+    "slug": "this_week_in_ai_security__may_24_2026",
+    "title": "This Week in AI Security \u2014 May 24, 2026",
+    "date": "2026-05-24",
+    "type": "Trend Report",
+    "description": "AI security research is shifting focus from simple prompt filtering to defending complex, autonomous AI agents and RAG pipelines against runtime and memory-based attacks.",
+    "tags": [
+      "AI Agents",
+      "RAG",
+      "Adversarial Attacks",
+      "LLM Security",
+      "Data Poisoning",
+      "Runtime Security"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "ai_security_digest__may_24_2026",
+    "title": "AI Security Digest \u2014 May 24, 2026",
+    "date": "2026-05-24",
+    "type": "News Digest",
+    "description": "This digest covers the shift to model-centric AI security, featuring research on data-free backdoor detection and supply-chain vulnerabilities in large-scale deployments.",
+    "tags": [
+      "LLM Security",
+      "Backdoor Attacks",
+      "RAG",
+      "Model Integrity",
+      "Adversarial Attacks",
+      "AI Supply Chain"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__may_23_2026",
     "title": "AI Security Digest \u2014 May 23, 2026",
     "date": "2026-05-23",
