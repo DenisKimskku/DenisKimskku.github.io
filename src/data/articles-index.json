@@ -1,5 +1,153 @@
 [
   {
+    "slug": "ai_security_digest__may_27_2026",
+    "title": "AI Security Digest \u2014 May 27, 2026",
+    "date": "2026-05-27",
+    "type": "News Digest",
+    "description": "The speed of AI exploitation is accelerating, demanding a shift to real-time verification. This digest covers malware poisoning, semantic validation of PE tools, and agentic AI attack vectors.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Malware Analysis",
+      "Agentic AI",
+      "Data Poisoning",
+      "PE Analysis"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "llmasareviewer_benchmarking_their_ability_divergence_and_pro",
+    "title": "LLM-as-a-Reviewer: Benchmarking Their Ability, Divergence, and Prompt Injection Resistance as Paper Reviewers",
+    "date": "2026-05-27",
+    "type": "Paper Review",
+    "description": "A stealthy prompt injection attack exploiting custom TrueType font mappings (`cmap` tables) to embed visually imperceptible adversarial payloads in PDF manuscripts, forcing LLM-as-a-reviewer pipelines",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "aptagent_automated_penetration_testing_using_large_language_",
+    "title": "APT-Agent: Automated Penetration Testing using Large Language Models",
+    "date": "2026-05-27",
+    "type": "Paper Review",
+    "description": "An automated penetration testing framework (APT-Agent) that resolves LLM hallucinations and long-horizon context loss using a hybrid fuzzy-matching command rectifier and a compact, state-aware JSON co",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "qmlpipeguard_driftaware_behavioral_fingerprinting_for_quantu",
+    "title": "QML-PipeGuard: Drift-Aware Behavioral Fingerprinting for Quantum Machine Learning Pipeline Integrity",
+    "date": "2026-05-27",
+    "type": "Paper Review",
+    "description": "QML-PipeGuard is a contract-based runtime verification framework that uses 'behavioral fingerprinting'\u2014measuring a tomographically complete family of Pauli observables\u2014to detect unauthorized quantum c",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "security_in_the_finetuning_lifecycle_of_large_language_model",
+    "title": "Security in the Fine-Tuning Lifecycle of Large Language Models: Threats, Defenses,Evaluation, and Future Directions",
+    "date": "2026-05-27",
+    "type": "Paper Review",
+    "description": "Fine-tuning security is highly model-dependent, non-monotonic with scale, and vulnerable to cross-phase bypasses where single-phase defenses fail to neutralize attacks targeting other lifecycle phases",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "when_interpretability_becomes_a_liability_adversarial_attack",
+    "title": "When Interpretability Becomes a Liability: Adversarial Attacks on CBM Concept Layers",
+    "date": "2026-05-27",
+    "type": "Paper Review",
+    "description": "Concept-level adversarial attacks exploit the human-interpretable intermediate concept layers of Concept Bottleneck Models (CBMs) to cause misclassification with minimal semantic edits, which can be m",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "evoattacker_memoryaugmented_reinforcement_learning_for_longh",
+    "title": "Evo-Attacker: Memory-Augmented Reinforcement Learning for Long-Horizon Tool Attacks on LLM-MAS",
+    "date": "2026-05-27",
+    "type": "Paper Review",
+    "description": "Evo-Attacker is a self-evolving, memory-augmented reinforcement learning framework that systematically compromises Large Language Model Multi-Agent Systems (LLM-MAS) by strategically injecting semanti",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "referential_security_as_a_new_paradigm_for_ai_evaluations",
+    "title": "Referential Security as a New Paradigm for AI Evaluations",
+    "date": "2026-05-27",
+    "type": "Paper Review",
+    "description": "AI safety evaluations currently rely on static identifiers (like model names) that resolve to unstable, constantly changing system configurations. To fix this, 'referential security' is introduced as ",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "an_efficient_and_privacypreserving_architecture_for_crossins",
+    "title": "An Efficient and Privacy-Preserving Architecture for Cross-Institutional Collaborative RAG",
+    "date": "2026-05-27",
+    "type": "Paper Review",
+    "description": "FedRAG, a non-cryptographic, federated RAG framework that uses a numerically stable scrambling matrix and token permutation to secure cross-node self-attention without model retraining or Trusted Exec",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "samark_a_selfanchored_text_watermarking_with_paragraphlevel_",
+    "title": "SAMark: A Self-Anchored Text Watermarking with Paragraph-Level Paraphrase Robustness",
+    "date": "2026-05-27",
+    "type": "Paper Review",
+    "description": "SAMARK is a self-anchored semantic-level watermarking framework that eliminates step-dependence in LLM text watermarking by anchoring random keys directly to sentence embeddings, making the watermark ",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "how_agentic_ai_coding_assistants_become_the_attackers_shell",
+    "title": "How Agentic AI Coding Assistants Become the Attacker's Shell",
+    "date": "2026-05-27",
+    "type": "Paper Review",
+    "description": "Indirect prompt injection attacks embedded in unvetted developer artifacts (such as workspace settings, custom rule files, and agent skill configurations) hijack the execution loop of agentic AI codin",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "semantic_validation_of_packer_identification_tools_character",
+    "title": "Semantic Validation of Packer Identification Tools: Characterization, Repair, and Downstream Impact",
+    "date": "2026-05-27",
+    "type": "Paper Review",
+    "description": "A semantic validation and repair framework that treats unpackers as 'executable semantic contracts' to automatically detect, localize, and fix semantic bugs in packer identification tools without manu",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "building_an_adversarial_malware_dataset_by_family_and_type_g",
+    "title": "Building an Adversarial Malware Dataset by Family and Type: Generation, Evasion, and Poisoning Evaluation",
+    "date": "2026-05-27",
+    "type": "Paper Review",
+    "description": "Data poisoning using as little as 0.5% fully mislabelled ($\\tau = 1.0$) adversarial malware samples can completely blind machine learning-based static PE classifiers, boosting evasion rates from 26.13",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
     "slug": "this_week_in_ai_security__may_24_2026",
     "title": "This Week in AI Security \u2014 May 24, 2026",
     "date": "2026-05-24",
