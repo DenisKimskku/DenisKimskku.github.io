@@ -1,5 +1,142 @@
 [
   {
+    "slug": "ai_security_digest__may_28_2026",
+    "title": "AI Security Digest \u2014 May 28, 2026",
+    "date": "2026-05-28",
+    "type": "News Digest",
+    "description": "This digest covers advanced LLM security threats, including dynamic inference-time exploits, structural prompt injection, and loader-level defenses against shared object hijacking.",
+    "tags": [
+      "LLM Security",
+      "Prompt Injection",
+      "Adversarial Attacks",
+      "Data Poisoning",
+      "Binary Analysis",
+      "Inference Security"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "testtime_training_undermines_safety_guardrails",
+    "title": "Test-Time Training Undermines Safety Guardrails",
+    "date": "2026-05-28",
+    "type": "Paper Review",
+    "description": "Attackers can exploit Test-Time Training (TTT) and dynamic fine-tuning APIs to completely bypass safety guardrails in just 1 to 10 gradient steps by updating the model's weights on harmful target pref",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "jailbreak_to_protect_buffering_and_reinforcing_via_temporary",
+    "title": "Jailbreak to Protect: Buffering and Reinforcing via Temporary Jailbreaking for Safe Fine-Tuning in Large Language Models",
+    "date": "2026-05-28",
+    "type": "Paper Review",
+    "description": "A fine-tuning defense framework that temporarily jailbreaks an LLM using a frozen adapter (BufferLoRA) during user training to saturate safety-degrading gradients, followed by post-training QR-decompo",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "ellipsoid_control_a_whitelist_jailbreak_defense_via_benign_l",
+    "title": "Ellipsoid Control: A White-list Jailbreak Defense via Benign Latent Modeling",
+    "date": "2026-05-28",
+    "type": "Paper Review",
+    "description": "Ellipsoid Control (EC) is an inference-time jailbreak defense that uses Projected Gradient Descent (PGD) to steer hidden representation states toward refusal targets while strictly bound by a high-dim",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "localization_then_neutralization_gradientguided_token_suppre",
+    "title": "Localization then Neutralization: Gradient-guided Token Suppression against Visual Prompt Injection Attack",
+    "date": "2026-05-28",
+    "type": "Paper Review",
+    "description": "Gradient Token Masking (GTM) is an inference-time defense that protects Large Vision-Language Models (LVLMs) from visual prompt injection by localizing critical adversarial image tokens via hidden-sta",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "five_queries_are_enough_queryefficient_and_surrogatefree_mem",
+    "title": "Five Queries Are Enough: Query-Efficient and Surrogate-Free Membership Inference Attacks on RAG via Entailment",
+    "date": "2026-05-28",
+    "type": "Paper Review",
+    "description": "MEntA (Membership Entailment Attack) is a highly query-efficient, surrogate-free membership inference attack on Retrieval-Augmented Generation (RAG) systems that leverages Natural Language Inference (",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "poisoning_the_watchtower_prompt_injection_attacks_against_ll",
+    "title": "Poisoning the Watchtower: Prompt Injection Attacks Against LLM-Augmented Security Operations Through Adversarial Log Content",
+    "date": "2026-05-28",
+    "type": "Paper Review",
+    "description": "Log-substrate prompt injection exploits attacker-controlled security log fields (such as HTTP User-Agents and URI paths) to inject adversarial instructions directly into LLM-augmented security workflo",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "steering_beyond_the_support_adversarial_training_on_unsuperv",
+    "title": "Steering Beyond the Support: Adversarial Training on Unsupervised Jailbroken Activation Simulation",
+    "date": "2026-05-28",
+    "type": "Paper Review",
+    "description": "An unsupervised adversarial training framework that simulates out-of-distribution (OOD) jailbreak activations in representation space, training a non-linear safety steering potential field to defend a",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "iterinject_indirect_prompt_injection_against_llm_agents_via_",
+    "title": "IterInject: Indirect Prompt Injection Against LLM Agents via Feedback-Guided Iterative Optimization",
+    "date": "2026-05-28",
+    "type": "Paper Review",
+    "description": "An iterative black-box framework named *IterInject* that automates indirect prompt injections (IPI) by coupling structured, four-level diagnostic feedback with an LLM-based optimizer and self-evolving",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 11
+  },
+  {
+    "slug": "cordyceps_covert_control_attacks_on_llms_via_data_poisoning",
+    "title": "Cordyceps: Covert Control Attacks on LLMs via Data Poisoning",
+    "date": "2026-05-28",
+    "type": "Paper Review",
+    "description": "CORDYCEPS is a data poisoning attack that implants a steganographic 'Semantic Hiding under Shared knowledge' (SHuSh) channel into LLMs during instruction tuning, enabling stealthy control and data exf",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "resolving_the_correct_library_a_loaderlevel_defense_solution",
+    "title": "Resolving the Correct Library: A Loader-Level Defense Solution Against Shared Object Hijacking",
+    "date": "2026-05-28",
+    "type": "Paper Review",
+    "description": "A loader-centric verification framework implemented via `glibc`'s `LD_AUDIT` interface that binds dynamically loaded shared objects (`.so`) to immutable Build-IDs and cryptographic hashes to block sea",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "prompt_injection_detection_is_regimedependent_a_deploymentaw",
+    "title": "Prompt Injection Detection is Regime-Dependent: A Deployment-Aware Evaluation with Interpretable Structural Signals",
+    "date": "2026-05-28",
+    "type": "Paper Review",
+    "description": "An evaluation framework exposing that prompt injection detection is highly 'regime-dependent' (varying heavily based on attack style), alongside the 'Instruction Boundary Violation Score' (IBVS v2)\u2014a ",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
     "slug": "ai_security_digest__may_27_2026",
     "title": "AI Security Digest \u2014 May 27, 2026",
     "date": "2026-05-27",
