@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import fs from 'node:fs';
 import path from 'node:path';
-import { getAllArticles, getTagEntries } from '@/lib/articles';
+import { getAllArticles } from '@/lib/articles';
 import { siteMetadata } from '@/lib/siteMetadata';
 
 export const dynamic = 'force-static';
@@ -18,9 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteMetadata.siteUrl;
   const appDir = path.join(process.cwd(), 'src', 'app');
   const articlesDir = path.join(process.cwd(), 'src', 'content', 'articles');
-  const projectsDataFile = path.join(process.cwd(), 'src', 'data', 'projects.json');
   const articles = getAllArticles();
-  const tagEntries = getTagEntries(articles);
 
   const staticPages = [
     {
@@ -89,32 +87,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     };
   });
 
-  const tagEntriesForSitemap = tagEntries.map((tagEntry) => {
-    const relatedArticleDates = articles
-      .filter((article) => article.tags.includes(tagEntry.name))
-      .map((article) => getLastModified(path.join(articlesDir, `${article.slug}.md`)).getTime());
-
-    const latestTagUpdate = relatedArticleDates.length > 0
-      ? new Date(Math.max(...relatedArticleDates))
-      : getLastModified(path.join(appDir, 'writing', 'page.tsx'));
-
-    return {
-      url: `${baseUrl}/writing/tag/${tagEntry.slug}/`,
-      lastModified: latestTagUpdate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    };
-  });
-
-  const externalToolEntries = [
-    {
-      url: 'https://dz.deniskim1.com/',
-      lastModified: getLastModified(projectsDataFile),
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    },
-  ];
-
+  // Tag pages (/writing/tag/*) are intentionally noindex, so they are excluded
+  // here — submitting noindex URLs in the sitemap sends Google contradictory
+  // signals. Cross-domain tools (e.g. dz.deniskim1.com) also don't belong in
+  // this property's sitemap.
   return [
     ...staticPages.map((page) => ({
       url: `${baseUrl}${page.route}/`,
@@ -122,8 +98,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: page.changeFrequency,
       priority: page.priority,
     })),
-    ...externalToolEntries,
-    ...tagEntriesForSitemap,
     ...articleEntries,
   ];
 }
