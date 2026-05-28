@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import fs from 'node:fs';
+import path from 'node:path';
 import 'highlight.js/styles/github-dark.css';
 import 'katex/dist/katex.min.css';
 import { notFound } from 'next/navigation';
@@ -35,6 +37,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  // Per-article cards are generated into public/og at build time; fall back to
+  // the site default so a missing card never serves a 404 image on social shares.
+  const hasOgImage = fs.existsSync(path.join(process.cwd(), 'public', 'og', `${slug}.png`));
+  const ogImage = hasOgImage
+    ? { url: `/og/${slug}.png`, width: 1200, height: 630 }
+    : {
+        url: siteMetadata.ogImage.url,
+        width: siteMetadata.ogImage.width,
+        height: siteMetadata.ogImage.height,
+        alt: siteMetadata.ogImage.alt,
+      };
+
   return {
     title: article.title,
     description: article.description,
@@ -49,7 +63,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       publishedTime: article.date,
       tags: article.tags,
       url: `${siteMetadata.siteUrl}/writing/${slug}/`,
-      images: [{ url: `/og/${slug}.png`, width: 1200, height: 630 }],
+      images: [ogImage],
     },
   };
 }
