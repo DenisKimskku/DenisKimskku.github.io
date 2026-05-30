@@ -1,5 +1,37 @@
 [
   {
+    "slug": "this_week_in_ai_security__may_31_2026",
+    "title": "This Week in AI Security \u2014 May 31, 2026",
+    "date": "2026-05-31",
+    "type": "Trend Report",
+    "description": "A weekly roundup of AI security research focusing on the shift from static defenses to dynamic runtime containment for autonomous agents.",
+    "tags": [
+      "LLM Security",
+      "Agentic AI",
+      "Prompt Injection",
+      "RAG",
+      "Adversarial Attacks",
+      "Runtime Security"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "ai_security_digest__may_31_2026",
+    "title": "AI Security Digest \u2014 May 31, 2026",
+    "date": "2026-05-31",
+    "type": "News Digest",
+    "description": "A digest covering the first in-the-wild LLM agent attacks, focusing on RAG pipeline injection and multi-agent system jailbreaks.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "RAG",
+      "Agent Security",
+      "Prompt Injection",
+      "System Hardening"
+    ],
+    "readingTime": 4
+  },
+  {
     "slug": "ai_security_digest__may_30_2026",
     "title": "AI Security Digest \u2014 May 30, 2026",
     "date": "2026-05-30",
