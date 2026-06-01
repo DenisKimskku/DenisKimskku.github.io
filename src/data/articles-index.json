@@ -1,5 +1,27 @@
 [
   {
+    "slug": "from_prompt_injection_to_persistent_control_defending_agenti",
+    "title": "From Prompt Injection to Persistent Control: Defending Agentic Harness Against Trojan Backdoors",
+    "date": "2026-06-02",
+    "type": "Paper Review",
+    "description": "Tan et al. (arXiv 2026) introduce *ClawTrojan*, a benchmark exposing how multi-step trojan attacks persistently compromise agentic workspace files, and *DASGuard*, a provenance-tracking runtime defens",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "badbone_backdoor_attacks_against_backbone_models_in_visual_p",
+    "title": "BadBone: Backdoor Attacks Against Backbone Models in Visual Prompt Learning",
+    "date": "2026-06-02",
+    "type": "Paper Review",
+    "description": "BADBONE is a bi-level optimization backdoor attack targeting frozen vision backbones in Visual Prompt Learning (VPL) using a highly stealthy 'prompt-and-trigger co-activation' mechanism",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 7
+  },
+  {
     "slug": "this_week_in_ai_security__may_31_2026",
     "title": "This Week in AI Security \u2014 May 31, 2026",
     "date": "2026-05-31",
