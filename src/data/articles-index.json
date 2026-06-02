@@ -1,5 +1,27 @@
 [
   {
+    "slug": "mmsnowball_evaluating_and_mitigating_hallucination_snowballi",
+    "title": "MM-Snowball: Evaluating and Mitigating Hallucination Snowballing in Multimodal Multi-Turn Dialogue",
+    "date": "2026-06-03",
+    "type": "Paper Review",
+    "description": "An analysis of 'hallucination snowballing' in multi-turn multimodal dialogue, where initially minor visual errors cascade into systemic cognitive delusions as the model prioritizes conversational hist",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 11
+  },
+  {
+    "slug": "the_invitation_trap_proactive_availability_backdoor_in_llms_",
+    "title": "The Invitation Trap: Proactive Availability Backdoor in LLMs via Conversational Induction",
+    "date": "2026-06-03",
+    "type": "Paper Review",
+    "description": "The Proactive Availability Backdoor (PAB) is an attack paradigm that weaponizes an LLM's aligned helpfulness, actively inducing the user to type a target trigger word through conversational suggestion",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
     "slug": "from_prompt_injection_to_persistent_control_defending_agenti",
     "title": "From Prompt Injection to Persistent Control: Defending Agentic Harness Against Trojan Backdoors",
     "date": "2026-06-02",
