@@ -77,15 +77,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const articleEntries = articles.map((article) => {
-    const articleFilePath = path.join(articlesDir, `${article.slug}.md`);
-    return {
-      url: `${baseUrl}/writing/${article.slug}/`,
-      lastModified: getLastModified(articleFilePath),
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    };
-  });
+  // Auto-generated articles are de-indexed (see writing/[slug]/page.tsx), so they are
+  // excluded from the sitemap — submitting noindex URLs sends Google mixed signals.
+  const AUTO_TYPES = ['Paper Review', 'News Digest', 'Trend Report'];
+  const articleEntries = articles
+    .filter((article) => !AUTO_TYPES.includes(article.type))
+    .map((article) => {
+      const articleFilePath = path.join(articlesDir, `${article.slug}.md`);
+      return {
+        url: `${baseUrl}/writing/${article.slug}/`,
+        lastModified: getLastModified(articleFilePath),
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+      };
+    });
 
   // Tag pages (/writing/tag/*) are intentionally noindex, so they are excluded
   // here — submitting noindex URLs in the sitemap sends Google contradictory
