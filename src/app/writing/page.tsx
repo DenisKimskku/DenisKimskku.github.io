@@ -32,7 +32,10 @@ interface Article {
 }
 
 export default async function Writing() {
-  const articles = getAllArticles() as Article[];
+  // Paper reviews duplicate each day's digest and are de-indexed; keep the main Writing
+  // feed focused on digests, trend reports, and human-written work. The complete set
+  // (including reviews) stays at /writing/archive.
+  const articles = (getAllArticles() as Article[]).filter((a) => a.type !== 'Paper Review');
   const tags = getTagEntries(articles);
   const pageUrl = `${siteMetadata.siteUrl}/writing/`;
   const jsonLd = {
@@ -75,7 +78,7 @@ export default async function Writing() {
           Writing
         </h1>
         <p className="text-[var(--color-text-secondary)]">
-          Research articles, AI security news, paper reviews, and technical writeups.
+          Daily AI security digests, weekly trend reports, and research writeups.
         </p>
       </header>
 
