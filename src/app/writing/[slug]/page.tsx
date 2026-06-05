@@ -5,7 +5,7 @@ import 'highlight.js/styles/github-dark.css';
 import 'katex/dist/katex.min.css';
 import { notFound } from 'next/navigation';
 import { getArticleBySlug, getAllArticleSlugs, calculateReadingTime, generateTOC } from '@/lib/markdown';
-import { getRelatedArticles, getAdjacentArticles, getAllArticles } from '@/lib/articles';
+import { getRelatedArticles, getAdjacentArticles } from '@/lib/articles';
 import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
 import Breadcrumb from '@/components/Breadcrumb';
@@ -49,19 +49,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         alt: siteMetadata.ogImage.alt,
       };
 
-  // Standalone paper reviews are near-duplicates of that day's digest: de-index them
-  // and point their canonical at the same-day digest. Digests, trend reports, and
-  // human-written articles stay indexed as the site's discoverable content.
+  // Standalone paper reviews duplicate each day's digest, so they are de-indexed.
+  // Use a SELF canonical (not cross-canonical to the digest): noindex + a cross-URL
+  // canonical are contradictory signals and can propagate noindex onto the digest.
   const isPaperReview = article.type === 'Paper Review';
-  let canonicalPath = `/writing/${slug}/`;
-  if (isPaperReview) {
-    const sameDayDigest = getAllArticles().find(
-      (a) => a.type === 'News Digest' && a.date === article.date,
-    );
-    if (sameDayDigest) {
-      canonicalPath = `/writing/${sameDayDigest.slug}/`;
-    }
-  }
 
   return {
     title: article.title,
@@ -69,7 +60,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     keywords: article.tags,
     robots: isPaperReview ? { index: false, follow: true } : undefined,
     alternates: {
-      canonical: canonicalPath,
+      canonical: `/writing/${slug}/`,
     },
     openGraph: {
       title: article.title,
