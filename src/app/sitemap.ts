@@ -77,11 +77,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // Auto-generated articles are de-indexed (see writing/[slug]/page.tsx), so they are
-  // excluded from the sitemap — submitting noindex URLs sends Google mixed signals.
-  const AUTO_TYPES = ['Paper Review', 'News Digest', 'Trend Report'];
+  // Only standalone paper reviews are de-indexed (see writing/[slug]/page.tsx) and
+  // therefore excluded from the sitemap — submitting noindex URLs sends Google mixed
+  // signals. Digests, trend reports, and human articles remain in the sitemap.
+  const NOINDEX_TYPES = ['Paper Review'];
   const articleEntries = articles
-    .filter((article) => !AUTO_TYPES.includes(article.type))
+    .filter((article) => !NOINDEX_TYPES.includes(article.type))
     .map((article) => {
       const articleFilePath = path.join(articlesDir, `${article.slug}.md`);
       return {
