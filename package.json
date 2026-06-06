@@ -5,13 +5,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/optimize-images.mjs && node scripts/generate-og-images.mjs && next build && node scripts/strip-twitter-meta.mjs && node scripts/generate-rss.mjs && node scripts/generate-resume-pdf.mjs",
+    "build": "node scripts/lint-content.mjs && node scripts/optimize-images.mjs && node scripts/generate-og-images.mjs && next build && node scripts/strip-twitter-meta.mjs && node scripts/generate-rss.mjs && node scripts/generate-resume-pdf.mjs",
     "start": "next start",
     "lint": "eslint .",
     "export": "npm run build",
     "generate:index": "node scripts/generate-articles-index.mjs",
     "warm:cache": "node scripts/warm-cache.mjs",
-    "purge:cache": "node scripts/purge-cloudflare-cache.mjs"
+    "purge:cache": "node scripts/purge-cloudflare-cache.mjs",
+    "lint:content": "node scripts/lint-content.mjs"
   },
   "keywords": [
     "portfolio",

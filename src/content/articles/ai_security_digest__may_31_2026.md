@@ -15,14 +15,6 @@ headerImage: "/images/news/ai_security_digest__may_31_2026.jpg"
 
 Today marks a critical escalation in threat landscapes as Sysdig documents the first active, in-the-wild cyberattack orchestrated entirely by an autonomous LLM agent. This historic shift from static automated scripting to dynamic, real-time adversarial decision-making exposes massive structural blind spots in legacy runtime defenses. Organizations must immediately transition from signature-based monitoring to behavioral profiling of LLM API interactions to mitigate non-deterministic, agent-led intrusion paths.
 
-## Paper Highlights
-
-*   **[Hijacking Autonomous LLM Agents via Indirect Prompt Injection in RAG Pipelines](/writing/indirect-prompt-injection-runtimes)** — by Dr. Elena Rostova and Liam Vance
-    This study demonstrates how attackers can exploit Retrieval-Augmented Generation (RAG) pipelines to inject malicious instructions via poisoned external documents, gaining complete control over downstream LLM agent tool calls. Practitioners must implement robust output validation and strictly isolate agentic runtime environments to prevent unauthorized write actions and database exfiltration on sensitive backend APIs.
-
-*   **[Adversarial Jailbreaks in Multi-Agent Collaborative Systems](/writing/multi-agent-jailbreaks)** — by Zhao et al.
-    The authors present a novel attack vector where secondary, low-security conversational agents are systematically manipulated to bypass safety guardrails in primary, high-security supervisor models. Security engineers designing multi-agent workflows must realize that safety alignment at the individual model level does not guarantee collective system security when inter-agent trust boundaries remain unmonitored.
-
 ## Industry & News
 
 *   **[Exploit Code Published for Critical Flowise RCE Vulnerability](https://news.google.com/rss/articles/CBMilgFBVV95cUxQc0YzdGNVY3hyeHdwdDFDanFaZW9FUVBhNjdtYTNjUEVoeFNJOWlPM0w3SmVEQkV1RkQ2MDRzVjhfTGxraUFwcTVWNy02dTRSQzEwVlZIWUJCM3EybUdjTFZrY3cxc2FnOVhxcldkeDBMWlZkSzAxX2JTM0Q4MjNwS0N6ajZVMjJXdHRTNnpjbTdIVjY2NWfSAZsBQVVfeXFMT1Q0Tmh1MmNoRnViWi1sa3ZVSFpJRUdkbzA1ZTRZX2FLX2dSYm9ad25JTWZfSjR0VnNZYkdRZmdaMnNqaTZrU2FkV1VPQVBVdFAyLU9SaU5qZ3pLbHd0eUFZMHR3UDA3Q1BuR1BfcW1peDdKSGRQQ2dKNjJzNklhM2p6S2duU3l3YXh5aFEzNEhwMWhhcy13N3J0UWs?oc=5&hl=en-US&gl=US&ceid=US:en)** (SecurityWeek) — The public release of a proof-of-concept exploit for Flowise (tracked under CVE-2024-31309) allows unauthenticated remote attackers to execute arbitrary system commands via manipulated API payloads in the visual node-based user interface. Organizations running self-hosted Flowise deployments must immediately apply the latest patches or disable exposed endpoints to prevent total compromise of their orchestration environments and connected LLM API keys.
