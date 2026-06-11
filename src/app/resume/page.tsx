@@ -152,9 +152,18 @@ export default async function Resume() {
             {siteMetadata.siteUrl.replace(/^https?:\/\//, '')}
           </a>
           {siteMetadata.profiles.map((url) => {
-            const label = url.includes('github.com')
+            // Match on the parsed hostname, not a substring of the whole URL:
+            // a substring check (e.g. url.includes('github.com')) can be fooled
+            // by hosts like evil.com/github.com or github.com.evil.com.
+            let host = '';
+            try {
+              host = new URL(url).hostname;
+            } catch {
+              host = '';
+            }
+            const label = host === 'github.com' || host.endsWith('.github.com')
               ? 'GitHub'
-              : url.includes('scholar.google')
+              : host === 'scholar.google.com'
                 ? 'Google Scholar'
                 : url;
             return (

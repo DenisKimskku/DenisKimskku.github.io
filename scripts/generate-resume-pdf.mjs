@@ -65,8 +65,11 @@ function startServer() {
         res.setHeader('Content-Type', mimeByExt[ext] || 'application/octet-stream');
         fs.createReadStream(file).pipe(res);
       } catch (err) {
+        // Log the detail server-side only; never leak the stack/error string
+        // (which can contain absolute file paths) into the HTTP response.
+        console.error('Error serving file:', err);
         res.statusCode = 500;
-        res.end(String(err));
+        res.end('Internal server error');
       }
     });
     server.on('error', reject);
