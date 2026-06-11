@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import fs from 'node:fs';
 import path from 'node:path';
-import { getAllArticles } from '@/lib/articles';
+import { getAllArticles, getTagEntries } from '@/lib/articles';
 import { siteMetadata } from '@/lib/siteMetadata';
 
 export const dynamic = 'force-static';
@@ -93,10 +93,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       };
     });
 
-  // Tag pages (/writing/tag/*) are intentionally noindex, so they are excluded
-  // here — submitting noindex URLs in the sitemap sends Google contradictory
-  // signals. Cross-domain tools (e.g. dz.deniskim1.com) also don't belong in
-  // this property's sitemap.
+  // Tag pages (/writing/tag/*) render index,follow with self-canonicals and
+  // unique landing copy, so they belong in the sitemap. Listing them stops
+  // Google treating these crawlable-but-orphaned hubs as "Crawled - currently
+  // not indexed". Cross-domain tools (e.g. dz.deniskim1.com) still don't belong
+  // in this property's sitemap.
+  const tagEntries = getTagEntries().map((tag) => ({
+    url: `${baseUrl}/writing/tag/${tag.slug}/`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.5,
+  }));
+
   return [
     ...staticPages.map((page) => ({
       url: `${baseUrl}${page.route}/`,
@@ -105,5 +113,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: page.priority,
     })),
     ...articleEntries,
+    ...tagEntries,
   ];
 }

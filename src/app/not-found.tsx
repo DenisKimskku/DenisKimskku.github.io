@@ -2,9 +2,20 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getAllArticles } from '@/lib/articles';
 
+// This component is written to out/404.html, which GitHub Pages serves with a
+// real HTTP 404 for every unmatched URL (deleted articles, renamed slugs, old
+// /news/* paths, orphaned tag URLs). The root layout sets a global robots
+// index,follow, so without this override the 404 page would inherit it and ship
+// a contradictory "index" signal next to Next's auto noindex. Forcing noindex
+// (incl. googleBot) gives Google the clean "drop this missing page" directive.
 export const metadata: Metadata = {
   title: 'Page Not Found',
   description: 'The page you are looking for does not exist.',
+  robots: {
+    index: false,
+    follow: true,
+    googleBot: { index: false, follow: true },
+  },
 };
 
 export default function NotFound() {
