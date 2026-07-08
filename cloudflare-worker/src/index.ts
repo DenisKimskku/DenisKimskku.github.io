@@ -100,7 +100,8 @@ const MIN_INTERVAL_MS = 8000; // burst protection: 8s between asks per IP
 
 const DEFAULT_DAILY_LIMIT = 5;
 const DEFAULT_GLOBAL_DAILY_LIMIT = 150;
-const DEFAULT_MODEL = 'meta/llama-3.3-70b-instruct';
+// 8b is fast and reliable for this account; 70b times out/4xxs upstream here.
+const DEFAULT_MODEL = 'meta/llama-3.1-8b-instruct';
 
 const UPSTREAM_URL = 'https://integrate.api.nvidia.com/v1/chat/completions';
 const UPSTREAM_TIMEOUT_MS = 60_000;
