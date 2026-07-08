@@ -11,6 +11,7 @@ import rehypeHighlight from 'rehype-highlight';
 import rehypeKatex from 'rehype-katex';
 import rehypeStringify from 'rehype-stringify';
 import { visit } from 'unist-util-visit';
+import sharp from 'sharp';
 import type { Root, Element } from 'hast';
 import {
   extractDescriptionFromContent,
@@ -33,13 +34,46 @@ export interface Article extends ArticleMetadata {
   wordCount: number;
 }
 
+// Cache intrinsic image dimensions across articles (keyed by src)
+const imageDimensionsCache = new Map<string, { width: number; height: number } | null>();
+
+async function getImageDimensions(src: string): Promise<{ width: number; height: number } | null> {
+  const cached = imageDimensionsCache.get(src);
+  if (cached !== undefined) {
+    return cached;
+  }
+  let dims: { width: number; height: number } | null = null;
+  try {
+    const fullPath = path.join(process.cwd(), 'public', src);
+    const metadata = await sharp(fullPath).metadata();
+    if (metadata.width && metadata.height) {
+      dims = { width: metadata.width, height: metadata.height };
+    }
+  } catch {
+    // Never fail the build over a missing/unreadable image — just skip dimensions
+    dims = null;
+  }
+  imageDimensionsCache.set(src, dims);
+  return dims;
+}
+
 function rehypeLazyImages() {
-  return (tree: Root) => {
+  return async (tree: Root) => {
+    const images: Element[] = [];
+    let firstImageSeen = false;
     visit(tree, 'element', (node: Element, index: number | undefined, parent: Element | Root | undefined) => {
       if (node.tagName === 'img') {
         node.properties = node.properties || {};
-        node.properties.loading = 'lazy';
+        if (firstImageSeen) {
+          node.properties.loading = 'lazy';
+        } else {
+          // Treat the first image as the hero/LCP candidate
+          firstImageSeen = true;
+          node.properties.loading = 'eager';
+          node.properties.fetchPriority = 'high';
+        }
         node.properties.decoding = 'async';
+        images.push(node);
 
         const src = String(node.properties.src || '');
         if (src.endsWith('.png') && parent && typeof index === 'number') {
@@ -62,6 +96,18 @@ function rehypeLazyImages() {
         }
       }
     });
+
+    // Set intrinsic width/height so the browser reserves space (prevents CLS)
+    for (const node of images) {
+      const src = String(node.properties?.src || '');
+      if (src.startsWith('/')) {
+        const dims = await getImageDimensions(src);
+        if (dims && node.properties) {
+          node.properties.width = dims.width;
+          node.properties.height = dims.height;
+        }
+      }
+    }
   };
 }
 

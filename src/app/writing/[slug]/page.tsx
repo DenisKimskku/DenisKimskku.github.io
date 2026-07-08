@@ -8,7 +8,7 @@ import { getArticleBySlug, getAllArticleSlugs, calculateReadingTime, generateTOC
 import { getRelatedArticles, getAdjacentArticles } from '@/lib/articles';
 import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
-import Breadcrumb from '@/components/Breadcrumb';
+import AskAI from '@/components/AskAI';
 import CopyLinkButton from '@/components/CopyLinkButton';
 import CodeBlockEnhancer from '@/components/CodeBlockEnhancer';
 import ReadingProgress from '@/components/ReadingProgress';
@@ -89,12 +89,20 @@ export default async function ArticlePage({ params }: PageProps) {
   const articleUrl = `${siteMetadata.siteUrl}/writing/${slug}/`;
   const showUpdated = article.updatedAt && article.updatedAt !== article.date;
 
+  // Same OG-card resolution as generateMetadata; JSON-LD requires absolute URLs.
+  const hasOgImage = fs.existsSync(path.join(process.cwd(), 'public', 'og', `${slug}.png`));
+  const jsonLdImage = hasOgImage
+    ? `${siteMetadata.siteUrl}/og/${slug}.png`
+    : `${siteMetadata.siteUrl}${siteMetadata.ogImage.url}`;
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: article.title,
     description: article.description,
+    image: [jsonLdImage],
     datePublished: article.date,
+    dateModified: article.updatedAt ?? article.date,
     url: `${siteMetadata.siteUrl}/writing/${slug}/`,
     author: [{
       '@type': 'Person',
@@ -103,22 +111,46 @@ export default async function ArticlePage({ params }: PageProps) {
     }],
   };
 
-  const breadcrumbItems = [
+  // BreadcrumbList structured data (previously emitted by the Breadcrumb
+  // component, whose visible UI is replaced by the back link below).
+  const breadcrumbItems: { name: string; href?: string }[] = [
     { name: 'Home', href: '/' },
     { name: 'Writing', href: '/writing/' },
     { name: article.title },
   ];
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbItems.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.href ? `${siteMetadata.siteUrl}${item.href}` : undefined,
+    })),
+  };
+
   return (
-    <div className="mx-auto px-6 max-w-[720px] lg:max-w-[960px] py-16 md:py-24">
+    <div className="mx-auto px-6 max-[560px]:px-5 max-w-[720px] lg:max-w-[960px] py-16 md:py-24">
       <ReadingProgress />
       <StructuredData data={jsonLd} />
-      <Breadcrumb items={breadcrumbItems} />
+      <StructuredData data={breadcrumbJsonLd} />
+
+      {/* Back link */}
+      <Link
+        href="/writing/"
+        className="inline-flex items-center gap-1.5 mb-8 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+      >
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Writing
+      </Link>
 
       {/* Article Header */}
       <header className="mb-12">
         {/* Meta Info */}
-        <div className="flex flex-wrap items-center gap-2 mb-6 text-sm text-[var(--color-text-muted)]">
+        <div className="flex flex-wrap items-center gap-2 mb-4 text-[13px] text-[var(--color-text-muted)] tabular-nums">
           <time dateTime={article.date}>{article.date}</time>
           {showUpdated && (
             <>
@@ -133,7 +165,7 @@ export default async function ArticlePage({ params }: PageProps) {
         </div>
 
         {/* Title */}
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6 text-[var(--color-text)] font-serif leading-tight">
+        <h1 className="font-serif text-[34px] font-semibold tracking-[-0.03em] leading-[1.25] mb-10 text-[var(--color-text)]">
           {article.title}
         </h1>
 
@@ -185,6 +217,7 @@ export default async function ArticlePage({ params }: PageProps) {
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
           <CodeBlockEnhancer />
+          <AskAI />
         </div>
 
         {/* Desktop Sticky TOC */}

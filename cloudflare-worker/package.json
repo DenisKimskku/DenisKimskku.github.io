@@ -1,0 +1,16 @@
+{
+  "name": "deniskim1-ask-worker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cloudflare Worker proxying the 'Ask AI about this selection' feature for deniskim1.com (keeps the NVIDIA API key server-side)",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260706.1",
+    "typescript": "^5.8.0",
+    "wrangler": "^4.0.0"
+  }
+}

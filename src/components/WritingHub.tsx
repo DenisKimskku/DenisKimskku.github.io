@@ -115,7 +115,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
     articles.forEach(article => {
       article.tags.forEach(tag => tags.add(tag));
     });
-    return Array.from(tags).sort();
+    return Array.from(tags).sort((a, b) => a.localeCompare(b));
   }, [articles]);
 
   // Filter and search articles
@@ -289,7 +289,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
                 onClick={() => setShowBookmarked(!showBookmarked)}
                 aria-label="Filter by bookmarked"
                 aria-pressed={showBookmarked}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all inline-flex items-center gap-1 ${
+                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium transition-all inline-flex items-center gap-1 ${
                   showBookmarked
                     ? 'bg-[var(--color-accent)] text-white'
                     : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
@@ -307,7 +307,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
                   onClick={() => toggleTag(tag)}
                   aria-label={`Filter by ${tag}`}
                   aria-pressed={activeTags.has(tag)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                  className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                     activeTags.has(tag)
                       ? 'bg-[var(--color-accent)] text-white'
                       : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
@@ -347,53 +347,42 @@ export default function WritingHub({ articles }: WritingHubProps) {
               key={article.slug}
               className="group"
             >
-                <div className="flex items-start gap-2 py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors">
+                <div className="grid grid-cols-[88px_1fr_auto] max-[560px]:grid-cols-[1fr_auto] gap-3 items-start py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors">
+                  <div className="pt-[3px] text-[13px] text-[var(--color-text-muted)] tabular-nums max-[560px]:col-span-full">
+                    {article.date}
+                  </div>
                   <Link
                     href={`/writing/${article.slug}/`}
                     data-article-link
-                    className="flex-1 min-w-0"
+                    className="min-w-0"
                   >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1 min-w-0">
-                        <h2 className="text-lg font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1.5">
-                          {highlightText(article.title, searchTermsArray)}
-                        </h2>
-                        <p className="text-sm text-[var(--color-text-secondary)] line-clamp-2 mb-3">
-                          {highlightText(article.description, searchTermsArray)}
-                        </p>
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span className="text-xs text-[var(--color-text-muted)]">{article.date}</span>
-                          <span className="text-[var(--color-border)]">·</span>
-                          <span className="text-xs text-[var(--color-text-muted)]">{article.type}</span>
-                          <span className="text-[var(--color-border)]">·</span>
-                          <span className="text-xs text-[var(--color-text-muted)]">{article.readingTime} min read</span>
-                          {article.tags.slice(0, 2).map((tag, tagIndex) => (
-                            <span
-                              key={tagIndex}
-                              className={`px-2 py-0.5 rounded text-xs ${
-                                activeTags.has(tag)
-                                  ? 'bg-[var(--color-accent)]/10 text-[var(--color-accent)]'
-                                  : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-muted)]'
-                              }`}
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                          {article.tags.length > 2 && (
-                            <span className="text-xs text-[var(--color-text-muted)]">
-                              +{article.tags.length - 2}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <svg
-                        className="w-4 h-4 text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors flex-shrink-0 mt-1.5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
+                    <h2 className="text-lg font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1.5">
+                      {highlightText(article.title, searchTermsArray)}
+                    </h2>
+                    <p className="text-sm text-[var(--color-text-secondary)] line-clamp-2 mb-3">
+                      {highlightText(article.description, searchTermsArray)}
+                    </p>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-xs text-[var(--color-text-muted)]">{article.type}</span>
+                      <span className="text-[var(--color-border)]">·</span>
+                      <span className="text-xs text-[var(--color-text-muted)]">{article.readingTime} min read</span>
+                      {article.tags.slice(0, 2).map((tag, tagIndex) => (
+                        <span
+                          key={tagIndex}
+                          className={`px-2 py-0.5 rounded text-xs ${
+                            activeTags.has(tag)
+                              ? 'bg-[var(--color-accent)]/10 text-[var(--color-accent)]'
+                              : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-muted)]'
+                          }`}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                      {article.tags.length > 2 && (
+                        <span className="text-xs text-[var(--color-text-muted)]">
+                          +{article.tags.length - 2}
+                        </span>
+                      )}
                     </div>
                   </Link>
                   <BookmarkButton slug={article.slug} onToggle={handleBookmarkToggle} />

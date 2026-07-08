@@ -71,7 +71,7 @@ export default async function Writing() {
   };
 
   return (
-    <div className="container-custom py-16 md:py-24">
+    <div className="container-custom py-24 max-[560px]:py-16 max-[560px]:px-5">
       <StructuredData data={jsonLd} />
       <header className="mb-12">
         <h1 className="text-3xl md:text-4xl font-semibold mb-4 text-[var(--color-text)] font-serif">
@@ -92,7 +92,7 @@ export default async function Writing() {
               <Link
                 key={tag.slug}
                 href={`/writing/tag/${tag.slug}/`}
-                className="px-3 py-1.5 rounded-full text-xs border border-[var(--color-border)] bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
+                className="whitespace-nowrap px-3 py-1.5 rounded-full text-xs border border-[var(--color-border)] bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
               >
                 {tag.name} ({tag.count})
               </Link>
@@ -102,6 +102,15 @@ export default async function Writing() {
       )}
 
       <WritingHub articles={articles} />
+
+      <p className="mt-12">
+        <Link
+          href="/writing/archive/"
+          className="text-[var(--color-accent)] hover:underline decoration-[var(--color-accent)]/30 underline-offset-2"
+        >
+          View the complete archive →
+        </Link>
+      </p>
     </div>
   );
 }

@@ -27,9 +27,14 @@ const articles = JSON.parse(fs.readFileSync(articlesIndexPath, 'utf8'))
   .filter((article) => article.slug && article.title && article.date)
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-const latestPubDate = articles.length > 0 ? toRfc822(articles[0].date) : new Date().toUTCString();
+// Keep the main feed aligned with the sitemap: noindexed types stay out of both
+// (matches NOINDEX_TYPES in src/app/sitemap.ts).
+const NOINDEX_TYPES = ['Paper Review'];
+const feedArticles = articles.filter((article) => !NOINDEX_TYPES.includes(article.type));
 
-const itemXml = articles.map((article) => {
+const latestPubDate = feedArticles.length > 0 ? toRfc822(feedArticles[0].date) : new Date().toUTCString();
+
+const itemXml = feedArticles.map((article) => {
   const articleUrl = `${siteUrl}/writing/${article.slug}/`;
   const categories = (article.tags || [])
     .map((tag) => `<category>${escapeXml(tag)}</category>`)
@@ -86,7 +91,7 @@ ${categories}
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
 <title>AI Security News - deniskim1.com</title>
-<link>${siteUrl}/news</link>
+<link>${siteUrl}/news/</link>
 <description>Daily AI security intelligence — automated news digests, paper reviews, and emerging threat analysis.</description>
 <language>en-US</language>
 <lastBuildDate>${newsLatestPubDate}</lastBuildDate>

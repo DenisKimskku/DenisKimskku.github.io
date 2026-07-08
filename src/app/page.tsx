@@ -4,7 +4,6 @@ import StructuredData from '@/components/StructuredData';
 import { siteMetadata } from '@/lib/siteMetadata';
 
 export const metadata: Metadata = {
-  title: 'About',
   description: siteMetadata.description,
   alternates: {
     canonical: '/',
@@ -51,17 +50,19 @@ export default function Home() {
   };
 
   return (
-    <div className="container-custom py-16 md:py-24">
+    <div className="container-custom py-24 max-[560px]:py-16 max-[560px]:px-5">
       <StructuredData data={jsonLd} />
       <section id="about">
-        <h1 className="text-3xl md:text-4xl font-semibold mb-10 text-[var(--color-text)] font-serif">
-          About
-        </h1>
-        <div className="space-y-6 text-[var(--color-text)] leading-relaxed">
+        <h1 className="sr-only">Minseok (Denis) Kim</h1>
+        <p className="font-serif text-[26px] font-medium tracking-[-0.025em] leading-[1.45] text-[var(--color-text)] max-w-[620px] mb-[28px]">
+          I am a researcher bridging computer security and machine learning — enhancing the
+          safety, security, and alignment of advanced AI systems.
+        </p>
+        <div aria-hidden="true" className="w-10 h-px bg-[var(--color-text)] mb-[28px]" />
+        <div className="space-y-6 text-[var(--color-text)] leading-[1.7]">
           <p>
-            I am a researcher bridging computer security and machine learning. My work focuses on
-            enhancing the safety, security, and alignment of advanced AI systems. I develop defenses
-            against adversarial attacks and apply large language models to binary analysis and reverse engineering.
+            I develop defenses against adversarial attacks and apply large language models to
+            binary analysis and reverse engineering.
           </p>
           <p>
             I am a Ph.D. student at Sungkyunkwan University, advised by{' '}

@@ -29,6 +29,11 @@ yarn-error.log*
 .env*.local
 .env
 
+# Wrangler local secrets and state (NVIDIA key lives in .dev.vars locally — never commit)
+**/.dev.vars
+cloudflare-worker/node_modules/
+cloudflare-worker/.wrangler/
+
 # Vercel
 .vercel
 

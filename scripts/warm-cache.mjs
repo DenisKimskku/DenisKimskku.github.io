@@ -193,6 +193,12 @@ function isWarmableAsset(pathname) {
     return true;
   }
 
+  // PDFs (papers, lab-meeting decks, resume) are user-facing downloads that were
+  // previously never warmed, so first hits always paid the cold-origin penalty.
+  if (pathname.endsWith('.pdf')) {
+    return true;
+  }
+
   return /^(\/icon\.svg|\/favicon\.ico|\/apple-touch-icon(?:-precomposed)?\.png)$/.test(pathname);
 }
 
@@ -269,6 +275,10 @@ function buildStaticAssetTargets() {
 
 function buildPurgeTargets(pageUrls) {
   const targets = new Set(buildSiteDocumentTargets());
+
+  // resume.pdf is regenerated on every build; other PDFs are immutable uploads
+  // and must NOT be purged (purging them would recreate the cold-PDF problem).
+  targets.add(new URL('/resume.pdf', baseUrl).toString());
 
   for (const pageUrl of pageUrls) {
     targets.add(pageUrl);
@@ -349,23 +359,43 @@ function loadLocalPageUrls() {
   return Array.from(pageUrls);
 }
 
-function getHtmlFiles(dir) {
+function getFilesByExtension(dir, extension) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   const files = [];
 
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      files.push(...getHtmlFiles(fullPath));
+      files.push(...getFilesByExtension(fullPath, extension));
       continue;
     }
 
-    if (entry.isFile() && fullPath.endsWith('.html')) {
+    if (entry.isFile() && fullPath.endsWith(extension)) {
       files.push(fullPath);
     }
   }
 
   return files;
+}
+
+function getHtmlFiles(dir) {
+  return getFilesByExtension(dir, '.html');
+}
+
+function buildPublicPdfTargets() {
+  const publicDir = path.join(process.cwd(), 'public');
+  if (process.env.CACHE_WARM_PDFS === '0' || !fs.existsSync(publicDir)) {
+    return [];
+  }
+
+  return getFilesByExtension(publicDir, '.pdf').map((filePath) => {
+    const route = `/${path
+      .relative(publicDir, filePath)
+      .split(path.sep)
+      .map(encodeURIComponent)
+      .join('/')}`;
+    return new URL(route, baseUrl).toString();
+  });
 }
 
 function buildOutAssetTargets() {
@@ -422,16 +452,29 @@ async function loadPageUrls() {
   };
 }
 
-async function warmOnce(pageUrls) {
+async function warmOnce(pageUrls, { collectLiveAssets = false, warmPdfs = false } = {}) {
   const assetUrls = new Set([...buildStaticAssetTargets(), ...buildOutAssetTargets()]);
   const rscUrls = new Set();
   const siteDocumentUrls = new Set(buildSiteDocumentTargets());
 
+  if (warmPdfs) {
+    for (const pdfUrl of buildPublicPdfTargets()) {
+      assetUrls.add(pdfUrl);
+    }
+  }
+
   await runWithConcurrency(pageUrls, async (pageUrl) => {
     try {
-      const warmed = await warmUrl(pageUrl);
-      if (warmed) {
-        log(`[page] warmed ${pageUrl}`);
+      // When out/ is unavailable (CI keep-warm and deploy jobs run without a build),
+      // read the live HTML we are already downloading and mine it for /_next assets —
+      // otherwise those chunks are never warmed and first paint stays slow.
+      const response = await requestWithRetry(pageUrl, collectLiveAssets ? 'text' : 'none');
+      log(`[page] warmed (${response.statusCode}) ${pageUrl}`);
+
+      if (collectLiveAssets && response.statusCode < 400 && response.body) {
+        collectAttributeAssets(response.body, 'href', pageUrl, assetUrls);
+        collectAttributeAssets(response.body, 'src', pageUrl, assetUrls);
+        collectSrcsetAssets(response.body, pageUrl, assetUrls);
       }
 
       for (const rscUrl of buildRscTargets(pageUrl)) {
@@ -462,9 +505,16 @@ async function main() {
 
   log(`Loaded ${pageUrls.length} URLs from ${sitemapUrl}`);
 
+  const hasLocalBuild = fs.existsSync(outDir);
+
   for (let pass = 1; pass <= PASS_COUNT; pass += 1) {
     log(`Starting warm pass ${pass}/${PASS_COUNT}`);
-    await warmOnce(pageUrls);
+    // PDFs only need one pass to populate the edge; live-HTML asset mining only
+    // matters when there is no local out/ to scan.
+    await warmOnce(pageUrls, {
+      collectLiveAssets: pass === 1 && !hasLocalBuild,
+      warmPdfs: pass === 1,
+    });
 
     if (pass < PASS_COUNT && PASS_DELAY_MS > 0) {
       log(`Waiting ${PASS_DELAY_MS}ms before next pass`);

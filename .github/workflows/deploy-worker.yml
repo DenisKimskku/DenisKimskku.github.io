@@ -1,0 +1,37 @@
+name: Deploy Cloudflare Worker (ask-ai proxy)
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "cloudflare-worker/**"
+      - ".github/workflows/deploy-worker.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "deploy-worker"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Deploys the Worker and pushes NVIDIA_API_KEY as a Worker secret.
+      # The key is passed only via the action's `secrets` input — it is
+      # never echoed in any run step.
+      - name: Deploy Worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          workingDirectory: cloudflare-worker
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          secrets: |
+            NVIDIA_API_KEY
+        env:
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}

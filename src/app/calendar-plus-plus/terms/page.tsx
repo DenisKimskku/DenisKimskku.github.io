@@ -1,8 +1,18 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
+import { siteMetadata } from '@/lib/siteMetadata'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Terms of Service - calendar++',
   description: 'Terms of Service for calendar++ macOS application',
+  alternates: {
+    canonical: '/calendar-plus-plus/terms/',
+  },
+  openGraph: {
+    url: `${siteMetadata.siteUrl}/calendar-plus-plus/terms/`,
+    title: 'Terms of Service - calendar++',
+    description: 'Terms of Service for calendar++ macOS application',
+  },
 }
 
 export default function TermsOfService() {

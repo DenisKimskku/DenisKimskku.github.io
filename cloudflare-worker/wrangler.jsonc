@@ -1,0 +1,44 @@
+// Wrangler configuration for the "Ask AI about this selection" proxy Worker.
+// Docs: https://developers.cloudflare.com/workers/wrangler/configuration/
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "deniskim1-ask",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-06-01",
+
+  // The routed custom domain is the ONLY entry point — never expose the
+  // *.workers.dev URL (it would bypass Cloudflare zone-level protections
+  // and make the origin allowlist the single line of defense).
+  "workers_dev": false,
+
+  // Same-origin routes on the already-Cloudflare-proxied zone, so the
+  // static site can call /api/ask* without CORS.
+  "routes": [
+    { "pattern": "deniskim1.com/api/ask*", "zone_name": "deniskim1.com" },
+    { "pattern": "www.deniskim1.com/api/ask*", "zone_name": "deniskim1.com" }
+  ],
+
+  // Durable Object that enforces per-IP and global daily quotas.
+  "durable_objects": {
+    "bindings": [
+      { "name": "RATE_LIMITER", "class_name": "RateLimiter" }
+    ]
+  },
+
+  // SQLite-backed DO storage ("new_sqlite_classes") — required for Durable
+  // Objects on the Workers FREE plan.
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["RateLimiter"] }
+  ],
+
+  // Non-secret configuration. NVIDIA_API_KEY is a SECRET and must be set
+  // with `wrangler secret put NVIDIA_API_KEY` (or the CI workflow) — never
+  // put it here or in any committed file.
+  "vars": {
+    "NVIDIA_MODEL": "meta/llama-3.3-70b-instruct",
+    "DAILY_LIMIT": "5",
+    "GLOBAL_DAILY_LIMIT": "150",
+    // '1' enables the http://localhost:3000 origin for local dev only.
+    "DEV_MODE": "0"
+  }
+}

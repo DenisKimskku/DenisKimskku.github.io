@@ -24,7 +24,9 @@
   "license": "MIT",
   "overrides": {
     "minimatch": "^10.2.1",
-    "postcss": "^8.5.15"
+    "postcss": "^8.5.15",
+    "ws": "^8.21.0",
+    "@babel/core": "^7.29.6"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

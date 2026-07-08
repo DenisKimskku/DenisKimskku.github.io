@@ -244,6 +244,13 @@
     @apply font-semibold text-[var(--color-text)];
   }
 
+  /* KaTeX display math is nowrap; html/body clip overflow-x, so wide
+     equations must scroll inside their own container at narrow widths. */
+  .article-content .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
   /* Table of Contents */
   .toc {
     @apply bg-[var(--color-bg-secondary)] rounded-lg p-6 my-8;

@@ -84,7 +84,7 @@ export default function Code() {
   };
 
   return (
-    <div className="container-custom py-16 md:py-24">
+    <div className="container-custom py-16 md:py-24 max-[560px]:px-5">
       <StructuredData data={jsonLd} />
       <header className="mb-12">
         <h1 className="text-3xl md:text-4xl font-semibold mb-4 text-[var(--color-text)] font-serif">
@@ -106,10 +106,17 @@ export default function Code() {
       <div className="space-y-4">
         {/* Featured Project */}
         <article className="group py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex-1 min-w-0">
+          <div className="grid grid-cols-[72px_1fr_16px] gap-4 max-[560px]:grid-cols-[1fr_16px]">
+            <div className="flex items-start gap-1.5 pt-[5px] text-xs text-[var(--color-text-muted)] max-[560px]:col-span-full">
+              <span className="w-2 h-2 rounded-full bg-[#F05138] mt-1 flex-shrink-0"></span>
+              <span>{featured.language}</span>
+            </div>
+            <div className="min-w-0">
               <h2 className="text-lg font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1.5">
-                <Link href={featured.demoUrl}>
+                <Link
+                  href={featured.demoUrl}
+                  className="text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors"
+                >
                   {featured.name}
                 </Link>
               </h2>
@@ -117,10 +124,6 @@ export default function Code() {
                 {featured.description}
               </p>
               <div className="flex items-center gap-3 text-xs text-[var(--color-text-muted)]">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-[#F05138]"></span>
-                  {featured.language}
-                </span>
                 <Link
                   href={featured.demoUrl}
                   className="text-[var(--color-accent)] hover:underline"
@@ -156,11 +159,20 @@ export default function Code() {
               key={project.name}
               className="group py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
             >
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1 min-w-0">
+              <div className="grid grid-cols-[72px_1fr_16px] gap-4 max-[560px]:grid-cols-[1fr_16px]">
+                <div className="flex items-start gap-1.5 pt-[5px] text-xs text-[var(--color-text-muted)] max-[560px]:col-span-full">
+                  {project.language && (
+                    <>
+                      <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] mt-1 flex-shrink-0"></span>
+                      <span>{project.language}</span>
+                    </>
+                  )}
+                </div>
+                <div className="min-w-0">
                   <h2 className="text-lg font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1.5">
                     <a
                       href={primaryUrl}
+                      className="text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -171,12 +183,6 @@ export default function Code() {
                     {project.description}
                   </p>
                   <div className="flex items-center gap-3 text-xs text-[var(--color-text-muted)]">
-                    {project.language && (
-                      <span className="flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-[var(--color-accent)]"></span>
-                        {project.language}
-                      </span>
-                    )}
                     {project.demoUrl && (
                       <a
                         href={project.demoUrl}

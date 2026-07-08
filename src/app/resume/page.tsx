@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import fs from 'fs';
 import path from 'path';
 import { siteMetadata } from '@/lib/siteMetadata';
+import { formatVenue } from '@/lib/venues';
 
 interface Paper {
   year: string;
@@ -100,14 +101,6 @@ const RESEARCH_INTERESTS = [
   'Defenses against data poisoning and prompt injection: lightweight post-retrieval filtering for RAG and runtime guards for tool-calling agents.',
 ];
 
-function formatVenue(conference: string): string {
-  // Tighten verbose journal names while preserving the academic feel.
-  return conference
-    .replace(/^Journal of The Korea Institute of Information Security & Cryptology\s*/i, 'J. Korea Inst. Inf. Security & Cryptology, ')
-    .replace(/^Review of KIISC \(정보보호학회지\)\s*/i, 'Review of KIISC, ')
-    .replace(/Vol\.?\s*(\d+)\.?\s*,?\s*No\.?\s*(\d+)/i, 'Vol. $1, No. $2');
-}
-
 function formatAuthors(authors: string[]): React.ReactNode {
   return authors.map((a, i) => (
     <span key={a}>
@@ -131,10 +124,13 @@ export default async function Resume() {
   });
 
   return (
-    <div className="resume-root cv-root mx-auto px-8 md:px-12 max-w-[760px] py-10 md:py-16">
+    <div className="resume-root cv-root mx-auto px-8 md:px-12 max-w-[760px] py-10 md:py-16 max-[560px]:px-5 max-[560px]:py-12">
       {/* ───────── Header ───────── */}
       <header className="cv-header">
-        <div className="cv-header-top">
+        {/* Below 560px the absolute top-right placement (globals.css .cv-header-top)
+            collides with the centered h1, so drop to a static right-aligned row
+            above the name. `!` is needed to out-cascade the non-layered CSS rule. */}
+        <div className="cv-header-top max-[560px]:!static max-[560px]:mb-4 max-[560px]:text-right">
           <a href="/resume.pdf" className="no-print cv-download" download>
             Download PDF ↓
           </a>
@@ -212,8 +208,8 @@ export default async function Resume() {
       <section className="cv-section">
         <h2 className="cv-section-heading">Publications</h2>
         {years.map((year) => (
-          <div key={year} className="cv-pub-year">
-            <h3 className="cv-pub-year-label">{year}</h3>
+          <div key={year} className="cv-pub-year grid grid-cols-[72px_1fr] gap-4 max-[560px]:grid-cols-1">
+            <h3 className="cv-pub-year-label pt-[3px] !mb-0">{year}</h3>
             <ol className="cv-pub-list">
               {groupedByYear[year].map((p, idx) => (
                 <li key={`${year}-${idx}`} className="cv-pub-item">

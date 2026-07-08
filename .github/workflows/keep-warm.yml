@@ -2,7 +2,9 @@ name: Keep Cloudflare cache warm
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Every 30 minutes
+    # Every 30 minutes, offset from :00/:30 — GitHub drops most jobs scheduled on
+    # round minutes under congestion (observed real cadence was 70–195 min).
+    - cron: '13,43 * * * *'
   workflow_dispatch:
 
 permissions:
