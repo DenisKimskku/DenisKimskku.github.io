@@ -22,13 +22,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Install the Worker's own pinned wrangler@4 + workers-types@5 from its
+      # lockfile. Without this, wrangler-action finds no local wrangler and
+      # auto-installs an old default (wrangler@3) that peer-conflicts with
+      # workers-types@5 and fails the deploy.
+      - name: Install worker deps
+        working-directory: cloudflare-worker
+        run: npm ci
+
       # Deploys the Worker and pushes NVIDIA_API_KEY as a Worker secret.
       # The key is passed only via the action's `secrets` input — it is
-      # never echoed in any run step.
+      # never echoed in any run step. wranglerVersion pins the action to the
+      # locally installed wrangler so it never reaches for a conflicting default.
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:
           workingDirectory: cloudflare-worker
+          wranglerVersion: "4"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           secrets: |
