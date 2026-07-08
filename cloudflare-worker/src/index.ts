@@ -536,6 +536,25 @@ async function handleAsk(request: Request, env: Env): Promise<Response> {
     ...(mode === 'question' ? ['', `Reader question (also untrusted): ${question}`] : []),
   ].join('\n');
 
+  const payload: Record<string, unknown> = {
+    model,
+    messages: [
+      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'user', content: userMessage },
+    ],
+    temperature: 0.3,
+    top_p: 0.9,
+    max_tokens: 600,
+    stream: true,
+  };
+  // Nemotron "super" models are hybrid reasoners that otherwise emit a long
+  // chain-of-thought first. This feature streams brief plain-text answers (the
+  // client drops reasoning_content), so disable thinking to keep the first
+  // token fast and the whole response inside the upstream timeout.
+  if (model.includes('nemotron')) {
+    payload.chat_template_kwargs = { enable_thinking: false };
+  }
+
   let upstream: Response;
   try {
     upstream = await fetch(UPSTREAM_URL, {
@@ -545,17 +564,7 @@ async function handleAsk(request: Request, env: Env): Promise<Response> {
         'Content-Type': 'application/json',
         Accept: 'text/event-stream',
       },
-      body: JSON.stringify({
-        model,
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: userMessage },
-        ],
-        temperature: 0.3,
-        top_p: 0.9,
-        max_tokens: 600,
-        stream: true,
-      }),
+      body: JSON.stringify(payload),
       signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
     });
   } catch {

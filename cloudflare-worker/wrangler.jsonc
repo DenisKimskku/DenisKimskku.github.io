@@ -34,11 +34,12 @@
   // Non-secret configuration. NVIDIA_API_KEY is a SECRET and must be set
   // with `wrangler secret put NVIDIA_API_KEY` (or the CI workflow) — never
   // put it here or in any committed file.
+  // Nemotron-super is a 120B hybrid reasoner; the worker sends
+  // enable_thinking:false so it answers directly (brief + within timeout).
+  // Fallbacks that also work for this account: meta/llama-3.1-8b-instruct
+  // (fast/small). meta/llama-3.3-70b-instruct times out upstream here — avoid.
   "vars": {
-    // 8b is fast (~250ms first byte) and reliable for this account. The 70b
-    // model (meta/llama-3.3-70b-instruct) times out / 4xxs upstream here, so
-    // it is NOT used; switch this back if 70b becomes reliable for the account.
-    "NVIDIA_MODEL": "meta/llama-3.1-8b-instruct",
+    "NVIDIA_MODEL": "nvidia/nemotron-3-super-120b-a12b",
     "DAILY_LIMIT": "5",
     "GLOBAL_DAILY_LIMIT": "150",
     // '1' enables the http://localhost:3000 origin for local dev only.
