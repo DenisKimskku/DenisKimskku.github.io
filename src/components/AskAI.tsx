@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback, useSyncExternalStore } from 'react';
+import type { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 
 const API_BASE = (process.env.NEXT_PUBLIC_ASK_API_BASE ?? '').replace(/\/+$/, '');
@@ -92,6 +93,142 @@ function writeCachedQuota(quota: Quota): void {
   } catch {
     // localStorage unavailable (private mode etc.) — non-fatal.
   }
+}
+
+/**
+ * Minimal, safe renderer for the markdown subset model answers emit:
+ * **bold**, *italic*, `code`, bullet/numbered lists, #-headings.
+ * Builds React nodes directly — no HTML injection. Tolerates the
+ * incomplete markdown that appears mid-stream (unclosed markers render
+ * literally until their closing token arrives).
+ */
+function renderInline(text: string, keyBase: string): ReactNode[] {
+  const nodes: ReactNode[] = [];
+  const emphasis = (seg: string, kb: string): ReactNode[] => {
+    const out: ReactNode[] = [];
+    seg.split(/(\*\*.+?\*\*)/g).forEach((b, i) => {
+      if (/^\*\*.+\*\*$/.test(b)) {
+        out.push(
+          <strong key={`${kb}-b${i}`} className="font-semibold text-[var(--color-text)]">
+            {b.slice(2, -2)}
+          </strong>
+        );
+      } else if (b) {
+        b.split(/(\*[^*\s][^*]*\*)/g).forEach((it, j) => {
+          if (/^\*[^*\s][^*]*\*$/.test(it)) {
+            out.push(<em key={`${kb}-i${i}-${j}`}>{it.slice(1, -1)}</em>);
+          } else if (it) {
+            out.push(it);
+          }
+        });
+      }
+    });
+    return out;
+  };
+  text.split(/(`[^`]+`)/g).forEach((seg, i) => {
+    if (/^`[^`]+`$/.test(seg)) {
+      nodes.push(
+        <code
+          key={`${keyBase}-c${i}`}
+          className="bg-[var(--color-bg-secondary)] px-1.5 py-0.5 rounded text-[0.9em] font-mono"
+        >
+          {seg.slice(1, -1)}
+        </code>
+      );
+    } else if (seg) {
+      nodes.push(...emphasis(seg, `${keyBase}-s${i}`));
+    }
+  });
+  return nodes;
+}
+
+interface AnswerBlock {
+  type: 'p' | 'heading' | 'ul' | 'ol';
+  children: ReactNode[];
+  items?: ReactNode[][];
+}
+
+function AnswerMarkdown({ text, cursor }: { text: string; cursor?: ReactNode }) {
+  const blocks: AnswerBlock[] = [];
+  let list: AnswerBlock | null = null;
+
+  text.split('\n').forEach((raw, idx) => {
+    const line = raw.trimEnd();
+    const key = `blk-${idx}`;
+    const bullet = /^\s*[-*\u2022]\s+(.*)$/.exec(line);
+    const numbered = /^\s*\d+[.)]\s+(.*)$/.exec(line);
+    const heading = /^#{1,4}\s+(.*)$/.exec(line);
+
+    if (bullet && !/^\*\s*\*/.test(line)) {
+      if (!list || list.type !== 'ul') {
+        list = { type: 'ul', children: [], items: [] };
+        blocks.push(list);
+      }
+      list.items!.push(renderInline(bullet[1], key));
+    } else if (numbered) {
+      if (!list || list.type !== 'ol') {
+        list = { type: 'ol', children: [], items: [] };
+        blocks.push(list);
+      }
+      list.items!.push(renderInline(numbered[1], key));
+    } else {
+      list = null;
+      if (heading) {
+        blocks.push({ type: 'heading', children: renderInline(heading[1], key) });
+      } else if (line.trim()) {
+        blocks.push({ type: 'p', children: renderInline(line.replace(/^>\s?/, ''), key) });
+      }
+    }
+  });
+
+  // Streaming caret rides the end of the last block instead of a new line.
+  if (cursor) {
+    const last = blocks[blocks.length - 1];
+    if (!last) {
+      blocks.push({ type: 'p', children: [cursor] });
+    } else if (last.type === 'ul' || last.type === 'ol') {
+      const lastItem = last.items![last.items!.length - 1];
+      if (lastItem) lastItem.push(cursor);
+      else last.items!.push([cursor]);
+    } else {
+      last.children.push(cursor);
+    }
+  }
+
+  return (
+    <>
+      {blocks.map((block, i) => {
+        const key = `ans-${i}`;
+        if (block.type === 'ul' || block.type === 'ol') {
+          const ListTag = block.type;
+          return (
+            <ListTag
+              key={key}
+              className={`mb-2.5 last:mb-0 pl-5 space-y-1 ${
+                block.type === 'ol' ? 'list-decimal' : 'list-disc'
+              }`}
+            >
+              {block.items!.map((item, j) => (
+                <li key={j}>{item}</li>
+              ))}
+            </ListTag>
+          );
+        }
+        if (block.type === 'heading') {
+          return (
+            <p key={key} className="mb-1.5 mt-2 first:mt-0 font-semibold text-[var(--color-text)]">
+              {block.children}
+            </p>
+          );
+        }
+        return (
+          <p key={key} className="mb-2.5 last:mb-0">
+            {block.children}
+          </p>
+        );
+      })}
+    </>
+  );
 }
 
 function SparkleIcon({ className }: { className?: string }) {
@@ -619,17 +756,22 @@ export default function AskAI() {
               {status === 'error' ? (
                 <p className="text-[13px] text-[var(--color-text-secondary)]">{errorMessage}</p>
               ) : (
-                <p className="whitespace-pre-wrap text-[15px] leading-[1.7] text-[var(--color-text)]">
-                  {answer}
-                  {busy && (
-                    <span
-                      aria-hidden="true"
-                      className={`inline-block w-[2px] h-[1em] align-text-bottom ml-0.5 bg-[var(--color-text-muted)] ${
-                        reducedMotion ? '' : 'animate-pulse'
-                      }`}
-                    />
-                  )}
-                </p>
+                <div className="text-[15px] leading-[1.7] text-[var(--color-text)]">
+                  <AnswerMarkdown
+                    text={answer}
+                    cursor={
+                      busy ? (
+                        <span
+                          key="caret"
+                          aria-hidden="true"
+                          className={`inline-block w-[2px] h-[1em] align-text-bottom ml-0.5 bg-[var(--color-text-muted)] ${
+                            reducedMotion ? '' : 'animate-pulse'
+                          }`}
+                        />
+                      ) : undefined
+                    }
+                  />
+                </div>
               )}
             </div>
           )}
