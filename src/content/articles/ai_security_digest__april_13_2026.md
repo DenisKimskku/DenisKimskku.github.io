@@ -64,7 +64,7 @@ Fortinet disclosed a critical SQL injection vulnerability, tracked as CVE-2023-4
 
 **[Week in review: Windows zero-day exploit leaked, Patch Tuesday forecast](https://news.google.com/rss/articles/CBMiswFBVV95cUxNS193TWVYRHhYQlVLOUUycDVBbzltNUlndTNZNXVoTENoUlA2OUZER1RhUUx5Y3YzbEVIVTZya243X2tHb3JNNERyWFhfTjRsTWdiWEZzWWtnelAtcm53R3Q4TzIwQmZuMU12WW9CaFNfXzc4ZExIbHI1X1pkYjBWRktVWXJ5MS1ScmRmbThwaDc3NnoyNTR5bDZEalNpS1hLcWJrVHpyYzNYOFVxQlJYVHhiNA?oc=5&hl=en-US&gl=US&ceid=US:en)**
 
-A critical local privilege escalation (LPE) zero-day exploit targeting the Windows Kernel Common Log File System (CLFS) driver, designated as CVE-2024-21338, has been publicly leaked ahead of Microsoft's Patch Tuesday. This exploit leverages an out-of-bounds write vulnerability within the `clfs.sys` driver, allowing an attacker with local user access to bypass Virtualization-Based Security (VBS) and execute arbitrary code in the context of the Windows kernel.
+A critical local privilege escalation (LPE) zero-day exploit targeting the Windows AppLocker kernel driver (appid.sys), designated as CVE-2024-21338, has been publicly leaked ahead of Microsoft's Patch Tuesday. This exploit leverages an exposed IOCTL with insufficient access control within the `appid.sys` driver, allowing an attacker with local user access to bypass Virtualization-Based Security (VBS) and execute arbitrary code in the context of the Windows kernel.
 
 ### **AI-Specific Threat Vectors**
 

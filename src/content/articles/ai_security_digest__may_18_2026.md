@@ -99,7 +99,7 @@ Threat actors are actively exploiting CVE-2026-42945, a critical memory corrupti
 Multiple advanced persistent threat (APT) groups have deployed an unpatched zero-day exploit in Cisco SD-WAN vEdge Routers (running firmware versions prior to 20.12.3) in tandem with privilege escalation exploits targeting on-premises Microsoft Exchange Server 2019 instances. These combined vulnerabilities allow attackers to establish initial network access, pivot laterally within enterprise subnets, and exfiltrate proprietary training corpora or API authorization tokens.
 
 ### **[Microsoft Confirms Active 0-Day Exploit](https://news.google.com/rss/articles/CBMiwgFBVV95cUxNWlFXWC1sSmtHdzBxcFloX3h6R3NYemZnNEtYZ0syTHNUdG9jU0xnUkRRZ2NFMVQtVDl2LUZwNmdUX05GX24wdDdDVXNJcUoyOFNTbkVhazBZLTdVM1h6M0ZWS2pQVHgxNEJiaHoxa2xhVy0zamk3eUtYNUtkLW5MYk9SMXBVYTFnYWsycnhMTm1GZ1FNVDhSd09fWUlHQTFjMHN0MzdJYzVpLXJ0RHAtMUhwdkJ3eEpjY1M4MEpzZ2E4QQ?oc=5&hl=en-US&gl=US&ceid=US:en)**
-Microsoft has confirmed active exploitation of CVE-2026-30129, a local privilege escalation zero-day vulnerability in the Windows kernel affecting Windows Server 2022. This exploit allows local authenticated attackers to bypass Virtualization-Based Security (VBS) boundaries, rendering host-level containerization sandboxes ineffective for isolated Python-based execution of untrusted AI agent skills.
+Microsoft has confirmed active exploitation of a local privilege escalation zero-day vulnerability in the Windows kernel affecting Windows Server 2022. This exploit allows local authenticated attackers to bypass Virtualization-Based Security (VBS) boundaries, rendering host-level containerization sandboxes ineffective for isolated Python-based execution of untrusted AI agent skills.
 
 ---
 

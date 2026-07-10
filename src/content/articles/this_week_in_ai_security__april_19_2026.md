@@ -79,7 +79,7 @@ The academic and clinical landscape this week centers on moving away from reacti
 
 ## Industry & News
 
-- **LangChain RAG Integration Vulnerability (CVE-2026-25184)**: LangChain released a critical patch resolving CVE-2026-25184, which allowed remote attackers to execute arbitrary code via recursive prompt injection in the `SQLDatabaseChain` module. This matters technically because it bypasses conventional text validation layers by exploiting trust assumptions in dynamic SQL query compilation, permitting unauthorized database schema modification.
+- **LangChain RAG Integration Vulnerability**: LangChain released a critical patch resolving a flaw that allowed remote attackers to execute arbitrary code via recursive prompt injection in the `SQLDatabaseChain` module. This matters technically because it bypasses conventional text validation layers by exploiting trust assumptions in dynamic SQL query compilation, permitting unauthorized database schema modification.
 
 - **Microsoft Azure AI Content Safety Bypass**: Security researchers uncovered a zero-day bypass in Microsoft Azure AI Content Safety (affecting model versions API 2026-03-01) that allowed users to bypass jailbreak detection using multi-language homoglyph obfuscation. Technically, this vulnerability exploits the tokenization mismatch between the primary English-centric classification model and foreign script characters, rendering localized system-prompt blocks ineffective.
 

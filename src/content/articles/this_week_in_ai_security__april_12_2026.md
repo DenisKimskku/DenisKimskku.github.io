@@ -70,8 +70,8 @@ Mathematical proofs are exposing core, un-patchable architectural limitations in
 
 ## Industry & News
 
-*   **Anyscale Ray Jobs API Vulnerability (CVE-2024-27351)**: Active exploitation campaigns are targeting unauthenticated Ray API endpoints to execute arbitrary remote code on distributed training clusters. Technically, this allows attackers to hijack active GPU nodes executing Llama-3 fine-tuning runs, leading to direct model weight exfiltration and unauthorized cluster resource allocation.
-*   **LangChain SQL Chain Remote Code Execution (CVE-2024-21512)**: A critical flaw in LangChain's SQL database execution utility allows attackers to bypass LLM-level prompt filtering via raw SQL string manipulation. This matters because it enables direct SQL injection attacks against underlying enterprise PostgreSQL backends without triggering standard transformer-level classification guardrails.
+*   **Anyscale Ray Jobs API Vulnerability (CVE-2023-48022)**: Active exploitation campaigns are targeting unauthenticated Ray API endpoints to execute arbitrary remote code on distributed training clusters. Technically, this allows attackers to hijack active GPU nodes executing Llama-3 fine-tuning runs, leading to direct model weight exfiltration and unauthorized cluster resource allocation.
+*   **LangChain SQL Chain Injection (CVE-2023-36189)**: A critical flaw in LangChain's SQL database execution utility allows attackers to bypass LLM-level prompt filtering via raw SQL string manipulation. This matters because it enables direct SQL injection attacks against underlying enterprise PostgreSQL backends without triggering standard transformer-level classification guardrails.
 
 ***
 

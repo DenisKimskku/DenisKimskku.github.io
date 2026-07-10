@@ -82,9 +82,9 @@ The convergence of artificial intelligence with hardware architectures, physics-
 
 ## Industry & News
 
-*   Anthropic released a critical patch for Claude 3.5 Sonnet to resolve CVE-2026-11204, which addresses a deserialization vulnerability within its tool-use parsing library. This flaw technically matters because malicious JSON payloads injected into tool responses allowed remote attackers to escape sandboxed Docker environments and execute code on host nodes.
+*   Anthropic released a critical patch for Claude 3.5 Sonnet to resolve a deserialization vulnerability within its tool-use parsing library. This flaw technically matters because malicious JSON payloads injected into tool responses allowed remote attackers to escape sandboxed Docker environments and execute code on host nodes.
 *   Databricks updated its catalog governance platform with a real-time retrieval-verification layer designed to counter indirect prompt injections targeting vector database systems. This platform-level control technically mitigates the threat of data poisoning by strictly isolating the context parsing pipeline from the LLM execution context.
-*   A critical vulnerability, CVE-2026-0941, was disclosed in LangChain v0.4.2 where recursive agentic planning loops can be trapped in an infinite execution state. This vulnerability allows remote attackers to trigger denial-of-service (DoS) states on cloud resources and exhaust enterprise API usage budgets.
+*   A critical vulnerability was disclosed in LangChain v0.4.2 where recursive agentic planning loops can be trapped in an infinite execution state. This vulnerability allows remote attackers to trigger denial-of-service (DoS) states on cloud resources and exhaust enterprise API usage budgets.
 
 ---
 

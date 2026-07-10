@@ -46,17 +46,17 @@ The table below outlines the core vectors, targets, and empirical performance me
 
 **[NIST Overhauls The National Vulnerability Database After CVEs Increased 263% between 2020 and 2025 - LinkedIn](https://news.google.com/rss/articles/CBMiiwFBVV95cUxOTHBVdEs2SUZYeUc5NW55b291VzljYzRJMnB4YnJlR2VxZ0pVeWlGeEhja1RGeUowOURPZzVGSlpxbUdqNzk0SVQxdGxTQUFOMkkwYlgxcTVGYVFMSUtrVC1WNVNOS0hlYkJxbFhwcG9UWU1wcUxfMHN6M0JGQklzV2FkaVJaWEp3RTFz?oc=5&hl=en-US&gl=US&ceid=US:en)**
 
-NIST has initiated a comprehensive structural overhaul of the National Vulnerability Database (NVD) in response to a 263% surge in CVE disclosures between 2020 and 2025. This backlog severely degrades the reliability of CVSS scoring pipelines, meaning enterprise CI/CD vulnerability scanners fail to flag critical automated exploits—such as memory corruption bugs like CVE-2024-3094—before they can be leveraged against production environments.
+NIST has initiated a comprehensive structural overhaul of the National Vulnerability Database (NVD) in response to a 263% surge in CVE disclosures between 2020 and 2025. This backlog severely degrades the reliability of CVSS scoring pipelines, meaning enterprise CI/CD vulnerability scanners fail to flag critical automated exploits—such as supply-chain compromises like the xz backdoor CVE-2024-3094—before they can be leveraged against production environments.
 
 ### Endpoint Security & The Trust Paradox
 
 **[Windows Defender Security Flaws Actively Exploited by Hackers - SQ Magazine](https://news.google.com/rss/articles/CBMidEFVX3lxTE1kSGVMVl9WVGg0bUNIYVBJTDlNTmdsLXZEYXhITXNNTnJaNDRaVURkVkxfNU44aUlXUERIYVRfS0h5amYxQjNESlB5dTd4aVg2aGFZc09HSHRiUHhqYjRuOGF3NHN5bUp4WjZfNFhKR0l3UU9H?oc=5&hl=en-US&gl=US&ceid=US:en)**
 
-Threat actors are actively exploiting severe security vulnerabilities in Microsoft Windows Defender (such as CVE-2023-24932) to bypass endpoint protective measures. This exploitation represents a critical "Defense-as-a-Vector" attack wherein adversaries leverage the security agent's high-privilege kernel access to bypass Endpoint Detection and Response (EDR) hooks, allowing unrestricted memory execution on host operating systems.
+Threat actors are actively exploiting severe security vulnerabilities in Microsoft Windows Defender to bypass endpoint protective measures. This exploitation represents a critical "Defense-as-a-Vector" attack wherein adversaries leverage the security agent's high-privilege kernel access to bypass Endpoint Detection and Response (EDR) hooks, allowing unrestricted memory execution on host operating systems.
 
 **[Week in review: Acrobat Reader flaw exploited, Claude Mythos offensive capabilities and limits - Help Net Security](https://news.google.com/rss/articles/CBMi0gFBVV95cUxOXzR2LVVrQUZuOFd4Y201N3VuY2dXSmd1dGpNS0VXSGpUMzB2Um9PZnZNTE4waEM3eWU0X2JlWi1zc0JzdEhyTS1pTXVGWG9SdDVCRkhBeGplejR2OFJEbGlCOWJXNDNjbW16bWdkWF83RUh3bjgtekFXVzR4QVdzUWZxdXktcmxaOGJNRW1BRzZ2ZmtCUmNxd3VrNlVDdndPRFlXVXFJX2pINHVZZDI1OXBQTGs2bGpYS3o5UjhSZzVoUlctQmxmWmNFcE83ZHI0NWc?oc=5&hl=en-US&gl=US&ceid=US:en)**
 
-Attackers are actively exploiting a critical remote code execution vulnerability (CVE-2023-26360) in Adobe Acrobat Reader alongside leveraging the advanced offensive capabilities of Anthropic's Claude Mythos model. This matters technically because Claude Mythos reduces the time required to weaponize heap-overflow vulnerabilities in legacy PDF parsers from weeks to minutes, allowing attackers to automatically synthesize stable, obfuscated shellcode that evades traditional static signature detection.
+Attackers are actively exploiting a critical remote code execution vulnerability (CVE-2023-26369) in Adobe Acrobat Reader alongside leveraging the advanced offensive capabilities of Anthropic's Claude Mythos model. This matters technically because Claude Mythos reduces the time required to weaponize heap-overflow vulnerabilities in legacy PDF parsers from weeks to minutes, allowing attackers to automatically synthesize stable, obfuscated shellcode that evades traditional static signature detection.
 
 ### Decentralization & The Future of Privacy-Preserving AI
 

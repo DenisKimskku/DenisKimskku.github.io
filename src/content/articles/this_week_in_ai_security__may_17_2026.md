@@ -98,7 +98,7 @@ Our analysis of this week’s 19 papers reveals shifting priorities in the resea
 
 ## Industry & News
 
-*   **LangChain Vulnerability (CVE-2026-38291):** LangChain versions prior to v0.3.4 contain a critical remote code execution vulnerability in the LangServe execution container. This flaw exploits insecure deserialization within the tool-calling schema validation layer, allowing unauthenticated attackers to execute arbitrary shell commands on backend containers hosting LLM agents.
+*   **LangChain Vulnerability:** LangChain versions prior to v0.3.4 contain a critical remote code execution vulnerability in the LangServe execution container. This flaw exploits insecure deserialization within the tool-calling schema validation layer, allowing unauthenticated attackers to execute arbitrary shell commands on backend containers hosting LLM agents.
 *   **OpenAI GPT-4o Context Updates:** OpenAI announced target patches for the `gpt-4o-2026-05-10` API model addressing a high-severity context-window contamination vulnerability. The update mitigates a flaw where specially formatted system-instruction override tokens embedded deep within retrieved documents could completely bypass system-prompt instructions in downstream agent tasks.
 *   **Hugging Face Spaces Data Leakage:** Hugging Face disclosed a critical isolation bypass incident in its Spaces execution environment running Gradio v5.1.0-alpha web interfaces. Attackers bypassed container boundaries to read environment variables, exposing highly sensitive AWS credentials and OpenAI API keys used by enterprise-level retrieval-augmented generation (RAG) instances.
 

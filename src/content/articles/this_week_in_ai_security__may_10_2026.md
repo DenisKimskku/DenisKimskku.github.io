@@ -100,8 +100,8 @@ Our knowledge base shows that **General AI Security** remains the largest single
 
 ## Industry & News
 
-*   **LangChain SQL Integration Arbitrary RCE (CVE-2026-11823)**: LangChain patched a critical remote code execution vulnerability in its experimental SQL database chain integration affecting versions prior to v0.3.52. This vulnerability allowed prompt-injected SQL commands to exploit insecure deserialization patterns and bypass Python 3.11 subprocess sandboxes entirely.
-*   **OpenAI Custom GPT-4o Tokenizer Deserialization Buffer Overflow (CVE-2026-30291)**: OpenAI deployed a critical patch for hosted Azure-OpenAI instances running GPT-4o to address a tokenizer crash vulnerability. Under this attack vector, maliciously structured base-64 mathematical representations trigger a heap-buffer overflow during parsing, causing a complete denial of service (DoS) in enterprise inference pipelines.
+*   **LangChain SQL Integration Arbitrary RCE**: LangChain patched a critical remote code execution vulnerability in its experimental SQL database chain integration affecting versions prior to v0.3.52. This vulnerability allowed prompt-injected SQL commands to exploit insecure deserialization patterns and bypass Python 3.11 subprocess sandboxes entirely.
+*   **OpenAI Custom GPT-4o Tokenizer Deserialization Buffer Overflow**: OpenAI deployed a critical patch for hosted Azure-OpenAI instances running GPT-4o to address a tokenizer crash vulnerability. Under this attack vector, maliciously structured base-64 mathematical representations trigger a heap-buffer overflow during parsing, causing a complete denial of service (DoS) in enterprise inference pipelines.
 *   **Pinecone Vector Database Metadata-Based Namespace Infiltration**: Pinecone issued an upgrade addressing a metadata filtering vulnerability that allowed cross-tenant namespace leakage during parallel index queries. By exploiting subtle timing differences in query vector routing, a concurrent tenant could infer private indexes, rendering standard application-level access controls ineffective.
 
 ---
