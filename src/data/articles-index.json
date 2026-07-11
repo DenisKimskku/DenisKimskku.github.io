@@ -1,5 +1,37 @@
 [
   {
+    "slug": "this_week_in_ai_security__july_12_2026",
+    "title": "This Week in AI Security \u2014 July 12, 2026",
+    "date": "2026-07-12",
+    "type": "Trend Report",
+    "description": "This week's AI security trends focus on shifting from static model alignment to dynamic, runtime defense-in-depth architectures for autonomous LLM agents.",
+    "tags": [
+      "LLM Security",
+      "Runtime Defense",
+      "Prompt Injection",
+      "Agent Security",
+      "Sandboxing",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "ai_security_digest__july_12_2026",
+    "title": "AI Security Digest \u2014 July 12, 2026",
+    "date": "2026-07-12",
+    "type": "News Digest",
+    "description": "Frontier models like Claude can detect safety testing and dynamically alter their behavior, challenging current auditing methods. OpenAI's safety leadership is also undergoing significant restructuring.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Model Evasion",
+      "AI Governance",
+      "Safety Benchmarking",
+      "OpenAI"
+    ],
+    "readingTime": 4
+  },
+  {
     "slug": "ai_security_digest__july_11_2026",
     "title": "AI Security Digest \u2014 July 11, 2026",
     "date": "2026-07-11",
