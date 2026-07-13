@@ -1,5 +1,91 @@
 [
   {
+    "slug": "ai_security_digest__july_14_2026",
+    "title": "AI Security Digest \u2014 July 14, 2026",
+    "date": "2026-07-14",
+    "type": "News Digest",
+    "description": "AI Security Digest \u2014 July 14, 2026",
+    "tags": [],
+    "readingTime": 3
+  },
+  {
+    "slug": "openlongtail_generative_scaling_of_longtail_driving_data",
+    "title": "OpenLongTail: Generative Scaling of Long-Tail Driving Data",
+    "date": "2026-07-14",
+    "type": "Paper Review",
+    "description": "OpenLongTail is an open-source generative data engine that converts unposed, monocular driving videos into pose-grounded, consistent multi-view training assets under a target camera rig",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "optimizing_against_safety_representations_activationguided_a",
+    "title": "Optimizing Against Safety Representations: Activation-Guided Adversarial Suffixes and the Geometry of Refusal",
+    "date": "2026-07-14",
+    "type": "Paper Review",
+    "description": "Activation-Guided GCG optimizes adversarial suffixes by minimizing projection onto a model's internal, low-dimensional refusal direction, paired with Soft-GCG (SGCG) which replaces discrete search wit",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "when_routes_run_out_adversarial_colearning_and_explainable_r",
+    "title": "When Routes Run Out: Adversarial Co-Learning and Explainable Robustness in Quantum Repeater Networks",
+    "date": "2026-07-14",
+    "type": "Paper Review",
+    "description": "An adversarial co-learning framework utilizing the Exp3 bandit algorithm to dynamically resolve route selection (Alice) and attack placement (Eve) over quantum repeater networks without prior topologi",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "federated_learning_architecture_data_privacy_and_system_secu",
+    "title": "Federated Learning Architecture: Data Privacy and System Security Approaches",
+    "date": "2026-07-14",
+    "type": "Paper Review",
+    "description": "A dual-layer defense framework that integrates CKKS Homomorphic Encryption (HE) with Differentially Private Stochastic Gradient Descent (DP-SGD) to protect both transit-level gradients and end-model o",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "triggering_stealthy_feature_map_backdoors_via_physical_fault",
+    "title": "Triggering Stealthy Feature Map Backdoors via Physical Fault Injection in Embedded Neural Networks",
+    "date": "2026-07-14",
+    "type": "Paper Review",
+    "description": "LATCH (Latent Activation Trigger via Cross-level Faults in Hardware) is a cross-layer backdoor attack that uses physical hardware fault injection (EMFI or voltage glitching) at runtime to dynamically ",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "statistically_undetectable_backdoors_in_deep_neural_networks",
+    "title": "Statistically Undetectable Backdoors in Deep Neural Networks",
+    "date": "2026-07-14",
+    "type": "Paper Review",
+    "description": "An adversarial model trainer can inject statistically undetectable, white-box backdoors into Deep Neural Networks (DNNs) with a compressing Gaussian first layer by planting a secret vector $\\mathbf{z}",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "vexaiot_autonomous_iot_vulnerability_exploitation_using_ai_a",
+    "title": "VEXAIoT: Autonomous IoT Vulnerability EXploitation using AI Agents",
+    "date": "2026-07-14",
+    "type": "Paper Review",
+    "description": "VEXAIoT is an autonomous multi-agent AI framework that coordinates a vulnerability detection agent and an attack execution agent to scan, plan, and exploit IoT-specific vulnerabilities using LLMs and ",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
     "slug": "ai_security_digest__july_13_2026",
     "title": "AI Security Digest \u2014 July 13, 2026",
     "date": "2026-07-13",
