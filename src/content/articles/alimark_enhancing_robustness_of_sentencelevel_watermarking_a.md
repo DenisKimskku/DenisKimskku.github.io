@@ -2,6 +2,8 @@
 title: "AliMark: Enhancing Robustness of Sentence-Level Watermarking Against Text Paraphrasing"
 date: "2026-05-30"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.29434"
+paperAuthors: "Yuexin Li, Wenjie Qu, Linyu Wu, et al."
 description: "AliMark is a sentence-level LLM watermarking framework that reformulates watermarking as a bit sequence encoding and global alignment problem, utilizing a proactive sentence 'Re-Structurer' and adapti"
 tags: ["AI Security"]
 readingTime: 10

@@ -85,17 +85,6 @@ As we build complex agentic workflows, we construct distributed software systems
 | **Black-Box RAG Membership Inference** | LlamaIndex, Pinecone | Dependency-Aware Privacy Filters | Limits sensitive data leakage by 81.3% |
 | **MoE Router Exploitation** | Mixtral 8x22B, DeepSeek-V3 | Cryptographic Registry Provenance / SkCC | Restores expert routing reliability to 100% |
 
-### By the Numbers
-
-An analysis of this week's 28 high-impact papers demonstrates a clear trend toward practical, defensive infrastructure.
-
-*   **Systemic/Defensive Infra**: 9 papers (33%)
-*   **Adversarial/Jailbreaking**: 7 papers (25%)
-*   **Agentic/Memory Security**: 6 papers (21%)
-*   **RAG/Data Privacy**: 6 papers (21%)
-
-Our knowledge base shows that **General AI Security** remains the largest single category with 7,852 total papers (averaging 41 citations). However, the specialized subdomain of **RAG Security** (2,071 papers, averaging 34 citations) is experiencing a rapid spike in activity. The smaller sub-category of **Code Vulnerability** (452 papers, 14 citations) is on track to grow by 45.2% over the next 12 months as security teams pivot from ethical alignment to software-hardening practices.
-
 ---
 
 ## Industry & News

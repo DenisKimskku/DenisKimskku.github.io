@@ -57,7 +57,7 @@ Finally, *ScopeJudge* introduces a pragmatic, cost-aware security layer for offe
 
 ### Connection to Historical Trends
 
-In our 5,700-paper knowledge base, **General AI Security** dominates with 17,609 entries (averaging 22 citations). However, the rising citation impact of **LLM Jailbreaking** (862 papers, 21 average citations) and **RAG Security** (3,143 papers, 26 average citations) underscores the vulnerability of model weights to input manipulations. This week's papers show that the industry is hitting a ceiling with weights-level safety. Just as traditional operating systems do not rely on software binary "politeness" to prevent malware, AI developers are realizing they cannot rely solely on model alignment. The emergence of firewalls and pre-execution gates marks the convergence of traditional application security (AppSec) with LLM orchestration.
+The continued growth of research on LLM jailbreaking and RAG security underscores the vulnerability of model weights to input manipulations. This week's papers show that the industry is hitting a ceiling with weights-level safety. Just as traditional operating systems do not rely on software binary "politeness" to prevent malware, AI developers are realizing they cannot rely solely on model alignment. The emergence of firewalls and pre-execution gates marks the convergence of traditional application security (AppSec) with LLM orchestration.
 
 ---
 
@@ -79,7 +79,7 @@ These steering methods are essential when deploying open-weights models, as deta
 
 ### Connection to Historical Trends
 
-Historically, **Adversarial Attacks** (2,580 papers, 13 average citations) and **Code Vulnerabilities** (1,051 papers, 8 average citations) have been treated as distinct problems. Code generation security typically focused on static analysis of outputs, while adversarial research focused on input-space perturbations. The integration of task-vector manipulation represents a major evolutionary step: we are now using adversarial and steering mechanics directly inside the model's weights to fix systemic code generation vulnerabilities. By editing the model's latent representation space, researchers are directly addressing the root cause of these vulnerabilities, rather than trying to patch the symptoms in generated outputs.
+Historically, **adversarial attacks** and **code vulnerabilities** have been treated as distinct problems. Code generation security typically focused on static analysis of outputs, while adversarial research focused on input-space perturbations. The integration of task-vector manipulation represents a major evolutionary step: we are now using adversarial and steering mechanics directly inside the model's weights to fix systemic code generation vulnerabilities. By editing the model's latent representation space, researchers are directly addressing the root cause of these vulnerabilities, rather than trying to patch the symptoms in generated outputs.
 
 ---
 
@@ -118,7 +118,7 @@ Traditional adversarial noise added to images or text to prevent model training 
 
 ### Connection to Historical Trends
 
-This domain draws on both **Watermarking** (630 papers in KB, 11 average citations) and the broader **Adversarial Attacks** category. The high citation rate of **RAG Security** (avg 26 citations) points to an ongoing struggle: how to safely ingest and use external data. As persuasion attacks show, simply monitoring reasoning traces is not enough; semantic content can still bypass these checks. Similarly, as the industry transitions from simple model extraction to training-data harvesting, the focus of watermarking is shifting from passive post-hoc detection to active, compression-resistant prevention of data ingestion.
+This domain draws on both the **watermarking** literature and the broader **adversarial attacks** category, and it points to an ongoing struggle: how to safely ingest and use external data. As persuasion attacks show, simply monitoring reasoning traces is not enough; semantic content can still bypass these checks. Similarly, as the industry transitions from simple model extraction to training-data harvesting, the focus of watermarking is shifting from passive post-hoc detection to active, compression-resistant prevention of data ingestion.
 
 ---
 
@@ -157,13 +157,13 @@ Using Jaccard similarity and metric perturbation, *EdgeRefine* dynamically filte
 
 ### Connection to Historical Trends
 
-These developments build directly on our KB's **Federated Learning** (1,375 papers, 18 average citations) and **Data Poisoning** (1,600 papers, 7 average citations) segments. Historically, federated learning research focused on defense mechanisms against label-flipping attacks in image classification. The transition to safety-critical systems like autonomous driving shows how the stakes have risen. Model corruption in these environments has direct physical consequences, which is why researchers are combining physical-world models (digital twins) with machine-learning defenses.
+These developments build directly on the **federated learning** and **data poisoning** research segments. Historically, federated learning research focused on defense mechanisms against label-flipping attacks in image classification. The transition to safety-critical systems like autonomous driving shows how the stakes have risen. Model corruption in these environments has direct physical consequences, which is why researchers are combining physical-world models (digital twins) with machine-learning defenses.
 
 ---
 
 ## By the Numbers
 
-To understand where the research community is focusing its efforts, we can look at the volume of publications and their historical citation performance:
+To understand where the research community is focusing its efforts, we can look at how this week's papers distribute across topics:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -176,11 +176,10 @@ To understand where the research community is focusing its efforts, we can look 
 └─────────────────────────────────────────────────────────┘
 ```
 
-### Key Statistical Insights
+### Key Insights
 
-*   **The Shift to Runtime Control**: 30% of this week's papers focused on runtime auditing, containment, and gating (e.g., *Token-Flow Firewall*, *Prismata*, *ScopeJudge*). In our historic knowledge base, these runtime security architectures made up less than 5% of all papers. This represents a major shift from offline alignment to active, real-time protection.
-*   **The High Cost of Vulnerabilities**: Within our 5,700-paper knowledge base, **RAG Security** has the highest average citation rate (26 citations per paper), followed closely by **LLM Jailbreaking** (21 citations). This high level of citation activity shows how critical these issues are to the industry, explaining the surge of runtime firewalls and sandboxes designed to block these specific threat vectors.
-*   **Value vs. Citations**: Despite their real-world impact, **Data Poisoning** papers average only 7 citations, while **Federated Learning** papers average 18. This gap suggests that while data poisoning remains a difficult theoretical challenge, practical federated security architectures (like *Twin-Aware FL*) are gaining more traction because they offer immediate solutions for industrial edge deployments.
+*   **The Shift to Runtime Control**: 30% of this week's papers focused on runtime auditing, containment, and gating (e.g., *Token-Flow Firewall*, *Prismata*, *ScopeJudge*). This represents a major shift from offline alignment to active, real-time protection.
+*   **Practical Edge Defenses Gaining Traction**: While data poisoning remains a difficult theoretical challenge, practical federated security architectures (like *Twin-Aware FL*) are gaining traction because they offer immediate solutions for industrial edge deployments.
 
 ---
 
@@ -206,6 +205,6 @@ When deploying federated or decentralized machine learning systems on edge devic
 
 For years, the industry treated prompt injection as an alignment problem—a delusion that has finally shattered now that autonomous agents are executing shell commands and parsing live DOM trees. I am incredibly excited to see the community finally embrace runtime, out-of-band containment over fragile RLHF patches. 
 
-The shift toward structural isolation is the only viable way forward. In my previous analysis of [Prismata: Confining Cross-Site Prompt Injection in Web Agents](/writing/prismata_confining_crosssite_prompt_injection_in_web_agents), I highlighted how treating untrusted web data with iframe-like boundary confinement prevents malicious DOM injections from hijacking system instructions entirely. But containment is only half the battle; we also need telemetry. My work on the [Token-Flow Firewall: Semantic Runtime Auditing for Persistent AI Agents](/writing/tokenflow_firewall_semantic_runtime_auditing_for_persistent_) detailed why tracking token-level provenance through generation states is critical to catching database-poisoned payloads before they trigger unauthorized downstream actions.
+The shift toward structural isolation is the only viable way forward. In my previous analysis of [Prismata: Confining Cross-Site Prompt Injection in Web Agents](/writing/prismata_confining_crosssite_prompt_injection_in_web_agents), I highlighted how treating untrusted web data with iframe-like boundary confinement prevents malicious DOM injections from hijacking system instructions entirely. But containment is only half the battle; we also need telemetry. My review of the [Token-Flow Firewall: Semantic Runtime Auditing for Persistent AI Agents](/writing/tokenflow_firewall_semantic_runtime_auditing_for_persistent_) detailed why tracking token-level provenance through generation states is critical to catching database-poisoned payloads before they trigger unauthorized downstream actions.
 
 However, we must remain practical about overhead. While pre-execution gating—like the policy-checking mechanism in *ScopeJudge*—is a necessary safety net for offensive security LLMs, adding multiple layers of semantic inspection and DOM sandboxing will inevitably introduce latency. As practitioners, our next challenge isn't just proving these security boundaries work, but optimizing them so they don't make our agents too sluggish for production.

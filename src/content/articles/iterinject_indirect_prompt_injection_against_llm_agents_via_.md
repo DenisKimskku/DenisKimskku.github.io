@@ -2,6 +2,8 @@
 title: "IterInject: Indirect Prompt Injection Against LLM Agents via Feedback-Guided Iterative Optimization"
 date: "2026-05-28"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.24659"
+paperAuthors: "Zixuan Chen, Jiaxiang Chen, Li Luo, et al."
 description: "An iterative black-box framework named *IterInject* that automates indirect prompt injections (IPI) by coupling structured, four-level diagnostic feedback with an LLM-based optimizer and self-evolving"
 tags: ["AI Security"]
 readingTime: 11

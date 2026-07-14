@@ -2,6 +2,8 @@
 title: "Localization then Neutralization: Gradient-guided Token Suppression against Visual Prompt Injection Attack"
 date: "2026-05-28"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.25194"
+paperAuthors: "Dongpeng Zhang, Ke Ma, Yangbangyan Jiang, et al."
 description: "Gradient Token Masking (GTM) is an inference-time defense that protects Large Vision-Language Models (LVLMs) from visual prompt injection by localizing critical adversarial image tokens via hidden-sta"
 tags: ["AI Security"]
 readingTime: 8

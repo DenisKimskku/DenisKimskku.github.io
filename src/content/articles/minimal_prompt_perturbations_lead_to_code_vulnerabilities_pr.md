@@ -2,6 +2,8 @@
 title: "Minimal Prompt Perturbations Lead to Code Vulnerabilities: Prompt Fragility and Hidden-State Signals in Coding LLMs"
 date: "2026-05-30"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.29737"
+paperAuthors: "Alexander Sternfeld, Andrei Kucharavy, Ljiljana Dolamic"
 description: "Minimal, benign prompt mutations (like single-character typos) can silently flip LLM-generated code from secure to vulnerable, but these security vulnerabilities can be predicted directly from the mod"
 tags: ["AI Security"]
 readingTime: 9

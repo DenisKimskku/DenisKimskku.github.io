@@ -31,7 +31,7 @@ As we move beyond static LLM interactions, the security field is rapidly reorien
 
 The papers in this cluster demonstrate that the security model for agents is fundamentally different from that of standard chatbots. Traditional red-teaming (e.g., direct prompt injection) is insufficient when an agent performs a multi-step execution loop. The LITMUS benchmark is a critical development here; it moves the field away from static text evaluations to dynamic, behavioral testing in wild scenarios. The introduction of IPI-proxy is similarly transformative, as it provides a concrete tool for red-teaming web-browsing agents—a capability that was previously theoretical or handled via ad-hoc scripts.
 
-The LychSim framework underscores the necessity of simulation for security research; we cannot test these agents in production without systemic risk. This shifts the field’s direction: security is no longer about the input string, but about the *state-machine* logic of the agent. The paper on "Incivility in Multi-Agent Systems" is a fascinating outlier, suggesting that even behavioral "soft" failures in agent communication channels can act as a vector for systemic instability. These papers reflect a maturation of the field; we are treating Agentic AI as a complex distributed system, borrowing heavily from traditional cyber-physical systems security. This aligns with our KB stats, where "General AI Security" dominates, but suggests that the next wave of citation growth will be driven by these highly specialized agentic sub-fields.
+The LychSim framework underscores the necessity of simulation for security research; we cannot test these agents in production without systemic risk. This shifts the field’s direction: security is no longer about the input string, but about the *state-machine* logic of the agent. The paper on "Incivility in Multi-Agent Systems" is a fascinating outlier, suggesting that even behavioral "soft" failures in agent communication channels can act as a vector for systemic instability. These papers reflect a maturation of the field; we are treating Agentic AI as a complex distributed system, borrowing heavily from traditional cyber-physical systems security. The next wave of research growth will likely be driven by these highly specialized agentic sub-fields.
 
 ### Jailbreaking 2.0: From Static Prompts to Metacognitive Evolution
 
@@ -43,7 +43,7 @@ The LychSim framework underscores the necessity of simulation for security resea
 
 The Metis paper stands out as a potential turning point. By utilizing "self-evolving metacognition," the attackers are essentially training a meta-model to find the optimal bypass for the target. This turns the jailbreak process into a feedback-loop-driven optimization problem, making standard static defense lists obsolete. 
 
-In response, the defense research (Guaranteed Jailbreaking Defense, EVA, and Re-Triggering Safeguards) is adopting more robust, algorithmic approaches. "Disrupt-and-Rectify" smoothing is particularly interesting because it treats the LLM's latent space as a continuous, differentiable landscape rather than a discrete text generator, applying signal processing techniques to neutralize adversarial noise. This confirms that the cat-and-mouse game has moved from the prompt layer to the model-weight and architecture layers. Historically, "LLM Jailbreaking" was one of our most cited categories (avg 24 citations per paper), but this week's papers suggest that the *methodology* of these citations is pivoting from prompt-based attacks to latent-space and architectural attacks.
+In response, the defense research (Guaranteed Jailbreaking Defense, EVA, and Re-Triggering Safeguards) is adopting more robust, algorithmic approaches. "Disrupt-and-Rectify" smoothing is particularly interesting because it treats the LLM's latent space as a continuous, differentiable landscape rather than a discrete text generator, applying signal processing techniques to neutralize adversarial noise. This confirms that the cat-and-mouse game has moved from the prompt layer to the model-weight and architecture layers. This week's papers suggest that jailbreaking *methodology* is pivoting from prompt-based attacks to latent-space and architectural attacks.
 
 ### The Integrity Crisis: RAG and Knowledge Graph Poisoning
 
@@ -55,7 +55,7 @@ In response, the defense research (Guaranteed Jailbreaking Defense, EVA, and Re-
 
 The emergence of ShadowMerge and BadSKP indicates that attackers have moved beyond simple keyword injection in documents to structured poisoning of Knowledge Graphs (KGs). This is a significant escalation. A standard RAG system might be vulnerable to a rogue document, but a Knowledge Graph-Enhanced LLM is vulnerable to structural subversion. If an attacker can inject a "shadow" relationship in a graph, they can manipulate the agent's logic chain without ever triggering a standard text-based filter.
 
-The paper "Architecture Matters" provides a vital sanity check for practitioners, confirming that not all RAG architectures are created equal regarding poisoning resilience. This cluster validates our KB data, which shows "RAG Security" as having the highest citation impact (avg 28 citations). The research is responding to the rapid industry adoption of RAG by proving that the retrieval pipeline is the most critical dependency. We expect future papers to focus on verifiable RAG provenance—cryptographically signing the data that feeds into these graphs to prevent shadow-merging.
+The paper "Architecture Matters" provides a vital sanity check for practitioners, confirming that not all RAG architectures are created equal regarding poisoning resilience. The research is responding to the rapid industry adoption of RAG by proving that the retrieval pipeline is the most critical dependency. We expect future papers to focus on verifiable RAG provenance—cryptographically signing the data that feeds into these graphs to prevent shadow-merging.
 
 ### Operational Security: The App-Layer Realities
 
@@ -66,7 +66,7 @@ The paper "Architecture Matters" provides a vital sanity check for practitioners
 
 This cluster represents the "boring" but critical work of operational security. The SQL Injection paper is a timely reminder that the injection techniques of the 2000s are being mapped directly onto the LLM-to-database interfaces of 2026. "Prompts as payloads" effectively describes the new reality: an LLM acts as an interpreter, and if that interpreter is not sandboxed, it will execute malicious SQL commands as efficiently as it would a summary request.
 
-Furthermore, the PRISM framework for secret leakage provides a necessary layer of protection for developers who are inadvertently hardcoding API keys or sensitive configurations into LLM workflows. The "Position" paper on targeting systems rather than models is perhaps the most important conceptual piece this week. It echoes the sentiment that we cannot patch the foundation models themselves to stop every attack; we must regulate the *systems* that host them. This aligns with our observation that "Code Vulnerability" (avg 8 citations) is maturing into "AI Code Vulnerability," where the LLM is the vulnerability host rather than just the code generator.
+Furthermore, the PRISM framework for secret leakage provides a necessary layer of protection for developers who are inadvertently hardcoding API keys or sensitive configurations into LLM workflows. The "Position" paper on targeting systems rather than models is perhaps the most important conceptual piece this week. It echoes the sentiment that we cannot patch the foundation models themselves to stop every attack; we must regulate the *systems* that host them. This aligns with our observation that "code vulnerability" research is maturing into "AI code vulnerability" research, where the LLM is the vulnerability host rather than just the code generator.
 
 ### Threat Model Matrix
 
@@ -83,9 +83,7 @@ Furthermore, the PRISM framework for secret leakage provides a necessary layer o
 Our analysis of this week’s 19 papers reveals shifting priorities in the research landscape.
 
 *   **Total Papers Analyzed:** 19
-*   **Top Venue Focus:** Agentic Security (26% of papers), RAG/Data Poisoning (26%), Jailbreaking/Defense (26%), Operational/App-Layer Security (22%).
-*   **Key Trend Velocity:** The "Agentic" category saw a 15% increase in relative interest compared to the moving average of the last 4 weeks.
-*   **Average Citations for Week’s Cohort (Projected):** Based on the KB historical data (e.g., RAG Security 28, Jailbreaking 24), this week’s papers are likely to exceed the average citation counts for the field due to their focus on high-impact systemic vulnerabilities.
+*   **Topic Focus:** Agentic Security (26% of papers), RAG/Data Poisoning (26%), Jailbreaking/Defense (26%), Operational/App-Layer Security (22%).
 
 **Distribution by Topic:**
 

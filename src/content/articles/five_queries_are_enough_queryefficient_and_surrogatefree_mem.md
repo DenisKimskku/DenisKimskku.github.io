@@ -2,6 +2,8 @@
 title: "Five Queries Are Enough: Query-Efficient and Surrogate-Free Membership Inference Attacks on RAG via Entailment"
 date: "2026-05-28"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.24312"
+paperAuthors: "Nguyen Linh Bao Nguyen, Wanlun Ma, Viet Vo, et al."
 description: "MEntA (Membership Entailment Attack) is a highly query-efficient, surrogate-free membership inference attack on Retrieval-Augmented Generation (RAG) systems that leverages Natural Language Inference ("
 tags: ["AI Security"]
 readingTime: 10

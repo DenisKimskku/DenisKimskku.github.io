@@ -2,6 +2,8 @@
 title: "Prompt Injection Detection is Regime-Dependent: A Deployment-Aware Evaluation with Interpretable Structural Signals"
 date: "2026-05-28"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.26999"
+paperAuthors: "Akindoyin Akinrele, Shreyank N Gowda"
 description: "An evaluation framework exposing that prompt injection detection is highly 'regime-dependent' (varying heavily based on attack style), alongside the 'Instruction Boundary Violation Score' (IBVS v2)—a "
 tags: ["AI Security"]
 readingTime: 10

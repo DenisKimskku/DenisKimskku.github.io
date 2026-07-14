@@ -2,6 +2,8 @@
 title: "Semantic Validation of Packer Identification Tools: Characterization, Repair, and Downstream Impact"
 date: "2026-05-27"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.25923"
+paperAuthors: "Fangtian Zhong, Zhuoyun Qian, Mengfei Ren, et al."
 description: "A semantic validation and repair framework that treats unpackers as 'executable semantic contracts' to automatically detect, localize, and fix semantic bugs in packer identification tools without manu"
 tags: ["AI Security"]
 readingTime: 9

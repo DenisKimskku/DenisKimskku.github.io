@@ -2,6 +2,8 @@
 title: "Poisoning the Watchtower: Prompt Injection Attacks Against LLM-Augmented Security Operations Through Adversarial Log Content"
 date: "2026-05-28"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.24421"
+paperAuthors: "Rohan Pandey, Archit Bhujang"
 description: "Log-substrate prompt injection exploits attacker-controlled security log fields (such as HTTP User-Agents and URI paths) to inject adversarial instructions directly into LLM-augmented security workflo"
 tags: ["AI Security"]
 readingTime: 9

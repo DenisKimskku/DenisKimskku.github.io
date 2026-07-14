@@ -2,6 +2,8 @@
 title: "GASLITE: Poisoning Dense Embedding-based Retrieval Systems"
 date: "2025-11-13"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2412.20953"
+paperAuthors: "Matan Ben-Tov, Mahmood Sharif"
 description: "An analysis of GASLITE, a novel attack that poisons dense embedding-based retrieval systems by crafting adversarial passages that appear in top-k results for targeted queries, achieving up to 100% success with minimal corpus contamination."
 tags: ["RAG Security", "Dense Retrieval", "Data Poisoning", "Adversarial Attacks", "Search Engine Security"]
 ---

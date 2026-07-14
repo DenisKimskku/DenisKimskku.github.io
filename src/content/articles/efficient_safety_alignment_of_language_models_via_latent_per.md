@@ -2,6 +2,8 @@
 title: "Efficient Safety Alignment of Language Models via Latent Personality Traits"
 date: "2026-07-11"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.07918"
+paperAuthors: "Mohamed Amine Merzouk, Nolan Smyth, Damiano Fornasiere, et al."
 description: "Latent Personality Alignment (LPA) is a compute-efficient post-training defense that applies Latent Adversarial Training (LAT) to a tiny, harm-agnostic dataset of 66 psychometric statements to robustl"
 tags: ["AI Security"]
 readingTime: 9

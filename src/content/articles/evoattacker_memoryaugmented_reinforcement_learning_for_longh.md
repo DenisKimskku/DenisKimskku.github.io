@@ -2,6 +2,8 @@
 title: "Evo-Attacker: Memory-Augmented Reinforcement Learning for Long-Horizon Tool Attacks on LLM-MAS"
 date: "2026-05-27"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.25389"
+paperAuthors: "Bingyu Yan, Xiaoming Zhang, Jinyu Hou, et al."
 description: "Evo-Attacker is a self-evolving, memory-augmented reinforcement learning framework that systematically compromises Large Language Model Multi-Agent Systems (LLM-MAS) by strategically injecting semanti"
 tags: ["AI Security"]
 readingTime: 9

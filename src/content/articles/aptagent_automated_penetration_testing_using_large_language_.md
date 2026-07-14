@@ -2,6 +2,8 @@
 title: "APT-Agent: Automated Penetration Testing using Large Language Models"
 date: "2026-05-27"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.24949"
+paperAuthors: "William Guanting Li, Alsharif Abuadbba, Kristen Moore, et al."
 description: "An automated penetration testing framework (APT-Agent) that resolves LLM hallucinations and long-horizon context loss using a hybrid fuzzy-matching command rectifier and a compact, state-aware JSON co"
 tags: ["AI Security"]
 readingTime: 9

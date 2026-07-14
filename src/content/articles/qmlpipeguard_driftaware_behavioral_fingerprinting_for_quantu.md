@@ -2,6 +2,8 @@
 title: "QML-PipeGuard: Drift-Aware Behavioral Fingerprinting for Quantum Machine Learning Pipeline Integrity"
 date: "2026-05-27"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.25066"
+paperAuthors: "Esra Yeniaras"
 description: "QML-PipeGuard is a contract-based runtime verification framework that uses 'behavioral fingerprinting'—measuring a tomographically complete family of Pauli observables—to detect unauthorized quantum c"
 tags: ["AI Security"]
 readingTime: 10

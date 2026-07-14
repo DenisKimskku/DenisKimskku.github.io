@@ -2,6 +2,8 @@
 title: "SafeCtrl-RL: Inference-Time Adaptive Behaviour Control for LLM Dialogue via RL-Driven Prompt Optimisation"
 date: "2026-05-30"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.25984"
+paperAuthors: "Michael Orme, Yanchao Yu, Zhiyuan Tan"
 description: "An inference-time behavioral control framework (SafeCtrl-RL) that uses a Reinforcement Learning (DQN) agent to dynamically select from 11 distinct prompt-refinement strategies based on real-time safet"
 tags: ["AI Security"]
 readingTime: 10

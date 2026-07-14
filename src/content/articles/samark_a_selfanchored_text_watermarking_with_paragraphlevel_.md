@@ -2,6 +2,8 @@
 title: "SAMark: A Self-Anchored Text Watermarking with Paragraph-Level Paraphrase Robustness"
 date: "2026-05-27"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.25796"
+paperAuthors: "Jiahao Huo, Wenjie Qu, Yibo Yan, et al."
 description: "SAMARK is a self-anchored semantic-level watermarking framework that eliminates step-dependence in LLM text watermarking by anchoring random keys directly to sentence embeddings, making the watermark "
 tags: ["AI Security"]
 readingTime: 10

@@ -2,6 +2,8 @@
 title: "AutoDAN: Generating Stealthy Jailbreak Prompts on Aligned Large Language Models"
 date: "2024-12-11"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2310.04451"
+paperAuthors: "Xiaogeng Liu, Nan Xu, Muhao Chen, et al."
 description: "An analysis of AutoDAN, a novel attack that generates semantically meaningful jailbreak prompts using hierarchical genetic algorithms, achieving high attack success rates while evading perplexity-based detection."
 tags: ["LLM Security", "Jailbreaking", "Genetic Algorithm", "Adversarial Attacks", "Red Teaming"]
 ---

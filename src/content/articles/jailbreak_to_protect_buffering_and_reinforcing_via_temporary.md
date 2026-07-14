@@ -2,6 +2,8 @@
 title: "Jailbreak to Protect: Buffering and Reinforcing via Temporary Jailbreaking for Safe Fine-Tuning in Large Language Models"
 date: "2026-05-28"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.24550"
+paperAuthors: "Seokil Ham, Jaehyuk Jang, Wonjun Lee, et al."
 description: "A fine-tuning defense framework that temporarily jailbreaks an LLM using a frozen adapter (BufferLoRA) during user training to saturate safety-degrading gradients, followed by post-training QR-decompo"
 tags: ["AI Security"]
 readingTime: 8

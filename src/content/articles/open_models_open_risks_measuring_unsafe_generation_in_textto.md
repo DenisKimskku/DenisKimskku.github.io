@@ -2,6 +2,8 @@
 title: "Open Models, Open Risks: Measuring Unsafe Generation in Text-to-Image Models In the Wild"
 date: "2026-07-11"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.07827"
+paperAuthors: "Peilin Han, Yang Liu, Yilong Yang, et al."
 description: "A large-scale empirical study revealing that traditional safety evaluation metrics catastrophically overestimate jailbreak risks in text-to-image (T2I) models due to 'semantic drift' and 'generation a"
 tags: ["AI Security"]
 readingTime: 9

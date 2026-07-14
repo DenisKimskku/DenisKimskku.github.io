@@ -2,6 +2,8 @@
 title: "Resolving the Correct Library: A Loader-Level Defense Solution Against Shared Object Hijacking"
 date: "2026-05-28"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.26665"
+paperAuthors: "Can Ozkan, Dave Singelee"
 description: "A loader-centric verification framework implemented via `glibc`'s `LD_AUDIT` interface that binds dynamically loaded shared objects (`.so`) to immutable Build-IDs and cryptographic hashes to block sea"
 tags: ["AI Security"]
 readingTime: 8

@@ -2,6 +2,8 @@
 title: "Hidden in Plain Tokens: Simply Robust, Gradient-Free Watermark for Synthetic Audio"
 date: "2026-05-30"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.25967"
+paperAuthors: "Georgios Milis, Yubin Qin, Yihan Wu, et al."
 description: "A gradient-free, training-free audio watermarking technique that clusters neural codec vocabularies using graph community detection (Leiden algorithm) to make token-level watermarks invariant to non-i"
 tags: ["AI Security"]
 readingTime: 11

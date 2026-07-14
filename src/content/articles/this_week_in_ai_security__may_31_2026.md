@@ -36,7 +36,7 @@ The threat grows more complex as these systems interact with external environmen
 Once inside the prompt window, attackers are no longer limited to single-session exploits. *Hijacking Agent Memory* shows how conversational Trojan attacks can silently poison an agent's long-term memory store, ensuring that malicious behavior persists across independent user sessions without triggering standard input-filtering alerts. The difficulty in stopping these attacks is underscored by *Prompt Injection Detection is Regime-Dependent*, which argues that modern detection strategies are highly sensitive to specific operational deployments and fail to generalize across diverse agentic environments. To proactively counter these exploits, defensive platforms like *APT-Agent* are emerging, leveraging automated penetration testing agents to map, stress-test, and patch these architectural flaws before they are exploited in production environments.
 
 ### Connection to Historical Trends
-This shift toward system-level exploits matches trends in our database, where **RAG Security** (2,803 papers, averaging 28 citations) and **General AI Security** (16,497 papers, averaging 21 citations) lead in both volume and citation density. The high citation average for RAG-related research reflects the industry's realization that the interface between the model and external data repositories is currently the most vulnerable part of the modern enterprise AI stack.
+This shift toward system-level exploits reflects the industry's realization that the interface between the model and external data repositories is currently the most vulnerable part of the modern enterprise AI stack.
 
 ---
 
@@ -59,7 +59,7 @@ This threat is no longer limited to textual inputs. As models become more multim
 In response to these dynamic threats, defensive strategies are shifting from static prompt filtering to runtime activation interventions. *SafeCtrl-RL* introduces inference-time adaptive control loops using reinforcement learning to guide LLM behavior in real time, steering outputs away from unsafe states. *Localization then Neutralization* offers a similar solution by dynamically locating and suppressing specific token activations that drive malicious output. Additionally, *Jailbreak to Protect* proposes a counter-intuitive defense: using a controlled "buffer" jailbreak to test a model's potential output safety, and then applying targeted corrections before the final text is returned to the user. Finally, *Ellipsoid Control* provides a whitelist-based mathematical defense, mapping benign output boundaries to ensure safety constraints are met.
 
 ### Connection to Historical Trends
-In our historical database, **LLM Jailbreaking** (742 papers, averaging 24 citations) remains one of the fastest-growing and highly-cited research areas. The high citation average highlights the continuous struggle between alignment engineering and adversarial exploitation, showing that static safety training during the pre-training phase must be reinforced with real-time, inference-level control layers.
+**LLM jailbreaking** remains one of the fastest-growing research areas. The continuous struggle between alignment engineering and adversarial exploitation shows that static safety training during the pre-training phase must be reinforced with real-time, inference-level control layers.
 
 ---
 
@@ -77,7 +77,7 @@ Recent work is also making these watermarks more resilient to active evasion tac
 These developments show that watermarking is moving from academic theory to deployment-ready enterprise solutions. By building these verification markers directly into model output layers, organizations can maintain clear content provenance, verify synthetic media, protect intellectual property, and detect unapproved model training data use.
 
 ### Connection to Historical Trends
-Watermarking sits at the intersection of **General AI Security** (16,497 papers, averaging 21 citations) and deepfake/provenance research. The emergence of robust sentence- and paragraph-level watermarking architectures indicates a maturing subfield, shifting away from theoretical token split patterns toward deployable, distortion-minimizing standards that can survive real-world tampering.
+Watermarking sits at the intersection of **general AI security** and deepfake/provenance research. The emergence of robust sentence- and paragraph-level watermarking architectures indicates a maturing subfield, shifting away from theoretical token split patterns toward deployable, distortion-minimizing standards that can survive real-world tampering.
 
 ---
 
@@ -106,7 +106,7 @@ This threat is highly practical for software development teams. *Minimal Prompt 
 On the defensive front, researchers are developing more realistic and efficient evaluation frameworks. *Referential Security as a New Paradigm for AI Evaluations* offers a more robust framework for measuring model security, while *Summoning the Oracle to Slay It* targets look-ahead bias to improve the accuracy of risk assessments. This research is critical because model evasion techniques are becoming highly query-efficient; *Five Queries Are Enough* shows that black-box attacks can successfully exploit models with extremely few queries, minimizing the footprint left in detection logs. Furthermore, *When Interpretability Becomes a Liability* warns that explaining model behaviors can accidentally reveal internal features, helping attackers design highly targeted adversarial prompts.
 
 ### Connection to Historical Trends
-In our historical statistics, **Data Poisoning** (1,424 papers, averaging 8 citations) and **Code Vulnerability** (1,003 papers, averaging 8 citations) represent mature yet fast-evolving domains. While their lower citation averages reflect the higher technical barrier to executing training-set attacks in the wild, their systemic impact on corporate software supply chains makes them a critical focus for industrial security architects.
+**Data poisoning** and **code vulnerability** research represent mature yet fast-evolving domains. While training-set attacks face a higher technical barrier to execution in the wild, their systemic impact on corporate software supply chains makes them a critical focus for industrial security architects.
 
 ---
 
@@ -114,17 +114,8 @@ In our historical statistics, **Data Poisoning** (1,424 papers, averaging 8 cita
 
 This week's data points to several key trends:
 
-```
-[Total Papers Analyzed This Week: 35]
-
-■ Runtime Manipulation / Jailbreaking / Alignment Evasion:  12 papers (34%)
-■ Supply Chain, Poisoning, & Code Security:                 11 papers (31%)
-■ Agentic, Retrieval, & Memory Security:                    8 papers (23%)
-■ Watermarking & Content Provenance:                        4 papers (12%)
-```
-
 - **Attacker Query Cost Reduction:** *Five Queries Are Enough* indicates a dramatic drop in the cost of black-box adversarial generation, reducing the average queries needed for successful evasion down to a single-digit threshold (5 queries).
-- **Modality Expansion:** While text-based LLMs still account for \$82\%\$ of security research this week, multimodal security research (specifically targeting code execution and audio channels) has risen to \$18\%\$.
+- **Modality Expansion:** While text-based LLMs still dominate this week's security research, multimodal security work (specifically targeting code execution and audio channels) is claiming a growing share.
 
 ---
 
@@ -145,4 +136,4 @@ What concerns me most about this shift toward agentic AI is how quickly engineer
 
 This is not a theoretical exercise. We are looking at a potential \$50M enterprise data breach waiting to happen in Fortune 500 deployments of Microsoft Copilot Studio, where agentic workflows are routinely given direct API access to legacy backend databases with virtually no boundary isolation. 
 
-In my previous analysis on [Hijacking Agent Memory: Stealthy Trojan Attacks Through Conversational Interaction](/writing/hijacking_agent_memory_stealthy_trojan_attacks_through_conve), I demonstrated how easily an attacker can poison an agent's long-term memory store to execute stealthy, persistent Trojan actions across entirely separate user sessions. If we continue to treat these autonomous agents as standard, trusted software components rather than highly volatile runtimes requiring zero-trust containment, we will see catastrophic, automated system hijacking in production environments before the year is out.
+In my previous analysis of [Hijacking Agent Memory: Stealthy Trojan Attacks Through Conversational Interaction](/writing/hijacking_agent_memory_stealthy_trojan_attacks_through_conve), I examined how easily an attacker can poison an agent's long-term memory store to execute stealthy, persistent Trojan actions across entirely separate user sessions. If we continue to treat these autonomous agents as standard, trusted software components rather than highly volatile runtimes requiring zero-trust containment, we will see catastrophic, automated system hijacking in production environments before the year is out.

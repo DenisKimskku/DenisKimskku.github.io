@@ -2,6 +2,8 @@
 title: "Federated Learning Architecture: Data Privacy and System Security Approaches"
 date: "2026-07-14"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.09391"
+paperAuthors: "Cagdas Karatas, Hibanur Karadogan, Ahmet Yasin Ertug, et al."
 description: "A dual-layer defense framework that integrates CKKS Homomorphic Encryption (HE) with Differentially Private Stochastic Gradient Descent (DP-SGD) to protect both transit-level gradients and end-model o"
 tags: ["AI Security"]
 readingTime: 10

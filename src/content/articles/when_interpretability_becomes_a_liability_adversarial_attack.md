@@ -2,6 +2,8 @@
 title: "When Interpretability Becomes a Liability: Adversarial Attacks on CBM Concept Layers"
 date: "2026-05-27"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.25304"
+paperAuthors: "Aditya Sridhar"
 description: "Concept-level adversarial attacks exploit the human-interpretable intermediate concept layers of Concept Bottleneck Models (CBMs) to cause misclassification with minimal semantic edits, which can be m"
 tags: ["AI Security"]
 readingTime: 8

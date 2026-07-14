@@ -2,6 +2,8 @@
 title: "Token-Flow Firewall: Semantic Runtime Auditing for Persistent AI Agents"
 date: "2026-07-11"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.08395"
+paperAuthors: "Puji Wang, Yingchen Zhang, Ruqing Zhang, et al."
 description: "TokenWall is a local, hierarchical runtime firewall that intercepts and semantically audits natural-language 'token flows' (context, authority, and capability transitions) in persistent AI agents befo"
 tags: ["AI Security"]
 readingTime: 8

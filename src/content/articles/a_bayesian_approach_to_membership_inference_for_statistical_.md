@@ -2,6 +2,8 @@
 title: "A Bayesian Approach to Membership Inference for Statistical Release"
 date: "2026-05-30"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.30203"
+paperAuthors: "Lisa Oakley, Sam Stites, Cameron Moy, et al."
 description: "A modular Bayesian Membership Inference Attack (BMIA) framework that models population attribute dependencies as a Bayesian Network and computes the exact posterior probability of membership via proba"
 tags: ["AI Security"]
 readingTime: 8

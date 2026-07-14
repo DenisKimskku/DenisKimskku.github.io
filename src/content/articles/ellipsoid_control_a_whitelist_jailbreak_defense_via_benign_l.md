@@ -2,6 +2,8 @@
 title: "Ellipsoid Control: A White-list Jailbreak Defense via Benign Latent Modeling"
 date: "2026-05-28"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.24552"
+paperAuthors: "Luoyu Chen, Weiqi Wang, Zhiyi Tian, et al."
 description: "Ellipsoid Control (EC) is an inference-time jailbreak defense that uses Projected Gradient Descent (PGD) to steer hidden representation states toward refusal targets while strictly bound by a high-dim"
 tags: ["AI Security"]
 readingTime: 10

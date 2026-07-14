@@ -2,6 +2,8 @@
 title: "LLM-as-a-Reviewer: Benchmarking Their Ability, Divergence, and Prompt Injection Resistance as Paper Reviewers"
 date: "2026-05-27"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.25415"
+paperAuthors: "Lingyao Li, Junjie Xiong, Changjia Zhu, et al."
 description: "A stealthy prompt injection attack exploiting custom TrueType font mappings (`cmap` tables) to embed visually imperceptible adversarial payloads in PDF manuscripts, forcing LLM-as-a-reviewer pipelines"
 tags: ["AI Security"]
 readingTime: 9

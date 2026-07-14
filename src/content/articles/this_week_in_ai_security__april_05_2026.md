@@ -96,22 +96,6 @@ The convergence of artificial intelligence with hardware architectures, physics-
 
 ---
 
-## By the Numbers
-
-This week saw a significant concentration of security research targeting advanced AI architectures, with 58 distinct papers analyzed across tracked repositories.
-
-*   **Total Papers Analyzed**: 58
-*   **Top Venue/Thematic Focus**:
-    *   **Agentic AI Security**: 14 papers (Focus: Governance, Long-term planning, Systemic compromise).
-    *   **Jailbreaking & Robustness**: 16 papers (Focus: Multimodal, Moral stress testing, Safe sink detection).
-    *   **Code & System Vulnerability**: 12 papers (Focus: Smart contracts, Web security, Automated remediation).
-    *   **Emerging Hardware/Physics**: 6 papers (Focus: Quantum, Spiking networks, Hardware counters).
-    *   **General/Miscellaneous**: 10 papers (Focus: Federated learning, Data poisoning, Membership inference).
-
-**Historical Context**: The volume of academic publications focused explicitly on **Agentic AI Security** has grown by 45\% quarter-over-quarter, indicating it will surpass general jailbreaking as the primary research focus by Q3 2026.
-
----
-
 ## Den's Take
 
 It's about time the broader research community caught up to what practitioners have been dealing with for months: a "safe" foundation model means almost nothing if the agent architecture wrapping it is full of holes.

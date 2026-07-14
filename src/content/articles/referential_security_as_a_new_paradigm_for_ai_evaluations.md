@@ -2,6 +2,8 @@
 title: "Referential Security as a New Paradigm for AI Evaluations"
 date: "2026-05-27"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.25673"
+paperAuthors: "Dan Ristea, Vasilios Mavroudis"
 description: "AI safety evaluations currently rely on static identifiers (like model names) that resolve to unstable, constantly changing system configurations. To fix this, 'referential security' is introduced as "
 tags: ["AI Security"]
 readingTime: 8

@@ -2,6 +2,8 @@
 title: "From Prompt Injection to Persistent Control: Defending Agentic Harness Against Trojan Backdoors"
 date: "2026-06-02"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.31042"
+paperAuthors: "Jiejun Tan, Zhicheng Dou, Xinyu Yang, et al."
 description: "Tan et al. (arXiv 2026) introduce *ClawTrojan*, a benchmark exposing how multi-step trojan attacks persistently compromise agentic workspace files, and *DASGuard*, a provenance-tracking runtime defens"
 tags: ["AI Security"]
 readingTime: 8

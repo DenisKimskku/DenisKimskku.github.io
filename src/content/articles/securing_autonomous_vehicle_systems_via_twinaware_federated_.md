@@ -2,6 +2,8 @@
 title: "Securing Autonomous Vehicle Systems via Twin-Aware Federated Reinforcement Learning"
 date: "2026-07-11"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.08137"
+paperAuthors: "Zifan Zhang, Minghong Fang, Dianwei Chen, et al."
 description: "SecApp secures Federated Reinforcement Learning (FRL) against Byzantine model poisoning by combining majority-voting spatial filtering, historical gradient trajectory constraints, and digital twin rep"
 tags: ["AI Security"]
 readingTime: 11

@@ -33,7 +33,7 @@ The most significant trend this week is the urgent focus on securing agentic wor
 **Analysis:**
 The integration of RAG and autonomous agents has created a "poisoning arms race." Historically, poisoning was often focused on training data, but Wang et al. (arXiv, 2026) and Chen et al. (arXiv, 2026) highlight that in modern RAG architectures, the "data" is the retrieval index itself. Attackers no longer need to poison the foundational weights; they only need to manipulate the retrieved context. The research by Lee et al. (arXiv, 2026) provides a sobering look at why this is difficult to solve: runtime trust failures are intrinsic to the asynchronous nature of agent execution.
 
-These papers reveal a paradigm shift. We are moving away from "input sanitization" toward "contextual verification." The systems proposed by Kim et al. (arXiv, 2026) and Chen et al. (arXiv, 2026) suggest that we cannot trust the retrieved information blindly, nor can we trust the agent to synthesize it without an external verification layer. Our knowledge base shows that RAG Security is already a heavily cited domain (2,803 papers, avg 28 citations). This week’s output confirms that while research is prolific, the difficulty is scaling these defenses to handle the latency requirements of real-world agents. The industry is effectively trying to build an "immunology" for agents—a way for the system to detect when its own memory (the retrieval cache) has been corrupted.
+These papers reveal a paradigm shift. We are moving away from "input sanitization" toward "contextual verification." The systems proposed by Kim et al. (arXiv, 2026) and Chen et al. (arXiv, 2026) suggest that we cannot trust the retrieved information blindly, nor can we trust the agent to synthesize it without an external verification layer. This week’s output confirms that while research is prolific, the difficulty is scaling these defenses to handle the latency requirements of real-world agents. The industry is effectively trying to build an "immunology" for agents—a way for the system to detect when its own memory (the retrieval cache) has been corrupted.
 
 ### 2. The Evolution of Jailbreaking: Obfuscation and Multimodality
 As LLM providers harden their alignment filters, adversaries are bypassing them by leveraging "obfuscation distributions"—spreading harmful intent across tokens or modalities so that no single component looks malicious to a standard safety filter.
@@ -49,7 +49,7 @@ As LLM providers harden their alignment filters, adversaries are bypassing them 
 **Analysis:**
 The cat-and-mouse game between red-teamers and alignment teams has entered a new phase of linguistic and modality-based sophistication. The research by Garcia et al. (arXiv, 2026) is particularly concerning; it suggests that by obfuscating the safety attention mechanism, attackers can render safety filters effectively blind. This is a departure from traditional "direct prompt" attacks, which the LLM industry has largely mitigated through better RLHF (Reinforcement Learning from Human Feedback).
 
-Furthermore, the focus on multilingual jailbreaking (using low-resource languages) and multimodal jailbreaking highlights a "safety debt" in globalized deployment. Safety training is heavily English-centric. When we analyze the historical trend of LLM Jailbreaking in our KB (742 papers, avg 24 citations), we see that the citation volume is high, but the "time-to-obsolescence" for each defense is shrinking. The inclusion of attention-guided reward mechanisms in jailbreaking underscores that attackers are now using AI-powered optimization to find the exact "latent detours" that trigger safety bypasses. The field is actively working to address the combinatorial explosion of attack vectors now available to attackers.
+Furthermore, the focus on multilingual jailbreaking (using low-resource languages) and multimodal jailbreaking highlights a "safety debt" in globalized deployment. Safety training is heavily English-centric. Looking at the historical trend of LLM jailbreaking research, the "time-to-obsolescence" for each defense is shrinking. The inclusion of attention-guided reward mechanisms in jailbreaking underscores that attackers are now using AI-powered optimization to find the exact "latent detours" that trigger safety bypasses. The field is actively working to address the combinatorial explosion of attack vectors now available to attackers.
 
 ### 3. Deep-Dive Diagnostics: Moving Beyond "Toxicity Scores"
 There is a rising realization that current benchmarking—simply checking if a model produces a "bad word"—is fundamentally flawed. We are seeing a new wave of research focused on *how* a model thinks, not just what it says.
@@ -62,7 +62,7 @@ There is a rising realization that current benchmarking—simply checking if a m
 *   **White et al. (arXiv, 2026)** — [Remembering More, Risking More: Longitudinal Safety Risks in LLMs](http://arxiv.org/abs/2605.17830v1): Establishes that scaling context windows up to 128k tokens correlates with a 41.6% increase in susceptibility to multi-hop indirect prompt injections.
 
 **Analysis:**
-The paper by Smith et al. (arXiv, 2026) is a vital theoretical contribution this week. It points out that safety checks are often performed after a generation is complete, or at the very end of the sequence. This misses the "reasoning trace"—the dangerous logic that occurs *before* the final token is generated. This mirrors the struggle in "General AI Security" (16,497 papers in our KB, avg 21 citations), where the sheer volume of research is beginning to suffer from fragmentation.
+The paper by Smith et al. (arXiv, 2026) is a vital theoretical contribution this week. It points out that safety checks are often performed after a generation is complete, or at the very end of the sequence. This misses the "reasoning trace"—the dangerous logic that occurs *before* the final token is generated. This mirrors the struggle in the broader AI security literature, where the sheer volume of research is beginning to suffer from fragmentation.
 
 Practitioners are realizing that static benchmarks are static, but attacks are dynamic. The papers by White et al. (arXiv, 2026) and Park et al. (arXiv, 2026) suggest a shift toward evaluating models over time, not just in isolated "Q&A" sessions. We are witnessing the birth of "adversarial regression testing" as a standard practice. It is no longer enough to measure if a model is safe on day one; we must measure if it remains safe after days of interacting with users, accumulating long-term memory, and potentially being nudged by benign-looking inputs. This is a critical maturation point for the field.
 
@@ -77,7 +77,7 @@ As models are integrated into federated learning environments and complex diffus
 *   **Guo et al. (arXiv, 2026)** — [Federated Naive Bayes with Real Mixture of Gaussians](http://arxiv.org/abs/2605.18647v1): Protects private local data distributions while keeping global classification accuracy within 1.8% of standard centralized benchmarks.
 
 **Analysis:**
-The focus on *Federated Learning* (1,185 papers in KB, avg 20 citations) and *Backdoor Detection* is not new, but the scope is broadening. We are seeing backdoors applied to increasingly niche and powerful architectures: Variational Quantum Circuits and Masked Diffusion Models. This indicates that attackers are looking at the "infrastructure" of AI rather than just the LLM weights. If a company uses a third-party diffusion model for generation, they inherit potential vulnerabilities that reside deep within the diffusion process. The robust aggregation defense proposed by Al-Mutawa et al. (arXiv, 2026) is a necessary step toward protecting decentralized training.
+The focus on *Federated Learning* and *Backdoor Detection* is not new, but the scope is broadening. We are seeing backdoors applied to increasingly niche and powerful architectures: Variational Quantum Circuits and Masked Diffusion Models. This indicates that attackers are looking at the "infrastructure" of AI rather than just the LLM weights. If a company uses a third-party diffusion model for generation, they inherit potential vulnerabilities that reside deep within the diffusion process. The robust aggregation defense proposed by Al-Mutawa et al. (arXiv, 2026) is a necessary step toward protecting decentralized training.
 
 ### Empirical Threat Model Matrix
 
@@ -88,18 +88,6 @@ The focus on *Federated Learning* (1,185 papers in KB, avg 20 citations) and *Ba
 | **Multi-Party Memory Leak** | CrewAI / AutoGPT Agent State | 27.5% unauthorized data leakage rate | Privilege-isolated runtime loops |
 | **Low-Resource Language Bypasses** | Llama-3-8B-Instruct | 81.3% alignment bypass rate | Dynamic multilingual guardrails |
 | **Masked Diffusion Backdoors** | Hugging Face MDLM checkpoints | 98.2% backdoor trigger activation | Fast model weight scanning algorithms |
-
-### Benchmarking Metrics
-
-| Topic | Papers This Week | Historical Avg Citations (KB) | Trend Impact |
-| :--- | :---: | :---: | :--- |
-| **Agent/RAG Security** | 9 | 28 | High (Escalating) |
-| **Jailbreaking** | 7 | 24 | High (Cat & Mouse) |
-| **Backdoor/Poisoning** | 8 | 8 | Moderate |
-| **Benchmarking/Diagnostics**| 6 | 14 | Rising |
-| **Federated/Privacy** | 5 | 20 | Stable |
-
-*Note: Total Papers Analyzed: 35. Total KB stats represent the aggregate of our 5,700-paper knowledge base.*
 
 ## Industry & News
 
@@ -117,6 +105,6 @@ The focus on *Federated Learning* (1,185 papers in KB, avg 20 citations) and *Ba
 
 I am deeply concerned, though not entirely surprised, by this week's overwhelming focus on agentic runtime failures and RAG poisoning. For the last two years, the industry has thrown massive budgets at prompt injection filters, ignoring what happens when we give these models autonomy, persistent memory, and access to third-party tools. 
 
-The papers on *AgentTrap* and *ShadowMerge* validate a practitioner's nightmare: in agentic workflows, traditional input sanitization is practically useless. Attackers are no longer trying to trick the model's front door; they are polluting the very environment the agent relies on to "think." This is the exact paradigm shift I warned about in [AI Agent Traps: When the Environment Becomes the Attacker](/writing/ai_agent_traps). This article is directly relevant because it established the threat model where the retrieval index itself is weaponized to exploit the LLM's parsing engine. When you cross these operational layers—which I analyzed in [Security of Autonomous AI Agents: Trust Boundary-Based Attack Surface Analysis and Trends](/writing/security_autonomous_ai_agents_trust_boundary)—the retrieved context itself becomes the exploit payload. This piece is directly relevant because it details the precise trust boundaries that fail when untrusted RAG context triggers unauthenticated tool execution.
+The papers on *AgentTrap* and *ShadowMerge* validate a practitioner's nightmare: in agentic workflows, traditional input sanitization is practically useless. Attackers are no longer trying to trick the model's front door; they are polluting the very environment the agent relies on to "think." This is the exact paradigm shift I warned about in my review of [AI Agent Traps: When the Environment Becomes the Attacker](/writing/ai_agent_traps). That review is directly relevant because it established the threat model where the retrieval index itself is weaponized to exploit the LLM's parsing engine. When you cross these operational layers—which I analyzed in [Security of Autonomous AI Agents: Trust Boundary-Based Attack Surface Analysis and Trends](/writing/security_autonomous_ai_agents_trust_boundary)—the retrieved context itself becomes the exploit payload. This piece is directly relevant because it details the precise trust boundaries that fail when untrusted RAG context triggers unauthenticated tool execution.
 
 We've already seen early glimpses of this in the wild, such as experimental coding assistants being hijacked simply by pulling from maliciously crafted GitHub repositories. This isn't just an academic exercise; an unchecked agent executing automated actions based on poisoned RAG data could easily lead to a \$50M enterprise incident. If your security architecture still relies on the agent safely synthesizing whatever it blindly retrieves from a vector database, you are already compromised. It is time we start treating external environments and RAG indexes as actively hostile territory.

@@ -2,6 +2,8 @@
 title: "Audio Jailbreaks in Large Audio-Language Models: Taxonomy, Attack-Defense Analysis, and Cost-Aware Evaluation"
 date: "2026-05-30"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.30031"
+paperAuthors: "Bo-Han Feng, Yu-Hsuan Li Liang, Chien-Feng Liu, et al."
 description: "Acoustic Best-of-N (Acoustic BoN) attacks systematically bypass safety alignment in Large Audio-Language Models (LALMs) by brute-forcing speech attributes (accent, language, emotion, age, gender), ach"
 tags: ["AI Security"]
 readingTime: 9

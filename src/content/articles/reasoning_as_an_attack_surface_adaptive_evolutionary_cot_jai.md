@@ -2,6 +2,8 @@
 title: "Reasoning as an Attack Surface: Adaptive Evolutionary CoT Jailbreaks for LLMs"
 date: "2026-05-30"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.24497"
+paperAuthors: "Jianan Li, Simeng Qin, Xiaojun Jia, et al."
 description: "AE-CoT is an adaptive evolutionary jailbreak framework that reformulates malicious goals into pedagogical 'teacher-style' prompts and systematically optimizes adversarial Chain-of-Thought (CoT) struct"
 tags: ["AI Security"]
 readingTime: 9

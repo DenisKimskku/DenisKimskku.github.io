@@ -2,6 +2,8 @@
 title: "Hijacking Agent Memory: Stealthy Trojan Attacks Through Conversational Interaction"
 date: "2026-05-30"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.29960"
+paperAuthors: "Hongtao Wang, Se Yang, Yu Chen, et al."
 description: "**MemPoison** is an optimization-driven conversational memory poisoning attack that bypasses the selective extraction and rewriting filters of modern LLM agents to inject persistent, triggerable backd"
 tags: ["AI Security"]
 readingTime: 9

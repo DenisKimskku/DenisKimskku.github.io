@@ -2,6 +2,8 @@
 title: "Summoning the Oracle to Slay It: Mitigating Look-Ahead Bias in Financial Backtesting with Large Language Models"
 date: "2026-05-30"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.24564"
+paperAuthors: "Weixian Waylon Li, Mengyu Wang, Tiejun Ma"
 description: "FinCAD is an inference-time decoding scheme that adapts Context-Aware Decoding (CAD) to suppress an LLM's memorized knowledge of historical stock movements by dynamically subtracting a model-specific,"
 tags: ["AI Security"]
 readingTime: 12

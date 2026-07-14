@@ -2,6 +2,8 @@
 title: "Cordyceps: Covert Control Attacks on LLMs via Data Poisoning"
 date: "2026-05-28"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.26595"
+paperAuthors: "Zedian Shao, Charles Fleming, Teodora Baluta"
 description: "CORDYCEPS is a data poisoning attack that implants a steganographic 'Semantic Hiding under Shared knowledge' (SHuSh) channel into LLMs during instruction tuning, enabling stealthy control and data exf"
 tags: ["AI Security"]
 readingTime: 10

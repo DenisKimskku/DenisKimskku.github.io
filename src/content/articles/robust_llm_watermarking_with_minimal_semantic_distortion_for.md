@@ -2,6 +2,8 @@
 title: "Robust LLM Watermarking with Minimal Semantic Distortion for IP Protection"
 date: "2026-05-30"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.23175"
+paperAuthors: "Kieu Dang, Phung Lai, NhatHai Phan, et al."
 description: "SAFESEAL is a key-conditioned, post-processing LLM watermarking framework that preserves named entities while utilizing context-aware synonym substitutions to embed robust, provider-specific verificat"
 tags: ["AI Security"]
 readingTime: 10

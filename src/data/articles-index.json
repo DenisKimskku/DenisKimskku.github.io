@@ -4,7 +4,7 @@
     "title": "AI Security Digest — July 14, 2026",
     "date": "2026-07-14",
     "type": "News Digest",
-    "description": "Today’s security updates underscore a distinct shift toward highly coordinated, automated exploitation systems and untraceable hardware-level neural network attacks. Multi-agent systems are transitioning from passive coding assistants to autonomous offensive operations targeting…",
+    "description": "Today’s security updates underscore a distinct shift toward highly coordinated, automated exploitation systems and untraceable hardware-level neural network attacks.",
     "tags": [
       "Agentic AI",
       "Multi-Agent Systems",
@@ -20,7 +20,7 @@
     "title": "Federated Learning Architecture: Data Privacy and System Security Approaches",
     "date": "2026-07-14",
     "type": "Paper Review",
-    "description": "A dual-layer defense framework that integrates CKKS Homomorphic Encryption (HE) with Differentially Private Stochastic Gradient Descent (DP-SGD) to protect both transit-level gradients and end-model o",
+    "description": "As organizations face mounting regulatory hurdles (such as GDPR and HIPAA) when pooling data, Federated Learning (FL) has been widely adopted as a privacy-preserving alternative.",
     "tags": [
       "AI Security"
     ],
@@ -31,7 +31,7 @@
     "title": "OpenLongTail: Generative Scaling of Long-Tail Driving Data",
     "date": "2026-07-14",
     "type": "Paper Review",
-    "description": "OpenLongTail is an open-source generative data engine that converts unposed, monocular driving videos into pose-grounded, consistent multi-view training assets under a target camera rig",
+    "description": "Autonomous driving (AD) systems are limited by scarce \"long-tail\" edge cases (e.g., construction zones, wild animals). Standard multi-view end-to-end models (like Alpamayo R1) require synchronized multi-view setups, but most real-world edge cases are captured on unposed…",
     "tags": [
       "AI Security"
     ],
@@ -42,7 +42,7 @@
     "title": "Optimizing Against Safety Representations: Activation-Guided Adversarial Suffixes and the Geometry of Refusal",
     "date": "2026-07-14",
     "type": "Paper Review",
-    "description": "Activation-Guided GCG optimizes adversarial suffixes by minimizing projection onto a model's internal, low-dimensional refusal direction, paired with Soft-GCG (SGCG) which replaces discrete search wit",
+    "description": "Security researchers and red-teamers have long relied on Greedy Coordinate Gradient (GCG) to bypass LLM safety guardrails. However, standard GCG operates on a superficial behavioral proxy—optimizing inputs to force specific target output tokens like \"Sure, here is...\"—while…",
     "tags": [
       "AI Security"
     ],
@@ -64,7 +64,7 @@
     "title": "Triggering Stealthy Feature Map Backdoors via Physical Fault Injection in Embedded Neural Networks",
     "date": "2026-07-14",
     "type": "Paper Review",
-    "description": "LATCH (Latent Activation Trigger via Cross-level Faults in Hardware) is a cross-layer backdoor attack that uses physical hardware fault injection (EMFI or voltage glitching) at runtime to dynamically",
+    "description": "Edge AI has rapidly migrated neural network inference from secure cloud servers to resource-constrained microcontrollers deployed in physical environments. While localized inference enhances privacy, it exposes hardware to physical adversaries.",
     "tags": [
       "AI Security"
     ],
@@ -75,7 +75,7 @@
     "title": "VEXAIoT: Autonomous IoT Vulnerability EXploitation using AI Agents",
     "date": "2026-07-14",
     "type": "Paper Review",
-    "description": "VEXAIoT is an autonomous multi-agent AI framework that coordinates a vulnerability detection agent and an attack execution agent to scan, plan, and exploit IoT-specific vulnerabilities using LLMs and",
+    "description": "With the rapid expansion of the Internet of Things (IoT)—projected to exceed 39 billion connected devices by 2030—the security of embedded systems has become a critical bottleneck.",
     "tags": [
       "AI Security"
     ],
@@ -86,7 +86,7 @@
     "title": "When Routes Run Out: Adversarial Co-Learning and Explainable Robustness in Quantum Repeater Networks",
     "date": "2026-07-14",
     "type": "Paper Review",
-    "description": "An adversarial co-learning framework utilizing the Exp3 bandit algorithm to dynamically resolve route selection (Alice) and attack placement (Eve) over quantum repeater networks without prior topologi",
+    "description": "As metropolitan-scale quantum communication systems move from localized physics labs to distributed, multi-node routing architectures, safeguarding these setups against strategic interceptors becomes a primary concern.",
     "tags": [
       "AI Security"
     ],
@@ -97,7 +97,7 @@
     "title": "AI Security Digest — July 13, 2026",
     "date": "2026-07-13",
     "type": "News Digest",
-    "description": "OpenAI is undergoing a fundamental structural realignment as its safety chief departs—marking the sixth safety leader to exit the organization in the past two years—with the dedicated safety mandate now being folded directly into the core research division. This consolidation…",
+    "description": "OpenAI is undergoing a fundamental structural realignment as its safety chief departs—marking the sixth safety leader to exit the organization in the past two years—with the dedicated safety mandate now being folded directly into the core research division.",
     "tags": [
       "Agentic AI",
       "Prompt Injection",
@@ -160,7 +160,7 @@
     "title": "EdgeRefine: Privacy-Utility Balance for Graphs via Jaccard Sampling under Edge Differential Privacy",
     "date": "2026-07-11",
     "type": "Paper Review",
-    "description": "EdgeRefine is a local differential privacy (LDP) framework that preserves graph structural utility under strict edge-level differential privacy by combining Jaccard similarity estimation, quantile-bas",
+    "description": "Traditional approaches to edge-level differential privacy (DP) inject noise directly into the adjacency matrix to satisfy $\\epsilon$-edge differential privacy.",
     "tags": [
       "AI Security"
     ],
@@ -171,7 +171,7 @@
     "title": "Efficient Safety Alignment of Language Models via Latent Personality Traits",
     "date": "2026-07-11",
     "type": "Paper Review",
-    "description": "Latent Personality Alignment (LPA) is a compute-efficient post-training defense that applies Latent Adversarial Training (LAT) to a tiny, harm-agnostic dataset of 66 psychometric statements to robustl",
+    "description": "Production language models integrated into agentic loops and developer tools (such as RAG pipelines or autonomous agents) remain highly vulnerable to jailbreaks and adversarial prompts.",
     "tags": [
       "AI Security"
     ],
@@ -182,7 +182,7 @@
     "title": "Functional and Secure Code Generation with Task Vectors",
     "date": "2026-07-11",
     "type": "Paper Review",
-    "description": "SecVecCoder uses task-vector arithmetic derived from Localized Preference Optimization (LPO) to steer LLM weights in weight-space ($W_{\\text{steered}} = W_{\\text{base}} + \\tau_{\\text{sec}} - \\theta \\t",
+    "description": "The rapid integration of Large Language Models (LLMs) into software development pipelines—powering coding assistants and internal code-completion engines—has introduced a critical security vector.",
     "tags": [
       "AI Security"
     ],
@@ -193,7 +193,7 @@
     "title": "Open Models, Open Risks: Measuring Unsafe Generation in Text-to-Image Models In the Wild",
     "date": "2026-07-11",
     "type": "Paper Review",
-    "description": "A large-scale empirical study revealing that traditional safety evaluation metrics catastrophically overestimate jailbreak risks in text-to-image (T2I) models due to 'semantic drift' and 'generation a",
+    "description": "Text-to-image (T2I) generation has transitioned from academic novelty to core infrastructure in real-world applications and self-hosted Stable Diffusion pipelines.",
     "tags": [
       "AI Security"
     ],
@@ -204,7 +204,7 @@
     "title": "Out of Sight: Compression-Aware Content Protection against Agentic Crawlers",
     "date": "2026-07-11",
     "type": "Paper Review",
-    "description": "CAPE (Compression-Aware Protective Evolution) is a proactive content-protection framework that injects human-invisible Unicode perturbations into high-value text to cause catastrophic semantic and str",
+    "description": "As large language model (LLM) agents like GPT-4.1, Gemini 3 Flash, and specialized coding tools like GitHub Copilot automate web navigation, traditional scraping barriers are failing.",
     "tags": [
       "AI Security"
     ],
@@ -215,7 +215,7 @@
     "title": "Persuasion Attacks Can Decrease Effectiveness of CoT Monitoring",
     "date": "2026-07-11",
     "type": "Paper Review",
-    "description": "Exposing an agent's Chain-of-Thought (CoT) reasoning to an LLM-based safety monitor acts as an additional persuasion channel, increasing the monitor's approval rate of policy-violating actions by an a",
+    "description": "As large language models (LLMs) transition from passive chatbots to autonomous agents executing code, managing financial transactions, and interacting with production APIs, safety engineering has shifted focus toward real-time oversight.",
     "tags": [
       "AI Security"
     ],
@@ -226,7 +226,7 @@
     "title": "Prismata: Confining Cross-Site Prompt Injection in Web Agents",
     "date": "2026-07-11",
     "type": "Paper Review",
-    "description": "Prismata is a system-level defense layer for autonomous web agents that enforces contextual least privilege by dynamically deriving trust labels from DOM structure and executing deterministic mechanic",
+    "description": "The rapid advancement of autonomous web agents—such as OpenAI's Operator, Google’s Agentic AI, and custom enterprise RPA pipelines—has reopened one of the web's oldest and most dangerous attack surfaces.",
     "tags": [
       "AI Security"
     ],
@@ -237,7 +237,7 @@
     "title": "ScopeJudge: Cost-Aware Pre-Execution Gating for Offensive Security Agents",
     "date": "2026-07-11",
     "type": "Paper Review",
-    "description": "A pre-execution gating framework that utilizes a cost-efficient, trusted LLM judge to inspect and accept or reject tool calls proposed by autonomous agents before they are executed",
+    "description": "As autonomous LLM agents transition from simple text generation to executing complex multi-step plans in tools like Claude Code's auto mode or custom offensive security harnesses, they present a massive liability.",
     "tags": [
       "AI Security"
     ],
@@ -248,7 +248,7 @@
     "title": "Securing Autonomous Vehicle Systems via Twin-Aware Federated Reinforcement Learning",
     "date": "2026-07-11",
     "type": "Paper Review",
-    "description": "SecApp secures Federated Reinforcement Learning (FRL) against Byzantine model poisoning by combining majority-voting spatial filtering, historical gradient trajectory constraints, and digital twin rep",
+    "description": "Standard defenses fail because they do not account for the unique characteristics of FRL. The table below highlights how prior schemes fall short under reinforcement learning constraints…",
     "tags": [
       "AI Security"
     ],
@@ -259,7 +259,7 @@
     "title": "Token-Flow Firewall: Semantic Runtime Auditing for Persistent AI Agents",
     "date": "2026-07-11",
     "type": "Paper Review",
-    "description": "TokenWall is a local, hierarchical runtime firewall that intercepts and semantically audits natural-language 'token flows' (context, authority, and capability transitions) in persistent AI agents befo",
+    "description": "As LLM agents transition from transient, single-turn chatbots into persistent, autonomous systems operating in the wild—such as OpenClaw personal assistants—they face a massive new attack surface.",
     "tags": [
       "AI Security"
     ],
@@ -286,7 +286,7 @@
     "title": "MM-Snowball: Evaluating and Mitigating Hallucination Snowballing in Multimodal Multi-Turn Dialogue",
     "date": "2026-06-03",
     "type": "Paper Review",
-    "description": "An analysis of 'hallucination snowballing' in multi-turn multimodal dialogue, where initially minor visual errors cascade into systemic cognitive delusions as the model prioritizes conversational hist",
+    "description": "While the AI red-teaming community has extensively studied jailbreaks, prompt injections, and single-turn hallucinations in Multimodal Large Language Models (MLLMs), a far more insidious vulnerability has flown under the radar: hallucination snowballing.",
     "tags": [
       "AI Security"
     ],
@@ -297,7 +297,7 @@
     "title": "The Invitation Trap: Proactive Availability Backdoor in LLMs via Conversational Induction",
     "date": "2026-06-03",
     "type": "Paper Review",
-    "description": "The Proactive Availability Backdoor (PAB) is an attack paradigm that weaponizes an LLM's aligned helpfulness, actively inducing the user to type a target trigger word through conversational suggestion",
+    "description": "As LLM agents are rapidly integrated into production pipelines—powering coding copilots, automated customer service, and real-time medical or legal advisors—our security assumptions remain anchored in static, passive threat models.",
     "tags": [
       "AI Security"
     ],
@@ -308,7 +308,7 @@
     "title": "BadBone: Backdoor Attacks Against Backbone Models in Visual Prompt Learning",
     "date": "2026-06-02",
     "type": "Paper Review",
-    "description": "BADBONE is a bi-level optimization backdoor attack targeting frozen vision backbones in Visual Prompt Learning (VPL) using a highly stealthy 'prompt-and-trigger co-activation' mechanism",
+    "description": "Visual prompt learning (VPL) has emerged as a highly efficient paradigm for adapting large pre-trained foundation models—such as ResNet, ViT, and CLIP—to specialized downstream tasks.",
     "tags": [
       "AI Security"
     ],
@@ -319,7 +319,7 @@
     "title": "From Prompt Injection to Persistent Control: Defending Agentic Harness Against Trojan Backdoors",
     "date": "2026-06-02",
     "type": "Paper Review",
-    "description": "Tan et al. (arXiv 2026) introduce *ClawTrojan*, a benchmark exposing how multi-step trojan attacks persistently compromise agentic workspace files, and *DASGuard*, a provenance-tracking runtime defens",
+    "description": "As LLM-powered systems transition from ephemeral web chatbots to autonomous, state-retaining coding agents like Claude Code, Cursor, and OpenClaw, security vulnerabilities are shifting from transient prompt injection to long-lived repository compromise. Tan et al.",
     "tags": [
       "AI Security"
     ],
@@ -362,7 +362,7 @@
     "title": "A Bayesian Approach to Membership Inference for Statistical Release",
     "date": "2026-05-30",
     "type": "Paper Review",
-    "description": "A modular Bayesian Membership Inference Attack (BMIA) framework that models population attribute dependencies as a Bayesian Network and computes the exact posterior probability of membership via proba",
+    "description": "Real-world demographic, financial, and medical data almost never follow a clean, independent product distribution; instead, they contain complex, multi-layered structural relationships.",
     "tags": [
       "AI Security"
     ],
@@ -389,7 +389,7 @@
     "title": "AliMark: Enhancing Robustness of Sentence-Level Watermarking Against Text Paraphrasing",
     "date": "2026-05-30",
     "type": "Paper Review",
-    "description": "AliMark is a sentence-level LLM watermarking framework that reformulates watermarking as a bit sequence encoding and global alignment problem, utilizing a proactive sentence 'Re-Structurer' and adapti",
+    "description": "As generative models like GPT-4o, Claude 3.5 Sonnet, and Google's Gemini become deeply integrated into writing workflows, identifying AI-generated content has transformed into a critical security and intellectual property challenge.",
     "tags": [
       "AI Security"
     ],
@@ -400,7 +400,7 @@
     "title": "Audio Jailbreaks in Large Audio-Language Models: Taxonomy, Attack-Defense Analysis, and Cost-Aware Evaluation",
     "date": "2026-05-30",
     "type": "Paper Review",
-    "description": "Acoustic Best-of-N (Acoustic BoN) attacks systematically bypass safety alignment in Large Audio-Language Models (LALMs) by brute-forcing speech attributes (accent, language, emotion, age, gender), ach",
+    "description": "As Large Audio-Language Models (LALMs) like OpenAI's GPT-4o and open-source models such as Qwen3-Omni become deeply integrated into real-time speech pipelines and personal voice assistants, their expanded threat landscape remains poorly understood.",
     "tags": [
       "AI Security"
     ],
@@ -411,7 +411,7 @@
     "title": "Beyond English and Evasion: A Human-Annotated Multi-Domain Benchmark for High-Stakes LLM Safety Evaluation in Chinese",
     "date": "2026-05-30",
     "type": "Paper Review",
-    "description": "A human-annotated benchmark (`ChiSafe-PAS`) designed to evaluate LLM alignment against Chinese-specific adversarial evasion techniques, such as character decomposition, tonal homophones, and hedging t",
+    "description": "When frontier LLMs like GPT-4o, Claude 3.5 Sonnet, and native Chinese systems like Qwen-2.5 are deployed in real-world environments, they encounter adversarial inputs vastly different from English red-teaming sets.",
     "tags": [
       "AI Security"
     ],
@@ -422,7 +422,7 @@
     "title": "Hidden in Plain Tokens: Simply Robust, Gradient-Free Watermark for Synthetic Audio",
     "date": "2026-05-30",
     "type": "Paper Review",
-    "description": "A gradient-free, training-free audio watermarking technique that clusters neural codec vocabularies using graph community detection (Leiden algorithm) to make token-level watermarks invariant to non-i",
+    "description": "As synthetic speech and generative music systems reach human parity, the line between authentic and AI-generated audio is almost completely gone. For security teams, red-teamers, and AI safety researchers, content provenance is now a critical battleground.",
     "tags": [
       "AI Security"
     ],
@@ -433,7 +433,7 @@
     "title": "Hijacking Agent Memory: Stealthy Trojan Attacks Through Conversational Interaction",
     "date": "2026-05-30",
     "type": "Paper Review",
-    "description": "**MemPoison** is an optimization-driven conversational memory poisoning attack that bypasses the selective extraction and rewriting filters of modern LLM agents to inject persistent, triggerable backd",
+    "description": "With LLM agents rapidly evolving from simple stateless chatbots to autonomous, persistent workflows, the integration of Long-Term Memory (LTM) modules has become standard practice.",
     "tags": [
       "AI Security"
     ],
@@ -444,7 +444,7 @@
     "title": "Minimal Prompt Perturbations Lead to Code Vulnerabilities: Prompt Fragility and Hidden-State Signals in Coding LLMs",
     "date": "2026-05-30",
     "type": "Paper Review",
-    "description": "Minimal, benign prompt mutations (like single-character typos) can silently flip LLM-generated code from secure to vulnerable, but these security vulnerabilities can be predicted directly from the mod",
+    "description": "LLM-based coding assistants like GitHub Copilot, Cursor, and Amazon Q have integrated deeply into the modern software development lifecycle. While developer productivity has soared, the security posture of the generated code remains highly precarious.",
     "tags": [
       "AI Security"
     ],
@@ -455,7 +455,7 @@
     "title": "Reasoning as an Attack Surface: Adaptive Evolutionary CoT Jailbreaks for LLMs",
     "date": "2026-05-30",
     "type": "Paper Review",
-    "description": "AE-CoT is an adaptive evolutionary jailbreak framework that reformulates malicious goals into pedagogical 'teacher-style' prompts and systematically optimizes adversarial Chain-of-Thought (CoT) struct",
+    "description": "As Large Reasoning Models (LRMs) like OpenAI's o1/o3-mini, DeepSeek-R1, and Gemini 2.5 Flash Thinking increasingly power critical user-facing systems, Google's AI Overviews, and RAG pipelines in software engineering tools like Cursor, their explicit reasoning capabilities…",
     "tags": [
       "AI Security"
     ],
@@ -466,7 +466,7 @@
     "title": "Relevance as a Vulnerability: How Web Retrieval Degrades Safety Alignment in LLM Agents",
     "date": "2026-05-30",
     "type": "Paper Review",
-    "description": "Web retrieval degrades LLM safety alignment by introducing two core vulnerabilities: 'commitment bias' (where coupling tool execution and generation makes refusal less likely) and the 'Safe Source Par",
+    "description": "As LLM-powered agents transition from static chat windows to active, tool-use systems that browse, fetch, and synthesize live web data in real time, their underlying safety profiles change dramatically.",
     "tags": [
       "AI Security"
     ],
@@ -477,7 +477,7 @@
     "title": "Robust LLM Watermarking with Minimal Semantic Distortion for IP Protection",
     "date": "2026-05-30",
     "type": "Paper Review",
-    "description": "SAFESEAL is a key-conditioned, post-processing LLM watermarking framework that preserves named entities while utilizing context-aware synonym substitutions to embed robust, provider-specific verificat",
+    "description": "As commercial large language models (LLMs) like GPT-4o, Claude 3.5 Sonnet, and Gemini Pro are increasingly deployed as downstream API services, providers face a growing threat: black-box model stealing.",
     "tags": [
       "AI Security"
     ],
@@ -488,7 +488,7 @@
     "title": "SafeCtrl-RL: Inference-Time Adaptive Behaviour Control for LLM Dialogue via RL-Driven Prompt Optimisation",
     "date": "2026-05-30",
     "type": "Paper Review",
-    "description": "An inference-time behavioral control framework (SafeCtrl-RL) that uses a Reinforcement Learning (DQN) agent to dynamically select from 11 distinct prompt-refinement strategies based on real-time safet",
+    "description": "Ensuring that Large Language Models (LLMs) behave safely and contextually during real-time interactions remains an active battleground for AI safety engineers.",
     "tags": [
       "AI Security"
     ],
@@ -499,7 +499,7 @@
     "title": "Summoning the Oracle to Slay It: Mitigating Look-Ahead Bias in Financial Backtesting with Large Language Models",
     "date": "2026-05-30",
     "type": "Paper Review",
-    "description": "FinCAD is an inference-time decoding scheme that adapts Context-Aware Decoding (CAD) to suppress an LLM's memorized knowledge of historical stock movements by dynamically subtracting a model-specific,",
+    "description": "Large language models (LLMs) are rapidly finding homes as autonomous quantitative analysts and trading agents inside algorithmic trading pipelines.",
     "tags": [
       "AI Security"
     ],
@@ -526,7 +526,7 @@
     "title": "Cordyceps: Covert Control Attacks on LLMs via Data Poisoning",
     "date": "2026-05-28",
     "type": "Paper Review",
-    "description": "CORDYCEPS is a data poisoning attack that implants a steganographic 'Semantic Hiding under Shared knowledge' (SHuSh) channel into LLMs during instruction tuning, enabling stealthy control and data exf",
+    "description": "With the widespread deployment of Retrieval-Augmented Generation (RAG) pipelines in corporate environments and advanced developer tools like Cursor, LLMs are continuously exposed to untrusted external data.",
     "tags": [
       "AI Security"
     ],
@@ -537,7 +537,7 @@
     "title": "Ellipsoid Control: A White-list Jailbreak Defense via Benign Latent Modeling",
     "date": "2026-05-28",
     "type": "Paper Review",
-    "description": "Ellipsoid Control (EC) is an inference-time jailbreak defense that uses Projected Gradient Descent (PGD) to steer hidden representation states toward refusal targets while strictly bound by a high-dim",
+    "description": "As large language models (LLMs) transition from conversational interfaces to core decision-making infrastructure—powering tools like Cursor, agentic workflows, and database-connected RAG pipelines—securing their latent representations from adversarial manipulation has become a…",
     "tags": [
       "AI Security"
     ],
@@ -548,7 +548,7 @@
     "title": "Five Queries Are Enough: Query-Efficient and Surrogate-Free Membership Inference Attacks on RAG via Entailment",
     "date": "2026-05-28",
     "type": "Paper Review",
-    "description": "MEntA (Membership Entailment Attack) is a highly query-efficient, surrogate-free membership inference attack on Retrieval-Augmented Generation (RAG) systems that leverages Natural Language Inference (",
+    "description": "As enterprises rapidly deploy Retrieval-Augmented Generation (RAG) architectures to ground Large Language Models (LLMs) in proprietary data, they open a massive and subtle privacy backdoor.",
     "tags": [
       "AI Security"
     ],
@@ -559,7 +559,7 @@
     "title": "IterInject: Indirect Prompt Injection Against LLM Agents via Feedback-Guided Iterative Optimization",
     "date": "2026-05-28",
     "type": "Paper Review",
-    "description": "An iterative black-box framework named *IterInject* that automates indirect prompt injections (IPI) by coupling structured, four-level diagnostic feedback with an LLM-based optimizer and self-evolving",
+    "description": "LLM-based autonomous agents are rapidly migrating from toys to core enterprise infrastructure. Production platforms like Claude Code, code-completion agents in Cursor, and agentic workflows in Google's AI Overviews routinely process, summarize, and execute tools based on…",
     "tags": [
       "AI Security"
     ],
@@ -570,7 +570,7 @@
     "title": "Jailbreak to Protect: Buffering and Reinforcing via Temporary Jailbreaking for Safe Fine-Tuning in Large Language Models",
     "date": "2026-05-28",
     "type": "Paper Review",
-    "description": "A fine-tuning defense framework that temporarily jailbreaks an LLM using a frozen adapter (BufferLoRA) during user training to saturate safety-degrading gradients, followed by post-training QR-decompo",
+    "description": "Fine-tuning-as-a-Service (FaaS) APIs offered by providers like OpenAI, Google Cloud, and Together AI have revolutionized personalized AI, enabling developers to customize models like LLaMA 3, Gemma 2, and GPT-4o on proprietary datasets.",
     "tags": [
       "AI Security"
     ],
@@ -581,7 +581,7 @@
     "title": "Localization then Neutralization: Gradient-guided Token Suppression against Visual Prompt Injection Attack",
     "date": "2026-05-28",
     "type": "Paper Review",
-    "description": "Gradient Token Masking (GTM) is an inference-time defense that protects Large Vision-Language Models (LVLMs) from visual prompt injection by localizing critical adversarial image tokens via hidden-sta",
+    "description": "As Large Vision-Language Models (LVLMs) transition from conversational interfaces to autonomous multimodal agents (acting in environments like Cursor, GPT-4o, and Qwen2-VL), their susceptibility to visual prompt injection has emerged as a high-priority attack surface.",
     "tags": [
       "AI Security"
     ],
@@ -592,7 +592,7 @@
     "title": "Poisoning the Watchtower: Prompt Injection Attacks Against LLM-Augmented Security Operations Through Adversarial Log Content",
     "date": "2026-05-28",
     "type": "Paper Review",
-    "description": "Log-substrate prompt injection exploits attacker-controlled security log fields (such as HTTP User-Agents and URI paths) to inject adversarial instructions directly into LLM-augmented security workflo",
+    "description": "As Large Language Models (LLMs) are rapidly adopted to assist Security Operations Centers (SOCs), they are being integrated directly into SIEM, EDR, and cloud telemetry feeds to perform heavy-lifting analysis.",
     "tags": [
       "AI Security"
     ],
@@ -603,7 +603,7 @@
     "title": "Prompt Injection Detection is Regime-Dependent: A Deployment-Aware Evaluation with Interpretable Structural Signals",
     "date": "2026-05-28",
     "type": "Paper Review",
-    "description": "An evaluation framework exposing that prompt injection detection is highly 'regime-dependent' (varying heavily based on attack style), alongside the 'Instruction Boundary Violation Score' (IBVS v2)—a",
+    "description": "As large language models power production-grade systems like Cursor, Google's AI Overviews, and complex retrieval-augmented generation (RAG) pipelines, the threat of prompt injection has evolved from a theoretical curiosity into a critical application-layer vulnerability.",
     "tags": [
       "AI Security"
     ],
@@ -614,7 +614,7 @@
     "title": "Resolving the Correct Library: A Loader-Level Defense Solution Against Shared Object Hijacking",
     "date": "2026-05-28",
     "type": "Paper Review",
-    "description": "A loader-centric verification framework implemented via `glibc`'s `LD_AUDIT` interface that binds dynamically loaded shared objects (`.so`) to immutable Build-IDs and cryptographic hashes to block sea",
+    "description": "As artificial intelligence models are increasingly deployed on resource-constrained Edge Linux devices and within complex microservices, securing the underlying execution environment is critical.",
     "tags": [
       "AI Security"
     ],
@@ -625,7 +625,7 @@
     "title": "Steering Beyond the Support: Adversarial Training on Unsupervised Jailbroken Activation Simulation",
     "date": "2026-05-28",
     "type": "Paper Review",
-    "description": "An unsupervised adversarial training framework that simulates out-of-distribution (OOD) jailbreak activations in representation space, training a non-linear safety steering potential field to defend a",
+    "description": "Real-world safety alignment is a moving target. While system prompts, RLHF, and post-hoc activation steering can temporarily patch alignment vulnerabilities, malicious actors constantly discover out-of-distribution (OOD) jailbreaks that bypass these guardrails.",
     "tags": [
       "AI Security"
     ],
@@ -636,7 +636,7 @@
     "title": "Test-Time Training Undermines Safety Guardrails",
     "date": "2026-05-28",
     "type": "Paper Review",
-    "description": "Attackers can exploit Test-Time Training (TTT) and dynamic fine-tuning APIs to completely bypass safety guardrails in just 1 to 10 gradient steps by updating the model's weights on harmful target pref",
+    "description": "As frontier Large Language Models (LLMs) transition from scaling static parameters to scaling test-time compute, techniques like Test-Time Training (TTT) are becoming industry standards.",
     "tags": [
       "AI Security"
     ],
@@ -663,7 +663,7 @@
     "title": "An Efficient and Privacy-Preserving Architecture for Cross-Institutional Collaborative RAG",
     "date": "2026-05-27",
     "type": "Paper Review",
-    "description": "FedRAG, a non-cryptographic, federated RAG framework that uses a numerically stable scrambling matrix and token permutation to secure cross-node self-attention without model retraining or Trusted Exec",
+    "description": "The rapid deployment of Retrieval-Augmented Generation (RAG) in enterprise pipelines—such as customer support agents, medical diagnostic assistants, and financial risk tools—has run head-first into the barrier of \"data silos.\" Organizations like hospital networks and banks want…",
     "tags": [
       "AI Security"
     ],
@@ -674,7 +674,7 @@
     "title": "APT-Agent: Automated Penetration Testing using Large Language Models",
     "date": "2026-05-27",
     "type": "Paper Review",
-    "description": "An automated penetration testing framework (APT-Agent) that resolves LLM hallucinations and long-horizon context loss using a hybrid fuzzy-matching command rectifier and a compact, state-aware JSON co",
+    "description": "As Large Language Models (LLMs) like GPT-4o are increasingly integrated into automated security workflows, building reliable autonomous cyber-agents has transitioned from a theoretical pursuit to an active deployment paradigm.",
     "tags": [
       "AI Security"
     ],
@@ -685,7 +685,7 @@
     "title": "Building an Adversarial Malware Dataset by Family and Type: Generation, Evasion, and Poisoning Evaluation",
     "date": "2026-05-27",
     "type": "Paper Review",
-    "description": "Data poisoning using as little as 0.5% fully mislabelled ($\\tau = 1.0$) adversarial malware samples can completely blind machine learning-based static PE classifiers, boosting evasion rates from 26.13",
+    "description": "Machine learning (ML) models are the backbone of modern, high-throughput threat detection, but their reliance on automated data collection makes them prime targets for subversion.",
     "tags": [
       "AI Security"
     ],
@@ -696,7 +696,7 @@
     "title": "Evo-Attacker: Memory-Augmented Reinforcement Learning for Long-Horizon Tool Attacks on LLM-MAS",
     "date": "2026-05-27",
     "type": "Paper Review",
-    "description": "Evo-Attacker is a self-evolving, memory-augmented reinforcement learning framework that systematically compromises Large Language Model Multi-Agent Systems (LLM-MAS) by strategically injecting semanti",
+    "description": "Autonomous Multi-Agent Systems (MAS) powered by models like GPT-4o, Claude 3.5 Sonnet, and Qwen3 are rapidly becoming the backbone of complex automation workflows, from software engineering agents (similar to Cognition's Devin) to deep research pipelines.",
     "tags": [
       "AI Security"
     ],
@@ -707,7 +707,7 @@
     "title": "How Agentic AI Coding Assistants Become the Attacker's Shell",
     "date": "2026-05-27",
     "type": "Paper Review",
-    "description": "Indirect prompt injection attacks embedded in unvetted developer artifacts (such as workspace settings, custom rule files, and agent skill configurations) hijack the execution loop of agentic AI codin",
+    "description": "The rapid adoption of agentic AI coding assistants like Cursor, GitHub Copilot, Claude Code, and Windsurf has fundamentally altered the software development lifecycle.",
     "tags": [
       "AI Security"
     ],
@@ -718,7 +718,7 @@
     "title": "LLM-as-a-Reviewer: Benchmarking Their Ability, Divergence, and Prompt Injection Resistance as Paper Reviewers",
     "date": "2026-05-27",
     "type": "Paper Review",
-    "description": "A stealthy prompt injection attack exploiting custom TrueType font mappings (`cmap` tables) to embed visually imperceptible adversarial payloads in PDF manuscripts, forcing LLM-as-a-reviewer pipelines",
+    "description": "With major AI conferences like NeurIPS and ICLR receiving over 31,000 combined submissions annually, the peer-review process is facing an unprecedented scaling crisis. This pressure has forced venues like ICML to adopt LLM-assisted reviewing frameworks.",
     "tags": [
       "AI Security"
     ],
@@ -729,7 +729,7 @@
     "title": "QML-PipeGuard: Drift-Aware Behavioral Fingerprinting for Quantum Machine Learning Pipeline Integrity",
     "date": "2026-05-27",
     "type": "Paper Review",
-    "description": "QML-PipeGuard is a contract-based runtime verification framework that uses 'behavioral fingerprinting'—measuring a tomographically complete family of Pauli observables—to detect unauthorized quantum c",
+    "description": "As quantum machine learning (QML) moves from research prototypes to production APIs on platforms like IBM Quantum, IonQ, and Quantinuum, the integrity of the underlying quantum stage becomes a critical security boundary.",
     "tags": [
       "AI Security"
     ],
@@ -740,7 +740,7 @@
     "title": "Referential Security as a New Paradigm for AI Evaluations",
     "date": "2026-05-27",
     "type": "Paper Review",
-    "description": "AI safety evaluations currently rely on static identifiers (like model names) that resolve to unstable, constantly changing system configurations. To fix this, 'referential security' is introduced as",
+    "description": "When you deploy a security-critical workflow inside an LLM pipeline—such as code generation inside Cursor or safety filters for a clinical assistant—you rely on the model name in your API configuration to guarantee consistency.",
     "tags": [
       "AI Security"
     ],
@@ -751,7 +751,7 @@
     "title": "SAMark: A Self-Anchored Text Watermarking with Paragraph-Level Paraphrase Robustness",
     "date": "2026-05-27",
     "type": "Paper Review",
-    "description": "SAMARK is a self-anchored semantic-level watermarking framework that eliminates step-dependence in LLM text watermarking by anchoring random keys directly to sentence embeddings, making the watermark",
+    "description": "As generative AI models like GPT-4o, Google's AI Overviews, and Claude 3.5 Sonnet dominate enterprise content creation, the need for robust, tamper-resistant text watermarking has become a national security and copyright priority.",
     "tags": [
       "AI Security"
     ],
@@ -762,7 +762,7 @@
     "title": "Security in the Fine-Tuning Lifecycle of Large Language Models: Threats, Defenses,Evaluation, and Future Directions",
     "date": "2026-05-27",
     "type": "Paper Review",
-    "description": "Fine-tuning security is highly model-dependent, non-monotonic with scale, and vulnerable to cross-phase bypasses where single-phase defenses fail to neutralize attacks targeting other lifecycle phases",
+    "description": "As organizations rapidly transition from general-purpose API calls to hyper-customized, local deployments, Parameter-Efficient Fine-Tuning (PEFT) techniques like LoRA have become standard engineering practice.",
     "tags": [
       "AI Security"
     ],
@@ -773,7 +773,7 @@
     "title": "Semantic Validation of Packer Identification Tools: Characterization, Repair, and Downstream Impact",
     "date": "2026-05-27",
     "type": "Paper Review",
-    "description": "A semantic validation and repair framework that treats unpackers as 'executable semantic contracts' to automatically detect, localize, and fix semantic bugs in packer identification tools without manu",
+    "description": "Automated malware analysis pipelines deployed in Security Operations Centers (SOCs), threat intelligence platforms like VirusTotal, and endpoint detection and response (EDR) systems rely fundamentally on stripping file obfuscation before inspection.",
     "tags": [
       "AI Security"
     ],
@@ -784,7 +784,7 @@
     "title": "When Interpretability Becomes a Liability: Adversarial Attacks on CBM Concept Layers",
     "date": "2026-05-27",
     "type": "Paper Review",
-    "description": "Concept-level adversarial attacks exploit the human-interpretable intermediate concept layers of Concept Bottleneck Models (CBMs) to cause misclassification with minimal semantic edits, which can be m",
+    "description": "As machine learning systems are increasingly deployed in high-stakes domains like autonomous vehicles and clinical medical diagnostics, explainability has transitioned from a luxury to a hard requirement.",
     "tags": [
       "AI Security"
     ],
@@ -795,7 +795,7 @@
     "title": "AI Security Digest — May 24, 2026",
     "date": "2026-05-24",
     "type": "News Digest",
-    "description": "The dominant theme this week is the collapse of static, post-hoc alignment defenses under the pressure of dynamic, meta-optimizing exploit engines and the subsequent shift toward native, data-free mod",
+    "description": "1. Intrinsic Alignment via On-Policy Consistency Training (OPCT) Trajectory: Rapid Adoption. The industry is transitioning from fragile, post-hoc RLHF/DPO wrappers to native mathematical constraints embedded directly into the model's loss function.",
     "tags": [
       "LLM Security",
       "Backdoor Attacks",
@@ -811,7 +811,7 @@
     "title": "This Week in AI Security — May 24, 2026",
     "date": "2026-05-24",
     "type": "Trend Report",
-    "description": "This week, the AI security research community signaled a decisive pivot from static, prompt-response safety paradigms to the volatile, high-stakes realm of agentic autonomy and complex system integrat",
+    "description": "This week, the AI security research community signaled a decisive pivot from static, prompt-response safety paradigms to the volatile, high-stakes realm of agentic autonomy and complex system integration.",
     "tags": [
       "AI Agents",
       "RAG",
@@ -827,7 +827,7 @@
     "title": "AI Security Digest — May 23, 2026",
     "date": "2026-05-23",
     "type": "News Digest",
-    "description": "The central theme of this week's AI security landscape is the structural vulnerability of stateful AI systems, specifically how temporal memory, dynamic retrieval, and graph-based agent architectures",
+    "description": "The central theme of this week's AI security landscape is the structural vulnerability of stateful AI systems, specifically how temporal memory, dynamic retrieval, and graph-based agent architectures introduce complex vectors for long-horizon adversarial poisoning.",
     "tags": [
       "AI Security"
     ],
@@ -838,7 +838,7 @@
     "title": "AI Security Digest — May 21, 2026",
     "date": "2026-05-21",
     "type": "News Digest",
-    "description": "The dominant theme for May 21, 2026, is the rapid transition from superficial 'black-box' prompt injections to structural, reasoning-aware exploits targeting Large Reasoning Models (LRMs) within high-",
+    "description": "The dominant theme for May 21, 2026, is the rapid transition from superficial \"black-box\" prompt injections to structural, reasoning-aware exploits targeting Large Reasoning Models (LRMs) within high-stakes agentic pipelines.",
     "tags": [
       "LLM Security",
       "Adversarial Attacks",
@@ -854,7 +854,7 @@
     "title": "AI Security Digest — May 20, 2026",
     "date": "2026-05-20",
     "type": "News Digest",
-    "description": "The dominant threat vector this week is the systemic breakdown of the instruction-data boundary across autonomous agentic architectures, rendering traditional perimeter defenses and input sanitization",
+    "description": "The dominant threat vector this week is the systemic breakdown of the instruction-data boundary across autonomous agentic architectures, rendering traditional perimeter defenses and input sanitization obsolete.",
     "tags": [
       "AI Security"
     ],
@@ -865,7 +865,7 @@
     "title": "AI Security Digest — May 18, 2026",
     "date": "2026-05-18",
     "type": "News Digest",
-    "description": "The security boundary of generative AI has definitively shifted from stateless prompt-engineering vulnerabilities to structural and temporal exploits within multi-agent orchestration architectures. Th",
+    "description": "The security boundary of generative AI has definitively shifted from stateless prompt-engineering vulnerabilities to structural and temporal exploits within multi-agent orchestration architectures.",
     "tags": [
       "LLM Security",
       "Agentic AI",
@@ -881,7 +881,7 @@
     "title": "AI Security Digest — May 17, 2026",
     "date": "2026-05-17",
     "type": "News Digest",
-    "description": "The dominant theme this week is the critical paradigm shift toward weight-level model editing and zero-cost post-hoc auditing as traditional input-filtering perimeter guards collapse under the weight",
+    "description": "The dominant theme this week is the critical paradigm shift toward weight-level model editing and zero-cost post-hoc auditing as traditional input-filtering perimeter guards collapse under the weight of automated, LLM-orchestrated exploitation.",
     "tags": [
       "AI Security"
     ],
@@ -892,7 +892,7 @@
     "title": "This Week in AI Security — May 17, 2026",
     "date": "2026-05-17",
     "type": "Trend Report",
-    "description": "The single dominant theme in AI security this week is the definitive shift from model-centric prompt alignment to holistic, system-level security architectures forced by autonomous orchestration. Trad",
+    "description": "The single dominant theme in AI security this week is the definitive shift from model-centric prompt alignment to holistic, system-level security architectures forced by autonomous orchestration.",
     "tags": [
       "AI Security"
     ],
@@ -903,7 +903,7 @@
     "title": "AI Security Digest — May 10, 2026",
     "date": "2026-05-10",
     "type": "News Digest",
-    "description": "The dominant theme in this week's AI security landscape is the systemic vulnerability of stateful and routing structures within compound AI agent architectures. As engineering teams transition from si",
+    "description": "Zhang et al. (ArXiv, 2026) address the critical conflict between data privacy and intellectual property (IP) accountability in Federated Learning (FL) systems built on frameworks like PySyft and FedML.",
     "tags": [
       "AI Security"
     ],
@@ -914,7 +914,7 @@
     "title": "This Week in AI Security — May 10, 2026",
     "date": "2026-05-10",
     "type": "Trend Report",
-    "description": "The primary narrative this week is the systemic shift in exploit strategies from ephemeral, stateless prompt injections to persistent, stateful compromises of agentic memory and retrieval-augmented wo",
+    "description": "The primary narrative this week is the systemic shift in exploit strategies from ephemeral, stateless prompt injections to persistent, stateful compromises of agentic memory and retrieval-augmented workflows.",
     "tags": [
       "AI Security"
     ],
@@ -925,7 +925,7 @@
     "title": "AI Security Digest — May 09, 2026",
     "date": "2026-05-09",
     "type": "News Digest",
-    "description": "The dominant theme in AI security this week is the definitive collapse of surface-level and static alignment defenses in favor of deep, representation-level adversarial vulnerabilities. As demonstrate",
+    "description": "The dominant theme in AI security this week is the definitive collapse of surface-level and static alignment defenses in favor of deep, representation-level adversarial vulnerabilities.",
     "tags": [
       "AI Security"
     ],
@@ -936,7 +936,7 @@
     "title": "AI Security Digest — May 07, 2026",
     "date": "2026-05-07",
     "type": "News Digest",
-    "description": "The rapid paradigm shift from stateless, single-turn Large Language Model (LLM) prompts to stateful, multi-step autonomous agentic workflows has rendered traditional boundary-based and per-turn securi",
+    "description": "This paper argues that the \"library-centered\" model of AI red teaming—relying on manually curated, framework-specific attack modules—is functionally obsolete for modern agentic systems. Dheekonda et al.",
     "tags": [
       "Agentic AI",
       "LLM Security",
@@ -969,7 +969,7 @@
     "title": "AI Security Digest — April 22, 2026",
     "date": "2026-04-22",
     "type": "News Digest",
-    "description": "The unifying theme of this week's AI security landscape is the critical transition from superficial, syntax-level filtering to deep, state-aware behavioral defenses across both agentic workflows and s",
+    "description": "This research introduces FAUDITOR, a framework designed to identify business-logic vulnerabilities in smart contracts by mimicking human auditor reasoning rather than relying on opcode-level pattern matching.",
     "tags": [
       "LLM Security",
       "Agent Security",
@@ -985,7 +985,7 @@
     "title": "AI Security Digest — April 21, 2026",
     "date": "2026-04-21",
     "type": "News Digest",
-    "description": "The dominant security theme today is the structural breakdown of boundaries between reasoning engines and executive environments, transitioning the primary threat vector from semantic prompt manipulat",
+    "description": "In this paper, Ferrari et al. (ArXiv, 2026) address the \"alignment gap\" in mobile application data disclosure. Using a multi-stage pipeline built on GPT-4o, the authors achieve an F1-score of 91.4% in detecting inconsistencies and reveal that 95.2% of audited Android apps…",
     "tags": [
       "LLM Security",
       "Agent Security",
@@ -1003,7 +1003,7 @@
     "title": "AI Security Digest — April 20, 2026",
     "date": "2026-04-20",
     "type": "News Digest",
-    "description": "The systematic scaling of automated, AI-driven vulnerability discovery has triggered a structural crisis in legacy patch-management frameworks, as evidenced by the 263% surge in CVEs forcing an overha",
+    "description": "The systematic scaling of automated, AI-driven vulnerability discovery has triggered a structural crisis in legacy patch-management frameworks, as evidenced by the 263% surge in CVEs forcing an overhaul of NIST's National Vulnerability Database.",
     "tags": [
       "LLM Security",
       "AI Safety",
@@ -1019,7 +1019,7 @@
     "title": "AI Security Digest — April 19, 2026",
     "date": "2026-04-19",
     "type": "News Digest",
-    "description": "The dominant security vector of this cycle is the exploitation of human trust and unpatched legacy infrastructure as primary entry points, contrasting sharply with academic focus on complex algorithmi",
+    "description": "The dominant security vector of this cycle is the exploitation of human trust and unpatched legacy infrastructure as primary entry points, contrasting sharply with academic focus on complex algorithmic adversarial robustness.",
     "tags": [
       "LLM Security",
       "Authentication Security",
@@ -1032,7 +1032,7 @@
     "title": "This Week in AI Security — April 19, 2026",
     "date": "2026-04-19",
     "type": "Trend Report",
-    "description": "The dominant theme this week is the decisive transition from isolated 'model-centric' security toward systemic, hardware-software co-designed infrastructure integrity. As enterprise AI deployments sca",
+    "description": "The dominant theme this week is the decisive transition from isolated \"model-centric\" security toward systemic, hardware-software co-designed infrastructure integrity.",
     "tags": [
       "LLM Security",
       "Agent Security",
@@ -1048,7 +1048,7 @@
     "title": "AI Security Digest — April 18, 2026",
     "date": "2026-04-18",
     "type": "News Digest",
-    "description": "As autonomous agentic systems and multi-modal models increasingly bypass static guardrails, the core paradigm of AI security is shifting from superficial post-hoc input/output filtering to deep, execu",
+    "description": "As autonomous agentic systems and multi-modal models increasingly bypass static guardrails, the core paradigm of AI security is shifting from superficial post-hoc input/output filtering to deep, execution-aware architectural defenses.",
     "tags": [
       "LLM Security",
       "Agent Security",
@@ -1081,7 +1081,7 @@
     "title": "AI Security Digest — April 13, 2026",
     "date": "2026-04-13",
     "type": "News Digest",
-    "description": "The dominant security theme this week is the transition from atomic, single-turn prompt injections to stateful, multi-turn cognitive exploits that manipulate the context-window dynamics of Large Langu",
+    "description": "The dominant security theme this week is the transition from atomic, single-turn prompt injections to stateful, multi-turn cognitive exploits that manipulate the context-window dynamics of Large Language Models.",
     "tags": [
       "LLM Security",
       "Adversarial Attacks",
@@ -1097,7 +1097,7 @@
     "title": "AI Security Digest — April 12, 2026",
     "date": "2026-04-12",
     "type": "News Digest",
-    "description": "The dominant theme this week is the collapse of static, text-centric alignment barriers as multimodal models and autonomous agents merge to create highly dynamic execution-level security risks. As dem",
+    "description": "The dominant theme this week is the collapse of static, text-centric alignment barriers as multimodal models and autonomous agents merge to create highly dynamic execution-level security risks.",
     "tags": [
       "MLLM",
       "Adversarial Attacks",
@@ -1113,7 +1113,7 @@
     "title": "This Week in AI Security — April 12, 2026",
     "date": "2026-04-12",
     "type": "Trend Report",
-    "description": "This week’s threat landscape signals a structural shift from transient text-based 'jailbreaks' toward the systematic exploitation of autonomous agent execution layers, specifically targeting Model Con",
+    "description": "I’m genuinely relieved to see the academic community finally catching up to what practitioners have felt in the trenches: chat jailbreaks are a distraction.",
     "tags": [
       "Agent Security",
       "LLM Security",
@@ -1129,7 +1129,7 @@
     "title": "AI Security Digest — April 11, 2026",
     "date": "2026-04-11",
     "type": "News Digest",
-    "description": "The single dominant theme in this week’s landscape is the systemic collapse of static, input-boundary defense paradigms as adversarial exploits pivot to dynamic, multi-agent cascading injections and v",
+    "description": "The single dominant theme in this week’s landscape is the systemic collapse of static, input-boundary defense paradigms as adversarial exploits pivot to dynamic, multi-agent cascading injections and visual-semantic smuggling across complex model pipelines.",
     "tags": [
       "LLM Security",
       "Prompt Injection",
@@ -1161,7 +1161,7 @@
     "title": "AI Security Digest — April 07, 2026",
     "date": "2026-04-07",
     "type": "News Digest",
-    "description": "The current AI security landscape is defined by a critical architectural shift: as autonomous agent ecosystems transition from stateless chat interfaces to persistent, multi-tool environments, the tra",
+    "description": "The current AI security landscape is defined by a critical architectural shift: as autonomous agent ecosystems transition from stateless chat interfaces to persistent, multi-tool environments, the traditional network security perimeter is completely bypassed by \"ambient…",
     "tags": [
       "Agentic AI",
       "Supply-Chain Attack",
@@ -1193,7 +1193,7 @@
     "title": "AI Security Digest — April 06, 2026",
     "date": "2026-04-06",
     "type": "News Digest",
-    "description": "The dominant theme in today's landscape is the operational shift toward real-time, inference-stage intervention over destructive weight-modification, manifesting in both AI safety steering and highly",
+    "description": "The dominant theme in today's landscape is the operational shift toward real-time, inference-stage intervention over destructive weight-modification, manifesting in both AI safety steering and highly specialized code-reconstruction tasks.",
     "tags": [
       "AI Security",
       "Generative AI",
@@ -1211,7 +1211,7 @@
     "title": "AI Security Digest — April 05, 2026",
     "date": "2026-04-05",
     "type": "News Digest",
-    "description": "The transition of Large Language Models (LLMs) from static chat interfaces to autonomous, multi-agent frameworks has transformed the AI threat landscape, rendering standard input-filtering guardrails",
+    "description": "The transition of Large Language Models (LLMs) from static chat interfaces to autonomous, multi-agent frameworks has transformed the AI threat landscape, rendering standard input-filtering guardrails obsolete.",
     "tags": [
       "LLM Security",
       "Adversarial Attacks",
@@ -1227,7 +1227,7 @@
     "title": "This Week in AI Security — April 05, 2026",
     "date": "2026-04-05",
     "type": "Trend Report",
-    "description": "The primary security trajectory this week marks a decisive transition away from localized prompt injection toward systemic, stateful exploitation of autonomous, multi-agent architectures. As artificia",
+    "description": "The primary security trajectory this week marks a decisive transition away from localized prompt injection toward systemic, stateful exploitation of autonomous, multi-agent architectures.",
     "tags": [
       "AI Security",
       "Autonomous Agents",
@@ -1244,7 +1244,7 @@
     "title": "AI Security Digest — April 04, 2026",
     "date": "2026-04-04",
     "type": "News Digest",
-    "description": "The dominant security paradigm of early 2026 is the rapid transition from static, perimeter-based deep learning defenses to dynamic state-space models and automated prompt-to-signature compilation. Th",
+    "description": "Hiremath et al. (arXiv, 2026) tackle the persistent challenge of detecting Advanced Persistent Threats (APTs) that evade standard perimeter defenses.",
     "tags": [
       "AI Security",
       "Defensive AI",
@@ -1260,7 +1260,7 @@
     "title": "AI Security Digest — April 03, 2026",
     "date": "2026-04-03",
     "type": "News Digest",
-    "description": "The enterprise security landscape is undergoing a critical transition as defensive architectures pivot from token-level static guardrails to countering complex, goal-directed agentic exploits. Emergin",
+    "description": "The enterprise security landscape is undergoing a critical transition as defensive architectures pivot from token-level static guardrails to countering complex, goal-directed agentic exploits.",
     "tags": [
       "AI Security",
       "Autonomous Systems",
@@ -1275,7 +1275,7 @@
     "title": "AI Security Digest — April 02, 2026",
     "date": "2026-04-02",
     "type": "News Digest",
-    "description": "The modern AI threat landscape is undergoing a structural phase shift where security boundaries are migrating away from isolated prompt-engineering patches toward compositional, system-level, and hard",
+    "description": "The modern AI threat landscape is undergoing a structural phase shift where security boundaries are migrating away from isolated prompt-engineering patches toward compositional, system-level, and hardware-interconnected verification frameworks.",
     "tags": [
       "AI Security",
       "EnsembleSHAP",
@@ -1291,7 +1291,7 @@
     "title": "AI Security Digest — April 01, 2026",
     "date": "2026-04-01",
     "type": "News Digest",
-    "description": "The dominant theme this week is the structural vulnerability of agentic integrations that decouple security policies from real-time execution state, leaving enterprise pipelines highly vulnerable to c",
+    "description": "Jain et al. (arXiv, 2026) provide a definitive taxonomy of threats facing Multimodal Large Language Models (MLLMs). The authors define the MLLM operational structure as a function $Y = F(X; \\theta)$, where $X$ represents inputs across heterogeneous modalities (text, image…",
     "tags": [
       "AI Security",
       "Adversarial Attacks",
@@ -1307,7 +1307,7 @@
     "title": "AI Security Digest — March 31, 2026",
     "date": "2026-03-31",
     "type": "News Digest",
-    "description": "The AI security landscape has reached a critical inflection point, shifting from reactive output filtering to deep-stack defense across intermediate reasoning layers (Chain-of-Thought) and physical ex",
+    "description": "As Large Reasoning Models (LRMs) like OpenAI o1 and DeepSeek-R1 become the engines of high-stakes automation, the security community’s traditional focus on \"content safety\" has proven dangerously myopic.",
     "tags": [
       "LLM Security",
       "Reasoning Safety",
@@ -1323,7 +1323,7 @@
     "title": "AI Security Digest — March 30, 2026",
     "date": "2026-03-30",
     "type": "News Digest",
-    "description": "The AI security landscape has entered a critical phase defined by the 'agentic capability-vulnerability paradox,' where LLM-based systems possess the autonomous reasoning to patch legacy software vuln",
+    "description": "The AI security landscape has entered a critical phase defined by the \"agentic capability-vulnerability paradox,\" where LLM-based systems possess the autonomous reasoning to patch legacy software vulnerabilities while simultaneously introducing complex, unmonitored execution…",
     "tags": [
       "LLM Security",
       "Smart Contracts",
@@ -1338,7 +1338,7 @@
     "title": "AI Security Digest — March 29, 2026",
     "date": "2026-03-29",
     "type": "News Digest",
-    "description": "The dominant theme in AI security is the operational crisis emerging from the rapid transition of large language models (LLMs) from passive information-retrieval engines to active, high-privileged age",
+    "description": "The lack of new high-impact submissions on ArXiv this week suggests a tactical pause in the academic community, likely as researchers focus on the operationalization of existing frameworks rather than the discovery of new theoretical attack vectors.",
     "tags": [
       "AI Security",
       "Autonomous Systems",
@@ -1354,7 +1354,7 @@
     "title": "AI Security Digest — March 28, 2026",
     "date": "2026-03-28",
     "type": "News Digest",
-    "description": "The single dominant theme this week is the institutional transition of AI safety from academic red-teaming to formalized, monetized application security frameworks at the semantic layer. As major prov",
+    "description": "The single dominant theme this week is the institutional transition of AI safety from academic red-teaming to formalized, monetized application security frameworks at the semantic layer.",
     "tags": [
       "LLM Security",
       "Bug Bounty Programs",
@@ -1577,7 +1577,7 @@
     "title": "Rescuing the Unpoisoned: Efficient Defense against Knowledge Corruption Attacks on RAG Systems",
     "date": "2025-11-06",
     "type": "Research Paper",
-    "description": "RAGDefender is a lightweight, efficient defense mechanism designed to protect Retrieval-Augmented Generation (RAG) systems from knowledge corruption attacks",
+    "description": "Retrieval-Augmented Generation (RAG) is a powerful technique for making Large Language Models (LLMs) smarter, more accurate, and more current.",
     "tags": [
       "Retrieval-Augmented Generation",
       "LLM Security",

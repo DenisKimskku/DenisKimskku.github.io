@@ -2,6 +2,8 @@
 title: "When Routes Run Out: Adversarial Co-Learning and Explainable Robustness in Quantum Repeater Networks"
 date: "2026-07-14"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.09378"
+paperAuthors: "Brennan Bell, Inti Gabriel Mendoza Estrada, Andreas Trügler, et al."
 description: "An adversarial co-learning framework utilizing the Exp3 bandit algorithm to dynamically resolve route selection (Alice) and attack placement (Eve) over quantum repeater networks without prior topologi"
 tags: ["AI Security"]
 readingTime: 9

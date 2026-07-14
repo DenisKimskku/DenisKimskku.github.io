@@ -2,6 +2,8 @@
 title: "Beyond English and Evasion: A Human-Annotated Multi-Domain Benchmark for High-Stakes LLM Safety Evaluation in Chinese"
 date: "2026-05-30"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.29667"
+paperAuthors: "Wajdi Zaghouani, Kholoud K. Aldous, Yicheng Gao"
 description: "A human-annotated benchmark (`ChiSafe-PAS`) designed to evaluate LLM alignment against Chinese-specific adversarial evasion techniques, such as character decomposition, tonal homophones, and hedging t"
 tags: ["AI Security"]
 readingTime: 7

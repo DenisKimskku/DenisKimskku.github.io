@@ -2,6 +2,8 @@
 title: "Statistically Undetectable Backdoors in Deep Neural Networks"
 date: "2026-07-14"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.09532"
+paperAuthors: "Andrej Bogdanov, Alon Rosen, Neekon Vafa"
 description: "An adversarial model trainer can inject statistically undetectable, white-box backdoors into Deep Neural Networks (DNNs) with a compressing Gaussian first layer by planting a secret vector that forces distant inputs to map to near-identical embeddings."
 tags: ["AI Security"]
 readingTime: 10

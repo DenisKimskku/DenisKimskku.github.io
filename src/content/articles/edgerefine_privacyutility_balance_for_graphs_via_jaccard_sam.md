@@ -2,6 +2,8 @@
 title: "EdgeRefine: Privacy-Utility Balance for Graphs via Jaccard Sampling under Edge Differential Privacy"
 date: "2026-07-11"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.08659"
+paperAuthors: "Wenxiu Ding, Muzhi Liu, Zheng Yan, et al."
 description: "EdgeRefine is a local differential privacy (LDP) framework that preserves graph structural utility under strict edge-level differential privacy by combining Jaccard similarity estimation, quantile-bas"
 tags: ["AI Security"]
 readingTime: 10

@@ -2,6 +2,8 @@
 title: "The Invitation Trap: Proactive Availability Backdoor in LLMs via Conversational Induction"
 date: "2026-06-03"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2606.00654"
+paperAuthors: "He Wang, Jun Feng, Hong Sun, et al."
 description: "The Proactive Availability Backdoor (PAB) is an attack paradigm that weaponizes an LLM's aligned helpfulness, actively inducing the user to type a target trigger word through conversational suggestion"
 tags: ["AI Security"]
 readingTime: 10

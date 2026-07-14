@@ -2,6 +2,8 @@
 title: "Out of Sight: Compression-Aware Content Protection against Agentic Crawlers"
 date: "2026-07-11"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.08180"
+paperAuthors: "Xuefei Wang"
 description: "CAPE (Compression-Aware Protective Evolution) is a proactive content-protection framework that injects human-invisible Unicode perturbations into high-value text to cause catastrophic semantic and str"
 tags: ["AI Security"]
 readingTime: 9

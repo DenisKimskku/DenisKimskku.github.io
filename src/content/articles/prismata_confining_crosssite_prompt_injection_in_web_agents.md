@@ -2,6 +2,8 @@
 title: "Prismata: Confining Cross-Site Prompt Injection in Web Agents"
 date: "2026-07-11"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.08147"
+paperAuthors: "Corban Villa, Alp Eren Ozdarendeli, Sijun Tan, et al."
 description: "Prismata is a system-level defense layer for autonomous web agents that enforces contextual least privilege by dynamically deriving trust labels from DOM structure and executing deterministic mechanic"
 tags: ["AI Security"]
 readingTime: 9

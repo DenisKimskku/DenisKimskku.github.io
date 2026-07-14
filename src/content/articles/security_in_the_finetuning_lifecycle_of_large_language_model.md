@@ -2,6 +2,8 @@
 title: "Security in the Fine-Tuning Lifecycle of Large Language Models: Threats, Defenses,Evaluation, and Future Directions"
 date: "2026-05-27"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.25073"
+paperAuthors: "Wenjuan Li, Yitao Liu, Runze Chen, et al."
 description: "Fine-tuning security is highly model-dependent, non-monotonic with scale, and vulnerable to cross-phase bypasses where single-phase defenses fail to neutralize attacks targeting other lifecycle phases"
 tags: ["AI Security"]
 readingTime: 10

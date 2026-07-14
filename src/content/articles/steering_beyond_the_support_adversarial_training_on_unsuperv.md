@@ -2,6 +2,8 @@
 title: "Steering Beyond the Support: Adversarial Training on Unsupervised Jailbroken Activation Simulation"
 date: "2026-05-28"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.24535"
+paperAuthors: "Luoyu Chen, Weiqi Wang, Zhiyi Tian, et al."
 description: "An unsupervised adversarial training framework that simulates out-of-distribution (OOD) jailbreak activations in representation space, training a non-linear safety steering potential field to defend a"
 tags: ["AI Security"]
 readingTime: 10

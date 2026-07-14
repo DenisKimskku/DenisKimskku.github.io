@@ -2,6 +2,8 @@
 title: "Optimizing Against Safety Representations: Activation-Guided Adversarial Suffixes and the Geometry of Refusal"
 date: "2026-07-14"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.08883"
+paperAuthors: "Ege Çakar, Hannah Guan, Kayden Kehe"
 description: "Activation-Guided GCG optimizes adversarial suffixes by minimizing projection onto a model's internal, low-dimensional refusal direction, paired with Soft-GCG (SGCG) which replaces discrete search wit"
 tags: ["AI Security"]
 readingTime: 10
