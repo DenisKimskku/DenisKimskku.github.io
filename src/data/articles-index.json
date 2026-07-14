@@ -1,5 +1,153 @@
 [
   {
+    "slug": "ai_security_digest__july_15_2026",
+    "title": "AI Security Digest \u2014 July 15, 2026",
+    "date": "2026-07-15",
+    "type": "News Digest",
+    "description": "New threats emerge as AI agents become active exploit generators. This digest covers distributed backdoors in multi-agent systems and automated agent red-teaming.",
+    "tags": [
+      "LLM Security",
+      "Agentic AI",
+      "Adversarial Attacks",
+      "Distributed Backdoors",
+      "Red Teaming",
+      "System Security"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "one_token_is_enough_fingerprinting_and_verifying_large_langu",
+    "title": "One Token Is Enough: Fingerprinting and Verifying Large Language Models from Single-Token Output Distributions",
+    "date": "2026-07-15",
+    "type": "Paper Review",
+    "description": "A black-box behavioral fingerprinting and verification protocol for LLMs that uses the empirical distribution of single-token responses to simple 'random-choice' prompts to detect model substitution a",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "understanding_implicit_trust_errors_in_core_carrier_networks",
+    "title": "Understanding Implicit Trust Errors in Core Carrier Networks through Multi-Agent Flaw Discovery and Analysis",
+    "date": "2026-07-15",
+    "type": "Paper Review",
+    "description": "iFinder is an LLM-driven multi-agent framework that uses a multi-agent pipeline (Discovery, Vetting, and Exploitation) to automatically detect 'implicit trust errors' (iTrue)\u2014logic bugs stemming from ",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "advnav_behaviorguided_blackbox_adversarial_attacks_on_vision",
+    "title": "AdvNav: Behavior-Guided Black-Box Adversarial Attacks on Vision-Language Navigation",
+    "date": "2026-07-15",
+    "type": "Paper Review",
+    "description": "AdvNav is a gradient-free, black-box adversarial attack that crafts visually imperceptible, low-frequency Perlin noise to systematically derail Vision-Language Navigation (VLN) agents using only their",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "netinjectbench_benchmarking_indirect_prompt_injection_in_too",
+    "title": "NetInjectBench: Benchmarking Indirect Prompt Injection in Tool-Using Large Language Model Agents for Network Operations",
+    "date": "2026-07-15",
+    "type": "Paper Review",
+    "description": "NetInjectBench is a 130-scenario benchmark evaluating indirect prompt injection (IPI) attacks on tool-using network operations (NetOps) LLM agents, demonstrating that prompt-level defenses leave massi",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "crosslayer_misalignment_detection_in_agent_skills_a_progress",
+    "title": "Cross-Layer Misalignment Detection in Agent Skills: A Progressive Loading-Aware Contrastive Learning Approach",
+    "date": "2026-07-15",
+    "type": "Paper Review",
+    "description": "PL-HCL (Progressive Loading-Aware Hierarchical Contrastive Learning) is a pre-execution security framework that detects 'cross-layer misalignment'\u2014discrepancies between user-facing metadata claims and",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "distributed_denial_of_science_how_indirect_data_poisoning_of",
+    "title": "Distributed Denial of Science: How Indirect Data Poisoning of AI Systems Can Industrialize Scientific Fraud",
+    "date": "2026-07-15",
+    "type": "Paper Review",
+    "description": "Indirect data poisoning manipulates public repositories with falsified tabular data and deceptive metadata to trick autonomous AI research agents into drawing fabricated scientific conclusions",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 6
+  },
+  {
+    "slug": "when_cheap_gradients_fail_the_measurement_cost_of_attacking_",
+    "title": "When cheap gradients fail: the measurement cost of attacking quantum classifiers",
+    "date": "2026-07-15",
+    "type": "Paper Review",
+    "description": "Quantum shot noise acts as an irreducible, physical defense against gradient-based adversarial attacks by forcing the cost of extracting input gradients to scale polynomially with dimension (up to $d^",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "amtx_phasestructured_multiturn_redteaming_with_checklistgate",
+    "title": "AMT-X: Phase-Structured Multi-Turn Red-Teaming with Checklist-Gated Evaluation",
+    "date": "2026-07-15",
+    "type": "Paper Review",
+    "description": "AMT-X (Adaptive Multi-Turn Exploitation) is a reproducible, phase-structured multi-turn red-teaming framework that uses a state-machine attacker guided by semantic signals, evaluated by a checklist-ga",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "mako_a_selfevolving_agentic_operating_system_seaos_for_auton",
+    "title": "Mako: A Self-Evolving Agentic Operating System (SE-AOS) for Autonomous Web Exploitation",
+    "date": "2026-07-15",
+    "type": "Paper Review",
+    "description": "Mako is a Self-Evolving Agentic Operating System (SE-AOS) that treats security exploitation capabilities as a mutable, versioned kernel, dynamically extending its own tool library at runtime through a",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "llmguided_program_evolution_for_targeted_blackbox_attacks_on",
+    "title": "LLM-Guided Program Evolution for Targeted Black-Box Attacks on Perceptual Hash Algorithms",
+    "date": "2026-07-15",
+    "type": "Paper Review",
+    "description": "LLM-guided program evolution (using OpenEvolve and GigaEvo) automates targeted black-box collision attacks on perceptual hashing algorithms by writing and iteratively refining python-based search stra",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "agent_hacks_agent_autoresearch_for_productionagent_redteamin",
+    "title": "Agent Hacks Agent: Autoresearch for Production-Agent Red-Teaming",
+    "date": "2026-07-15",
+    "type": "Paper Review",
+    "description": "AHA (Agent Hacks Agents) is an automated red-teaming framework that uses a falsifiable research loop to discover structured, reusable 'vulnerability concepts' (represented as a Vulnerability Concept G",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "when_local_monitors_miss_compositional_harm_diagnosing_distr",
+    "title": "When Local Monitors Miss Compositional Harm: Diagnosing Distributed Backdoors in Multi-Agent Systems",
+    "date": "2026-07-15",
+    "type": "Paper Review",
+    "description": "A formal proof and empirical validation showing that per-step runtime monitors are mathematically blind to 'distributed backdoor' attacks where a malicious payload is split into locally benign fragmen",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
     "slug": "ai_security_digest__july_14_2026",
     "title": "AI Security Digest — July 14, 2026",
     "date": "2026-07-14",
