@@ -126,4 +126,37 @@ if (hasCwebp) {
   }
 }
 
-console.log(`\nDone: ${recompressed} recompressed, ${converted} converted, ${skipped} skipped (already exist).`);
+// --- Pass 3: guarantee a light .webp sibling for every heavy original ---
+// lint-content accepts an over-300KB original only when its .webp sibling is
+// under the limit; cwebp -q80 does not guarantee that (large palette PNGs can
+// produce oversized webps), so step quality/width down until the sibling fits.
+let guaranteed = 0;
+if (sharp) {
+  for (const image of images) {
+    if (statSync(image).size <= MAX_JPEG_BYTES) continue;
+    const webp = image.replace(/\.(png|jpe?g)$/i, '.webp');
+    if (existsSync(webp) && statSync(webp).size <= MAX_JPEG_BYTES) continue;
+    let done = false;
+    for (const [width, quality] of [[1600, 75], [1600, 60], [1200, 60], [1200, 45], [1000, 40]]) {
+      try {
+        const out = await sharp(image)
+          .resize({ width, withoutEnlargement: true })
+          .webp({ quality })
+          .toBuffer();
+        if (out.length <= MAX_JPEG_BYTES) {
+          writeFileSync(webp, out);
+          guaranteed++;
+          console.log(`Guaranteed webp: ${basename(webp)} ${Math.round(out.length / 1024)}KB (w${width} q${quality})`);
+          done = true;
+          break;
+        }
+      } catch (err) {
+        console.warn(`Failed webp for ${basename(image)}: ${err.message}`);
+        break;
+      }
+    }
+    if (!done) console.warn(`Could not get ${basename(image)} under ${MAX_JPEG_BYTES / 1024}KB as webp.`);
+  }
+}
+
+console.log(`\nDone: ${recompressed} recompressed, ${converted} converted, ${guaranteed} webp-guaranteed, ${skipped} skipped (already exist).`);
