@@ -2,7 +2,7 @@
 title: "Statistically Undetectable Backdoors in Deep Neural Networks"
 date: "2026-07-14"
 type: "Paper Review"
-description: "An adversarial model trainer can inject statistically undetectable, white-box backdoors into Deep Neural Networks (DNNs) with a compressing Gaussian first layer by planting a secret vector $\mathbf{z}"
+description: "An adversarial model trainer can inject statistically undetectable, white-box backdoors into Deep Neural Networks (DNNs) with a compressing Gaussian first layer by planting a secret vector that forces distant inputs to map to near-identical embeddings."
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/statistically_undetectable_backdoors_in_deep_neural_networks.jpg"

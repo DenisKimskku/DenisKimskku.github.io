@@ -18,6 +18,46 @@ function calculateReadingTime(content) {
   return Math.ceil(words / 200);
 }
 
+// Auto-generated articles sometimes carry raw LaTeX (e.g. $\mathbf{z}) inside
+// double-quoted frontmatter values; YAML only allows a fixed set of \-escapes
+// there, so js-yaml throws and kills the build. Re-serialize each double-quoted
+// scalar treating its contents as literal text. Returns null if nothing changed.
+function repairFrontmatter(raw) {
+  const m = raw.match(/^(---\r?\n)([\s\S]*?)(\r?\n---)/);
+  if (!m) return null;
+  const body = m[2];
+  const fixed = body
+    .split(/\r?\n/)
+    .map((line) => {
+      const kv = line.match(/^(\s*[\w-]+:\s*)"(.*)"(\s*)$/);
+      if (!kv) return line;
+      const literal = kv[2].replace(/\\(["\\])/g, '$1');
+      return kv[1] + JSON.stringify(literal) + kv[3];
+    })
+    .join('\n');
+  if (fixed === body) return null;
+  return raw.slice(0, m[1].length) + fixed + raw.slice(m[1].length + body.length);
+}
+
+function parseArticle(file, raw) {
+  try {
+    return { raw, parsed: matter(raw) };
+  } catch (err) {
+    const repaired = repairFrontmatter(raw);
+    if (repaired !== null) {
+      try {
+        const parsed = matter(repaired);
+        console.warn(`⚠ Repaired invalid frontmatter escapes in ${file}`);
+        fs.writeFileSync(path.join(articlesDir, file), repaired, 'utf8');
+        return { raw: repaired, parsed };
+      } catch {
+        // fall through to the original error
+      }
+    }
+    throw new Error(`Invalid frontmatter in ${file}: ${err.message}`);
+  }
+}
+
 // Load existing index so curated descriptions are preserved when frontmatter
 // only has a placeholder (e.g. "AI Security Digest — April 22, 2026"). When no
 // curated description exists either, fall back to auto-extraction from the
@@ -35,7 +75,7 @@ const articles = files
   .map((file) => {
     const slug = file.replace(/\.md$/, '');
     const raw = fs.readFileSync(path.join(articlesDir, file), 'utf8');
-    const { data, content } = matter(raw);
+    const { data, content } = parseArticle(file, raw).parsed;
 
     if (!data.title || !data.date) return null;
 
