@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/lib/theme";
 import PageTransition from "@/components/PageTransition";
 import LazyExtras from "@/components/LazyExtras";
-import { siteMetadata } from "@/lib/siteMetadata";
+import { siteMetadata, buildAlternates } from "@/lib/siteMetadata";
 
 const GA_MEASUREMENT_ID = 'G-0R77Z2VFWT';
 
@@ -42,11 +42,7 @@ export const metadata: Metadata = {
     icon: '/icon.svg',
     apple: '/apple-touch-icon.png',
   },
-  alternates: {
-    types: {
-      'application/rss+xml': `${siteMetadata.siteUrl}/rss.xml`,
-    },
-  },
+  alternates: buildAlternates(),
   verification: {
     ...(googleVerification ? { google: googleVerification } : {}),
     ...(bingVerification ? { other: { 'msvalidate.01': bingVerification } } : {}),
@@ -81,6 +77,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${lora.variable}`}>
       <body className="font-sans">
+        {/* Apply the stored/system theme before first paint to avoid a light flash.
+            Must mirror ThemeProvider in src/lib/theme.tsx: 'theme' key, 'dark' class. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d);}catch(e){}",
+          }}
+        />
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-[var(--color-bg-secondary)] focus:text-[var(--color-text)]">
           Skip to main content
         </a>

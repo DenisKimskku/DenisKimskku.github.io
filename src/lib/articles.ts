@@ -169,7 +169,7 @@ const TAG_ALIASES: Record<string, string> = {
   'Korean Language': 'LLM Security',
 };
 
-function normalizeTags(rawTags: string[]): string[] {
+export function normalizeTags(rawTags: string[]): string[] {
   const canonical = new Set<string>();
   for (const tag of rawTags) {
     const mapped = TAG_ALIASES[tag];
@@ -286,7 +286,7 @@ export function getRelatedArticles(
 }
 
 const tagLandingOverrides: Record<string, { lead: string; body: string }> = {
-  RAG: {
+  'RAG Security': {
     lead:
       'RAG security sits at the intersection of retrieval quality, prompt safety, and model reliability. A secure RAG pipeline is not just about better answers: it is about ensuring that retrieved context cannot quietly steer generation toward harmful, incorrect, or attacker-controlled behavior.',
     body:

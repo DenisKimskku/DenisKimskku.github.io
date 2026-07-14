@@ -10,7 +10,7 @@ import {
   getTagLandingContent,
   getTagSlugByName,
 } from '@/lib/articles';
-import { siteMetadata } from '@/lib/siteMetadata';
+import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
 
 interface PageProps {
   params: Promise<{ tag: string }>;
@@ -56,9 +56,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${tagName} Research Articles`,
     description,
     keywords: [tagName, ...landingContent.relatedTags],
-    alternates: {
-      canonical: `/writing/tag/${tagSlug}/`,
-    },
+    alternates: buildAlternates(`/writing/tag/${tagSlug}/`),
     openGraph: {
       title: `${tagName} Research Articles | ${siteMetadata.authorName}`,
       description,

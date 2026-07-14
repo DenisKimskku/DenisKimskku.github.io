@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import fs from 'fs';
 import path from 'path';
-import { siteMetadata } from '@/lib/siteMetadata';
+import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
 import { formatVenue } from '@/lib/venues';
 
 interface Paper {
@@ -23,9 +23,7 @@ const description = 'Curriculum vitae of Minseok (Denis) Kim — Ph.D. student a
 export const metadata: Metadata = {
   title: 'Curriculum Vitae',
   description,
-  alternates: {
-    canonical: '/resume/',
-  },
+  alternates: buildAlternates('/resume/'),
   openGraph: {
     title: `CV | ${siteMetadata.authorName}`,
     description,

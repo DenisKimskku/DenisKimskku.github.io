@@ -3,16 +3,14 @@ import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import StructuredData from '@/components/StructuredData';
 import { getAllArticles } from '@/lib/articles';
-import { siteMetadata } from '@/lib/siteMetadata';
+import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
 
 const description = 'Complete chronological archive of all articles, reviews, and tutorials.';
 
 export const metadata: Metadata = {
   title: 'Writing Archive',
   description,
-  alternates: {
-    canonical: '/writing/archive/',
-  },
+  alternates: buildAlternates('/writing/archive/'),
   openGraph: {
     title: `Writing Archive | ${siteMetadata.authorName}`,
     description,

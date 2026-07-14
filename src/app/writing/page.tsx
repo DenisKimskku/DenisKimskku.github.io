@@ -3,15 +3,13 @@ import Link from 'next/link';
 import WritingHub from '@/components/WritingHub';
 import StructuredData from '@/components/StructuredData';
 import { getAllArticles, getTagEntries } from '@/lib/articles';
-import { siteMetadata } from '@/lib/siteMetadata';
+import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
 
 const description = 'Research articles, AI security news, and technical writings by Minseok (Denis) Kim.';
 export const metadata: Metadata = {
   title: 'Writing',
   description,
-  alternates: {
-    canonical: '/writing/',
-  },
+  alternates: buildAlternates('/writing/'),
   openGraph: {
     title: `Writing | ${siteMetadata.authorName}`,
     description,
@@ -106,7 +104,7 @@ export default async function Writing() {
       <p className="mt-12">
         <Link
           href="/writing/archive/"
-          className="text-[var(--color-accent)] hover:underline decoration-[var(--color-accent)]/30 underline-offset-2"
+          className="text-[var(--color-accent)] hover:underline decoration-[color:color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2"
         >
           View the complete archive →
         </Link>

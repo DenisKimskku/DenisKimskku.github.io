@@ -45,11 +45,15 @@ function levenshteinDistance(a: string, b: string): number {
 }
 
 function highlightText(text: string, searchTerms: string[]): React.ReactElement {
-  if (searchTerms.length === 0) {
+  // Escape regex metacharacters — terms are user input ("(" would throw).
+  const escapedTerms = searchTerms
+    .filter(Boolean)
+    .map(term => term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  if (escapedTerms.length === 0) {
     return <>{text}</>;
   }
 
-  const regex = new RegExp(`(${searchTerms.join('|')})`, 'gi');
+  const regex = new RegExp(`(${escapedTerms.join('|')})`, 'gi');
   const matches = text.split(regex);
 
   return (
@@ -371,7 +375,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
                           key={tagIndex}
                           className={`px-2 py-0.5 rounded text-xs ${
                             activeTags.has(tag)
-                              ? 'bg-[var(--color-accent)]/10 text-[var(--color-accent)]'
+                              ? 'bg-[color:color-mix(in_srgb,var(--color-accent)_10%,transparent)] text-[var(--color-accent)]'
                               : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-muted)]'
                           }`}
                         >

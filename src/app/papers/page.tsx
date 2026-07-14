@@ -5,16 +5,14 @@ import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
 import CopyBibtexButton from '@/components/CopyBibtexButton';
 import AbstractToggle from '@/components/AbstractToggle';
-import { siteMetadata } from '@/lib/siteMetadata';
+import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
 import { formatVenueShort } from '@/lib/venues';
 
 const description = 'Academic publications by Minseok (Denis) Kim on AI security, RAG systems, and LLM safety.';
 export const metadata: Metadata = {
   title: 'Papers',
   description,
-  alternates: {
-    canonical: '/papers/',
-  },
+  alternates: buildAlternates('/papers/'),
   openGraph: {
     title: `Papers | ${siteMetadata.authorName}`,
     description,

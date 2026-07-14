@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { buildAlternates } from '@/lib/siteMetadata';
 
 export const metadata: Metadata = {
   title: 'News moved to Writing',
@@ -8,9 +9,7 @@ export const metadata: Metadata = {
     index: false,
     follow: true,
   },
-  alternates: {
-    canonical: '/news/',
-  },
+  alternates: buildAlternates('/news/'),
 };
 
 export default function NewsMoved() {

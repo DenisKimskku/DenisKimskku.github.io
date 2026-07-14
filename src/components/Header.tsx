@@ -42,8 +42,9 @@ export default function Header() {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [open]);
 
+  // Tailwind v3 drops opacity modifiers on var() arbitrary values, so use color-mix() directly.
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg)]/90 backdrop-blur-sm border-b border-[var(--color-border)] no-print">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[color:color-mix(in_srgb,var(--color-bg)_92%,transparent)] backdrop-blur-sm border-b border-[var(--color-border)] no-print">
       <div className="container-custom">
         <div className="flex items-center justify-between h-[var(--header-height)]">
           {/* Logo/Name */}
@@ -102,7 +103,7 @@ export default function Header() {
         <nav
           id="mobile-nav"
           aria-label="Primary navigation"
-          className="md:hidden border-t border-[var(--color-border)] bg-[var(--color-bg)]/95 backdrop-blur-sm"
+          className="md:hidden border-t border-[var(--color-border)] bg-[color:color-mix(in_srgb,var(--color-bg)_95%,transparent)] backdrop-blur-sm"
         >
           <div className="container-custom py-2 flex flex-col">
             {navItems.map((item) => (

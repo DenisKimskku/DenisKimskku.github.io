@@ -2,16 +2,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import StructuredData from '@/components/StructuredData'
-import { siteMetadata } from '@/lib/siteMetadata'
+import { siteMetadata, buildAlternates } from '@/lib/siteMetadata'
 
 const description = 'A powerful menu bar calendar app for macOS with Google Calendar integration, event management, and beautiful design.'
 
 export const metadata: Metadata = {
   title: 'Calendar++',
   description,
-  alternates: {
-    canonical: '/calendar-plus-plus/',
-  },
+  alternates: buildAlternates('/calendar-plus-plus/'),
   openGraph: {
     title: `Calendar++ | ${siteMetadata.authorName}`,
     description,

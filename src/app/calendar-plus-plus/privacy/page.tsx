@@ -1,13 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { siteMetadata } from '@/lib/siteMetadata'
+import { siteMetadata, buildAlternates } from '@/lib/siteMetadata'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy - calendar++',
   description: 'Privacy Policy for calendar++ macOS application',
-  alternates: {
-    canonical: '/calendar-plus-plus/privacy/',
-  },
+  alternates: buildAlternates('/calendar-plus-plus/privacy/'),
   openGraph: {
     url: `${siteMetadata.siteUrl}/calendar-plus-plus/privacy/`,
     title: 'Privacy Policy - calendar++',

@@ -1,16 +1,14 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
-import { siteMetadata } from '@/lib/siteMetadata';
+import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
 import projectData from '@/data/projects.json';
 
 const description = 'Open-source projects and code contributions by Minseok (Denis) Kim.';
 export const metadata: Metadata = {
   title: 'Code',
   description,
-  alternates: {
-    canonical: '/code/',
-  },
+  alternates: buildAlternates('/code/'),
   openGraph: {
     title: `Code | ${siteMetadata.authorName}`,
     description,
@@ -94,7 +92,7 @@ export default function Code() {
           Open-source projects and research implementations.{' '}
           <a
             href="https://github.com/DenisKimskku"
-            className="text-[var(--color-accent)] hover:underline decoration-[var(--color-accent)]/30 underline-offset-2"
+            className="text-[var(--color-accent)] hover:underline decoration-[color:color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2"
             target="_blank"
             rel="noopener noreferrer"
           >

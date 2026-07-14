@@ -1,13 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
-import { siteMetadata } from '@/lib/siteMetadata';
+import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
 
 export const metadata: Metadata = {
   description: siteMetadata.description,
-  alternates: {
-    canonical: '/',
-  },
+  alternates: buildAlternates('/'),
   openGraph: {
     title: siteMetadata.title,
     description: siteMetadata.description,
@@ -68,7 +66,7 @@ export default function Home() {
             I am a Ph.D. student at Sungkyunkwan University, advised by{' '}
             <a
               href="https://kevinkoo001.github.io/"
-              className="text-[var(--color-accent)] hover:underline decoration-[var(--color-accent)]/30 underline-offset-2"
+              className="text-[var(--color-accent)] hover:underline decoration-[color:color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -83,15 +81,15 @@ export default function Home() {
           </p>
           <p>
             A complete list of my{' '}
-            <Link href="/papers/" className="text-[var(--color-accent)] hover:underline decoration-[var(--color-accent)]/30 underline-offset-2">
+            <Link href="/papers/" className="text-[var(--color-accent)] hover:underline decoration-[color:color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2">
               publications
             </Link>{' '}
             are online, along with some of my{' '}
-            <Link href="/code/" className="text-[var(--color-accent)] hover:underline decoration-[var(--color-accent)]/30 underline-offset-2">
+            <Link href="/code/" className="text-[var(--color-accent)] hover:underline decoration-[color:color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2">
               code
             </Link>
             , and some extra{' '}
-            <Link href="/writing/" className="text-[var(--color-accent)] hover:underline decoration-[var(--color-accent)]/30 underline-offset-2">
+            <Link href="/writing/" className="text-[var(--color-accent)] hover:underline decoration-[color:color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2">
               writings
             </Link>
             .
