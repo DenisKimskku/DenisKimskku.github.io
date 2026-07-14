@@ -9,6 +9,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  issues: write
 
 concurrency:
   group: "pages"
@@ -28,7 +29,7 @@ jobs:
           cache: "npm"
 
       - name: Install system dependencies
-        run: sudo apt-get install -y webp
+        run: sudo apt-get update && sudo apt-get install -y webp
 
       - name: Install dependencies
         run: npm ci
@@ -39,10 +40,30 @@ jobs:
       - name: Build with Next.js
         run: npm run build
 
+      - name: Stamp deploy marker
+        run: echo "${GITHUB_SHA}" > out/deploy-marker.txt
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
+
+      - name: File issue on build failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # One open issue is enough; don't file a new one per failed run.
+          existing=$(gh issue list --repo "${{ github.repository }}" --state open \
+            --search "Deploy failed in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
+          if [ -z "$existing" ]; then
+            gh issue create --repo "${{ github.repository }}" \
+              --title "Deploy failed for ${{ github.sha }}" \
+              --body "The Pages build job failed. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+              || true # never mask the build failure with a notification failure
+          else
+            echo "Open deploy-failure issue #$existing already exists; skipping."
+          fi
 
   deploy:
     environment:
@@ -69,7 +90,19 @@ jobs:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
         run: npm run purge:cache
 
-      - name: Warm Cloudflare cache
+      - name: Wait for new deploy to be live
         run: |
-          sleep 15
-          CACHE_WARM_PASSES=2 CACHE_WARM_PASS_DELAY_MS=45000 CACHE_WARM_RETRIES=2 npm run warm:cache
+          # Poll the build-stamped marker until the origin serves THIS commit;
+          # any date-based signal matches the previous same-day deploy too.
+          for i in $(seq 1 24); do
+            marker=$(curl -fsS --max-time 10 "https://deniskim1.com/deploy-marker.txt?cb=${GITHUB_SHA}-${i}" || true)
+            if [ "$(printf '%s' "$marker" | tr -d '[:space:]')" = "${GITHUB_SHA}" ]; then
+              echo "Origin is serving this deploy after $((i * 5))s."
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "::warning::Deploy marker did not match ${GITHUB_SHA} within ~120s; warming anyway."
+
+      - name: Warm Cloudflare cache
+        run: CACHE_WARM_PASSES=2 CACHE_WARM_PASS_DELAY_MS=45000 CACHE_WARM_RETRIES=2 npm run warm:cache

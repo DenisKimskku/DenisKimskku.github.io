@@ -1,9 +1,11 @@
 name: CI
 
 on:
-  push:
-    branches: ["main"]
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   quality:
@@ -20,11 +22,17 @@ jobs:
           node-version: "20"
           cache: "npm"
 
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y webp
+
       - name: Install dependencies
         run: npm ci
 
       - name: Lint
         run: npm run lint
+
+      - name: Generate articles index
+        run: npm run generate:index
 
       - name: Build
         run: npm run build

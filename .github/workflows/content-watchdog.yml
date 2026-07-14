@@ -1,0 +1,51 @@
+name: Content watchdog
+
+on:
+  schedule:
+    # Daily at 21:00 UTC — the external automation should have published
+    # today's digest well before this.
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check-freshness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check newest article age
+        run: |
+          node -e '
+            const idx = require("./src/data/articles-index.json");
+            const newest = idx.map((a) => a.date).filter(Boolean).sort().at(-1);
+            if (!newest) { console.error("No dated articles in index."); process.exit(1); }
+            const ageHours = (Date.now() - Date.parse(newest + "T00:00:00Z")) / 3.6e6;
+            console.log(`Newest article: ${newest} (${ageHours.toFixed(1)}h old)`);
+            if (ageHours > 36) {
+              console.error("::error::Newest article is older than 36h — the content automation may be broken.");
+              process.exit(1);
+            }
+          '
+
+      - name: File issue on stale content
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # One open issue is enough; a stalled pipeline fails every day.
+          existing=$(gh issue list --repo "${{ github.repository }}" --state open \
+            --search "Content automation stale in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
+          if [ -z "$existing" ]; then
+            gh issue create --repo "${{ github.repository }}" \
+              --title "Content automation stale: no new article in 36h" \
+              --body "The content watchdog found no article newer than 36h in src/data/articles-index.json. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+              || true # never mask the check failure with a notification failure
+          else
+            echo "Open staleness issue #$existing already exists; skipping."
+          fi

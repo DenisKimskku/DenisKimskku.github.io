@@ -126,8 +126,14 @@ try {
     console.log(`[resume-pdf] wrote ${path.relative(process.cwd(), publicResumePath)}`);
   }
 } catch (err) {
-  console.error('[resume-pdf] failed:', err);
-  process.exitCode = 1;
+  if (fs.existsSync(publicResumePath)) {
+    // The committed public/resume.pdf was already copied into out/ by the
+    // build, so the deploy still ships a (possibly stale) resume.
+    console.warn(`::warning::[resume-pdf] generation failed (${err.message}); shipping committed public/resume.pdf fallback.`);
+  } else {
+    console.error('[resume-pdf] failed with no committed fallback:', err);
+    process.exitCode = 1;
+  }
 } finally {
   server.close();
 }

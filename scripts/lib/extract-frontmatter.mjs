@@ -54,7 +54,14 @@ function stripMarkdown(text) {
 function isTrivialDescription(description, title) {
   if (!description) return true;
   const normalized = description.trim();
-  return normalized === title.trim() || normalized.length < 60;
+  if (normalized === title.trim() || normalized.length < 60) return true;
+  // Truncated descriptions (mid-sentence or mid-word cuts from upstream
+  // automation) read broken in meta tags / cards — treat them as trivial so
+  // extractDescriptionFromContent() regenerates a sentence-complete summary.
+  // Terminal = . ! ? optionally followed by closing quotes/brackets; a
+  // trailing ellipsis ('...' or '…') is a truncation marker, not terminal.
+  if (/(\.\.\.|…)["'”’)\]]*$/.test(normalized)) return true;
+  return !/[.!?]["'”’)\]]*$/.test(normalized);
 }
 
 // Pull the first substantive paragraph from the article body, preferring the
@@ -73,7 +80,7 @@ function extractDescriptionFromContent(content, maxLen = 280) {
       for (let j = i + 1; j < blocks.length; j++) {
         const next = stripMarkdown(blocks[j]);
         if (next.length >= 80 && !next.startsWith('#') && !/^[!*\-]/.test(blocks[j].trim())) {
-          return truncate(next, maxLen);
+          return finalize(next, maxLen);
         }
       }
     }
@@ -91,15 +98,25 @@ function extractDescriptionFromContent(content, maxLen = 280) {
     if (trimmed.startsWith('|')) continue;          // table
     const cleaned = stripMarkdown(trimmed);
     if (cleaned.length >= 80) {
-      return truncate(cleaned, maxLen);
+      return finalize(cleaned, maxLen);
     }
   }
   return '';
 }
 
+// A paragraph that ends by introducing a list (':' etc.) is not a complete
+// summary on its own — mark the continuation explicitly.
+function finalize(text, maxLen) {
+  const t = truncate(text, maxLen);
+  return /[,;:]$/.test(t) ? t.replace(/[,;:\s]+$/, '') + '…' : t;
+}
+
 function truncate(text, maxLen) {
   if (text.length <= maxLen) return text;
   const cut = text.slice(0, maxLen);
+  // Prefer ending on a complete sentence so summaries never stop mid-thought.
+  const sentenceEnd = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('! '), cut.lastIndexOf('? '));
+  if (sentenceEnd > maxLen * 0.5) return cut.slice(0, sentenceEnd + 1);
   const lastSpace = cut.lastIndexOf(' ');
   return (lastSpace > maxLen * 0.6 ? cut.slice(0, lastSpace) : cut).replace(/[,;:.\s]+$/, '') + '…';
 }

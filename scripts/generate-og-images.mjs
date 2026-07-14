@@ -1,5 +1,7 @@
+import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
 
@@ -12,26 +14,35 @@ if (!fs.existsSync(ogDir)) {
   fs.mkdirSync(ogDir, { recursive: true });
 }
 
-// Fetch font from Google Fonts CSS API (request truetype format for satori compatibility)
-async function loadGoogleFont(family, weight) {
-  // Use an older user-agent to get ttf URLs (satori doesn't support woff2)
-  const cssUrl = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(family)}:wght@${weight}&display=swap`;
-  const cssRes = await fetch(cssUrl, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)',
-    },
-  });
-  const css = await cssRes.text();
+// slug -> sha1(title + type): lets corrected titles regenerate their image
+// while unchanged articles are skipped.
+const manifestPath = path.join(ogDir, 'manifest.json');
 
-  // Extract font URL (truetype/woff format)
-  const urlMatch = css.match(/src:\s*url\(([^)]+)\)\s*format\('(truetype|woff)'\)/);
-  if (!urlMatch) {
-    throw new Error(`Could not find font URL for ${family} ${weight}. CSS:\n${css.substring(0, 500)}`);
+// Fonts are vendored under scripts/assets/fonts/ (satori needs ttf; the old
+// Google Fonts CSS fetch made every build depend on an external service).
+const fontsDir = path.join(path.dirname(fileURLToPath(import.meta.url)), 'assets', 'fonts');
+
+function loadFont(file, name, weight) {
+  const data = fs.readFileSync(path.join(fontsDir, file));
+  return { name, data, weight };
+}
+
+function articleHash(article) {
+  // Hash every field the card renders — a corrected title, type, date, or
+  // tag set must regenerate the image.
+  const tags = Array.isArray(article.tags) ? article.tags.join(',') : '';
+  return crypto
+    .createHash('sha1')
+    .update(`${article.title}\n${article.type}\n${article.date}\n${tags}`)
+    .digest('hex');
+}
+
+function loadManifest() {
+  try {
+    return JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  } catch {
+    return {};
   }
-
-  const fontRes = await fetch(urlMatch[1]);
-  const data = await fontRes.arrayBuffer();
-  return { name: family, data, weight };
 }
 
 const TYPE_COLORS = {
@@ -44,18 +55,21 @@ const TYPE_COLORS = {
 };
 
 async function main() {
-  console.log('Loading fonts...');
-  const interFont = await loadGoogleFont('Inter', 400);
-  const interBoldFont = await loadGoogleFont('Inter', 700);
-  const loraFont = await loadGoogleFont('Lora', 700);
-  console.log('Fonts loaded.');
+  const interFont = loadFont('inter-400.ttf', 'Inter', 400);
+  const interBoldFont = loadFont('inter-700.ttf', 'Inter', 700);
+  const loraFont = loadFont('lora-700.ttf', 'Lora', 700);
+
+  const oldManifest = loadManifest();
+  const manifest = {};
 
   for (const article of articlesIndex) {
     const outputPath = path.join(ogDir, `${article.slug}.png`);
+    const hash = articleHash(article);
+    manifest[article.slug] = hash;
 
-    // Skip if already generated
-    if (fs.existsSync(outputPath)) {
-      console.log(`Skipping ${article.slug} (already exists)`);
+    // Skip only when the image exists AND was rendered from the same
+    // title/type — corrected titles regenerate.
+    if (fs.existsSync(outputPath) && oldManifest[article.slug] === hash) {
       continue;
     }
 
@@ -268,7 +282,14 @@ async function main() {
     console.log(`Generated OG image: ${article.slug}.png`);
   }
 
+  // Deterministic manifest: current index slugs only, sorted.
+  const sorted = Object.fromEntries(Object.keys(manifest).sort().map((k) => [k, manifest[k]]));
+  fs.writeFileSync(manifestPath, JSON.stringify(sorted, null, 2) + '\n', 'utf8');
+
   console.log('OG image generation complete.');
 }
 
-main().catch(console.error);
+main().catch((err) => {
+  console.error('OG image generation failed:', err);
+  process.exit(1);
+});

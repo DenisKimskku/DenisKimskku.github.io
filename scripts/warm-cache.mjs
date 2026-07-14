@@ -199,6 +199,11 @@ function isWarmableAsset(pathname) {
     return true;
   }
 
+  // Article header/hero images referenced from page HTML.
+  if (pathname.startsWith('/images/')) {
+    return true;
+  }
+
   return /^(\/icon\.svg|\/favicon\.ico|\/apple-touch-icon(?:-precomposed)?\.png)$/.test(pathname);
 }
 
