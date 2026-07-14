@@ -7,6 +7,7 @@ import {
   inferTagsFromContent,
   isTrivialDescription,
 } from './lib/extract-frontmatter.mjs';
+import { repairFrontmatterEscapes } from './lib/frontmatter-escapes.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, '..');
@@ -18,42 +19,24 @@ function calculateReadingTime(content) {
   return Math.ceil(words / 200);
 }
 
-// Auto-generated articles sometimes carry raw LaTeX (e.g. $\mathbf{z}) inside
-// double-quoted frontmatter values; YAML only allows a fixed set of \-escapes
-// there, so js-yaml throws and kills the build. Re-serialize each double-quoted
-// scalar treating its contents as literal text. Returns null if nothing changed.
-function repairFrontmatter(raw) {
-  const m = raw.match(/^(---\r?\n)([\s\S]*?)(\r?\n---)/);
-  if (!m) return null;
-  const body = m[2];
-  const fixed = body
-    .split(/\r?\n/)
-    .map((line) => {
-      const kv = line.match(/^(\s*[\w-]+:\s*)"(.*)"(\s*)$/);
-      if (!kv) return line;
-      const literal = kv[2].replace(/\\(["\\])/g, '$1');
-      return kv[1] + JSON.stringify(literal) + kv[3];
-    })
-    .join('\n');
-  if (fixed === body) return null;
-  return raw.slice(0, m[1].length) + fixed + raw.slice(m[1].length + body.length);
-}
-
+// Repair runs proactively, not just on parse errors: invalid escapes (\m)
+// crash js-yaml, but valid ones (\t in $\theta$) silently mangle the value,
+// and only the raw text betrays them. See scripts/lib/frontmatter-escapes.mjs.
 function parseArticle(file, raw) {
+  const repaired = repairFrontmatterEscapes(raw);
+  if (repaired !== null) {
+    try {
+      const parsed = matter(repaired);
+      console.warn(`⚠ Repaired unintended frontmatter escapes in ${file}`);
+      fs.writeFileSync(path.join(articlesDir, file), repaired, 'utf8');
+      return { raw: repaired, parsed };
+    } catch {
+      // repair didn't help; report the original file's parse error below
+    }
+  }
   try {
     return { raw, parsed: matter(raw) };
   } catch (err) {
-    const repaired = repairFrontmatter(raw);
-    if (repaired !== null) {
-      try {
-        const parsed = matter(repaired);
-        console.warn(`⚠ Repaired invalid frontmatter escapes in ${file}`);
-        fs.writeFileSync(path.join(articlesDir, file), repaired, 'utf8');
-        return { raw: repaired, parsed };
-      } catch {
-        // fall through to the original error
-      }
-    }
     throw new Error(`Invalid frontmatter in ${file}: ${err.message}`);
   }
 }

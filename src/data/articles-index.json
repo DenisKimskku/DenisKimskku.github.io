@@ -182,7 +182,7 @@
     "title": "Functional and Secure Code Generation with Task Vectors",
     "date": "2026-07-11",
     "type": "Paper Review",
-    "description": "SecVecCoder uses task-vector arithmetic derived from Localized Preference Optimization (LPO) to steer LLM weights in weight-space ($W_{\text{steered}} = W_{\text{base}} + \tau_{\text{sec}} - \theta",
+    "description": "SecVecCoder uses task-vector arithmetic derived from Localized Preference Optimization (LPO) to steer LLM weights in weight-space ($W_{\\text{steered}} = W_{\\text{base}} + \\tau_{\\text{sec}} - \\theta \\t",
     "tags": [
       "AI Security"
     ],
@@ -685,7 +685,7 @@
     "title": "Building an Adversarial Malware Dataset by Family and Type: Generation, Evasion, and Poisoning Evaluation",
     "date": "2026-05-27",
     "type": "Paper Review",
-    "description": "Data poisoning using as little as 0.5% fully mislabelled ($\tau = 1.0$) adversarial malware samples can completely blind machine learning-based static PE classifiers, boosting evasion rates from 26.13",
+    "description": "Data poisoning using as little as 0.5% fully mislabelled ($\\tau = 1.0$) adversarial malware samples can completely blind machine learning-based static PE classifiers, boosting evasion rates from 26.13",
     "tags": [
       "AI Security"
     ],

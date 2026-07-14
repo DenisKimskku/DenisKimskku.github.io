@@ -4,6 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
+import { repairFrontmatterEscapes } from './lib/frontmatter-escapes.mjs';
 
 const ARTDIR = path.join(process.cwd(), 'src', 'content', 'articles');
 const files = fs.readdirSync(ARTDIR).filter((f) => f.endsWith('.md'));
@@ -24,6 +25,9 @@ for (const f of files) {
     // loader (src/lib/markdown.ts catches parse errors and returns null).
     yamlError = String(err.message).split('\n')[0];
   }
+  // Even when YAML parses, raw backslashes in quoted values (LaTeX like
+  // $\theta$) silently mangle the text via valid escape sequences.
+  const badEscapes = !yamlError && repairFrontmatterEscapes(text) !== null;
   const ph = new Set();
   for (const m of text.matchAll(CVE)) if (PLACEHOLDER.has(m[1])) ph.add(m[0]);
   const dead = new Set();
@@ -32,7 +36,7 @@ for (const f of files) {
     if (tgt === 'archive' || tgt === 'tag') continue;
     if (!validSlugs.has(tgt)) dead.add(tgt);
   }
-  if (ph.size || dead.size || yamlError) problems.push({ slug: f.replace(/\.md$/, ''), ph: [...ph], dead: [...dead], yamlError });
+  if (ph.size || dead.size || yamlError || badEscapes) problems.push({ slug: f.replace(/\.md$/, ''), ph: [...ph], dead: [...dead], yamlError, badEscapes });
 }
 
 if (problems.length) {
@@ -40,7 +44,8 @@ if (problems.length) {
   for (const p of problems) {
     if (p.ph.length) console.error(`  ${p.slug}: placeholder CVE(s) ${p.ph.join(', ')}`);
     if (p.dead.length) console.error(`  ${p.slug}: dead internal link(s) ${p.dead.map((d) => '/writing/' + d).join(', ')}`);
-    if (p.yamlError) console.error(`  ${p.slug}: unparseable frontmatter — ${p.yamlError} (run \`npm run generate:index\` to auto-repair)`);
+    if (p.yamlError) console.error(`  ${p.slug}: unparseable frontmatter — ${p.yamlError} (\`npm run generate:index\` may auto-repair)`);
+    if (p.badEscapes) console.error(`  ${p.slug}: raw backslash escapes in quoted frontmatter values would ship mangled (run \`npm run generate:index\` to auto-repair)`);
   }
   console.error('\nRemove these before building. (scripts/lint-content.mjs)');
   process.exit(1);

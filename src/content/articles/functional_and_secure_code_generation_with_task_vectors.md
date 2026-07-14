@@ -2,7 +2,7 @@
 title: "Functional and Secure Code Generation with Task Vectors"
 date: "2026-07-11"
 type: "Paper Review"
-description: "SecVecCoder uses task-vector arithmetic derived from Localized Preference Optimization (LPO) to steer LLM weights in weight-space ($W_{\text{steered}} = W_{\text{base}} + \tau_{\text{sec}} - \theta \t"
+description: "SecVecCoder uses task-vector arithmetic derived from Localized Preference Optimization (LPO) to steer LLM weights in weight-space ($W_{\\text{steered}} = W_{\\text{base}} + \\tau_{\\text{sec}} - \\theta \\t"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/functional_and_secure_code_generation_with_task_vectors.jpg"
