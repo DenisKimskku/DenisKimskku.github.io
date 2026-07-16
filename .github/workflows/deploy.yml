@@ -18,6 +18,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,7 +26,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "npm"
 
       - name: Install system dependencies
@@ -34,6 +35,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # The daily automation pushes straight to main and bypasses ci.yml, so
+      # this is the only test gate that always runs.
+      - name: Run tests
+        run: npm test
+
+      # Deliberately NOT --strict: a broken escape from the automation must
+      # never block a site deploy (the repair path handles it in-run).
       - name: Generate articles index
         run: npm run generate:index
 
@@ -71,6 +79,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
+    timeout-minutes: 45
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -78,7 +87,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: Deploy to GitHub Pages
         id: deployment
@@ -104,5 +113,28 @@ jobs:
           done
           echo "::warning::Deploy marker did not match ${GITHUB_SHA} within ~120s; warming anyway."
 
+      # A slow warm must never fail the deploy or hold the 'pages' concurrency
+      # lock (one run held it ~60 min) — cap it and swallow failures.
       - name: Warm Cloudflare cache
+        timeout-minutes: 15
+        continue-on-error: true
         run: CACHE_WARM_PASSES=2 CACHE_WARM_PASS_DELAY_MS=45000 CACHE_WARM_RETRIES=2 npm run warm:cache
+
+      # Mirror of the build job's failure notification: a deploy-job failure
+      # (deploy-pages error, purge failure, the 45-min job timeout) would
+      # otherwise be a silent red run.
+      - name: File issue on deploy failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          existing=$(gh issue list --repo "${{ github.repository }}" --state open \
+            --search "Deploy failed in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
+          if [ -z "$existing" ]; then
+            gh issue create --repo "${{ github.repository }}" \
+              --title "Deploy failed for ${{ github.sha }}" \
+              --body "The Pages deploy job failed. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+              || true # never mask the deploy failure with a notification failure
+          else
+            echo "Open deploy-failure issue #$existing already exists; skipping."
+          fi

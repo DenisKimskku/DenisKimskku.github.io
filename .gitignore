@@ -59,6 +59,13 @@ next-env.d.ts
 
 # Pipeline staging
 ready_to_publish/
+
+# Test scratch trees (survive a hard-killed `npm test` run)
+tests/.scratch-index-*/
+
+# Link-checker CI artifacts (generated in the workflow, never committed)
+link-failures.md
+issue-body.md
 # Finder-duplicate debris
 * 2
 * 2.*

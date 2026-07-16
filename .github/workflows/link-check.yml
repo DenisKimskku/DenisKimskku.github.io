@@ -1,0 +1,61 @@
+name: External link check
+
+on:
+  schedule:
+    # Weekly, Sunday 05:37 UTC — off-peak and clear of the other crons
+    # (content-watchdog runs daily at 21:00, keep-warm at 13 */8).
+    - cron: '37 5 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      # No `npm ci`: the checker uses only Node built-ins (fs, fetch), and
+      # installing the full dependency tree (incl. puppeteer's Chromium) would
+      # add minutes and a failure surface this job doesn't need.
+      - name: Check external links in recent articles
+        env:
+          LINK_CHECK_DAYS: '10'
+        run: node scripts/check-external-links.mjs --report
+
+      - name: File or update issue on dead links
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ ! -s link-failures.md ]; then
+            echo "No dead links found; nothing to file."
+            exit 0
+          fi
+          {
+            cat link-failures.md
+            echo ""
+            echo "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          } > issue-body.md
+          # One open issue is enough; dead links would otherwise re-file weekly.
+          existing=$(gh issue list --repo "${{ github.repository }}" --state open \
+            --search "Dead external links detected in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
+          if [ -z "$existing" ]; then
+            gh issue create --repo "${{ github.repository }}" \
+              --title "Dead external links detected" \
+              --body-file issue-body.md \
+              || true # never mask the check with a notification failure
+          else
+            echo "Open dead-links issue #$existing already exists; refreshing its body."
+            gh issue edit "$existing" --repo "${{ github.repository }}" \
+              --body-file issue-body.md \
+              || true
+          fi

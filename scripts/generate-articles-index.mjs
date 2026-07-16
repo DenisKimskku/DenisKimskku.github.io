@@ -14,6 +14,14 @@ const root = path.join(__dirname, '..');
 const articlesDir = path.join(root, 'src', 'content', 'articles');
 const indexPath = path.join(root, 'src', 'data', 'articles-index.json');
 
+// --strict (or STRICT_INDEX=1): fail with exit 1 instead of silently rewriting
+// .md files when the frontmatter-repair path fires. CI runs strict so a broken
+// escape surfaces as a red check rather than mutating an uncommitted checkout
+// on every run; the deploy pipeline stays lenient so a bad escape can never
+// block a site deploy.
+const STRICT = process.argv.includes('--strict') || process.env.STRICT_INDEX === '1';
+const repairedFiles = [];
+
 function calculateReadingTime(content) {
   const words = content.split(/\s+/).filter(Boolean).length;
   return Math.ceil(words / 200);
@@ -28,7 +36,8 @@ function parseArticle(file, raw) {
     try {
       const parsed = matter(repaired);
       console.warn(`⚠ Repaired unintended frontmatter escapes in ${file}`);
-      fs.writeFileSync(path.join(articlesDir, file), repaired, 'utf8');
+      repairedFiles.push(file);
+      if (!STRICT) fs.writeFileSync(path.join(articlesDir, file), repaired, 'utf8');
       return { raw: repaired, parsed };
     } catch {
       // repair didn't help; report the original file's parse error below
@@ -94,6 +103,15 @@ const articles = files
   })
   .filter(Boolean)
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+if (STRICT && repairedFiles.length > 0) {
+  console.error(
+    `✖ Strict mode: frontmatter repair fired for ${repairedFiles.length} file(s): ` +
+    `${repairedFiles.join(', ')}. Run \`npm run generate:index\` locally and commit ` +
+    `the repaired files instead of relying on CI to rewrite them.`
+  );
+  process.exit(1);
+}
 
 fs.writeFileSync(indexPath, JSON.stringify(articles, null, 2) + '\n', 'utf8');
 console.log(`Generated articles-index.json: ${articles.length} articles`);

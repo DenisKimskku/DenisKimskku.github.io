@@ -25,7 +25,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: Warm sitemap pages and critical assets
         run: CACHE_WARM_PASSES=2 CACHE_WARM_PASS_DELAY_MS=30000 CACHE_WARM_RETRIES=2 npm run warm:cache

@@ -8,6 +8,7 @@
     "build": "node scripts/optimize-images.mjs && node scripts/lint-content.mjs && node scripts/generate-og-images.mjs && next build && node scripts/generate-rss.mjs && node scripts/generate-resume-pdf.mjs",
     "start": "next start",
     "lint": "eslint .",
+    "test": "node --test \"tests/*.test.mjs\"",
     "export": "npm run build",
     "generate:index": "node scripts/generate-articles-index.mjs",
     "warm:cache": "node scripts/warm-cache.mjs",
@@ -22,6 +23,9 @@
   ],
   "author": "Minseok (Denis) Kim",
   "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
   "overrides": {
     "minimatch": "^10.2.1",
     "postcss": "^8.5.15",
@@ -36,7 +40,6 @@
     "eslint": "^9.39.1",
     "eslint-config-next": "^16.2.3",
     "gray-matter": "^4.0.3",
-    "jiti": "^2.6.1",
     "next": "^16.2.6",
     "postcss": "^8.5.15",
     "puppeteer": "^23.11.1",

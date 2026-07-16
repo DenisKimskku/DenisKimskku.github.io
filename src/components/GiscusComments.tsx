@@ -6,18 +6,18 @@ import { useCurrentTheme } from '@/lib/hooks';
 export default function GiscusComments() {
   const containerRef = useRef<HTMLDivElement>(null);
   const injectedRef = useRef(false);
-  const [nearViewport, setNearViewport] = useState(false);
+  // Lazy initializer doubles as the no-IntersectionObserver fallback: load
+  // immediately when the API is missing (setting state synchronously inside
+  // the effect body trips react-hooks/set-state-in-effect).
+  const [nearViewport, setNearViewport] = useState(
+    () => typeof IntersectionObserver === 'undefined'
+  );
   const theme = useCurrentTheme();
 
   // Defer loading the giscus script until the container is near the viewport.
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
-
-    if (typeof IntersectionObserver === 'undefined') {
-      setNearViewport(true);
-      return;
-    }
+    if (!container || nearViewport) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -30,7 +30,7 @@ export default function GiscusComments() {
     );
     observer.observe(container);
     return () => observer.disconnect();
-  }, []);
+  }, [nearViewport]);
 
   useEffect(() => {
     const container = containerRef.current;
