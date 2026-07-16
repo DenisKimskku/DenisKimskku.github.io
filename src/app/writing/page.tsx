@@ -76,7 +76,7 @@ export default async function Writing() {
           Writing
         </h1>
         <p className="text-[var(--color-text-secondary)]">
-          Daily AI security digests, weekly trend reports, and research writeups.
+          AI security news and trends, lab-meeting paper walkthroughs, and research writeups.
         </p>
       </header>
 

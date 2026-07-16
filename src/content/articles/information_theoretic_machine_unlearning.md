@@ -1,7 +1,7 @@
 ---
 title: "An Information Theoretic Approach to Machine Unlearning"
 date: "2025-07-23"
-type: "Paper Review"
+type: "Paper Walkthrough"
 paperUrl: "https://arxiv.org/abs/2402.01401"
 paperAuthors: "Jack Foster, Kyle Fogarty, Stefan Schoepf, et al."
 description: "A novel zero-shot machine unlearning method using information theory and curvature analysis, enabling efficient removal of data influence without requiring access to the retain set."

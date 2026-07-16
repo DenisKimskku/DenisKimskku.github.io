@@ -1,7 +1,7 @@
 ---
 title: "Machine Unlearning for LLMs: Foundations and the AltPO Approach"
 date: "2025-04-09"
-type: "Paper Review"
+type: "Paper Walkthrough"
 description: "An introduction to machine unlearning in Large Language Models, covering the TOFU benchmark, various unlearning methods (GradDiff, NPO, IdkPO, AltPO), and the challenges of maintaining model utility while forgetting specific knowledge."
 tags: ["Machine Unlearning", "LLM", "Privacy", "TOFU Benchmark", "Preference Optimization"]
 ---

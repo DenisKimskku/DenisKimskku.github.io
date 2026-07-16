@@ -1,7 +1,7 @@
 ---
 title: "AI Agent Traps: When the Environment Becomes the Attacker"
 date: "2026-05-04"
-type: "Paper Review"
+type: "Paper Walkthrough"
 description: "Franklin et al. (DeepMind, SSRN 2026) introduce a taxonomy of 'AI agent traps'—adversarial content embedded in digital environments to misdirect, deceive, or exploit autonomous agents. We walk through six classes of traps spanning perception, reasoning, memory, action, multi-agent dynamics, and human oversight."
 tags: ["AI Agents", "Agentic AI", "LLM Security", "Prompt Injection", "Multi-Agent Systems", "Adversarial Attacks", "Human-in-the-Loop"]
 ---

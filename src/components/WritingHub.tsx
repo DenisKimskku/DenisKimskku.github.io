@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import BookmarkButton from '@/components/BookmarkButton';
 import { getBookmarks } from '@/lib/bookmarks';
+import { getCategory, getCategoryLabel, getTypeMetaLabel } from '@/lib/articleTypes';
 
 interface Article {
   slug: string;
@@ -83,20 +84,11 @@ function useDebounce(value: string, delay: number): string {
   return debouncedValue;
 }
 
-const TYPE_CONFIG: Record<string, { label: string; color: string }> = {
-  'News Digest': { label: 'News', color: 'text-blue-500' },
-  'Trend Report': { label: 'Trends', color: 'text-purple-500' },
-  'Research Paper': { label: 'Research', color: 'text-emerald-500' },
-  'Paper Review': { label: 'Reviews', color: 'text-amber-500' },
-  'Tutorial': { label: 'Tutorials', color: 'text-rose-500' },
-  'Project': { label: 'Projects', color: 'text-cyan-500' },
-};
-
 export default function WritingHub({ articles }: WritingHubProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearch = useDebounce(searchTerm, 200);
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
-  const [activeType, setActiveType] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [showBookmarked, setShowBookmarked] = useState(false);
   const [bookmarkedSlugs, setBookmarkedSlugs] = useState<Set<string>>(() => new Set(getBookmarks()));
   const [, setBookmarkVersion] = useState(0);
@@ -106,11 +98,11 @@ export default function WritingHub({ articles }: WritingHubProps) {
     setBookmarkVersion((v) => v + 1);
   }, []);
 
-  // Extract all unique types present in articles
-  const allTypes = useMemo(() => {
-    const types = new Set<string>();
-    articles.forEach(article => types.add(article.type));
-    return Array.from(types).sort();
+  // Extract all unique reader-facing categories present in articles
+  const allCategories = useMemo(() => {
+    const categories = new Set<string>();
+    articles.forEach(article => categories.add(getCategory(article.type)));
+    return Array.from(categories).sort();
   }, [articles]);
 
   // Extract all unique tags
@@ -131,9 +123,9 @@ export default function WritingHub({ articles }: WritingHubProps) {
       filtered = filtered.filter(article => bookmarkedSlugs.has(article.slug));
     }
 
-    // Filter by type
-    if (activeType) {
-      filtered = filtered.filter(article => article.type === activeType);
+    // Filter by category
+    if (activeCategory) {
+      filtered = filtered.filter(article => getCategory(article.type) === activeCategory);
     }
 
     // Filter by tags
@@ -151,6 +143,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
           article.title,
           article.description,
           article.type,
+          getCategory(article.type),
           ...article.tags,
         ]
           .join(' ')
@@ -173,7 +166,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
     }
 
     return filtered;
-  }, [articles, debouncedSearch, activeTags, activeType, showBookmarked, bookmarkedSlugs]);
+  }, [articles, debouncedSearch, activeTags, activeCategory, showBookmarked, bookmarkedSlugs]);
 
   const toggleTag = (tag: string) => {
     const newTags = new Set(activeTags);
@@ -187,7 +180,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
 
   const clearAllFilters = () => {
     setActiveTags(new Set());
-    setActiveType(null);
+    setActiveCategory(null);
     setSearchTerm('');
     setShowBookmarked(false);
   };
@@ -236,37 +229,34 @@ export default function WritingHub({ articles }: WritingHubProps) {
           )}
         </div>
 
-        {/* Type Filters */}
-        {allTypes.length > 1 && (
+        {/* Category Filters */}
+        {allCategories.length > 1 && (
           <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
-              onClick={() => setActiveType(null)}
+              onClick={() => setActiveCategory(null)}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                !activeType
+                !activeCategory
                   ? 'bg-[var(--color-text)] text-[var(--color-bg)]'
                   : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
               }`}
             >
               All
             </button>
-            {allTypes.map((type) => {
-              const config = TYPE_CONFIG[type];
-              return (
-                <button
-                  type="button"
-                  key={type}
-                  onClick={() => setActiveType(activeType === type ? null : type)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                    activeType === type
-                      ? 'bg-[var(--color-text)] text-[var(--color-bg)]'
-                      : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
-                  }`}
-                >
-                  {config?.label || type}
-                </button>
-              );
-            })}
+            {allCategories.map((category) => (
+              <button
+                type="button"
+                key={category}
+                onClick={() => setActiveCategory(activeCategory === category ? null : category)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                  activeCategory === category
+                    ? 'bg-[var(--color-text)] text-[var(--color-bg)]'
+                    : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
+                }`}
+              >
+                {getCategoryLabel(category)}
+              </button>
+            ))}
           </div>
         )}
 
@@ -277,7 +267,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
               <span className="text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider">
                 Filter by topic
               </span>
-              {(activeTags.size > 0 || activeType || showBookmarked) && (
+              {(activeTags.size > 0 || activeCategory || showBookmarked) && (
                 <button
                   type="button"
                   onClick={clearAllFilters}
@@ -367,7 +357,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
                       {highlightText(article.description, searchTermsArray)}
                     </p>
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-xs text-[var(--color-text-muted)]">{article.type}</span>
+                      <span className="text-xs text-[var(--color-text-muted)]">{getTypeMetaLabel(article.type)}</span>
                       <span className="text-[var(--color-border)]">·</span>
                       <span className="text-xs text-[var(--color-text-muted)]">{article.readingTime} min read</span>
                       {article.tags.slice(0, 2).map((tag, tagIndex) => (

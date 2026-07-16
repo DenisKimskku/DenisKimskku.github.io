@@ -48,6 +48,7 @@ function loadManifest() {
 const TYPE_COLORS = {
   'News Digest': '#3b82f6',
   'Trend Report': '#a855f7',
+  'Paper Walkthrough': '#14b8a6',
   'Research Paper': '#10b981',
   'Paper Review': '#f59e0b',
   'Tutorial': '#f43f5e',

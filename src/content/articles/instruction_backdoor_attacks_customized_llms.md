@@ -1,7 +1,7 @@
 ---
 title: "Instruction Backdoor Attacks against Customized LLMs"
 date: "2025-01-12"
-type: "Paper Review"
+type: "Paper Walkthrough"
 paperUrl: "https://arxiv.org/abs/2402.09179"
 paperAuthors: "Rui Zhang, Hongwei Li, Rui Wen, et al."
 description: "A comprehensive analysis of how malicious instructions can be embedded in customized LLMs to create backdoors that activate on specific triggers, without requiring any model fine-tuning."

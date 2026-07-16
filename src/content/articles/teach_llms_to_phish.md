@@ -1,7 +1,7 @@
 ---
 title: "Teach LLMs to Phish: Stealing Private Information from Language Models"
 date: "2024-11-20"
-type: "Paper Review"
+type: "Paper Walkthrough"
 paperUrl: "https://arxiv.org/abs/2403.00871"
 paperAuthors: "Ashwinee Panda, Christopher A. Choquette-Choo, Zhengming Zhang, et al."
 description: "An analysis of neural phishing attacks that teach LLMs to memorize and leak private information by inserting benign-appearing poison data during pretraining, achieving up to 90% secret extraction rates."

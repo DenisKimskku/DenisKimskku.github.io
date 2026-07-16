@@ -1,7 +1,7 @@
 ---
 title: "PassBERT: Improving Real-world Password Guessing via Bi-directional Transformers"
 date: "2024-07-08"
-type: "Paper Review"
+type: "Paper Walkthrough"
 description: "An analysis of PassBERT, a pre-trained BERT-based framework for real-world password guessing attacks including conditional, targeted, and adaptive rule-based password guessing scenarios."
 tags: ["Password Security", "BERT", "Password Guessing", "Deep Learning", "Credential Attacks"]
 ---

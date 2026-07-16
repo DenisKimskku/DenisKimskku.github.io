@@ -1,7 +1,7 @@
 ---
 title: "Foice: Attacking Voice Authentication Systems with a Single Face Image"
 date: "2024-09-12"
-type: "Paper Review"
+type: "Paper Walkthrough"
 description: "An analysis of Foice, a novel attack that generates synthetic voice recordings from a single face image to bypass voice authentication systems, achieving up to 100% success rate on commercial platforms like WeChat."
 tags: ["Voice Authentication", "Biometric Security", "Deepfake", "Cross-Modal Attack", "Speaker Verification"]
 ---

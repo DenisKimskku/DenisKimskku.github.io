@@ -1,7 +1,7 @@
 ---
 title: "LINT: On Large Language Models' Resilience to Coercive Interrogation"
 date: "2024-08-14"
-type: "Paper Review"
+type: "Paper Walkthrough"
 description: "An analysis of LINT, a novel attack that bypasses LLM safety alignment by exploiting top-k token access to extract harmful content without prompt engineering, achieving near-perfect attack success rates."
 tags: ["LLM Security", "Jailbreaking", "Adversarial Attacks", "AI Safety", "Alignment"]
 ---

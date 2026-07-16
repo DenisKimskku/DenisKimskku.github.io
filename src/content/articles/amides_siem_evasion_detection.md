@@ -1,7 +1,7 @@
 ---
 title: "AMIDES: Adaptive Misuse Detection for SIEM Rule Evasions"
 date: "2025-02-11"
-type: "Paper Review"
+type: "Paper Walkthrough"
 description: "Understanding SIEM systems, Sigma rules, and how attackers evade detection through simple command-line obfuscation techniques - leading to the need for adaptive misuse detection."
 tags: ["SIEM", "Intrusion Detection", "Sigma Rules", "Evasion Techniques", "Enterprise Security"]
 ---

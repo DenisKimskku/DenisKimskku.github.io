@@ -1,7 +1,7 @@
 ---
 title: "Membership Inference Attacks on Retrieval-Augmented Generation: A Comprehensive Survey"
 date: "2025-03-09"
-type: "Paper Review"
+type: "Paper Walkthrough"
 paperUrl: "https://arxiv.org/abs/2405.20446"
 paperAuthors: "Maya Anderson, Guy Amit, Abigail Goldsteen"
 description: "A comprehensive analysis of membership inference attacks against RAG systems, examining three state-of-the-art approaches: RAG-MIA, S²MIA, and MBA, along with their defenses and limitations."

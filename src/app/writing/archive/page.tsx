@@ -4,6 +4,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 import StructuredData from '@/components/StructuredData';
 import { getAllArticles } from '@/lib/articles';
 import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
+import { getTypeMetaLabel } from '@/lib/articleTypes';
 
 const description = 'Complete chronological archive of all articles, reviews, and tutorials.';
 
@@ -108,7 +109,7 @@ export default function ArchivePage() {
                       {article.title}
                     </span>
                     <span className="text-xs text-[var(--color-text-muted)] ml-2">
-                      {article.type}
+                      {getTypeMetaLabel(article.type)}
                     </span>
                   </div>
                 </Link>

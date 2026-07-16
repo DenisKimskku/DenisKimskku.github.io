@@ -1,7 +1,7 @@
 ---
 title: "MOEVIL: Poisoning Experts to Compromise the Safety of Mixture-of-Experts LLMs"
 date: "2026-01-14"
-type: "Paper Review"
+type: "Paper Walkthrough"
 description: "An analysis of MOEVIL, a novel attack that poisons individual experts in FrankenMoE systems to bypass safety alignment, achieving up to 79% attack success while maintaining benign task performance through DPO-based poisoning and latent vector manipulation."
 tags: ["LLM Security", "Mixture-of-Experts", "Model Poisoning", "Safety Alignment"]
 ---

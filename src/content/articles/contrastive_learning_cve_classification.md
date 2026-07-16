@@ -1,7 +1,7 @@
 ---
 title: "Contrastive Learning for Code Vulnerability Type Classification"
 date: "2025-05-13"
-type: "Paper Review"
+type: "Paper Walkthrough"
 description: "A comprehensive analysis of hierarchical contrastive learning approaches for classifying code vulnerabilities into CWE types, addressing long-tail distribution, class isolation, and input length limitations."
 tags: ["Vulnerability Detection", "Contrastive Learning", "CWE Classification", "Code Security", "Deep Learning"]
 ---

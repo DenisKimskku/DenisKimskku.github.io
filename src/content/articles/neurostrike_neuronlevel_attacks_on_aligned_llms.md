@@ -1,7 +1,7 @@
 ---
 title: "NeuroStrike: Neuron-Level Attacks on Aligned LLMs"
 date: "2026-04-07"
-type: "Paper Review"
+type: "Paper Walkthrough"
 paperUrl: "https://arxiv.org/abs/2509.11864"
 paperAuthors: "Lichao Wu, Sasha Behrouzi, Mohamadreza Rostami, et al."
 description: "This paper introduces NeuroStrike, a neuron-level attack framework revealing that safety alignment in LLMs concentrates in fewer than 1% of neurons, enabling both white-box pruning and black-box surrogate-guided jailbreaks with strong cross-model transferability."

@@ -11,6 +11,7 @@ import {
   getTagSlugByName,
 } from '@/lib/articles';
 import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
+import { getTypeMetaLabel } from '@/lib/articleTypes';
 
 interface PageProps {
   params: Promise<{ tag: string }>;
@@ -190,7 +191,7 @@ export default async function WritingTagPage({ params }: PageProps) {
               <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--color-text-muted)]">
                 <time dateTime={article.date}>{article.date}</time>
                 <span>·</span>
-                <span>{article.type}</span>
+                <span>{getTypeMetaLabel(article.type)}</span>
                 <span>·</span>
                 <span>{article.readingTime} min read</span>
                 {article.tags.map((articleTag) => (
