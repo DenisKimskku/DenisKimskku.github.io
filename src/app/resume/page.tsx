@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import fs from 'fs';
 import path from 'path';
+import StructuredData from '@/components/StructuredData';
 import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
 import { formatVenue } from '@/lib/venues';
 
@@ -125,8 +126,52 @@ export default async function Resume() {
     year: 'numeric',
   });
 
+  const pageUrl = `${siteMetadata.siteUrl}/resume/`;
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    '@id': `${pageUrl}#profile`,
+    url: pageUrl,
+    name: 'Curriculum Vitae',
+    description,
+    mainEntity: {
+      '@type': 'Person',
+      // Same @id as the homepage Person node so the graphs merge.
+      '@id': `${siteMetadata.siteUrl}#person`,
+      name: siteMetadata.authorName,
+      url: siteMetadata.siteUrl,
+      sameAs: siteMetadata.profiles,
+      jobTitle: 'Ph.D. Student & AI Security Researcher',
+      affiliation: {
+        '@type': 'CollegeOrUniversity',
+        name: INSTITUTION,
+      },
+      // Title already carries parentheses ("… (APC’26)"), so join with a comma.
+      award: AWARDS.map((a) => `${a.title}, ${a.date}`),
+    },
+  };
+
+  // BreadcrumbList structured data (same shape as writing/[slug]/page.tsx).
+  const breadcrumbItems: { name: string; href?: string }[] = [
+    { name: 'Home', href: '/' },
+    { name: 'Resume' },
+  ];
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbItems.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.href ? `${siteMetadata.siteUrl}${item.href}` : undefined,
+    })),
+  };
+
   return (
     <div className="resume-root cv-root mx-auto px-8 md:px-12 max-w-[760px] py-10 md:py-16 max-[560px]:px-5 max-[560px]:py-12">
+      <StructuredData data={jsonLd} />
+      <StructuredData data={breadcrumbJsonLd} />
       {/* ───────── Header ───────── */}
       <header className="cv-header">
         {/* Below 560px the absolute top-right placement (globals.css .cv-header-top)

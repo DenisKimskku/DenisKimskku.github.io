@@ -34,7 +34,8 @@ interface ProjectData {
 const { featured, projects } = projectData as ProjectData;
 
 export default function Code() {
-  const pageUrl = `${siteMetadata.siteUrl}/code`;
+  // Trailing slash to match the canonical URL (site uses trailingSlash: true).
+  const pageUrl = `${siteMetadata.siteUrl}/code/`;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -76,6 +77,23 @@ export default function Code() {
               url: project.demoUrl || project.githubUrl,
             },
           })),
+        ],
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${pageUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: `${siteMetadata.siteUrl}/`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Code',
+          },
         ],
       },
     ],

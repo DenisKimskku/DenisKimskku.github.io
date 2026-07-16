@@ -19,6 +19,41 @@ function toRfc822(dateString) {
   return Number.isNaN(parsed.getTime()) ? new Date().toUTCString() : parsed.toUTCString();
 }
 
+// Full-content items for the newest N main-feed entries. 80 full bodies would
+// make the feed multi-MB, so older items stay description-only.
+const FULL_CONTENT_ITEMS = 20;
+
+// Extract the rendered article body from the static export. Returns null when
+// the page is missing — the item then falls back to description-only; never
+// fail the build over a feed nicety.
+function extractArticleHtml(slug) {
+  try {
+    const html = fs.readFileSync(path.join(outDir, 'writing', slug, 'index.html'), 'utf8');
+    const start = html.indexOf('<article class="article-content"');
+    if (start === -1) return null;
+    const contentStart = html.indexOf('>', start);
+    const end = html.indexOf('</article>', contentStart);
+    if (contentStart === -1 || end === -1) return null;
+    let content = html.slice(contentStart + 1, end);
+    // Feed readers need absolute URLs. Site-relative href/src/srcset all start
+    // with a single "/" (the srcset values here are single-URL webp sources).
+    content = content
+      .replaceAll('href="/', `href="${siteUrl}/`)
+      .replaceAll('src="/', `src="${siteUrl}/`)
+      .replaceAll('srcset="/', `srcset="${siteUrl}/`)
+      .replaceAll('srcSet="/', `srcSet="${siteUrl}/`);
+    return content;
+  } catch {
+    return null;
+  }
+}
+
+// "]]>" inside CDATA would terminate the section early; split it across two
+// CDATA blocks (the standard escape).
+function toCdata(content) {
+  return `<![CDATA[${content.replaceAll(']]>', ']]]]><![CDATA[>')}]]>`;
+}
+
 if (!fs.existsSync(outDir) || !fs.existsSync(articlesIndexPath)) {
   process.exit(0);
 }
@@ -34,24 +69,26 @@ const feedArticles = articles.filter((article) => !NOINDEX_TYPES.includes(articl
 
 const latestPubDate = feedArticles.length > 0 ? toRfc822(feedArticles[0].date) : new Date().toUTCString();
 
-const itemXml = feedArticles.map((article) => {
+const itemXml = feedArticles.map((article, index) => {
   const articleUrl = `${siteUrl}/writing/${article.slug}/`;
   const categories = (article.tags || [])
     .map((tag) => `<category>${escapeXml(tag)}</category>`)
     .join('');
+  const fullHtml = index < FULL_CONTENT_ITEMS ? extractArticleHtml(article.slug) : null;
+  const contentEncoded = fullHtml ? `\n<content:encoded>${toCdata(fullHtml)}</content:encoded>` : '';
 
   return `<item>
 <title>${escapeXml(article.title)}</title>
 <link>${articleUrl}</link>
 <guid>${articleUrl}</guid>
-<description>${escapeXml(article.description || '')}</description>
+<description>${escapeXml(article.description || '')}</description>${contentEncoded}
 <pubDate>${toRfc822(article.date)}</pubDate>
 ${categories}
 </item>`;
 }).join('\n');
 
 const rssXml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
 <channel>
 <title>Minseok (Denis) Kim - Writing</title>
 <link>${siteUrl}/writing/</link>

@@ -42,9 +42,26 @@ async function getPapers(): Promise<Paper[]> {
   return JSON.parse(fileContents);
 }
 
+// Stable per-paper anchor: the /papers/<dir>/ segment of the PDF URL
+// (e.g. 'kcc26', 'acsac25'), falling back to a slugified title.
+function paperAnchorId(paper: Paper): string {
+  const dirMatch = paper.pdfUrl?.match(/\/papers\/([^/]+)\//);
+  if (dirMatch) {
+    return dirMatch[1];
+  }
+  return paper.title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 export default async function Papers() {
   const papers = await getPapers();
   const pageUrl = `${siteMetadata.siteUrl}/papers/`;
+  // Single source of truth for the Scholar profile: siteMetadata.profiles.
+  const scholarUrl = siteMetadata.profiles.find((url) =>
+    url.startsWith('https://scholar.google.com/')
+  );
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -66,6 +83,8 @@ export default async function Papers() {
           position: index + 1,
           item: {
             '@type': 'ScholarlyArticle',
+            '@id': `${pageUrl}#${paperAnchorId(paper)}`,
+            url: `${pageUrl}#${paperAnchorId(paper)}`,
             name: paper.title,
             description: paper.description,
             datePublished: paper.year,
@@ -76,6 +95,23 @@ export default async function Papers() {
             sameAs: paper.pdfUrl,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${pageUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: `${siteMetadata.siteUrl}/`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Papers',
+          },
+        ],
       },
     ],
   };
@@ -90,6 +126,18 @@ export default async function Papers() {
         <p className="text-[var(--color-text-secondary)]">
           Academic publications and research work.
         </p>
+        {scholarUrl && (
+          <p className="mt-2 text-sm">
+            <a
+              href={scholarUrl}
+              className="text-[var(--color-accent)] hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Google Scholar profile →
+            </a>
+          </p>
+        )}
       </header>
 
       <div>
@@ -98,6 +146,7 @@ export default async function Papers() {
           return (
             <article
               key={index}
+              id={paperAnchorId(paper)}
               className="group grid grid-cols-[72px_1fr] gap-4 max-[560px]:grid-cols-1 py-6 border-b border-[var(--color-border)] last:border-0"
             >
               <div
