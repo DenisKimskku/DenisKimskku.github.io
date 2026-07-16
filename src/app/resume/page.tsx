@@ -99,6 +99,13 @@ const RESEARCH_INTERESTS = [
   'Defenses against data poisoning and prompt injection: lightweight post-retrieval filtering for RAG and runtime guards for tool-calling agents.',
 ];
 
+const AWARDS: { title: string; date: string }[] = [
+  {
+    title: 'Winner, AI Prompting Challenge (APC’26)',
+    date: 'July 2026',
+  },
+];
+
 function formatAuthors(authors: string[]): React.ReactNode {
   return authors.map((a, i) => (
     <span key={a}>
@@ -190,6 +197,16 @@ export default async function Resume() {
             </div>
           ))}
         </dl>
+      </section>
+
+      {/* ───────── Honors & Awards ───────── */}
+      <section className="cv-section">
+        <h2 className="cv-section-heading">Honors &amp; Awards</h2>
+        <ul className="cv-interests">
+          {AWARDS.map((a, i) => (
+            <li key={i} className="cv-interest-item">{a.title} — {a.date}</li>
+          ))}
+        </ul>
       </section>
 
       {/* ───────── Research Interests ───────── */}

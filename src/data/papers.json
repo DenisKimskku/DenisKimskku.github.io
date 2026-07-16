@@ -1,4 +1,16 @@
 [
+  {
+    "year": "2026",
+    "title": "A Study of Information Leakage Across Topologies and Languages in LLM-based Multi-Agent Systems",
+    "authors": ["Gahyun Baek", "Minseok Kim", "Hyungjoon Koo"],
+    "conference": "KCC 2026",
+    "description": "An extension of the AgentLeak benchmark to three MAS topologies and two languages, showing that decentralized agent networks and Korean-language settings leak more private data, and that internal agent messages leak far more than final outputs.",
+    "abstract": "최근 대규모 언어 모델(LLM)은 AI 에이전트가 협력할 수 있는 멀티 에이전트 시스템(MAS)을 지원해 높은 효율성과 확장성을 제공한다. 한편, 에이전트 간 통신 메시지나 공유 메모리를 통한 정보 유출이 가능해지면서 새로운 보안 위협을 수반한다. 본 연구는 기존의 에이전트 프레임워크에서 두 가지 언어와 세 가지 네트워크 토폴로지(단일 계층, 탈중앙화, 다중 계층)에서 정보 유출 양상을 분석했다. 실험 결과, 언어 환경에 관계없이 탈중앙화 구조가 다른 구조(단일 계층, 단일 계층)에 비해 평균적으로 약 21.5% 더 높은 유출률을 보이며 가장 취약한 것으로 나타났다. 또한, 두 언어 환경을 비교했을 때 국문 환경이 영문 환경 대비 8.7% 더 많은 정보 유출이 발생함을 확인하였다.",
+    "pdfUrl": "https://deniskim1.com/papers/kcc26/kcc26_topology_leakage.pdf",
+    "slideUrl": "https://deniskim1.com/papers/kcc26/kcc_poster.pdf",
+    "articleSlug": "mas_topology_language_leakage",
+    "bibtex": "@inproceedings{baek2026leakage,\n  title={A Study of Information Leakage Across Topologies and Languages in LLM-based Multi-Agent Systems},\n  author={Baek, Gahyun and Kim, Minseok and Koo, Hyungjoon},\n  booktitle={Proceedings of the Korea Computer Congress (KCC)},\n  year={2026}\n}"
+  },
     {
     "year": "2026",
     "title": "Security of Autonomous AI Agents: Trust Boundary-Based Attack Surface Analysis and Trends",
