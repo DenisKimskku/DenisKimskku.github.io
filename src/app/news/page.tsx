@@ -20,8 +20,8 @@ export default function NewsMoved() {
           News moved to Writing
         </h1>
         <p className="text-[var(--color-text-secondary)] mb-8">
-          Daily digests and trend reports are now part of the Writing section,
-          alongside research articles and paper reviews.
+          News and trend coverage is now part of the Writing section,
+          alongside paper walkthroughs and research writeups.
         </p>
         <Link
           href="/writing/"

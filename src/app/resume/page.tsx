@@ -99,12 +99,9 @@ const RESEARCH_INTERESTS = [
   'Defenses against data poisoning and prompt injection: lightweight post-retrieval filtering for RAG and runtime guards for tool-calling agents.',
 ];
 
-const AWARDS: { title: string; date: string }[] = [
-  {
-    title: 'Winner, AI Prompting Challenge (APC’26)',
-    date: 'July 2026',
-  },
-];
+const AWARDS: { title: string; date: string }[] = JSON.parse(
+  fs.readFileSync(path.join(process.cwd(), 'src', 'data', 'awards.json'), 'utf8')
+);
 
 function formatAuthors(authors: string[]): React.ReactNode {
   return authors.map((a, i) => (

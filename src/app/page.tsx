@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
@@ -15,7 +17,29 @@ export const metadata: Metadata = {
   },
 };
 
+interface Highlight {
+  when: string;
+  text: string;
+  href: string | null;
+}
+
+interface Award {
+  title: string;
+  date: string;
+}
+
+function readData<T>(fileName: string): T {
+  const filePath = path.join(process.cwd(), 'src', 'data', fileName);
+  return JSON.parse(fs.readFileSync(filePath, 'utf8')) as T;
+}
+
+const accentLinkClass =
+  'text-[var(--color-accent)] hover:underline decoration-[color:color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2';
+
 export default function Home() {
+  const highlights = readData<Highlight[]>('highlights.json');
+  const awards = readData<Award[]>('awards.json');
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -43,6 +67,16 @@ export default function Home() {
           'LLM safety',
           'Adversarial machine learning',
         ],
+        affiliation: {
+          '@type': 'CollegeOrUniversity',
+          name: 'Sungkyunkwan University',
+        },
+        alumniOf: {
+          '@type': 'CollegeOrUniversity',
+          name: 'Sungkyunkwan University',
+        },
+        // Title already carries parentheses ("… (APC’26)"), so join with a comma.
+        award: awards.map((award) => `${award.title}, ${award.date}`),
       },
     ],
   };
@@ -66,7 +100,7 @@ export default function Home() {
             I am a Ph.D. student at Sungkyunkwan University, advised by{' '}
             <a
               href="https://kevinkoo001.github.io/"
-              className="text-[var(--color-accent)] hover:underline decoration-[color:color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2"
+              className={accentLinkClass}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -81,21 +115,61 @@ export default function Home() {
           </p>
           <p>
             A complete list of my{' '}
-            <Link href="/papers/" className="text-[var(--color-accent)] hover:underline decoration-[color:color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2">
+            <Link href="/papers/" className={accentLinkClass}>
               publications
             </Link>{' '}
             are online, along with some of my{' '}
-            <Link href="/code/" className="text-[var(--color-accent)] hover:underline decoration-[color:color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2">
+            <Link href="/code/" className={accentLinkClass}>
               code
             </Link>
             , and some extra{' '}
-            <Link href="/writing/" className="text-[var(--color-accent)] hover:underline decoration-[color:color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2">
+            <Link href="/writing/" className={accentLinkClass}>
               writings
             </Link>
             .
           </p>
         </div>
       </section>
+
+      <section aria-labelledby="highlights-heading" className="mt-16">
+        <h2
+          id="highlights-heading"
+          className="text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider mb-3"
+        >
+          Recent highlights
+        </h2>
+        <ul className="list-none">
+          {highlights.map((highlight, index) => (
+            <li
+              key={`${highlight.when}-${index}`}
+              className="grid grid-cols-[88px_1fr] gap-3 max-[560px]:grid-cols-1 py-3 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
+            >
+              <span className="text-[13px] text-[var(--color-text-muted)] tabular-nums">
+                {highlight.when}
+              </span>
+              <span className="text-[var(--color-text)] leading-[1.6]">
+                {highlight.href === null ? (
+                  highlight.text
+                ) : highlight.href.startsWith('/') ? (
+                  <Link href={highlight.href} className={accentLinkClass}>
+                    {highlight.text}
+                  </Link>
+                ) : (
+                  <a
+                    href={highlight.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={accentLinkClass}
+                  >
+                    {highlight.text}
+                  </a>
+                )}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
     </div>
   );
 }

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import WritingHub from '@/components/WritingHub';
 import StructuredData from '@/components/StructuredData';
-import { getAllArticles, getTagEntries } from '@/lib/articles';
+import { getAllArticles, getRecentHandwrittenArticles, getTagEntries } from '@/lib/articles';
 import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
 
 const description = 'Research articles, AI security news, and technical writings by Minseok (Denis) Kim.';
@@ -34,6 +34,13 @@ export default async function Writing() {
   // feed focused on digests, trend reports, and human-written work. The complete set
   // (including reviews) stays at /writing/archive.
   const articles = (getAllArticles() as Article[]).filter((a) => a.type !== 'Paper Review');
+  // Hand-written pre-automation "Paper Review" articles live only in the
+  // archive (the hub below filters that type out), so exclude them here too —
+  // a featured card must never point at an article invisible in the feed
+  // beneath it.
+  const featured = getRecentHandwrittenArticles(6)
+    .filter((a) => a.type !== 'Paper Review')
+    .slice(0, 3);
   const tags = getTagEntries(articles);
   const pageUrl = `${siteMetadata.siteUrl}/writing/`;
   const jsonLd = {
@@ -79,6 +86,34 @@ export default async function Writing() {
           AI security news and trends, lab-meeting paper walkthroughs, and research writeups.
         </p>
       </header>
+
+      {featured.length > 0 && (
+        <section className="mb-10">
+          <h2 className="text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider mb-3">
+            Featured
+          </h2>
+          <div className="grid gap-4 md:grid-cols-3">
+            {featured.map((article) => (
+              <Link
+                key={article.slug}
+                href={`/writing/${article.slug}/`}
+                className="block rounded-lg border border-[var(--color-border)] p-5 hover:border-[var(--color-accent)] transition-colors group"
+              >
+                <h3 className="text-base font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-2">
+                  {article.title}
+                </h3>
+                <p className="line-clamp-2 text-sm text-[var(--color-text-secondary)] mb-3">
+                  {article.description}
+                </p>
+                <p className="text-xs text-[var(--color-text-muted)]">
+                  <span className="tabular-nums">{article.date}</span> · {article.type} ·{' '}
+                  {article.readingTime} min read
+                </p>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {tags.length > 0 && (
         <section className="mb-10">
