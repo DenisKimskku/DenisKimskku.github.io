@@ -1,5 +1,153 @@
 [
   {
+    "slug": "ai_security_digest__july_18_2026",
+    "title": "AI Security Digest \u2014 July 18, 2026",
+    "date": "2026-07-18",
+    "type": "News Digest",
+    "description": "This digest covers a critical vulnerability in Anthropic's MCP, the rise of AI in vulnerability management, and new research on cost-aware LLM agent evaluation and hardware leakage.",
+    "tags": [
+      "LLM Security",
+      "Supply Chain Attacks",
+      "Adversarial Attacks",
+      "AI in Security",
+      "Hardware Security",
+      "Vulnerability Management"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "context_contamination_in_llm_analysis_of_network_security_lo",
+    "title": "Context Contamination in LLM Analysis of Network Security Logs: Poison with Passive Prompt Injection and Mitigation Evaluation",
+    "date": "2026-07-18",
+    "type": "Paper Review",
+    "description": "Context Contamination via passive prompt injection, where attackers embed malicious, dormant instructions into untrusted security logs (e.g., User-Agents, API payloads, or SSH usernames) to hijack dow",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "democratizing_agent_deployment_safety_a_structural_monitorin",
+    "title": "Democratizing Agent Deployment Safety: A Structural Monitoring Approach",
+    "date": "2026-07-18",
+    "type": "Paper Review",
+    "description": "The Information Flow Graph (IFG) monitor detects and blocks infrastructure-as-code (IaC) sabotage by combining deterministic control-flow and data-flow graph diffs with a lightweight LLM judge",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "bad_memory_evaluating_prompt_injection_risks_from_memory_in_",
+    "title": "Bad Memory: Evaluating Prompt Injection Risks from Memory in Agentic Systems",
+    "date": "2026-07-18",
+    "type": "Paper Review",
+    "description": "An evaluation of persistent prompt injection attacks targeting user-curated, plain-text memory and configuration files (e.g., `CLAUDE.md`, `AGENTS.md`, and `behaviors.md`) in agentic coding and person",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "routing_ceilings_are_domainindependent_structural_prior_inje",
+    "title": "Routing Ceilings Are Domain-Independent: Structural Prior Injection in Code Security Vulnerability Detection",
+    "date": "2026-07-18",
+    "type": "Paper Review",
+    "description": "Injected structural prior prompts ('cheatsheets') raise synthetic code vulnerability detection to near-perfect F1 scores but trigger 'distribution-shift collapse,' causing real-world CVE detection per",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 7
+  },
+  {
+    "slug": "mempoison_uncovering_persistent_memory_threats_and_structura",
+    "title": "MemPoison: Uncovering Persistent Memory Threats and Structural Blind Spots in LLM Agents",
+    "date": "2026-07-18",
+    "type": "Paper Review",
+    "description": "MemPoison is a comprehensive benchmark and analysis framework that systematically evaluates persistent memory poisoning attacks on LLM agents using a three-tier taxonomy (L1 direct, L2 compositional, ",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "flowguard_from_signals_to_evidence_for_mcp_security_detectio",
+    "title": "FlowGuard: From Signals to Evidence for MCP Security Detection",
+    "date": "2026-07-18",
+    "type": "Paper Review",
+    "description": "FlowGuard is an evidence-grounded security scanner for the Model Context Protocol (MCP) that combines semantic risk triage, reconnaissance-guided probing, and runtime response adjudication to distingu",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "is_external_database_protection_static_in_retrievalaugmented",
+    "title": "Is External Database Protection Static in Retrieval-Augmented Generation? Rethinking Privacy Preservation under Dynamic Queries",
+    "date": "2026-07-18",
+    "type": "Paper Review",
+    "description": "Prompt-Aware Dynamic Hierarchical Differential Privacy (PA-HDP) dynamically sanitizes RAG retrieval contexts by calculating real-time, query-dependent risk scores at the sentence level and applying an",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "random_logit_scaling_defending_deep_neural_networks_against_",
+    "title": "Random Logit Scaling: Defending Deep Neural Networks Against Black-Box Score-Based Adversarial Example Attacks",
+    "date": "2026-07-18",
+    "type": "Paper Review",
+    "description": "Random Logit Scaling (RLS) is a lightweight, zero-accuracy-loss, post-processing defense that dynamically multiplies logits by a random scaling factor $m \\sim \\mathcal{U}(a, b)$ on every query to fals",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "on_success_and_simplicity_a_second_look_at_transferable_visi",
+    "title": "On Success and Simplicity: A Second Look at Transferable Vision-Language Attack Pipeline",
+    "date": "2026-07-18",
+    "type": "Paper Review",
+    "description": "SimVLA (Simple Vision-Language Attack) is a highly optimized two-stage transferable adversarial attack pipeline that strips away the over-engineered third stage of standard vision-language attacks whi",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "datashield_uncovering_risky_finetuning_data_across_llms_thro",
+    "title": "DataShield: Uncovering Risky Fine-Tuning Data Across LLMs Through Consensus Subspace Alignment",
+    "date": "2026-07-18",
+    "type": "Paper Review",
+    "description": "DataShield is a defense framework that prevents safety degradation during LLM fine-tuning by extracting consensus safe/unsafe semantic subspaces from an ensemble of reference models to filter or mask ",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "automated_templatefree_synthesis_of_instructioncentric_leaka",
+    "title": "Automated Template-free Synthesis of Instruction-Centric Leakage Contracts for Black-Box CPUs",
+    "date": "2026-07-18",
+    "type": "Paper Review",
+    "description": "`malcos` is the first template-free, black-box synthesis tool that automatically extracts instruction-centric microarchitectural leakage contracts from commercial CPUs without requiring RTL access or ",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "beyond_success_rate_costaware_evaluation_of_offensive_and_de",
+    "title": "Beyond Success Rate: Cost-Aware Evaluation of Offensive and Defensive Security Agents",
+    "date": "2026-07-18",
+    "type": "Paper Review",
+    "description": "A cost-aware evaluation framework measuring LLM-based security agents through a cost-success lens, revealing that while offensive hacking scales with raw reasoning budget, defensive incident response ",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 12
+  },
+  {
     "slug": "ai_security_digest__july_17_2026",
     "title": "AI Security Digest \u2014 July 17, 2026",
     "date": "2026-07-17",
