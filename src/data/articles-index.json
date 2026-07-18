@@ -1,5 +1,158 @@
 [
   {
+    "slug": "this_week_in_ai_security__july_19_2026",
+    "title": "This Week in AI Security \u2014 July 19, 2026",
+    "date": "2026-07-19",
+    "type": "Trend Report",
+    "description": "This week's AI security research highlights the shift from base model vulnerabilities to the systemic fragility of autonomous agentic networks and stateful, multi-turn environments.",
+    "tags": [
+      "Agentic AI",
+      "LLM Security",
+      "Adversarial Attacks",
+      "Runtime Security",
+      "Systemic Risk",
+      "Agent Red-Teaming"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "ai_security_digest__july_19_2026",
+    "title": "AI Security Digest \u2014 July 19, 2026",
+    "date": "2026-07-19",
+    "type": "News Digest",
+    "description": "This digest covers systemic AI fragility, detailing how malware evades sandboxes by detecting local AI tools and how multi-agent systems bypass deepfake detectors using VLMs.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Malware Analysis",
+      "VLM Security",
+      "Deepfakes",
+      "AI Evasion"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "pretraining_data_can_be_poisoned_through_computational_propa",
+    "title": "Pretraining Data Can Be Poisoned through Computational Propaganda",
+    "date": "2026-07-19",
+    "type": "Paper Review",
+    "description": "Attackers can poison web-scale LLM pretraining data by injecting adversarial content into public discussion/comment interfaces (e.g., WordPress), bypassing modern HTML extraction and curation filters",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "evaluating_frontier_ai_agents_as_autonomous_clinical_securit",
+    "title": "Evaluating Frontier AI Agents as Autonomous Clinical Security Auditors",
+    "date": "2026-07-19",
+    "type": "Paper Review",
+    "description": "An open evaluation task built on METR Task Standard v0.3.0 that assesses whether frontier AI agents can autonomously implement, execute, and aggregate a multi-component adversarial security audit agai",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "inferencetime_concept_suppression_and_videocentric_evaluatio",
+    "title": "Inference-Time Concept Suppression and Video-Centric Evaluation for Text-to-Video Models",
+    "date": "2026-07-19",
+    "type": "Paper Review",
+    "description": "SIRUS is a training-free, inference-time concept suppression framework for text-to-video (T2V) models that builds a contextualized text-embedding subspace to dynamically subtract concept residuals dur",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 7
+  },
+  {
+    "slug": "when_is_delegated_play_truthful_withinrange_regret_and_the_t",
+    "title": "When Is Delegated Play Truthful? Within-Range Regret and the Trilemma of Aligned Delegation",
+    "date": "2026-07-19",
+    "type": "Paper Review",
+    "description": "When automated proxies (such as LLM agents or bidding bots) are restricted by safety guardrails or alignment layers, users have a direct mathematical incentive to lie to their own agents (e.g., via in",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "automatic_hard_example_synthesis_with_multilevel_agentic_dat",
+    "title": "Automatic Hard Example Synthesis with Multi-Level Agentic Data Curation",
+    "date": "2026-07-19",
+    "type": "Paper Review",
+    "description": "An automated multi-agent framework that uses an evolutionary 'Explore and Mutate' strategy to autonomously generate, debate, and label highly ambiguous visual policy violations ('hard examples')",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "privacy_leakage_in_federated_learning_in_radiology_reports_a",
+    "title": "Privacy Leakage in Federated Learning in Radiology Reports: A Comparative Evaluation of Tokenizer-Driven Privacy Risks",
+    "date": "2026-07-19",
+    "type": "Paper Review",
+    "description": "An active malicious server can reconstruct up to 43.5% of private radiology text sentences by injecting a 193K-parameter analytic 'imprint' probe before positional embeddings during federated training",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "ai_agents_do_not_fail_alonethe_context_fails_first",
+    "title": "AI Agents Do Not Fail Alone:The Context Fails First",
+    "date": "2026-07-19",
+    "type": "Paper Review",
+    "description": "Proposes `ProofAgent-Harness`, an open-source evaluation framework that mathematically isolates and measures 7 criteria of LLM agent *context quality* to serve as an independent leading indicator of a",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "securing_llms_in_the_wild_privacy_and_security_challenges_at",
+    "title": "Securing LLMs in the Wild: Privacy and Security Challenges at the Edge",
+    "date": "2026-07-19",
+    "type": "Paper Review",
+    "description": "The 'Security-Efficiency Paradox' in edge LLMs: optimizing models via quantization, pruning, partitioning, or PEFT to fit hardware limits directly degrades safety alignment and exposes sensitive local",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "breaking_refusal_in_the_first_half_a_mechanistic_study_of_th",
+    "title": "Breaking Refusal in the First Half: A Mechanistic Study of the Prefill Jailbreak",
+    "date": "2026-07-19",
+    "type": "Paper Review",
+    "description": "The 'Prefill Jailbreak' (forcing the assistant to start its response with affirmative phrases like 'Sure, here is') bypasses safety refusal not by destroying prompt-side harm representations, which re",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "armor_agentic_orchestration_of_a_multidomain_primitive_set_f",
+    "title": "ARMOR++: Agentic Orchestration of a Multi-Domain Primitive Set for Transferable Attacks on Deepfake Detectors",
+    "date": "2026-07-19",
+    "type": "Paper Review",
+    "description": "A multi-agent framework called ARMOR++ that uses Vision-Language Models (VLMs) and LLMs to orchestrate and dynamically parameterize five heterogeneous perturbation primitives, bypassing black-box deep",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "a_measurement_study_of_aienvironment_realism_gaps_in_malware",
+    "title": "A Measurement Study of AI-Environment Realism Gaps in Malware-Analysis Sandboxes",
+    "date": "2026-07-19",
+    "type": "Paper Review",
+    "description": "AIprints is a sandbox evasion framework that detects the presence or absence of persistent local AI software environment artifacts (e.g., Claude Code/Cursor configs, HuggingFace model caches, local Ol",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
     "slug": "ai_security_digest__july_18_2026",
     "title": "AI Security Digest \u2014 July 18, 2026",
     "date": "2026-07-18",
