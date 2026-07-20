@@ -1,5 +1,142 @@
 [
   {
+    "slug": "ai_security_digest__july_21_2026",
+    "title": "AI Security Digest \u2014 July 21, 2026",
+    "date": "2026-07-21",
+    "type": "News Digest",
+    "description": "This digest covers active exploitation of a ServiceNow RCE vulnerability and new research showing LLM watermarking defenses are easily bypassed by paraphrasing.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Vulnerability Exploitation",
+      "Cybersecurity",
+      "5G Security",
+      "Threat Intelligence"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "flint_fingerprinting_federated_learning_architectures_from_5",
+    "title": "FLINT: Fingerprinting Federated Learning Architectures from 5G PHY-Layer Side Channels",
+    "date": "2026-07-21",
+    "type": "Paper Review",
+    "description": "FLINT is a passive, over-the-air side-channel attack that reconstructs rotating temporary physical-layer identifiers (RNTIs) and uses multi-view temporal modeling of unencrypted 5G control channel (PD",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "from_neural_intent_to_cryptographic_authorization_governing_",
+    "title": "From Neural Intent to Cryptographic Authorization: Governing Agentic Workflows",
+    "date": "2026-07-21",
+    "type": "Paper Review",
+    "description": "Neural Cryptographic Services (NCS) is an active neuro-symbolic security governance plane that forces probabilistic LLM agents to adhere to offline-signed, hash-chained instruction streams, preventing",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "do_agents_dream_of_false_memories_blackbox_visual_attacks_on",
+    "title": "Do Agents Dream of False Memories? Black-box Visual Attacks on Long-term Memory in Multimodal AI Agents",
+    "date": "2026-07-21",
+    "type": "Paper Review",
+    "description": "LUCID is a black-box, image-only adversarial attack that compromises multimodal long-term memory in AI agents, injecting 'false memories' without altering text or database indices",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 7
+  },
+  {
+    "slug": "beyond_detection_agentic_attack_synthesis_and_simulation_for",
+    "title": "Beyond Detection: Agentic Attack Synthesis and Simulation for Smart Contracts",
+    "date": "2026-07-21",
+    "type": "Paper Review",
+    "description": "KASS (Knowledge-Augmented Attack Synthesis and Simulation) is a multi-agent framework that automates Smart Contract Automated Exploit Generation (AEG) by combining retrieval-augmented planning over re",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "speechguard_online_defense_against_backdoor_attacks_on_speec",
+    "title": "SpeechGuard: Online Defense against Backdoor Attacks on Speech Recognition Models",
+    "date": "2026-07-21",
+    "type": "Paper Review",
+    "description": "An online, two-stage backdoor defense pipeline (SpeechGuard) that uses SNR-adaptive perturbation (S-STRIP) to detect poisoned audio inputs and an autoencoder-generated time-frequency mask to purify th",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "the_language_of_security_how_prompt_syntax_shapes_secure_cod",
+    "title": "The Language of Security: How Prompt Syntax Shapes Secure Code Generation in Open LLMs",
+    "date": "2026-07-21",
+    "type": "Paper Review",
+    "description": "Casual linguistic edits, such as shortening a prompt or removing relative adverbial clauses (like 'how' or 'which'), can systematically trigger open-weight LLMs to generate highly vulnerable code",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "codepoisoning_property_inference_attacks",
+    "title": "Code-Poisoning Property Inference Attacks",
+    "date": "2026-07-21",
+    "type": "Paper Review",
+    "description": "CPPIA (Code-Poisoning Property Inference Attack) is a stealthy supply-chain attack where an adversary injects code-level hooks to profile a private training set, encode its global statistics as a bina",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "refusal_is_not_safety_benchmarking_latent_safety_risks_of_ll",
+    "title": "Refusal is Not Safety! Benchmarking Latent Safety Risks of LLM-Driven Content Humorization",
+    "date": "2026-07-21",
+    "type": "Paper Review",
+    "description": "**HumorSafe** and **HumorPIA** demonstrate how LLMs can be manipulated via 'content humorization' to bypass safety guardrails and covertly generate toxic or stereotypical content disguised as harmless",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "ai_watermark_evidence_fails_forensic_readiness_an_empirical_",
+    "title": "AI Watermark Evidence Fails Forensic Readiness: An Empirical Evaluation",
+    "date": "2026-07-21",
+    "type": "Paper Review",
+    "description": "Automated, meaning-preserving paraphrase attacks systematically strip LLM watermarks (KGW, Unigram, and SynthID-Text), resulting in near-total (98.3% to 100%) watermark erasure and rendering them comp",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 11
+  },
+  {
+    "slug": "dosq_a_crosslayer_denial_of_service_quality_attack_by_exploi",
+    "title": "DoSQ: A Cross-Layer Denial of Service Quality Attack by Exploiting Side Channels in 5G NR",
+    "date": "2026-07-21",
+    "type": "Paper Review",
+    "description": "DoSQ (Denial of Service Quality) is a cross-layer side-channel attack that passively decodes unencrypted 5G Downlink Control Information (DCI) to predict application-layer Goodput, enabling a slot-ali",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 11
+  },
+  {
+    "slug": "evaluating_openweight_llms_for_generating_structured_threat_",
+    "title": "Evaluating Open-Weight LLMs for Generating Structured Threat Information for Autonomous Vehicle Vulnerabilities",
+    "date": "2026-07-21",
+    "type": "Paper Review",
+    "description": "An empirical evaluation of 11 open-weight LLMs (4B to 120B) on converting raw Connected and Autonomous Vehicle (CAV) vulnerabilities into structured STIX 2.1 threat intelligence graphs, mapping to CWE",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8
+  },
+  {
     "slug": "this_week_in_ai_security__july_19_2026",
     "title": "This Week in AI Security \u2014 July 19, 2026",
     "date": "2026-07-19",
