@@ -56,6 +56,11 @@ jobs:
         with:
           path: ./out
 
+      - name: Ntfy alert on build failure
+        if: failure()
+        run: |
+          curl -s -H 'Title: SITE DEPLOY FAILED' -H 'Priority: high' -d 'deniskim1.com deploy failed — check Actions' ntfy.sh/deniskim-kb
+
       - name: File issue on build failure
         if: failure()
         env:
@@ -123,6 +128,11 @@ jobs:
       # Mirror of the build job's failure notification: a deploy-job failure
       # (deploy-pages error, purge failure, the 45-min job timeout) would
       # otherwise be a silent red run.
+      - name: Ntfy alert on deploy failure
+        if: failure()
+        run: |
+          curl -s -H 'Title: SITE DEPLOY FAILED' -H 'Priority: high' -d 'deniskim1.com deploy failed — check Actions' ntfy.sh/deniskim-kb
+
       - name: File issue on deploy failure
         if: failure()
         env:

@@ -33,6 +33,28 @@ jobs:
             }
           '
 
+      # Repo-fresh but site-stale must not pass: the newest article being in
+      # the index proves nothing about the live site, so hit its real URL.
+      - name: Check newest article is live on deniskim1.com
+        run: |
+          slug=$(node -e '
+            const idx = require("./src/data/articles-index.json");
+            const newest = idx
+              .filter((a) => a.date && a.slug)
+              .sort((a, b) => a.date.localeCompare(b.date))
+              .at(-1);
+            if (!newest) { console.error("No dated articles with slugs in index."); process.exit(1); }
+            console.log(newest.slug);
+          ')
+          url="https://deniskim1.com/writing/${slug}/"
+          echo "Checking live URL: $url"
+          status=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 "${url}?cb=${GITHUB_RUN_ID}")
+          echo "HTTP $status"
+          if [ "$status" != "200" ]; then
+            echo "::error::Newest article ($slug) is in the repo but not live (HTTP $status)."
+            exit 1
+          fi
+
       - name: File issue on stale content
         if: failure()
         env:
@@ -49,3 +71,8 @@ jobs:
           else
             echo "Open staleness issue #$existing already exists; skipping."
           fi
+
+      - name: Ntfy alert on watchdog failure
+        if: failure()
+        run: |
+          curl -s -H 'Title: SITE WATCHDOG FAILED' -H 'Priority: high' -d 'deniskim1.com content watchdog failed — check Actions' ntfy.sh/deniskim-kb
