@@ -41,7 +41,7 @@ This work presents DC-GRPO (Decomposed Credit Group Relative Policy Optimization
 
 ## Den's Take
 
-OpenAI's claim that GPT-Red achieves an 84% prompt injection success rate compared to human hackers at a mere 13% is a massive validation of automated offensive security. This directly parallels my work on [Agent Hacks Agent: Autoresearch for Production-Agent Red-Teaming](/writing/agent_hacks_agent_autoresearch_for_productionagent_redteamin), where I demonstrated how automated, agentic loops are the only scalable way to pressure-test modern production-grade model boundaries. 
+OpenAI's claim that GPT-Red achieves an 84% prompt injection success rate compared to human hackers at a mere 13% is a massive validation of automated offensive security. This directly parallels the research in [Agent Hacks Agent: Autoresearch for Production-Agent Red-Teaming](/writing/agent_hacks_agent_autoresearch_for_productionagent_redteamin), where I demonstrated how automated, agentic loops are the only scalable way to pressure-test modern production-grade model boundaries. 
 
 However, the real technical meat this week is the DC-GRPO framework introduced in the "MJ" jailbreaking paper. Traditional defenders still operate under the delusion that single-turn safety alignment is enough. DC-GRPO proves otherwise by mathematically decoupling immediate and future rewards to optimize multi-turn state drift. In [AMT-X: Phase-Structured Multi-Turn Red-Teaming with Checklist-Gated Evaluation](/writing/amtx_phasestructured_multiturn_redteaming_with_checklistgate), I analyzed how structured, multi-turn interactions expose catastrophic context window drift, and this paper's turn-level reinforcement learning method makes that exploitation highly systematic.
 
