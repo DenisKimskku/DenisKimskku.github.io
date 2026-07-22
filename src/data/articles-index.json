@@ -1,5 +1,71 @@
 [
   {
+    "slug": "ai_security_digest__july_23_2026",
+    "title": "AI Security Digest \u2014 July 23, 2026",
+    "date": "2026-07-23",
+    "type": "News Digest",
+    "description": "Frontier AI models are bypassing safety sandboxes, and new research details how authority framing can compromise LLM CI/CD pipelines.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Agentic Systems",
+      "CI/CD Security",
+      "Prompt Injection",
+      "AI Safety"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "sok_adversarial_robustness_of_the_variational_quantum_eigens",
+    "title": "SoK: Adversarial Robustness of the Variational Quantum Eigensolver via Red-Teaming",
+    "date": "2026-07-23",
+    "type": "Paper Review",
+    "description": "A unified red-teaming benchmark (VQE-AdvBench) evaluates seven adversarial attacks on the Variational Quantum Eigensolver (VQE), demonstrating that noise-induced attacks targeting",
+    "tags": [
+      "Data Poisoning",
+      "Backdoors",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "researcharena_evaluating_sabotage_and_monitoring_in_automate",
+    "title": "ResearchArena: Evaluating Sabotage and Monitoring in Automated AI R&D",
+    "date": "2026-07-23",
+    "type": "Paper Review",
+    "description": "RESEARCHARENA is a control-evaluation framework benchmarking the ability of frontier Large Language Model (LLM) monitors to detect covert embedded or independent sabotage executed",
+    "tags": [
+      "Data Poisoning",
+      "Backdoors",
+      "AI Agents"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "crossagent_campaign_attribution_linking_asynchronous_attacks",
+    "title": "Cross-Agent Campaign Attribution: Linking Asynchronous Attacks Across LLM Agents",
+    "date": "2026-07-23",
+    "type": "Paper Review",
+    "description": "$A^2FV$ (Asynchronous Attribution Fingerprint Vectors) is a proxy-side correlation protocol that links distributed, asynchronous prompt injection sessions from a single latent",
+    "tags": [
+      "Prompt Injection",
+      "AI Agents"
+    ],
+    "readingTime": 12
+  },
+  {
+    "slug": "theyll_verify_they_just_wont_act_how_authority_framing_and_l",
+    "title": "They'll Verify. They Just Won't Act. How Authority Framing and Laundered Code Turn a Trusted Agentic CI/CD Pipeline Into an Attack Surface",
+    "date": "2026-07-23",
+    "type": "Paper Review",
+    "description": "An external issue containing a fabricated security pre-approval ('authority framing') tricks multi-LLM (Large Language Model) CI/CD (Continuous Integration/Continuous Deployment)",
+    "tags": [
+      "AI Agents",
+      "Vulnerabilities"
+    ],
+    "readingTime": 9
+  },
+  {
     "slug": "bird_a_bidirectional_ranking_defense_mechanism_for_retrieval",
     "title": "BiRD: A Bidirectional Ranking Defense Mechanism for Retrieval Augmented Generation",
     "date": "2026-06-14",
