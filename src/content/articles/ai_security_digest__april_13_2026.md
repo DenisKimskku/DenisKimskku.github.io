@@ -2,7 +2,7 @@
 title: "AI Security Digest — April 13, 2026"
 date: "2026-04-13"
 type: "News Digest"
-description: "The dominant security theme this week is the transition from atomic, single-turn prompt injections to stateful, multi-turn cognitive exploits that manipulate the context-window dynamics of Large Langu"
+description: "The dominant security theme this week is the transition from atomic, single-turn prompt injections to stateful, multi-turn cognitive exploits that manipulate the context-window…"
 tags: ["LLM Security", "Adversarial Attacks", "Prompt Injection", "AI Alignment", "Cybersecurity", "Threat Intelligence"]
 readingTime: 7
 headerImage: "/images/news/ai_security_digest__april_13_2026.jpg"

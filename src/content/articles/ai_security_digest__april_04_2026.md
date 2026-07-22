@@ -2,7 +2,7 @@
 title: "AI Security Digest — April 04, 2026"
 date: "2026-04-04"
 type: "News Digest"
-description: "The dominant security paradigm of early 2026 is the rapid transition from static, perimeter-based deep learning defenses to dynamic state-space models and automated prompt-to-signature compilation. Th"
+description: "The dominant security paradigm of early 2026 is the rapid transition from static, perimeter-based deep learning defenses to dynamic state-space models and automated…"
 tags: ["AI Security", "Defensive AI", "Advanced Persistent Threats", "Neural Networks", "Attack Detection", "Adversarial Attacks"]
 readingTime: 10
 headerImage: "/images/news/ai_security_digest__april_04_2026.jpg"

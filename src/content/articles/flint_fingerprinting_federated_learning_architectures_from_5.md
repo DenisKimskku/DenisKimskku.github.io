@@ -2,7 +2,7 @@
 title: "FLINT: Fingerprinting Federated Learning Architectures from 5G PHY-Layer Side Channels"
 date: "2026-07-21"
 type: "Paper Review"
-description: "FLINT is a passive, over-the-air side-channel attack that reconstructs rotating temporary physical-layer identifiers (RNTIs) and uses multi-view temporal modeling of unencrypted 5G control channel (PD"
+description: "FLINT is a passive, over-the-air side-channel attack that reconstructs rotating temporary physical-layer identifiers (RNTIs) and uses multi-view temporal modeling of unencrypted…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/flint_fingerprinting_federated_learning_architectures_from_5.jpg"

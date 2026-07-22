@@ -4,7 +4,7 @@ date: "2026-07-11"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2607.08395"
 paperAuthors: "Puji Wang, Yingchen Zhang, Ruqing Zhang, et al."
-description: "TokenWall is a local, hierarchical runtime firewall that intercepts and semantically audits natural-language 'token flows' (context, authority, and capability transitions) in persistent AI agents befo"
+description: "TokenWall is a local, hierarchical runtime firewall that intercepts and semantically audits natural-language \"token flows\" (context, authority, and capability transitions) in…"
 tags: ["AI Security"]
 readingTime: 8
 headerImage: "/images/news/tokenflow_firewall_semantic_runtime_auditing_for_persistent_.jpg"
@@ -182,7 +182,7 @@ Securing long-lived AI agents requires moving away from static prompt guardrails
 
 ## Den's Take
 
-I am glad to see researchers focusing on the actual boundary of state mutation rather than post-hoc auditing. In my previous writing on persistent control and defending agentic systems against trojans and injections, I argued that securing the execution loop of persistent agents requires active, runtime intervention before an injection escalates into long-term system control. 
+I am glad to see researchers focusing on the actual boundary of state mutation rather than post-hoc auditing. In my previous reviews covering persistent control and defenses of agentic systems against trojans and injections, I noted that securing the execution loop of persistent agents requires active, runtime intervention before an injection escalates into long-term system control. 
 
 TokenWall’s modeling of agent actions as "token flows" ($f = (x, s, t, c, b)$) is a clean, practical framework for intercepting exploits before they write to memory or execute tools. Adding only 0.69 seconds of latency is highly tolerable for enterprise assistants, and the 97.4% benign pass rate shows they are minimizing operational friction. 
 

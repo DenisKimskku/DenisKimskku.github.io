@@ -2,7 +2,7 @@
 title: "Evaluating Open-Weight LLMs for Generating Structured Threat Information for Autonomous Vehicle Vulnerabilities"
 date: "2026-07-21"
 type: "Paper Review"
-description: "An empirical evaluation of 11 open-weight LLMs (4B to 120B) on converting raw Connected and Autonomous Vehicle (CAV) vulnerabilities into structured STIX 2.1 threat intelligence graphs, mapping to CWE"
+description: "An empirical evaluation of 11 open-weight LLMs (4B to 120B) on converting raw Connected and Autonomous Vehicle (CAV) vulnerabilities into structured STIX 2.1 threat intelligence…"
 tags: ["AI Security"]
 readingTime: 8
 headerImage: "/images/news/evaluating_openweight_llms_for_generating_structured_threat_.jpg"

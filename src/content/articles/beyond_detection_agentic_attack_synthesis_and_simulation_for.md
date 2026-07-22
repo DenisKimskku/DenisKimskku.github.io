@@ -2,7 +2,7 @@
 title: "Beyond Detection: Agentic Attack Synthesis and Simulation for Smart Contracts"
 date: "2026-07-21"
 type: "Paper Review"
-description: "KASS (Knowledge-Augmented Attack Synthesis and Simulation) is a multi-agent framework that automates Smart Contract Automated Exploit Generation (AEG) by combining retrieval-augmented planning over re"
+description: "What**: KASS (Knowledge-Augmented Attack Synthesis and Simulation) is a multi-agent framework that automates Smart Contract Automated Exploit Generation (AEG) by combining…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/beyond_detection_agentic_attack_synthesis_and_simulation_for.jpg"

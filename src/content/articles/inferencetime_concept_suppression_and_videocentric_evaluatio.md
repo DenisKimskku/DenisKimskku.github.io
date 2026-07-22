@@ -2,7 +2,7 @@
 title: "Inference-Time Concept Suppression and Video-Centric Evaluation for Text-to-Video Models"
 date: "2026-07-19"
 type: "Paper Review"
-description: "SIRUS is a training-free, inference-time concept suppression framework for text-to-video (T2V) models that builds a contextualized text-embedding subspace to dynamically subtract concept residuals dur"
+description: "SIRUS is a training-free, inference-time concept suppression framework for text-to-video (T2V) models that builds a contextualized text-embedding subspace to dynamically subtract…"
 tags: ["AI Security"]
 readingTime: 7
 headerImage: "/images/news/inferencetime_concept_suppression_and_videocentric_evaluatio.jpg"

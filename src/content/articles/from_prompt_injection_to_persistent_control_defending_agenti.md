@@ -4,7 +4,7 @@ date: "2026-06-02"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.31042"
 paperAuthors: "Jiejun Tan, Zhicheng Dou, Xinyu Yang, et al."
-description: "Tan et al. (arXiv 2026) introduce *ClawTrojan*, a benchmark exposing how multi-step trojan attacks persistently compromise agentic workspace files, and *DASGuard*, a provenance-tracking runtime defens"
+description: "Tan et al."
 tags: ["AI Security"]
 readingTime: 8
 headerImage: "/images/news/from_prompt_injection_to_persistent_control_defending_agenti.jpg"
@@ -166,6 +166,6 @@ As AI agents assume real-world operations in our local workspaces, we must aband
 
 Let's stop pretending that prompt injection is just a single-turn problem. The real threat to modern enterprise agents isn't a clever adversarial suffix in a chat window; it is persistent, multi-step state poisoning in local workspaces. If you are deploying tools like Claude Code or Cursor on a developer's workstation inside a Fortune 500 company, ClawTrojan's 95.5% attack success rate on GPT-5.4 should terrify you. An attacker doesn't need to break your API firewall if they can drop a stealthy instruction into a README or test file that the agent processes five steps later.
 
-This directly builds on my previous analysis in [Hijacking Agent Memory: Stealthy Trojan Attacks Through Conversational Interaction](/writing/hijacking_agent_memory_stealthy_trojan_attacks_through_conve), where I explained how persistent memory acts as a massive, unmonitored attack surface that allows adversaries to bypass traditional single-turn guardrails. 
+This directly builds on my review of [Hijacking Agent Memory: Stealthy Trojan Attacks Through Conversational Interaction](/writing/hijacking_agent_memory_stealthy_trojan_attacks_through_conve), which explained how persistent memory acts as a massive, unmonitored attack surface that allows adversaries to bypass traditional single-turn guardrails. 
 
 I'm excited about DASGuard's provenance-tracking runtime defense because it targets the actual root cause—the lack of context-origin tracking. We cannot trust LLMs to police their own inputs when those inputs are fetched dynamically from a compromised local environment. If we don't start tracking where an agent's instructions originate, we are essentially giving a \$50M corporate repository's keys to whatever random text files happen to be lying around.

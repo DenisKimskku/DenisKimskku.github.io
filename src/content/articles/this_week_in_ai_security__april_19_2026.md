@@ -2,7 +2,7 @@
 title: "This Week in AI Security — April 19, 2026"
 date: "2026-04-19"
 type: "Trend Report"
-description: "The dominant theme this week is the decisive transition from isolated 'model-centric' security toward systemic, hardware-software co-designed infrastructure integrity. As enterprise AI deployments sca"
+description: "The dominant theme this week is the decisive transition from isolated 'model-centric' security toward systemic, hardware-software co-designed infrastructure integrity."
 tags: ["LLM Security", "Agent Security", "AI Safety", "Watermarking", "Adversarial ML", "Hardware Security"]
 readingTime: 8
 headerImage: "/images/news/this_week_in_ai_security__april_19_2026.jpg"

@@ -4,7 +4,7 @@ date: "2026-05-28"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.24421"
 paperAuthors: "Rohan Pandey, Archit Bhujang"
-description: "Log-substrate prompt injection exploits attacker-controlled security log fields (such as HTTP User-Agents and URI paths) to inject adversarial instructions directly into LLM-augmented security workflo"
+description: "Log-substrate prompt injection exploits attacker-controlled security log fields (such as HTTP User-Agents and URI paths) to inject adversarial instructions directly into…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/poisoning_the_watchtower_prompt_injection_attacks_against_ll.jpg"
@@ -178,4 +178,4 @@ This paper exposes a glaring, structural blind spot in how we build LLM-augmente
 
 Imagine a Fortune 500 deployment running Microsoft Sentinel: a single, malformed HTTP request from an external adversary could silently suppress critical exfiltration warnings, paving the way for a devastating \$50M ransomware breach. Traditional string-matching and naive XML parsing defenses are utterly inadequate here because the logging of the adversarial input is legally and operationally mandatory. 
 
-This vulnerability underscores the urgent need for robust evaluation frameworks, a theme I previously detailed in [Referential Security as a New Paradigm for AI Evaluations](/writing/referential_security_as_a_new_paradigm_for_ai_evaluations), where I argued that AI security assessments must be anchored to hard system state changes rather than easily manipulated linguistic outputs. If your "watchtower" can be house-trained by the very adversary it is meant to spot, your automated triage is worse than useless—it is a liability.
+This vulnerability underscores the urgent need for robust evaluation frameworks, a theme I previously covered in [Referential Security as a New Paradigm for AI Evaluations](/writing/referential_security_as_a_new_paradigm_for_ai_evaluations), which argued that AI security assessments must be anchored to hard system state changes rather than easily manipulated linguistic outputs. If your "watchtower" can be house-trained by the very adversary it is meant to spot, your automated triage is worse than useless—it is a liability.

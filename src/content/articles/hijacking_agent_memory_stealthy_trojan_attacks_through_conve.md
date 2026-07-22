@@ -4,7 +4,7 @@ date: "2026-05-30"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.29960"
 paperAuthors: "Hongtao Wang, Se Yang, Yu Chen, et al."
-description: "**MemPoison** is an optimization-driven conversational memory poisoning attack that bypasses the selective extraction and rewriting filters of modern LLM agents to inject persistent, triggerable backd"
+description: "**MemPoison** is an optimization-driven conversational memory poisoning attack that bypasses the selective extraction and rewriting filters of modern LLM agents to inject…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/hijacking_agent_memory_stealthy_trojan_attacks_through_conve.jpg"
@@ -183,4 +183,4 @@ What excites me about MemPoison is that it finally moves past the naive threat m
 
 As a practitioner, this is highly alarming. Imagine a \$20M healthcare copilot deployment like Nuance DAX Copilot where a malicious patient or compromised email thread can permanently inject lethal drug interaction advice into a patient's clinical history just by chatting with the system. Because Mem0 and LangMem-style architectures extract semantic facts dynamically, traditional input filters will completely miss these optimized triggers. 
 
-This is a massive leap forward in threat modeling realism, echoing my findings in [IterInject: Indirect Prompt Injection Against LLM Agents via Feedback-Guided Iterative Optimization](/writing/iterinject_indirect_prompt_injection_against_llm_agents_via_), where we showed how iterative optimization allows attackers to systematically bypass an agent's dynamic reasoning boundaries. If your agent dynamically updates its own database based on conversational inputs, you cannot rely on static input guardrails; you are actively hosting a self-poisoning engine.
+This is a massive leap forward in threat modeling realism, echoing my review of [IterInject: Indirect Prompt Injection Against LLM Agents via Feedback-Guided Iterative Optimization](/writing/iterinject_indirect_prompt_injection_against_llm_agents_via_), which showed how iterative optimization allows attackers to systematically bypass an agent's dynamic reasoning boundaries. If your agent dynamically updates its own database based on conversational inputs, you cannot rely on static input guardrails; you are actively hosting a self-poisoning engine.

@@ -2,7 +2,7 @@
 title: "Automatic Hard Example Synthesis with Multi-Level Agentic Data Curation"
 date: "2026-07-19"
 type: "Paper Review"
-description: "An automated multi-agent framework that uses an evolutionary 'Explore and Mutate' strategy to autonomously generate, debate, and label highly ambiguous visual policy violations ('hard examples')"
+description: "An automated multi-agent framework that uses an evolutionary \"Explore and Mutate\" strategy to autonomously generate, debate, and label highly ambiguous visual policy violations…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/automatic_hard_example_synthesis_with_multilevel_agentic_dat.jpg"

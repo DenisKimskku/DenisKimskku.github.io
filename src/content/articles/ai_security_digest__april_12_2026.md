@@ -2,7 +2,7 @@
 title: "AI Security Digest — April 12, 2026"
 date: "2026-04-12"
 type: "News Digest"
-description: "The dominant theme this week is the collapse of static, text-centric alignment barriers as multimodal models and autonomous agents merge to create highly dynamic execution-level security risks. As dem"
+description: "The dominant theme this week is the collapse of static, text-centric alignment barriers as multimodal models and autonomous agents merge to create highly dynamic execution-level…"
 tags: ["MLLM", "Adversarial Attacks", "Semantic Gap", "AI Safety", "Agentic Risk", "Content Moderation"]
 readingTime: 6
 headerImage: "/images/news/ai_security_digest__april_12_2026.jpg"

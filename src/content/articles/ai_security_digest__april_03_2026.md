@@ -2,7 +2,7 @@
 title: "AI Security Digest — April 03, 2026"
 date: "2026-04-03"
 type: "News Digest"
-description: "The enterprise security landscape is undergoing a critical transition as defensive architectures pivot from token-level static guardrails to countering complex, goal-directed agentic exploits. Emergin"
+description: "The enterprise security landscape is undergoing a critical transition as defensive architectures pivot from token-level static guardrails to countering complex, goal-directed…"
 tags: ["AI Security", "Autonomous Systems", "Agentic Misalignment", "Safety Certification", "Adversarial Testing"]
 readingTime: 11
 headerImage: "/images/news/ai_security_digest__april_03_2026.jpg"

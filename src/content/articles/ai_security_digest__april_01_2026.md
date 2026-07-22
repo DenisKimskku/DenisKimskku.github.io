@@ -2,7 +2,7 @@
 title: "AI Security Digest — April 01, 2026"
 date: "2026-04-01"
 type: "News Digest"
-description: "The dominant theme this week is the structural vulnerability of agentic integrations that decouple security policies from real-time execution state, leaving enterprise pipelines highly vulnerable to c"
+description: "The dominant theme this week is the structural vulnerability of agentic integrations that decouple security policies from real-time execution state, leaving enterprise pipelines…"
 tags: ["AI Security", "Adversarial Attacks", "Multimodal Large Language Models", "Formal Defensive Architectures", "Agent Identity Protocol", "Cognitive State Planes"]
 readingTime: 14
 headerImage: "/images/news/ai_security_digest__april_01_2026.jpg"

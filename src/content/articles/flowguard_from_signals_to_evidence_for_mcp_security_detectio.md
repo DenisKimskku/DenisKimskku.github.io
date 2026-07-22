@@ -2,7 +2,7 @@
 title: "FlowGuard: From Signals to Evidence for MCP Security Detection"
 date: "2026-07-18"
 type: "Paper Review"
-description: "FlowGuard is an evidence-grounded security scanner for the Model Context Protocol (MCP) that combines semantic risk triage, reconnaissance-guided probing, and runtime response adjudication to distingu"
+description: "FlowGuard is an evidence-grounded security scanner for the Model Context Protocol (MCP) that combines semantic risk triage, reconnaissance-guided probing, and runtime response…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/flowguard_from_signals_to_evidence_for_mcp_security_detectio.jpg"

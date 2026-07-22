@@ -4,7 +4,7 @@ date: "2026-07-14"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2607.08883"
 paperAuthors: "Ege Çakar, Hannah Guan, Kayden Kehe"
-description: "Activation-Guided GCG optimizes adversarial suffixes by minimizing projection onto a model's internal, low-dimensional refusal direction, paired with Soft-GCG (SGCG) which replaces discrete search wit"
+description: "Activation-Guided GCG optimizes adversarial suffixes by minimizing projection onto a model's internal, low-dimensional refusal direction, paired with Soft-GCG (SGCG) which…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/optimizing_against_safety_representations_activationguided_a.jpg"

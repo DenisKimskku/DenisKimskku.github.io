@@ -2,7 +2,7 @@
 title: "AI Security Digest — April 22, 2026"
 date: "2026-04-22"
 type: "News Digest"
-description: "The unifying theme of this week's AI security landscape is the critical transition from superficial, syntax-level filtering to deep, state-aware behavioral defenses across both agentic workflows and s"
+description: "The unifying theme of this week's AI security landscape is the critical transition from superficial, syntax-level filtering to deep, state-aware behavioral defenses across both…"
 tags: ["LLM Security", "Agent Security", "RAG Security", "Code Security", "Data Poisoning", "AI Safety"]
 readingTime: 11
 headerImage: "/images/news/ai_security_digest__april_22_2026.jpg"

@@ -2,7 +2,7 @@
 title: "This Week in AI Security — April 05, 2026"
 date: "2026-04-05"
 type: "Trend Report"
-description: "The primary security trajectory this week marks a decisive transition away from localized prompt injection toward systemic, stateful exploitation of autonomous, multi-agent architectures. As artificia"
+description: "The primary security trajectory this week marks a decisive transition away from localized prompt injection toward systemic, stateful exploitation of autonomous, multi-agent…"
 tags: ["AI Security", "Autonomous Agents", "Agentic Security", "LLM Security", "System Compromise", "Trust and Governance", "Backdoor Attacks"]
 readingTime: 9
 headerImage: "/images/news/this_week_in_ai_security__april_05_2026.jpg"

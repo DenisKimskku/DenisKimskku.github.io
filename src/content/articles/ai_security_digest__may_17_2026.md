@@ -2,7 +2,7 @@
 title: "AI Security Digest — May 17, 2026"
 date: "2026-05-17"
 type: "News Digest"
-description: "The dominant theme this week is the critical paradigm shift toward weight-level model editing and zero-cost post-hoc auditing as traditional input-filtering perimeter guards collapse under the weight "
+description: "The dominant theme this week is the critical paradigm shift toward weight-level model editing and zero-cost post-hoc auditing as traditional input-filtering perimeter guards…"
 tags: ["AI Security"]
 readingTime: 8
 headerImage: "/images/news/ai_security_digest__may_17_2026.jpg"

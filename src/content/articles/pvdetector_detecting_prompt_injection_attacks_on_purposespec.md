@@ -2,7 +2,7 @@
 title: "PVDetector: Detecting Prompt Injection Attacks on Purpose-Specific LLM Agents through Policy-Violation Concept Analysis"
 date: "2026-07-16"
 type: "Paper Review"
-description: "PVDetector is a training-free prompt injection (PI) detection framework that isolates 'policy-violation' (PV) concepts in the LLM's hidden activation space and measures real-time semantic alignment du"
+description: "PVDetector is a training-free prompt injection (PI) detection framework that isolates \"policy-violation\" (PV) concepts in the LLM's hidden activation space and measures real-time…"
 tags: ["AI Security"]
 readingTime: 11
 headerImage: "/images/news/pvdetector_detecting_prompt_injection_attacks_on_purposespec.jpg"

@@ -2,7 +2,7 @@
 title: "AI Security Digest — April 02, 2026"
 date: "2026-04-02"
 type: "News Digest"
-description: "The modern AI threat landscape is undergoing a structural phase shift where security boundaries are migrating away from isolated prompt-engineering patches toward compositional, system-level, and hard"
+description: "The modern AI threat landscape is undergoing a structural phase shift where security boundaries are migrating away from isolated prompt-engineering patches toward compositional…"
 tags: ["AI Security", "EnsembleSHAP", "SABLE", "Adversarial Attacks", "Compositional Security", "System-Level Vulnerabilities"]
 readingTime: 14
 headerImage: "/images/news/ai_security_digest__april_02_2026.jpg"

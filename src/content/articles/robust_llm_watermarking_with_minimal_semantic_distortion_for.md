@@ -4,7 +4,7 @@ date: "2026-05-30"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.23175"
 paperAuthors: "Kieu Dang, Phung Lai, NhatHai Phan, et al."
-description: "SAFESEAL is a key-conditioned, post-processing LLM watermarking framework that preserves named entities while utilizing context-aware synonym substitutions to embed robust, provider-specific verificat"
+description: "SAFESEAL is a key-conditioned, post-processing LLM watermarking framework that preserves named entities while utilizing context-aware synonym substitutions to embed robust…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/robust_llm_watermarking_with_minimal_semantic_distortion_for.jpg"

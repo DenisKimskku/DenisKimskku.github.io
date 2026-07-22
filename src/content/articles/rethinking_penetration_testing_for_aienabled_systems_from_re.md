@@ -2,7 +2,7 @@
 title: "Rethinking Penetration Testing for AI-Enabled Systems: From Resource Compromise to Behavioral Objective Violation"
 date: "2026-07-17"
 type: "Paper Review"
-description: "Reframes penetration testing for AI systems from resource compromise (exploiting software vulnerabilities/infrastructure) to 'objective-driven behavioral evaluation'—where success is defined as the fe"
+description: "Reframes penetration testing for AI systems from resource compromise (exploiting software vulnerabilities/infrastructure) to \"objective-driven behavioral evaluation\"—where…"
 tags: ["AI Security"]
 readingTime: 11
 ---

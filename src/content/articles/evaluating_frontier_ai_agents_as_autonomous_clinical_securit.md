@@ -2,7 +2,7 @@
 title: "Evaluating Frontier AI Agents as Autonomous Clinical Security Auditors"
 date: "2026-07-19"
 type: "Paper Review"
-description: "An open evaluation task built on METR Task Standard v0.3.0 that assesses whether frontier AI agents can autonomously implement, execute, and aggregate a multi-component adversarial security audit agai"
+description: "An open evaluation task built on METR Task Standard v0.3.0 that assesses whether frontier AI agents can autonomously implement, execute, and aggregate a multi-component…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/evaluating_frontier_ai_agents_as_autonomous_clinical_securit.jpg"

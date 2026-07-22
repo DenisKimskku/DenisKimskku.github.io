@@ -4,7 +4,7 @@ date: "2026-05-28"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.22984"
 paperAuthors: "Simone Antonelli, Sadegh Akhondzadeh, Aleksandar Bojchevski"
-description: "Attackers can exploit Test-Time Training (TTT) and dynamic fine-tuning APIs to completely bypass safety guardrails in just 1 to 10 gradient steps by updating the model's weights on harmful target pref"
+description: "Attackers can exploit Test-Time Training (TTT) and dynamic fine-tuning APIs to completely bypass safety guardrails in just 1 to 10 gradient steps by updating the model's weights…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/testtime_training_undermines_safety_guardrails.jpg"

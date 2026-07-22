@@ -2,7 +2,7 @@
 title: "Bad Memory: Evaluating Prompt Injection Risks from Memory in Agentic Systems"
 date: "2026-07-18"
 type: "Paper Review"
-description: "An evaluation of persistent prompt injection attacks targeting user-curated, plain-text memory and configuration files (e.g., `CLAUDE.md`, `AGENTS.md`, and `behaviors.md`) in agentic coding and person"
+description: "An evaluation of persistent prompt injection attacks targeting user-curated, plain-text memory and configuration files (e.g., `CLAUDE.md`, `AGENTS.md`, and `behaviors.md`) in…"
 tags: ["AI Security"]
 readingTime: 8
 headerImage: "/images/news/bad_memory_evaluating_prompt_injection_risks_from_memory_in_.jpg"

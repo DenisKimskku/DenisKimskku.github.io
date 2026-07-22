@@ -4,7 +4,7 @@ date: "2026-06-03"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2606.00654"
 paperAuthors: "He Wang, Jun Feng, Hong Sun, et al."
-description: "The Proactive Availability Backdoor (PAB) is an attack paradigm that weaponizes an LLM's aligned helpfulness, actively inducing the user to type a target trigger word through conversational suggestion"
+description: "The Proactive Availability Backdoor (PAB) is an attack paradigm that weaponizes an LLM's aligned helpfulness, actively inducing the user to type a target trigger word through…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/the_invitation_trap_proactive_availability_backdoor_in_llms_.jpg"

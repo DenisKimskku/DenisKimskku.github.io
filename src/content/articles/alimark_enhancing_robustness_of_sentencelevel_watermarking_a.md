@@ -4,7 +4,7 @@ date: "2026-05-30"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.29434"
 paperAuthors: "Yuexin Li, Wenjie Qu, Linyu Wu, et al."
-description: "AliMark is a sentence-level LLM watermarking framework that reformulates watermarking as a bit sequence encoding and global alignment problem, utilizing a proactive sentence 'Re-Structurer' and adapti"
+description: "AliMark is a sentence-level LLM watermarking framework that reformulates watermarking as a bit sequence encoding and global alignment problem, utilizing a proactive sentence…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/alimark_enhancing_robustness_of_sentencelevel_watermarking_a.jpg"
@@ -234,4 +234,4 @@ Watermarking has historically been a game of whack-a-mole: token-level approache
 
 This resilience is critical. Consider a \$15M copyright dispute where a financial enterprise accuses a competitor of scraping and using its proprietary, synthetic financial analyses to train a rival model. Without a robust, paraphrase-resistant watermark, proving that content was machine-generated in court is a forensic nightmare. 
 
-However, we must view watermarking not as a standalone silver bullet, but as part of a larger defense-in-depth strategy. In my previous overview of [Security in the Fine-Tuning Lifecycle of Large Language Models](/writing/security_in_the_finetuning_lifecycle_of_large_language_model), I argued that robust output attribution and verification mechanisms are absolutely vital for maintaining model provenance and compliance when upstream fine-tuning controls fail. AliMark provides the exact kind of mathematical resilience we need at this verification layer. Still, the security community must remain vigilant—the cat-and-mouse game between semantic watermarking and advanced, structure-aware paraphrasers is far from over.
+However, we must view watermarking not as a standalone silver bullet, but as part of a larger defense-in-depth strategy. In my previous overview of [Security in the Fine-Tuning Lifecycle of Large Language Models](/writing/security_in_the_finetuning_lifecycle_of_large_language_model), I noted that robust output attribution and verification mechanisms are absolutely vital for maintaining model provenance and compliance when upstream fine-tuning controls fail. AliMark provides the exact kind of mathematical resilience we need at this verification layer. Still, the security community must remain vigilant—the cat-and-mouse game between semantic watermarking and advanced, structure-aware paraphrasers is far from over.

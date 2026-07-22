@@ -2,7 +2,7 @@
 title: "ARMOR++: Agentic Orchestration of a Multi-Domain Primitive Set for Transferable Attacks on Deepfake Detectors"
 date: "2026-07-19"
 type: "Paper Review"
-description: "A multi-agent framework called ARMOR++ that uses Vision-Language Models (VLMs) and LLMs to orchestrate and dynamically parameterize five heterogeneous perturbation primitives, bypassing black-box deep"
+description: "A multi-agent framework called ARMOR++ that uses Vision-Language Models (VLMs) and LLMs to orchestrate and dynamically parameterize five heterogeneous perturbation primitives…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/armor_agentic_orchestration_of_a_multidomain_primitive_set_f.jpg"

@@ -4,7 +4,7 @@ date: "2026-05-28"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.25194"
 paperAuthors: "Dongpeng Zhang, Ke Ma, Yangbangyan Jiang, et al."
-description: "Gradient Token Masking (GTM) is an inference-time defense that protects Large Vision-Language Models (LVLMs) from visual prompt injection by localizing critical adversarial image tokens via hidden-sta"
+description: "Gradient Token Masking (GTM) is an inference-time defense that protects Large Vision-Language Models (LVLMs) from visual prompt injection by localizing critical adversarial image…"
 tags: ["AI Security"]
 readingTime: 8
 headerImage: "/images/news/localization_then_neutralization_gradientguided_token_suppre.jpg"
@@ -166,4 +166,4 @@ GTM is exactly the kind of pragmatic, surgical defense we need as we transition 
 
 However, the obvious practitioner's catch is the dependency on intermediate hidden-layer gradients. This defense is a non-starter if your architecture relies on closed APIs like GPT-4o or Claude 3.5 Sonnet. But for teams self-hosting open-weights pipelines like Qwen2-VL or LLaVA, GTM is incredibly compelling. The latency overhead of +0.22 seconds is a rounding error compared to output-guardrail lag. 
 
-We must secure these multimodal pipelines because the downstream risk of hijacked vision models isn't just bad text generation; it is active tool exploitation. This connects directly to my previous analysis in [How Agentic AI Coding Assistants Become the Attacker's Shell](/writing/how_agentic_ai_coding_assistants_become_the_attackers_shell), where I detail how compromised model contexts inevitably translate into unauthorized API executions and host-level compromise when hooked up to agentic executors. If you are building with open-weights vision models, GTM is a defense you should be actively prototyping.
+We must secure these multimodal pipelines because the downstream risk of hijacked vision models isn't just bad text generation; it is active tool exploitation. This connects directly to my review of [How Agentic AI Coding Assistants Become the Attacker's Shell](/writing/how_agentic_ai_coding_assistants_become_the_attackers_shell), which details how compromised model contexts inevitably translate into unauthorized API executions and host-level compromise when hooked up to agentic executors. If you are building with open-weights vision models, GTM is a defense you should be actively prototyping.

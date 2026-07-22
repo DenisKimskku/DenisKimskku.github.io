@@ -1,11 +1,6 @@
 [
   {
     "when": "Jul 2026",
-    "text": "Won the AI Prompting Challenge (APC’26).",
-    "href": null
-  },
-  {
-    "when": "Jul 2026",
     "text": "Presented Fool Me If You Can — our study of adversarial robustness in binary code similarity detection — at FSE'26.",
     "href": "/writing/fool_me_binary_similarity/"
   },
@@ -13,5 +8,10 @@
     "when": "Dec 2025",
     "text": "Presented RAGDefender, our defense against knowledge-corruption attacks on RAG systems, at ACSAC 2025.",
     "href": "/writing/Rescuing_the_unpoisoned/"
+  },
+  {
+    "when": "Jul 2026",
+    "text": "Won the AI Prompting Challenge (APC’26).",
+    "href": null
   }
 ]

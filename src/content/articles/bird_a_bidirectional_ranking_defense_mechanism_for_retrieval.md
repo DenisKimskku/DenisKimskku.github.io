@@ -2,7 +2,7 @@
 title: "BiRD: A Bidirectional Ranking Defense Mechanism for Retrieval Augmented Generation"
 date: "2026-06-14"
 type: "Paper Review"
-description: "BiRD: A Bidirectional Ranking Defense Mechanism for Retrieval Augmented Generation"
+description: "BiRD (Bidirectional Ranking Defense) is an exceptionally fast, training-free RAG defense that filters poisoned documents by analyzing the correlation between a document's…"
 tags: ["RAG Security", "Data Poisoning", "LLM Security", "Adversarial Attacks"]
 readingTime: 10
 headerImage: "/images/news/bird_bidirectional_ranking_defense_rag_security.jpg"
@@ -187,6 +187,6 @@ BiRD elegantly demonstrates that RAG security does not require throwing massive 
 
 As someone who builds and breaks these systems, I find BiRD incredibly refreshing. For too long, the industry has thrown expensive compute at RAG security, relying on heavy LLM-based verifiers that obliterate production latency. BiRD’s shift from semantic filtering to structural anomaly detection in the embedding space is exactly how we solve this at scale. Keeping additional latency under 1 second while slashing PoisonedRAG's Attack Success Rate by up to 54%—and up to 87% on the Mistral-NQ-ANCE configuration—is a massive win for practical deployment.
 
-In my prior analysis of [Relevance as a Vulnerability: How Web Retrieval Degrades Safety Alignment in LLM Agents](/writing/relevance_as_a_vulnerability_how_web_retrieval_degrades_safe), I argued that relying solely on a retriever's semantic matching inevitably exposes downstream models to injection risks; BiRD bypasses this semantic blindspot entirely by analyzing structural embedding anomalies.
+In my review of [Relevance as a Vulnerability: How Web Retrieval Degrades Safety Alignment in LLM Agents](/writing/relevance_as_a_vulnerability_how_web_retrieval_degrades_safe), I noted that relying solely on a retriever's semantic matching inevitably exposes downstream models to injection risks; BiRD bypasses this semantic blindspot entirely by analyzing structural embedding anomalies.
 
 However, as a practitioner, I’m already thinking about the next adversarial move. Because BiRD relies on detecting the tight, highly stable embedding clusters that optimized adversarial documents must form to manipulate dense retrievers like Contriever or DPR, sophisticated attackers will likely start optimizing for "loose" or multi-pronged distributions to evade this bidirectional ranking check. While BiRD handles current poisoning baselines beautifully, we must remain vigilant about how adversaries will inevitably adapt their embedding optimization techniques.

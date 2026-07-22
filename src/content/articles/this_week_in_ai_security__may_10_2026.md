@@ -2,7 +2,7 @@
 title: "This Week in AI Security — May 10, 2026"
 date: "2026-05-10"
 type: "Trend Report"
-description: "The primary narrative this week is the systemic shift in exploit strategies from ephemeral, stateless prompt injections to persistent, stateful compromises of agentic memory and retrieval-augmented wo"
+description: "The primary narrative this week is the systemic shift in exploit strategies from ephemeral, stateless prompt injections to persistent, stateful compromises of agentic memory and…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/this_week_in_ai_security__may_10_2026.jpg"
@@ -111,4 +111,4 @@ We are building systems with persistent vector stores but blindly relying on sem
 
 Furthermore, when attackers do interact directly, they're abandoning natural language entirely. The shift toward mathematical encoding and sparse token manipulation bypasses surface-level safety alignment by attacking the model's fundamental representation layer. This directly maps to the systemic vulnerabilities I analyzed in [NeuroStrike: Neuron-Level Attacks on Aligned LLMs](/writing/neurostrike_neuronlevel_attacks_on_aligned_llms), which demonstrates how targeting the representation layer bypasses semantic safety filters entirely.
 
-As I argued in my [AI Security Digest — May 09, 2026](/writing/ai_security_digest__may_09_2026), where I broke down the breakdown of API boundary protections, security teams must treat agents with persistent state as fully exposed database backends. If you are deploying an agentic system with persistent memory—such as a \$50M enterprise customer-support deployment integrating live database writes—you must implement state-aware runtime integrity checks. Otherwise, you aren't deploying an enterprise assistant—you're just building a persistent backdoor with a \$1M API bill.
+As I noted in my [AI Security Digest — May 09, 2026](/writing/ai_security_digest__may_09_2026), where I broke down the breakdown of API boundary protections, security teams must treat agents with persistent state as fully exposed database backends. If you are deploying an agentic system with persistent memory—such as a \$50M enterprise customer-support deployment integrating live database writes—you must implement state-aware runtime integrity checks. Otherwise, you aren't deploying an enterprise assistant—you're just building a persistent backdoor with a \$1M API bill.

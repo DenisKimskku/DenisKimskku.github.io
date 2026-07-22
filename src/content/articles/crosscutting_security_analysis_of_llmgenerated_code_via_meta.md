@@ -2,7 +2,7 @@
 title: "Cross-Cutting Security Analysis of LLM-Generated Code via Metamorphic Testing and Association Rule Mining"
 date: "2026-07-16"
 type: "Paper Review"
-description: "A hybrid security evaluation framework combining LLM-as-a-judge Metamorphic Testing (MT) with Apriori Association Rule (AR) mining to discover and map 'cross-cutting' co-occurring vulnerability cluste"
+description: "A hybrid security evaluation framework combining LLM-as-a-judge Metamorphic Testing (MT) with Apriori Association Rule (AR) mining to discover and map \"cross-cutting\"…"
 tags: ["AI Security"]
 readingTime: 11
 headerImage: "/images/news/crosscutting_security_analysis_of_llmgenerated_code_via_meta.jpg"

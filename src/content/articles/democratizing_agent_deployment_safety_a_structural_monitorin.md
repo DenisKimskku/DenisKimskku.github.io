@@ -2,7 +2,7 @@
 title: "Democratizing Agent Deployment Safety: A Structural Monitoring Approach"
 date: "2026-07-18"
 type: "Paper Review"
-description: "The Information Flow Graph (IFG) monitor detects and blocks infrastructure-as-code (IaC) sabotage by combining deterministic control-flow and data-flow graph diffs with a lightweight LLM judge"
+description: "The Information Flow Graph (IFG) monitor detects and blocks infrastructure-as-code (IaC) sabotage by combining deterministic control-flow and data-flow graph diffs with a…"
 tags: ["AI Security"]
 readingTime: 8
 headerImage: "/images/news/democratizing_agent_deployment_safety_a_structural_monitorin.jpg"

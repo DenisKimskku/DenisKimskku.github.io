@@ -2,7 +2,7 @@
 title: "AI Agents Do Not Fail Alone:The Context Fails First"
 date: "2026-07-19"
 type: "Paper Review"
-description: "Proposes `ProofAgent-Harness`, an open-source evaluation framework that mathematically isolates and measures 7 criteria of LLM agent *context quality* to serve as an independent leading indicator of a"
+description: "Proposes `ProofAgent-Harness`, an open-source evaluation framework that mathematically isolates and measures 7 criteria of LLM agent *context quality* to serve as an independent…"
 tags: ["AI Security"]
 readingTime: 8
 headerImage: "/images/news/ai_agents_do_not_fail_alonethe_context_fails_first.jpg"

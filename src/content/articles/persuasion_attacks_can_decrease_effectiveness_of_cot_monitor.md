@@ -4,7 +4,7 @@ date: "2026-07-11"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2607.08066"
 paperAuthors: "Jennifer Za, Julija Bainiaksina, Nikita Ostrovsky, et al."
-description: "Exposing an agent's Chain-of-Thought (CoT) reasoning to an LLM-based safety monitor acts as an additional persuasion channel, increasing the monitor's approval rate of policy-violating actions by an a"
+description: "Exposing an agent's Chain-of-Thought (CoT) reasoning to an LLM-based safety monitor acts as an additional persuasion channel, increasing the monitor's approval rate of…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/persuasion_attacks_can_decrease_effectiveness_of_cot_monitor.jpg"

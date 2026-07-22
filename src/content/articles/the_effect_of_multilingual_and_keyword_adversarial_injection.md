@@ -2,7 +2,7 @@
 title: "The Effect of Multi-Lingual and Keyword Adversarial Injection on LLM Relevance Judgment"
 date: "2026-07-17"
 type: "Paper Review"
-description: "Multilingual content-based adversarial prompt injections (query phrases, variants, and distractor text) that bypass LLM-centric defenses to artificially inflate document relevance scores"
+description: "Multilingual content-based adversarial prompt injections (query phrases, variants, and distractor text) that bypass LLM-centric defenses to artificially inflate document…"
 tags: ["AI Security"]
 readingTime: 9
 ---

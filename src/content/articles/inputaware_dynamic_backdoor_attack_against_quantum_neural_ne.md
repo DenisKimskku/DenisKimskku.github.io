@@ -2,7 +2,7 @@
 title: "Input-Aware Dynamic Backdoor Attack Against Quantum Neural Networks"
 date: "2026-07-17"
 type: "Paper Review"
-description: "Q-DIBA is the first input-aware dynamic backdoor attack designed for Quantum Neural Networks (QNNs), utilizing a classical trigger generator and pre-measurement ensemble density contrastive loss to by"
+description: "Q-DIBA is the first input-aware dynamic backdoor attack designed for Quantum Neural Networks (QNNs), utilizing a classical trigger generator and pre-measurement ensemble density…"
 tags: ["AI Security"]
 readingTime: 9
 ---

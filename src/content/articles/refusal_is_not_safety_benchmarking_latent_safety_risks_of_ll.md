@@ -2,7 +2,7 @@
 title: "Refusal is Not Safety! Benchmarking Latent Safety Risks of LLM-Driven Content Humorization"
 date: "2026-07-21"
 type: "Paper Review"
-description: "**HumorSafe** and **HumorPIA** demonstrate how LLMs can be manipulated via 'content humorization' to bypass safety guardrails and covertly generate toxic or stereotypical content disguised as harmless"
+description: "**HumorSafe** and **HumorPIA** demonstrate how LLMs can be manipulated via \"content humorization\" to bypass safety guardrails and covertly generate toxic or stereotypical content…"
 tags: ["AI Security"]
 readingTime: 8
 headerImage: "/images/news/refusal_is_not_safety_benchmarking_latent_safety_risks_of_ll.jpg"

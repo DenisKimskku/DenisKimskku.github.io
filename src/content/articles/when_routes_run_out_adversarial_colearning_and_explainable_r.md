@@ -4,7 +4,7 @@ date: "2026-07-14"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2607.09378"
 paperAuthors: "Brennan Bell, Inti Gabriel Mendoza Estrada, Andreas Trügler, et al."
-description: "An adversarial co-learning framework utilizing the Exp3 bandit algorithm to dynamically resolve route selection (Alice) and attack placement (Eve) over quantum repeater networks without prior topologi"
+description: "An adversarial co-learning framework utilizing the Exp3 bandit algorithm to dynamically resolve route selection (Alice) and attack placement (Eve) over quantum repeater networks…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/when_routes_run_out_adversarial_colearning_and_explainable_r.jpg"
@@ -160,4 +160,4 @@ Adversarial co-learning algorithms can successfully navigate the physical constr
 
 I'm generally skeptical of papers that slap multi-agent algorithms onto quantum security and call it a day, but this work actually grounds its math in physical realities using the SeQUeNCe simulator. Achieving a near-perfect Pearson correlation of `r = 0.99` between the Exp3-learned retention and the full-matrix minimax reference across 50 distinct topologies is genuinely impressive. It shows that online bandit algorithms can successfully navigate adaptive routing decisions (up to 7 hops and 32 routes) without needing prior topological maps.
 
-However, as a practitioner, the threat model feels far too sanitized. Limiting Eve to exactly one component-level attack per turn—either an edge intercept-resend or memory degradation—assumes a highly constrained adversary. In the real world, an attacker won't nicely coordinate with your discrete-event steps to play a neat, turn-based zero-sum game. In my [AI Security Digest — July 13, 2026](/writing/ai_security_digest__july_13_2026), I argued that over-simplifying attacker capabilities in simulation runs the risk of deploying defenses that crumble under unexpected, out-of-distribution strategies. If we want truly explainable robustness in QKD networks, we must test these Exp3 routing models against adaptive, multi-point adversarial strategies, not just highly restricted single-action bandits.
+However, as a practitioner, the threat model feels far too sanitized. Limiting Eve to exactly one component-level attack per turn—either an edge intercept-resend or memory degradation—assumes a highly constrained adversary. In the real world, an attacker won't nicely coordinate with your discrete-event steps to play a neat, turn-based zero-sum game. In my [AI Security Digest — July 13, 2026](/writing/ai_security_digest__july_13_2026), I noted that over-simplifying attacker capabilities in simulation runs the risk of deploying defenses that crumble under unexpected, out-of-distribution strategies. If we want truly explainable robustness in QKD networks, we must test these Exp3 routing models against adaptive, multi-point adversarial strategies, not just highly restricted single-action bandits.

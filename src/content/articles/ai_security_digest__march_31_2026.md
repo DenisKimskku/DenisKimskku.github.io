@@ -2,7 +2,7 @@
 title: "AI Security Digest — March 31, 2026"
 date: "2026-03-31"
 type: "News Digest"
-description: "The AI security landscape has reached a critical inflection point, shifting from reactive output filtering to deep-stack defense across intermediate reasoning layers (Chain-of-Thought) and physical ex"
+description: "The AI security landscape has reached a critical inflection point, shifting from reactive output filtering to deep-stack defense across intermediate reasoning layers…"
 tags: ["LLM Security", "Reasoning Safety", "Hardware Security", "Agentic Risk", "AI Alignment", "Dual-Use Oversight"]
 readingTime: 12
 headerImage: "/images/news/ai_security_digest__march_31_2026.jpg"

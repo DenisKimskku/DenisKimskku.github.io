@@ -2,7 +2,7 @@
 title: "When Binaries Talk Back: Representation-Confusion Attacks on LLM-Assisted Reverse Engineering"
 date: "2026-07-16"
 type: "Paper Review"
-description: "Representation-Confusion Attacks in Reverse Engineering (RARE) exploit AI-assisted binary analysis pipelines by tricking the LLM into promoting untrusted, attacker-controlled binary observations into "
+description: "Representation-Confusion Attacks in Reverse Engineering (RARE) exploit AI-assisted binary analysis pipelines by tricking the LLM into promoting untrusted, attacker-controlled…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/when_binaries_talk_back_representationconfusion_attacks_on_l.jpg"

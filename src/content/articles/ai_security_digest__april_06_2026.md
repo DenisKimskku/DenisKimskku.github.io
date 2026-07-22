@@ -2,7 +2,7 @@
 title: "AI Security Digest — April 06, 2026"
 date: "2026-04-06"
 type: "News Digest"
-description: "The dominant theme in today's landscape is the operational shift toward real-time, inference-stage intervention over destructive weight-modification, manifesting in both AI safety steering and highly "
+description: "The dominant theme in today's landscape is the operational shift toward real-time, inference-stage intervention over destructive weight-modification, manifesting in both AI…"
 tags: ["AI Security", "Generative AI", "Inference-Time Safety", "Neural Decompilation", "Dart", "Swift", "Software Supply Chain", "Adversarial Attacks"]
 readingTime: 8
 headerImage: "/images/news/ai_security_digest__april_06_2026.jpg"

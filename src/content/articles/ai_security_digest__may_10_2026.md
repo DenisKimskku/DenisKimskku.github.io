@@ -2,7 +2,7 @@
 title: "AI Security Digest — May 10, 2026"
 date: "2026-05-10"
 type: "News Digest"
-description: "The dominant theme in this week's AI security landscape is the systemic vulnerability of stateful and routing structures within compound AI agent architectures. As engineering teams transition from si"
+description: "The dominant theme in this week's AI security landscape is the systemic vulnerability of stateful and routing structures within compound AI agent architectures."
 tags: ["AI Security"]
 readingTime: 15
 headerImage: "/images/news/ai_security_digest__may_10_2026.jpg"

@@ -2,7 +2,7 @@
 title: "Breaking Refusal in the First Half: A Mechanistic Study of the Prefill Jailbreak"
 date: "2026-07-19"
 type: "Paper Review"
-description: "The 'Prefill Jailbreak' (forcing the assistant to start its response with affirmative phrases like 'Sure, here is') bypasses safety refusal not by destroying prompt-side harm representations, which re"
+description: "The \"Prefill Jailbreak\" (forcing the assistant to start its response with affirmative phrases like \"Sure, here is\") bypasses safety refusal not by destroying prompt-side harm…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/breaking_refusal_in_the_first_half_a_mechanistic_study_of_th.jpg"

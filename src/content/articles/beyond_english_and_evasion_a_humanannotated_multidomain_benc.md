@@ -4,7 +4,7 @@ date: "2026-05-30"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.29667"
 paperAuthors: "Wajdi Zaghouani, Kholoud K. Aldous, Yicheng Gao"
-description: "A human-annotated benchmark (`ChiSafe-PAS`) designed to evaluate LLM alignment against Chinese-specific adversarial evasion techniques, such as character decomposition, tonal homophones, and hedging t"
+description: "A human-annotated benchmark (`ChiSafe-PAS`) designed to evaluate LLM alignment against Chinese-specific adversarial evasion techniques, such as character decomposition, tonal…"
 tags: ["AI Security"]
 readingTime: 7
 headerImage: "/images/news/beyond_english_and_evasion_a_humanannotated_multidomain_benc.jpg"

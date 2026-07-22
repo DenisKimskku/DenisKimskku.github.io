@@ -2,7 +2,7 @@
 title: "Skills That Don't Exist: A Large-Scale Study of Hallucinated Skill Recommendation in LLM Agents"
 date: "2026-07-16"
 type: "Paper Review"
-description: "Attackers can pre-register malicious configurations on open agent registries under specific, predictable, and persistently hallucinated skill names, transforming natural language generation flaws into"
+description: "Attackers can pre-register malicious configurations on open agent registries under specific, predictable, and persistently hallucinated skill names, transforming natural language…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/skills_that_dont_exist_a_largescale_study_of_hallucinated_sk.jpg"

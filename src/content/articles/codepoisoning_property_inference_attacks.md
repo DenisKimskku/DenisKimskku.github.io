@@ -2,7 +2,7 @@
 title: "Code-Poisoning Property Inference Attacks"
 date: "2026-07-21"
 type: "Paper Review"
-description: "CPPIA (Code-Poisoning Property Inference Attack) is a stealthy supply-chain attack where an adversary injects code-level hooks to profile a private training set, encode its global statistics as a bina"
+description: "CPPIA (Code-Poisoning Property Inference Attack) is a stealthy supply-chain attack where an adversary injects code-level hooks to profile a private training set, encode its…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/codepoisoning_property_inference_attacks.jpg"
@@ -179,4 +179,4 @@ CPPIA is a massive wake-up call for ML practitioners. We’ve spent years obsess
 
 The mechanism itself is elegantly malicious. By injecting code-level hooks directly into training loops, the adversary profiles global statistics, encodes them as a binary sequence, and exfiltrates them via only 10 black-box API queries on secret samples. If you are training models on sensitive clinical or financial records using unvetted templates or AI coding assistants, you are highly vulnerable. 
 
-This threat underscores why we cannot blindly trust generated code in machine learning pipelines. In [Democratizing Agent Deployment Safety: A Structural Monitoring Approach](/writing/democratizing_agent_deployment_safety_a_structural_monitorin), I argued that we need runtime validation frameworks to monitor and constrain agentic behaviors, a safety practice that is now painfully urgent as developers increasingly delegate training loop construction to AI coding assistants like Claude Code and Codex. If you aren't rigorously auditing your training code, you might as well open-source your training set.
+This threat underscores why we cannot blindly trust generated code in machine learning pipelines. In my review of [Democratizing Agent Deployment Safety: A Structural Monitoring Approach](/writing/democratizing_agent_deployment_safety_a_structural_monitorin), I noted that we need runtime validation frameworks to monitor and constrain agentic behaviors, a safety practice that is now painfully urgent as developers increasingly delegate training loop construction to AI coding assistants like Claude Code and Codex. If you aren't rigorously auditing your training code, you might as well open-source your training set.

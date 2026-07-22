@@ -4,7 +4,7 @@ date: "2026-07-11"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2607.08147"
 paperAuthors: "Corban Villa, Alp Eren Ozdarendeli, Sijun Tan, et al."
-description: "Prismata is a system-level defense layer for autonomous web agents that enforces contextual least privilege by dynamically deriving trust labels from DOM structure and executing deterministic mechanic"
+description: "Prismata is a system-level defense layer for autonomous web agents that enforces contextual least privilege by dynamically deriving trust labels from DOM structure and executing…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/prismata_confining_crosssite_prompt_injection_in_web_agents.jpg"

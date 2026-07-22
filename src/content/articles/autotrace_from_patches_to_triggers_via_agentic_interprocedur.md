@@ -2,7 +2,7 @@
 title: "AutoTrace: From Patches to Triggers via Agentic Interprocedural Exploration"
 date: "2026-07-16"
 type: "Paper Review"
-description: "AutoTrace is an agentic framework that localizes deep interprocedural vulnerability triggers by combining LLM-guided call-graph exploration with rigid, deterministic Code Property Graph (CPG) verifica"
+description: "AutoTrace is an agentic framework that localizes deep interprocedural vulnerability triggers by combining LLM-guided call-graph exploration with rigid, deterministic Code…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/autotrace_from_patches_to_triggers_via_agentic_interprocedur.jpg"

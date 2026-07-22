@@ -2,7 +2,7 @@
 title: "NetInjectBench: Benchmarking Indirect Prompt Injection in Tool-Using Large Language Model Agents for Network Operations"
 date: "2026-07-15"
 type: "Paper Review"
-description: "NetInjectBench is a 130-scenario benchmark evaluating indirect prompt injection (IPI) attacks on tool-using network operations (NetOps) LLM agents, demonstrating that prompt-level defenses leave massi"
+description: "What**: NetInjectBench is a 130-scenario benchmark evaluating indirect prompt injection (IPI) attacks on tool-using network operations (NetOps) LLM agents, demonstrating that…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/netinjectbench_benchmarking_indirect_prompt_injection_in_too.jpg"

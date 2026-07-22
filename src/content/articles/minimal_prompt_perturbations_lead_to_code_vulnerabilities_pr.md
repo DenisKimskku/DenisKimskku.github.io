@@ -4,7 +4,7 @@ date: "2026-05-30"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.29737"
 paperAuthors: "Alexander Sternfeld, Andrei Kucharavy, Ljiljana Dolamic"
-description: "Minimal, benign prompt mutations (like single-character typos) can silently flip LLM-generated code from secure to vulnerable, but these security vulnerabilities can be predicted directly from the mod"
+description: "Minimal, benign prompt mutations (like single-character typos) can silently flip LLM-generated code from secure to vulnerable, but these security vulnerabilities can be predicted…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/minimal_prompt_perturbations_lead_to_code_vulnerabilities_pr.jpg"
@@ -162,6 +162,6 @@ The generative code pipeline is incredibly fragile: minor, benign edits to devel
 
 The fact that a single-character typo can silently flip generated code from secure to highly vulnerable isn't just a quirky academic edge case—it is a massive liability for any enterprise relying on automated software development. Imagine a developer pushing a rushed hotfix to a \$15M payment gateway pipeline via GitHub Copilot, only for a minor keyboard slip to silently strip out input-sanitization logic. This is how the next devastating software supply chain breach will happen.
 
-What excites me about this work, however, is the defense vector: utilizing prompt-end hidden states to predict these "silent flips" *before* token generation even begins. This aligns directly with my prior analysis in [Prompt Injection Detection is Regime-Dependent: A Deployment-Aware Evaluation with Interpretable Structural Signals](/writing/prompt_injection_detection_is_regimedependent_a_deploymentaw), where I argued that robust LLM security cannot rely on static input checks and must instead leverage dynamic, internal model representations tailored to the deployment context. 
+What excites me about this work, however, is the defense vector: utilizing prompt-end hidden states to predict these "silent flips" *before* token generation even begins. This aligns directly with my review of [Prompt Injection Detection is Regime-Dependent: A Deployment-Aware Evaluation with Interpretable Structural Signals](/writing/prompt_injection_detection_is_regimedependent_a_deploymentaw), which argued that robust LLM security cannot rely on static input checks and must instead leverage dynamic, internal model representations tailored to the deployment context. 
 
 If we can reliably flag risky latent states at the inference boundary—especially for highly predictable input-handling vulnerabilities—we can block insecure code generations before they ever touch a repository. We need to stop treating LLMs as deterministic compilers and start building runtime security architectures that treat prompt fragility as an active runtime threat.

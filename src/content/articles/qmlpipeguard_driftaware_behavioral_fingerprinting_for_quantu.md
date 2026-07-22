@@ -4,7 +4,7 @@ date: "2026-05-27"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.25066"
 paperAuthors: "Esra Yeniaras"
-description: "QML-PipeGuard is a contract-based runtime verification framework that uses 'behavioral fingerprinting'—measuring a tomographically complete family of Pauli observables—to detect unauthorized quantum c"
+description: "QML-PipeGuard is a contract-based runtime verification framework that uses \"behavioral fingerprinting\"—measuring a tomographically complete family of Pauli observables—to detect…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/qmlpipeguard_driftaware_behavioral_fingerprinting_for_quantu.jpg"
@@ -182,4 +182,4 @@ While most AI security professionals treat quantum machine learning (QML) as a p
 
 What excites me about QML-PipeGuard is that it moves us past theoretical, computationally prohibitive verification toward a practical runtime guardrail. By using a tight frame-bound constant of $C = \sqrt{3}$ to slash verification overhead by 100-fold, this is actually deployable without blowing past an enterprise's cloud budget. 
 
-In my prior analysis on [Security of Autonomous AI Agents: Trust Boundary-Based Attack Surface Analysis and Trends](/writing/security_autonomous_ai_agents_trust_boundary), I argued that trusting external execution environments without strict, active verification is a fundamental architectural failure. QML-PipeGuard provides the exact mathematical runtime assertions we need to draw a hard, verifiable trust boundary around third-party QPUs before the data even leaves our classical systems.
+In my review of [Security of Autonomous AI Agents: Trust Boundary-Based Attack Surface Analysis and Trends](/writing/security_autonomous_ai_agents_trust_boundary), I noted that trusting external execution environments without strict, active verification is a fundamental architectural failure. QML-PipeGuard provides the exact mathematical runtime assertions we need to draw a hard, verifiable trust boundary around third-party QPUs before the data even leaves our classical systems.

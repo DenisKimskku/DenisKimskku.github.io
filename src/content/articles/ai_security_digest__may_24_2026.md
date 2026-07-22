@@ -2,7 +2,7 @@
 title: "AI Security Digest — May 24, 2026"
 date: "2026-05-24"
 type: "News Digest"
-description: "The dominant theme this week is the collapse of static, post-hoc alignment defenses under the pressure of dynamic, meta-optimizing exploit engines and the subsequent shift toward native, data-free mod"
+description: "The dominant theme this week is the collapse of static, post-hoc alignment defenses under the pressure of dynamic, meta-optimizing exploit engines and the subsequent shift toward…"
 tags: ["LLM Security", "Backdoor Attacks", "RAG", "Model Integrity", "Adversarial Attacks", "AI Supply Chain"]
 readingTime: 9
 headerImage: "/images/news/ai_security_digest__may_24_2026.jpg"

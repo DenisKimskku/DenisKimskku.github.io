@@ -4,7 +4,7 @@ date: "2026-05-27"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.25673"
 paperAuthors: "Dan Ristea, Vasilios Mavroudis"
-description: "AI safety evaluations currently rely on static identifiers (like model names) that resolve to unstable, constantly changing system configurations. To fix this, 'referential security' is introduced as "
+description: "AI safety evaluations currently rely on static identifiers (like model names) that resolve to unstable, constantly changing system configurations."
 tags: ["AI Security"]
 readingTime: 8
 headerImage: "/images/news/referential_security_as_a_new_paradigm_for_ai_evaluations.jpg"
@@ -167,6 +167,6 @@ AI safety evaluation is currently built on quicksand. We spend millions of dolla
 
 This paper exposes the open secret of the modern API era: version pinning is security theater. The fact that a dated, supposedly "stable" snapshot like `gpt-4o-2024-05-13` yielded 37 different system fingerprints across 11,600 queries is horrifying for anyone trying to build deterministic security controls. If providers are silently swapping prompts, routing logic, or quantization parameters under the hood, any safety certification is dead on arrival. 
 
-This isn't just an academic annoyance. Imagine a Fortune 500 financial institution facing a \$20M regulatory penalty because a "pinned" customer-facing model silently drifted, bypassing their internal safety guardrails and leaking sensitive transaction data. In my previous analysis, [Security of Autonomous AI Agents: Trust Boundary-Based Attack Surface Analysis and Trends](/writing/security_autonomous_ai_agents_trust_boundary), I detailed how autonomous agent security relies on rigid, well-defined trust boundaries—but if the underlying model is a shifting, un-verifiable baseline, those architectural boundaries completely collapse. 
+This isn't just an academic annoyance. Imagine a Fortune 500 financial institution facing a \$20M regulatory penalty because a "pinned" customer-facing model silently drifted, bypassing their internal safety guardrails and leaking sensitive transaction data. In my review of [Security of Autonomous AI Agents: Trust Boundary-Based Attack Surface Analysis and Trends](/writing/security_autonomous_ai_agents_trust_boundary), I covered how autonomous agent security relies on rigid, well-defined trust boundaries—but if the underlying model is a shifting, un-verifiable baseline, those architectural boundaries completely collapse. 
 
 We cannot treat LLM endpoints like static software dependencies. Until we have cryptographic attestation or robust, real-time behavioral fingerprinting as standard practice, enterprise compliance and model auditing will remain nothing more than a roll of the dice.

@@ -4,7 +4,7 @@ date: "2026-05-27"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.25304"
 paperAuthors: "Aditya Sridhar"
-description: "Concept-level adversarial attacks exploit the human-interpretable intermediate concept layers of Concept Bottleneck Models (CBMs) to cause misclassification with minimal semantic edits, which can be m"
+description: "Concept-level adversarial attacks exploit the human-interpretable intermediate concept layers of Concept Bottleneck Models (CBMs) to cause misclassification with minimal semantic…"
 tags: ["AI Security"]
 readingTime: 8
 headerImage: "/images/news/when_interpretability_becomes_a_liability_adversarial_attack.jpg"
@@ -217,4 +217,4 @@ I love interpretability, but security-by-design dictates that every new feature 
 
 If you are building computer vision pipelines for high-stakes environments, you should be deeply concerned. Imagine a clinical diagnostic network utilizing automated oncology triage models—a \$15M enterprise deployment—where an adversary imperceptibly manipulates medical images to flip the "irregular border" concept of a tumor. The downstream classifier alters the diagnostic output, yet the system produces a beautifully "interpretable" but entirely incorrect explanation to the oncologist. It is the ultimate gaslighting of safety-critical systems.
 
-In my previous analysis, [Security of Autonomous AI Agents: Trust Boundary-Based Attack Surface Analysis and Trends](/writing/security_autonomous_ai_agents_trust_boundary), I highlighted how exposing intermediate decision steps across trust boundaries dramatically expands your attack surface—a structural flaw that this concept-layer exploit perfectly demonstrates. As practitioners, we must stop assuming that human-readable models are inherently safer. If your explainable model doesn't implement a stability defense like SPECTRA, you are just giving attackers a highly organized, semantic roadmap to exploit your pipeline.
+In my review of [Security of Autonomous AI Agents: Trust Boundary-Based Attack Surface Analysis and Trends](/writing/security_autonomous_ai_agents_trust_boundary), I highlighted how exposing intermediate decision steps across trust boundaries dramatically expands your attack surface—a structural flaw that this concept-layer exploit perfectly demonstrates. As practitioners, we must stop assuming that human-readable models are inherently safer. If your explainable model doesn't implement a stability defense like SPECTRA, you are just giving attackers a highly organized, semantic roadmap to exploit your pipeline.

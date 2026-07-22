@@ -4,7 +4,7 @@ date: "2026-05-30"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.24497"
 paperAuthors: "Jianan Li, Simeng Qin, Xiaojun Jia, et al."
-description: "AE-CoT is an adaptive evolutionary jailbreak framework that reformulates malicious goals into pedagogical 'teacher-style' prompts and systematically optimizes adversarial Chain-of-Thought (CoT) struct"
+description: "AE-CoT is an adaptive evolutionary jailbreak framework that reformulates malicious goals into pedagogical \"teacher-style\" prompts and systematically optimizes adversarial…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/reasoning_as_an_attack_surface_adaptive_evolutionary_cot_jai.jpg"
@@ -193,6 +193,6 @@ The core finding of Li et al. (ICML 2026) is clear: the explicit reasoning trace
 
 For a long time, the industry hoped that Chain-of-Thought (CoT) reasoning in models like OpenAI’s o1 or DeepSeek-R1 would act as an implicit safety buffer, giving models the "time to think" and self-correct before spitting out toxic content. AE-CoT utterly demolishes that assumption. What concerns me most here is how trivially cheap it is to weaponize these intermediate reasoning traces. Bypassing state-of-the-art defenses with a 96% success rate for an average of just \$0.345 per task means that reasoning is no longer a defense—it is a massive, highly leverageable attack surface.
 
-This aligns directly with my findings in [IterInject: Indirect Prompt Injection Against LLM Agents via Feedback-Guided Iterative Optimization](/writing/iterinject_indirect_prompt_injection_against_llm_agents_via_), where we demonstrated that feedback-driven, iterative optimization can systematically dismantle LLM safety guardrails without requiring gradient access. 
+This aligns directly with my review of [IterInject: Indirect Prompt Injection Against LLM Agents via Feedback-Guided Iterative Optimization](/writing/iterinject_indirect_prompt_injection_against_llm_agents_via_), which demonstrated that feedback-driven, iterative optimization can systematically dismantle LLM safety guardrails without requiring gradient access. 
 
 In the real world, this is a massive liability. An adversary could spend less than \$50 to completely hijack a \$10M automated legal discovery agent built on a frontier LRM, forcing it to leak proprietary trade secrets under the guise of "pedagogical reasoning." As we shift from static chat boxes to highly integrated enterprise agents, relying on post-hoc token filtering is a recipe for disaster; we must start hardening the latent reasoning steps themselves.

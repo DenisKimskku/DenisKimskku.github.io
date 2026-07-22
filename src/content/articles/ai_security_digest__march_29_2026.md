@@ -2,7 +2,7 @@
 title: "AI Security Digest — March 29, 2026"
 date: "2026-03-29"
 type: "News Digest"
-description: "The dominant theme in AI security is the operational crisis emerging from the rapid transition of large language models (LLMs) from passive information-retrieval engines to active, high-privileged age"
+description: "The dominant theme in AI security is the operational crisis emerging from the rapid transition of large language models (LLMs) from passive information-retrieval engines to…"
 tags: ["AI Security", "Autonomous Systems", "Operational Risks", "Authorization Boundaries", "Geopolitical Supply Chain", "Automated Vulnerability Discovery"]
 readingTime: 5
 headerImage: "/images/news/ai_security_digest__march_29_2026.jpg"

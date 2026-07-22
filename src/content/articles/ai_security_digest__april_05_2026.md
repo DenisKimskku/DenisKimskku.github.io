@@ -2,7 +2,7 @@
 title: "AI Security Digest — April 05, 2026"
 date: "2026-04-05"
 type: "News Digest"
-description: "The transition of Large Language Models (LLMs) from static chat interfaces to autonomous, multi-agent frameworks has transformed the AI threat landscape, rendering standard input-filtering guardrails "
+description: "The transition of Large Language Models (LLMs) from static chat interfaces to autonomous, multi-agent frameworks has transformed the AI threat landscape, rendering standard…"
 tags: ["LLM Security", "Adversarial Attacks", "Autonomous Agents", "Credential Exposure", "RAG", "Prompt Injection"]
 readingTime: 9
 headerImage: "/images/news/ai_security_digest__april_05_2026.jpg"

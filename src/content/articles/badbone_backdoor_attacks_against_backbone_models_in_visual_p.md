@@ -4,7 +4,7 @@ date: "2026-06-02"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.31246"
 paperAuthors: "Ziqing Yang, Rui Wen, Xinlei He, et al."
-description: "BADBONE is a bi-level optimization backdoor attack targeting frozen vision backbones in Visual Prompt Learning (VPL) using a highly stealthy 'prompt-and-trigger co-activation' mechanism"
+description: "BADBONE is a bi-level optimization backdoor attack targeting frozen vision backbones in Visual Prompt Learning (VPL) using a highly stealthy \"prompt-and-trigger co-activation\"…"
 tags: ["AI Security"]
 readingTime: 7
 headerImage: "/images/news/badbone_backdoor_attacks_against_backbone_models_in_visual_p.jpg"

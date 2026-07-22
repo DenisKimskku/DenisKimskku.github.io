@@ -2,7 +2,7 @@
 title: "Rescuing the Unpoisoned: Efficient Defense against Knowledge Corruption Attacks on RAG Systems"
 date: "2025-11-06"
 type: "Research Paper"
-description: "RAGDefender is a lightweight, efficient defense mechanism designed to protect Retrieval-Augmented Generation (RAG) systems from knowledge corruption attacks"
+description: "RAGDefender is a lightweight, efficient defense mechanism designed to protect Retrieval-Augmented Generation (RAG) systems from knowledge corruption…"
 tags: ["Retrieval-Augmented Generation", "LLM Security", "Adversarial Attacks", "RAG"]
 ---
 

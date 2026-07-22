@@ -4,7 +4,7 @@ date: "2026-07-14"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2607.09391"
 paperAuthors: "Cagdas Karatas, Hibanur Karadogan, Ahmet Yasin Ertug, et al."
-description: "A dual-layer defense framework that integrates CKKS Homomorphic Encryption (HE) with Differentially Private Stochastic Gradient Descent (DP-SGD) to protect both transit-level gradients and end-model o"
+description: "A dual-layer defense framework that integrates CKKS Homomorphic Encryption (HE) with Differentially Private Stochastic Gradient Descent (DP-SGD) to protect both transit-level…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/federated_learning_architecture_data_privacy_and_system_secu.jpg"

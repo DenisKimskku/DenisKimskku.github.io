@@ -2,7 +2,7 @@
 title: "Open-Source Intelligence for Code Provenance and the Security Patterns that Separate Human and Large-Language-Model Implementations of Common Programming Tasks"
 date: "2026-07-16"
 type: "Paper Review"
-description: "An open-source intelligence pipeline that uses lightweight, language-agnostic style and security features to classify code provenance (human vs. machine) and map distinct security pattern divergences"
+description: "An open-source intelligence pipeline that uses lightweight, language-agnostic style and security features to classify code provenance (human vs."
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/opensource_intelligence_for_code_provenance_and_the_security.jpg"

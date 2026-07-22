@@ -2,7 +2,7 @@
 title: "AI Security Digest — April 20, 2026"
 date: "2026-04-20"
 type: "News Digest"
-description: "The systematic scaling of automated, AI-driven vulnerability discovery has triggered a structural crisis in legacy patch-management frameworks, as evidenced by the 263% surge in CVEs forcing an overha"
+description: "The systematic scaling of automated, AI-driven vulnerability discovery has triggered a structural crisis in legacy patch-management frameworks, as evidenced by the 263% surge in…"
 tags: ["LLM Security", "AI Safety", "Agent Security", "Privacy", "Code Security", "Intrusion Detection"]
 readingTime: 6
 headerImage: "/images/news/ai_security_digest__april_20_2026.jpg"

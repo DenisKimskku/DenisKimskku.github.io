@@ -2,7 +2,7 @@
 title: "SpeechGuard: Online Defense against Backdoor Attacks on Speech Recognition Models"
 date: "2026-07-21"
 type: "Paper Review"
-description: "An online, two-stage backdoor defense pipeline (SpeechGuard) that uses SNR-adaptive perturbation (S-STRIP) to detect poisoned audio inputs and an autoencoder-generated time-frequency mask to purify th"
+description: "An online, two-stage backdoor defense pipeline (SpeechGuard) that uses SNR-adaptive perturbation (S-STRIP) to detect poisoned audio inputs and an autoencoder-generated…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/speechguard_online_defense_against_backdoor_attacks_on_speec.jpg"

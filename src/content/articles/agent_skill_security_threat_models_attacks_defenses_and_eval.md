@@ -2,7 +2,7 @@
 title: "Agent Skill Security: Threat Models, Attacks, Defenses, and Evaluation"
 date: "2026-07-17"
 type: "Paper Review"
-description: "SkillSec-Eval is a lifecycle-aware security evaluation framework that systematically exposes and mitigates vulnerabilities across the entire lifespan of reusable LLM agent skills—spanning repository a"
+description: "What**: SkillSec-Eval is a lifecycle-aware security evaluation framework that systematically exposes and mitigates vulnerabilities across the entire lifespan of reusable LLM…"
 tags: ["AI Security"]
 readingTime: 11
 ---

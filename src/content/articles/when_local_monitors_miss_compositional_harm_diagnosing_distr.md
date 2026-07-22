@@ -2,7 +2,7 @@
 title: "When Local Monitors Miss Compositional Harm: Diagnosing Distributed Backdoors in Multi-Agent Systems"
 date: "2026-07-15"
 type: "Paper Review"
-description: "A formal proof and empirical validation showing that per-step runtime monitors are mathematically blind to 'distributed backdoor' attacks where a malicious payload is split into locally benign fragmen"
+description: "A formal proof and empirical validation showing that per-step runtime monitors are mathematically blind to \"distributed backdoor\" attacks where a malicious payload is split into…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/when_local_monitors_miss_compositional_harm_diagnosing_distr.jpg"

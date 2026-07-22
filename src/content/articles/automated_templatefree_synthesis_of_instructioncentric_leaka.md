@@ -2,7 +2,7 @@
 title: "Automated Template-free Synthesis of Instruction-Centric Leakage Contracts for Black-Box CPUs"
 date: "2026-07-18"
 type: "Paper Review"
-description: "`malcos` is the first template-free, black-box synthesis tool that automatically extracts instruction-centric microarchitectural leakage contracts from commercial CPUs without requiring RTL access or "
+description: "`malcos` is the first template-free, black-box synthesis tool that automatically extracts instruction-centric microarchitectural leakage contracts from commercial CPUs without…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/automated_templatefree_synthesis_of_instructioncentric_leaka.jpg"

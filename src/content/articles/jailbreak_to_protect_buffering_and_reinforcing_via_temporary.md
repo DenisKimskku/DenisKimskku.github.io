@@ -4,7 +4,7 @@ date: "2026-05-28"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.24550"
 paperAuthors: "Seokil Ham, Jaehyuk Jang, Wonjun Lee, et al."
-description: "A fine-tuning defense framework that temporarily jailbreaks an LLM using a frozen adapter (BufferLoRA) during user training to saturate safety-degrading gradients, followed by post-training QR-decompo"
+description: "A fine-tuning defense framework that temporarily jailbreaks an LLM using a frozen adapter (BufferLoRA) during user training to saturate safety-degrading gradients, followed by…"
 tags: ["AI Security"]
 readingTime: 8
 headerImage: "/images/news/jailbreak_to_protect_buffering_and_reinforcing_via_temporary.jpg"

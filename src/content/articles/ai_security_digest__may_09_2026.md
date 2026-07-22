@@ -2,7 +2,7 @@
 title: "AI Security Digest — May 09, 2026"
 date: "2026-05-09"
 type: "News Digest"
-description: "The dominant theme in AI security this week is the definitive collapse of surface-level and static alignment defenses in favor of deep, representation-level adversarial vulnerabilities. As demonstrate"
+description: "The dominant theme in AI security this week is the definitive collapse of surface-level and static alignment defenses in favor of deep, representation-level adversarial…"
 tags: ["AI Security"]
 readingTime: 7
 headerImage: "/images/news/ai_security_digest__may_09_2026.jpg"

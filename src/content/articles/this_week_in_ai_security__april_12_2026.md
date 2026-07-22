@@ -2,7 +2,7 @@
 title: "This Week in AI Security — April 12, 2026"
 date: "2026-04-12"
 type: "Trend Report"
-description: "This week’s threat landscape signals a structural shift from transient text-based 'jailbreaks' toward the systematic exploitation of autonomous agent execution layers, specifically targeting Model Con"
+description: "This week’s threat landscape signals a structural shift from transient text-based 'jailbreaks' toward the systematic exploitation of autonomous agent execution layers…"
 tags: ["Agent Security", "LLM Security", "Adversarial Attacks", "MCP", "Tool Use", "Red Teaming"]
 readingTime: 8
 headerImage: "/images/news/this_week_in_ai_security__april_12_2026.jpg"

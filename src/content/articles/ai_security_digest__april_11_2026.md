@@ -2,7 +2,7 @@
 title: "AI Security Digest — April 11, 2026"
 date: "2026-04-11"
 type: "News Digest"
-description: "The single dominant theme in this week’s landscape is the systemic collapse of static, input-boundary defense paradigms as adversarial exploits pivot to dynamic, multi-agent cascading injections and v"
+description: "The single dominant theme in this week’s landscape is the systemic collapse of static, input-boundary defense paradigms as adversarial exploits pivot to dynamic, multi-agent…"
 tags: ["LLM Security", "Prompt Injection", "Agentic AI", "RAG", "Adversarial Attacks", "Red Teaming"]
 readingTime: 13
 headerImage: "/images/news/ai_security_digest__april_11_2026.jpg"
@@ -164,6 +164,6 @@ What stands out to me in today’s digest is the long-overdue realization that o
 
 As practitioners, we are rushing to build complex agentic workflows, often relying on commodity API routers and middleware to glue our ecosystems together. We implicitly trust this transport layer. But as this paper proves, these intermediaries are a massive, largely undefended attack surface. It's incredibly easy to envision a real-world scenario where a compromised router performs a silent Man-in-the-Middle (MitM) attack on an enterprise agent swarm, exfiltrating proprietary data or injecting malicious tool-use commands, potentially causing a \$15M data breach in a \$50M enterprise deployment before any traditional guardrails trip. 
 
-I wrote extensively about this exact architectural blindspot regarding agent protocols in [Bridging Models and Agents: Protocol Architectures and Security in MCP & A2A](/writing/bridging_models_agents_mcp_a2a), which directly addresses how insecure connection interfaces like the Model Context Protocol (MCP) enable attackers to bypass foundational model alignment. Furthermore, the executive summary correctly asserts that defending these dynamic systems requires shifting to decoding-time and runtime activation steering. This aligns directly with my findings in [NeuroStrike: Neuron-Level Attacks on Aligned LLMs](/writing/neurostrike_neuronlevel_attacks_on_aligned_llms), where we demonstrated that surface-level text filters are mathematically bypassed by targeting internal model representations directly via targeted activation perturbations.
+I wrote extensively about this exact architectural blindspot regarding agent protocols in [Bridging Models and Agents: Protocol Architectures and Security in MCP & A2A](/writing/bridging_models_agents_mcp_a2a), which directly addresses how insecure connection interfaces like the Model Context Protocol (MCP) enable attackers to bypass foundational model alignment. Furthermore, the executive summary correctly asserts that defending these dynamic systems requires shifting to decoding-time and runtime activation steering. This aligns directly with my review of [NeuroStrike: Neuron-Level Attacks on Aligned LLMs](/writing/neurostrike_neuronlevel_attacks_on_aligned_llms), which demonstrated that surface-level text filters are mathematically bypassed by targeting internal model representations directly via targeted activation perturbations.
 
 It’s time we stop treating AI security as a simple input/output text problem and start securing it as the distributed systems architecture it has become.

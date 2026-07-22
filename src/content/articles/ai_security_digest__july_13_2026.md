@@ -2,7 +2,7 @@
 title: "AI Security Digest — July 13, 2026"
 date: "2026-07-13"
 type: "News Digest"
-description: "AI Security Digest — July 13, 2026"
+description: "AI Security Digest — July 13…"
 tags: []
 readingTime: 2
 headerImage: "/images/news/ai_security_digest__july_13_2026.jpg"
@@ -43,6 +43,6 @@ This organizational shift changes the threat model for the enterprise. You can n
 
 The structural collapse of independent safety teams at frontier AI labs is a massive step backward, but as a practitioner, the real-world threat vector that keeps me up is "Ghostcommit." We’ve spent years securing CI/CD pipelines from compromised developer credentials, only to blindly trust vision-capable AI agents to review our code. Attackers hiding exploit instructions inside a UI mockup image to bypass branch protection rules is a brilliant, highly realistic threat vector. Traditional static analysis tools are completely blind to this.
 
-This is why relying on native model safety is a losing game. In my previous post, [From Prompt Injection to Persistent Control: Defending Agentic Harness Against Trojan Backdoors](/writing/from_prompt_injection_to_persistent_control_defending_agenti), I argued that we must treat agentic environments as inherently untrusted and isolate their execution loops, which is exactly the defense paradigm needed to stop Ghostcommit from successfully approving backdoored code. 
+This is why relying on native model safety is a losing game. In my previous post, [From Prompt Injection to Persistent Control: Defending Agentic Harness Against Trojan Backdoors](/writing/from_prompt_injection_to_persistent_control_defending_agenti), I noted that we must treat agentic environments as inherently untrusted and isolate their execution loops, which is exactly the defense paradigm needed to stop Ghostcommit from successfully approving backdoored code. 
 
 With OpenAI merging its safety and research divisions to expedite releases like GPT-Live, the burden of security is officially shifting entirely to the enterprise. If you are integrating multimodal models for automated code review, you can no longer assume the model will "refuse" malicious instructions; you must build sandboxed verification gates that treat every agent output as suspicious.

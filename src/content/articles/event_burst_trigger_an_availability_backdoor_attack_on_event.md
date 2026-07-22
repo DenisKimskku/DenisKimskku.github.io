@@ -2,7 +2,7 @@
 title: "Event Burst Trigger: An Availability Backdoor Attack on Event-Based SNN Object Detection"
 date: "2026-07-17"
 type: "Paper Review"
-description: "Event Burst Trigger (EBT) is an availability backdoor attack that poisons training data with sparse temporal event triggers to induce synchronized SNN firing cascades, causing a massive candidate boun"
+description: "Event Burst Trigger (EBT) is an availability backdoor attack that poisons training data with sparse temporal event triggers to induce synchronized SNN firing cascades, causing a…"
 tags: ["AI Security"]
 readingTime: 12
 ---

@@ -2,7 +2,7 @@
 title: "AI Security Digest — May 21, 2026"
 date: "2026-05-21"
 type: "News Digest"
-description: "The dominant theme for May 21, 2026, is the rapid transition from superficial 'black-box' prompt injections to structural, reasoning-aware exploits targeting Large Reasoning Models (LRMs) within high-"
+description: "The dominant theme for May 21, 2026, is the rapid transition from superficial 'black-box' prompt injections to structural, reasoning-aware exploits targeting Large Reasoning…"
 tags: ["LLM Security", "Adversarial Attacks", "Reinforcement Learning", "Chain-of-Thought", "LRM", "AI Cyberattacks"]
 readingTime: 12
 headerImage: "/images/news/ai_security_digest__may_21_2026.jpg"

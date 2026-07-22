@@ -4,7 +4,7 @@ date: "2026-05-27"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.25415"
 paperAuthors: "Lingyao Li, Junjie Xiong, Changjia Zhu, et al."
-description: "A stealthy prompt injection attack exploiting custom TrueType font mappings (`cmap` tables) to embed visually imperceptible adversarial payloads in PDF manuscripts, forcing LLM-as-a-reviewer pipelines"
+description: "A stealthy prompt injection attack exploiting custom TrueType font mappings (`cmap` tables) to embed visually imperceptible adversarial payloads in PDF manuscripts, forcing…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/llmasareviewer_benchmarking_their_ability_divergence_and_pro.jpg"

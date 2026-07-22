@@ -2,7 +2,7 @@
 title: "DoSQ: A Cross-Layer Denial of Service Quality Attack by Exploiting Side Channels in 5G NR"
 date: "2026-07-21"
 type: "Paper Review"
-description: "DoSQ (Denial of Service Quality) is a cross-layer side-channel attack that passively decodes unencrypted 5G Downlink Control Information (DCI) to predict application-layer Goodput, enabling a slot-ali"
+description: "DoSQ (Denial of Service Quality) is a cross-layer side-channel attack that passively decodes unencrypted 5G Downlink Control Information (DCI) to predict application-layer…"
 tags: ["AI Security"]
 readingTime: 11
 headerImage: "/images/news/dosq_a_crosslayer_denial_of_service_quality_attack_by_exploi.jpg"

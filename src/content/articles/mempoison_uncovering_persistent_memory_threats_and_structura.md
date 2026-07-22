@@ -2,7 +2,7 @@
 title: "MemPoison: Uncovering Persistent Memory Threats and Structural Blind Spots in LLM Agents"
 date: "2026-07-18"
 type: "Paper Review"
-description: "MemPoison is a comprehensive benchmark and analysis framework that systematically evaluates persistent memory poisoning attacks on LLM agents using a three-tier taxonomy (L1 direct, L2 compositional, "
+description: "MemPoison is a comprehensive benchmark and analysis framework that systematically evaluates persistent memory poisoning attacks on LLM agents using a three-tier taxonomy (L1…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/mempoison_uncovering_persistent_memory_threats_and_structura.jpg"

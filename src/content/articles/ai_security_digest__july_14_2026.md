@@ -2,7 +2,7 @@
 title: "AI Security Digest — July 14, 2026"
 date: "2026-07-14"
 type: "News Digest"
-description: "AI Security Digest — July 14, 2026"
+description: "AI Security Digest — July 14…"
 tags: []
 readingTime: 3
 headerImage: "/images/news/ai_security_digest__july_14_2026.jpg"

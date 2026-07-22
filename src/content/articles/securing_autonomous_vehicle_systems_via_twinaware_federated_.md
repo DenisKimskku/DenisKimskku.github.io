@@ -4,7 +4,7 @@ date: "2026-07-11"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2607.08137"
 paperAuthors: "Zifan Zhang, Minghong Fang, Dianwei Chen, et al."
-description: "SecApp secures Federated Reinforcement Learning (FRL) against Byzantine model poisoning by combining majority-voting spatial filtering, historical gradient trajectory constraints, and digital twin rep"
+description: "SecApp secures Federated Reinforcement Learning (FRL) against Byzantine model poisoning by combining majority-voting spatial filtering, historical gradient trajectory…"
 tags: ["AI Security"]
 readingTime: 11
 headerImage: "/images/news/securing_autonomous_vehicle_systems_via_twinaware_federated_.jpg"

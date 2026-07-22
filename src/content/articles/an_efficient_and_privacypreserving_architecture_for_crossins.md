@@ -4,7 +4,7 @@ date: "2026-05-27"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.25716"
 paperAuthors: "Chenxin Mao, Shangyu Liu, Zhenzhe Zheng, et al."
-description: "FedRAG, a non-cryptographic, federated RAG framework that uses a numerically stable scrambling matrix and token permutation to secure cross-node self-attention without model retraining or Trusted Exec"
+description: "FedRAG, a non-cryptographic, federated RAG framework that uses a numerically stable scrambling matrix and token permutation to secure cross-node self-attention without model…"
 tags: ["AI Security"]
 readingTime: 8
 headerImage: "/images/news/an_efficient_and_privacypreserving_architecture_for_crossins.jpg"

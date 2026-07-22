@@ -2,7 +2,7 @@
 title: "AI Security Digest — April 07, 2026"
 date: "2026-04-07"
 type: "News Digest"
-description: "The current AI security landscape is defined by a critical architectural shift: as autonomous agent ecosystems transition from stateless chat interfaces to persistent, multi-tool environments, the tra"
+description: "The current AI security landscape is defined by a critical architectural shift: as autonomous agent ecosystems transition from stateless chat interfaces to persistent, multi-tool…"
 tags: ["Agentic AI", "Supply-Chain Attack", "LLM Security", "Prompt Injection", "RAG", "Privilege Escalation"]
 readingTime: 8
 headerImage: "/images/news/ai_security_digest__april_07_2026.jpg"

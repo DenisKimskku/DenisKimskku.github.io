@@ -2,7 +2,7 @@
 title: "Is External Database Protection Static in Retrieval-Augmented Generation? Rethinking Privacy Preservation under Dynamic Queries"
 date: "2026-07-18"
 type: "Paper Review"
-description: "Prompt-Aware Dynamic Hierarchical Differential Privacy (PA-HDP) dynamically sanitizes RAG retrieval contexts by calculating real-time, query-dependent risk scores at the sentence level and applying an"
+description: "Prompt-Aware Dynamic Hierarchical Differential Privacy (PA-HDP) dynamically sanitizes RAG retrieval contexts by calculating real-time, query-dependent risk scores at the sentence…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/is_external_database_protection_static_in_retrievalaugmented.jpg"

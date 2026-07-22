@@ -4,7 +4,7 @@ date: "2026-05-27"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.25073"
 paperAuthors: "Wenjuan Li, Yitao Liu, Runze Chen, et al."
-description: "Fine-tuning security is highly model-dependent, non-monotonic with scale, and vulnerable to cross-phase bypasses where single-phase defenses fail to neutralize attacks targeting other lifecycle phases"
+description: "Fine-tuning security is highly model-dependent, non-monotonic with scale, and vulnerable to cross-phase bypasses where single-phase defenses fail to neutralize attacks targeting…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/security_in_the_finetuning_lifecycle_of_large_language_model.jpg"
@@ -195,4 +195,4 @@ What concerns me most about this paper is how trivially easy it is to obliterate
 
 Imagine the real-world fallout when this exploit is targeted at a \$20M enterprise customer-support agent. An attacker does not need to trigger traditional keyword blocks; they can silently de-align the model using standard domain-adaptation data, transforming a compliant assistant into an unaligned liability engine. 
 
-In my previous analysis on [Security of Autonomous AI Agents: Trust Boundary-Based Attack Surface Analysis and Trends](/writing/security_autonomous_ai_agents_trust_boundary), I argued that traditional perimeter security fails when the model's internal parameter state itself is compromised, which directly explains why post-tuning alignment is so notoriously fragile. If you are fine-tuning models on user-generated or semi-trusted datasets without rigorous optimization constraints, you are essentially running untrusted code directly on your weights.
+In my review of [Security of Autonomous AI Agents: Trust Boundary-Based Attack Surface Analysis and Trends](/writing/security_autonomous_ai_agents_trust_boundary), I noted that traditional perimeter security fails when the model's internal parameter state itself is compromised, which directly explains why post-tuning alignment is so notoriously fragile. If you are fine-tuning models on user-generated or semi-trusted datasets without rigorous optimization constraints, you are essentially running untrusted code directly on your weights.

@@ -2,7 +2,7 @@
 title: "AI Security Digest — May 07, 2026"
 date: "2026-05-07"
 type: "News Digest"
-description: "The rapid paradigm shift from stateless, single-turn Large Language Model (LLM) prompts to stateful, multi-step autonomous agentic workflows has rendered traditional boundary-based and per-turn securi"
+description: "The rapid paradigm shift from stateless, single-turn Large Language Model (LLM) prompts to stateful, multi-step autonomous agentic workflows has rendered traditional…"
 tags: ["Agentic AI", "LLM Security", "Adversarial Attacks", "Memory Poisoning", "Red Teaming", "AI Architecture"]
 readingTime: 9
 headerImage: "/images/news/ai_security_digest__may_07_2026.jpg"

@@ -2,7 +2,7 @@
 title: "AI Security Digest — March 28, 2026"
 date: "2026-03-28"
 type: "News Digest"
-description: "The single dominant theme this week is the institutional transition of AI safety from academic red-teaming to formalized, monetized application security frameworks at the semantic layer. As major prov"
+description: "The single dominant theme this week is the institutional transition of AI safety from academic red-teaming to formalized, monetized application security frameworks at the…"
 tags: ["LLM Security", "Bug Bounty Programs", "Model Abuse", "Prompt Injection", "Reinforcement Learning from Human Feedback"]
 readingTime: 5
 headerImage: "/images/news/ai_security_digest__march_28_2026.jpg"

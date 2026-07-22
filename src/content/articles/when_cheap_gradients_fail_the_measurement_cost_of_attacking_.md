@@ -2,7 +2,7 @@
 title: "When cheap gradients fail: the measurement cost of attacking quantum classifiers"
 date: "2026-07-15"
 type: "Paper Review"
-description: "Quantum shot noise acts as an irreducible, physical defense against gradient-based adversarial attacks by forcing the cost of extracting input gradients to scale polynomially with dimension (up to $d^"
+description: "Quantum shot noise acts as an irreducible, physical defense against gradient-based adversarial attacks by forcing the cost of extracting input gradients to scale polynomially…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/when_cheap_gradients_fail_the_measurement_cost_of_attacking_.jpg"

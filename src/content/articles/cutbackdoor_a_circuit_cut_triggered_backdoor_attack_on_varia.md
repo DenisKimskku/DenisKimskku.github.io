@@ -2,7 +2,7 @@
 title: "CutBackdoor: A Circuit Cut Triggered Backdoor Attack on Variational Quantum Algorithms"
 date: "2026-07-22"
 type: "Paper Review"
-description: "A parameter-supply-chain backdoor attack that exploits quantum circuit cutting as a deployment-time trigger, causing poisoned variational parameters to pass full-circuit"
+description: "A parameter-supply-chain backdoor attack that exploits quantum circuit cutting as a deployment-time trigger, causing poisoned variational parameters to pass full-circuit…"
 tags: ["Data Poisoning", "Backdoors", "Supply Chain Security"]
 readingTime: 9
 headerImage: "/images/news/cutbackdoor_a_circuit_cut_triggered_backdoor_attack_on_varia.jpg"

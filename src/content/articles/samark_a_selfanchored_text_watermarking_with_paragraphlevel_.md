@@ -4,7 +4,7 @@ date: "2026-05-27"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.25796"
 paperAuthors: "Jiahao Huo, Wenjie Qu, Yibo Yan, et al."
-description: "SAMARK is a self-anchored semantic-level watermarking framework that eliminates step-dependence in LLM text watermarking by anchoring random keys directly to sentence embeddings, making the watermark "
+description: "SAMARK is a self-anchored semantic-level watermarking framework that eliminates step-dependence in LLM text watermarking by anchoring random keys directly to sentence embeddings…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/samark_a_selfanchored_text_watermarking_with_paragraphlevel_.jpg"
@@ -216,4 +216,4 @@ I've said it before: token-level watermarks are security theater. The moment an 
 
 This isn't just an academic exercise; it has massive commercial implications. Imagine a digital publishing giant facing a \$20M copyright infringement dispute because a competitor easily stripped their distribution watermarks using simple paragraph reordering. If we cannot reliably attribute LLM-generated content under basic editing conditions, enterprise compliance and IP protection fall apart. 
 
-However, we must look at the broader ecosystem. As I argued in [AI Agent Traps: When the Environment Becomes the Attacker](/writing/ai_agent_traps), autonomous systems constantly ingest and execute untrusted environmental data. Robust watermarking like SAMark is vital because it provides a reliable, tamper-resistant mechanism to verify whether incoming instructions originated from a trusted enterprise LLM or an external adversary attempting to hijack the agent.
+However, we must look at the broader ecosystem. As I noted when reviewing [AI Agent Traps: When the Environment Becomes the Attacker](/writing/ai_agent_traps), autonomous systems constantly ingest and execute untrusted environmental data. Robust watermarking like SAMark is vital because it provides a reliable, tamper-resistant mechanism to verify whether incoming instructions originated from a trusted enterprise LLM or an external adversary attempting to hijack the agent.

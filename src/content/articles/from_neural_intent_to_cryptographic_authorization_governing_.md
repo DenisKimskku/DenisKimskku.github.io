@@ -2,7 +2,7 @@
 title: "From Neural Intent to Cryptographic Authorization: Governing Agentic Workflows"
 date: "2026-07-21"
 type: "Paper Review"
-description: "Neural Cryptographic Services (NCS) is an active neuro-symbolic security governance plane that forces probabilistic LLM agents to adhere to offline-signed, hash-chained instruction streams, preventing"
+description: "Neural Cryptographic Services (NCS) is an active neuro-symbolic security governance plane that forces probabilistic LLM agents to adhere to offline-signed, hash-chained…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/from_neural_intent_to_cryptographic_authorization_governing_.jpg"

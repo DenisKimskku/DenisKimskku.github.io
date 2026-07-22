@@ -2,7 +2,7 @@
 title: "Stability Buys Time: A Re-Keying Game for Encrypted Multi-Agent Control"
 date: "2026-07-16"
 type: "Paper Review"
-description: "A game-theoretic framework that dynamically schedules cryptographic re-keying cadences for approximate homomorphic (CKKS) multi-agent control loops based on the control-theoretic stability of the netw"
+description: "A game-theoretic framework that dynamically schedules cryptographic re-keying cadences for approximate homomorphic (CKKS) multi-agent control loops based on the control-theoretic…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/stability_buys_time_a_rekeying_game_for_encrypted_multiagent.jpg"

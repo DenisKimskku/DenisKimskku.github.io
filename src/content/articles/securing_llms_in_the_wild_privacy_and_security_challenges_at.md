@@ -2,7 +2,7 @@
 title: "Securing LLMs in the Wild: Privacy and Security Challenges at the Edge"
 date: "2026-07-19"
 type: "Paper Review"
-description: "The 'Security-Efficiency Paradox' in edge LLMs: optimizing models via quantization, pruning, partitioning, or PEFT to fit hardware limits directly degrades safety alignment and exposes sensitive local"
+description: "The \"Security-Efficiency Paradox\" in edge LLMs: optimizing models via quantization, pruning, partitioning, or PEFT to fit hardware limits directly degrades safety alignment and…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/securing_llms_in_the_wild_privacy_and_security_challenges_at.jpg"

@@ -4,7 +4,7 @@ date: "2026-07-11"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2607.08180"
 paperAuthors: "Xuefei Wang"
-description: "CAPE (Compression-Aware Protective Evolution) is a proactive content-protection framework that injects human-invisible Unicode perturbations into high-value text to cause catastrophic semantic and str"
+description: "CAPE (Compression-Aware Protective Evolution) is a proactive content-protection framework that injects human-invisible Unicode perturbations into high-value text to cause…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/out_of_sight_compressionaware_content_protection_against_age.jpg"

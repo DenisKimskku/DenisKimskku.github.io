@@ -2,7 +2,7 @@
 title: "This Week in AI Security — May 17, 2026"
 date: "2026-05-17"
 type: "Trend Report"
-description: "The single dominant theme in AI security this week is the definitive shift from model-centric prompt alignment to holistic, system-level security architectures forced by autonomous orchestration. Trad"
+description: "The single dominant theme in AI security this week is the definitive shift from model-centric prompt alignment to holistic, system-level security architectures forced by…"
 tags: ["AI Security"]
 readingTime: 12
 headerImage: "/images/news/this_week_in_ai_security__may_17_2026.jpg"

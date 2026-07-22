@@ -2,7 +2,7 @@
 title: "DataShield: Uncovering Risky Fine-Tuning Data Across LLMs Through Consensus Subspace Alignment"
 date: "2026-07-18"
 type: "Paper Review"
-description: "DataShield is a defense framework that prevents safety degradation during LLM fine-tuning by extracting consensus safe/unsafe semantic subspaces from an ensemble of reference models to filter or mask "
+description: "DataShield is a defense framework that prevents safety degradation during LLM fine-tuning by extracting consensus safe/unsafe semantic subspaces from an ensemble of reference…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/datashield_uncovering_risky_finetuning_data_across_llms_thro.jpg"

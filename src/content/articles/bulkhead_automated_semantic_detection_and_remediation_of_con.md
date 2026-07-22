@@ -2,7 +2,7 @@
 title: "Bulkhead: Automated Semantic Detection and Remediation of Container Escape Vulnerabilities"
 date: "2026-07-16"
 type: "Paper Review"
-description: "Bulkhead is an automated framework that combines the semantic reasoning of Large Language Models (LLMs) with the formal verification rigor of model checking (SPIN/Promela) to systematically detect, ge"
+description: "Bulkhead is an automated framework that combines the semantic reasoning of Large Language Models (LLMs) with the formal verification rigor of model checking (SPIN/Promela) to…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/bulkhead_automated_semantic_detection_and_remediation_of_con.jpg"

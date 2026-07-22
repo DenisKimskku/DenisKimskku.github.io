@@ -4,7 +4,7 @@ date: "2026-07-14"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2607.09473"
 paperAuthors: "Steyn Hommes, Vincent Dankbaar, Tanguy Stekke, et al."
-description: "LATCH (Latent Activation Trigger via Cross-level Faults in Hardware) is a cross-layer backdoor attack that uses physical hardware fault injection (EMFI or voltage glitching) at runtime to dynamically "
+description: "LATCH (Latent Activation Trigger via Cross-level Faults in Hardware) is a cross-layer backdoor attack that uses physical hardware fault injection (EMFI or voltage glitching) at…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/triggering_stealthy_feature_map_backdoors_via_physical_fault.jpg"

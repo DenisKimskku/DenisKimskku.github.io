@@ -2,7 +2,7 @@
 title: "AI Security Digest — March 30, 2026"
 date: "2026-03-30"
 type: "News Digest"
-description: "The AI security landscape has entered a critical phase defined by the 'agentic capability-vulnerability paradox,' where LLM-based systems possess the autonomous reasoning to patch legacy software vuln"
+description: "The AI security landscape has entered a critical phase defined by the 'agentic capability-vulnerability paradox,' where LLM-based systems possess the autonomous reasoning to…"
 tags: ["LLM Security", "Smart Contracts", "Reentrancy Detection", "Agent-Driven Verification", "Semantic Vulnerability"]
 readingTime: 13
 headerImage: "/images/news/ai_security_digest__march_30_2026.jpg"

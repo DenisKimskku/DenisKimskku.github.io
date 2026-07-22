@@ -2,7 +2,7 @@
 title: "Distributed Denial of Science: How Indirect Data Poisoning of AI Systems Can Industrialize Scientific Fraud"
 date: "2026-07-15"
 type: "Paper Review"
-description: "Indirect data poisoning manipulates public repositories with falsified tabular data and deceptive metadata to trick autonomous AI research agents into drawing fabricated scientific conclusions"
+description: "Indirect data poisoning manipulates public repositories with falsified tabular data and deceptive metadata to trick autonomous AI research agents into drawing fabricated…"
 tags: ["AI Security"]
 readingTime: 6
 headerImage: "/images/news/distributed_denial_of_science_how_indirect_data_poisoning_of.jpg"

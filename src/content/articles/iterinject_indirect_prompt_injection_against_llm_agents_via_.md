@@ -4,7 +4,7 @@ date: "2026-05-28"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.24659"
 paperAuthors: "Zixuan Chen, Jiaxiang Chen, Li Luo, et al."
-description: "An iterative black-box framework named *IterInject* that automates indirect prompt injections (IPI) by coupling structured, four-level diagnostic feedback with an LLM-based optimizer and self-evolving"
+description: "An iterative black-box framework named *IterInject* that automates indirect prompt injections (IPI) by coupling structured, four-level diagnostic feedback with an LLM-based…"
 tags: ["AI Security"]
 readingTime: 11
 headerImage: "/images/news/iterinject_indirect_prompt_injection_against_llm_agents_via_.jpg"

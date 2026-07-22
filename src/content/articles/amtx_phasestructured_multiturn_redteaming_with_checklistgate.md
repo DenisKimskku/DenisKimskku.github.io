@@ -2,7 +2,7 @@
 title: "AMT-X: Phase-Structured Multi-Turn Red-Teaming with Checklist-Gated Evaluation"
 date: "2026-07-15"
 type: "Paper Review"
-description: "AMT-X (Adaptive Multi-Turn Exploitation) is a reproducible, phase-structured multi-turn red-teaming framework that uses a state-machine attacker guided by semantic signals, evaluated by a checklist-ga"
+description: "AMT-X (Adaptive Multi-Turn Exploitation) is a reproducible, phase-structured multi-turn red-teaming framework that uses a state-machine attacker guided by semantic signals…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/amtx_phasestructured_multiturn_redteaming_with_checklistgate.jpg"

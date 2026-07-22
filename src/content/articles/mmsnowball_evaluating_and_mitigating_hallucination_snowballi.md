@@ -4,7 +4,7 @@ date: "2026-06-03"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2606.00622"
 paperAuthors: "Yue Jiang, Xue Jiang, Lihua Zhang, et al."
-description: "An analysis of 'hallucination snowballing' in multi-turn multimodal dialogue, where initially minor visual errors cascade into systemic cognitive delusions as the model prioritizes conversational hist"
+description: "An analysis of \"hallucination snowballing\" in multi-turn multimodal dialogue, where initially minor visual errors cascade into systemic cognitive delusions as the model…"
 tags: ["AI Security"]
 readingTime: 11
 headerImage: "/images/news/mmsnowball_evaluating_and_mitigating_hallucination_snowballi.jpg"

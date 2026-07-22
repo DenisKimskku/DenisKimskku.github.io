@@ -2,7 +2,7 @@
 title: "Salience Induction against Multi-Hop RAG Agents: Threat and Defense"
 date: "2026-07-22"
 type: "Paper Review"
-description: "A truth-preserving attack technique that manipulates presentation-level salience cues (position, formatting, epistemic tone, and semantic proximity) to hijack multi-hop RAG entity"
+description: "A truth-preserving attack technique that manipulates presentation-level salience cues (position, formatting, epistemic tone, and semantic proximity) to hijack multi-hop RAG…"
 tags: ["RAG", "Adversarial Attacks", "AI Agents", "Vulnerabilities"]
 readingTime: 10
 headerImage: "/images/news/salience_induction_against_multihop_rag_agents_threat_and_de.jpg"

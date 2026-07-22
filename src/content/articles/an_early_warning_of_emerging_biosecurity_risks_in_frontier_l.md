@@ -2,7 +2,7 @@
 title: "An Early Warning of Emerging Biosecurity Risks in Frontier LLMs"
 date: "2026-07-22"
 type: "Paper Review"
-description: "Intern-BioBreaker bypasses frontier LLM safety alignment using a specialized four-stage bio-red-teaming pipeline to generate obfuscated, screening-evasive DNA sequences for"
+description: "Intern-BioBreaker bypasses frontier LLM safety alignment using a specialized four-stage bio-red-teaming pipeline to generate obfuscated, screening-evasive DNA sequences for…"
 tags: ["Adversarial Attacks", "Vulnerabilities"]
 readingTime: 10
 headerImage: "/images/news/an_early_warning_of_emerging_biosecurity_risks_in_frontier_l.jpg"

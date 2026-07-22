@@ -4,8 +4,8 @@ date: "2026-07-14"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2607.09655"
 paperAuthors: "Lulin Liu, Nuo Chen, Yan Wang, et al."
-description: "OpenLongTail is an open-source generative data engine that converts unposed, monocular driving videos into pose-grounded, consistent multi-view training assets under a target camera rig"
-tags: ["AI Security"]
+description: "OpenLongTail is an open-source generative data engine that converts unposed, monocular driving videos into pose-grounded, consistent multi-view training assets under a target…"
+tags: ["Off-Topic", "Autonomous Driving", "Generative Models"]
 readingTime: 8
 headerImage: "/images/news/openlongtail_generative_scaling_of_longtail_driving_data.jpg"
 ---

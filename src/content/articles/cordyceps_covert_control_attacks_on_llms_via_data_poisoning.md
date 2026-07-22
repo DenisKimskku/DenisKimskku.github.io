@@ -4,7 +4,7 @@ date: "2026-05-28"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.26595"
 paperAuthors: "Zedian Shao, Charles Fleming, Teodora Baluta"
-description: "CORDYCEPS is a data poisoning attack that implants a steganographic 'Semantic Hiding under Shared knowledge' (SHuSh) channel into LLMs during instruction tuning, enabling stealthy control and data exf"
+description: "CORDYCEPS is a data poisoning attack that implants a steganographic \"Semantic Hiding under Shared knowledge\" (SHuSh) channel into LLMs during instruction tuning, enabling…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/cordyceps_covert_control_attacks_on_llms_via_data_poisoning.jpg"
@@ -215,4 +215,4 @@ What terrifies me about CORDYCEPS is how it brilliantly exploits the fundamental
 
 This is a nightmare scenario for production environments. Imagine this deployed in a \$20M enterprise RAG pipeline handling proprietary source code or financial transactions. If an attacker poisons a fraction of a percent of an open-source instruction-tuning dataset, they can trigger silent data exfiltration or unauthorized API execution through completely benign-looking documents—leaving security operations centers completely blind. 
 
-This threat model directly aligns with my previous analysis in [Security in the Fine-Tuning Lifecycle of Large Language Models: Threats, Defenses,Evaluation, and Future Directions](/writing/security_in_the_finetuning_lifecycle_of_large_language_model), where we warned that the post-pretraining phase is highly susceptible to poison-based backdoors that survive alignment tuning. CORDYCEPS proves that our defenses cannot just focus on runtime prompt sanitization; if you do not have absolute, cryptographically verified provenance of your fine-tuning data, you are essentially running untrusted, un-auditable code directly in your model's latent space.
+This threat model directly aligns with my review of [Security in the Fine-Tuning Lifecycle of Large Language Models: Threats, Defenses,Evaluation, and Future Directions](/writing/security_in_the_finetuning_lifecycle_of_large_language_model), which warned that the post-pretraining phase is highly susceptible to poison-based backdoors that survive alignment tuning. CORDYCEPS proves that our defenses cannot just focus on runtime prompt sanitization; if you do not have absolute, cryptographically verified provenance of your fine-tuning data, you are essentially running untrusted, un-auditable code directly in your model's latent space.

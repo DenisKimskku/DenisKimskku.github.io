@@ -2,7 +2,7 @@
 title: "Do Agents Dream of False Memories? Black-box Visual Attacks on Long-term Memory in Multimodal AI Agents"
 date: "2026-07-21"
 type: "Paper Review"
-description: "LUCID is a black-box, image-only adversarial attack that compromises multimodal long-term memory in AI agents, injecting 'false memories' without altering text or database indices"
+description: "LUCID is a black-box, image-only adversarial attack that compromises multimodal long-term memory in AI agents, injecting \"false memories\" without altering text or database indices."
 tags: ["AI Security"]
 readingTime: 7
 headerImage: "/images/news/do_agents_dream_of_false_memories_blackbox_visual_attacks_on.jpg"

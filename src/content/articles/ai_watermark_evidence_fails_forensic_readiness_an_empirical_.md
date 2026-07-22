@@ -2,7 +2,7 @@
 title: "AI Watermark Evidence Fails Forensic Readiness: An Empirical Evaluation"
 date: "2026-07-21"
 type: "Paper Review"
-description: "Automated, meaning-preserving paraphrase attacks systematically strip LLM watermarks (KGW, Unigram, and SynthID-Text), resulting in near-total (98.3% to 100%) watermark erasure and rendering them comp"
+description: "Automated, meaning-preserving paraphrase attacks systematically strip LLM watermarks (KGW, Unigram, and SynthID-Text), resulting in near-total (98.3% to 100%) watermark erasure…"
 tags: ["AI Security"]
 readingTime: 11
 headerImage: "/images/news/ai_watermark_evidence_fails_forensic_readiness_an_empirical_.jpg"

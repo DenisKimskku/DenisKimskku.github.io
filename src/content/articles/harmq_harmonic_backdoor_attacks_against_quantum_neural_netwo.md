@@ -2,7 +2,7 @@
 title: "HarmQ: Harmonic Backdoor Attacks Against Quantum Neural Networks"
 date: "2026-07-17"
 type: "Paper Review"
-description: "HarmQ is a quantum-native data poisoning backdoor attack that uses low-frequency sinusoidal (harmonic) triggers designed to survive aggressive downsampling and exploit the intrinsic spectral learning "
+description: "HarmQ is a quantum-native data poisoning backdoor attack that uses low-frequency sinusoidal (harmonic) triggers designed to survive aggressive downsampling and exploit the…"
 tags: ["AI Security"]
 readingTime: 10
 ---

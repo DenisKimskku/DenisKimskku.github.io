@@ -2,7 +2,7 @@
 title: "Cross-Layer Misalignment Detection in Agent Skills: A Progressive Loading-Aware Contrastive Learning Approach"
 date: "2026-07-15"
 type: "Paper Review"
-description: "PL-HCL (Progressive Loading-Aware Hierarchical Contrastive Learning) is a pre-execution security framework that detects 'cross-layer misalignment'—discrepancies between user-facing metadata claims and"
+description: "PL-HCL (Progressive Loading-Aware Hierarchical Contrastive Learning) is a pre-execution security framework that detects \"cross-layer misalignment\"—discrepancies between…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/crosslayer_misalignment_detection_in_agent_skills_a_progress.jpg"

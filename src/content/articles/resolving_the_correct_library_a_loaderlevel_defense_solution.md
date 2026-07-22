@@ -4,7 +4,7 @@ date: "2026-05-28"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.26665"
 paperAuthors: "Can Ozkan, Dave Singelee"
-description: "A loader-centric verification framework implemented via `glibc`'s `LD_AUDIT` interface that binds dynamically loaded shared objects (`.so`) to immutable Build-IDs and cryptographic hashes to block sea"
+description: "A loader-centric verification framework implemented via `glibc`'s `LD_AUDIT` interface that binds dynamically loaded shared objects (`.so`) to immutable Build-IDs and…"
 tags: ["AI Security"]
 readingTime: 8
 headerImage: "/images/news/resolving_the_correct_library_a_loaderlevel_defense_solution.jpg"
@@ -171,4 +171,4 @@ What excites me about this loader-level approach is its sheer pragmatism. Most d
 
 This isn't just an academic exercise. The threat of shared library hijacking is highly practical, recalling the terrifying mechanics of the XZ Utils backdoor (CVE-2024-3094) where dynamic loading resolution was subtly subverted. In an era where edge AI is deployed in untrusted physical environments—think of a \$50M autonomous drone fleet or smart grid gateways—relying solely on standard kernel file integrity (like IMA) is a massive blind spot. If an attacker can manipulate local search paths to hijack the dynamic linker, your securely signed binary is effectively executing attacker code.
 
-This silent execution-flow manipulation is exactly the type of vulnerability that automated systems are increasingly prone to triggering. In my previous analysis, [How Agentic AI Coding Assistants Become the Attacker's Shell](/writing/how_agentic_ai_coding_assistants_become_the_attackers_shell), I detailed how compromised development pipelines and LLM-driven assistants can be coerced into dropping malicious dependencies or misconfiguring local search paths. By anchoring verification directly inside `glibc`'s `LD_AUDIT` interface, this paper provides a robust last line of defense against both human adversaries and accidental, automated supply-chain self-sabotage.
+This silent execution-flow manipulation is exactly the type of vulnerability that automated systems are increasingly prone to triggering. In my review of [How Agentic AI Coding Assistants Become the Attacker's Shell](/writing/how_agentic_ai_coding_assistants_become_the_attackers_shell), I covered how compromised development pipelines and LLM-driven assistants can be coerced into dropping malicious dependencies or misconfiguring local search paths. By anchoring verification directly inside `glibc`'s `LD_AUDIT` interface, this paper provides a robust last line of defense against both human adversaries and accidental, automated supply-chain self-sabotage.

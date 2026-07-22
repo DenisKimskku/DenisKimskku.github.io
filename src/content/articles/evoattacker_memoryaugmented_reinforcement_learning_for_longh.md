@@ -4,7 +4,7 @@ date: "2026-05-27"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.25389"
 paperAuthors: "Bingyu Yan, Xiaoming Zhang, Jinyu Hou, et al."
-description: "Evo-Attacker is a self-evolving, memory-augmented reinforcement learning framework that systematically compromises Large Language Model Multi-Agent Systems (LLM-MAS) by strategically injecting semanti"
+description: "Evo-Attacker is a self-evolving, memory-augmented reinforcement learning framework that systematically compromises Large Language Model Multi-Agent Systems (LLM-MAS) by…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/evoattacker_memoryaugmented_reinforcement_learning_for_longh.jpg"
@@ -166,4 +166,4 @@ What excites me about Evo-Attacker is that it moves past simplistic, static prom
 
 If an adversary can compromise just one minor upstream API or database query, they can dynamically poison the entire collaboration. Imagine a \$30M enterprise CI/CD pipeline where an LLM-based multi-agent system reviews, tests, and deploys code. Evo-Attacker proves that a bad actor doesn't need to trigger loud, obvious alarms; by strategically injecting microscopic, adaptive errors into a single test output, they can silently degrade system-wide performance, causing catastrophic compiler failures downstream without ever tripping safety filters.
 
-This paper perfectly operationalizes the hazard I mapped out in [Security of Autonomous AI Agents: Trust Boundary-Based Attack Surface Analysis and Trends](/writing/security_autonomous_ai_agents_trust_boundary), where I argued that treating tool outputs as trusted ground truth creates an undefended boundary that adversaries can easily exploit. If you are building agentic workflows today, you must stop treating external API returns as safe zones.
+This paper perfectly operationalizes the hazard I highlighted when reviewing [Security of Autonomous AI Agents: Trust Boundary-Based Attack Surface Analysis and Trends](/writing/security_autonomous_ai_agents_trust_boundary), which argued that treating tool outputs as trusted ground truth creates an undefended boundary that adversaries can easily exploit. If you are building agentic workflows today, you must stop treating external API returns as safe zones.

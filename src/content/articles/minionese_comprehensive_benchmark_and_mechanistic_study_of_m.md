@@ -2,7 +2,7 @@
 title: "Minionese: Comprehensive Benchmark and Mechanistic Study of Multilingual LLM Safety"
 date: "2026-07-17"
 type: "Paper Review"
-description: "Minionese is a benchmark of 55,440 prompts showing that multilingual jailbreaks exploit a geometric misalignment where harmful low-resource representations fail to project onto the low-dimensional ref"
+description: "Minionese is a benchmark of 55,440 prompts showing that multilingual jailbreaks exploit a geometric misalignment where harmful low-resource representations fail to project onto…"
 tags: ["AI Security"]
 readingTime: 10
 ---

@@ -2,7 +2,7 @@
 title: "(A)iSpy: Parasitic Trojans for Machine Learning Infrastructure"
 date: "2026-07-22"
 type: "Paper Review"
-description: "(A)iSpy is a parasitic machine learning runtime Trojan that registers as a framework extension to manipulate transient memory states, enabling backdoor amplification from a single"
+description: "(A)iSpy is a parasitic machine learning runtime Trojan that registers as a framework extension to manipulate transient memory states, enabling backdoor amplification from a…"
 tags: ["Data Poisoning", "Backdoors", "Supply Chain Security"]
 readingTime: 10
 headerImage: "/images/news/aispy_parasitic_trojans_for_machine_learning_infrastructure.jpg"

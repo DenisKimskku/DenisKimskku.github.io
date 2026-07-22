@@ -2,7 +2,7 @@
 title: "AI Security Digest — May 23, 2026"
 date: "2026-05-23"
 type: "News Digest"
-description: "The central theme of this week's AI security landscape is the structural vulnerability of stateful AI systems, specifically how temporal memory, dynamic retrieval, and graph-based agent architectures "
+description: "The central theme of this week's AI security landscape is the structural vulnerability of stateful AI systems, specifically how temporal memory, dynamic retrieval, and…"
 tags: ["AI Security"]
 readingTime: 13
 headerImage: "/images/news/ai_security_digest__may_23_2026.jpg"
@@ -170,4 +170,4 @@ I'm relieved to see academic research finally catching up to what practitioners 
 
 When you connect an LLM to a dynamic database or the open web, the environment itself becomes the threat vector. I broke down this exact mechanism in [AI Agent Traps: When the Environment Becomes the Attacker](/writing/ai_agent_traps), which details how indirect injection attacks can hijack an agent's control loop when it processes external, untrusted web content. Adversaries don’t need to spend multi-million \$ budgets on complex jailbreaks or weight tampering if they can simply poison the search index your RAG pipeline blindly trusts. 
 
-The EnCAgg paper on Federated Learning reinforces the same fundamental lesson. Defending against slow-drip, oscillating model poisoning requires dropping static thresholds. As I argued in [Security of Autonomous AI Agents: Trust Boundary-Based Attack Surface Analysis and Trends](/writing/security_autonomous_ai_agents_trust_boundary), which establishes that autonomous systems must explicitly map and validate untrusted input boundaries, our traditional security perimeters have completely dissolved. Whether it's a gradient update from a decentralized node or a retrieved document in a RAG pipeline, we have to adopt a zero-trust mindset for all external AI inputs. Structural, dynamic defenses like the ones highlighted today aren't just "nice to have"—they are mandatory for securing modern, stateful AI systems.
+The EnCAgg paper on Federated Learning reinforces the same fundamental lesson. Defending against slow-drip, oscillating model poisoning requires dropping static thresholds. As I noted when reviewing [Security of Autonomous AI Agents: Trust Boundary-Based Attack Surface Analysis and Trends](/writing/security_autonomous_ai_agents_trust_boundary), which establishes that autonomous systems must explicitly map and validate untrusted input boundaries, our traditional security perimeters have completely dissolved. Whether it's a gradient update from a decentralized node or a retrieved document in a RAG pipeline, we have to adopt a zero-trust mindset for all external AI inputs. Structural, dynamic defenses like the ones highlighted today aren't just "nice to have"—they are mandatory for securing modern, stateful AI systems.

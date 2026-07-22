@@ -2,7 +2,7 @@
 title: "On Success and Simplicity: A Second Look at Transferable Vision-Language Attack Pipeline"
 date: "2026-07-18"
 type: "Paper Review"
-description: "SimVLA (Simple Vision-Language Attack) is a highly optimized two-stage transferable adversarial attack pipeline that strips away the over-engineered third stage of standard vision-language attacks whi"
+description: "SimVLA (Simple Vision-Language Attack) is a highly optimized two-stage transferable adversarial attack pipeline that strips away the over-engineered third stage of standard…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/on_success_and_simplicity_a_second_look_at_transferable_visi.jpg"

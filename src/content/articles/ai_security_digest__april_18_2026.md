@@ -2,7 +2,7 @@
 title: "AI Security Digest — April 18, 2026"
 date: "2026-04-18"
 type: "News Digest"
-description: "As autonomous agentic systems and multi-modal models increasingly bypass static guardrails, the core paradigm of AI security is shifting from superficial post-hoc input/output filtering to deep, execu"
+description: "As autonomous agentic systems and multi-modal models increasingly bypass static guardrails, the core paradigm of AI security is shifting from superficial post-hoc input/output…"
 tags: ["LLM Security", "Agent Security", "Watermarking", "Hardware Security", "Data Poisoning", "Adversarial ML"]
 readingTime: 12
 headerImage: "/images/news/ai_security_digest__april_18_2026.jpg"

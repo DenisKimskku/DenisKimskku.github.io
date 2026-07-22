@@ -4,7 +4,7 @@ date: "2026-07-11"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2607.07827"
 paperAuthors: "Peilin Han, Yang Liu, Yilong Yang, et al."
-description: "A large-scale empirical study revealing that traditional safety evaluation metrics catastrophically overestimate jailbreak risks in text-to-image (T2I) models due to 'semantic drift' and 'generation a"
+description: "A large-scale empirical study revealing that traditional safety evaluation metrics catastrophically overestimate jailbreak risks in text-to-image (T2I) models due to \"semantic…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/open_models_open_risks_measuring_unsafe_generation_in_textto.jpg"
@@ -210,6 +210,6 @@ As a practitioner, this is the reality check the text-to-image (T2I) safety spac
 
 This discrepancy highlights how "semantic drift" and warped generation artifacts render traditional binary classifiers (like MHSC) practically useless for real-world threat modeling. However, the real danger is "in-the-wild" model merging and fine-tuning, where downstream developers unknowingly strip away baseline guardrails. 
 
-This vulnerability mirrors my previous findings in [Safety Alignment Should Be Made More Than Just a Few Tokens Deep](/writing/safety_alignment_more_than_a_few_tokens_deep), where I argued that superficial safety guardrails are fundamentally brittle and easily stripped away during subsequent downstream adaptation. 
+This vulnerability mirrors my review of [Safety Alignment Should Be Made More Than Just a Few Tokens Deep](/writing/safety_alignment_more_than_a_few_tokens_deep), which argued that superficial safety guardrails are fundamentally brittle and easily stripped away during subsequent downstream adaptation. 
 
 If you are deploying open-source models like FLUX or SDXL derivatives in production, stop relying on raw detector activations. You must design your safety architecture under the assumption that the underlying model weights have already been compromised during the decentralized open-source pipeline.

@@ -2,7 +2,7 @@
 title: "The Language of Security: How Prompt Syntax Shapes Secure Code Generation in Open LLMs"
 date: "2026-07-21"
 type: "Paper Review"
-description: "Casual linguistic edits, such as shortening a prompt or removing relative adverbial clauses (like 'how' or 'which'), can systematically trigger open-weight LLMs to generate highly vulnerable code"
+description: "Casual linguistic edits, such as shortening a prompt or removing relative adverbial clauses (like \"how\" or \"which\"), can systematically trigger open-weight LLMs to generate…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/the_language_of_security_how_prompt_syntax_shapes_secure_cod.jpg"

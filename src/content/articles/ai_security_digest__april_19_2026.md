@@ -2,7 +2,7 @@
 title: "AI Security Digest — April 19, 2026"
 date: "2026-04-19"
 type: "News Digest"
-description: "The dominant security vector of this cycle is the exploitation of human trust and unpatched legacy infrastructure as primary entry points, contrasting sharply with academic focus on complex algorithmi"
+description: "The dominant security vector of this cycle is the exploitation of human trust and unpatched legacy infrastructure as primary entry points, contrasting sharply with academic focus…"
 tags: ["LLM Security", "Authentication Security", "Code Security"]
 readingTime: 6
 headerImage: "/images/news/ai_security_digest__april_19_2026.jpg"

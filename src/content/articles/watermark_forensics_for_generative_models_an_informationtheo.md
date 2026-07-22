@@ -2,7 +2,7 @@
 title: "Watermark Forensics for Generative Models: An Information-Theoretic Perspective"
 date: "2026-07-16"
 type: "Paper Review"
-description: "An information-theoretic framework showing that all generative model watermarking tasks (detection, attribution, extraction, and localization) are governed by a single mathematical object—the *informa"
+description: "An information-theoretic framework showing that all generative model watermarking tasks (detection, attribution, extraction, and localization) are governed by a single…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/watermark_forensics_for_generative_models_an_informationtheo.jpg"

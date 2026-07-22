@@ -2,7 +2,7 @@
 title: "Mako: A Self-Evolving Agentic Operating System (SE-AOS) for Autonomous Web Exploitation"
 date: "2026-07-15"
 type: "Paper Review"
-description: "Mako is a Self-Evolving Agentic Operating System (SE-AOS) that treats security exploitation capabilities as a mutable, versioned kernel, dynamically extending its own tool library at runtime through a"
+description: "Mako is a Self-Evolving Agentic Operating System (SE-AOS) that treats security exploitation capabilities as a mutable, versioned kernel, dynamically extending its own tool…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/mako_a_selfevolving_agentic_operating_system_seaos_for_auton.jpg"
@@ -179,4 +179,4 @@ Mako proves that the bottleneck in automated offensive security is no longer the
 
 An unauthenticated black-box attacker solving 104 out of 104 targets on the public XBOW benchmark is a wake-up call. What excites—and frankly, concerns—me about Mako is how it completely sidesteps the cognitive bottleneck of LLM context windows by shifting the burden to a self-evolving tool kernel. Instead of exhausting its context trying to "reason" through complex exploits, Mako simply writes, validates, and registers its own tools on the fly using commodity models like Gemini 2.5 Flash.
 
-The economics here are the real story. Bypassing modern web vulnerabilities like SQLi, SSTI, and padding oracles at an average compute cost of just \$4.61 per target (totaling \$478.99) lowers the barrier to entry for high-velocity, automated attacks to almost nothing. In my prior analysis of cost-aware pre-execution gating for offensive security agents, I argued that offensive agents require strict execution safeguards and cost-bounding to prevent catastrophic API spending; Mako's architecture proves that when agents can autonomously self-correct and modularize their exploits, they achieve incredibly high success rates while keeping the meter running surprisingly low. We are officially entering an era where static, signature-based web defenses will be systematically dismantled by self-evolving software agents operating at machine speed.
+The economics here are the real story. Bypassing modern web vulnerabilities like SQLi, SSTI, and padding oracles at an average compute cost of just \$4.61 per target (totaling \$478.99) lowers the barrier to entry for high-velocity, automated attacks to almost nothing. In my prior review of cost-aware pre-execution gating for offensive security agents, I noted that offensive agents require strict execution safeguards and cost-bounding to prevent catastrophic API spending; Mako's architecture proves that when agents can autonomously self-correct and modularize their exploits, they achieve incredibly high success rates while keeping the meter running surprisingly low. We are officially entering an era where static, signature-based web defenses will be systematically dismantled by self-evolving software agents operating at machine speed.

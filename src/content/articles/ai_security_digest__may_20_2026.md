@@ -2,7 +2,7 @@
 title: "AI Security Digest — May 20, 2026"
 date: "2026-05-20"
 type: "News Digest"
-description: "The dominant threat vector this week is the systemic breakdown of the instruction-data boundary across autonomous agentic architectures, rendering traditional perimeter defenses and input sanitization"
+description: "The dominant threat vector this week is the systemic breakdown of the instruction-data boundary across autonomous agentic architectures, rendering traditional perimeter defenses…"
 tags: ["AI Security"]
 readingTime: 13
 headerImage: "/images/news/ai_security_digest__may_20_2026.jpg"

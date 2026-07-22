@@ -4,7 +4,7 @@ date: "2026-07-11"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2607.07774"
 paperAuthors: "Shane Caldwell, Max Harley, Ads Dawson, et al."
-description: "A pre-execution gating framework that utilizes a cost-efficient, trusted LLM judge to inspect and accept or reject tool calls proposed by autonomous agents before they are executed"
+description: "A pre-execution gating framework that utilizes a cost-efficient, trusted LLM judge to inspect and accept or reject tool calls proposed by autonomous agents before they are…"
 tags: ["AI Security"]
 readingTime: 11
 headerImage: "/images/news/scopejudge_costaware_preexecution_gating_for_offensive_secur.jpg"

@@ -4,7 +4,7 @@ date: "2026-05-30"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.25967"
 paperAuthors: "Georgios Milis, Yubin Qin, Yihan Wu, et al."
-description: "A gradient-free, training-free audio watermarking technique that clusters neural codec vocabularies using graph community detection (Leiden algorithm) to make token-level watermarks invariant to non-i"
+description: "A gradient-free, training-free audio watermarking technique that clusters neural codec vocabularies using graph community detection (Leiden algorithm) to make token-level…"
 tags: ["AI Security"]
 readingTime: 11
 headerImage: "/images/news/hidden_in_plain_tokens_simply_robust_gradientfree_watermark_.jpg"
@@ -220,4 +220,4 @@ This is an incredibly elegant solution to a massive practical headache. As someo
 
 For trust and safety teams at companies like ElevenLabs or OpenAI fighting the fallout of voice-clone scams—including high-profile incidents like the notorious \$25M deepfake CFO heist in Hong Kong—this technique is a massive deal. Traditional KGW watermarks disintegrate the second audio is transcoded to MP3 or run through a basic bandpass filter, leaving platforms defenseless against adversarial stripping. 
 
-This shift to robust, structure-aware detection mirrors my findings in [Prompt Injection Detection is Regime-Dependent: A Deployment-Aware Evaluation with Interpretable Structural Signals](/writing/prompt_injection_detection_is_regimedependent_a_deploymentaw), where I demonstrated that safety defenses must be designed around the actual, messy distribution shifts of deployment-phase data rather than clean, idealized laboratory baselines. If we want generative audio provenance to be more than a compliance checkbox, we must build defenses that survive the inevitable noise of the real world.
+This shift to robust, structure-aware detection mirrors my review of [Prompt Injection Detection is Regime-Dependent: A Deployment-Aware Evaluation with Interpretable Structural Signals](/writing/prompt_injection_detection_is_regimedependent_a_deploymentaw), which demonstrated that safety defenses must be designed around the actual, messy distribution shifts of deployment-phase data rather than clean, idealized laboratory baselines. If we want generative audio provenance to be more than a compliance checkbox, we must build defenses that survive the inevitable noise of the real world.

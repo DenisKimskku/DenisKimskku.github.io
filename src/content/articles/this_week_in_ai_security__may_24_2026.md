@@ -2,7 +2,7 @@
 title: "This Week in AI Security — May 24, 2026"
 date: "2026-05-24"
 type: "Trend Report"
-description: "This week, the AI security research community signaled a decisive pivot from static, prompt-response safety paradigms to the volatile, high-stakes realm of agentic autonomy and complex system integrat"
+description: "This week, the AI security research community signaled a decisive pivot from static, prompt-response safety paradigms to the volatile, high-stakes realm of agentic autonomy and…"
 tags: ["AI Agents", "RAG", "Adversarial Attacks", "LLM Security", "Data Poisoning", "Runtime Security"]
 readingTime: 12
 headerImage: "/images/news/this_week_in_ai_security__may_24_2026.jpg"

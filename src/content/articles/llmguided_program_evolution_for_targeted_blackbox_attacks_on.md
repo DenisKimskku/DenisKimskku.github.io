@@ -2,7 +2,7 @@
 title: "LLM-Guided Program Evolution for Targeted Black-Box Attacks on Perceptual Hash Algorithms"
 date: "2026-07-15"
 type: "Paper Review"
-description: "LLM-guided program evolution (using OpenEvolve and GigaEvo) automates targeted black-box collision attacks on perceptual hashing algorithms by writing and iteratively refining python-based search stra"
+description: "LLM-guided program evolution (using OpenEvolve and GigaEvo) automates targeted black-box collision attacks on perceptual hashing algorithms by writing and iteratively refining…"
 tags: ["AI Security"]
 readingTime: 8
 headerImage: "/images/news/llmguided_program_evolution_for_targeted_blackbox_attacks_on.jpg"

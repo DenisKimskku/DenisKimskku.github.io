@@ -4,8 +4,8 @@ date: "2026-05-30"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.24564"
 paperAuthors: "Weixian Waylon Li, Mengyu Wang, Tiejun Ma"
-description: "FinCAD is an inference-time decoding scheme that adapts Context-Aware Decoding (CAD) to suppress an LLM's memorized knowledge of historical stock movements by dynamically subtracting a model-specific,"
-tags: ["AI Security"]
+description: "FinCAD is an inference-time decoding scheme that adapts Context-Aware Decoding (CAD) to suppress an LLM's memorized knowledge of historical stock movements by dynamically…"
+tags: ["Off-Topic", "Finance", "LLM Evaluation"]
 readingTime: 12
 headerImage: "/images/news/summoning_the_oracle_to_slay_it_mitigating_lookahead_bias_in.jpg"
 ---

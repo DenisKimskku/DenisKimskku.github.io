@@ -4,7 +4,7 @@ date: "2026-05-27"
 type: "Paper Review"
 paperUrl: "https://arxiv.org/abs/2605.25871"
 paperAuthors: "Yue Liu, Yanjie Zhao, Yunbo Lyu, et al."
-description: "Indirect prompt injection attacks embedded in unvetted developer artifacts (such as workspace settings, custom rule files, and agent skill configurations) hijack the execution loop of agentic AI codin"
+description: "Indirect prompt injection attacks embedded in unvetted developer artifacts (such as workspace settings, custom rule files, and agent skill configurations) hijack the execution…"
 tags: ["AI Security"]
 readingTime: 9
 headerImage: "/images/news/how_agentic_ai_coding_assistants_become_the_attackers_shell.jpg"

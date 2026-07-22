@@ -2,7 +2,7 @@
 title: "AdvNav: Behavior-Guided Black-Box Adversarial Attacks on Vision-Language Navigation"
 date: "2026-07-15"
 type: "Paper Review"
-description: "AdvNav is a gradient-free, black-box adversarial attack that crafts visually imperceptible, low-frequency Perlin noise to systematically derail Vision-Language Navigation (VLN) agents using only their"
+description: "AdvNav is a gradient-free, black-box adversarial attack that crafts visually imperceptible, low-frequency Perlin noise to systematically derail Vision-Language Navigation (VLN)…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/advnav_behaviorguided_blackbox_adversarial_attacks_on_vision.jpg"

@@ -2,7 +2,7 @@
 title: "Privacy Leakage in Federated Learning in Radiology Reports: A Comparative Evaluation of Tokenizer-Driven Privacy Risks"
 date: "2026-07-19"
 type: "Paper Review"
-description: "An active malicious server can reconstruct up to 43.5% of private radiology text sentences by injecting a 193K-parameter analytic 'imprint' probe before positional embeddings during federated training"
+description: "An active malicious server can reconstruct up to 43.5% of private radiology text sentences by injecting a 193K-parameter analytic \"imprint\" probe before positional embeddings…"
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/privacy_leakage_in_federated_learning_in_radiology_reports_a.jpg"
