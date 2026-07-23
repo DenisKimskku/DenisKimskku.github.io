@@ -174,6 +174,20 @@ jobs:
           done
           echo "::warning::Deploy marker did not match ${GITHUB_SHA} within ~120s; warming anyway."
 
+      # The feeds advertise pubsubhubbub as their WebSub hub; tell it they
+      # changed so subscribers get pushed the update instead of polling.
+      # Best-effort: a hub hiccup must never fail a deploy.
+      - name: Announce feeds via WebSub
+        continue-on-error: true
+        run: |
+          for feed in \
+            https://deniskim1.com/rss.xml \
+            https://deniskim1.com/writing/rss.xml \
+            https://deniskim1.com/news/rss.xml; do
+            curl -fsS --max-time 15 -X POST https://pubsubhubbub.appspot.com/ \
+              -d hub.mode=publish --data-urlencode "hub.url=${feed}" || true
+          done
+
       # A slow warm must never fail the deploy or hold the 'pages' concurrency
       # lock (one run held it ~60 min) — cap it and swallow failures.
       - name: Warm Cloudflare cache

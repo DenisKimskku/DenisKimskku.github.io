@@ -10,7 +10,7 @@ const description = 'Paper walkthroughs, research writeups, and technical writin
 export const metadata: Metadata = {
   title: 'Writing',
   description,
-  alternates: buildAlternates('/writing/'),
+  alternates: buildAlternates('/writing/', '/writing/rss.xml'),
   openGraph: buildOpenGraph({
     title: `Writing | ${siteMetadata.authorName}`,
     description,

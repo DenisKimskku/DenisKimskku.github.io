@@ -4,7 +4,9 @@
 // (3) first-person authorship claims in auto-generated digests, (4) HTML in
 // frontmatter title/description, (5) overweight local images, (6) fabricated
 // corpus stats in digests, (7) frontmatter schema (title/date/type/description/
-// slug uniqueness) — warn-only unless --strict. Deterministic, no network.
+// slug uniqueness) — warn-only unless --strict, (8) authorship-claim guard —
+// type "Research Paper" must match a real publication in src/data/papers.json
+// and vice-versa; warn-only unless --strict. Deterministic, no network.
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
@@ -52,8 +54,58 @@ const MAX_IMAGE_BYTES = 300 * 1024;
 const AUTHORSHIP = [/\bmy work on\b/i, /\bI (?:previously )?proposed\b/i, /\bmy paper\b/i, /\bwe propose\b/i];
 const FAKE_STATS = [/knowledge base of [0-9,]+ papers/i, /averaging [0-9.]+ citations/i];
 
+// Authorship-claim guard: type "Research Paper" is a claim that the site
+// owner (co-)authored the work, so the article title must correspond to one
+// of the real publications in src/data/papers.json. The reverse also warns:
+// a title matching a real publication but typed otherwise is likely an own
+// paper demoted to (or branded as) an auto-generated review.
+const PAPERS_PATH = path.join(process.cwd(), 'src', 'data', 'papers.json');
+let papers = null; // null disables the guard — an unreadable papers.json must never block a deploy
+try {
+  const parsed = JSON.parse(fs.readFileSync(PAPERS_PATH, 'utf8'));
+  if (Array.isArray(parsed)) papers = parsed.filter((p) => typeof p?.title === 'string' && p.title.trim());
+} catch {
+  /* papers.json problems are the papers/CV pipeline's to report, not this linter's */
+}
+
+// Article titles legitimately drift from the formal publication title
+// (subtitles trimmed, "leak" vs "leakage" rewording), so the comparison is
+// fuzzy: normalized whole-title containment, or >=0.6 overlap of significant
+// words. Overlap coefficient (matches / smaller set) rather than plain
+// Jaccard so a shortened or rephrased title still matches its longer formal
+// counterpart; word matching allows prefix inflections (language/languages).
+const TITLE_MATCH_THRESHOLD = 0.6;
+const TITLE_STOPWORDS = new Set([
+  'a', 'an', 'the', 'of', 'in', 'on', 'at', 'to', 'for', 'and', 'or', 'but', 'not', 'all',
+  'with', 'via', 'from', 'into', 'over', 'under', 'across', 'against', 'between', 'about',
+  'based', 'using', 'toward', 'towards', 'is', 'are', 'can', 'its', 'their', 'you', 'your',
+  'how', 'what', 'when', 'why', 'do', 'does', 'if', 'me',
+]);
+const normalizeTitle = (t) => String(t ?? '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+const significantWords = (normalized) => [...new Set(normalized.split(' ').filter((w) => w.length >= 3 && !TITLE_STOPWORDS.has(w)))];
+const wordsAlike = (a, b) => {
+  if (a === b) return true;
+  const [short, long] = a.length <= b.length ? [a, b] : [b, a];
+  return short.length >= 4 && long.startsWith(short); // leak/leakage, language/languages
+};
+function titlesMatch(articleTitle, paperTitle) {
+  const na = normalizeTitle(articleTitle);
+  const nb = normalizeTitle(paperTitle);
+  const wa = significantWords(na);
+  const wb = significantWords(nb);
+  if (!wa.length || !wb.length) return false;
+  // Whole-title containment (one title extends the other with a subtitle) —
+  // only when the shorter title is long enough that containment cannot be
+  // coincidental ("rag systems" is a substring of two distinct papers).
+  if (Math.min(wa.length, wb.length) >= 4 && (na.includes(nb) || nb.includes(na))) return true;
+  const [small, big] = wa.length <= wb.length ? [wa, wb] : [wb, wa];
+  const matched = small.filter((w) => big.some((v) => wordsAlike(w, v))).length;
+  return matched / small.length >= TITLE_MATCH_THRESHOLD;
+}
+
 const problems = [];
 const schemaWarnings = []; // { slug, issues: string[] } — warn-only unless --strict
+const authorshipWarnings = []; // { slug, issue } — same warn/--strict tier as schema
 for (const f of files) {
   const text = fs.readFileSync(path.join(ARTDIR, f), 'utf8');
   let yamlError = null;
@@ -133,6 +185,24 @@ for (const f of files) {
   }
   if (schema.length) schemaWarnings.push({ slug: f.replace(/\.md$/, ''), issues: schema });
 
+  // Authorship-claim guard (see titlesMatch above). Skipped when frontmatter
+  // is broken (already reported), the title is missing (schema reports it),
+  // or papers.json was unreadable.
+  if (fm && !yamlError && papers && title.trim()) {
+    const matchedPaper = papers.find((p) => titlesMatch(title, p.title));
+    if (data.type === 'Research Paper' && !matchedPaper) {
+      authorshipWarnings.push({
+        slug: f.replace(/\.md$/, ''),
+        issue: 'typed "Research Paper" but its title matches no publication in src/data/papers.json — external work must not carry the owner\'s byline',
+      });
+    } else if (data.type !== 'Research Paper' && matchedPaper) {
+      authorshipWarnings.push({
+        slug: f.replace(/\.md$/, ''),
+        issue: `title matches the owner's publication "${matchedPaper.title}" but is typed ${JSON.stringify(data.type ?? 'Article')} — expected "Research Paper"`,
+      });
+    }
+  }
+
   const heavyImages = [];
   const imageRefs = new Set();
   if (typeof data.headerImage === 'string' && data.headerImage.startsWith('/images/')) imageRefs.add(data.headerImage);
@@ -177,6 +247,16 @@ if (schemaIssueCount) {
     : '\nNot blocking the build; run `node scripts/lint-content.mjs --strict` to enforce. (scripts/lint-content.mjs)\n');
 }
 
+if (authorshipWarnings.length) {
+  // Same tier as the schema rules: the daily automation pushes straight to
+  // main, so on the deploy path this warns without failing; --strict fails.
+  console.error(`${STRICT ? '✗' : '⚠'} Authorship-claim ${STRICT ? 'check FAILED (--strict)' : 'warnings'}:\n`);
+  for (const w of authorshipWarnings) console.error(`  ${w.slug}: ${w.issue}`);
+  console.error(STRICT
+    ? '\nFix the type/title mismatches above. (scripts/lint-content.mjs --strict)\n'
+    : '\nNot blocking the build; run `node scripts/lint-content.mjs --strict` to enforce. (scripts/lint-content.mjs)\n');
+}
+
 if (problems.length) {
   console.error('✗ Content lint FAILED:\n');
   for (const p of problems) {
@@ -192,9 +272,10 @@ if (problems.length) {
   console.error('\nRemove these before building. (scripts/lint-content.mjs)');
   process.exit(1);
 }
-if (STRICT && schemaIssueCount) process.exit(1);
-if (schemaIssueCount) {
-  console.log(`⚠ Content lint passed with ${schemaIssueCount} frontmatter schema warning(s) (${files.length} articles).`);
+const warningCount = schemaIssueCount + authorshipWarnings.length;
+if (STRICT && warningCount) process.exit(1);
+if (warningCount) {
+  console.log(`⚠ Content lint passed with ${schemaIssueCount} frontmatter schema and ${authorshipWarnings.length} authorship-claim warning(s) (${files.length} articles).`);
 } else {
-  console.log(`✓ Content lint passed (${files.length} articles; valid frontmatter schema, no placeholder CVEs, dead internal links, authorship claims, fabricated stats, HTML in metadata, or overweight images).`);
+  console.log(`✓ Content lint passed (${files.length} articles; valid frontmatter schema, no placeholder CVEs, dead internal links, authorship claims, mislabeled Research Papers, fabricated stats, HTML in metadata, or overweight images).`);
 }

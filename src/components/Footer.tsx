@@ -26,15 +26,14 @@ const socialLinks = [
       </svg>
     ),
   },
-  {
-    name: 'RSS',
-    href: '/rss.xml',
-    icon: (
-      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6.503 20.752a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3.503 11.752a9 9 0 019 9M3.503 2.752a18 18 0 0118 18" />
-      </svg>
-    ),
-  },
+];
+
+// Three feeds: everything indexable, hand-written work only, and the
+// News & Trends automation (see scripts/generate-rss.mjs).
+const rssFeeds = [
+  { name: 'All', href: '/rss.xml' },
+  { name: 'Original', href: '/writing/rss.xml' },
+  { name: 'News', href: '/news/rss.xml' },
 ];
 
 export default function Footer() {
@@ -64,6 +63,27 @@ export default function Footer() {
                 <span className="hidden sm:inline">{link.name}</span>
               </a>
             ))}
+
+            {/* RSS feeds */}
+            <span className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-label="RSS" role="img">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6.503 20.752a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3.503 11.752a9 9 0 019 9M3.503 2.752a18 18 0 0118 18" />
+              </svg>
+              {rssFeeds.map((feed, index) => (
+                <span key={feed.name} className="flex items-center gap-2">
+                  {index > 0 && <span aria-hidden="true" className="text-[var(--color-text-muted)]">/</span>}
+                  <a
+                    href={feed.href}
+                    className="hover:text-[var(--color-accent)] transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${feed.name} RSS feed`}
+                  >
+                    {feed.name}
+                  </a>
+                </span>
+              ))}
+            </span>
           </div>
         </div>
       </div>
