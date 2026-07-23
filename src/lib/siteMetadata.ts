@@ -33,11 +33,13 @@ export function buildOpenGraph(overrides: NonNullable<Metadata['openGraph']>) {
 // Next.js metadata merges `alternates` shallowly, so a page that sets only
 // `canonical` would drop the layout's RSS autodiscovery link. Every page that
 // sets alternates must build them through this helper to keep the RSS type.
-export function buildAlternates(canonical?: string) {
+export function buildAlternates(canonical?: string, feedPath: string = '/rss.xml') {
   return {
     ...(canonical ? { canonical } : {}),
     types: {
-      'application/rss+xml': `${siteMetadata.siteUrl}/rss.xml`,
+      // Sitewide default is the everything feed; section hubs (e.g. /news/)
+      // may advertise their own feed instead.
+      'application/rss+xml': `${siteMetadata.siteUrl}${feedPath}`,
     },
   };
 }

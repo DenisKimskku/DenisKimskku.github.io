@@ -262,6 +262,40 @@ export function getArticlesByTag(tagName: string): ArticleSummary[] {
   return getAllArticles().filter((article) => article.tags.includes(tagName));
 }
 
+// The /news/ hub and its feed are projections over the same corpus: articles
+// keep their /writing/<slug>/ URLs; this only selects the News & Trends
+// display category (daily digests + weekly trend reports).
+export function getNewsArticles(): ArticleSummary[] {
+  return getAllArticles().filter((article) => getCategory(article.type) === NEWS_AND_TRENDS);
+}
+
+export interface MonthGroup {
+  key: string; // 'YYYY-MM'
+  label: string; // 'July 2026'
+  articles: ArticleSummary[];
+}
+
+// Bucket a newest-first article list into contiguous month groups for dense
+// chronological listings (the /news/ hub). Input order is preserved.
+export function groupArticlesByMonth(articles: ArticleSummary[]): MonthGroup[] {
+  const groups: MonthGroup[] = [];
+  for (const article of articles) {
+    const key = article.date.slice(0, 7);
+    let group = groups[groups.length - 1];
+    if (!group || group.key !== key) {
+      const label = new Date(`${key}-01T00:00:00Z`).toLocaleDateString('en-US', {
+        month: 'long',
+        year: 'numeric',
+        timeZone: 'UTC',
+      });
+      group = { key, label, articles: [] };
+      groups.push(group);
+    }
+    group.articles.push(article);
+  }
+  return groups;
+}
+
 // Prev/next navigation is scoped to the current article's reader-facing
 // category. Strict chronology across the whole corpus would sandwich
 // hand-written pieces between daily digests, so instead each category forms

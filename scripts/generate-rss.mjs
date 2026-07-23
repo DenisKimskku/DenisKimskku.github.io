@@ -103,8 +103,11 @@ ${itemXml}
 
 fs.writeFileSync(path.join(outDir, 'rss.xml'), rssXml, 'utf8');
 
-// Generate /news RSS feed (News Digest + Paper Review only)
-const newsTypes = ['News Digest', 'Paper Review'];
+// Generate /news RSS feed: the News & Trends category (daily digests +
+// weekly trend reports). Paper Reviews are noindex and deliberately NOT in
+// this feed; the pre-2026-07 composition ['News Digest', 'Paper Review']
+// was a bug that also dropped the weeklies.
+const newsTypes = ['News Digest', 'Trend Report'];
 const newsArticles = articles.filter((a) => newsTypes.includes(a.type));
 
 if (newsArticles.length > 0) {

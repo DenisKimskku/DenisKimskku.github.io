@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getAllArticles, getTagEntries } from '@/lib/articles';
+import { getAllArticles, getNewsArticles, getTagEntries } from '@/lib/articles';
 import { siteMetadata } from '@/lib/siteMetadata';
 
 export const dynamic = 'force-static';
@@ -46,6 +46,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ...(newestArticleDate ? { lastModified: newestArticleDate } : {}),
       changeFrequency: 'weekly',
       priority: 0.7,
+    },
+    // The /news/ hub links digests at their /writing/<slug>/ URLs; it changes
+    // every day the automation publishes.
+    {
+      url: `${baseUrl}/news/`,
+      ...(getNewsArticles()[0]?.date ? { lastModified: new Date(getNewsArticles()[0].date) } : {}),
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/calendar-plus-plus/`,

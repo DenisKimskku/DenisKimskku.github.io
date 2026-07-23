@@ -10,6 +10,7 @@ const navItems = [
   { href: '/papers/', label: 'Papers' },
   { href: '/code/', label: 'Code' },
   { href: '/writing/', label: 'Writing' },
+  { href: '/news/', label: 'News' },
   { href: '/resume/', label: 'Resume' },
 ];
 
