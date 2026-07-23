@@ -29,3 +29,11 @@ jobs:
 
       - name: Warm sitemap pages and critical assets
         run: CACHE_WARM_PASSES=2 CACHE_WARM_PASS_DELAY_MS=30000 CACHE_WARM_RETRIES=2 npm run warm:cache
+
+      # Local warming only fills US colos (runner egress); Globalping probes
+      # fill each region's own colo. Best-effort: the script always exits 0.
+      - name: Warm remote regions via Globalping
+        continue-on-error: true
+        env:
+          GLOBALPING_TOKEN: ${{ secrets.GLOBALPING_TOKEN }}
+        run: npm run warm:global

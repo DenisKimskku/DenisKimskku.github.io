@@ -129,6 +129,15 @@ jobs:
         continue-on-error: true
         run: CACHE_WARM_PASSES=2 CACHE_WARM_PASS_DELAY_MS=45000 CACHE_WARM_RETRIES=2 npm run warm:cache
 
+      # The purge above emptied every colo worldwide; local warming refills
+      # only US colos, so re-seed the other regions via Globalping probes.
+      - name: Warm remote regions via Globalping
+        timeout-minutes: 5
+        continue-on-error: true
+        env:
+          GLOBALPING_TOKEN: ${{ secrets.GLOBALPING_TOKEN }}
+        run: npm run warm:global
+
       # Mirror of the build job's failure notification: a deploy-job failure
       # (deploy-pages error, purge failure, the 45-min job timeout) would
       # otherwise be a silent red run.

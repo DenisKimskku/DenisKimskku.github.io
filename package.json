@@ -12,6 +12,7 @@
     "export": "npm run build",
     "generate:index": "node scripts/generate-articles-index.mjs",
     "warm:cache": "node scripts/warm-cache.mjs",
+    "warm:global": "node scripts/warm-global.mjs",
     "purge:cache": "node scripts/purge-cloudflare-cache.mjs",
     "lint:content": "node scripts/lint-content.mjs"
   },
