@@ -5,7 +5,7 @@ import Link from 'next/link';
 import ArticleTypeLabel from '@/components/ArticleTypeLabel';
 import BookmarkButton from '@/components/BookmarkButton';
 import { getBookmarks } from '@/lib/bookmarks';
-import { getCategory, getCategoryLabel, NEWS_AND_TRENDS } from '@/lib/articleTypes';
+import { getCategory, getCategoryLabel } from '@/lib/articleTypes';
 
 interface Article {
   slug: string;
@@ -90,10 +90,6 @@ export default function WritingHub({ articles }: WritingHubProps) {
   const debouncedSearch = useDebounce(searchTerm, 200);
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  // Human-first default: with no category selected, auto-generated News &
-  // Trends digests are hidden so original writing isn't buried under dated
-  // digests. "All" (or the News & Trends chip) is one click away.
-  const [showAllCategories, setShowAllCategories] = useState(false);
   const [showBookmarked, setShowBookmarked] = useState(false);
   const [bookmarkedSlugs, setBookmarkedSlugs] = useState<Set<string>>(() => new Set(getBookmarks()));
   const [, setBookmarkVersion] = useState(0);
@@ -119,9 +115,8 @@ export default function WritingHub({ articles }: WritingHubProps) {
     return Array.from(tags).sort((a, b) => a.localeCompare(b));
   }, [articles]);
 
-  // Filter and search articles. Also reports how many articles the
-  // human-first default view hid, so the UI can offer "show all".
-  const { filteredArticles, hiddenNewsCount } = useMemo(() => {
+  // Filter and search articles
+  const filteredArticles = useMemo(() => {
     let filtered = articles;
 
     // Filter by bookmarks
@@ -166,18 +161,13 @@ export default function WritingHub({ articles }: WritingHubProps) {
       });
     }
 
-    // Filter by category (last, so we can count what the default view hides)
-    let hiddenNewsCount = 0;
+    // Filter by category
     if (activeCategory) {
       filtered = filtered.filter(article => getCategory(article.type) === activeCategory);
-    } else if (!showAllCategories) {
-      const withoutNews = filtered.filter(article => getCategory(article.type) !== NEWS_AND_TRENDS);
-      hiddenNewsCount = filtered.length - withoutNews.length;
-      filtered = withoutNews;
     }
 
-    return { filteredArticles: filtered, hiddenNewsCount };
-  }, [articles, debouncedSearch, activeTags, activeCategory, showAllCategories, showBookmarked, bookmarkedSlugs]);
+    return filtered;
+  }, [articles, debouncedSearch, activeTags, activeCategory, showBookmarked, bookmarkedSlugs]);
 
   const toggleTag = (tag: string) => {
     const newTags = new Set(activeTags);
@@ -192,7 +182,6 @@ export default function WritingHub({ articles }: WritingHubProps) {
   const clearAllFilters = () => {
     setActiveTags(new Set());
     setActiveCategory(null);
-    setShowAllCategories(false);
     setSearchTerm('');
     setShowBookmarked(false);
   };
@@ -246,28 +235,10 @@ export default function WritingHub({ articles }: WritingHubProps) {
           <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
-              onClick={() => {
-                setActiveCategory(null);
-                setShowAllCategories(false);
-              }}
-              aria-pressed={!activeCategory && !showAllCategories}
+              onClick={() => setActiveCategory(null)}
+              aria-pressed={!activeCategory}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                !activeCategory && !showAllCategories
-                  ? 'bg-[var(--color-text)] text-[var(--color-bg)]'
-                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
-              }`}
-            >
-              Featured
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setActiveCategory(null);
-                setShowAllCategories(true);
-              }}
-              aria-pressed={!activeCategory && showAllCategories}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                !activeCategory && showAllCategories
+                !activeCategory
                   ? 'bg-[var(--color-text)] text-[var(--color-bg)]'
                   : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
               }`}
@@ -299,7 +270,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
               <span className="text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider">
                 Filter by topic
               </span>
-              {(activeTags.size > 0 || activeCategory || showAllCategories || showBookmarked) && (
+              {(activeTags.size > 0 || activeCategory || showBookmarked) && (
                 <button
                   type="button"
                   onClick={clearAllFilters}
@@ -348,20 +319,9 @@ export default function WritingHub({ articles }: WritingHubProps) {
       </div>
 
       {/* Results Count */}
-      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-6">
-        <p className="text-xs text-[var(--color-text-muted)] uppercase tracking-wider">
-          {filteredArticles.length} {filteredArticles.length === 1 ? 'article' : 'articles'}
-        </p>
-        {hiddenNewsCount > 0 && (
-          <button
-            type="button"
-            onClick={() => setShowAllCategories(true)}
-            className="text-xs text-[var(--color-accent)] hover:underline"
-          >
-            Show all incl. {hiddenNewsCount} news &amp; trends
-          </button>
-        )}
-      </div>
+      <p className="text-xs text-[var(--color-text-muted)] mb-6 uppercase tracking-wider">
+        {filteredArticles.length} {filteredArticles.length === 1 ? 'article' : 'articles'}
+      </p>
 
       {/* Screen-reader announcement of filter/search results (WCAG 4.1.3).
           filteredArticles already trails typing via the debounced search

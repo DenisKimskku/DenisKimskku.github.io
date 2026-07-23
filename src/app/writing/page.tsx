@@ -3,20 +3,21 @@ import Link from 'next/link';
 import WritingHub from '@/components/WritingHub';
 import StructuredData from '@/components/StructuredData';
 import { getAllArticles, getRecentHandwrittenArticles, getTagEntries } from '@/lib/articles';
-import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
+import { getCategory, NEWS_AND_TRENDS } from '@/lib/articleTypes';
+import { siteMetadata, buildAlternates, buildOpenGraph } from '@/lib/siteMetadata';
 
-const description = 'Research articles, AI security news, and technical writings by Minseok (Denis) Kim.';
+const description = 'Paper walkthroughs, research writeups, and technical writing by Minseok (Denis) Kim.';
 export const metadata: Metadata = {
   title: 'Writing',
   description,
   alternates: buildAlternates('/writing/'),
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: `Writing | ${siteMetadata.authorName}`,
     description,
     url: `${siteMetadata.siteUrl}/writing/`,
     type: 'website',
     images: [siteMetadata.ogImage],
-  },
+  }),
 };
 
 interface Article {
@@ -30,10 +31,13 @@ interface Article {
 }
 
 export default async function Writing() {
-  // Paper reviews duplicate each day's digest and are de-indexed; keep the main Writing
-  // feed focused on digests, trend reports, and human-written work. The complete set
-  // (including reviews) stays at /writing/archive.
-  const articles = (getAllArticles() as Article[]).filter((a) => a.type !== 'Paper Review');
+  // Writing is the portfolio surface: hand-written work only. Paper reviews
+  // are de-indexed and live in the archive; daily digests and weekly trend
+  // reports have their own hub at /news/ (articles keep /writing/<slug>/
+  // URLs — the hubs are projections, not namespaces).
+  const articles = (getAllArticles() as Article[]).filter(
+    (a) => a.type !== 'Paper Review' && getCategory(a.type) !== NEWS_AND_TRENDS,
+  );
   // Hand-written pre-automation "Paper Review" articles live only in the
   // archive (the hub below filters that type out), so exclude them here too —
   // a featured card must never point at an article invisible in the feed
@@ -83,7 +87,14 @@ export default async function Writing() {
           Writing
         </h1>
         <p className="text-[var(--color-text-secondary)]">
-          AI security news and trends, lab-meeting paper walkthroughs, and research writeups.
+          Lab-meeting paper walkthroughs, research writeups, and tutorials.
+        </p>
+        <p className="mt-2 text-sm text-[var(--color-text-muted)]">
+          Looking for the daily digests and weekly trend reports? They live in{' '}
+          <Link href="/news/" className="text-[var(--color-accent)] hover:underline">
+            News
+          </Link>
+          .
         </p>
       </header>
 
