@@ -35,8 +35,15 @@ jobs:
           '
 
       # Repo-fresh but site-stale must not pass: the newest article being in
-      # the index proves nothing about the live site, so hit its real URL.
-      - name: Check newest article is live on deniskim1.com
+      # the index proves nothing about the deployed site, so verify it is
+      # actually served. Cloudflare bot rules 403 ALL GitHub Actions traffic
+      # to the zone (keep-warm gets 403 on every request too, browser UA or
+      # not), so the edge URL cannot be probed from CI. Probe the GitHub
+      # Pages origin instead by pinning the custom domain to the Pages IPs.
+      # TLS verify is off (-k) because Pages presents its github.io cert on
+      # pinned connections; authenticity comes from requiring the fetched
+      # HTML to contain the article slug, not from the probe's cert chain.
+      - name: Check newest article is served by the GitHub Pages origin
         id: liveness
         run: |
           slug=$(node -e '
@@ -50,24 +57,27 @@ jobs:
           ')
           url="https://deniskim1.com/writing/${slug}/"
           echo "url=$url" >> "$GITHUB_OUTPUT"
-          echo "Checking live URL: $url"
-          # Cloudflare bot protection 403s bare curl from Actions datacenter IPs,
-          # so send the same browser UA scripts/warm-cache.mjs uses, and retry to
-          # ride out transient edge blocks.
-          ua='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36'
+          echo "Checking origin for: $url"
+          ok=""
           status=000
-          for attempt in 1 2 3; do
-            status=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 -A "$ua" \
-              "${url}?cb=${GITHUB_RUN_ID}-${attempt}" || echo 000)
-            echo "Attempt $attempt: HTTP $status"
-            if [ "$status" = "200" ]; then break; fi
-            if [ "$attempt" -lt 3 ]; then sleep 15; fi
+          for ip in 185.199.108.153 185.199.109.153 185.199.110.153 185.199.111.153; do
+            status=$(curl -sSk --resolve "deniskim1.com:443:${ip}" --max-time 30 \
+              -o /tmp/article.html -w '%{http_code}' "${url}?cb=${GITHUB_RUN_ID}" || echo 000)
+            echo "Origin ${ip}: HTTP ${status}"
+            if [ "$status" = "200" ] && grep -q "$slug" /tmp/article.html; then
+              ok=1
+              break
+            fi
           done
           echo "status=$status" >> "$GITHUB_OUTPUT"
-          if [ "$status" != "200" ]; then
-            echo "::error::Newest article ($slug) is in the repo but not live (HTTP $status)."
+          if [ -z "$ok" ]; then
+            echo "::error::Newest article ($slug) is in the repo but the origin is not serving it (last HTTP $status)."
             exit 1
           fi
+          # Edge probe is informational only: Cloudflare blocks CI IPs, so a
+          # 403 here is expected noise, never an outage signal.
+          edge=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 "${url}?cb=${GITHUB_RUN_ID}-edge" || echo 000)
+          echo "Edge (through Cloudflare) says HTTP ${edge} — informational only."
 
       - name: File issue on watchdog failure
         if: failure()
@@ -80,8 +90,8 @@ jobs:
             title="Content automation stale: no new article in 36h"
             body="The content watchdog found no article newer than 36h in src/data/articles-index.json."
           else
-            title="Watchdog liveness check failed: newest article URL not returning 200"
-            body="${{ steps.liveness.outputs.url }} returned HTTP ${{ steps.liveness.outputs.status }} from the Actions runner (3 attempts, browser UA). The article is in the repo; if the URL loads in a normal browser, suspect Cloudflare bot rules blocking the runner rather than a deploy failure."
+            title="Watchdog liveness check failed: origin not serving newest article"
+            body="The GitHub Pages origin is not serving ${{ steps.liveness.outputs.url }} (HTTP ${{ steps.liveness.outputs.status }} across all four Pages IPs). The article is in the repo, so the deploy pipeline most likely failed to publish it — check the latest Deploy run."
           fi
           body="$body Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           # One open issue per failure mode is enough; a stalled pipeline fails every day.

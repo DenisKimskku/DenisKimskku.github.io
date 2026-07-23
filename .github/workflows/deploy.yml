@@ -108,8 +108,12 @@ jobs:
         run: |
           # Poll the build-stamped marker until the origin serves THIS commit;
           # any date-based signal matches the previous same-day deploy too.
+          # Pin to a Pages IP (-k: Pages serves its github.io cert on pinned
+          # connections): Cloudflare bot rules 403 Actions traffic to the
+          # zone, so polling through the edge never matches and this loop
+          # silently degraded into a fixed 120s sleep.
           for i in $(seq 1 24); do
-            marker=$(curl -fsS --max-time 10 "https://deniskim1.com/deploy-marker.txt?cb=${GITHUB_SHA}-${i}" || true)
+            marker=$(curl -fsSk --resolve deniskim1.com:443:185.199.108.153 --max-time 10 "https://deniskim1.com/deploy-marker.txt?cb=${GITHUB_SHA}-${i}" || true)
             if [ "$(printf '%s' "$marker" | tr -d '[:space:]')" = "${GITHUB_SHA}" ]; then
               echo "Origin is serving this deploy after $((i * 5))s."
               exit 0
