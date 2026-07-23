@@ -22,6 +22,46 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # HEAD~ is needed by the slug-collision tripwire below.
+          fetch-depth: 2
+
+      # Tripwire: the external automation has overwritten existing articles on
+      # slug collision (auto-commits 4c824c7 and bdf8141 MODIFIED files under
+      # src/content/articles/). Detect a modified article inside an
+      # auto-generated commit and alert + file an issue — but never fail the
+      # build: an overwrite is a content problem, not a deploy problem.
+      - name: Alert if automation overwrote an existing article
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          printf '%s' "$HEAD_MSG" | grep -qE 'Add .* auto-generated' || exit 0
+          # fetch-depth: 2 normally provides HEAD~, but not for the repo's
+          # first commit or a dispatch on an odd ref — skip quietly then.
+          if ! git rev-parse --verify --quiet 'HEAD~' >/dev/null; then
+            echo "HEAD~ unavailable in this checkout; skipping tripwire."
+            exit 0
+          fi
+          modified=$(git diff --diff-filter=M --name-only HEAD~ HEAD -- src/content/articles/ || true)
+          [ -n "$modified" ] || exit 0
+          echo "::warning::Auto-generated commit modified existing article(s):"
+          echo "$modified"
+          curl -s -H 'Title: AUTO-CONTENT OVERWROTE EXISTING ARTICLE' -H 'Priority: high' \
+            --data-binary "$(printf 'Auto-generated commit %s modified existing article(s):\n%s' "$GITHUB_SHA" "$modified")" \
+            ntfy.sh/deniskim-kb || true
+          # One open issue is enough; don't file a new one per collision.
+          existing=$(gh issue list --repo "${{ github.repository }}" --state open \
+            --search "Automation overwrote existing article in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
+          if [ -z "$existing" ]; then
+            gh issue create --repo "${{ github.repository }}" \
+              --title "Automation overwrote existing article (slug collision)" \
+              --body "$(printf 'Auto-generated commit %s modified existing article(s):\n\n%s\n\nRun: %s/%s/actions/runs/%s' "$GITHUB_SHA" "$modified" "${{ github.server_url }}" "${{ github.repository }}" "${{ github.run_id }}")" \
+              || true # never fail the build over a notification failure
+          else
+            echo "Open slug-collision issue #$existing already exists; skipping."
+          fi
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -44,6 +84,18 @@ jobs:
       # never block a site deploy (the repair path handles it in-run).
       - name: Generate articles index
         run: npm run generate:index
+
+      # The generator quarantines unparseable articles instead of throwing
+      # (content must never block a deploy) and lists them in
+      # quarantined-articles.txt — surface that loudly, then continue.
+      - name: Ntfy alert on quarantined articles
+        continue-on-error: true
+        run: |
+          if [ -f quarantined-articles.txt ]; then
+            curl -s -H 'Title: ARTICLE QUARANTINED — deploy continued' -H 'Priority: high' \
+              --data-binary "$(printf 'Deploy continued without unparseable article(s):\n%s' "$(cat quarantined-articles.txt)")" \
+              ntfy.sh/deniskim-kb || true
+          fi
 
       - name: Build with Next.js
         run: npm run build

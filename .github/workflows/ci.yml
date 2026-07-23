@@ -39,5 +39,10 @@ jobs:
       - name: Generate articles index
         run: npm run generate:index -- --strict
 
+      # Schema violations (bad date/type/title, duplicate slugs) fail CI here
+      # but only warn in the deploy path — content never blocks a deploy.
+      - name: Lint content frontmatter (strict)
+        run: node scripts/lint-content.mjs --strict
+
       - name: Build
         run: npm run build

@@ -21,6 +21,7 @@ const indexPath = path.join(root, 'src', 'data', 'articles-index.json');
 // block a site deploy.
 const STRICT = process.argv.includes('--strict') || process.env.STRICT_INDEX === '1';
 const repairedFiles = [];
+const quarantinedFiles = [];
 
 function calculateReadingTime(content) {
   const words = content.split(/\s+/).filter(Boolean).length;
@@ -67,7 +68,21 @@ const articles = files
   .map((file) => {
     const slug = file.replace(/\.md$/, '');
     const raw = fs.readFileSync(path.join(articlesDir, file), 'utf8');
-    const { data, content } = parseArticle(file, raw).parsed;
+
+    // In lenient mode an unparseable, unrepairable article is quarantined —
+    // dropped from the index so a broken push from the automation can never
+    // block a site deploy (the deploy workflow alerts on the quarantine
+    // file). Strict CI still fails hard so the file actually gets fixed.
+    let parsed;
+    try {
+      parsed = parseArticle(file, raw).parsed;
+    } catch (err) {
+      if (STRICT) throw err;
+      console.warn(`⚠ Quarantined ${file}: ${err.message}`);
+      quarantinedFiles.push(file);
+      return null;
+    }
+    const { data, content } = parsed;
 
     if (!data.title || !data.date) return null;
 
@@ -111,6 +126,20 @@ if (STRICT && repairedFiles.length > 0) {
     `the repaired files instead of relying on CI to rewrite them.`
   );
   process.exit(1);
+}
+
+// The quarantine file is the deploy workflow's signal to fire an ntfy alert;
+// only write it when something was actually quarantined, and clear any stale
+// copy left behind by a previous local run.
+const quarantinePath = path.join(root, 'quarantined-articles.txt');
+if (quarantinedFiles.length > 0) {
+  console.warn(
+    `::warning::Quarantined ${quarantinedFiles.length} unparseable article(s): ` +
+    `${quarantinedFiles.join(', ')}`
+  );
+  fs.writeFileSync(quarantinePath, quarantinedFiles.join('\n') + '\n', 'utf8');
+} else if (fs.existsSync(quarantinePath)) {
+  fs.rmSync(quarantinePath);
 }
 
 fs.writeFileSync(indexPath, JSON.stringify(articles, null, 2) + '\n', 'utf8');

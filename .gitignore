@@ -69,3 +69,7 @@ issue-body.md
 # Finder-duplicate debris
 * 2
 * 2.*
+
+# Written by generate-articles-index.mjs when an article is quarantined in
+# lenient mode; consumed by deploy.yml's alert step, never committed.
+quarantined-articles.txt
