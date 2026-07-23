@@ -31,11 +31,14 @@
     { "tag": "v1", "new_sqlite_classes": ["RateLimiter"] }
   ],
 
-  // Workers Analytics Engine dataset for usage telemetry (available on the
-  // free plan). The worker no-ops gracefully if this binding is absent.
-  "analytics_engine_datasets": [
-    { "binding": "ASK_ANALYTICS", "dataset": "deniskim1_ask" }
-  ],
+  // Workers Analytics Engine dataset for usage telemetry (free plan, but the
+  // account must opt in ONCE at dash.cloudflare.com -> Workers -> Analytics
+  // Engine; deploying the binding before that fails with API error 10089).
+  // The worker code no-ops when the binding is absent, so this stays
+  // commented out until the account opt-in is done — then uncomment and push.
+  // "analytics_engine_datasets": [
+  //   { "binding": "ASK_ANALYTICS", "dataset": "deniskim1_ask" }
+  // ],
 
   // Non-secret configuration. NVIDIA_API_KEY is a SECRET and must be set
   // with `wrangler secret put NVIDIA_API_KEY` (or the CI workflow) — never
