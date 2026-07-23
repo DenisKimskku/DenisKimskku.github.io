@@ -20,6 +20,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Check newest article age
+        id: freshness
         run: |
           node -e '
             const idx = require("./src/data/articles-index.json");
@@ -36,6 +37,7 @@ jobs:
       # Repo-fresh but site-stale must not pass: the newest article being in
       # the index proves nothing about the live site, so hit its real URL.
       - name: Check newest article is live on deniskim1.com
+        id: liveness
         run: |
           slug=$(node -e '
             const idx = require("./src/data/articles-index.json");
@@ -47,29 +49,51 @@ jobs:
             console.log(newest.slug);
           ')
           url="https://deniskim1.com/writing/${slug}/"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
           echo "Checking live URL: $url"
-          status=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 "${url}?cb=${GITHUB_RUN_ID}")
-          echo "HTTP $status"
+          # Cloudflare bot protection 403s bare curl from Actions datacenter IPs,
+          # so send the same browser UA scripts/warm-cache.mjs uses, and retry to
+          # ride out transient edge blocks.
+          ua='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36'
+          status=000
+          for attempt in 1 2 3; do
+            status=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 -A "$ua" \
+              "${url}?cb=${GITHUB_RUN_ID}-${attempt}" || echo 000)
+            echo "Attempt $attempt: HTTP $status"
+            if [ "$status" = "200" ]; then break; fi
+            if [ "$attempt" -lt 3 ]; then sleep 15; fi
+          done
+          echo "status=$status" >> "$GITHUB_OUTPUT"
           if [ "$status" != "200" ]; then
             echo "::error::Newest article ($slug) is in the repo but not live (HTTP $status)."
             exit 1
           fi
 
-      - name: File issue on stale content
+      - name: File issue on watchdog failure
         if: failure()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # One open issue is enough; a stalled pipeline fails every day.
+          # Title must name the check that failed — a liveness 403 filed as
+          # "content stale" sends triage down the wrong path.
+          if [ "${{ steps.freshness.outcome }}" = "failure" ]; then
+            title="Content automation stale: no new article in 36h"
+            body="The content watchdog found no article newer than 36h in src/data/articles-index.json."
+          else
+            title="Watchdog liveness check failed: newest article URL not returning 200"
+            body="${{ steps.liveness.outputs.url }} returned HTTP ${{ steps.liveness.outputs.status }} from the Actions runner (3 attempts, browser UA). The article is in the repo; if the URL loads in a normal browser, suspect Cloudflare bot rules blocking the runner rather than a deploy failure."
+          fi
+          body="$body Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          # One open issue per failure mode is enough; a stalled pipeline fails every day.
           existing=$(gh issue list --repo "${{ github.repository }}" --state open \
-            --search "Content automation stale in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
+            --search "\"$title\" in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
           if [ -z "$existing" ]; then
             gh issue create --repo "${{ github.repository }}" \
-              --title "Content automation stale: no new article in 36h" \
-              --body "The content watchdog found no article newer than 36h in src/data/articles-index.json. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+              --title "$title" \
+              --body "$body" \
               || true # never mask the check failure with a notification failure
           else
-            echo "Open staleness issue #$existing already exists; skipping."
+            echo "Open issue #$existing already exists; skipping."
           fi
 
       - name: Ntfy alert on watchdog failure
