@@ -1,7 +1,7 @@
 ---
 title: "Safety Alignment Should Be Made More Than Just a Few Tokens Deep"
 date: "2026-06-08"
-type: "Research Paper"
+type: "Paper Walkthrough"
 description: "An analysis of 'shallow safety alignment'—the finding that current LLM alignment concentrates almost entirely on the first few output tokens—and two lightweight interventions (deep safety-recovery augmentation and a token-aware constrained fine-tuning objective) that push safety deeper into the response."
 tags: ["LLM Security", "Safety Alignment", "AI Alignment", "Jailbreaking", "Adversarial Attacks", "Red Teaming"]
 readingTime: 11
