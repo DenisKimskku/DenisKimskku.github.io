@@ -9,7 +9,7 @@ const REQUEST_TIMEOUT_MS = 30000;
 const MAX_RETRIES = Math.max(0, Number(process.env.CACHE_WARM_RETRIES || 2));
 const PASS_COUNT = Math.max(1, Number(process.env.CACHE_WARM_PASSES || 1));
 const PASS_DELAY_MS = Math.max(0, Number(process.env.CACHE_WARM_PASS_DELAY_MS || 30000));
-const SOURCE_MODE = getArgValue('--source') || process.env.CACHE_WARM_SOURCE || 'local';
+const SOURCE_MODE = getArgValue('--source') || process.env.CACHE_WARM_SOURCE || 'merged';
 const BROWSER_USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36';
 const mode = getArgValue('--mode') || 'warm';
 const isWarmMode = mode === 'warm';
@@ -300,45 +300,17 @@ function loadArticles() {
   return JSON.parse(fileContents);
 }
 
-function slugifyTag(tag) {
-  return tag
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '');
-}
-
-function getTagSlugs(articles) {
-  const tags = new Set();
-
-  for (const article of articles) {
-    for (const tag of article.tags || []) {
-      tags.add(tag);
-    }
-  }
-
-  const sortedTags = Array.from(tags).sort((a, b) => a.localeCompare(b));
-  const usedSlugs = new Set();
-
-  return sortedTags.map((tag) => {
-    const base = slugifyTag(tag) || 'tag';
-    let slug = base;
-    let suffix = 2;
-
-    while (usedSlugs.has(slug)) {
-      slug = `${base}-${suffix}`;
-      suffix += 1;
-    }
-
-    usedSlugs.add(slug);
-    return slug;
-  });
-}
-
+// Static routes + article slugs only — deliberately NO tag URLs. The app maps
+// raw article tags onto a small curated set of tag hubs (getTagEntries in
+// src/lib/articles.ts), so deriving tag slugs from articles-index.json here
+// produced 188 phantom 404 URLs while missing real hubs whose canonical names
+// never appear verbatim in the index. Tag hubs come from the sitemap instead
+// (see loadMergedPageUrls) — the app's own route manifest cannot drift.
 function loadLocalPageUrls() {
   const staticRoutes = [
     '/',
     '/writing/',
+    '/writing/archive/',
     '/papers/',
     '/code/',
     '/resume/',
@@ -348,17 +320,12 @@ function loadLocalPageUrls() {
   ];
 
   const articles = loadArticles();
-  const tagSlugs = getTagSlugs(articles);
   const pageUrls = new Set(staticRoutes.map((route) => toSiteUrl(route)));
 
   for (const article of articles) {
     if (article.slug) {
       pageUrls.add(toSiteUrl(`/writing/${article.slug}/`));
     }
-  }
-
-  for (const tagSlug of tagSlugs) {
-    pageUrls.add(toSiteUrl(`/writing/tag/${tagSlug}/`));
   }
 
   return Array.from(pageUrls);
@@ -446,15 +413,43 @@ async function loadLivePageUrls() {
   return { sitemapUrl, pageUrls };
 }
 
+// Default source: sitemap ∪ local article index. The sitemap contributes the
+// routes only the app knows (the curated tag hubs); the index contributes the
+// noindex Paper Review articles the sitemap deliberately omits. If the sitemap
+// fetch fails, degrade to index-only — tag hubs just go unwarmed that run.
+// For purge-targets this may read the pre-purge cached sitemap; both races are
+// benign (a brand-new page has nothing cached to purge, a removed page's purge
+// is a harmless no-op) and sitemap.xml itself is always in the purge list.
+async function loadMergedPageUrls() {
+  const pageUrls = new Set(loadLocalPageUrls());
+  let sitemapUrl = 'local article index only (sitemap fetch failed)';
+
+  try {
+    const live = await loadLivePageUrls();
+    for (const url of live.pageUrls) {
+      pageUrls.add(url);
+    }
+    sitemapUrl = `${live.sitemapUrl} + local article index`;
+  } catch (error) {
+    warn(`[merged] sitemap fetch failed: ${error.message} — tag hubs will not be covered this run.`);
+  }
+
+  return { sitemapUrl, pageUrls: Array.from(pageUrls) };
+}
+
 async function loadPageUrls() {
   if (SOURCE_MODE === 'live') {
     return loadLivePageUrls();
   }
 
-  return {
-    sitemapUrl: 'local route inventory',
-    pageUrls: loadLocalPageUrls(),
-  };
+  if (SOURCE_MODE === 'local') {
+    return {
+      sitemapUrl: 'local route inventory',
+      pageUrls: loadLocalPageUrls(),
+    };
+  }
+
+  return loadMergedPageUrls();
 }
 
 async function warmOnce(pageUrls, { collectLiveAssets = false, warmPdfs = false } = {}) {
