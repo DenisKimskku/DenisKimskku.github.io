@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 export const siteMetadata = {
   siteUrl: 'https://deniskim1.com',
   siteName: 'Minseok Kim Portfolio',
@@ -16,6 +18,17 @@ export const siteMetadata = {
     'https://scholar.google.com/citations?user=81uf6x0AAAAJ',
   ],
 } as const;
+
+// Next.js metadata merges `openGraph` shallowly too: any page that defines its
+// own openGraph drops the layout's og:site_name and og:locale. Every page that
+// sets openGraph must build it through this helper so both always survive.
+export function buildOpenGraph(overrides: NonNullable<Metadata['openGraph']>) {
+  return {
+    siteName: siteMetadata.siteName,
+    locale: 'en_US',
+    ...overrides,
+  };
+}
 
 // Next.js metadata merges `alternates` shallowly, so a page that sets only
 // `canonical` would drop the layout's RSS autodiscovery link. Every page that

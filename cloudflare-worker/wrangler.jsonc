@@ -31,6 +31,12 @@
     { "tag": "v1", "new_sqlite_classes": ["RateLimiter"] }
   ],
 
+  // Workers Analytics Engine dataset for usage telemetry (available on the
+  // free plan). The worker no-ops gracefully if this binding is absent.
+  "analytics_engine_datasets": [
+    { "binding": "ASK_ANALYTICS", "dataset": "deniskim1_ask" }
+  ],
+
   // Non-secret configuration. NVIDIA_API_KEY is a SECRET and must be set
   // with `wrangler secret put NVIDIA_API_KEY` (or the CI workflow) — never
   // put it here or in any committed file.

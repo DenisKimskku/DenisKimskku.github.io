@@ -2,8 +2,33 @@
 
 import { useEffect, useState, useCallback } from 'react';
 
+const SHORTCUTS_DISABLED_KEY = 'shortcuts-disabled';
+
 export default function KeyboardShortcuts() {
   const [showHelp, setShowHelp] = useState(false);
+  // WCAG 2.1.4: single-key shortcuts must be user-disableable. Persisted in
+  // localStorage; read in an effect so SSR/hydration stays consistent.
+  const [shortcutsDisabled, setShortcutsDisabled] = useState(false);
+
+  useEffect(() => {
+    try {
+      setShortcutsDisabled(localStorage.getItem(SHORTCUTS_DISABLED_KEY) === 'true');
+    } catch {
+      // localStorage unavailable — leave shortcuts enabled
+    }
+  }, []);
+
+  const toggleShortcutsDisabled = useCallback(() => {
+    setShortcutsDisabled((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem(SHORTCUTS_DISABLED_KEY, String(next));
+      } catch {
+        // localStorage unavailable — state still applies for this session
+      }
+      return next;
+    });
+  }, []);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     const target = e.target as HTMLElement;
@@ -22,11 +47,15 @@ export default function KeyboardShortcuts() {
 
     if (isTyping) return;
 
+    // '?' stays active even when shortcuts are disabled, so the help dialog
+    // (and the re-enable toggle inside it) remains reachable.
     if (e.key === '?') {
       e.preventDefault();
       setShowHelp((prev) => !prev);
       return;
     }
+
+    if (shortcutsDisabled) return;
 
     if (e.key === '/') {
       const searchInput = document.getElementById('writing-search');
@@ -56,7 +85,7 @@ export default function KeyboardShortcuts() {
       links[nextIndex].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
       return;
     }
-  }, [showHelp]);
+  }, [showHelp, shortcutsDisabled]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
@@ -114,6 +143,20 @@ export default function KeyboardShortcuts() {
                   </kbd>
                 </div>
               ))}
+            </div>
+            <div className="mt-4 pt-4 border-t border-[var(--color-border)]">
+              <label className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)] cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={shortcutsDisabled}
+                  onChange={toggleShortcutsDisabled}
+                  className="accent-[var(--color-accent)]"
+                />
+                Disable keyboard shortcuts
+              </label>
+              <p className="mt-1.5 text-xs text-[var(--color-text-muted)]">
+                ? and Esc stay active so you can re-enable them here.
+              </p>
             </div>
           </div>
         </div>

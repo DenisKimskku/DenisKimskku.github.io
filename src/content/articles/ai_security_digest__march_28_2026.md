@@ -1,5 +1,5 @@
 ---
-title: "AI Security Digest — March 28, 2026"
+title: "AI Security Digest — March 28, 2026: OpenAI Bug Bounty & Adversarial Suffix Attacks"
 date: "2026-03-28"
 type: "News Digest"
 description: "The single dominant theme this week is the institutional transition of AI safety from academic red-teaming to formalized, monetized application security frameworks at the…"
@@ -13,7 +13,7 @@ headerImage: "/images/news/ai_security_digest__march_28_2026.jpg"
 
 ![AI Security Digest — March 28, 2026](/images/news/ai_security_digest__march_28_2026.jpg)
 
-# AI Security Digest — March 28, 2026
+# AI Security Digest — March 28, 2026: OpenAI Bug Bounty & Adversarial Suffix Attacks
 
 ## Executive Summary
 

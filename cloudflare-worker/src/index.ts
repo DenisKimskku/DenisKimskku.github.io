@@ -51,8 +51,24 @@ interface DurableNamespace {
   get(id: unknown): DurableStub;
 }
 
+// Structural subset of AnalyticsEngineDataset from @cloudflare/workers-types
+// (the worker tsconfig loads those types ambiently; this keeps the file
+// typechecking under the repo root tsconfig too, same as the DO types above).
+interface AnalyticsEngineDataset {
+  writeDataPoint(event?: {
+    indexes?: (string | null)[];
+    doubles?: number[];
+    blobs?: (string | null)[];
+  }): void;
+}
+
 export interface Env {
   RATE_LIMITER: DurableNamespace;
+  /**
+   * Workers Analytics Engine dataset for usage telemetry. Optional: absent in
+   * local dev / tests, in which case tracking silently no-ops.
+   */
+  ASK_ANALYTICS?: AnalyticsEngineDataset;
   /** Secret — set via `wrangler secret put NVIDIA_API_KEY` / CI. */
   NVIDIA_API_KEY: string;
   NVIDIA_MODEL?: string;
@@ -131,11 +147,19 @@ const MODE_INSTRUCTIONS: Record<Mode, string> = {
 /* Helpers                                                            */
 /* ------------------------------------------------------------------ */
 
-/** Baseline headers attached to every response. */
+/**
+ * Baseline headers attached to every response (including 4xx/5xx). The API
+ * only ever serves JSON/SSE, so the CSP locks the responses down completely
+ * and the frame-ancestors/XFO pair blocks any embedding.
+ */
 function baseHeaders(extra?: Record<string, string>): Headers {
   const h = new Headers({
     'Cache-Control': 'no-store',
     'X-Content-Type-Options': 'nosniff',
+    'Content-Security-Policy': "default-src 'none'; frame-ancestors 'none'",
+    'X-Frame-Options': 'DENY',
+    'Referrer-Policy': 'no-referrer',
+    'Cross-Origin-Resource-Policy': 'same-origin',
   });
   if (extra) {
     for (const [k, v] of Object.entries(extra)) h.set(k, v);
@@ -151,6 +175,23 @@ function jsonResponse(status: number, body: unknown, extra?: Record<string, stri
 
 function errorResponse(status: number, code: string, extra?: Record<string, string>): Response {
   return jsonResponse(status, { error: code }, extra);
+}
+
+/**
+ * Usage telemetry via Workers Analytics Engine. Fire-and-forget: no-ops when
+ * the binding is absent (local dev / tests) and never throws — telemetry must
+ * never affect the response path.
+ */
+function track(env: Env, outcome: string, mode?: Mode): void {
+  try {
+    env.ASK_ANALYTICS?.writeDataPoint({
+      blobs: [outcome, mode ?? ''],
+      doubles: [1],
+      indexes: ['ask'],
+    });
+  } catch {
+    /* best effort — never let telemetry break a request */
+  }
 }
 
 /**
@@ -469,6 +510,7 @@ async function handleAsk(request: Request, env: Env): Promise<Response> {
     });
   } catch {
     // Limiter unavailable -> never skip it.
+    track(env, 'limiter_unavailable', mode);
     return errorResponse(503, 'limiter_unavailable');
   }
 
@@ -477,6 +519,7 @@ async function handleAsk(request: Request, env: Env): Promise<Response> {
     if (userResult.reason === 'interval' && userResult.retryAfterMs) {
       extra['Retry-After'] = String(Math.ceil(userResult.retryAfterMs / 1000));
     }
+    track(env, 'rate_limited_user', mode);
     return jsonResponse(
       429,
       {
@@ -501,6 +544,7 @@ async function handleAsk(request: Request, env: Env): Promise<Response> {
       } catch {
         /* best effort */
       }
+      track(env, 'rate_limited_global', mode);
       return jsonResponse(429, {
         error: 'rate_limited',
         scope: 'global',
@@ -514,6 +558,7 @@ async function handleAsk(request: Request, env: Env): Promise<Response> {
     } catch {
       /* best effort */
     }
+    track(env, 'limiter_unavailable', mode);
     return errorResponse(503, 'limiter_unavailable');
   }
 
@@ -571,6 +616,7 @@ async function handleAsk(request: Request, env: Env): Promise<Response> {
     // Network failure or timeout before headers arrived — refund. (Nothing
     // has been streamed to the client yet, so nothing is committed.)
     await refundQuota(env, ip);
+    track(env, 'upstream_error', mode);
     return errorResponse(502, 'upstream_error', rateHeaders);
   }
 
@@ -580,6 +626,7 @@ async function handleAsk(request: Request, env: Env): Promise<Response> {
     if (upstream.status >= 500 || !upstream.body) {
       await refundQuota(env, ip);
     }
+    track(env, 'upstream_error', mode);
     return errorResponse(502, 'upstream_error', rateHeaders);
   }
 
@@ -589,6 +636,7 @@ async function handleAsk(request: Request, env: Env): Promise<Response> {
   // compute has likely been spent, so refunding would hand out free calls.
   const headers = baseHeaders(rateHeaders);
   headers.set('Content-Type', 'text/event-stream; charset=utf-8');
+  track(env, 'success', mode);
   return new Response(upstream.body, { status: 200, headers });
 }
 
@@ -620,6 +668,7 @@ export default {
     // (the headers are spoofable outside a browser); actual abuse control
     // is the rate limiting inside each handler.
     if (!isAllowedOrigin(request, env)) {
+      track(env, 'forbidden_origin');
       return errorResponse(403, 'forbidden_origin');
     }
 

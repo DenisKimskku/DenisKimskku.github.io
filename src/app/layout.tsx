@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/lib/theme";
 import PageTransition from "@/components/PageTransition";
 import LazyExtras from "@/components/LazyExtras";
-import { siteMetadata, buildAlternates } from "@/lib/siteMetadata";
+import { siteMetadata, buildAlternates, buildOpenGraph } from "@/lib/siteMetadata";
 
 const GA_MEASUREMENT_ID = 'G-0R77Z2VFWT';
 
@@ -47,15 +47,13 @@ export const metadata: Metadata = {
     ...(googleVerification ? { google: googleVerification } : {}),
     ...(bingVerification ? { other: { 'msvalidate.01': bingVerification } } : {}),
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     type: "website",
-    locale: "en_US",
     url: siteMetadata.siteUrl,
     title: siteMetadata.title,
     description: siteMetadata.description,
-    siteName: siteMetadata.siteName,
     images: [siteMetadata.ogImage],
-  },
+  }),
   robots: {
     index: true,
     follow: true,
@@ -83,6 +81,16 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html:
               "try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d);}catch(e){}",
+          }}
+        />
+        {/* Report uncaught errors / unhandled rejections to GA4 as non-fatal
+            exception events. Guarded so it never throws when gtag is absent
+            (gtag loads lazyOnload — earlier errors are dropped), dedupes
+            identical messages, and caps at 10 events per page. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var _seen=new Set(),_sent=0;function _rep(d){try{if(_sent>=10||_seen.has(d))return;_seen.add(d);_sent++;if(typeof window.gtag==='function'){window.gtag('event','exception',{description:d.slice(0,150),fatal:false});}}catch(e){}}window.addEventListener('error',function(e){_rep((e.message||'error')+' @'+(e.filename||'')+':'+(e.lineno||0));});window.addEventListener('unhandledrejection',function(e){var m;try{m=e.reason&&e.reason.message?e.reason.message:String(e.reason);}catch(x){m='unhandledrejection';}_rep('unhandledrejection: '+m);});}catch(e){}",
           }}
         />
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-[var(--color-bg-secondary)] focus:text-[var(--color-text)]">

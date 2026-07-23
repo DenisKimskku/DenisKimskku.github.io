@@ -1,5 +1,5 @@
 ---
-title: "AI Security Digest — July 17, 2026"
+title: "AI Security Digest — July 17, 2026: GPT-Red Automated Red Teaming & Multi-Turn Jailbreaks"
 date: "2026-07-17"
 type: "News Digest"
 description: "GPT-Red shows high prompt injection success, while new government initiatives push for automated, state-level AI defense frameworks."
@@ -7,7 +7,7 @@ tags: ["LLM Security", "Prompt Injection", "AI Red Teaming", "Agent Security", "
 readingTime: 4
 ---
 
-# AI Security Digest — July 17, 2026
+# AI Security Digest — July 17, 2026: GPT-Red Automated Red Teaming & Multi-Turn Jailbreaks
 
 Today's single most significant development is OpenAI’s release of GPT-Red, an automated AI red-teaming model that achieves an 84% prompt injection success rate in head-to-head testing compared to a mere 13% for human hackers, which is being utilized to secure the upcoming GPT-5.6 model. In tandem, the United States government has launched the centralized AI Vulnerability Clearinghouse alongside the "Gold Eagle" initiative to coordinate cyber defenses across critical infrastructure. Together, these moves mark a definitive pivot toward automated, state-level, and agent-driven security frameworks designed to address vulnerabilities at scale.
 
