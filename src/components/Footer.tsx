@@ -84,6 +84,14 @@ export default function Footer() {
                 </span>
               ))}
             </span>
+
+            {/* Transparency: how the automated articles are produced. */}
+            <a
+              href="/writing/pipeline/"
+              className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+            >
+              Pipeline
+            </a>
           </div>
         </div>
       </div>
