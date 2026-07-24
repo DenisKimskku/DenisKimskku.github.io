@@ -200,14 +200,14 @@ As highlighted in Figure 7, the distinction in PVS scores between violating and 
 
 ## The Takeaway
 
-PVDetector shows that LLMs retain a clear internal awareness of policy violations even when an adversarial input bypasses their safety guardrails and forces them to generate malicious outputs. By shifting our defensive focus away from superficial surface-level text matching and targeting the model's internal activation space, we can build highly robust, real-time, training-free guardrails for enterprise AI agents.
+PVDetector shows that LLMs retain a clear internal awareness of policy violations even when an adversarial input bypasses their safety guardrails and forces them to generate malicious outputs. By shifting the defensive focus away from superficial surface-level text matching and targeting the model's internal activation space, it becomes possible to build highly robust, real-time, training-free guardrails for enterprise AI agents.
 
 ---
 
 ## Den's Take
 
-I’ve always argued that defending LLMs at the surface text level is a losing battle. PVDetector gets this right by looking downstream into the hidden activation space to isolate "policy-violation" concepts. Achieving a False Negative Rate of under 1% on models like Llama-3.1 and Qwen-2.5 with a mere 0.1059-second overhead is a massive win for training-free, real-time defense. It correctly recognizes that purpose-specific agents face domain-boundary challenges that general safety alignment completely misses.
+A recurring argument in this space is that defending LLMs at the surface text level is a losing battle. PVDetector aligns with that view by looking downstream into the hidden activation space to isolate "policy-violation" concepts. Achieving a False Negative Rate of under 1% on models like Llama-3.1 and Qwen-2.5 with a mere 0.1059-second overhead is a significant result for training-free, real-time defense. It correctly recognizes that purpose-specific agents face domain-boundary challenges that general safety alignment completely misses.
 
 This approach directly aligns with representation engineering techniques [75] and research on the Linear Representation Hypothesis [36], which suggest that safety-related concepts map to specific directions within the model's activation space.
 
-However, as a practitioner, I’m highly skeptical of PVDetector's resilience against adaptive white-box adversaries. If an attacker has the gradient access required to run optimization attacks like GCG, they can easily craft adversarial suffixes specifically designed to mask their projection in this hidden-state subspace. Until we evaluate this defense against adaptive attacks optimized to bypass the projection vectors themselves, I would caution against treating this as a silver bullet—even if the initial FNR numbers look spectacular.
+However, PVDetector's resilience against adaptive white-box adversaries warrants skepticism. If an attacker has the gradient access required to run optimization attacks like GCG, they can easily craft adversarial suffixes specifically designed to mask their projection in this hidden-state subspace. Until this defense is evaluated against adaptive attacks optimized to bypass the projection vectors themselves, it would be premature to treat it as a silver bullet—even if the initial FNR numbers look spectacular.

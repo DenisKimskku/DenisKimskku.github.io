@@ -145,7 +145,7 @@ def federated_round(global_model, clients, HEctx):
 
 ### Key Results
 
-When we analyze the experimental data presented in **Table 3** and **Table 4** of the paper, the claims of "enhanced privacy without significantly compromising model accuracy" require serious scrutiny. 
+Analyzing the experimental data presented in **Table 3** and **Table 4** of the paper, the claims of "enhanced privacy without significantly compromising model accuracy" require serious scrutiny. 
 
 The introduction of differential privacy causes a clear and consistent drop in classification performance across all client distributions.
 
@@ -231,6 +231,6 @@ Integrating Homomorphic Encryption (CKKS) and Differential Privacy (DP-SGD) prov
 
 While combining CKKS Homomorphic Encryption and DP-SGD sounds like a bulletproof defense-in-depth strategy for federated learning, this paper exposes a harsh reality that practitioners know all too well: the devastating utility tax of differential privacy. 
 
-Seeing a diabetes classification model's clinical recall plummet by 40.43%—collapsing from 0.7447 to an absolutely unusable 0.3404 when distributed across just 10 clients—is a massive red flag. In collaborative clinical diagnostics, a false negative rate of over 65% is a non-starter. This utility collapse highlights a recurring theme in how rigorous mathematical privacy guarantees can completely destroy model performance in practice, a trade-off commonly observed in other privacy-preserving machine learning contexts.
+A diabetes classification model's clinical recall plummeting by 40.43%—collapsing from 0.7447 to an absolutely unusable 0.3404 when distributed across just 10 clients—is a massive red flag. In collaborative clinical diagnostics, a false negative rate of over 65% is a non-starter. This utility collapse highlights a recurring theme in how rigorous mathematical privacy guarantees can completely destroy model performance in practice, a trade-off commonly observed in other privacy-preserving machine learning contexts.
 
-As a practitioner, I appreciate the paper's intellectual honesty in reporting these dismal numbers rather than hiding behind sanitized synthetic benchmarks. Secure transit via CKKS is great, but if the underlying model is rendered useless by local DP-SGD noise, the deployment is dead on arrival. If we want to secure distributed medical networks, we desperately need more research focused on mitigating this utility collapse for small-sample, tabular environments.
+The paper's intellectual honesty in reporting these dismal numbers rather than hiding behind sanitized synthetic benchmarks is a genuine strength. Secure transit via CKKS is valuable, but if the underlying model is rendered useless by local DP-SGD noise, the deployment is dead on arrival. Securing distributed medical networks will require more research focused on mitigating this utility collapse for small-sample, tabular environments.

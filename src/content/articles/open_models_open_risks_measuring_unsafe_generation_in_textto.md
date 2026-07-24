@@ -206,10 +206,10 @@ Open-source T2I safety is not a solved problem, and popular belief in current gu
 
 ## Den's Take
 
-As a practitioner, this is the reality check the text-to-image (T2I) safety space desperately needed. Too often, academic AI security papers claim massive jailbreak success rates using automated detectors that, in reality, flag complete garbage or benign, warped images. Han et al. expose this gap cleanly: evaluating base SDXL under standard jailbreak prompts yields a terrifying **83.0%** standard Attack Success Rate (ASR), but filtering out non-visual false positives using their Advanced Attack Success Rate (AASR) reveals the practical risk is a mere **7.0%**. 
+This is the reality check the text-to-image (T2I) safety space desperately needed. Too often, academic AI security papers claim massive jailbreak success rates using automated detectors that, in reality, flag complete garbage or benign, warped images. Han et al. expose this gap cleanly: evaluating base SDXL under standard jailbreak prompts yields a terrifying **83.0%** standard Attack Success Rate (ASR), but filtering out non-visual false positives using their Advanced Attack Success Rate (AASR) reveals the practical risk is a mere **7.0%**. 
 
 This discrepancy highlights how "semantic drift" and warped generation artifacts render traditional binary classifiers (like MHSC) practically useless for real-world threat modeling. However, the real danger is "in-the-wild" model merging and fine-tuning, where downstream developers unknowingly strip away baseline guardrails. 
 
-This vulnerability mirrors my review of [Safety Alignment Should Be Made More Than Just a Few Tokens Deep](/writing/safety_alignment_more_than_a_few_tokens_deep), which argued that superficial safety guardrails are fundamentally brittle and easily stripped away during subsequent downstream adaptation. 
+This vulnerability echoes the earlier piece on [Safety Alignment Should Be Made More Than Just a Few Tokens Deep](/writing/safety_alignment_more_than_a_few_tokens_deep), which argued that superficial safety guardrails are fundamentally brittle and easily stripped away during subsequent downstream adaptation. 
 
 If you are deploying open-source models like FLUX or SDXL derivatives in production, stop relying on raw detector activations. You must design your safety architecture under the assumption that the underlying model weights have already been compromised during the decentralized open-source pipeline.

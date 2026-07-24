@@ -22,9 +22,9 @@ headerImage: "/images/news/the_language_of_security_how_prompt_syntax_shapes_sec
 
 # Prompt Syntax as an Attack Surface: How Tiny Linguistic Variations Induce Security Flaws in Open-Weight LLMs
 
-When we think of LLM-based secure code generation, we tend to think about high-level strategies: *Do we have a system prompt instructing the model to be secure? Are we using iterative self-reflection? Are we appending secure coding rules?* 
+Discussions of LLM-based secure code generation tend to focus on high-level strategies: *Is there a system prompt instructing the model to be secure? Is iterative self-reflection in use? Are secure coding rules appended?* 
 
-However, a recent academic paper, *"The Language of Security: How Prompt Syntax Shapes Secure Code Generation in Open LLMs,"* reveals that our security assumptions are built on a highly fragile foundation. The researchers demonstrate that LLMs do not interpret prompts as abstract semantic specifications, but as literal, highly structured linguistic artifacts. By systematically stripping minor syntactic components—such as a single subordinate clause or a "how" phrase—from a prompt, we can completely degrade the security of the generated output. Casual prompt adjustments made by developers can silently convert safe, functional code into vulnerable code riddled with SQL injections, buffer overflows, and path traversals.
+However, a recent academic paper, *"The Language of Security: How Prompt Syntax Shapes Secure Code Generation in Open LLMs,"* reveals that these security assumptions are built on a highly fragile foundation. The researchers demonstrate that LLMs do not interpret prompts as abstract semantic specifications, but as literal, highly structured linguistic artifacts. Systematically stripping minor syntactic components—such as a single subordinate clause or a "how" phrase—from a prompt can completely degrade the security of the generated output. Casual prompt adjustments made by developers can silently convert safe, functional code into vulnerable code riddled with SQL injections, buffer overflows, and path traversals.
 
 ---
 
@@ -155,7 +155,7 @@ LLMs do not compile natural language into abstract, pure logic. The literal surf
 
 ## Den's Take
 
-As a practitioner who integrates LLMs into automated development environments, this paper hits a raw nerve. We spend months engineering elaborate system prompts and secure coding guidelines, only to find that deleting a single relative adverbial clause (`WHADVP`)—like a casual "how" or "which"—can spike Qwen 2.5's vulnerability generation rate to an alarming 85.19%, yielding risk ratios up to 2.24x. 
+For teams that integrate LLMs into automated development environments, this paper hits a raw nerve. Months of effort can go into engineering elaborate system prompts and secure coding guidelines, only for a single deleted relative adverbial clause (`WHADVP`)—a casual "how" or "which"—to spike Qwen 2.5's vulnerability generation rate to an alarming 85.19%, yielding risk ratios up to 2.24x. 
 
 This is a massive wake-up call for anyone deploying local IDE extensions or agentic CI/CD pipelines powered by open-weight models like Phi-4 or Athene-V2. The research exposes how dangerously fragile these models are: they are not reasoning about abstract security principles, but are instead brittle statistical mimics of syntactic structures. This syntactic fragility aligns directly with the notion that systemic failures in LLM outputs are almost always catalyzed by subtle shifts in the input context rather than core agentic logic. 
 

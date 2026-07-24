@@ -218,14 +218,14 @@ Do not forget about read-side attacks. Ensure tool definitions that reveal inter
 
 ## The Takeaway
 
-NetInjectBench delivers a crucial wake-up call to enterprise security teams: **prompt engineering is not safety engineering.** As we connect autonomous agents to critical infrastructure, we must stop hoping that LLMs will successfully ignore malicious input. Instead, treat LLM tool-calling actions as completely unprivileged requests, and enforce explicit, deterministic access-control policies at the execution layer.
+NetInjectBench delivers a crucial wake-up call to enterprise security teams: **prompt engineering is not safety engineering.** As autonomous agents are connected to critical infrastructure, the field must stop hoping that LLMs will successfully ignore malicious input. Instead, LLM tool-calling actions should be treated as completely unprivileged requests, with explicit, deterministic access-control policies enforced at the execution layer.
 
 ---
 
 ## Den's Take
 
-I have been banging this drum for years: trying to secure autonomous agents with prompt hygiene is pure security theater. The NetInjectBench results lay this bare. When a naive NetOps agent is subjected to indirect prompt injection, it hits a staggering 82.50% Unsafe Tool-Action Rate (UTAR). Trying to patch this with prompt-level defenses like Spotlighting only drags that rate down to 18.33%—which is still a catastrophic one-in-five chance of letting an attacker rewrite your routing configurations or dump internal network topologies.
+The core message here has been repeated for years: trying to secure autonomous agents with prompt hygiene is pure security theater. The NetInjectBench results lay this bare. When a naive NetOps agent is subjected to indirect prompt injection, it hits a staggering 82.50% Unsafe Tool-Action Rate (UTAR). Patching this with prompt-level defenses like Spotlighting only drags that rate down to 18.33%—which is still a catastrophic one-in-five chance of letting an attacker rewrite routing configurations or dump internal network topologies.
 
-What excites me about this work is its pragmatism. Instead of chasing the mirage of a perfectly aligned LLM, the authors advocate for a metadata-aware deterministic execution policy gate, which successfully blocked 100% of the attacks in their 130-scenario benchmark. This mirrors the broader industry push toward cost-aware pre-execution gating, where we argue that deterministic pre-execution validation is the only way to keep autonomous agents bounded within safe operational limits. 
+The most compelling aspect of this work is its pragmatism. Instead of chasing the mirage of a perfectly aligned LLM, the authors advocate for a metadata-aware deterministic execution policy gate, which successfully blocked 100% of the attacks in their 130-scenario benchmark. This mirrors the broader industry push toward cost-aware pre-execution gating, in which deterministic pre-execution validation is treated as the only way to keep autonomous agents bounded within safe operational limits. 
 
 If you are deploying LLM agents to interact with critical infrastructure like ticketing systems or ChatOps pipelines, you must stop relying on system prompts as access control. Treat every single tool call as an untrusted proposal and validate it deterministically against hard authorization metadata before execution.

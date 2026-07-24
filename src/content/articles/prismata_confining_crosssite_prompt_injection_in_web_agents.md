@@ -169,7 +169,7 @@ Because DOM layout structures are highly redundant across page states, always de
 
 ## The Takeaway
 
-Prismata shifts the AI security paradigm away from unreliable, model-level alignment band-aids and toward provable, system-level information flow control. By utilizing classic security principles—specifically the Biba integrity model—we can effectively isolate untrusted web content and safely deploy autonomous agents on real-world websites without expecting site developers to rewrite their codebases.
+Prismata shifts the AI security paradigm away from unreliable, model-level alignment band-aids and toward provable, system-level information flow control. By utilizing classic security principles—specifically the Biba integrity model—untrusted web content can be effectively isolated, allowing autonomous agents to be safely deployed on real-world websites without expecting site developers to rewrite their codebases.
 
 ---
 
@@ -177,6 +177,6 @@ Prismata shifts the AI security paradigm away from unreliable, model-level align
 
 Prismata’s core proposition—using a Biba-style integrity model to dynamically isolate untrusted DOM elements—is a refreshing departure from fragile, model-level prompt guardrails. Dropping the Cross-Site Prompting (XSP) attack success rate from 85.5% to 0.7% while retaining most baseline utility (a mere 3.3 percentage point drop in baseline task success rate) is an incredibly impressive benchmark on paper.
 
-However, as a practitioner who has built and broken these pipelines, I am skeptical about how this holds up in the wild. Real-world modern web apps are dynamic, chaotic, and heavily obfuscated. Relying on DOM-level structure to dynamically derive trust labels works beautifully in controlled Playwright or BrowserGym environments, but it is bound to struggle with highly volatile single-page applications where data and UI components are deeply entangled. 
+However, there are reasons to be skeptical about how this holds up in the wild. Real-world modern web apps are dynamic, chaotic, and heavily obfuscated. Relying on DOM-level structure to dynamically derive trust labels works beautifully in controlled Playwright or BrowserGym environments, but it is bound to struggle with highly volatile single-page applications where data and UI components are deeply entangled. 
 
-In my prior analysis on how web retrieval degrades safety alignment in LLM agents, I detailed how pulling external, untrusted web data into an agent's context fundamentally breaks safety assumptions because LLMs natively conflate instructions with data. While Prismata's mechanical confinement at the browser level is the right engineering direction, any defense relying on heuristic DOM parsing will face a continuous game of cat-and-mouse as web frameworks evolve. It’s a massive step forward, but we shouldn't treat DOM-based confinement as a solved problem just yet.
+Prior analysis of how web retrieval degrades safety alignment in LLM agents has shown that pulling external, untrusted web data into an agent's context fundamentally breaks safety assumptions because LLMs natively conflate instructions with data. While Prismata's mechanical confinement at the browser level is the right engineering direction, any defense relying on heuristic DOM parsing will face a continuous game of cat-and-mouse as web frameworks evolve. It’s a massive step forward, but DOM-based confinement should not be treated as a solved problem just yet.

@@ -132,7 +132,7 @@ The impact of the minimization phase on contract precision is shown below (repro
 *Note: Soundness was 100% (1.0) across all configurations, confirming that no observed leaks were missed.*
 
 ### 2. Comparison to Template-Based State-of-the-Art
-We compared `malcos` against template-based white-box synthesis tools (`LeaSyn` \[60\], `RTL2\muPath` \[32\], and `VeloCT` \[20\]) on complex synthetic targets. The results demonstrate the penalty of rigid template restrictions (extracted from Table 4, Section 6):
+`malcos` was compared against template-based white-box synthesis tools (`LeaSyn` \[60\], `RTL2\muPath` \[32\], and `VeloCT` \[20\]) on complex synthetic targets. The results demonstrate the penalty of rigid template restrictions (extracted from Table 4, Section 6):
 
 | Synthesis Target | `malcos-x86` Precision | `LeaSyn` Precision | `RTL2\muPath` Precision | `VeloCT` Precision |
 |---|---|---|---|---|
@@ -180,10 +180,10 @@ If you are a security researcher, compiler engineer, or cryptographer trying to 
 
 ## Den's Take
 
-As a practitioner, I am always highly skeptical of claims regarding "100% soundness," and `malcos` carries the standard academic caveat: this soundness is strictly "relative to its test suites." If your fuzzing or test generation misses a subtle execution state, your synthesized leakage contract will still have blind spots. 
+Claims of "100% soundness" warrant skepticism, and `malcos` carries the standard academic caveat: this soundness is strictly "relative to its test suites." If fuzzing or test generation misses a subtle execution state, the synthesized leakage contract will still have blind spots. 
 
-That said, what excites me is the sheer practical utility of bypassing white-box RTL requirements. Reaching up to 100% precision on commercial black-box CPUs like Intel Raptor Lake and ARM Cortex-A76—while prior white-box, template-based approaches plummeted to as low as 18% precision on complex profiles—is a massive win. For anyone hardening cryptographic libraries or enclave runtimes, relying on undocumented hardware assumptions is a recipe for disaster. 
+The most notable contribution is the practical utility of bypassing white-box RTL requirements. Reaching up to 100% precision on commercial black-box CPUs like Intel Raptor Lake and ARM Cortex-A76—while prior white-box, template-based approaches plummeted to as low as 18% precision on complex profiles—is a substantial advance. For teams hardening cryptographic libraries or enclave runtimes, relying on undocumented hardware assumptions is a recipe for disaster. 
 
 This automated, template-free approach to contract generation mirrors the philosophy of automated microarchitectural security verification, where automated synthesis is a scalable way to bypass the bottleneck of manually writing security rules and validation tests.
 
-If we can commoditize black-box contract synthesis, we can finally stop treating CPU microarchitecture as an opaque, trust-on-faith black box. This is exactly the kind of rigorous, tooling-first research the hardware security space desperately needs.
+Commoditizing black-box contract synthesis would let the field stop treating CPU microarchitecture as an opaque, trust-on-faith black box. This is exactly the kind of rigorous, tooling-first research the hardware security space needs.

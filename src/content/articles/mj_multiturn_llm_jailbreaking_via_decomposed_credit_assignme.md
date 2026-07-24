@@ -103,7 +103,7 @@ The table below shows the victim-wise averages computed across the three benchma
 | **ReNeLLM** [18] | 56.01% | 71.65% | 49.35% | 77.39% | 63.60% |
 | **AutoDan-Turbo** [26]| 66.54% | 61.00% | 56.92% | 58.73% | 60.80% |
 
-Both the dynamic and static variants of our decomposed credit approach dramatically outperform existing automated multi-turn attackers. The dynamic-weighted model ($MJ_{DW}$) achieves an average success rate of **98.26%**, surpassing the SEMA baseline by **11.68 percentage points** and TROJail by **12.03 percentage points**.
+Both the dynamic and static variants of the decomposed credit approach dramatically outperform existing automated multi-turn attackers. The dynamic-weighted model ($MJ_{DW}$) achieves an average success rate of **98.26%**, surpassing the SEMA baseline by **11.68 percentage points** and TROJail by **12.03 percentage points**.
 
 ### Attack Speed (Mean Turn of First Success)
 
@@ -150,6 +150,6 @@ The era of relying on "prompt security" is over. By decomposing reinforcement le
 
 Single-turn jailbreaks are largely a solved problem for top-tier models, but multi-turn dialog is where safety alignment completely breaks down. That is why DC-GRPO is so concerning: it systematically targets the weak link in multi-turn RL training, which is credit assignment. Instead of blindly spreading rewards across a whole conversation, this method decouples immediate and future rewards at each of the 5 conversational turns. 
 
-The results speak for themselves. Scoring a 98.26% average Attack Success Rate ($ASR_5@3$) against robust models like Llama-3.1-8B-Instruct, Qwen2.5-7B-Instruct, Gemma-2-9B-IT, and Mistral-7B-Instruct-v0.3 is no small feat—it's an 11.68 percentage point jump over SEMA. What worries me most as a practitioner is the asymmetric cost: training the Qwen3-4B-Instruct attacker required just 260 optimization steps, taking less than 11 hours.
+The results speak for themselves. Scoring a 98.26% average Attack Success Rate ($ASR_5@3$) against robust models like Llama-3.1-8B-Instruct, Qwen2.5-7B-Instruct, Gemma-2-9B-IT, and Mistral-7B-Instruct-v0.3 is no small feat—it's an 11.68 percentage point jump over SEMA. The most concerning aspect from a practitioner's standpoint is the asymmetric cost: training the Qwen3-4B-Instruct attacker required just 260 optimization steps, taking less than 11 hours.
 
 This highly automated efficiency validates the necessity of phase-structured multi-turn red-teaming, where structured, multi-turn dialogue progression is essential to expose deep alignment deficits in production agents. DC-GRPO proves that attackers don't need massive compute to automate these multi-turn exploits; they just need a smarter way to assign blame to their prompts.

@@ -187,14 +187,14 @@ If you are deploying multi-agent systems, do not rely solely on per-step output 
 
 ## The Takeaway
 
-Local safety does not equal global safety. As enterprise applications shift from single-prompt interactions to complex, tool-using multi-agent workflows, safety engineering must evolve. If harm is compositional, our guardrails must be compositional too. The security industry must stop focusing on optimizing individual per-step classifiers and start addressing the harder problem of representation discovery across complete, multi-agent execution traces.
+Local safety does not equal global safety. As enterprise applications shift from single-prompt interactions to complex, tool-using multi-agent workflows, safety engineering must evolve. If harm is compositional, guardrails must be compositional too. The security industry must stop focusing on optimizing individual per-step classifiers and start addressing the harder problem of representation discovery across complete, multi-agent execution traces.
 
 ---
 
 ## Den's Take
 
-This paper highlights a glaring vulnerability: our current reliance on point-in-time, per-step guardrails is ineffective when applied to multi-agent architectures. By splitting an exploit into $K = 3$ or $5$ locally benign fragments, an attacker completely blinds standard local monitors, dropping their detection capabilities to a coin-flip (~0.50 AUROC). 
+This paper highlights a glaring vulnerability: the current reliance on point-in-time, per-step guardrails is ineffective when applied to multi-agent architectures. By splitting an exploit into $K = 3$ or $5$ locally benign fragments, an attacker completely blinds standard local monitors, dropping their detection capabilities to a coin-flip (~0.50 AUROC). 
 
-What excites me is the elegant proof of this "observability boundary." It exposes the mathematical reality that local agents cannot secure global workflows. The fact that the authors successfully dropped the Attack Success Rate from up to 1.00 down to 0.00 across Llama-3.1-8B and Qwen2.5 models using a "decoded-view gate" shows that global context reconstruction is the only viable path forward. 
+The most notable contribution is the elegant proof of this "observability boundary." It exposes the mathematical reality that local agents cannot secure global workflows. The fact that the authors successfully dropped the Attack Success Rate from up to 1.00 down to 0.00 across Llama-3.1-8B and Qwen2.5 models using a "decoded-view gate" shows that global context reconstruction is the only viable path forward. 
 
-While I have previously emphasized the necessity of sandboxing and strict boundary confinement to stop untrusted data inputs in web agents, this new research highlights an even deeper structural flaw: isolation alone cannot prevent coordinated, multi-step payload assembly if your safety monitors remain stubbornly local. If you are building collaborative agent networks, continuing to rely on isolated step-by-step neural detectors is an open invitation to bypasses. You must monitor the reconstructed assembly state, not just the individual steps.
+Sandboxing and strict boundary confinement are frequently emphasized as ways to stop untrusted data inputs in web agents, but this new research highlights an even deeper structural flaw: isolation alone cannot prevent coordinated, multi-step payload assembly if safety monitors remain stubbornly local. For teams building collaborative agent networks, continuing to rely on isolated step-by-step neural detectors is an open invitation to bypasses. The reconstructed assembly state must be monitored, not just the individual steps.

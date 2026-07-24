@@ -22,7 +22,7 @@ headerImage: "/images/news/triggering_stealthy_feature_map_backdoors_via_physica
 
 # LATCH: Triggering Stealthy Feature Map Backdoors via Physical Fault Injection in Embedded Neural Networks
 
-Edge AI has rapidly migrated neural network inference from secure cloud servers to resource-constrained microcontrollers deployed in physical environments. While localized inference enhances privacy, it exposes hardware to physical adversaries. In this post, we break down **LATCH (Latent Activation Trigger via Cross-level Faults in Hardware)**, a novel attack vector demonstrating that hardware-level physical faults can act as highly precise, invisible triggers for software backdoors, rendering standard input-validation defenses entirely useless.
+Edge AI has rapidly migrated neural network inference from secure cloud servers to resource-constrained microcontrollers deployed in physical environments. While localized inference enhances privacy, it exposes hardware to physical adversaries. This post breaks down **LATCH (Latent Activation Trigger via Cross-level Faults in Hardware)**, a novel attack vector demonstrating that hardware-level physical faults can act as highly precise, invisible triggers for software backdoors, rendering standard input-validation defenses entirely useless.
 
 ---
 
@@ -150,8 +150,8 @@ LATCH demonstrates that the boundary between physical hardware security and soft
 
 ## Den's Take
 
-LATCH is a wake-up call for edge AI security. For years, we’ve treated physical fault injection and neural network backdoors as separate threat vectors. By using EMFI or voltage glitching to dynamically activate a latent feature-map backdoor (`conv_2`) on an ARM Cortex-M4 microcontroller running CMSIS-NN, this paper demonstrates a terrifyingly elegant exploit loop.
+LATCH is a wake-up call for edge AI security. For years, physical fault injection and neural network backdoors have been treated as separate threat vectors. By using EMFI or voltage glitching to dynamically activate a latent feature-map backdoor (`conv_2`) on an ARM Cortex-M4 microcontroller running CMSIS-NN, this paper demonstrates a strikingly elegant exploit loop.
 
-What excites me here is the sheer stealth of the attack. Because the trigger is injected directly into internal registers during runtime rather than existing in the input data, software-level defenses like Neural Cleanse or STRIP are completely blind to it—yielding a 0% detection rate in their evaluation. Once the fault is injected, the adversary achieves a 100% Backdoor Attack Success Rate on CIFAR-10. 
+The most striking aspect here is the sheer stealth of the attack. Because the trigger is injected directly into internal registers during runtime rather than existing in the input data, software-level defenses like Neural Cleanse or STRIP are completely blind to it—yielding a 0% detection rate in their evaluation. Once the fault is injected, the adversary achieves a 100% Backdoor Attack Success Rate on CIFAR-10. 
 
-However, we must recognize the limitations: the threat model assumes a hybrid adversary who can poison the supply chain to implant the backdoor and then deploy inexpensive hardware to physically execute microsecond-level glitches. This necessity of out-of-band activation channels reflects the broader evasion challenge, where decoupling the trigger from the standard input vector renders traditional heuristic defenses entirely obsolete.
+The limitations are equally worth recognizing: the threat model assumes a hybrid adversary who can poison the supply chain to implant the backdoor and then deploy inexpensive hardware to physically execute microsecond-level glitches. This necessity of out-of-band activation channels reflects the broader evasion challenge, where decoupling the trigger from the standard input vector renders traditional heuristic defenses entirely obsolete.

@@ -54,7 +54,7 @@ Unlike prior work, SpeechGuard is tailored specifically for the 1D and 2D repres
 | **Neural Cleanse** [15] | Vision / General | Offline | Trigger Synthesis / Model Pruning | Requires white-box access to the model; high compute overhead. |
 | **Februus** [16] | Vision | Online | Grad-CAM + GAN Reconstruction | Tailored for spatial image regions; cannot easily process temporal/spectral audio. |
 | **STRIP** [7] | Vision / Text | Online | Naive Perturbation Superimposition | Ignores audio signal strength, causing highly unstable energy distributions in perturbed audio. |
-| **SpeechGuard** (Ours) | Audio | Online | SNR-Adaptive Perturbation (S-STRIP) + T-F Autoencoder Masking | First online, real-time pipeline offering both detection *and* purification for ASR. |
+| **SpeechGuard** (this paper) | Audio | Online | SNR-Adaptive Perturbation (S-STRIP) + T-F Autoencoder Masking | First online, real-time pipeline offering both detection *and* purification for ASR. |
 
 ---
 
@@ -85,7 +85,7 @@ By calculating the Shannon entropy of the model's predictions over $N$ perturbed
 ### Stage 2: Time-Frequency Masking & Purification
 Once an input is flagged as poisoned, SpeechGuard doesn't drop it. Instead, it attempts to reconstruct the original speech using an autoencoder.
 
-Because audio signals are highly sparse in the time-frequency domain, and triggers (especially ultrasonic pulses or localized environmental noise like whistles) usually occupy isolated frequency bands (as illustrated in Figure 2), we can apply a Time-Frequency (T-F) mask to silence the trigger.
+Because audio signals are highly sparse in the time-frequency domain, and triggers (especially ultrasonic pulses or localized environmental noise like whistles) usually occupy isolated frequency bands (as illustrated in Figure 2), a Time-Frequency (T-F) mask can be applied to silence the trigger.
 
 SpeechGuard trains a fully connected autoencoder to map the spectrogram of the poisoned input $Y(t, f)$ directly to an Ideal Binary Mask (IBM) $M(t, f)$, where:
 $$\mathbf{M}_{\text{IBM}}(t, f) = \begin{cases} 1, & \text{if } |X(t, f)|^2 - |N(t, f)|^2 > 0 \\ 0, & \text{otherwise} \end{cases}$$
@@ -155,8 +155,8 @@ SpeechGuard demonstrates that online, real-time backdoor defense for audio is th
 
 ## Den's Take
 
-We’ve spent years debating offline backdoor defenses, but in the real world, you rarely control the training pipeline of the proprietary voice models you deploy. That is why I like the direction of SpeechGuard. Instead of just flagging and dropping suspicious inputs—which destroys the user experience—this online, two-stage pipeline actually attempts to purify the audio. 
+After years of debate over offline backdoor defenses, the practical reality is that operators rarely control the training pipeline of the proprietary voice models they deploy. That is what makes the direction of SpeechGuard notable. Instead of just flagging and dropping suspicious inputs—which destroys the user experience—this online, two-stage pipeline actually attempts to purify the audio. 
 
-The evaluation numbers on the SCDv2 dataset using a 2D-CNN are highly encouraging: crashing the attack success rate of ultrasonic pulse triggers from 99.10% to 2.66% while preserving a 94.07% purified prediction accuracy is no small feat. By adapting STRIP (via S-STRIP) to handle the signal-to-noise ratio of audio and leveraging an autoencoder-generated time-frequency mask, the authors address a genuine gap where vision-based defenses fail on temporal signal distributions.
+The evaluation numbers on the SCDv2 dataset using a 2D-CNN are strong: crashing the attack success rate of ultrasonic pulse triggers from 99.10% to 2.66% while preserving a 94.07% purified prediction accuracy is a significant result. By adapting STRIP (via S-STRIP) to handle the signal-to-noise ratio of audio and leveraging an autoencoder-generated time-frequency mask, the authors address a genuine gap where vision-based defenses fail on temporal signal distributions.
 
-However, my immediate concern as a practitioner is the runtime latency. Running an adaptive perturbation detection step followed by an autoencoder reconstruction on live, streaming audio is computationally demanding. This is highly problematic for voice-activated smart home assistants or edge systems, a challenge I explored in [Securing LLMs in the Wild: Privacy and Security Challenges at the Edge](/writing/securing_llms_in_the_wild_privacy_and_security_challenges_at), where tight computational budgets often clash with complex, real-time security overhead. Until we see hardware-level latency benchmarks, I remain skeptical about deploying this in high-throughput production environments.
+The immediate practical concern, however, is runtime latency. Running an adaptive perturbation detection step followed by an autoencoder reconstruction on live, streaming audio is computationally demanding. This is highly problematic for voice-activated smart home assistants or edge systems, a challenge examined in the earlier piece on [Securing LLMs in the Wild: Privacy and Security Challenges at the Edge](/writing/securing_llms_in_the_wild_privacy_and_security_challenges_at), where tight computational budgets often clash with complex, real-time security overhead. Without hardware-level latency benchmarks, deploying this in high-throughput production environments remains questionable.
