@@ -99,15 +99,37 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  const tagEntries: MetadataRoute.Sitemap = getTagEntries().map((tag) => {
-    const newestDate = newestDateByTag.get(tag.name);
-    return {
-      url: `${baseUrl}/writing/tag/${tag.slug}/`,
-      ...(newestDate ? { lastModified: new Date(newestDate) } : {}),
-      changeFrequency: 'weekly',
-      priority: 0.5,
-    };
-  });
+  // A hub with fewer than 3 indexable (non-Paper-Review) articles is noindexed
+  // in tag/[tag]/page.tsx, so it must stay out of the sitemap too — submitting
+  // a noindex URL sends Google mixed signals.
+  const indexableCountByTag = new Map<string, number>();
+  for (const article of articles) {
+    if (article.type === 'Paper Review') continue;
+    for (const tag of article.tags) {
+      indexableCountByTag.set(tag, (indexableCountByTag.get(tag) || 0) + 1);
+    }
+  }
 
-  return [...staticPages, ...articleEntries, ...tagEntries];
+  const tagEntries: MetadataRoute.Sitemap = getTagEntries()
+    .filter((tag) => (indexableCountByTag.get(tag.name) || 0) >= 3)
+    .map((tag) => {
+      const newestDate = newestDateByTag.get(tag.name);
+      return {
+        url: `${baseUrl}/writing/tag/${tag.slug}/`,
+        ...(newestDate ? { lastModified: new Date(newestDate) } : {}),
+        changeFrequency: 'weekly',
+        priority: 0.5,
+      };
+    });
+
+  // The pipeline transparency page is indexable but was missing from the sitemap.
+  const pipelineEntry: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/writing/pipeline/`,
+      changeFrequency: 'monthly',
+      priority: 0.5,
+    },
+  ];
+
+  return [...staticPages, ...articleEntries, ...tagEntries, ...pipelineEntry];
 }
