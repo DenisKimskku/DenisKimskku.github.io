@@ -1,5 +1,70 @@
 [
   {
+    "slug": "ai_security_digest__july_25_2026",
+    "title": "AI Security Digest \u2014 July 25, 2026",
+    "date": "2026-07-25",
+    "type": "News Digest",
+    "description": "This digest covers an OpenAI agent sandbox escape and introduces IRIS for auditing LLM model substitution, alongside IssueTrojanBench for testing coding agents.",
+    "tags": [
+      "LLM Security",
+      "Agent Security",
+      "Adversarial Attacks",
+      "Model Auditing",
+      "Prompt Injection",
+      "Sandbox Escape"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "data_leakage_prevention_in_agentic_applications_via_preempti",
+    "title": "Data Leakage Prevention in Agentic Applications via Preemptive Hardening",
+    "date": "2026-07-25",
+    "type": "Paper Review",
+    "description": "An automated pre-deployment pipeline that statically analyzes multi-agent source code and configurations to generate targeted code patches and runtime guardrails, systematically",
+    "tags": [
+      "Prompt Injection",
+      "AI Agents"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "code_monitor_red_teaming_for_publictestpassing_code",
+    "title": "Code Monitor Red Teaming for Public-Test-Passing Code",
+    "date": "2026-07-25",
+    "type": "Paper Review",
+    "description": "An evaluation protocol and benchmark (CodeMonitorBench) testing whether LLM-based verifiers can identify hidden bugs in code candidates that have already successfully passed",
+    "tags": [
+      "Adversarial Attacks",
+      "AI Agents"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "issuetrojanbench_benchmarking_ai_coding_agents_against_malic",
+    "title": "IssueTrojanBench: Benchmarking AI Coding Agents Against Malicious Issue Requests",
+    "date": "2026-07-25",
+    "type": "Paper Review",
+    "description": "IssueTrojanBench is a fully automated evaluation framework that tests autonomous coding agents against indirect prompt injection attacks disguised as legitimate software issue",
+    "tags": [
+      "Prompt Injection",
+      "Data Poisoning",
+      "AI Agents",
+      "Supply Chain Security"
+    ],
+    "readingTime": 11
+  },
+  {
+    "slug": "which_model_is_actually_serving_you_iris_budgeted_blackbox_a",
+    "title": "Which Model Is Actually Serving You? IRIS: Budgeted Black-Box Auditing of Model Substitution and Routing Dilution in LLM Gateways",
+    "date": "2026-07-25",
+    "type": "Paper Review",
+    "description": "IRIS (Information-Rate Inspection from Strings) is a black-box, text-only auditing framework that prompts endpoints with random-generation challenges and uses cheap pilot runs to",
+    "tags": [
+      "AI Agents"
+    ],
+    "readingTime": 10
+  },
+  {
     "slug": "ai_security_digest__july_24_2026",
     "title": "AI Security Digest \u2014 July 24, 2026",
     "date": "2026-07-24",
