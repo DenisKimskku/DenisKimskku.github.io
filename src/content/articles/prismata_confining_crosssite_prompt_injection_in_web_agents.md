@@ -27,7 +27,7 @@ The rapid advancement of autonomous web agents—such as OpenAI's Operator, Goog
 | | |
 |---|---|
 | **Attacker** | Black-box access to web-facing inputs (e.g., posting product reviews, user comments, or serving third-party advertisements) on trusted, benign domains. |
-| **Victim** | Autonomous LLM-based web agents (e.g., utilizing models like gpt-4o-mini) navigating multi-origin web pages. |
+| **Victim** | Autonomous LLM-based web agents (e.g., utilizing models like gpt-5.4-mini) navigating multi-origin web pages. |
 | **Goal** | Hijack the agent's execution flow to perform unauthorized state-changing actions (e.g., resetting passwords, exfiltrating credit card details, sending unauthorized direct messages). |
 | **Budget** | Zero-code, natural-language prompt injection payloads embedded in standard text or alt-text, with no direct network exploitation required. |
 

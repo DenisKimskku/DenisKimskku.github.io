@@ -16,15 +16,15 @@ headerImage: "/images/news/testtime_training_undermines_safety_guardrails.jpg"
 ## TLDR
 - **What**: Attackers can exploit Test-Time Training (TTT) and dynamic fine-tuning APIs to completely bypass safety guardrails in just 1 to 10 gradient steps by updating the model's weights on harmful target prefixes or few-shot exemplars during inference.
 - **Who's at risk**: Providers exposing test-time adaptation endpoints, inference-compute scaling APIs, and production LLM fine-tuning interfaces (e.g., the Tinker API) running open-weight or proprietary models.
-- **Key number**: Under LoRA, Few-Shot and Generation-Phase TTT attacks achieve an average Attack Success Rate over 10 trials (ASR@10) of 95% and 93% respectively across multiple model families, completely jailbreaking a production 120B parameter model (GPT-OSS 120B) for less than \$2.
+- **Key number**: Under LoRA, Few-Shot and Generation-Phase TTT attacks achieve an average Attack Success Rate over 10 trials (ASR@10) of 95% and 93% respectively across multiple model families, completely jailbreaking a production 120B parameter model (GPT-OSS 120B). The paper reports the full attack can be carried out for less than \$22.
 
 ---
 
-# Bypassing the Shield: How Test-Time Training Erases LLM Safety Guardrails for Under \$2
+# Bypassing the Shield: How Test-Time Training Erases LLM Safety Guardrails for Under \$22
 
 As frontier Large Language Models (LLMs) transition from scaling static parameters to scaling test-time compute, techniques like Test-Time Training (TTT) are becoming industry standards. TTT optimizes model weights on the fly to fit a specific query's context before generating a response. However, this dynamic parameter updating exposes a critical, previously unmapped security vulnerability. 
 
-In their paper, *"Test-Time Training Undermines Safety Guardrails"*, Antonelli et al. (2026) demonstrate that allowing user-influenced gradient updates during inference—even for as few as 1 to 5 steps—completely dismantles the post-training safety alignment (RLHF, DPO, and Constitutional AI) of models like Llama3-70B and Qwen3-32B. These vulnerabilities easily transfer to production APIs like the Tinker fine-tuning endpoint, allowing adversaries to execute highly critical CBRN (Chemical, Biological, Radiological, and Nuclear) and cyberweapon requests for under \$2.
+In their paper, *"Test-Time Training Undermines Safety Guardrails"*, Antonelli et al. (2026) demonstrate that allowing user-influenced gradient updates during inference—even for as few as 1 to 5 steps—completely dismantles the post-training safety alignment (RLHF, DPO, and Constitutional AI) of models like Llama3-70B and Qwen3-32B. These vulnerabilities easily transfer to production APIs like the Tinker fine-tuning endpoint, allowing adversaries to execute highly critical CBRN (Chemical, Biological, Radiological, and Nuclear) and cyberweapon requests for under \$22.
 
 ---
 
@@ -35,7 +35,7 @@ In their paper, *"Test-Time Training Undermines Safety Guardrails"*, Antonelli e
 | **Attacker** | Grey-box or black-box API user who can influence the Test-Time Training (TTT) optimization loop by submitting a query $\tilde{x}$ and/or auxiliary training data $\psi$ (few-shot exemplars or custom loss target prefixes). |
 | **Victim** | LLM providers and enterprise deployments that leverage TTT, test-time reinforcement learning, or dynamic on-the-fly LoRA adaptations to process complex prompts or retrieve information. |
 | **Goal** | Overwrite safety alignments to force the generation of restricted, harmful, or illegal text (e.g., code for zero-day exploits, instructions for chemical weapon synthesis). |
-| **Budget** | Extremely low; requires 1 to 10 gradient steps of test-time training, costing less than \$2 on production API endpoints. |
+| **Budget** | Extremely low; requires 1 to 10 gradient steps of test-time training, costing less than \$22 on production API endpoints. |
 
 ---
 
@@ -105,14 +105,14 @@ To verify if these threats exist in the real world, the authors tested their met
 
 ### Tinker API Jailbreak Success (ASR@10)
 
-| Model | Attack Type | 5 Steps | 10 Steps | Cost (USD) |
-|---|---|---|---|---|
-| **Qwen3 8B** | Few-Shot | 56.0% | 2.0% | < \$0.50 |
-| | Target (Gen-Phase) | 86.0% | 100.0% | < \$0.50 |
-| **GPT-OSS 120B** | Few-Shot | 86.0% | 100.0% | < \$2.00 |
-| | Target (Gen-Phase) | 88.0% | 98.0% | < \$2.00 |
+| Model | Attack Type | 5 Steps | 10 Steps |
+|---|---|---|---|
+| **Qwen3 8B** | Few-Shot | 56.0% | 2.0% |
+| | Target (Gen-Phase) | 86.0% | 100.0% |
+| **GPT-OSS 120B** | Few-Shot | 86.0% | 100.0% |
+| | Target (Gen-Phase) | 88.0% | 98.0% |
 
-*Table 3 shows that even a massive 120B parameter model is fully compromised (100% ASR@10) within 10 API steps, costing less than \$2.*
+*Table 3 shows that even a massive 120B parameter model is fully compromised (100% ASR@10) within 10 API steps; the paper reports the overall attack costs less than \$22.*
 
 ---
 
@@ -165,6 +165,6 @@ Test-Time Training represents a paradigm shift in how we scale LLM intelligence,
 
 As a practitioner who builds and breaks LLM defenses, this work terrifies me because it proves that the push for test-time efficiency is directly colliding with safety. We have spent years hardening static prompt guardrails, but this paper shows that dynamic inference-compute scaling completely rewrites the rules. 
 
-Imagine an enterprise deploying a proprietary \$10M customer-facing agent that uses on-the-fly LoRA personalization. An attacker can hijack the dynamic optimization loop for less than \$2, instantly bypassing safety alignments to generate malicious weapon blueprints or exfiltrate sensitive data. This is not a theoretical threat; it is an active vulnerability for any architecture exposing adaptive APIs. 
+Imagine an enterprise deploying a proprietary \$10M customer-facing agent that uses on-the-fly LoRA personalization. An attacker can hijack the dynamic optimization loop for less than \$22, instantly bypassing safety alignments to generate malicious weapon blueprints or exfiltrate sensitive data. This is not a theoretical threat; it is an active vulnerability for any architecture exposing adaptive APIs. 
 
 This finding directly builds on my prior work in [Security in the Fine-Tuning Lifecycle of Large Language Models: Threats, Defenses, Evaluation, and Future Directions](/writing/security_in_the_finetuning_lifecycle_of_large_language_model), where I warned that letting untrusted inputs influence model training or adaptation phases inevitably collapses the safety boundary. If a model's weights can be warped in just five gradient steps at inference, our current static RLHF paradigm is effectively dead. We must transition to real-time, state-aware verification layers that sit outside the target model's optimization loop.
