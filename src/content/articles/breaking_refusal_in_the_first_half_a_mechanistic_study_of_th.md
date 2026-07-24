@@ -2,6 +2,8 @@
 title: "Breaking Refusal in the First Half: A Mechanistic Study of the Prefill Jailbreak"
 date: "2026-07-19"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14147"
+paperAuthors: "Alex Kwon"
 description: "The \"Prefill Jailbreak\" (forcing the assistant to start its response with affirmative phrases like \"Sure, here is\") bypasses safety refusal not by destroying prompt-side harm…"
 tags: ["AI Security"]
 readingTime: 10

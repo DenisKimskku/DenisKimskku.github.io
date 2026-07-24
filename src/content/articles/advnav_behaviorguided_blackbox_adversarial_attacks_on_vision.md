@@ -2,6 +2,8 @@
 title: "AdvNav: Behavior-Guided Black-Box Adversarial Attacks on Vision-Language Navigation"
 date: "2026-07-15"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.11063"
+paperAuthors: "Chenyang Li, Kaige Li, Zeyu Jiang, et al."
 description: "AdvNav is a gradient-free, black-box adversarial attack that crafts visually imperceptible, low-frequency Perlin noise to systematically derail Vision-Language Navigation (VLN)…"
 tags: ["AI Security"]
 readingTime: 10

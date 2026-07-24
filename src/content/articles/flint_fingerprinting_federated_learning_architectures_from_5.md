@@ -2,6 +2,8 @@
 title: "FLINT: Fingerprinting Federated Learning Architectures from 5G PHY-Layer Side Channels"
 date: "2026-07-21"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.15469"
+paperAuthors: "Md Nahid Hasan Shuvo, Mahmudul Hassan Ashik, Moinul Hossain"
 description: "FLINT is a passive, over-the-air side-channel attack that reconstructs rotating temporary physical-layer identifiers (RNTIs) and uses multi-view temporal modeling of unencrypted…"
 tags: ["AI Security"]
 readingTime: 10

@@ -2,6 +2,8 @@
 title: "DataShield: Uncovering Risky Fine-Tuning Data Across LLMs Through Consensus Subspace Alignment"
 date: "2026-07-18"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.15081"
+paperAuthors: "Zefeng Wu, Weiwei Qi, Jielong Chen, et al."
 description: "DataShield is a defense framework that prevents safety degradation during LLM fine-tuning by extracting consensus safe/unsafe semantic subspaces from an ensemble of reference…"
 tags: ["AI Security"]
 readingTime: 9

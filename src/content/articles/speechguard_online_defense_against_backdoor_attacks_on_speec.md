@@ -2,6 +2,8 @@
 title: "SpeechGuard: Online Defense against Backdoor Attacks on Speech Recognition Models"
 date: "2026-07-21"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.15697"
+paperAuthors: "Jinwen Xin, Xixiang Lv"
 description: "An online, two-stage backdoor defense pipeline (SpeechGuard) that uses SNR-adaptive perturbation (S-STRIP) to detect poisoned audio inputs and an autoencoder-generated…"
 tags: ["AI Security"]
 readingTime: 9

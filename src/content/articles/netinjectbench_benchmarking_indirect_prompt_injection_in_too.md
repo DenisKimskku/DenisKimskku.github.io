@@ -2,6 +2,8 @@
 title: "NetInjectBench: Benchmarking Indirect Prompt Injection in Tool-Using Large Language Model Agents for Network Operations"
 date: "2026-07-15"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.10490"
+paperAuthors: "Ruksat Khan Shayoni, Muhammad Faraz Shoaib, S M Asif Hossain, et al."
 description: "What**: NetInjectBench is a 130-scenario benchmark evaluating indirect prompt injection (IPI) attacks on tool-using network operations (NetOps) LLM agents, demonstrating that…"
 tags: ["AI Security"]
 readingTime: 10

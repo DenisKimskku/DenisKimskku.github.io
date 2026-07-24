@@ -2,6 +2,8 @@
 title: "Bulkhead: Automated Semantic Detection and Remediation of Container Escape Vulnerabilities"
 date: "2026-07-16"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.12723"
+paperAuthors: "Qiyuan Fan, Zhi Li, Junjie Li, et al."
 description: "Bulkhead is an automated framework that combines the semantic reasoning of Large Language Models (LLMs) with the formal verification rigor of model checking (SPIN/Promela) to…"
 tags: ["AI Security"]
 readingTime: 10

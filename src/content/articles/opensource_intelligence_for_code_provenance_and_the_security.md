@@ -2,6 +2,8 @@
 title: "Open-Source Intelligence for Code Provenance and the Security Patterns that Separate Human and Large-Language-Model Implementations of Common Programming Tasks"
 date: "2026-07-16"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.12524"
+paperAuthors: "Mohammadreza Rashidi"
 description: "An open-source intelligence pipeline that uses lightweight, language-agnostic style and security features to classify code provenance (human vs."
 tags: ["AI Security"]
 readingTime: 10

@@ -2,6 +2,8 @@
 title: "BiRD: A Bidirectional Ranking Defense Mechanism for Retrieval Augmented Generation"
 date: "2026-06-14"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2605.20123"
+paperAuthors: "Chengcai Gao, Zhihong Sun, Xiaochuan Shi, et al."
 description: "BiRD (Bidirectional Ranking Defense) is an exceptionally fast, training-free RAG defense that filters poisoned documents by analyzing the correlation between a document's…"
 tags: ["RAG Security", "Data Poisoning", "LLM Security", "Adversarial Attacks"]
 readingTime: 10

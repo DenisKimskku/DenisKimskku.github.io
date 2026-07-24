@@ -2,6 +2,8 @@
 title: "(A)iSpy: Parasitic Trojans for Machine Learning Infrastructure"
 date: "2026-07-22"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.17550"
+paperAuthors: "Habibur Rahaman, Qipan Xu, Zafaryab Haider, et al."
 description: "(A)iSpy is a parasitic machine learning runtime Trojan that registers as a framework extension to manipulate transient memory states, enabling backdoor amplification from a…"
 tags: ["Data Poisoning", "Backdoors", "Supply Chain Security"]
 readingTime: 10

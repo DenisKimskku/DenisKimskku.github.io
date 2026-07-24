@@ -2,6 +2,8 @@
 title: "Input-Aware Dynamic Backdoor Attack Against Quantum Neural Networks"
 date: "2026-07-17"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.11843"
+paperAuthors: "Junrui Zhang, Zemin Chen, Lusi Li, et al."
 description: "Q-DIBA is the first input-aware dynamic backdoor attack designed for Quantum Neural Networks (QNNs), utilizing a classical trigger generator and pre-measurement ensemble density…"
 tags: ["AI Security"]
 readingTime: 9

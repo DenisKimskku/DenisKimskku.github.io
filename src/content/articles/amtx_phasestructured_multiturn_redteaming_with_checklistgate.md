@@ -2,6 +2,8 @@
 title: "AMT-X: Phase-Structured Multi-Turn Red-Teaming with Checklist-Gated Evaluation"
 date: "2026-07-15"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.11151"
+paperAuthors: "Yi Ting Shen, Kentaroh Toyoda, Alex Leung"
 description: "AMT-X (Adaptive Multi-Turn Exploitation) is a reproducible, phase-structured multi-turn red-teaming framework that uses a state-machine attacker guided by semantic signals…"
 tags: ["AI Security"]
 readingTime: 9

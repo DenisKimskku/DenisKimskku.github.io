@@ -2,6 +2,8 @@
 title: "Salience Induction against Multi-Hop RAG Agents: Threat and Defense"
 date: "2026-07-22"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.17535"
+paperAuthors: "Xingfu Zhou, Pengfei Wang, Yuan Zhou, et al."
 description: "A truth-preserving attack technique that manipulates presentation-level salience cues (position, formatting, epistemic tone, and semantic proximity) to hijack multi-hop RAG…"
 tags: ["RAG", "Adversarial Attacks", "AI Agents", "Vulnerabilities"]
 readingTime: 10

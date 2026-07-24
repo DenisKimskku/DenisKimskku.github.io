@@ -2,6 +2,8 @@
 title: "Random Logit Scaling: Defending Deep Neural Networks Against Black-Box Score-Based Adversarial Example Attacks"
 date: "2026-07-18"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14921"
+paperAuthors: "Hamid Dashtbani, Mehdi Dousti Gandomani, AmirMahdi Sadeghzadeh"
 description: "What**: Random Logit Scaling (RLS) is a lightweight, zero-accuracy-loss, post-processing defense that dynamically multiplies logits by a random scaling factor $m \\sim…"
 tags: ["AI Security"]
 readingTime: 9

@@ -2,6 +2,8 @@
 title: "Privacy Leakage in Federated Learning in Radiology Reports: A Comparative Evaluation of Tokenizer-Driven Privacy Risks"
 date: "2026-07-19"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14205"
+paperAuthors: "Santhosh Parampottupadam, Andres Martinez, Dimitrios Bounias, et al."
 description: "An active malicious server can reconstruct up to 43.5% of private radiology text sentences by injecting a 193K-parameter analytic \"imprint\" probe before positional embeddings…"
 tags: ["AI Security"]
 readingTime: 10

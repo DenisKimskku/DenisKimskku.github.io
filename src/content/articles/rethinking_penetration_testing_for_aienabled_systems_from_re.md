@@ -2,6 +2,8 @@
 title: "Rethinking Penetration Testing for AI-Enabled Systems: From Resource Compromise to Behavioral Objective Violation"
 date: "2026-07-17"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14006"
+paperAuthors: "Mohammad Allahbakhsh, Mohammad Hassan Bahari, Moslem Attar-Raouf"
 description: "Reframes penetration testing for AI systems from resource compromise (exploiting software vulnerabilities/infrastructure) to \"objective-driven behavioral evaluation\"—where…"
 tags: ["AI Security"]
 readingTime: 11

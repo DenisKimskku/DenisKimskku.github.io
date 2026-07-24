@@ -2,6 +2,8 @@
 title: "Stability Buys Time: A Re-Keying Game for Encrypted Multi-Agent Control"
 date: "2026-07-16"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.12742"
+paperAuthors: "Sai Sandeep Damera, John S. Baras"
 description: "A game-theoretic framework that dynamically schedules cryptographic re-keying cadences for approximate homomorphic (CKKS) multi-agent control loops based on the control-theoretic…"
 tags: ["AI Security"]
 readingTime: 9

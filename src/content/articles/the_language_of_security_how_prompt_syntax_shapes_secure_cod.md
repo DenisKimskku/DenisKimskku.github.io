@@ -2,6 +2,8 @@
 title: "The Language of Security: How Prompt Syntax Shapes Secure Code Generation in Open LLMs"
 date: "2026-07-21"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.15937"
+paperAuthors: "Matteo Cicalese, Antonio Della Porta, Stefano Lambiase, et al."
 description: "Casual linguistic edits, such as shortening a prompt or removing relative adverbial clauses (like \"how\" or \"which\"), can systematically trigger open-weight LLMs to generate…"
 tags: ["AI Security"]
 readingTime: 10

@@ -2,6 +2,8 @@
 title: "The Effect of Multi-Lingual and Keyword Adversarial Injection on LLM Relevance Judgment"
 date: "2026-07-17"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.10080"
+paperAuthors: "Nguyen Khoi Vo, Duy Duong Tuong, Oleg Zendel, et al."
 description: "Multilingual content-based adversarial prompt injections (query phrases, variants, and distractor text) that bypass LLM-centric defenses to artificially inflate document…"
 tags: ["AI Security"]
 readingTime: 9

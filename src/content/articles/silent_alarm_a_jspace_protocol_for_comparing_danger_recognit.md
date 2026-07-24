@@ -2,6 +2,8 @@
 title: "Silent Alarm: A J-Space Protocol for Comparing Danger Recognition Across Models and Quantization Levels"
 date: "2026-07-16"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.12792"
+paperAuthors: "Roman Prosvirnin, Victor Minchenkov, Alexey Soldatov, et al."
 description: "JADR (Jacobian Assessment of Danger Recognition) is a white-box, generation-free protocol that probes an LLM's internal representation (\"J-space\") at the prompt's decision point…"
 tags: ["AI Security"]
 readingTime: 8

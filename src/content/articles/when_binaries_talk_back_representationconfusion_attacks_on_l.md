@@ -2,6 +2,8 @@
 title: "When Binaries Talk Back: Representation-Confusion Attacks on LLM-Assisted Reverse Engineering"
 date: "2026-07-16"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.12507"
+paperAuthors: "Igor Santos-Grueiro"
 description: "Representation-Confusion Attacks in Reverse Engineering (RARE) exploit AI-assisted binary analysis pipelines by tricking the LLM into promoting untrusted, attacker-controlled…"
 tags: ["AI Security"]
 readingTime: 10

@@ -2,6 +2,8 @@
 title: "Agent Hacks Agent: Autoresearch for Production-Agent Red-Teaming"
 date: "2026-07-15"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.11698"
+paperAuthors: "Xutao Mao, Xiang Zheng, Cong Wang"
 description: "AHA (Agent Hacks Agents) is an automated red-teaming framework that uses a falsifiable research loop to discover structured, reusable \"vulnerability concepts\" (represented as a…"
 tags: ["AI Security"]
 readingTime: 10

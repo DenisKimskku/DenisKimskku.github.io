@@ -2,6 +2,8 @@
 title: "PVDetector: Detecting Prompt Injection Attacks on Purpose-Specific LLM Agents through Policy-Violation Concept Analysis"
 date: "2026-07-16"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.12624"
+paperAuthors: "Junhui Wang, Hangtao Zhang, Zhirun Zheng, et al."
 description: "PVDetector is a training-free prompt injection (PI) detection framework that isolates \"policy-violation\" (PV) concepts in the LLM's hidden activation space and measures real-time…"
 tags: ["AI Security"]
 readingTime: 11

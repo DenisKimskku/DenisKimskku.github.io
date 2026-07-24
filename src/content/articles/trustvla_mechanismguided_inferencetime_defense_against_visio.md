@@ -2,6 +2,8 @@
 title: "TrustVLA: Mechanism-Guided Inference-Time Defense Against Vision-Language-Action Backdoors"
 date: "2026-07-16"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.12571"
+paperAuthors: "Pinhan Fu, Xianda Guo, Xuetao Li, et al."
 description: "TrustVLA is a retraining-free, inference-time defense for Vision-Language-Action (VLA) models that uses per-token, per-layer Dirichlet evidence tracking to detect visual-trigger…"
 tags: ["AI Security"]
 readingTime: 11

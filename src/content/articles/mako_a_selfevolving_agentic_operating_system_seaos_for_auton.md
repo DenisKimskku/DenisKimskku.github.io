@@ -2,6 +2,8 @@
 title: "Mako: A Self-Evolving Agentic Operating System (SE-AOS) for Autonomous Web Exploitation"
 date: "2026-07-15"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.11288"
+paperAuthors: "Praneeth Narisetty, Shiva Nagendra Babu Kore"
 description: "Mako is a Self-Evolving Agentic Operating System (SE-AOS) that treats security exploitation capabilities as a mutable, versioned kernel, dynamically extending its own tool…"
 tags: ["AI Security"]
 readingTime: 9

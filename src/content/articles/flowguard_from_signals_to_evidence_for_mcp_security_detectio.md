@@ -2,6 +2,8 @@
 title: "FlowGuard: From Signals to Evidence for MCP Security Detection"
 date: "2026-07-18"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14754"
+paperAuthors: "Baichao An, Pei Chen, Geng Hong, et al."
 description: "FlowGuard is an evidence-grounded security scanner for the Model Context Protocol (MCP) that combines semantic risk triage, reconnaissance-guided probing, and runtime response…"
 tags: ["AI Security"]
 readingTime: 9

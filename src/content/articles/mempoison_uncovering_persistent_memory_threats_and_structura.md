@@ -2,6 +2,8 @@
 title: "MemPoison: Uncovering Persistent Memory Threats and Structural Blind Spots in LLM Agents"
 date: "2026-07-18"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14651"
+paperAuthors: "Jifeng Gao, Kang Xia, Yi Zhang, et al."
 description: "MemPoison is a comprehensive benchmark and analysis framework that systematically evaluates persistent memory poisoning attacks on LLM agents using a three-tier taxonomy (L1…"
 tags: ["AI Security"]
 readingTime: 9

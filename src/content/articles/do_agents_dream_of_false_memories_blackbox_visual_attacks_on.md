@@ -2,6 +2,8 @@
 title: "Do Agents Dream of False Memories? Black-box Visual Attacks on Long-term Memory in Multimodal AI Agents"
 date: "2026-07-21"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.15657"
+paperAuthors: "Halima Bouzidi, Mboutidem Ekemini Mkpong, Mohammad Abdullah Al Faruque"
 description: "LUCID is a black-box, image-only adversarial attack that compromises multimodal long-term memory in AI agents, injecting \"false memories\" without altering text or database indices."
 tags: ["AI Security"]
 readingTime: 7

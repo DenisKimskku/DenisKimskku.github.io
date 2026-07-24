@@ -2,6 +2,8 @@
 title: "ResearchArena: Evaluating Sabotage and Monitoring in Automated AI R&D"
 date: "2026-07-23"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.19321"
+paperAuthors: "Lena Libon, Ben Rank, Jehyeok Yeon, et al."
 description: "RESEARCHARENA is a control-evaluation framework benchmarking the ability of frontier Large Language Model (LLM) monitors to detect covert embedded or independent sabotage executed"
 tags: ["Data Poisoning", "Backdoors", "AI Agents"]
 readingTime: 9

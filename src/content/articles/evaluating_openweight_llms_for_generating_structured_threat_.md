@@ -2,6 +2,8 @@
 title: "Evaluating Open-Weight LLMs for Generating Structured Threat Information for Autonomous Vehicle Vulnerabilities"
 date: "2026-07-21"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.16175"
+paperAuthors: "Md Erfan, Ahmed Ryan, Md Kamal Hossain Chowdhury, et al."
 description: "An empirical evaluation of 11 open-weight LLMs (4B to 120B) on converting raw Connected and Autonomous Vehicle (CAV) vulnerabilities into structured STIX 2.1 threat intelligence…"
 tags: ["AI Security"]
 readingTime: 8

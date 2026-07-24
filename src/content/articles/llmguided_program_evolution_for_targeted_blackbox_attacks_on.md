@@ -2,6 +2,8 @@
 title: "LLM-Guided Program Evolution for Targeted Black-Box Attacks on Perceptual Hash Algorithms"
 date: "2026-07-15"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.11472"
+paperAuthors: "A. Krylov, D. Rakhov, V. Veselova, et al."
 description: "LLM-guided program evolution (using OpenEvolve and GigaEvo) automates targeted black-box collision attacks on perceptual hashing algorithms by writing and iteratively refining…"
 tags: ["AI Security"]
 readingTime: 8

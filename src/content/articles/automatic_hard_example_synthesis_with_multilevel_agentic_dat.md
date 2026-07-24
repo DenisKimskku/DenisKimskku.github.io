@@ -2,6 +2,8 @@
 title: "Automatic Hard Example Synthesis with Multi-Level Agentic Data Curation"
 date: "2026-07-19"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14256"
+paperAuthors: "Genglin Liu, Muye Zhang, Krishnamurthy Viswanathan, et al."
 description: "An automated multi-agent framework that uses an evolutionary \"Explore and Mutate\" strategy to autonomously generate, debate, and label highly ambiguous visual policy violations…"
 tags: ["AI Security"]
 readingTime: 9

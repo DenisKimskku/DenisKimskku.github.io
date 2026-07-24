@@ -2,6 +2,8 @@
 title: "MJ: Multi-turn LLM Jailbreaking via Decomposed Credit Assignment"
 date: "2026-07-17"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.11070"
+paperAuthors: "Junyoung Park, Namgyu Park, Sechan Lee, et al."
 description: "DC-GRPO (Decomposed Credit Group Relative Policy Optimization) is a turn-level reinforcement learning framework that decouples immediate and future rewards to train highly…"
 tags: ["AI Security"]
 readingTime: 8

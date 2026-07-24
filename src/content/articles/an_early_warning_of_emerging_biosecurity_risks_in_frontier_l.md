@@ -2,6 +2,8 @@
 title: "An Early Warning of Emerging Biosecurity Risks in Frontier LLMs"
 date: "2026-07-22"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.18056"
+paperAuthors: "Zhida He, Xia Hu, Baichen Le, et al."
 description: "Intern-BioBreaker bypasses frontier LLM safety alignment using a specialized four-stage bio-red-teaming pipeline to generate obfuscated, screening-evasive DNA sequences for…"
 tags: ["Adversarial Attacks", "Vulnerabilities"]
 readingTime: 10

@@ -2,6 +2,8 @@
 title: "One Token Is Enough: Fingerprinting and Verifying Large Language Models from Single-Token Output Distributions"
 date: "2026-07-15"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.10252"
+paperAuthors: "Tomas Bruckner"
 description: "A black-box behavioral fingerprinting and verification protocol for LLMs that uses the empirical distribution of single-token responses to simple \"random-choice\" prompts to…"
 tags: ["AI Security"]
 readingTime: 10

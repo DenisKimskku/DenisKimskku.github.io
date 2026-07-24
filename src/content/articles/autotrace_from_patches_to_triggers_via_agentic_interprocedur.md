@@ -2,6 +2,8 @@
 title: "AutoTrace: From Patches to Triggers via Agentic Interprocedural Exploration"
 date: "2026-07-16"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.12058"
+paperAuthors: "Arastoo Zibaeirad, Marco Vieira, Thomas Zimmermann"
 description: "AutoTrace is an agentic framework that localizes deep interprocedural vulnerability triggers by combining LLM-guided call-graph exploration with rigid, deterministic Code…"
 tags: ["AI Security"]
 readingTime: 10
