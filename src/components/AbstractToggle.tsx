@@ -9,6 +9,12 @@ interface AbstractToggleProps {
 export default function AbstractToggle({ abstract }: AbstractToggleProps) {
   const [expanded, setExpanded] = useState(false);
 
+  // Korean abstracts (KIISC/KIISC-venue papers) render poorly in italic and
+  // need lang="ko" for correct hyphenation/screen-reader pronunciation
+  // (WCAG 3.1.2). Detect any Hangul syllable and, when present, tag the text
+  // as Korean and drop the italic styling.
+  const isKorean = /[가-힯]/.test(abstract);
+
   return (
     <div>
       <button
@@ -23,7 +29,12 @@ export default function AbstractToggle({ abstract }: AbstractToggleProps) {
       </button>
 
       {expanded && (
-        <p className="mt-3 text-sm text-[var(--color-text-secondary)] leading-relaxed border-l-2 border-[var(--color-border)] pl-3 italic">
+        <p
+          lang={isKorean ? 'ko' : undefined}
+          className={`mt-3 text-sm text-[var(--color-text-secondary)] leading-relaxed border-l-2 border-[var(--color-border)] pl-3${
+            isKorean ? '' : ' italic'
+          }`}
+        >
           {abstract}
         </p>
       )}

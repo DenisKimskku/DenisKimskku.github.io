@@ -139,6 +139,7 @@ export default async function Resume() {
       // Same @id as the homepage Person node so the graphs merge.
       '@id': `${siteMetadata.siteUrl}#person`,
       name: siteMetadata.authorName,
+      alternateName: ['김민석', 'Kim Minseok'],
       url: siteMetadata.siteUrl,
       sameAs: siteMetadata.profiles,
       jobTitle: 'Ph.D. Student & AI Security Researcher',
