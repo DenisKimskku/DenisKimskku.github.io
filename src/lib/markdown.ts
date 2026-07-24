@@ -10,7 +10,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeKatex from 'rehype-katex';
 import rehypeStringify from 'rehype-stringify';
-import { visit } from 'unist-util-visit';
+import { visit, SKIP } from 'unist-util-visit';
 import sharp from 'sharp';
 import type { Root, Element } from 'hast';
 import type { Root as MdastRoot } from 'mdast';
@@ -191,6 +191,28 @@ function rehypeLazyImages(options: { title: string }) {
   };
 }
 
+// Wide tables clip on phones: html/body clip overflow-x and .article-content
+// table is width:100% with no scroll rule, so columns past the viewport edge
+// are unreachable at ~375px. Wrap each <table> in a scroll container (mirrors
+// the .katex-display fix in globals.css). The wrapper is a div, not
+// display:block on the table, so table semantics stay intact for screen
+// readers. Returning SKIP stops descent into the table's own rows and lets the
+// parent loop advance past the wrapper, so the table is never re-wrapped.
+function rehypeWrapTables() {
+  return (tree: Root) => {
+    visit(tree, 'element', (node: Element, index: number | undefined, parent: Element | Root | undefined) => {
+      if (node.tagName !== 'table' || !parent || typeof index !== 'number') return;
+      parent.children[index] = {
+        type: 'element',
+        tagName: 'div',
+        properties: { className: ['table-scroll'] },
+        children: [node],
+      };
+      return SKIP;
+    });
+  };
+}
+
 const articlesDirectory = path.join(process.cwd(), 'src', 'content', 'articles');
 
 // Simple build-time cache to avoid reprocessing articles
@@ -222,6 +244,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
       .use(rehypeSlug)
       .use(rehypeKatex)
       .use(rehypeHighlight)
+      .use(rehypeWrapTables)
       .use(rehypeLazyImages, { title: String(data.title || '') })
       .use(rehypeStringify)
       .process(normalizeDisplayMath(content));

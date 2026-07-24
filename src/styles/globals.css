@@ -207,6 +207,18 @@
     opacity: 1;
   }
 
+  /* Hover-only reveal hides the button on touch and keyboard. Show it always
+     where hover is unavailable, and whenever it receives keyboard focus. */
+  @media (hover: none) {
+    .code-copy-btn {
+      opacity: 1;
+    }
+  }
+
+  .code-copy-btn:focus-visible {
+    opacity: 1;
+  }
+
   .code-copy-btn:hover {
     color: #f5f5f5;
   }
@@ -251,6 +263,18 @@
   .article-content .katex-display {
     overflow-x: auto;
     overflow-y: hidden;
+  }
+
+  /* Wide tables are width:100% with no overflow rule; html/body clip
+     overflow-x, so columns past the viewport edge are unreachable on phones.
+     The wrapper (added by rehypeWrapTables) scrolls; the <table> keeps its
+     semantics. Scoped under .article-content (like .katex-display above) so
+     Tailwind's layer tree-shaking keeps it — a bare .table-scroll class never
+     appears in scanned source (rehype injects it) and gets purged. */
+  .article-content .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
   }
 
   /* Table of Contents */
@@ -333,6 +357,18 @@
   /* Focus styles for accessibility */
   .focus-ring {
     @apply focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:ring-offset-2 focus:ring-offset-[var(--color-bg)];
+  }
+}
+
+/* iOS Safari zooms the viewport when a focused input's font-size is < 16px.
+ * Enforce a >= 16px effective size on coarse-pointer (touch) devices only, so
+ * desktop sizing is untouched. Deliberately no viewport maximum-scale, which
+ * would break pinch-to-zoom accessibility. */
+@media (pointer: coarse) {
+  input,
+  textarea,
+  select {
+    font-size: max(16px, 1em);
   }
 }
 
