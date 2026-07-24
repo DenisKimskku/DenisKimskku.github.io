@@ -109,4 +109,4 @@ jobs:
       - name: Ntfy alert on watchdog failure
         if: failure()
         run: |
-          curl -s -H 'Title: SITE WATCHDOG FAILED' -H 'Priority: high' -d 'deniskim1.com content watchdog failed — check Actions' ntfy.sh/deniskim-kb
+          curl -s -H 'Title: SITE WATCHDOG FAILED' -H 'Priority: high' -d 'deniskim1.com content watchdog failed — check Actions' ntfy.sh/${{ secrets.NTFY_TOPIC || 'deniskim-kb' }}

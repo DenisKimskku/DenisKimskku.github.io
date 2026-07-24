@@ -50,7 +50,7 @@ jobs:
           echo "$modified"
           curl -s -H 'Title: AUTO-CONTENT OVERWROTE EXISTING ARTICLE' -H 'Priority: high' \
             --data-binary "$(printf 'Auto-generated commit %s modified existing article(s):\n%s' "$GITHUB_SHA" "$modified")" \
-            ntfy.sh/deniskim-kb || true
+            ntfy.sh/${{ secrets.NTFY_TOPIC || 'deniskim-kb' }} || true
           # One open issue is enough; don't file a new one per collision.
           existing=$(gh issue list --repo "${{ github.repository }}" --state open \
             --search "Automation overwrote existing article in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
@@ -94,7 +94,7 @@ jobs:
           if [ -f quarantined-articles.txt ]; then
             curl -s -H 'Title: ARTICLE QUARANTINED — deploy continued' -H 'Priority: high' \
               --data-binary "$(printf 'Deploy continued without unparseable article(s):\n%s' "$(cat quarantined-articles.txt)")" \
-              ntfy.sh/deniskim-kb || true
+              ntfy.sh/${{ secrets.NTFY_TOPIC || 'deniskim-kb' }} || true
           fi
 
       - name: Build with Next.js
@@ -111,7 +111,7 @@ jobs:
       - name: Ntfy alert on build failure
         if: failure()
         run: |
-          curl -s -H 'Title: SITE DEPLOY FAILED' -H 'Priority: high' -d 'deniskim1.com deploy failed — check Actions' ntfy.sh/deniskim-kb
+          curl -s -H 'Title: SITE DEPLOY FAILED' -H 'Priority: high' -d 'deniskim1.com deploy failed — check Actions' ntfy.sh/${{ secrets.NTFY_TOPIC || 'deniskim-kb' }}
 
       - name: File issue on build failure
         if: failure()
@@ -210,7 +210,7 @@ jobs:
       - name: Ntfy alert on deploy failure
         if: failure()
         run: |
-          curl -s -H 'Title: SITE DEPLOY FAILED' -H 'Priority: high' -d 'deniskim1.com deploy failed — check Actions' ntfy.sh/deniskim-kb
+          curl -s -H 'Title: SITE DEPLOY FAILED' -H 'Priority: high' -d 'deniskim1.com deploy failed — check Actions' ntfy.sh/${{ secrets.NTFY_TOPIC || 'deniskim-kb' }}
 
       - name: File issue on deploy failure
         if: failure()
