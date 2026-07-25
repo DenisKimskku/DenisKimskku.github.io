@@ -1,5 +1,87 @@
 [
   {
+    "slug": "this_week_in_ai_security__july_26_2026",
+    "title": "This Week in AI Security \u2014 July 26, 2026",
+    "date": "2026-07-26",
+    "type": "Trend Report",
+    "description": "AI security is shifting from input manipulation to systemic risks in multi-agent workflows and operational systems.",
+    "tags": [
+      "LLM Security",
+      "Agentic AI",
+      "RAG",
+      "Adversarial Attacks",
+      "System Security",
+      "State Manipulation"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "ai_security_digest__july_26_2026",
+    "title": "AI Security Digest \u2014 July 26, 2026",
+    "date": "2026-07-26",
+    "type": "News Digest",
+    "description": "New research highlights autonomous offensive capabilities in LLMs, showing Claude Opus 5 penetrating networks. Focus areas include gradient injection and agent verification.",
+    "tags": [
+      "LLM Security",
+      "Agentic AI",
+      "Prompt Injection",
+      "Adversarial Attacks",
+      "Network Security",
+      "Gradient Injection"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "cryptanalysisbench_can_llms_do_cryptanalysis",
+    "title": "CryptanalysisBench: Can LLMs do Cryptanalysis?",
+    "date": "2026-07-26",
+    "type": "Paper Review",
+    "description": "CryptanalysisBench is a standardized, game-based evaluation framework designed to measure the automated cryptanalytic capabilities of Large Language Models (LLMs) against",
+    "tags": [
+      "AI Agents",
+      "Vulnerabilities"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "attacking_graph_foundation_models_through_their_shared_repre",
+    "title": "Attacking Graph Foundation Models Through Their Shared Representation",
+    "date": "2026-07-26",
+    "type": "Paper Review",
+    "description": "The ALIGN attack targets the shared representation bottleneck (the alignment layer) of Graph Foundation Models (GFMs) at inference time, collapsing cross-domain generalization",
+    "tags": [
+      "Adversarial Attacks"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "receipt_deterministic_rewardhackingresistant_verification_fo",
+    "title": "RECEIPT: Deterministic, Reward-Hacking-Resistant Verification for White-Box Agentic XSS Discovery",
+    "date": "2026-07-26",
+    "type": "Paper Review",
+    "description": "RECEIPT is a deterministic, reward-hacking-resistant verification framework that isolates LLM security agents within ephemeral sandboxes and forces them to produce reproducible",
+    "tags": [
+      "RAG",
+      "AI Agents",
+      "Vulnerabilities"
+    ],
+    "readingTime": 14
+  },
+  {
+    "slug": "cpinj_uncovering_prompt_injection_risks_in_textual_collabora",
+    "title": "CPInj: Uncovering Prompt Injection Risks in Textual Collaborative Prompt Optimization",
+    "date": "2026-07-26",
+    "type": "Paper Review",
+    "description": "CPInj is a multi-objective textual gradient attack that injects highly persistent and stealthy adversarial instructions into collaborative prompt optimization loops, completely",
+    "tags": [
+      "Prompt Injection",
+      "Data Poisoning",
+      "Adversarial Attacks",
+      "Vulnerabilities"
+    ],
+    "readingTime": 11
+  },
+  {
     "slug": "ai_security_digest__july_25_2026",
     "title": "AI Security Digest \u2014 July 25, 2026",
     "date": "2026-07-25",
