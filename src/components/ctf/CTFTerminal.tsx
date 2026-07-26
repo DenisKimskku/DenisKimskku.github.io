@@ -127,11 +127,25 @@ export default function CTFTerminal() {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const getAuthHeaders = (): Record<string, string> => {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('ctf_session_id');
+      if (saved) {
+        headers['X-Session-ID'] = saved;
+      }
+    }
+    return headers;
+  };
+
   const fetchStatus = async () => {
     try {
-      const res = await fetch(`${BACKEND_URL}/api/status`, { credentials: 'include' });
+      const res = await fetch(`${BACKEND_URL}/api/status`, { headers: getAuthHeaders() });
       if (res.ok) {
         const data = await res.json();
+        if (data.session_id && typeof window !== 'undefined') {
+          localStorage.setItem('ctf_session_id', data.session_id);
+        }
         setCompletedLevels(data.completed_levels || []);
         setUserMaxUnlocked(data.current_level || 1);
         setBackendStatus('online');
@@ -154,7 +168,7 @@ export default function CTFTerminal() {
     ]);
 
     try {
-      const res = await fetch(`${BACKEND_URL}/api/level/${lvl}`, { credentials: 'include' });
+      const res = await fetch(`${BACKEND_URL}/api/level/${lvl}`, { headers: getAuthHeaders() });
       if (res.ok) {
         const data: LevelMeta = await res.json();
         setActiveMeta(data);
@@ -166,7 +180,7 @@ export default function CTFTerminal() {
 
   const fetchHints = async (lvl: number) => {
     try {
-      const res = await fetch(`${BACKEND_URL}/api/hint/${lvl}`, { credentials: 'include' });
+      const res = await fetch(`${BACKEND_URL}/api/hint/${lvl}`, { headers: getAuthHeaders() });
       if (res.ok) {
         const data: HintData = await res.json();
         setHintData(data);
@@ -196,8 +210,7 @@ export default function CTFTerminal() {
     try {
       const res = await fetch(`${BACKEND_URL}/api/chat`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
+        headers: getAuthHeaders(),
         body: JSON.stringify({ level: currentLevel, prompt: userMsg }),
       });
 
@@ -226,13 +239,13 @@ export default function CTFTerminal() {
         const errData = await res.json().catch(() => ({ detail: 'Request failed' }));
         setMessages((prev) => [
           ...prev,
-          { sender: 'system', text: `[Error ${res.status}] ${errData.detail || 'Failed'}` },
+          { sender: 'system', text: `[Notice ${res.status}] ${errData.detail || 'Inference engine initializing...'}` },
         ]);
       }
     } catch {
       setMessages((prev) => [
         ...prev,
-        { sender: 'system', text: '[Error] Unable to communicate with CTF inference backend.' },
+        { sender: 'system', text: '[Notice] Inference engine initializing. Please send payload again in a moment.' },
       ]);
     } finally {
       setLoading(false);
@@ -246,8 +259,7 @@ export default function CTFTerminal() {
     try {
       const res = await fetch(`${BACKEND_URL}/api/submit_flag`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
+        headers: getAuthHeaders(),
         body: JSON.stringify({ level: currentLevel, flag: flagInput.trim() }),
       });
 

@@ -8,7 +8,7 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 
-# CORS configuration to allow Next.js frontend requests across custom domains & local environments
+# Allowed CORS origins for Next.js frontend
 origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
@@ -23,7 +23,7 @@ app.add_middleware(
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=["*", "X-Session-ID", "x-session-id"],
 )
 
 app.include_router(router, prefix=settings.API_V1_STR)
