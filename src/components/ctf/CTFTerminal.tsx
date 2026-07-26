@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import OWASPWriteups from './OWASPWriteups';
 import CTFCertificate from './CTFCertificate';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_CTF_BACKEND_URL || 'http://localhost:8000';
+const BACKEND_URL = process.env.NEXT_PUBLIC_CTF_BACKEND_URL || 'https://ctf-api.deniskim1.com';
 
 interface LevelMeta {
   level: number;
@@ -474,7 +474,7 @@ export default function CTFTerminal() {
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block" />
                     <span className="text-[var(--color-text-secondary)] text-[11px] ml-2 font-mono">ctf_arena ~ level_{currentLevel}.py</span>
                   </div>
-                  <span className="text-[var(--color-text-muted)] text-[10px]">Ollama (qwen3:8b)</span>
+                  <span className="text-[var(--color-text-muted)] text-[10px] font-mono">[AI Security Sandbox]</span>
                 </div>
 
                 {/* Chat Output Area */}

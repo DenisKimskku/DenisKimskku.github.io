@@ -8,10 +8,13 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 
-# CORS configuration to allow local Next.js frontend requests
+# CORS configuration to allow Next.js frontend requests across custom domains & local environments
 origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://deniskim1.com",
+    "https://ctf.deniskim1.com",
+    "https://ctf-api.deniskim1.com",
     "https://deniskimskku.github.io",
 ]
 
