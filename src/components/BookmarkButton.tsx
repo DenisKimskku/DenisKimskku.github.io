@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { isBookmarked, toggleBookmark } from '@/lib/bookmarks';
 
 interface BookmarkButtonProps {
@@ -9,11 +9,15 @@ interface BookmarkButtonProps {
 }
 
 export default function BookmarkButton({ slug, onToggle }: BookmarkButtonProps) {
-  const [bookmarked, setBookmarked] = useState(false);
+  const [prevSlug, setPrevSlug] = useState(slug);
+  const [bookmarked, setBookmarked] = useState(() =>
+    typeof window !== 'undefined' ? isBookmarked(slug) : false
+  );
 
-  useEffect(() => {
+  if (slug !== prevSlug) {
+    setPrevSlug(slug);
     setBookmarked(isBookmarked(slug));
-  }, [slug]);
+  }
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
