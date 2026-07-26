@@ -49,7 +49,7 @@ Standard defenses fail because they do not account for the unique characteristic
 | **FoolsGold** (Fung et al. [19]) | Measures cosine similarity of historical updates to identify sybils. | Fails to handle legitimate environment heterogeneity and non-stationary RL trajectories. |
 | **FABA** (Xia et al. [22]) | Iteratively removes updates furthest from the mean update. | Blind to sophisticated adaptive attacks that subtly manipulate the gradient direction. |
 | **FedPG-BR** (Fan et al. [18]) | Uses median-of-means aggregation specifically for FRL. | Fails against advanced historical state and adaptive attacks designed to exploit temporal correlations. |
-| **SecApp** (Ours) | Spatial majority filtering coupled with temporal-drift bounding ($\lambda$-scaling) relative to historical parameters. | None identified within the evaluated simulator, though vulnerable to highly synchronized colluding attackers. |
+| **SecApp** (proposed) | Spatial majority filtering coupled with temporal-drift bounding ($\lambda$-scaling) relative to historical parameters. | None identified within the evaluated simulator, though vulnerable to highly synchronized colluding attackers. |
 
 ---
 
@@ -100,7 +100,7 @@ Once the set $S$ is established, SecApp identifies a "center" gradient $\mu_t^S$
 $$\mu_t^S = \text{argmin}_{\mu_t^{\tilde{k}}} \|\mu_t^{\tilde{k}} - \text{mean}(S)\| \quad \text{s.t.} \quad \tilde{k} \in S$$
 
 ### 3. Distance-Based Temporal Refinement
-To prevent slow, cumulative poisoning (such as "A Little Is Enough" or historical trajectory-drifting attacks), the server defines an aggregation subset $\mathcal{W}_t$. An update $\mu_t^k$ is only included in $\mathcal{W}_t$ if its distance from the *previous* round's aggregate gradient $\mu_{t-1}$ is bounded relative to the drift of our secure spatial benchmark $\mu_t^S$:
+To prevent slow, cumulative poisoning (such as "A Little Is Enough" or historical trajectory-drifting attacks), the server defines an aggregation subset $\mathcal{W}_t$. An update $\mu_t^k$ is only included in $\mathcal{W}_t$ if its distance from the *previous* round's aggregate gradient $\mu_{t-1}$ is bounded relative to the drift of the secure spatial benchmark $\mu_t^S$:
 
 $$\|\mu_t^k - \mu_{t-1}\| \le \lambda \|\mu_t^S - \mu_{t-1}\|$$
 
@@ -154,7 +154,7 @@ The framework was evaluated on **HighwayDT**, a SUMO-CARLA co-simulation environ
 | **FedPG** [18] | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 10.14% | 13.76% | 14.19% | 8.97% | 100.0% | 17.06% |
 | **FLAME** [53] | 100.0% | 100.0% | 100.0% | 10.24% | 100.0% | 100.0% | 11.95% | 100.0% | 8.92% | 29.24% | 100.0% |
 | **Deepsight** [52] | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 14.22% | 14.34% | 100.0% | 12.33% | 100.0% | 100.0% |
-| **SecApp** (Ours) | **100.0%** | **100.0%** | **100.0%** | **100.0%** | **100.0%** | **100.0%** | **100.0%** | **100.0%** | **100.0%** | **100.0%** | **100.0%** |
+| **SecApp** (proposed) | **100.0%** | **100.0%** | **100.0%** | **100.0%** | **100.0%** | **100.0%** | **100.0%** | **100.0%** | **100.0%** | **100.0%** | **100.0%** |
 
 ### Key Observations & Skeptical Analysis
 The baseline results show stark vulnerabilities. FABA, while effective against MinMax and Adaptive attacks, crashes to a **10.27%** no-collision rate under the Krum attack. FLAME, which relies on clustering, fails catastrophically under the History attack, dropping to **10.24%**. 
@@ -201,8 +201,8 @@ SecApp demonstrates that FRL systems cannot rely on traditional federated defens
 
 ## Den's Take
 
-Securing Federated Reinforcement Learning (FRL) in safety-critical cyber-physical systems is a massive headache. Because RL agents must constantly explore non-stationary environments, traditional federated learning defenses fail; they simply cannot distinguish between a malicious poisoning attempt and a legitimate, high-variance local policy update. 
+Securing Federated Reinforcement Learning (FRL) in safety-critical cyber-physical systems is a significant challenge. Because RL agents must constantly explore non-stationary environments, traditional federated learning defenses fail; they simply cannot distinguish between a malicious poisoning attempt and a legitimate, high-variance local policy update. 
 
-SecApp’s performance is admittedly eye-catching—maintaining a 100.0% no-collision rate in highway simulations across 13 poisoning attacks where baselines like FABA and FLAME collapse to roughly 10%. However, as a practitioner, I urge caution. The evaluation is limited to a highly sanitized simulator with only $K=10$ clients and up to 20% malicious nodes. Real-world edge-caching and vehicle fleets operate at a completely different scale; real-world heterogeneity will quickly muddy the waters for spatial majority filtering. Furthermore, the authors openly admit that the framework remains vulnerable to highly synchronized, colluding attackers who can systematically distort the historical gradient trajectory.
+SecApp’s performance is eye-catching—maintaining a 100.0% no-collision rate in highway simulations across 13 poisoning attacks where baselines like FABA and FLAME collapse to roughly 10%. Caution is nonetheless warranted. The evaluation is limited to a highly sanitized simulator with only $K=10$ clients and up to 20% malicious nodes. Real-world edge-caching and vehicle fleets operate at a completely different scale; real-world heterogeneity will quickly muddy the waters for spatial majority filtering. Furthermore, the authors openly admit that the framework remains vulnerable to highly synchronized, colluding attackers who can systematically distort the historical gradient trajectory.
 
-In my prior work on [SafeCtrl-RL](/writing/safectrlrl_inferencetime_adaptive_behaviour_control_for_llm_), I examined the inherent difficulty of enforcing safety constraints on dynamic, RL-driven systems at inference time, which underscores why relying solely on aggregation-side history bounds is a risky bet. SecApp is a solid step toward temporal-drift bounding, but we need to see how it handles scaled, coordinated multi-agent evasion before trusting it with physical control loops.
+Related analysis in [SafeCtrl-RL](/writing/safectrlrl_inferencetime_adaptive_behaviour_control_for_llm_) examined the inherent difficulty of enforcing safety constraints on dynamic, RL-driven systems at inference time, which underscores why relying solely on aggregation-side history bounds is a risky bet. SecApp is a solid step toward temporal-drift bounding, but its behavior under scaled, coordinated multi-agent evasion needs to be established before it can be trusted with physical control loops.

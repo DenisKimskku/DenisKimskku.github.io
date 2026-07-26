@@ -2,6 +2,8 @@
 title: "AI Watermark Evidence Fails Forensic Readiness: An Empirical Evaluation"
 date: "2026-07-21"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.16010"
+paperAuthors: "Saifur Rahman Tamim, Amir Labib Khan"
 description: "Automated, meaning-preserving paraphrase attacks systematically strip LLM watermarks (KGW, Unigram, and SynthID-Text), resulting in near-total (98.3% to 100%) watermark erasure…"
 tags: ["AI Security"]
 readingTime: 11

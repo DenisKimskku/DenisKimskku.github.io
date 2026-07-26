@@ -247,7 +247,6 @@ const CHIP_ACTIONS: Array<{ label: string; mode: AskMode }> = [
 ];
 
 export default function AskAI() {
-  const [mounted, setMounted] = useState(false);
   const [pillVisible, setPillVisible] = useState(false);
   const [pillPos, setPillPos] = useState<PillPosition | null>(null);
   const [pillShown, setPillShown] = useState(false);
@@ -270,11 +269,11 @@ export default function AskAI() {
   const pillPressedRef = useRef(false);
   const headerQuotaAtRef = useRef(0);
   const panelOpenRef = useRef(false);
-  panelOpenRef.current = panelOpen;
+  const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    panelOpenRef.current = panelOpen;
+  }, [panelOpen]);
 
   // --- Selection tracking -------------------------------------------------
 
@@ -372,16 +371,12 @@ export default function AskAI() {
   // Pill entrance animation (fade/scale-in ~150ms, skipped for reduced motion).
   useEffect(() => {
     if (!pillVisible) {
-      setPillShown(false);
-      return;
-    }
-    if (reducedMotion) {
-      setPillShown(true);
-      return;
+      const id = requestAnimationFrame(() => setPillShown(false));
+      return () => cancelAnimationFrame(id);
     }
     const id = requestAnimationFrame(() => setPillShown(true));
     return () => cancelAnimationFrame(id);
-  }, [pillVisible, reducedMotion]);
+  }, [pillVisible]);
 
   // --- Quota ---------------------------------------------------------------
 
@@ -459,17 +454,13 @@ export default function AskAI() {
   // Panel entrance animation + initial focus.
   useEffect(() => {
     if (!panelOpen) {
-      setPanelShown(false);
-      return;
+      const id = requestAnimationFrame(() => setPanelShown(false));
+      return () => cancelAnimationFrame(id);
     }
     panelRef.current?.focus();
-    if (reducedMotion) {
-      setPanelShown(true);
-      return;
-    }
     const id = requestAnimationFrame(() => setPanelShown(true));
     return () => cancelAnimationFrame(id);
-  }, [panelOpen, reducedMotion]);
+  }, [panelOpen]);
 
   // Escape closes the panel.
   useEffect(() => {

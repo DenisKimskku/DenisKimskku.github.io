@@ -102,6 +102,14 @@ export default function NewsPage() {
           A daily digest of AI security research and a weekly trend report covering
           the developments that matter.
         </p>
+        <p className="mt-2 text-sm text-[var(--color-text-muted)] max-w-2xl">
+          These issues are produced by an automated review pipeline I direct and
+          spot-check.{' '}
+          <Link href="/writing/pipeline/" className="text-[var(--color-accent)] hover:underline">
+            How it works
+          </Link>
+          .
+        </p>
         <p className="mt-3 text-sm">
           <a
             href="/news/rss.xml"

@@ -2,6 +2,8 @@
 title: "Refusal is Not Safety! Benchmarking Latent Safety Risks of LLM-Driven Content Humorization"
 date: "2026-07-21"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.15977"
+paperAuthors: "Yu Cui, Ruiqing Yue, Tingyu Li, et al."
 description: "**HumorSafe** and **HumorPIA** demonstrate how LLMs can be manipulated via \"content humorization\" to bypass safety guardrails and covertly generate toxic or stereotypical content…"
 tags: ["AI Security"]
 readingTime: 8

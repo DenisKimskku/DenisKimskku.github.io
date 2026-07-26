@@ -2,6 +2,8 @@
 title: "Skills That Don't Exist: A Large-Scale Study of Hallucinated Skill Recommendation in LLM Agents"
 date: "2026-07-16"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.12340"
+paperAuthors: "Weifeng Yuan, Wenbo Guo, Feng Dong, et al."
 description: "Attackers can pre-register malicious configurations on open agent registries under specific, predictable, and persistently hallucinated skill names, transforming natural language…"
 tags: ["AI Security"]
 readingTime: 10

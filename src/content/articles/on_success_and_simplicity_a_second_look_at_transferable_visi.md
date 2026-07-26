@@ -2,6 +2,8 @@
 title: "On Success and Simplicity: A Second Look at Transferable Vision-Language Attack Pipeline"
 date: "2026-07-18"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14974"
+paperAuthors: "Yuchen Ren, Zhengyu Zhao, Chenhao Lin, et al."
 description: "SimVLA (Simple Vision-Language Attack) is a highly optimized two-stage transferable adversarial attack pipeline that strips away the over-engineered third stage of standard…"
 tags: ["AI Security"]
 readingTime: 10

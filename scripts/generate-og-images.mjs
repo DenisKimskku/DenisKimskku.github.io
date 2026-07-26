@@ -14,9 +14,36 @@ if (!fs.existsSync(ogDir)) {
   fs.mkdirSync(ogDir, { recursive: true });
 }
 
-// slug -> sha1(title + type): lets corrected titles regenerate their image
-// while unchanged articles are skipped.
+// slug -> sha1(template version + rendered fields): lets corrected articles
+// regenerate their image while unchanged articles are skipped.
 const manifestPath = path.join(ogDir, 'manifest.json');
+
+// Bump whenever the card template itself changes (layout, byline, colors…).
+// It is folded into every article hash, so a bump invalidates and
+// regenerates ALL existing cards even if the article content is unchanged.
+// v2: byline row + description excerpt added.
+const TEMPLATE_VERSION = 2;
+
+// Byline: read the author name from src/lib/siteMetadata.ts so the card stays
+// in sync with the site. The .ts file can't be imported from this .mjs script,
+// so parse the literal; fall back to the hardcoded value (keep in sync with
+// siteMetadata.authorName) if the parse ever fails.
+function loadAuthorName() {
+  try {
+    const src = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'lib', 'siteMetadata.ts'),
+      'utf8'
+    );
+    const match = src.match(/authorName:\s*'([^']+)'/);
+    if (match) return match[1];
+  } catch {
+    // fall through to hardcoded fallback
+  }
+  return 'Minseok (Denis) Kim';
+}
+
+const AUTHOR_NAME = loadAuthorName();
+const AUTHOR_ROLE = 'AI Security Researcher';
 
 // Fonts are vendored under scripts/assets/fonts/ (satori needs ttf; the old
 // Google Fonts CSS fetch made every build depend on an external service).
@@ -27,13 +54,25 @@ function loadFont(file, name, weight) {
   return { name, data, weight };
 }
 
+// Description excerpt: hard character cap as a backstop; satori's lineClamp
+// does the visual 3-line truncation with an ellipsis.
+function excerpt(description) {
+  if (typeof description !== 'string') return '';
+  const text = description.trim();
+  if (text.length <= 220) return text;
+  return `${text.slice(0, 220).replace(/\s+\S*$/, '')}…`;
+}
+
 function articleHash(article) {
-  // Hash every field the card renders — a corrected title, type, date, or
-  // tag set must regenerate the image.
+  // Hash every field the card renders — a corrected title, type, date,
+  // description, or tag set must regenerate the image. TEMPLATE_VERSION is
+  // included so bumping it regenerates every card after a template change.
   const tags = Array.isArray(article.tags) ? article.tags.join(',') : '';
   return crypto
     .createHash('sha1')
-    .update(`${article.title}\n${article.type}\n${article.date}\n${tags}`)
+    .update(
+      `v${TEMPLATE_VERSION}\n${article.title}\n${article.type}\n${article.date}\n${article.description || ''}\n${tags}\n${AUTHOR_NAME}\n${AUTHOR_ROLE}`
+    )
     .digest('hex');
 }
 
@@ -76,6 +115,7 @@ async function main() {
 
     const accentColor = TYPE_COLORS[article.type] || '#60a5fa';
     const tags = (article.tags || []).slice(0, 3);
+    const description = excerpt(article.description);
 
     const svg = await satori(
       {
@@ -187,10 +227,29 @@ async function main() {
                       children: article.title,
                     },
                   },
+                  // Description excerpt (skipped when the article has none)
+                  ...(description
+                    ? [
+                        {
+                          type: 'div',
+                          props: {
+                            style: {
+                              fontSize: '21px',
+                              color: '#a3a3a3',
+                              fontWeight: 400,
+                              lineHeight: 1.5,
+                              maxWidth: '880px',
+                              lineClamp: 3,
+                            },
+                            children: description,
+                          },
+                        },
+                      ]
+                    : []),
                 ],
               },
             },
-            // Bottom section: tags + meta
+            // Bottom section: byline + tags on the left, site meta on the right
             {
               type: 'div',
               props: {
@@ -201,28 +260,87 @@ async function main() {
                   position: 'relative',
                 },
                 children: [
-                  // Tags
+                  // Byline + tags
                   {
                     type: 'div',
                     props: {
                       style: {
                         display: 'flex',
-                        gap: '8px',
+                        flexDirection: 'column',
+                        gap: '14px',
                       },
-                      children: tags.map((tag) => ({
-                        type: 'div',
-                        props: {
-                          style: {
-                            fontSize: '13px',
-                            color: '#737373',
-                            padding: '4px 12px',
-                            border: '1px solid #262626',
-                            borderRadius: '6px',
-                            backgroundColor: '#141414',
+                      children: [
+                        // Byline row
+                        {
+                          type: 'div',
+                          props: {
+                            style: {
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '10px',
+                            },
+                            children: [
+                              {
+                                type: 'div',
+                                props: {
+                                  style: {
+                                    width: '8px',
+                                    height: '8px',
+                                    borderRadius: '50%',
+                                    backgroundColor: accentColor,
+                                  },
+                                },
+                              },
+                              {
+                                type: 'div',
+                                props: {
+                                  style: {
+                                    fontSize: '17px',
+                                    color: '#e5e5e5',
+                                    fontWeight: 700,
+                                  },
+                                  children: AUTHOR_NAME,
+                                },
+                              },
+                              {
+                                type: 'div',
+                                props: {
+                                  style: {
+                                    fontSize: '16px',
+                                    color: '#737373',
+                                    fontWeight: 400,
+                                  },
+                                  children: `— ${AUTHOR_ROLE}`,
+                                },
+                              },
+                            ],
                           },
-                          children: tag,
                         },
-                      })),
+                        // Tags
+                        {
+                          type: 'div',
+                          props: {
+                            style: {
+                              display: 'flex',
+                              gap: '8px',
+                            },
+                            children: tags.map((tag) => ({
+                              type: 'div',
+                              props: {
+                                style: {
+                                  fontSize: '13px',
+                                  color: '#737373',
+                                  padding: '4px 12px',
+                                  border: '1px solid #262626',
+                                  borderRadius: '6px',
+                                  backgroundColor: '#141414',
+                                },
+                                children: tag,
+                              },
+                            })),
+                          },
+                        },
+                      ],
                     },
                   },
                   // Site + date

@@ -2,6 +2,8 @@
 title: "Democratizing Agent Deployment Safety: A Structural Monitoring Approach"
 date: "2026-07-18"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14570"
+paperAuthors: "Preeti Ravindra, Rahul Tiwari, Vincent Wolowski"
 description: "The Information Flow Graph (IFG) monitor detects and blocks infrastructure-as-code (IaC) sabotage by combining deterministic control-flow and data-flow graph diffs with a…"
 tags: ["AI Security"]
 readingTime: 8

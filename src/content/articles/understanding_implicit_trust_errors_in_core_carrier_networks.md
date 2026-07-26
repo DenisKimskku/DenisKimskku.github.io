@@ -2,6 +2,8 @@
 title: "Understanding Implicit Trust Errors in Core Carrier Networks through Multi-Agent Flaw Discovery and Analysis"
 date: "2026-07-15"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.10315"
+paperAuthors: "Ziyu Lin, Ziting Wang, Xinfeng Li, et al."
 description: "iFinder is an LLM-driven multi-agent framework that uses a multi-agent pipeline (Discovery, Vetting, and Exploitation) to automatically detect \"implicit trust errors\"…"
 tags: ["AI Security"]
 readingTime: 10

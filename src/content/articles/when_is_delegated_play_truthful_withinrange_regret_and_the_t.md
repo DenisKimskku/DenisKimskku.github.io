@@ -2,6 +2,8 @@
 title: "When Is Delegated Play Truthful? Within-Range Regret and the Trilemma of Aligned Delegation"
 date: "2026-07-19"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14357"
+paperAuthors: "Taksch Dube"
 description: "When automated proxies (such as LLM agents or bidding bots) are restricted by safety guardrails or alignment layers, users have a direct mathematical incentive to lie to their…"
 tags: ["Off-Topic", "Game Theory", "AI Alignment"]
 readingTime: 10

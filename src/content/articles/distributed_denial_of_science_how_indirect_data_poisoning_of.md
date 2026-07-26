@@ -2,6 +2,8 @@
 title: "Distributed Denial of Science: How Indirect Data Poisoning of AI Systems Can Industrialize Scientific Fraud"
 date: "2026-07-15"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.10712"
+paperAuthors: "Bálint Gyevnár, Atoosa Kasirzadeh, Nihar B. Shah"
 description: "Indirect data poisoning manipulates public repositories with falsified tabular data and deceptive metadata to trick autonomous AI research agents into drawing fabricated…"
 tags: ["AI Security"]
 readingTime: 6

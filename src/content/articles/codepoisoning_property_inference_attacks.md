@@ -2,6 +2,8 @@
 title: "Code-Poisoning Property Inference Attacks"
 date: "2026-07-21"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.15970"
+paperAuthors: "Xukun Luan, Yuhui Gong, Gang Zhang, et al."
 description: "CPPIA (Code-Poisoning Property Inference Attack) is a stealthy supply-chain attack where an adversary injects code-level hooks to profile a private training set, encode its…"
 tags: ["AI Security"]
 readingTime: 9

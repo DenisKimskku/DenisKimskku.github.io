@@ -2,6 +2,8 @@
 title: "Inference-Time Concept Suppression and Video-Centric Evaluation for Text-to-Video Models"
 date: "2026-07-19"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14194"
+paperAuthors: "Wenxuan Chen, Wenjie Feng"
 description: "SIRUS is a training-free, inference-time concept suppression framework for text-to-video (T2V) models that builds a contextualized text-embedding subspace to dynamically subtract…"
 tags: ["AI Security"]
 readingTime: 7

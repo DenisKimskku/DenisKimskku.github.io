@@ -64,15 +64,34 @@ const existingBySlug = Object.fromEntries(existingIndex.map((a) => [a.slug, a]))
 
 const files = fs.readdirSync(articlesDir).filter((f) => f.endsWith('.md'));
 
+function extractSearchContent(content) {
+  if (!content) return '';
+  let plainText = content
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/`[^`]+`/g, '')
+    .replace(/!\[.*?\]\(.*?\)/g, '')
+    .replace(/\[([^\]]+)\]\(.*?\)/g, '$1');
+
+  // Loop replacement until convergence to satisfy CodeQL multi-character sanitization rule
+  let prevText;
+  do {
+    prevText = plainText;
+    plainText = plainText.replace(/<[^>]*>/g, '');
+  } while (plainText !== prevText);
+
+  plainText = plainText
+    .replace(/[#*_\-\\]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  return plainText.slice(0, 1500);
+}
+
 const articles = files
   .map((file) => {
     const slug = file.replace(/\.md$/, '');
     const raw = fs.readFileSync(path.join(articlesDir, file), 'utf8');
 
-    // In lenient mode an unparseable, unrepairable article is quarantined —
-    // dropped from the index so a broken push from the automation can never
-    // block a site deploy (the deploy workflow alerts on the quarantine
-    // file). Strict CI still fails hard so the file actually gets fixed.
     let parsed;
     try {
       parsed = parseArticle(file, raw).parsed;
@@ -114,6 +133,7 @@ const articles = files
       readingTime: typeof data.readingTime === 'number'
         ? data.readingTime
         : calculateReadingTime(content),
+      searchContent: extractSearchContent(content),
     };
   })
   .filter(Boolean)

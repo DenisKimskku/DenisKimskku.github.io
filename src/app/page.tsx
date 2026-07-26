@@ -58,6 +58,7 @@ export default function Home() {
         '@type': 'Person',
         '@id': `${siteMetadata.siteUrl}#person`,
         name: siteMetadata.authorName,
+        alternateName: ['김민석', 'Kim Minseok'],
         url: siteMetadata.siteUrl,
         sameAs: siteMetadata.profiles,
         jobTitle: 'Ph.D. Student & AI Security Researcher',
@@ -85,7 +86,9 @@ export default function Home() {
     <div className="container-custom py-24 max-[560px]:py-16 max-[560px]:px-5">
       <StructuredData data={jsonLd} />
       <section id="about">
-        <h1 className="sr-only">Minseok (Denis) Kim</h1>
+        <h1 className="sr-only">
+          Minseok (Denis) Kim <span lang="ko">(김민석)</span>
+        </h1>
         <p className="font-serif text-[26px] font-medium tracking-[-0.025em] leading-[1.45] text-[var(--color-text)] max-w-[620px] mb-[28px]">
           I am a researcher bridging computer security and machine learning — enhancing the
           safety, security, and alignment of advanced AI systems.

@@ -10,7 +10,7 @@ const description = 'Paper walkthroughs, research writeups, and technical writin
 export const metadata: Metadata = {
   title: 'Writing',
   description,
-  alternates: buildAlternates('/writing/'),
+  alternates: buildAlternates('/writing/', '/writing/rss.xml'),
   openGraph: buildOpenGraph({
     title: `Writing | ${siteMetadata.authorName}`,
     description,
@@ -87,7 +87,7 @@ export default async function Writing() {
           Writing
         </h1>
         <p className="text-[var(--color-text-secondary)]">
-          Lab-meeting paper walkthroughs, research writeups, and tutorials.
+          Paper walkthroughs, research writeups, and tutorials.
         </p>
         <p className="mt-2 text-sm text-[var(--color-text-muted)]">
           Looking for the daily digests and weekly trend reports? They live in{' '}

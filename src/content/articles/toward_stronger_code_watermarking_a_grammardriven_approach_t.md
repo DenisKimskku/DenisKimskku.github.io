@@ -2,6 +2,8 @@
 title: "Toward Stronger Code Watermarking: A Grammar-Driven Approach to Optimizing the Trade-off Between Quality and Detectability"
 date: "2026-07-17"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.10210"
+paperAuthors: "Licheng Yu, Aiwei Liu, Songze Li"
 description: "Grammar-Driven Watermarking (GDW) preserves syntactic correctness in LLM-generated code using context-free grammars (CFGs) and adjusts watermark strength based on the structural…"
 tags: ["AI Security"]
 readingTime: 10

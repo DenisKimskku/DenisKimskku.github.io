@@ -2,6 +2,8 @@
 title: "Beyond Success Rate: Cost-Aware Evaluation of Offensive and Defensive Security Agents"
 date: "2026-07-21"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.15263"
+paperAuthors: "Paul Kassianik, Blaine Nelson, Yaron Singer"
 description: "A cost-success evaluation framework for AI security agents revealing that while offensive capabilities scale steadily with test-time compute, defensive threat-hunting efficacy…"
 tags: ["AI Security"]
 readingTime: 9

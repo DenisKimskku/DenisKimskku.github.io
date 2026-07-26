@@ -2,6 +2,8 @@
 title: "AI Agents Do Not Fail Alone:The Context Fails First"
 date: "2026-07-19"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14275"
+paperAuthors: "Fouad Bousetouane"
 description: "Proposes `ProofAgent-Harness`, an open-source evaluation framework that mathematically isolates and measures 7 criteria of LLM agent *context quality* to serve as an independent…"
 tags: ["AI Security"]
 readingTime: 8

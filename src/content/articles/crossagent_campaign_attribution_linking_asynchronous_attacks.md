@@ -2,6 +2,8 @@
 title: "Cross-Agent Campaign Attribution: Linking Asynchronous Attacks Across LLM Agents"
 date: "2026-07-23"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.18826"
+paperAuthors: "SangJin Park, Myungsub Choi, Jineok Kim, et al."
 description: "$A^2FV$ (Asynchronous Attribution Fingerprint Vectors) is a proxy-side correlation protocol that links distributed, asynchronous prompt injection sessions from a single latent"
 tags: ["Prompt Injection", "AI Agents"]
 readingTime: 12

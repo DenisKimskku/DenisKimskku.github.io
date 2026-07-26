@@ -2,6 +2,8 @@
 title: "Routing Ceilings Are Domain-Independent: Structural Prior Injection in Code Security Vulnerability Detection"
 date: "2026-07-18"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14628"
+paperAuthors: "Manuel Israel Cázares"
 description: "Injected structural prior prompts (\"cheatsheets\") raise synthetic code vulnerability detection to near-perfect F1 scores but trigger \"distribution-shift collapse,\" causing…"
 tags: ["AI Security"]
 readingTime: 7

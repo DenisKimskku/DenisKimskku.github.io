@@ -7,7 +7,10 @@ Live site: [https://deniskim1.com](https://deniskim1.com)
 
 - Built with Next.js App Router + TypeScript
 - Statically exported for GitHub Pages
-- Markdown-based writing workflow
+- Build-time full-text search index across all articles and digests
+- Bi-directional cross-linking between research papers, code projects, and article reviews
+- Theme-adaptive code blocks with dark/light mode support
+- Markdown-based writing workflow with KaTeX math & syntax highlighting
 - Built-in SEO (canonical, Open Graph, JSON-LD, sitemap, robots)
 - RSS feed generation for writing
 

@@ -2,6 +2,8 @@
 title: "Cross-Cutting Security Analysis of LLM-Generated Code via Metamorphic Testing and Association Rule Mining"
 date: "2026-07-16"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.12089"
+paperAuthors: "Zedong Peng, Chenggang Wang, Shangyue Zhu"
 description: "A hybrid security evaluation framework combining LLM-as-a-judge Metamorphic Testing (MT) with Apriori Association Rule (AR) mining to discover and map \"cross-cutting\"…"
 tags: ["AI Security"]
 readingTime: 11

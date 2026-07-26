@@ -2,6 +2,8 @@
 title: "Beyond Detection: Agentic Attack Synthesis and Simulation for Smart Contracts"
 date: "2026-07-21"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.15673"
+paperAuthors: "Xianhao Zhang, Jing Sun, Zijian Zhang, et al."
 description: "What**: KASS (Knowledge-Augmented Attack Synthesis and Simulation) is a multi-agent framework that automates Smart Contract Automated Exploit Generation (AEG) by combining…"
 tags: ["AI Security"]
 readingTime: 10

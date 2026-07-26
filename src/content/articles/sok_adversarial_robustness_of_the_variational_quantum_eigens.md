@@ -2,6 +2,8 @@
 title: "SoK: Adversarial Robustness of the Variational Quantum Eigensolver via Red-Teaming"
 date: "2026-07-23"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.19318"
+paperAuthors: "Ahmed Azaz Humdoon, Cheng Chu, Lei Jiang, et al."
 description: "A unified red-teaming benchmark (VQE-AdvBench) evaluates seven adversarial attacks on the Variational Quantum Eigensolver (VQE), demonstrating that noise-induced attacks targeting"
 tags: ["Data Poisoning", "Backdoors", "Adversarial Attacks"]
 readingTime: 9

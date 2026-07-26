@@ -11,6 +11,7 @@ export interface ArticleSummary {
   description: string;
   tags: string[];
   readingTime: number;
+  searchContent?: string;
 }
 
 // Canonical topics shown on the site. Every raw tag is mapped to one of

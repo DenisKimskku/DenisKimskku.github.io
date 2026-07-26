@@ -2,6 +2,8 @@
 title: "Securing LLMs in the Wild: Privacy and Security Challenges at the Edge"
 date: "2026-07-19"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.13088"
+paperAuthors: "Ren-Yi Huang, Mingchen Li, Dumindu Samaraweera, et al."
 description: "The \"Security-Efficiency Paradox\" in edge LLMs: optimizing models via quantization, pruning, partitioning, or PEFT to fit hardware limits directly degrades safety alignment and…"
 tags: ["AI Security"]
 readingTime: 10

@@ -89,7 +89,7 @@ The academic and clinical landscape this week centers on moving away from reacti
 
 ## By the Numbers
 
-This week saw a diverse distribution of research outputs across our tracking metrics, with a notable uptick in hardware-software co-design papers.
+This week saw a diverse distribution of research outputs across the tracking metrics, with a notable uptick in hardware-software co-design papers.
 
 **Papers per Thematic Cluster:**
 *   **Systemic Integrity & Provenance**: 3 papers
@@ -100,7 +100,7 @@ This week saw a diverse distribution of research outputs across our tracking met
 **Key Statistics from this Week:**
 *   **Total Papers Analyzed**: 12
 *   **Emerging Trend**: A significant shift toward "Inference-Time Security" (e.g., NeuroTrace, QuantileMark) which account for 25% of this week's papers, suggesting a move away from purely training-time defenses.
-*   **Converging Subfields**: LLM jailbreaking and RAG security research continue to converge, suggesting that in the coming months, we will likely see fewer "pure" jailbreak papers and more "RAG-jailbreak-hybrid" papers (e.g., exploiting retrieval augmentation to inject adversarial content).
+*   **Converging Subfields**: LLM jailbreaking and RAG security research continue to converge, suggesting that in the coming months there will likely be fewer "pure" jailbreak papers and more "RAG-jailbreak-hybrid" papers (e.g., exploiting retrieval augmentation to inject adversarial content).
 
 ---
 
@@ -114,8 +114,8 @@ This week saw a diverse distribution of research outputs across our tracking met
 
 ## Den's Take
 
-I’ve been arguing for months that our industry's obsession with prompt sanitization is a losing battle. The papers this week—particularly *NeuroTrace* and *SafeHarness*—show the academic community finally treating AI models not as fragile text generators, but as vulnerable infrastructure components.
+A recurring argument in the field is that the industry's obsession with prompt sanitization is a losing battle. The papers this week—particularly *NeuroTrace* and *SafeHarness*—show the academic community finally treating AI models not as fragile text generators, but as vulnerable infrastructure components.
 
-What excites me most here is the shift toward forensic traceability. Consider a \$45M enterprise agentic deployment where autonomous AI agents are hijacked to exfiltrate database contents. The root problem is never just a clever jailbreak; it is the total lack of execution provenance. When an LLM executes a destructive API call, security teams need an auditable log of exactly *why* it made that decision. This directly mirrors the structural vulnerabilities I examined in my review of [NeuroStrike: Neuron-Level Attacks on Aligned LLMs](/writing/neurostrike_neuronlevel_attacks_on_aligned_llms). That review is directly relevant because it details the exact mechanics of how sub-network manipulations bypass safety guardrails, highlighting why deep execution audits are needed. We can't keep applying software-layer band-aids to neural-layer bleeding.
+The most notable shift here is toward forensic traceability. Consider a \$45M enterprise agentic deployment where autonomous AI agents are hijacked to exfiltrate database contents. The root problem is never just a clever jailbreak; it is the total lack of execution provenance. When an LLM executes a destructive API call, security teams need an auditable log of exactly *why* it made that decision. This directly mirrors the structural vulnerabilities covered in the earlier piece on [NeuroStrike: Neuron-Level Attacks on Aligned LLMs](/writing/neurostrike_neuronlevel_attacks_on_aligned_llms). That analysis is directly relevant because it details the exact mechanics of how sub-network manipulations bypass safety guardrails, highlighting why deep execution audits are needed. Software-layer band-aids cannot keep pace with neural-layer bleeding.
 
-Additionally, the focus on edge security and homomorphic encryption is long overdue. As I noted in [This Week in AI Security — April 12, 2026](/writing/this_week_in_ai_security__april_12_2026), as AI rapidly integrates into \$10B+ physical supply chains and IoT environments, "AI safety" must evolve beyond just preventing a chatbot from generating toxic text. This previous edition is directly relevant because it established the baseline vulnerabilities of agentic tools interacting with unverified external APIs, framing the need for the physical-layer hardware defense strategies discussed this week. True security requires systemic hardware-software co-design, and it is refreshing to see the literature catching up to reality.
+Additionally, the focus on edge security and homomorphic encryption is long overdue. As covered in [This Week in AI Security — April 12, 2026](/writing/this_week_in_ai_security__april_12_2026), as AI rapidly integrates into \$10B+ physical supply chains and IoT environments, "AI safety" must evolve beyond just preventing a chatbot from generating toxic text. That previous edition is directly relevant because it established the baseline vulnerabilities of agentic tools interacting with unverified external APIs, framing the need for the physical-layer hardware defense strategies discussed this week. True security requires systemic hardware-software co-design, and the literature is increasingly catching up to that reality.

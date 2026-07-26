@@ -2,6 +2,8 @@
 title: "Evaluating Frontier AI Agents as Autonomous Clinical Security Auditors"
 date: "2026-07-19"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.13411"
+paperAuthors: "Michael O. Eniolade"
 description: "An open evaluation task built on METR Task Standard v0.3.0 that assesses whether frontier AI agents can autonomously implement, execute, and aggregate a multi-component…"
 tags: ["AI Security"]
 readingTime: 9

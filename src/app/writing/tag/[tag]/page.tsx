@@ -44,10 +44,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = truncateForMeta(
     `${articles.length} research ${articles.length === 1 ? 'article' : 'articles'} on ${tagName}. ${landingContent.lead}`,
   );
+  // Thin hubs (fewer than 3 INDEXABLE articles — Paper Reviews are noindex and
+  // don't count) read as scaled/low-value pages to Google, so noindex them
+  // (keep follow, so their internal links still pass). Kept in sync with the
+  // sitemap exclusion in src/app/sitemap.ts.
+  const indexableCount = articles.filter((a) => a.type !== 'Paper Review').length;
   return {
     title: `${tagName} Research Articles`,
     description,
     keywords: [tagName, ...landingContent.relatedTags],
+    ...(indexableCount < 3 ? { robots: { index: false, follow: true } } : {}),
     alternates: buildAlternates(`/writing/tag/${tagSlug}/`),
     openGraph: {
       title: `${tagName} Research Articles | ${siteMetadata.authorName}`,

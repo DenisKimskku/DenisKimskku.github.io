@@ -2,6 +2,8 @@
 title: "Bad Memory: Evaluating Prompt Injection Risks from Memory in Agentic Systems"
 date: "2026-07-18"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14611"
+paperAuthors: "Soham Gadgil, David Alexander, Sai Sunku, et al."
 description: "An evaluation of persistent prompt injection attacks targeting user-curated, plain-text memory and configuration files (e.g., `CLAUDE.md`, `AGENTS.md`, and `behaviors.md`) in…"
 tags: ["AI Security"]
 readingTime: 8

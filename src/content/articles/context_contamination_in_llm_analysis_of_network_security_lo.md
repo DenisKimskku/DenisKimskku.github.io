@@ -2,6 +2,8 @@
 title: "Context Contamination in LLM Analysis of Network Security Logs: Poison with Passive Prompt Injection and Mitigation Evaluation"
 date: "2026-07-18"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14493"
+paperAuthors: "Rabimba Karanjai, Yang Lu, Hemanth Hegadehalli Madhavarao, et al."
 description: "Context Contamination via passive prompt injection, where attackers embed malicious, dormant instructions into untrusted security logs (e.g., User-Agents, API payloads, or SSH…"
 tags: ["AI Security"]
 readingTime: 10

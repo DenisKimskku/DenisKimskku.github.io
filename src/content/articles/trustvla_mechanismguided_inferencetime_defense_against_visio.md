@@ -2,6 +2,8 @@
 title: "TrustVLA: Mechanism-Guided Inference-Time Defense Against Vision-Language-Action Backdoors"
 date: "2026-07-16"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.12571"
+paperAuthors: "Pinhan Fu, Xianda Guo, Xuetao Li, et al."
 description: "TrustVLA is a retraining-free, inference-time defense for Vision-Language-Action (VLA) models that uses per-token, per-layer Dirichlet evidence tracking to detect visual-trigger…"
 tags: ["AI Security"]
 readingTime: 11
@@ -211,6 +213,6 @@ VLA backdoors represent a critical vector for physical safety breaches in automa
 
 ## Den's Take
 
-As someone who spends a lot of time analyzing how fragile embodied models are when deployed in physical environments, TrustVLA excites me. Retraining-free, inference-time defenses are the only realistic path forward for robotics; standard methods like fine-pruning essentially brick the robot's control loops, dropping clean performance to zero. TrustVLA’s approach of using per-token, per-layer Dirichlet evidence tracking and counterfactual inpainting is brilliant because it preserves the agent's policy. The paper's results on the LIBERO benchmarks are undeniably strong, crushing BadVLA’s backdoor success rate from 100% to 7.0%, and INFUSE down to 2.2%, while maintaining success rates close to the undefended clean baseline (e.g., 97.4% on INFUSE Spatial).
+Given how fragile embodied models are when deployed in physical environments, TrustVLA stands out. Retraining-free, inference-time defenses are the only realistic path forward for robotics; standard methods like fine-pruning essentially brick the robot's control loops, dropping clean performance to zero. TrustVLA’s approach of using per-token, per-layer Dirichlet evidence tracking and counterfactual inpainting is compelling because it preserves the agent's policy. The paper's results on the LIBERO benchmarks are undeniably strong, crushing BadVLA’s backdoor success rate from 100% to 7.0%, and INFUSE down to 2.2%, while maintaining success rates close to the undefended clean baseline (e.g., 97.4% on INFUSE Spatial).
 
-However, as a practitioner, I am skeptical about the reliance on localized inpainting. While simulation benchmarks handle inpainted frames well, real-world manipulators operating under variable lighting and tight tolerances might suffer from visual artifacts that cause trajectory drift. This vulnerability to visual perturbations is a recurring theme; from my experience with adversarial attacks on vision-language navigation, we know how easily navigation paths drift under subtle visual-spatial changes, suggesting that TrustVLA's visual recovery mechanism will face much harsher trials when transitioned to physical hardware.
+There is reason for skepticism, however, about the reliance on localized inpainting. While simulation benchmarks handle inpainted frames well, real-world manipulators operating under variable lighting and tight tolerances might suffer from visual artifacts that cause trajectory drift. This vulnerability to visual perturbations is a recurring theme; adversarial attacks on vision-language navigation show how easily navigation paths drift under subtle visual-spatial changes, suggesting that TrustVLA's visual recovery mechanism will face much harsher trials when transitioned to physical hardware.

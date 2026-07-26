@@ -37,7 +37,7 @@ As the training of foundation models and embedding pipelines increasingly consol
 
 Most literature on machine learning backdoors focuses on *sensitivity-based* adversarial examples, where tiny, human-imperceptible input perturbations lead to massive, unexpected changes in the output (e.g., changing a "Stop" sign classification to "Speed Limit 80"). This paper explores the dual threat: *invariance-based* adversarial examples. Here, a large, highly visible change in the input leads to an unusually small, almost imperceptible change in the output. If an attacker can force two entirely different inputs to yield identical embeddings, they can trigger false negatives or inject malicious payloads that bypass semantic guardrails.
 
-To understand why this backdoor is so difficult to detect, we must compare it with previous attempts at planting white-box neural network backdoors:
+To understand why this backdoor is so difficult to detect, it is useful to compare it with previous attempts at planting white-box neural network backdoors:
 
 ### Comparison of White-Box Backdoor Approaches
 
@@ -158,14 +158,14 @@ If you are a security researcher, ML engineer, or auditor deploying third-party 
 
 ## The Takeaway
 
-This paper proves that complete white-box access to a model's weights and code is insufficient to guarantee its integrity. By exploiting the mathematical properties of the Johnson-Lindenstrauss lemma and the hardness of the Symmetric Bounded Perceptron problem, trainers hold an inherent, cryptographically protected advantage over users. Until we develop robust, verifiable training protocols, any outsourced embedding pipeline must be treated as a potential vector for silent, undetectable semantic evasion.
+This paper proves that complete white-box access to a model's weights and code is insufficient to guarantee its integrity. By exploiting the mathematical properties of the Johnson-Lindenstrauss lemma and the hardness of the Symmetric Bounded Perceptron problem, trainers hold an inherent, cryptographically protected advantage over users. Until robust, verifiable training protocols are developed, any outsourced embedding pipeline must be treated as a potential vector for silent, undetectable semantic evasion.
 
 ---
 
 ## Den's Take
 
-This paper is deeply unsettling because it moves backdoor mechanics from empirical "cat-and-mouse" heuristics into the realm of mathematical provability. As a practitioner who audits defense pipelines, the prospect of an *invariance-based* backdoor that is statistically indistinguishable from a standard random projection layer is a nightmare scenario for RAG and embedding-based search architectures. 
+This paper is notable because it moves backdoor mechanics from empirical "cat-and-mouse" heuristics into the realm of mathematical provability. For anyone auditing defense pipelines, the prospect of an *invariance-based* backdoor that is statistically indistinguishable from a standard random projection layer is a worst-case scenario for RAG and embedding-based search architectures. 
 
 The evaluation here is exceptionally clean. By achieving a collision norm of just \$3.3 \times 10^{-10}$ on a \$100 \times 30$ matrix—while three heuristic search algorithms failed to find any collision vector under $0.13$—the authors prove that an attacker can engineer near-perfect embedding collisions that are computationally impossible for a downstream user to detect, even with full white-box access to the weights. 
 
-In typical backdoor analyses of upstream foundation models, we look at how upstream compromises poison downstream tasks, but Bogdanov et al. take this threat vector to a deeper level: you do not even need complex prompt-tuning triggers if you can subvert the dimensionality-reduction step itself. If we cannot trust the first-layer projections of MLaaS providers, our entire downstream verification pipeline for embeddings-based retrieval is built on sand.
+Typical backdoor analyses of upstream foundation models examine how upstream compromises poison downstream tasks, but Bogdanov et al. take this threat vector to a deeper level: complex prompt-tuning triggers are unnecessary if the dimensionality-reduction step itself can be subverted. If the first-layer projections of MLaaS providers cannot be trusted, the entire downstream verification pipeline for embeddings-based retrieval is built on sand.

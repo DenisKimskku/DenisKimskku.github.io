@@ -2,6 +2,8 @@
 title: "When cheap gradients fail: the measurement cost of attacking quantum classifiers"
 date: "2026-07-15"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.11095"
+paperAuthors: "Bacui Li, Chandra Thapa, Tansu Alpcan, et al."
 description: "Quantum shot noise acts as an irreducible, physical defense against gradient-based adversarial attacks by forcing the cost of extracting input gradients to scale polynomially…"
 tags: ["AI Security"]
 readingTime: 9

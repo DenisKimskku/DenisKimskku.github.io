@@ -2,6 +2,8 @@
 title: "Agent Skill Security: Threat Models, Attacks, Defenses, and Evaluation"
 date: "2026-07-17"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.13987"
+paperAuthors: "Sanket Badhe, Priyanka Tiwari"
 description: "What**: SkillSec-Eval is a lifecycle-aware security evaluation framework that systematically exposes and mitigates vulnerabilities across the entire lifespan of reusable LLM…"
 tags: ["AI Security"]
 readingTime: 11

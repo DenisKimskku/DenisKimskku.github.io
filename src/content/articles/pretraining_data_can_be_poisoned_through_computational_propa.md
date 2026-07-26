@@ -2,6 +2,8 @@
 title: "Pretraining Data Can Be Poisoned through Computational Propaganda"
 date: "2026-07-19"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.15267"
+paperAuthors: "Victoria Graf, Hannaneh Hajishirzi, Noah A. Smith, et al."
 description: "Attackers can poison web-scale LLM pretraining data by injecting adversarial content into public discussion/comment interfaces (e.g., WordPress), bypassing modern HTML extraction…"
 tags: ["AI Security"]
 readingTime: 8

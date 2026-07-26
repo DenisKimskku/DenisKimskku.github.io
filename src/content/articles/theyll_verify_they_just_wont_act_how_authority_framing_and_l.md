@@ -2,6 +2,8 @@
 title: "They'll Verify. They Just Won't Act. How Authority Framing and Laundered Code Turn a Trusted Agentic CI/CD Pipeline Into an Attack Surface"
 date: "2026-07-23"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.19267"
+paperAuthors: "Yohann Sidot"
 description: "An external issue containing a fabricated security pre-approval ('authority framing') tricks multi-LLM (Large Language Model) CI/CD (Continuous Integration/Continuous Deployment)"
 tags: ["AI Agents", "Vulnerabilities"]
 readingTime: 9

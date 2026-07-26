@@ -2,6 +2,8 @@
 title: "Random Logit Scaling: Defending Deep Neural Networks Against Black-Box Score-Based Adversarial Example Attacks"
 date: "2026-07-18"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.14921"
+paperAuthors: "Hamid Dashtbani, Mehdi Dousti Gandomani, AmirMahdi Sadeghzadeh"
 description: "What**: Random Logit Scaling (RLS) is a lightweight, zero-accuracy-loss, post-processing defense that dynamically multiplies logits by a random scaling factor $m \\sim…"
 tags: ["AI Security"]
 readingTime: 9
@@ -185,6 +187,6 @@ Random Logit Scaling (RLS) is an elegant, zero-effort, post-processing defense t
 
 ## Den's Take
 
-As a practitioner, I am always skeptical of defenses claiming "zero clean accuracy degradation," but Random Logit Scaling (RLS) presents an elegantly simple post-processing approach that actually delivers on this promise. By dynamically multiplying logits by a random scaling factor $m \sim \mathcal{U}(0.5, 1000)$ on every query, RLS warps the confidence score landscape without shifting the argmax prediction. The fact that it reduces the highly query-efficient Bandit attack success rate on CIFAR-10 (using ResNet-18) from 100% down to a mere 1.56% is impressive, especially when compared to computationally expensive adversarial training.
+Defenses claiming "zero clean accuracy degradation" usually warrant skepticism, but Random Logit Scaling (RLS) presents an elegantly simple post-processing approach that actually delivers on this promise. By dynamically multiplying logits by a random scaling factor $m \sim \mathcal{U}(0.5, 1000)$ on every query, RLS warps the confidence score landscape without shifting the argmax prediction. The fact that it reduces the highly query-efficient Bandit attack success rate on CIFAR-10 (using ResNet-18) from 100% down to a mere 1.56% is impressive, especially when compared to computationally expensive adversarial training.
 
 However, we must look at this with a critical eye. RLS only protects endpoints that return complete soft-label confidence scores. If an attacker switches to a decision-based black-box attack—which only relies on hard-label predictions—RLS provides zero protection because the predicted class remains entirely unchanged. Furthermore, a sophisticated adversary could attempt to average out the scaling factor over multiple queries if the API rate limits are permissive. This emphasizes why evaluating these behavioral exploits is critical; as I highlighted in [Rethinking Penetration Testing for AI-Enabled Systems: From Resource Compromise to Behavioral Objective Violation](/writing/rethinking_penetration_testing_for_aienabled_systems_from_re), security teams must focus on defending against behavioral violations on exposed model endpoints rather than treating AI security as a solved infrastructure problem.

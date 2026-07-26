@@ -19,13 +19,16 @@
       "description": "Interactive visualizer for RAG security, covering fundamentals, adversarial attacks (poisoning, injection), and multi-stage defense mechanisms.",
       "githubUrl": "https://github.com/DenisKimskku/RAG-Vis-Playground",
       "language": "TypeScript",
-      "demoUrl": "https://rag-vis.deniskim1.com/"
+      "demoUrl": "https://rag-vis.deniskim1.com/",
+      "articleSlug": "trends_rag_attacks_defenses"
     },
     {
       "name": "RAGDefender",
       "description": "A resource-efficient defense mechanism against knowledge corruption attacks in practical RAG deployments.",
       "githubUrl": "https://github.com/SecAI-Lab/RAGDefender",
-      "language": "Python"
+      "language": "Python",
+      "paperUrl": "https://deniskim1.com/papers/acsac25/RAGDefender_published_version.pdf",
+      "articleSlug": "Rescuing_the_unpoisoned"
     },
     {
       "name": "pickleguard",
@@ -37,7 +40,8 @@
       "name": "iChat",
       "description": "An intelligent RAG-based chatbot leveraging retrieval-augmented generation for enhanced conversational AI.",
       "githubUrl": "https://github.com/DenisKimskku/iChat",
-      "language": "Python"
+      "language": "Python",
+      "articleSlug": "trends_rag_attacks_defenses"
     },
     {
       "name": "korean_slang_detector",

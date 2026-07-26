@@ -2,6 +2,8 @@
 title: "Watermark Forensics for Generative Models: An Information-Theoretic Perspective"
 date: "2026-07-16"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.13003"
+paperAuthors: "Xiaoyu Li, Zheng Gao, Xiaoyan Feng, et al."
 description: "An information-theoretic framework showing that all generative model watermarking tasks (detection, attribution, extraction, and localization) are governed by a single…"
 tags: ["AI Security"]
 readingTime: 9
