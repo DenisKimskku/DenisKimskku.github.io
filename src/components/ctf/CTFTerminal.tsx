@@ -110,6 +110,8 @@ export default function CTFTerminal() {
 
   useEffect(() => {
     fetchStatus();
+    const interval = setInterval(fetchStatus, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -299,10 +301,21 @@ export default function CTFTerminal() {
           <div className="bg-[var(--color-bg-secondary)] px-3 py-1.5 rounded-md border border-[var(--color-border)] text-[var(--color-text-secondary)] flex items-center gap-2">
             <span
               className={`w-2 h-2 rounded-full ${
-                backendStatus === 'online' ? 'bg-emerald-500' : 'bg-amber-500'
+                backendStatus === 'online'
+                  ? 'bg-emerald-500'
+                  : backendStatus === 'checking'
+                  ? 'bg-amber-400 animate-pulse'
+                  : 'bg-red-400'
               }`}
             />
-            <span>Engine: {backendStatus.toUpperCase()}</span>
+            <span>
+              Engine:{' '}
+              {backendStatus === 'online'
+                ? 'ONLINE'
+                : backendStatus === 'checking'
+                ? 'CONNECTING'
+                : 'OFFLINE'}
+            </span>
           </div>
 
           <div className="bg-[var(--color-bg-secondary)] px-3 py-1.5 rounded-md border border-[var(--color-border)] font-semibold text-[var(--color-accent)]">
