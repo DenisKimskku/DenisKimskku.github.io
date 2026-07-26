@@ -518,10 +518,16 @@ export default function CTFTerminal() {
                               <br />
                               {m.judge_reason}
                               {m.unlocked_flag && (
-                                <div className="mt-1 font-bold text-[var(--color-text)]">
-                                  Flag: {m.unlocked_flag}
+                                <div className="mt-1 font-mono text-xs select-all bg-black/40 p-1.5 rounded text-emerald-300">
+                                  {m.unlocked_flag}
                                 </div>
                               )}
+                            </div>
+                          )}
+
+                          {!m.win && m.judge_reason && (
+                            <div className="mt-1 text-[10px] text-[var(--color-text-muted)] italic">
+                              Judge feedback: {m.judge_reason}
                             </div>
                           )}
 
