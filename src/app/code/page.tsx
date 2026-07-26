@@ -24,6 +24,8 @@ interface ProjectEntry {
   githubUrl: string;
   language?: string;
   demoUrl?: string;
+  paperUrl?: string;
+  articleSlug?: string;
 }
 
 interface ProjectData {
@@ -198,16 +200,40 @@ export default function Code() {
                   <p className="text-sm text-[var(--color-text-secondary)] mb-3">
                     {project.description}
                   </p>
-                  <div className="flex items-center gap-3 text-xs text-[var(--color-text-muted)]">
+                  <div className="flex flex-wrap items-center gap-3 text-xs text-[var(--color-text-muted)]">
                     {project.demoUrl && (
                       <a
                         href={project.demoUrl}
-                        className="text-[var(--color-accent)] hover:underline"
+                        className="text-[var(--color-accent)] hover:underline font-medium"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
                         Live demo
                       </a>
+                    )}
+                    {project.paperUrl && (
+                      <a
+                        href={project.paperUrl}
+                        className="inline-flex items-center gap-1 text-[var(--color-accent)] hover:underline font-medium"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                        Read Paper
+                      </a>
+                    )}
+                    {project.articleSlug && (
+                      <Link
+                        href={`/writing/${project.articleSlug}/`}
+                        className="inline-flex items-center gap-1 text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+                      >
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Research Review →
+                      </Link>
                     )}
                     <a
                       href={project.githubUrl}

@@ -15,6 +15,7 @@ interface Article {
   description: string;
   tags: string[];
   readingTime: number;
+  searchContent?: string;
 }
 
 interface WritingHubProps {
@@ -141,6 +142,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
           article.type,
           getCategory(article.type),
           ...article.tags,
+          article.searchContent || '',
         ]
           .join(' ')
           .toLowerCase();

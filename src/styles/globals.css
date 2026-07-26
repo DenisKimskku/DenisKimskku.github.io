@@ -182,10 +182,11 @@
   }
 
   .article-content pre {
-    @apply bg-[#1a1a1a] p-5 rounded-lg overflow-x-auto my-8;
+    @apply bg-[var(--color-bg-secondary)] border border-[var(--color-border)] p-5 rounded-lg overflow-x-auto my-8;
     position: relative;
     font-size: 0.875rem;
     line-height: 1.6;
+    color: var(--color-text);
   }
 
   .code-copy-btn {
@@ -194,13 +195,13 @@
     right: 0.5rem;
     padding: 0.25rem 0.625rem;
     font-size: 0.75rem;
-    color: #a3a3a3;
-    background: #262626;
-    border: 1px solid #404040;
+    color: var(--color-text-muted);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
     border-radius: 0.375rem;
     cursor: pointer;
     opacity: 0;
-    transition: opacity 0.15s ease, color 0.15s ease;
+    transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease;
   }
 
   .article-content pre:hover .code-copy-btn {
@@ -220,7 +221,8 @@
   }
 
   .code-copy-btn:hover {
-    color: #f5f5f5;
+    color: var(--color-text);
+    background: var(--color-bg-secondary);
   }
 
   .article-content pre code {

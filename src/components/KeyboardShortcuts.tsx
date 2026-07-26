@@ -8,15 +8,14 @@ export default function KeyboardShortcuts() {
   const [showHelp, setShowHelp] = useState(false);
   // WCAG 2.1.4: single-key shortcuts must be user-disableable. Persisted in
   // localStorage; read in an effect so SSR/hydration stays consistent.
-  const [shortcutsDisabled, setShortcutsDisabled] = useState(false);
-
-  useEffect(() => {
+  const [shortcutsDisabled, setShortcutsDisabled] = useState(() => {
+    if (typeof window === 'undefined') return false;
     try {
-      setShortcutsDisabled(localStorage.getItem(SHORTCUTS_DISABLED_KEY) === 'true');
+      return localStorage.getItem(SHORTCUTS_DISABLED_KEY) === 'true';
     } catch {
-      // localStorage unavailable — leave shortcuts enabled
+      return false;
     }
-  }, []);
+  });
 
   const toggleShortcutsDisabled = useCallback(() => {
     setShortcutsDisabled((prev) => {

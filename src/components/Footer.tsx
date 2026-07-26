@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const socialLinks = [
   {
     name: 'Email',
@@ -86,12 +88,12 @@ export default function Footer() {
             </span>
 
             {/* Transparency: how the automated articles are produced. */}
-            <a
+            <Link
               href="/writing/pipeline/"
               className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
             >
               Pipeline
-            </a>
+            </Link>
           </div>
         </div>
       </div>
