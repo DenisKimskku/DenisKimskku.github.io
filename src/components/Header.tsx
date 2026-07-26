@@ -11,6 +11,7 @@ const navItems = [
   { href: '/code/', label: 'Code' },
   { href: '/writing/', label: 'Writing' },
   { href: '/news/', label: 'News' },
+  { href: '/ctf/', label: 'LLM CTF' },
   { href: '/resume/', label: 'Resume' },
 ];
 
