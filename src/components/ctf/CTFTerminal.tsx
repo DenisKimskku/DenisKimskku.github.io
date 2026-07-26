@@ -37,11 +37,11 @@ interface HintData {
 }
 
 function TypewriterText({ text, onChunk }: { text: string; onChunk?: () => void }) {
-  const [displayed, setDisplayed] = useState<string>('');
+  const [displayed, setDisplayed] = useState<string>(text || '');
 
   useEffect(() => {
     let index = 0;
-    setDisplayed('');
+    setDisplayed(text ? text.slice(0, 3) : '');
     if (!text) return;
 
     const timer = setInterval(() => {
@@ -328,7 +328,9 @@ export default function CTFTerminal() {
       </div>
 
       {/* TAB 1: CTF ARENA */}
-      {activeTab === 'arena' && (
+      {activeTab === 'arena' && (() => {
+        const currentMeta = activeMeta || STATIC_LEVELS[currentLevel] || STATIC_LEVELS[1];
+        return (
         <>
           {/* Challenge Level Selector Grid */}
           <div className="space-y-3">
@@ -364,34 +366,33 @@ export default function CTFTerminal() {
           </div>
 
           {/* Challenge Detail & Execution Workspace */}
-          {activeMeta && (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Left Panel: Academic Level Briefing */}
-              <div className="lg:col-span-1 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg p-5 space-y-4 text-xs">
-                <div className="border-b border-[var(--color-border)] pb-3">
-                  <h3 className="font-serif text-lg font-semibold text-[var(--color-text)]">
-                    Level {activeMeta.level}: {activeMeta.title}
-                  </h3>
-                  <div className="text-[var(--color-text-muted)] text-[11px] mt-0.5 font-mono">
-                    Tier {activeMeta.tier} • {activeMeta.tier_name}
-                  </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Left Panel: Academic Level Briefing */}
+            <div className="lg:col-span-1 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg p-5 space-y-4 text-xs">
+              <div className="border-b border-[var(--color-border)] pb-3">
+                <h3 className="font-serif text-lg font-semibold text-[var(--color-text)]">
+                  Level {currentMeta.level}: {currentMeta.title}
+                </h3>
+                <div className="text-[var(--color-text-muted)] text-[11px] mt-0.5 font-mono">
+                  Tier {currentMeta.tier} • {currentMeta.tier_name}
                 </div>
+              </div>
 
-                <div>
-                  <div className="text-[var(--color-text-muted)] uppercase tracking-wider mb-1 font-mono text-[10px]">
-                    Objective
-                  </div>
-                  <p className="text-[var(--color-text)] leading-relaxed">{activeMeta.description}</p>
+              <div>
+                <div className="text-[var(--color-text-muted)] uppercase tracking-wider mb-1 font-mono text-[10px]">
+                  Objective
                 </div>
+                <p className="text-[var(--color-text)] leading-relaxed">{currentMeta.description}</p>
+              </div>
 
-                <div>
-                  <div className="text-[var(--color-text-muted)] uppercase tracking-wider mb-1 font-mono text-[10px]">
-                    Scenario
-                  </div>
-                  <div className="bg-[var(--color-bg)] p-3 rounded border border-[var(--color-border)] text-[var(--color-text-secondary)] leading-relaxed">
-                    {activeMeta.scenario}
-                  </div>
+              <div>
+                <div className="text-[var(--color-text-muted)] uppercase tracking-wider mb-1 font-mono text-[10px]">
+                  Scenario
                 </div>
+                <div className="bg-[var(--color-bg)] p-3 rounded border border-[var(--color-border)] text-[var(--color-text-secondary)] leading-relaxed">
+                  {currentMeta.scenario}
+                </div>
+              </div>
 
                 {/* Progressive Hint Drawer Button */}
                 <div className="border-t border-[var(--color-border)] pt-3">
@@ -555,9 +556,9 @@ export default function CTFTerminal() {
                 </form>
               </div>
             </div>
-          )}
-        </>
-      )}
+          </>
+        );
+      })()}
 
       {/* TAB 2: OWASP WRITEUPS */}
       {activeTab === 'owasp' && (
