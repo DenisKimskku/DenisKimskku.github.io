@@ -170,10 +170,18 @@ export default function CTFTerminal() {
       if (res.ok) {
         const data: HintData = await res.json();
         setHintData(data);
+        return;
       }
     } catch (e) {
       console.error(e);
     }
+    setHintData({
+      attempts: 0,
+      hint_1_unlocked: false,
+      hint_1: "Reach 3 failed attempts to unlock Hint 1.",
+      hint_2_unlocked: false,
+      hint_2: "Reach 5 failed attempts to unlock Hint 2."
+    });
   };
 
   const handleSendPrompt = async (e: React.FormEvent) => {
