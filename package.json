@@ -28,6 +28,7 @@
     "node": ">=24"
   },
   "overrides": {
+    "brace-expansion": "^2.1.2",
     "minimatch": "^10.2.1",
     "postcss": "^8.5.23",
     "ws": "^8.21.0",

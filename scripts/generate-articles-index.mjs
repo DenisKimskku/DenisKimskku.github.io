@@ -66,15 +66,24 @@ const files = fs.readdirSync(articlesDir).filter((f) => f.endsWith('.md'));
 
 function extractSearchContent(content) {
   if (!content) return '';
-  const plainText = content
+  let plainText = content
     .replace(/```[\s\S]*?```/g, '')
     .replace(/`[^`]+`/g, '')
     .replace(/!\[.*?\]\(.*?\)/g, '')
-    .replace(/\[([^\]]+)\]\(.*?\)/g, '$1')
-    .replace(/<[^>]*>/g, '')
+    .replace(/\[([^\]]+)\]\(.*?\)/g, '$1');
+
+  // Loop replacement until convergence to satisfy CodeQL multi-character sanitization rule
+  let prevText;
+  do {
+    prevText = plainText;
+    plainText = plainText.replace(/<[^>]*>/g, '');
+  } while (plainText !== prevText);
+
+  plainText = plainText
     .replace(/[#*_\-\\]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+
   return plainText.slice(0, 1500);
 }
 
