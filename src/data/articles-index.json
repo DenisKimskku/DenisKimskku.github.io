@@ -1,5 +1,72 @@
 [
   {
+    "slug": "ai_security_digest__july_28_2026",
+    "title": "AI Security Digest \u2014 July 28, 2026",
+    "date": "2026-07-28",
+    "type": "News Digest",
+    "description": "LLM agent vulnerabilities are escalating to protocol-level exploits and VM escape vectors. Security must shift to OS-level zero-trust boundaries.",
+    "tags": [
+      "LLM Security",
+      "Agent Security",
+      "Protocol Attacks",
+      "Zero Trust",
+      "Adversarial Attacks",
+      "VM Escape"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "siren_luring_llms_onto_the_rocks_pairdriven_preference_manip",
+    "title": "SIREN (Luring LLMs onto the Rocks): PAIR-Driven Preference Manipulation in Web-RAG Recommenders",
+    "date": "2026-07-28",
+    "type": "Paper Review",
+    "description": "An automated black-box attack framework called SIREN that iteratively refines webpage edits using a feedback loop to trick Web-RAG (Retrieval-Augmented Generation) recommendation",
+    "tags": [
+      "RAG",
+      "Data Poisoning",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "agent_security_needs_redefinition_through_a_holistic_framewo",
+    "title": "Agent Security Needs Redefinition through a Holistic Framework",
+    "date": "2026-07-28",
+    "type": "Paper Review",
+    "description": "A structural position showing that LLM agent security is fundamentally a contextual authorization problem rather than a content-filtering problem, requiring reframing into four",
+    "tags": [
+      "Prompt Injection",
+      "Jailbreaking",
+      "Adversarial Attacks",
+      "AI Agents"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "pocevolve_generating_proofofconcept_exploits_from_security_p",
+    "title": "PoCEvolve: Generating Proof-of-Concept Exploits from Security Patches with Vulnerability-Aware Prompt Evolution",
+    "date": "2026-07-28",
+    "type": "Paper Review",
+    "description": "POCEVOLVE automates the generation of working proof-of-concept exploits directly from Git patch commits by utilizing a multi-objective prompt-evolution loop scored against",
+    "tags": [
+      "Vulnerabilities"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "protocollevel_attacks_on_agentic_commerce_platforms_a_crossp",
+    "title": "Protocol-Level Attacks on Agentic Commerce Platforms: A Cross-Platform Taxonomy, AIP-Bench, and Unified Defense",
+    "date": "2026-07-28",
+    "type": "Paper Review",
+    "description": "Demonstrates that agentic commerce security is broken at the protocol layer via deterministic, model-agnostic 'structural attacks' (achieving a 100% success rate wherever",
+    "tags": [
+      "Prompt Injection",
+      "AI Agents",
+      "Vulnerabilities"
+    ],
+    "readingTime": 12
+  },
+  {
     "slug": "ai_security_digest__july_27_2026",
     "title": "AI Security Digest \u2014 July 27, 2026",
     "date": "2026-07-27",
