@@ -140,9 +140,41 @@ export default function CTFTerminal() {
     return headers;
   };
 
+  const apiFetch = async (path: string, options: RequestInit = {}): Promise<Response> => {
+    const headers = getAuthHeaders();
+    const mergedHeaders = { ...headers, ...((options.headers as Record<string, string>) || {}) };
+    const mergedOptions = { ...options, headers: mergedHeaders };
+
+    const targets = [
+      'https://ctf-api.deniskim1.com',
+      'https://ctf.deniskim1.com',
+      'http://localhost:8000',
+    ];
+
+    if (typeof window !== 'undefined' && window.location.origin) {
+      if (!targets.includes(window.location.origin)) {
+        targets.unshift(window.location.origin);
+      }
+    }
+
+    let lastError: any = null;
+    for (const baseUrl of targets) {
+      try {
+        const url = `${baseUrl}${path.startsWith('/') ? path : '/' + path}`;
+        const res = await fetch(url, mergedOptions);
+        if (res.ok || res.status === 401 || res.status === 403 || res.status === 404) {
+          return res;
+        }
+      } catch (e) {
+        lastError = e;
+      }
+    }
+    throw lastError || new Error('All backend fallback targets failed');
+  };
+
   const fetchStatus = async () => {
     try {
-      const res = await fetch(`${BACKEND_URL}/api/status`, { headers: getAuthHeaders() });
+      const res = await apiFetch('/api/status');
       if (res.ok) {
         const data = await res.json();
         if (data.session_id && typeof window !== 'undefined') {
@@ -170,7 +202,7 @@ export default function CTFTerminal() {
     ]);
 
     try {
-      const res = await fetch(`${BACKEND_URL}/api/level/${lvl}`, { headers: getAuthHeaders() });
+      const res = await apiFetch(`/api/level/${lvl}`);
       if (res.ok) {
         const data: LevelMeta = await res.json();
         setActiveMeta(data);
@@ -182,7 +214,7 @@ export default function CTFTerminal() {
 
   const fetchHints = async (lvl: number) => {
     try {
-      const res = await fetch(`${BACKEND_URL}/api/hint/${lvl}`, { headers: getAuthHeaders() });
+      const res = await apiFetch(`/api/hint/${lvl}`);
       if (res.ok) {
         const data: HintData = await res.json();
         setHintData(data);
@@ -210,9 +242,8 @@ export default function CTFTerminal() {
     setLoading(true);
 
     try {
-      const res = await fetch(`${BACKEND_URL}/api/chat`, {
+      const res = await apiFetch('/api/chat', {
         method: 'POST',
-        headers: getAuthHeaders(),
         body: JSON.stringify({ level: currentLevel, prompt: userMsg }),
       });
 
@@ -259,9 +290,8 @@ export default function CTFTerminal() {
     if (!flagInput.trim()) return;
 
     try {
-      const res = await fetch(`${BACKEND_URL}/api/submit_flag`, {
+      const res = await apiFetch('/api/submit_flag', {
         method: 'POST',
-        headers: getAuthHeaders(),
         body: JSON.stringify({ level: currentLevel, flag: flagInput.trim() }),
       });
 

@@ -26,6 +26,12 @@ export default function CTFPage() {
 
   return (
     <div className="container-custom py-16 max-[560px]:py-10">
+      <head>
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="connect-src 'self' https://ctf-api.deniskim1.com https://ctf.deniskim1.com https://deniskim1.com https://*.deniskim1.com https://www.google-analytics.com https://region1.google-analytics.com https://cloudflareinsights.com;"
+        />
+      </head>
       <StructuredData data={jsonLd} />
       <CTFTerminal />
     </div>
