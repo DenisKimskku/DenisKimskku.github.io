@@ -4,8 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import OWASPWriteups from './OWASPWriteups';
 import CTFCertificate from './CTFCertificate';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_CTF_BACKEND_URL || 'https://ctf-api.deniskim1.com';
-
 interface LevelMeta {
   level: number;
   title: string;
@@ -19,6 +17,7 @@ interface LevelMeta {
 }
 
 interface ChatMessage {
+  id: string;
   sender: 'user' | 'assistant' | 'system';
   text: string;
   win?: boolean;
@@ -34,31 +33,6 @@ interface HintData {
   hint_1: string;
   hint_2_unlocked: boolean;
   hint_2: string;
-}
-
-function TypewriterText({ text, onChunk }: { text: string; onChunk?: () => void }) {
-  const [displayed, setDisplayed] = useState<string>(text || '');
-
-  useEffect(() => {
-    let index = 0;
-    setDisplayed(text ? text.slice(0, 3) : '');
-    if (!text) return;
-
-    const timer = setInterval(() => {
-      index += 3;
-      if (index >= text.length) {
-        setDisplayed(text);
-        clearInterval(timer);
-      } else {
-        setDisplayed(text.slice(0, index));
-      }
-      onChunk?.();
-    }, 15);
-
-    return () => clearInterval(timer);
-  }, [text, onChunk]);
-
-  return <div className="whitespace-pre-wrap leading-relaxed">{displayed}</div>;
 }
 
 const STATIC_LEVELS: Record<number, LevelMeta> = {
@@ -93,6 +67,7 @@ export default function CTFTerminal() {
   const [prompt, setPrompt] = useState<string>('');
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
+      id: 'init',
       sender: 'system',
       text: `Level 1: ${STATIC_LEVELS[1].title}\nScenario: ${STATIC_LEVELS[1].scenario}`,
     },
@@ -100,7 +75,6 @@ export default function CTFTerminal() {
   const [flagInput, setFlagInput] = useState<string>('');
   const [flagFeedback, setFlagFeedback] = useState<{ msg: string; success: boolean } | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [backendStatus, setBackendStatus] = useState<'online' | 'offline' | 'checking'>('checking');
   
   // Hint state
   const [hintData, setHintData] = useState<HintData | null>(null);
@@ -110,8 +84,6 @@ export default function CTFTerminal() {
 
   useEffect(() => {
     fetchStatus();
-    const interval = setInterval(fetchStatus, 5000);
-    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -124,10 +96,6 @@ export default function CTFTerminal() {
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
-
-  const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   const getAuthHeaders = (): Record<string, string> => {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' };
@@ -181,12 +149,9 @@ export default function CTFTerminal() {
         }
         setCompletedLevels(data.completed_levels || []);
         setUserMaxUnlocked(data.current_level || 1);
-        setBackendStatus('online');
-      } else {
-        setBackendStatus('offline');
       }
     } catch {
-      setBackendStatus('offline');
+      // Quiet fallback
     }
   };
 
@@ -195,6 +160,7 @@ export default function CTFTerminal() {
     setActiveMeta(fallback);
     setMessages([
       {
+        id: `sys-${lvl}-${Date.now()}`,
         sender: 'system',
         text: `Level ${lvl}: ${fallback.title}\nScenario: ${fallback.scenario}`,
       },
@@ -237,7 +203,10 @@ export default function CTFTerminal() {
 
     const userMsg = prompt.trim();
     setPrompt('');
-    setMessages((prev) => [...prev, { sender: 'user', text: userMsg }]);
+    setMessages((prev) => [
+      ...prev,
+      { id: `usr-${Date.now()}`, sender: 'user', text: userMsg },
+    ]);
     setLoading(true);
 
     try {
@@ -251,6 +220,7 @@ export default function CTFTerminal() {
         setMessages((prev) => [
           ...prev,
           {
+            id: `ast-${Date.now()}`,
             sender: 'assistant',
             text: data.response,
             win: data.win,
@@ -271,13 +241,21 @@ export default function CTFTerminal() {
         const errData = await res.json().catch(() => ({ detail: 'Request failed' }));
         setMessages((prev) => [
           ...prev,
-          { sender: 'system', text: `[Notice ${res.status}] ${errData.detail || 'Inference engine initializing...'}` },
+          {
+            id: `err-${Date.now()}`,
+            sender: 'system',
+            text: `[Notice ${res.status}] ${errData.detail || 'Inference engine initializing...'}`,
+          },
         ]);
       }
     } catch {
       setMessages((prev) => [
         ...prev,
-        { sender: 'system', text: '[Notice] Inference engine initializing. Please send payload again in a moment.' },
+        {
+          id: `err-${Date.now()}`,
+          sender: 'system',
+          text: '[Notice] Inference engine initializing. Please send payload again in a moment.',
+        },
       ]);
     } finally {
       setLoading(false);
@@ -315,7 +293,7 @@ export default function CTFTerminal() {
 
   return (
     <div className="w-full space-y-8">
-      {/* Top Header & Tab Navigation Bar */}
+      {/* Zen Header & Navigation */}
       <div className="border-b border-[var(--color-border)] pb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <h1 className="font-serif text-2xl md:text-3xl font-bold tracking-tight text-[var(--color-text)]">
@@ -326,35 +304,13 @@ export default function CTFTerminal() {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5 text-xs font-mono">
-          <div className="bg-[var(--color-bg-secondary)] px-3 py-1.5 rounded-md border border-[var(--color-border)] text-[var(--color-text-secondary)] flex items-center gap-2">
-            <span
-              className={`w-2 h-2 rounded-full ${
-                backendStatus === 'online'
-                  ? 'bg-emerald-500'
-                  : backendStatus === 'checking'
-                  ? 'bg-amber-400 animate-pulse'
-                  : 'bg-red-400'
-              }`}
-            />
-            <span>
-              Engine:{' '}
-              {backendStatus === 'online'
-                ? 'ONLINE'
-                : backendStatus === 'checking'
-                ? 'CONNECTING'
-                : 'OFFLINE'}
-            </span>
-          </div>
-
-          <div className="bg-[var(--color-bg-secondary)] px-3 py-1.5 rounded-md border border-[var(--color-border)] font-semibold text-[var(--color-accent)]">
-            Progress: {completedLevels.length}/20
-          </div>
+        <div className="text-xs font-mono text-[var(--color-text-secondary)] bg-[var(--color-bg-secondary)] px-3.5 py-1.5 rounded-md border border-[var(--color-border)]">
+          Progress: <span className="font-semibold text-[var(--color-accent)]">{completedLevels.length}/20</span>
         </div>
       </div>
 
-      {/* 3 Academic Workspace Tabs */}
-      <div className="flex border-b border-[var(--color-border)] gap-6 text-sm font-medium font-mono">
+      {/* Quiet Tab Navigation */}
+      <div className="flex border-b border-[var(--color-border)] gap-8 text-sm font-medium">
         <button
           onClick={() => setActiveTab('arena')}
           className={`pb-3 border-b-2 transition-colors ${
@@ -363,7 +319,7 @@ export default function CTFTerminal() {
               : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
           }`}
         >
-          [1. CTF Arena]
+          CTF Arena
         </button>
 
         <button
@@ -374,7 +330,7 @@ export default function CTFTerminal() {
               : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
           }`}
         >
-          [2. OWASP Writeups]
+          OWASP Writeups
         </button>
 
         <button
@@ -385,7 +341,7 @@ export default function CTFTerminal() {
               : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
           }`}
         >
-          [3. Verified Certificate]
+          Verified Certificate
         </button>
       </div>
 
@@ -393,130 +349,132 @@ export default function CTFTerminal() {
       {activeTab === 'arena' && (() => {
         const currentMeta = activeMeta || STATIC_LEVELS[currentLevel] || STATIC_LEVELS[1];
         return (
-        <>
-          {/* Challenge Level Selector Grid */}
-          <div className="space-y-3">
-            <h2 className="font-serif text-base font-semibold text-[var(--color-text)]">
-              Challenge Levels
-            </h2>
-            <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-10 gap-2">
-              {Array.from({ length: 20 }, (_, i) => i + 1).map((lvl) => {
-                const isSolved = completedLevels.includes(lvl);
-                const isUnlocked = lvl <= userMaxUnlocked || isSolved;
-                const isSelected = lvl === currentLevel;
+          <>
+            {/* Minimalist Challenge Level Grid */}
+            <div className="space-y-3">
+              <h2 className="font-serif text-sm font-semibold text-[var(--color-text-muted)] uppercase tracking-wider">
+                Challenge Levels
+              </h2>
+              <div className="grid grid-cols-5 sm:grid-cols-10 md:grid-cols-20 gap-1.5">
+                {Array.from({ length: 20 }, (_, i) => i + 1).map((lvl) => {
+                  const isSolved = completedLevels.includes(lvl);
+                  const isUnlocked = lvl <= userMaxUnlocked || isSolved;
+                  const isSelected = lvl === currentLevel;
 
-                return (
-                  <button
-                    key={lvl}
-                    disabled={!isUnlocked}
-                    onClick={() => setCurrentLevel(lvl)}
-                    className={`py-2 text-center font-mono text-xs rounded-md border transition-all focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] ${
-                      isSelected
-                        ? 'border-[var(--color-accent)] bg-[var(--color-accent)]/10 text-[var(--color-accent)] font-bold'
-                        : isSolved
-                        ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-500 font-medium'
-                        : isUnlocked
-                        ? 'border-[var(--color-border)] bg-[var(--color-bg-secondary)] text-[var(--color-text)] hover:border-[var(--color-accent)]'
-                        : 'border-transparent bg-[var(--color-bg-secondary)]/30 text-[var(--color-text-muted)] cursor-not-allowed opacity-40'
-                    }`}
-                  >
-                    {isSolved ? `✓ ${lvl}` : lvl}
-                  </button>
-                );
-              })}
+                  return (
+                    <button
+                      key={lvl}
+                      disabled={!isUnlocked}
+                      onClick={() => setCurrentLevel(lvl)}
+                      className={`py-1.5 text-center font-mono text-xs rounded transition-all focus:outline-none ${
+                        isSelected
+                          ? 'border border-[var(--color-accent)] bg-[var(--color-accent)]/10 text-[var(--color-accent)] font-bold'
+                          : isSolved
+                          ? 'border border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-medium'
+                          : isUnlocked
+                          ? 'border border-[var(--color-border)] bg-[var(--color-bg-secondary)] text-[var(--color-text)] hover:border-[var(--color-accent)]'
+                          : 'border border-transparent bg-[var(--color-bg-secondary)]/30 text-[var(--color-text-muted)] cursor-not-allowed opacity-30'
+                      }`}
+                    >
+                      {isSolved ? `✓${lvl}` : lvl}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
 
-          {/* Challenge Detail & Execution Workspace */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left Panel: Academic Level Briefing */}
-            <div className="lg:col-span-1 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg p-5 space-y-4 text-xs">
-              <div className="border-b border-[var(--color-border)] pb-3">
-                <h3 className="font-serif text-lg font-semibold text-[var(--color-text)]">
-                  Level {currentMeta.level}: {currentMeta.title}
-                </h3>
-                <div className="text-[var(--color-text-muted)] text-[11px] mt-0.5 font-mono">
-                  Tier {currentMeta.tier} • {currentMeta.tier_name}
-                </div>
-              </div>
-
-              <div>
-                <div className="text-[var(--color-text-muted)] uppercase tracking-wider mb-1 font-mono text-[10px]">
-                  Objective
-                </div>
-                <p className="text-[var(--color-text)] leading-relaxed">{currentMeta.description}</p>
-              </div>
-
-              <div>
-                <div className="text-[var(--color-text-muted)] uppercase tracking-wider mb-1 font-mono text-[10px]">
-                  Scenario
-                </div>
-                <div className="bg-[var(--color-bg)] p-3 rounded border border-[var(--color-border)] text-[var(--color-text-secondary)] leading-relaxed">
-                  {currentMeta.scenario}
-                </div>
-              </div>
-
-                {/* Progressive Hint Drawer Button */}
-                <div className="border-t border-[var(--color-border)] pt-3">
-                  <button
-                    onClick={() => setShowHintModal(!showHintModal)}
-                    className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text)] font-mono py-2 rounded-md text-xs transition-colors flex items-center justify-between px-3"
-                  >
-                    <span>💡 Progressive Hints</span>
-                    <span className="text-[var(--color-accent)] font-semibold">
-                      {hintData ? `Attempts: ${hintData.attempts}` : 'Loading...'}
-                    </span>
-                  </button>
-
-                  {showHintModal && hintData && (
-                    <div className="mt-3 p-3 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md space-y-3 font-mono text-[11px]">
-                      <div>
-                        <div className="font-semibold text-[var(--color-accent)] mb-1">
-                          Hint 1 (3 Attempts Required)
-                        </div>
-                        <div className="text-[var(--color-text-secondary)] leading-relaxed">
-                          {hintData.hint_1}
-                        </div>
-                      </div>
-
-                      <div className="border-t border-[var(--color-border-light)] pt-2">
-                        <div className="font-semibold text-[var(--color-accent)] mb-1">
-                          Hint 2 (5 Attempts Required)
-                        </div>
-                        <div className="text-[var(--color-text-secondary)] leading-relaxed">
-                          {hintData.hint_2}
-                        </div>
-                      </div>
+            {/* Main Interactive Workspace */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Left Panel: Level Briefing & Flag Submit */}
+              <div className="lg:col-span-1 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg p-5 space-y-5 text-xs flex flex-col justify-between">
+                <div className="space-y-4">
+                  <div className="border-b border-[var(--color-border)] pb-3">
+                    <h3 className="font-serif text-lg font-semibold text-[var(--color-text)]">
+                      Level {currentMeta.level}: {currentMeta.title}
+                    </h3>
+                    <div className="text-[var(--color-text-muted)] text-[11px] mt-0.5 font-mono">
+                      Tier {currentMeta.tier} • {currentMeta.tier_name}
                     </div>
-                  )}
+                  </div>
+
+                  <div>
+                    <div className="text-[var(--color-text-muted)] uppercase tracking-wider mb-1 font-mono text-[10px]">
+                      Objective
+                    </div>
+                    <p className="text-[var(--color-text)] leading-relaxed">{currentMeta.description}</p>
+                  </div>
+
+                  <div>
+                    <div className="text-[var(--color-text-muted)] uppercase tracking-wider mb-1 font-mono text-[10px]">
+                      Scenario
+                    </div>
+                    <div className="bg-[var(--color-bg)] p-3 rounded border border-[var(--color-border)] text-[var(--color-text-secondary)] leading-relaxed">
+                      {currentMeta.scenario}
+                    </div>
+                  </div>
+
+                  {/* Hints Drawer */}
+                  <div className="border-t border-[var(--color-border)] pt-3">
+                    <button
+                      onClick={() => setShowHintModal(!showHintModal)}
+                      className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text)] font-mono py-2 rounded-md text-xs transition-colors flex items-center justify-between px-3"
+                    >
+                      <span>💡 Hints</span>
+                      <span className="text-[var(--color-accent)] font-semibold">
+                        {hintData ? `Attempts: ${hintData.attempts}` : 'Loading...'}
+                      </span>
+                    </button>
+
+                    {showHintModal && hintData && (
+                      <div className="mt-3 p-3 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md space-y-3 font-mono text-[11px]">
+                        <div>
+                          <div className="font-semibold text-[var(--color-accent)] mb-1">
+                            Hint 1 (3 Attempts Required)
+                          </div>
+                          <div className="text-[var(--color-text-secondary)] leading-relaxed">
+                            {hintData.hint_1}
+                          </div>
+                        </div>
+
+                        <div className="border-t border-[var(--color-border)] pt-2">
+                          <div className="font-semibold text-[var(--color-accent)] mb-1">
+                            Hint 2 (5 Attempts Required)
+                          </div>
+                          <div className="text-[var(--color-text-secondary)] leading-relaxed">
+                            {hintData.hint_2}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                {/* Flag Submission Form */}
+                {/* Flag Submission */}
                 <div className="border-t border-[var(--color-border)] pt-4 space-y-2">
                   <label className="font-semibold text-[var(--color-text)] block text-xs">
                     Submit Flag
                   </label>
-                  <form onSubmit={handleFlagSubmit} className="space-y-2">
+                  <form onSubmit={handleFlagSubmit} className="flex gap-2">
                     <input
                       type="text"
                       placeholder="CTF{...}"
                       value={flagInput}
                       onChange={(e) => setFlagInput(e.target.value)}
-                      className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md px-3 py-2 text-xs font-mono text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none"
+                      className="flex-1 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md px-3 py-2 text-xs font-mono text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none"
                     />
                     <button
                       type="submit"
-                      className="w-full bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-medium py-2 rounded-md text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+                      className="bg-[var(--color-accent)] hover:opacity-90 text-white font-medium px-3 py-2 rounded-md text-xs transition-colors focus:outline-none"
                     >
-                      Verify Flag
+                      Submit
                     </button>
                   </form>
 
                   {flagFeedback && (
                     <div
-                      className={`p-2.5 rounded text-[11px] font-mono ${
+                      className={`p-2 rounded text-[11px] font-mono ${
                         flagFeedback.success
-                          ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-500'
+                          ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400'
                           : 'bg-red-500/10 border border-red-500/30 text-red-500'
                       }`}
                     >
@@ -526,37 +484,38 @@ export default function CTFTerminal() {
                 </div>
               </div>
 
-              {/* Right Panel: Academic Interactive Terminal */}
-              <div className="lg:col-span-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg flex flex-col h-[520px] font-mono text-xs shadow-sm overflow-hidden">
-                {/* Terminal Header */}
+              {/* Right Panel: Zen Clean Interaction Terminal */}
+              <div className="lg:col-span-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg flex flex-col h-[540px] font-mono text-xs shadow-sm overflow-hidden">
+                {/* Quiet Header */}
                 <div className="bg-[var(--color-bg-secondary)] px-4 py-2.5 border-b border-[var(--color-border)] flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-red-400 inline-block" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block" />
-                    <span className="text-[var(--color-text-secondary)] text-[11px] ml-2 font-mono">ctf_arena ~ level_{currentLevel}.py</span>
+                  <div className="text-[var(--color-text-secondary)] text-[11px] font-mono">
+                    level_{currentLevel}.py
                   </div>
-                  <span className="text-[var(--color-text-muted)] text-[10px] font-mono">[AI Security Sandbox]</span>
+                  <div className="text-[var(--color-text-muted)] text-[11px] font-mono">
+                    Target: {currentMeta.title}
+                  </div>
                 </div>
 
-                {/* Chat Output Area */}
+                {/* Clean Chat Area */}
                 <div className="flex-1 p-4 overflow-y-auto space-y-4">
-                  {messages.map((m, idx) => (
-                    <div key={idx} className="space-y-1">
+                  {messages.map((m) => (
+                    <div key={m.id} className="space-y-1">
                       {m.sender === 'user' && (
                         <div className="text-[var(--color-accent)] flex items-start gap-2">
-                          <span className="text-[var(--color-text-muted)]">&gt;</span>
+                          <span className="text-[var(--color-text-muted)] select-none">&gt;</span>
                           <span className="whitespace-pre-wrap">{m.text}</span>
                         </div>
                       )}
 
                       {m.sender === 'assistant' && (
                         <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border)] p-3 rounded-md text-[var(--color-text)] space-y-2 leading-relaxed">
-                          <TypewriterText text={m.text} onChunk={scrollToBottom} />
+                          <div className="whitespace-pre-wrap leading-relaxed text-[var(--color-text)] font-mono text-xs">
+                            {m.text}
+                          </div>
                           
                           {m.win && (
-                            <div className="mt-2 p-2.5 bg-emerald-500/10 border border-emerald-500/30 rounded text-emerald-500 text-[11px]">
-                              🏆 <strong>JUDGE VERDICT: WIN DETECTED!</strong>
+                            <div className="mt-2 p-2.5 bg-emerald-500/10 border border-emerald-500/30 rounded text-emerald-600 dark:text-emerald-400 text-[11px]">
+                              🏆 <strong>WIN DETECTED!</strong>
                               <br />
                               {m.judge_reason}
                               {m.unlocked_flag && (
@@ -574,21 +533,21 @@ export default function CTFTerminal() {
                           )}
 
                           {m.queued && (
-                            <div className="mt-2 p-2.5 bg-blue-500/10 border border-blue-500/30 rounded text-blue-400 text-[11px]">
-                              ⏳ <strong>QUEUED:</strong> Request queued — processing shortly. Please wait a moment...
+                            <div className="mt-2 p-2 bg-blue-500/10 border border-blue-500/30 rounded text-blue-400 text-[11px]">
+                              Processing in queue...
                             </div>
                           )}
 
                           {m.guardrail_blocked && !m.queued && (
                             <div className="mt-2 p-2 bg-amber-500/10 border border-amber-500/30 rounded text-amber-500 text-[11px]">
-                              ⚠️ <strong>GUARDRAIL TRIGGERED:</strong> Input or output filter blocked response compliance.
+                              Guardrail triggered: Response blocked.
                             </div>
                           )}
                         </div>
                       )}
 
                       {m.sender === 'system' && (
-                        <div className="text-[var(--color-text-muted)] italic text-[11px] bg-[var(--color-bg-secondary)]/50 p-2.5 rounded border border-[var(--color-border)]">
+                        <div className="text-[var(--color-text-muted)] italic text-[11px] bg-[var(--color-bg-secondary)]/40 p-2.5 rounded border border-[var(--color-border)]">
                           {m.text}
                         </div>
                       )}
@@ -596,19 +555,19 @@ export default function CTFTerminal() {
                   ))}
 
                   {loading && (
-                    <div className="text-[var(--color-accent)] flex items-center gap-2 text-xs font-mono">
-                      <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-ping" />
-                      <span>Executing inference & LLM Judge inspection...</span>
+                    <div className="text-[var(--color-accent)] flex items-center gap-2 text-xs font-mono py-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-ping" />
+                      <span>Executing inference...</span>
                     </div>
                   )}
                   <div ref={chatEndRef} />
                 </div>
 
-                {/* Prompt Input Bar */}
+                {/* Prompt Input Form */}
                 <form onSubmit={handleSendPrompt} className="p-3 bg-[var(--color-bg-secondary)] border-t border-[var(--color-border)] flex gap-2">
                   <input
                     type="text"
-                    placeholder={`Send prompt payload to Level ${currentLevel} LLM...`}
+                    placeholder={`Send prompt payload to Level ${currentLevel}...`}
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     disabled={loading}
@@ -617,9 +576,9 @@ export default function CTFTerminal() {
                   <button
                     type="submit"
                     disabled={loading || !prompt.trim()}
-                    className="bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] disabled:opacity-50 text-white font-medium px-4 py-2 rounded-md text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+                    className="bg-[var(--color-accent)] hover:opacity-90 disabled:opacity-50 text-white font-medium px-4 py-2 rounded-md text-xs transition-colors focus:outline-none"
                   >
-                    Send Payload
+                    Send
                   </button>
                 </form>
               </div>

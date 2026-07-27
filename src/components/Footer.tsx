@@ -46,7 +46,7 @@ export default function Footer() {
       <div className="container-custom">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Copyright */}
-          <p className="text-sm text-[var(--color-text-muted)] order-2 md:order-1">
+          <p className="text-sm text-[var(--color-text-muted)] order-2 md:order-1 whitespace-nowrap">
             © {currentYear} Minseok (Denis) Kim
           </p>
 
