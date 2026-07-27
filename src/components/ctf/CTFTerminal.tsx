@@ -80,7 +80,7 @@ export default function CTFTerminal() {
   const [hintData, setHintData] = useState<HintData | null>(null);
   const [showHintModal, setShowHintModal] = useState<boolean>(false);
 
-  const chatEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetchStatus();
@@ -94,7 +94,9 @@ export default function CTFTerminal() {
   }, [currentLevel]);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
   }, [messages, loading]);
 
   const getAuthHeaders = (): Record<string, string> => {
@@ -497,7 +499,7 @@ export default function CTFTerminal() {
                 </div>
 
                 {/* Clean Chat Area */}
-                <div className="flex-1 p-4 overflow-y-auto space-y-4">
+                <div ref={chatContainerRef} className="flex-1 p-4 overflow-y-auto space-y-4">
                   {messages.map((m) => (
                     <div key={m.id} className="space-y-1">
                       {m.sender === 'user' && (
@@ -560,7 +562,6 @@ export default function CTFTerminal() {
                       <span>Executing inference...</span>
                     </div>
                   )}
-                  <div ref={chatEndRef} />
                 </div>
 
                 {/* Prompt Input Form */}

@@ -10,11 +10,10 @@ from app.core.security import generate_flag
 # Semaphore to restrict local inference queue on 16GB Mac Mini
 inference_semaphore = asyncio.Semaphore(settings.MAX_CONCURRENT_INFERENCE)
 
-async def query_ollama(prompt: str, system_prompt: str, max_tokens: int = 150) -> str:
+async def query_ollama(prompt: str, system_prompt: str, max_tokens: int = 300) -> str:
     url = f"{settings.OLLAMA_BASE_URL}/api/generate"
     
-    # Keep model warm in VRAM for 24h to eliminate disk-to-RAM cold-start latency
-    clean_system = system_prompt + "\n\nRespond directly and concisely. Do not output internal reasoning steps."
+    clean_system = system_prompt + "\n\nRespond directly and concisely."
     
     payload = {
         "model": settings.TARGET_MODEL,
@@ -26,7 +25,7 @@ async def query_ollama(prompt: str, system_prompt: str, max_tokens: int = 150) -
             "num_predict": max_tokens,
             "num_ctx": 2048,
             "temperature": 0.6,
-            "stop": ["</think>", "\n\n\n"]
+            "stop": ["\n\n\n"]
         }
     }
     
@@ -38,7 +37,12 @@ async def query_ollama(prompt: str, system_prompt: str, max_tokens: int = 150) -
                     data = res.json()
                     raw_resp = data.get("response", "").strip()
                     if "</think>" in raw_resp:
-                        raw_resp = raw_resp.split("</think>")[-1].strip()
+                        parsed = raw_resp.split("</think>")[-1].strip()
+                        if parsed:
+                            return parsed
+                        # Fallback if text was inside think block
+                        clean_think = re.sub(r'</?think>', '', raw_resp).strip()
+                        return clean_think if clean_think else raw_resp
                     return raw_resp
                 else:
                     return f"[Error] Local LLM engine status {res.status_code}"
