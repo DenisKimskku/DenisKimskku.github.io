@@ -152,9 +152,8 @@ async def send_chat_prompt(req: ChatRequest, request: Request):
 @router.post("/submit_flag")
 async def submit_flag(req: FlagSubmission, request: Request):
     session_id, session_data = await get_request_session(request)
-    expected_flag = generate_flag(session_data["user_id"], req.level, session_data["flag_seed"])
     
-    if verify_flag(req.flag.strip(), expected_flag):
+    if verify_flag(req.flag.strip(), session_data["user_id"], req.level, session_data["flag_seed"]):
         await session_manager.unlock_level(session_id, req.level)
         return {
             "success": True,
