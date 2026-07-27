@@ -151,24 +151,23 @@ export default function CTFTerminal() {
       'http://localhost:8000',
     ];
 
-    if (typeof window !== 'undefined' && window.location.origin) {
-      if (!targets.includes(window.location.origin)) {
-        targets.unshift(window.location.origin);
-      }
-    }
-
+    let lastRes: Response | null = null;
     let lastError: any = null;
+
     for (const baseUrl of targets) {
       try {
         const url = `${baseUrl}${path.startsWith('/') ? path : '/' + path}`;
         const res = await fetch(url, mergedOptions);
-        if (res.ok || res.status === 401 || res.status === 403 || res.status === 404) {
+        if (res.ok) {
           return res;
         }
+        lastRes = res;
       } catch (e) {
         lastError = e;
       }
     }
+
+    if (lastRes) return lastRes;
     throw lastError || new Error('All backend fallback targets failed');
   };
 
