@@ -142,8 +142,9 @@ async def send_chat_prompt(req: ChatRequest, request: Request):
             "unlocked_flag": expected_flag
         }
     else:
+        fallback_text = model_response if model_response.strip() else f"I am a secure AI system protecting Level {level_id} policy directives. Access denied.\n({judge_reason})"
         return {
-            "response": model_response,
+            "response": fallback_text,
             "win": False,
             "judge_reason": judge_reason
         }
