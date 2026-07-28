@@ -1,5 +1,69 @@
 [
   {
+    "slug": "ai_security_digest__july_29_2026",
+    "title": "AI Security Digest \u2014 July 29, 2026",
+    "date": "2026-07-29",
+    "type": "News Digest",
+    "description": "LLMs are now actively exploiting zero-days, necessitating strict runtime isolation. New research introduces algebraic policies and physical camouflage attacks.",
+    "tags": [
+      "LLM Security",
+      "Agentic Workflows",
+      "Adversarial Attacks",
+      "Zero-Day Exploitation",
+      "Taint Confinement",
+      "Deepfake Detection"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "adversarial_prompts_for_acceptance_collapse_in_speculative_d",
+    "title": "Adversarial Prompts for Acceptance Collapse in Speculative Decoding",
+    "date": "2026-07-29",
+    "type": "Paper Review",
+    "description": "ADSD is a prompt-suffix optimization attack that targets the internal acceptance mechanism of speculative decoding, forcing the verifier model to reject proposed draft tokens and",
+    "tags": [
+      "Adversarial Attacks",
+      "Vulnerabilities"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "toolguardian_declarative_security_for_ai_agenttool_interacti",
+    "title": "ToolGuardian: Declarative Security for AI Agent-Tool Interactions",
+    "date": "2026-07-29",
+    "type": "Paper Review",
+    "description": "ToolGuardian secures AI agent-tool interactions by translating tool behaviors (descriptions, system calls, mock execution, and static analysis) into structured logic facts and",
+    "tags": [
+      "MCP",
+      "AI Agents"
+    ],
+    "readingTime": 8
+  },
+  {
+    "slug": "ispcloak_weaponizing_isp_for_optimizationfree_physical_camou",
+    "title": "ISPCloak: Weaponizing ISP for Optimization-Free Physical Camouflage against Deepfake Detectors",
+    "date": "2026-07-29",
+    "type": "Paper Review",
+    "description": "An optimization-free, physics-grounded adversarial attack that bypasses deepfake detectors by projecting images into the RAW sensor domain, injecting signal-dependent",
+    "tags": [
+      "Adversarial Attacks",
+      "Vulnerabilities"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "agentic_permissions_policy_algebra_for_taint_confinement_in_",
+    "title": "Agentic Permissions Policy Algebra for Taint Confinement in LLM Agents",
+    "date": "2026-07-29",
+    "type": "Paper Review",
+    "description": "APPA (Agentic Permissions Policy Algebra) isolates untrusted or restricted tool outputs inside disposable, label-seeded child branches and evaluates policy constraints",
+    "tags": [
+      "Prompt Injection",
+      "AI Agents"
+    ],
+    "readingTime": 12
+  },
+  {
     "slug": "ai_security_digest__july_28_2026",
     "title": "AI Security Digest \u2014 July 28, 2026",
     "date": "2026-07-28",
