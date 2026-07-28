@@ -2,7 +2,7 @@ from typing import Dict, Any, Optional
 
 OWASP_MAPPINGS: Dict[int, Dict[str, Any]] = {
     1: {
-        "category": "LLM01: Prompt Injection",
+        "category": "LLM07: System Prompt Leakage",
         "title": "Direct System Prompt Extraction",
         "cve_reference": "CWE-20: Improper Input Validation",
         "summary": "Direct prompt injection occurs when user inputs alter the LLM context flow, forcing the model to disregard developer instructions and leak secret system variables.",
@@ -12,7 +12,7 @@ OWASP_MAPPINGS: Dict[int, Dict[str, Any]] = {
     2: {
         "category": "LLM01: Prompt Injection",
         "title": "Persona Constraint Bypassing",
-        "cve_reference": "CWE-269: Improper Privilege Management",
+        "cve_reference": "CWE-693: Protection Mechanism Failure",
         "summary": "Negative persona prompting alone ('never break character') is insufficient to resist adversarial persona overriding commands.",
         "real_world_risk": "Attackers bypass brand compliance filters and trick financial or medical assistants into giving unauthorized, liability-inducing advice.",
         "developer_mitigation": "Use structured output schemas (JSON Mode) and API-level guardrails rather than relying purely on natural language compliance."
@@ -36,7 +36,7 @@ OWASP_MAPPINGS: Dict[int, Dict[str, Any]] = {
     5: {
         "category": "LLM01: Prompt Injection",
         "title": "Multi-Lingual Compliance Evasion",
-        "cve_reference": "CWE-138: Improper Output Neutralization",
+        "cve_reference": "CWE-693: Protection Mechanism Failure",
         "summary": "Safety alignment fine-tuning is often weaker in non-English or low-resource languages, permitting cross-lingual jailbreak attacks.",
         "real_world_risk": "Adversaries translate injection payloads into rare languages or mixed polyglot tokens to evade standard English guardrails.",
         "developer_mitigation": "Translate untrusted user inputs to a normalized canonical language before running safety classifiers."
@@ -68,7 +68,7 @@ OWASP_MAPPINGS: Dict[int, Dict[str, Any]] = {
     9: {
         "category": "LLM02: Sensitive Information Disclosure",
         "title": "Substitution Cipher Evasion (ROT13)",
-        "cve_reference": "CWE-310: Cryptographic Issues",
+        "cve_reference": "CWE-116: Improper Encoding or Escaping of Output",
         "summary": "LLMs possess internal translation capabilities for simple ciphers (ROT13, Caesar), allowing exfiltration around raw keyword monitors.",
         "real_world_risk": "Stealthy exfiltration of credentials or sensitive data past basic output regexes.",
         "developer_mitigation": "Apply DLP inspection on both cleartext and transformed output representations."
@@ -82,7 +82,7 @@ OWASP_MAPPINGS: Dict[int, Dict[str, Any]] = {
         "developer_mitigation": "Employ defense-in-depth: combine input intent filters, system prompt sandboxing, and output inspection."
     },
     11: {
-        "category": "LLM01: Prompt Injection",
+        "category": "LLM07: System Prompt Leakage",
         "title": "Markdown Delimiter Breakout",
         "cve_reference": "CWE-94: Improper Control of Generation of Code",
         "summary": "Wrapping user text in code block delimiters (` ``` `) fails if the user injects matching closing delimiters.",
@@ -90,7 +90,7 @@ OWASP_MAPPINGS: Dict[int, Dict[str, Any]] = {
         "developer_mitigation": "Sanitize or escape structural code block delimiters inside user-supplied text before interpolation."
     },
     12: {
-        "category": "LLM07: Insecure Plugin Design",
+        "category": "LLM05: Improper Output Handling",
         "title": "JSON Payload & API Breakout",
         "cve_reference": "CWE-75: Failure to Sanitize Data (JSON)",
         "summary": "Unescaped quotes or JSON syntax inside user input can break out of structured API payloads.",
@@ -127,7 +127,7 @@ OWASP_MAPPINGS: Dict[int, Dict[str, Any]] = {
         "cve_reference": "CWE-285: Improper Authorization",
         "summary": "When LLMs have tool-calling access, prompt injections can induce unauthorized function execution.",
         "real_world_risk": "Attackers trick agents into calling database deletion, wire transfer, or data retrieval functions.",
-        "developer_mitigation": "Require human-in-the-loop (HITL) approval for sensitive tool calls and enforce backendRBAC."
+        "developer_mitigation": "Require human-in-the-loop (HITL) approval for sensitive tool calls and enforce backend RBAC."
     },
     17: {
         "category": "LLM01: Prompt Injection",
@@ -138,7 +138,7 @@ OWASP_MAPPINGS: Dict[int, Dict[str, Any]] = {
         "developer_mitigation": "Combine ML safety classifiers with deterministic pattern verification and DLP scanning."
     },
     18: {
-        "category": "LLM02: Insecure Output Handling",
+        "category": "LLM05: Improper Output Handling",
         "title": "Dual-LLM Peer Review Bypassing",
         "cve_reference": "CWE-345: Insufficient Verification of Data Authenticity",
         "summary": "In dual-LLM systems, attackers craft payloads that confuse Reviewer Model B into approving Generator Model A's unsafe output.",
@@ -156,7 +156,7 @@ OWASP_MAPPINGS: Dict[int, Dict[str, Any]] = {
     20: {
         "category": "LLM06: Excessive Agency",
         "title": "Multi-Agent Privilege Escalation Chain",
-        "cve_reference": "CWE-269: Improper Privilege Management",
+        "cve_reference": "CWE-693: Protection Mechanism Failure",
         "summary": "Complex multi-agent chains (Planner -> Worker -> Sentinel) can suffer cascading privilege escalation if one sub-agent is compromised.",
         "real_world_risk": "Compromising a low-privilege worker agent allows attackers to trick the orchestrator into executing high-privilege tasks.",
         "developer_mitigation": "Implement zero-trust boundaries between sub-agents. Validate state transitions independently at each hop."

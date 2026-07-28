@@ -1,11 +1,18 @@
-fastapi>=0.100.0
-uvicorn[standard]>=0.22.0
-redis>=4.6.0
-pydantic>=2.0.0
-pydantic-settings>=2.0.0
-httpx>=0.24.0
-slowapi>=0.1.8
-python-jose[cryptography]>=3.3.0
-python-dotenv>=1.0.0
-pytest>=7.3.0
-pytest-asyncio>=0.21.0
+# Pinned deliberately: there is no lockfile, and an unattended `pip install -U`
+# can change ProxyHeadersMiddleware semantics under the rate limiter.
+fastapi==0.115.6
+uvicorn[standard]==0.39.0
+pydantic==2.10.4
+httpx==0.28.1
+slowapi==0.1.9
+pytest==8.3.4
+pytest-asyncio==0.25.0
+
+# Removed, all with zero imports anywhere in app/:
+#   redis                     - sessions are SQLite; nothing imports redis
+#   pydantic-settings         - config.py is a plain class, not BaseSettings
+#   python-dotenv             - never called
+#   python-jose[cryptography] - no JWT anywhere. Removed on security grounds as
+#                               much as tidiness: an unused JWT library with a
+#                               CVE history is the wrong thing to find in a
+#                               security showcase's dependency list.

@@ -1,0 +1,78 @@
+# CTF backend test suite.
+#
+# COVERS: every HTTP route returns non-5xx on happy and failure paths; the
+# CHALLENGES/OWASP/HINTS dicts are internally consistent and every declared
+# feature flag is either implemented or explicitly listed as unimplemented;
+# run_llm_judge's verdict table including adversarial classifier output; session
+# resolution, player isolation, unlock concurrency; the shared-GPU keep_alive
+# policy.
+#
+# DOES NOT COVER -- do not read a green tick as more than it is:
+#   * whether the real qwen3:8b can actually be jailbroken on any level. The
+#     model is faked here. Answer that on the Mac Mini with `pytest -m live`.
+#   * Cloudflare tunnel, launchd, backups, log rotation, real rate limiting.
+#   * the Next.js frontend (separate npm workflow).
+#
+# Needs no Ollama, no GPU, no network, and never touches ctf_backend/data/ --
+# conftest replaces sqlite3.connect with a guard that raises on any path there.
+
+name: CTF Backend Tests
+
+on:
+  push:
+    paths: ["ctf_backend/**", ".github/workflows/ctf-backend-tests.yml"]
+  pull_request:
+    paths: ["ctf_backend/**", ".github/workflows/ctf-backend-tests.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: ctf_backend
+
+jobs:
+  pytest:
+    name: pytest (py${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 3.9 is what the launchd plist actually runs -- production parity.
+        # 3.11 is the recommended upgrade target; keeping it green means the
+        # migration stays a plist edit rather than a project.
+        python-version: ["3.9", "3.11"]
+
+    env:
+      CTF_FLAG_HMAC_KEY: ci-only-flag-key-not-used-for-any-real-flag
+      CTF_CERT_HMAC_KEY: ci-only-cert-key-not-used-for-any-real-cert
+      CTF_DB_PATH: ${{ runner.temp }}/ci_ctf_progress.db
+      OLLAMA_BASE_URL: http://ollama.ci.invalid:11434
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: ctf_backend/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Assert the app imports without a live database
+        run: python -c "import app.main; print('import ok')"
+
+      - name: Run fast tiers
+        run: python -m pytest -q --strict-markers
+
+      - name: Assert the suite created no database under data/
+        run: |
+          if [ -e data/ctf_progress.db ]; then
+            echo "::error::A test created ctf_backend/data/ctf_progress.db."
+            exit 1
+          fi
+          echo "data/ is clean"

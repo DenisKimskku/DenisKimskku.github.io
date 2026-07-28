@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_CTF_BACKEND_URL || 'http://localhost:8000';
+import { ApiError, ctfFetch } from './ctfApi';
 
 interface OWASPDetail {
   category: string;
@@ -18,22 +17,22 @@ export default function OWASPWriteups({ completedLevels }: { completedLevels: nu
   const [data, setData] = useState<OWASPDetail | null>(null);
 
   useEffect(() => {
-    fetchOWASP(selectedLevel);
-  }, [selectedLevel]);
-
-  const fetchOWASP = async (lvl: number) => {
-    try {
-      const res = await fetch(`${BACKEND_URL}/api/owasp/${lvl}`, { credentials: 'include' });
-      if (res.ok) {
-        const json: OWASPDetail = await res.json();
-        setData(json);
-      } else {
-        setData(null);
-      }
-    } catch {
+    // Client-side gating only — the /api/owasp endpoint is unauthenticated, so
+    // this is UX honesty (the sidebar promises "complete level X to unlock"),
+    // not a security control. Anyone can curl it.
+    if (!completedLevels.includes(selectedLevel)) {
       setData(null);
+      return;
     }
-  };
+    const ac = new AbortController();
+    ctfFetch(`/api/owasp/${selectedLevel}`, { signal: ac.signal, timeoutMs: 15_000 })
+      .then((r) => r.json())
+      .then(setData)
+      .catch((e: ApiError) => {
+        if (e.kind !== 'aborted') setData(null);
+      });
+    return () => ac.abort();
+  }, [selectedLevel, completedLevels]);
 
   return (
     <div className="space-y-6">
