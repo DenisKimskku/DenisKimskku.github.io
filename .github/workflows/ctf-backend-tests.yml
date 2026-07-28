@@ -47,7 +47,7 @@ jobs:
     env:
       CTF_FLAG_HMAC_KEY: ci-only-flag-key-not-used-for-any-real-flag
       CTF_CERT_HMAC_KEY: ci-only-cert-key-not-used-for-any-real-cert
-      CTF_DB_PATH: ${{ runner.temp }}/ci_ctf_progress.db
+      CTF_DB_PATH: /tmp/ci_ctf_progress.db
       OLLAMA_BASE_URL: http://ollama.ci.invalid:11434
 
     steps:
