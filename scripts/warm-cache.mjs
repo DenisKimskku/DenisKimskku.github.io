@@ -314,6 +314,13 @@ function loadLocalPageUrls() {
     '/papers/',
     '/code/',
     '/resume/',
+    // /ctf/ is deliberately absent from the sitemap (it is an interactive app,
+    // not indexable content), and the purge list is built from sitemap + this
+    // array. Omitting it meant the CTF page was never purged: a deploy reported
+    // success while visitors kept getting the previous bundle until
+    // Cloudflare's ~24h TTL expired. Observed after a CTF release as
+    // `age: 84252` and still climbing on a freshly deployed page.
+    '/ctf/',
     '/calendar-plus-plus/',
     '/calendar-plus-plus/privacy/',
     '/calendar-plus-plus/terms/',
