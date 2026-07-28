@@ -296,6 +296,7 @@ COVERED_PATHS = {
     "/api/status", "/api/level/{level_id}", "/api/chat", "/api/chat/stream",
     "/api/admin/stats", "/api/submit_flag", "/api/hint/{level_id}",
     "/api/owasp/{level_id}", "/api/certificate", "/api/verify_cert/{cert_code}",
+    "/api/chat/clear",
 }
 _FRAMEWORK = {"/api/openapi.json", "/docs", "/docs/oauth2-redirect", "/redoc"}
 
@@ -309,3 +310,23 @@ def test_every_route_has_a_smoke_test(app_obj):
     )
     stale = COVERED_PATHS - declared
     assert not stale, "COVERED_PATHS lists routes that no longer exist: %s" % sorted(stale)
+
+
+def test_chat_clear(client):
+    r = client.post("/api/chat/clear", json={}, headers=REMOTE)
+    _no_5xx(r, "POST /api/chat/clear")
+    body = r.json()
+    assert body["cleared"] is True and body["attempts_preserved"] is True
+
+
+def test_chat_clear_out_of_range_level_is_422(client):
+    assert client.post("/api/chat/clear", json={"level": 0}, headers=REMOTE).status_code == 422
+
+
+def test_level_declares_its_conversation_contract(client):
+    """The UI cannot render a context meter, or honestly say "stateless",
+    without knowing which it is."""
+    conversational = client.get("/api/level/1", headers=REMOTE).json()
+    fenced = client.get("/api/level/11", headers=REMOTE).json()
+    assert conversational["multi_turn"] is True and conversational["context_window"] >= 2
+    assert fenced["multi_turn"] is False

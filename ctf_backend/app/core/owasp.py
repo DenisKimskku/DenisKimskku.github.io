@@ -43,11 +43,11 @@ OWASP_MAPPINGS: Dict[int, Dict[str, Any]] = {
     },
     6: {
         "category": "LLM01: Prompt Injection",
-        "title": "WAF & Keyword Blacklist Evasion",
-        "cve_reference": "CWE-184: Incomplete List of Disallowed Inputs",
-        "summary": "Simple regex or keyword blacklists ('secret', 'ignore') are easily bypassed using synonyms, typosquatting, or semantic circumlocution.",
-        "real_world_risk": "Static Web Application Firewalls fail against natural language variability.",
-        "developer_mitigation": "Use semantic vector embeddings or ML-based intent classifiers instead of static keyword blacklists."
+        "title": 'Stateless WAF vs Stateful Conversation',
+        "cve_reference": 'CWE-184: Incomplete List of Disallowed Inputs',
+        "summary": 'A per-request keyword filter defends the wrong unit of analysis. An attack can be composed from messages that are each individually clean: one turn establishes a referent, a later turn points at it using no blocked term.',
+        "real_world_risk": 'Session-level attacks pass every request-level control in the stack, and the audit log shows twenty benign messages.',
+        "developer_mitigation": 'Score the conversation, not the message. Retain and re-evaluate session state at each turn. Treat any filter without memory as a rate limiter, not a security control.'
     },
     7: {
         "category": "LLM01: Prompt Injection",
@@ -75,11 +75,11 @@ OWASP_MAPPINGS: Dict[int, Dict[str, Any]] = {
     },
     10: {
         "category": "LLM01: Prompt Injection",
-        "title": "Pre-Filter Intent Classifier Evasion",
-        "cve_reference": "CWE-807: Reliance on Untrusted Inputs in Security Decision",
-        "summary": "Adversaries obfuscate input intent using hypothetical framing, poetry, or indirect questions to trick intent pre-filters.",
-        "real_world_risk": "Single-layer pre-filters are routinely bypassed by multi-step prompt engineering.",
-        "developer_mitigation": "Employ defense-in-depth: combine input intent filters, system prompt sandboxing, and output inspection."
+        "title": 'Distributed Intent Laundering Past a Stateless Classifier',
+        "cve_reference": 'CWE-807: Reliance on Untrusted Inputs in a Security Decision',
+        "summary": 'An ML intent classifier scoring one message at a time can be defeated by distributing intent across turns so that no single message expresses it. Intent is a property of the conversation; the classifier is measuring the wrong object.',
+        "real_world_risk": 'Multi-turn attacks -- crescendo and its automated descendants -- routinely clear single-message pre-filters that block the equivalent single-shot payload outright.',
+        "developer_mitigation": 'Classify over a rolling conversation window. Combine with output inspection; a pre-filter alone is one layer, and attackers plan around exactly one layer.'
     },
     11: {
         "category": "LLM07: System Prompt Leakage",
@@ -99,11 +99,11 @@ OWASP_MAPPINGS: Dict[int, Dict[str, Any]] = {
     },
     13: {
         "category": "LLM01: Prompt Injection",
-        "title": "Multi-Turn Delimiter & Context Confusion",
-        "cve_reference": "CWE-471: Modification of Assumed Immutable Data",
-        "summary": "In multi-turn chats, appending past messages allows attackers to fake assistant or system turn markers (`<|im_start|>`).",
-        "real_world_risk": "Privilege escalation by spoofing historical assistant responses.",
-        "developer_mitigation": "Use structured chat APIs (OpenAI/Ollama message arrays) rather than raw string concatenation."
+        "title": 'Conversation History Poisoning via Forged Role Markers',
+        "cve_reference": 'CWE-471: Modification of Assumed Immutable Data',
+        "summary": "Rendering chat history as a concatenated string lets a user write role markers into it. The forged turn is stored and replayed, so on the next request the model reads the attacker's claim as its own prior commitment rather than as user input.",
+        "real_world_risk": 'Persisted history becomes an injection store: one poisoned message escalates every subsequent turn, and the escalating turns themselves look innocuous in review.',
+        "developer_mitigation": 'Use structured message arrays, never string concatenation. Strip control and role-marker tokens from user content before persistence. Never let user text be re-read in a privileged position.'
     },
     14: {
         "category": "LLM06: Excessive Agency",
@@ -147,11 +147,11 @@ OWASP_MAPPINGS: Dict[int, Dict[str, Any]] = {
     },
     19: {
         "category": "LLM01: Prompt Injection",
-        "title": "Indirect Email Attachment Payload Injection",
-        "cve_reference": "CWE-20: Improper Input Validation",
-        "summary": "Processing untrusted email bodies or attachments exposes autonomous assistants to indirect prompt injection.",
-        "real_world_risk": "Inbound emails hijack personal AI assistants to forward emails, exfiltrate files, or leak keys.",
-        "developer_mitigation": "Treat all incoming external data as untrusted; strip executable instructions from document parsers."
+        "title": 'Delayed-Trigger Indirect Injection via Archived Content',
+        "cve_reference": 'CWE-829: Inclusion of Functionality from an Untrusted Control Sphere',
+        "summary": 'An instruction planted in untrusted data need not fire on arrival. Once archived into a thread, corpus, or memory that is re-read on later requests, it activates during an ordinary benign interaction the user initiated.',
+        "real_world_risk": 'The exfiltrating request contains no attack, so incident response looks at the wrong message. Assistants with mail, document or memory access are affected by content ingested days earlier.',
+        "developer_mitigation": 'Re-sanitise archived and quoted content on every read, not only on ingest. Keep provenance on every context segment and refuse to treat retrieved data as instructions regardless of age.'
     },
     20: {
         "category": "LLM06: Excessive Agency",

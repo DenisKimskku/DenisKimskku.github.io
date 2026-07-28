@@ -159,6 +159,27 @@ export async function fetchStatus(signal?: AbortSignal): Promise<StatusData> {
   return data;
 }
 
+/**
+ * Drop the server-side conversation for one level.
+ *
+ * POST /api/chat/clear {level}. Progress is untouched by design: solved levels,
+ * captured flags, and the attempt counters that gate hints are all unreachable
+ * from that endpoint, and flag_seed is never regenerated (a flag the player
+ * already wrote down must keep verifying).
+ *
+ * A failure is surfaced by the caller as "cleared locally only" rather than
+ * reported as success — telling a player the model forgot when it did not would
+ * break the level.
+ */
+export async function clearConversation(level: number, signal?: AbortSignal): Promise<void> {
+  await ctfFetch('/api/chat/clear', {
+    method: 'POST',
+    body: { level },
+    signal,
+    timeoutMs: 15_000,
+  });
+}
+
 export interface StreamEvent {
   chunk?: string;
   replace?: boolean;
@@ -169,6 +190,10 @@ export interface StreamEvent {
   engine_error?: boolean;
   guardrail_blocked?: boolean;
   done?: boolean;
+  /** How many stored messages the server replayed into this turn, and the size
+   *  of that window. Absent on levels with no conversation. */
+  turns_retained?: number;
+  context_window?: number;
 }
 
 /**
@@ -209,7 +234,14 @@ export async function streamChat(
   level: number,
   prompt: string,
   onChunk: (text: string, replace: boolean) => void,
-  opts: { signal?: AbortSignal; idleTimeoutMs?: number } = {},
+  opts: {
+    signal?: AbortSignal;
+    idleTimeoutMs?: number;
+    /** Every parsed record, including ones with no chunk. The backend's only
+     *  progress signal on a buffered level is {"chunk": "", "status":
+     *  "generating"} and "" is falsy — which is why `status` was unreachable. */
+    onEvent?: (ev: StreamEvent) => void;
+  } = {},
 ): Promise<StreamEvent> {
   const idleTimeoutMs = opts.idleTimeoutMs ?? 90_000;
 
@@ -251,6 +283,7 @@ export async function streamChat(
       buffer = buffer.slice(m.index + m[0].length);
       const ev = parseSseRecord(record);
       if (!ev) continue;
+      opts.onEvent?.(ev);
       if (ev.chunk) onChunk(ev.chunk, !!ev.replace);
       if (ev.done) final = ev;
     }
@@ -259,6 +292,7 @@ export async function streamChat(
       const ev = parseSseRecord(buffer);
       buffer = '';
       if (ev) {
+        opts.onEvent?.(ev);
         if (ev.chunk) onChunk(ev.chunk, !!ev.replace);
         if (ev.done) final = ev;
       }

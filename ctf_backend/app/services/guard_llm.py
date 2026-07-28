@@ -75,7 +75,9 @@ async def reviewer_gate(draft: str) -> Tuple[bool, str]:
     return "REJECT" not in verdict.strip().upper()[:16], verdict.strip()[:40]
 
 
-async def run_multi_agent_pipeline(user_prompt: str, expected_flag: str) -> Tuple[str, str]:
+async def run_multi_agent_pipeline(
+    user_prompt: str, expected_flag: str, history_block: str = ""
+) -> Tuple[str, str]:
     """Level 20: Planner -> Worker -> Sentinel, three sequential calls.
 
     The escalation is real because the agents have different views:
@@ -92,8 +94,12 @@ async def run_multi_agent_pipeline(user_prompt: str, expected_flag: str) -> Tupl
     """
     from app.core.level_mechanics import PLANNER_SYSTEM, SENTINEL_SYSTEM, WORKER_SYSTEM
 
+    # History reaches the PLANNER only. The Worker still sees nothing but the
+    # Planner's paraphrased task line, so turn-1 context has to survive a
+    # paraphrase to pay off -- which is the escalation this level is about.
+    request_body = _fence(history_block, limit=2400) + _fence(user_prompt)
     plan = await query_ollama(
-        "<request>\n%s\n</request>\nEmit one TASK: line for the Worker." % _fence(user_prompt),
+        "<request>\n%s\n</request>\nEmit one TASK: line for the Worker." % request_body,
         PLANNER_SYSTEM, max_tokens=120, think=False,
     )
 

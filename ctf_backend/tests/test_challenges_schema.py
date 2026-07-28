@@ -31,6 +31,7 @@ ENFORCED_FLAGS = {
     "input_blacklist", "alphanumeric_only", "output_censor_raw_flag",
     "pre_filter_enabled", "dual_llm", "llamaguard_check",
     "json_wrapper", "multi_turn", "multi_agent", "indirect_rag",
+    "history_disabled",
 }
 NARRATIVE_META = {"status", "status_note"}
 # Vestigial keys from the original schema: always None, read by nothing.

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from pydantic import BaseModel, Field
-from typing import Optional, List, Tuple, Dict, Any
+from typing import Any, Dict, List, NamedTuple, Optional, Tuple
 import hmac
 import re
 
@@ -16,6 +16,8 @@ from app.core.security import generate_flag, verify_flag, generate_certificate, 
 from app.core.owasp import get_owasp_info, OWASP_MAPPINGS
 from app.core.guardrails import apply_input_filters, censor_raw_flag
 from app.core.level_mechanics import (
+    USER_TURN_CONVERSATION, USER_TURN_DEFAULT,
+    chat_history_block, corpus_document, estimate_tokens, fit_history,
     indirect_document, json_envelope, multi_turn_transcript,
 )
 from app.services.session_mgr import session_manager
@@ -35,6 +37,10 @@ router = APIRouter()
 class ChatRequest(BaseModel):
     level: int = Field(..., ge=1, le=20)
     prompt: str = Field(..., max_length=8000)
+
+class ClearRequest(BaseModel):
+    # Omitted -> clear every level for this session.
+    level: Optional[int] = Field(None, ge=1, le=20)
 
 class FlagSubmission(BaseModel):
     level: int = Field(..., ge=1, le=20)
@@ -130,28 +136,62 @@ async def get_level_info(level_id: int, request: Request):
         # framing says so, rather than implying a guardrail that isn't enforced.
         "defense_status": challenge.get("status", "enforced"),
         "defense_note": challenge.get("status_note"),
+        # Whether a level remembers you is load-bearing information for an
+        # attacker, and the UI had no way to know it.
+        "multi_turn": _history_mode(challenge) != "off",
+        "context_window": _replay_limit(_history_mode(challenge)),
         "is_completed": level_id in session_data["completed_levels"]
     }
+
+class PreparedTurn(NamedTuple):
+    session_id: str
+    challenge: Dict[str, Any]
+    user_prompt: str
+    turn: str
+    system_prompt: str
+    expected_flag: str
+    history: List[Dict[str, str]]   # what was REPLAYED, pre-append
+    dropped: int
+    early: Optional[Dict[str, Any]]
+
 
 def _sse(payload: Dict[str, Any]) -> str:
     return f"data: {json.dumps(payload)}\n\n"
 
 
-async def _prepare_turn(
-    req: ChatRequest, request: Request
-) -> Tuple[str, Dict[str, Any], str, str, str, str, Optional[Dict[str, Any]]]:
+def _history_mode(challenge: Dict[str, Any]) -> str:
+    """'off' | 'raw' | 'corpus' | 'chat'.
+
+    Opt-OUT, not opt-in: 18 of 20 levels want conversation, so a future level
+    author gets the modern behaviour by default. The two exceptions declare
+    `history_disabled` because their mechanic is a property of ONE request's
+    structure -- a code fence (11) and a JSON envelope (12) -- and replayed
+    history would let a player write OUTSIDE the wrapper instead of breaking it,
+    deleting the level rather than enriching it.
+    """
+    if not settings.HISTORY_ENABLED or challenge.get("history_disabled"):
+        return "off"
+    if challenge.get("multi_turn"):
+        return "raw"          # level 13: forgeable markers, on purpose
+    if challenge.get("indirect_rag"):
+        return "corpus"       # levels 15/19: the corpus accumulates
+    return "chat"
+
+
+def _replay_limit(mode: str) -> int:
+    return db_session.MAX_TURNS if mode == "raw" else settings.HISTORY_MAX_MESSAGES
+
+
+async def _prepare_turn(req: ChatRequest, request: Request):
     """Shared front half of /chat and /chat/stream.
 
-    Returns (session_id, challenge, user_prompt, turn, system_prompt, expected_flag,
-    early_response). A non-None early_response means the turn is already decided
+    Returns a PreparedTurn. A non-None `early` means the turn is already decided
     and no inference should happen.
 
-    system_prompt is returned rather than re-derived by each caller: the
-    templating rule (whether the payload is embedded structurally, and therefore
-    must NOT be repeated as a bare user turn) lives in exactly one place.
-
     Both endpoints go through this: they used to be parallel implementations, so
-    every guardrail added to /chat was bypassable by POSTing to /chat/stream.
+    every guardrail added to /chat was bypassable by POSTing to /chat/stream --
+    and the turn-persistence bug that made level 13 non-functional in production
+    was exactly that drift reappearing.
     """
     session_id, session_data = await get_request_session(request)
     level_id = req.level
@@ -160,9 +200,6 @@ async def _prepare_turn(
     if not challenge:
         raise HTTPException(status_code=404, detail="Level not found")
 
-    # Yield to higher-priority local workloads. This is an honest 503 with
-    # Retry-After -- the old code returned {"queued": true, "response":
-    # "processing shortly"} and then dropped the request on the floor.
     yield_reason = await scheduler.should_yield()
     if yield_reason:
         raise HTTPException(status_code=503, detail=yield_reason, headers={"Retry-After": "30"})
@@ -172,66 +209,77 @@ async def _prepare_turn(
 
     sanitized, block_reason = apply_input_filters(challenge, user_prompt)
     if block_reason:
-        return session_id, challenge, user_prompt, "", "", "", {
-            "response": block_reason,
-            "win": False,
-            "guardrail_blocked": True,
-        }
+        return PreparedTurn(session_id, challenge, user_prompt, "", "", "", [], 0, {
+            "response": block_reason, "win": False, "guardrail_blocked": True,
+        })
     user_prompt = sanitized
 
-    # Level 10: an intent classifier in front of the target model.
     if challenge.get("pre_filter_enabled"):
         allowed, _verdict = await intent_prefilter(user_prompt)
         if not allowed:
-            return session_id, challenge, user_prompt, "", "", "", {
+            return PreparedTurn(session_id, challenge, user_prompt, "", "", "", [], 0, {
                 "response": "[PRE-FILTER BLOCKED] The intent classifier flagged this prompt "
                             "as an extraction attempt. It was never forwarded to the target "
                             "model.",
-                "win": False,
-                "guardrail_blocked": True,
-            }
+                "win": False, "guardrail_blocked": True,
+            })
 
     expected_flag = generate_flag(session_data["user_id"], level_id, session_data["flag_seed"])
     template = challenge["system_prompt"]
+    mode = _history_mode(challenge)
 
-    # ---- Structural mechanics: change where the payload LANDS ----------
-    # A level whose only defense is a sentence of English is a Tier-1 level no
-    # matter what its description promises.
+    # ---- Context budget --------------------------------------------------
+    # History yields to the payload, never the reverse. Truncating a player's
+    # payload behind their back is the same class of dishonesty as fabricating a
+    # refusal, and it would silently break long payloads that work today.
+    scaffold = estimate_tokens(template.replace("{USER_INPUT}", "").replace("{FLAG}", ""))
+    prompt_tokens = estimate_tokens(user_prompt)
+    available = (settings.CONTEXT_WINDOW - settings.MAX_TOKENS
+                 - settings.PROMPT_RESERVE_TOKENS - scaffold - prompt_tokens)
+
+    if available < 0:
+        room = max(0, prompt_tokens + available)
+        return PreparedTurn(session_id, challenge, user_prompt, "", "", "", [], 0, {
+            "response": ("[CONTEXT] This payload is about %d tokens; this level leaves room for "
+                         "about %d. Nothing was sent to the model \u2014 the platform will not "
+                         "silently truncate your payload. Shorten it and retry."
+                         % (prompt_tokens, room)),
+            "win": False, "context_overflow": True,
+        })
+
+    history, dropped = [], 0
+    if mode != "off":
+        limit = _replay_limit(mode)
+        stored = await asyncio.to_thread(db_session.get_turns, session_id, level_id, limit)
+        history, dropped = fit_history(stored, min(settings.HISTORY_TOKEN_BUDGET, available), limit)
+
+    # ---- Structural mechanics: change where the payload LANDS ------------
+    # History goes into the SAME slot the payload occupies, i.e. inside whatever
+    # fence the level draws. It must NEVER go into the system prompt: that is
+    # the trusted channel holding `Confidential Key: {FLAG}`, and attacker text
+    # there would be a free system-prompt injection primitive on all 20 levels.
     embedded = user_prompt
+    turn = USER_TURN_DEFAULT if "{USER_INPUT}" in template else user_prompt
 
     if challenge.get("json_wrapper"):
-        # Level 12: build the envelope by concatenation. The missing escaping is
-        # the vulnerability; the player wins by closing the string and adding a
-        # sibling key.
         embedded = json_envelope(user_prompt)
-
-    elif challenge.get("multi_turn"):
-        # Level 13: render prior turns as a raw transcript so the role markers
-        # are real text the player can forge, rather than a structured array the
-        # server would escape for them.
-        history = await asyncio.to_thread(db_session.get_turns, session_id, level_id)
+    elif mode == "raw":
+        # Level 13: replayed turns are NOT neutralised, so markers are forgeable.
         embedded = multi_turn_transcript(history, user_prompt)
-
     elif challenge.get("indirect_rag"):
-        # Levels 15/19: the payload arrives through a DATA channel (a retrieved
-        # document, an email attachment) and the user turn is fixed. That single
-        # change is the whole difference between direct and indirect injection.
-        embedded, _fixed_query = indirect_document(level_id, user_prompt)
+        if mode == "corpus":
+            embedded, turn = corpus_document(level_id, history, user_prompt)
+        else:
+            embedded, turn = indirect_document(level_id, user_prompt)
+    elif history:
+        embedded = chat_history_block(history, dropped) + user_prompt
+        if "{USER_INPUT}" in template:
+            turn = USER_TURN_CONVERSATION
 
     system_prompt = template.format(FLAG=expected_flag, USER_INPUT=embedded)
 
-    # If the level embeds the payload structurally, do NOT hand the model a
-    # second, unwrapped copy. The old code passed user_prompt as the user turn
-    # *and* interpolated it into the template, so on level 11 the player's
-    # instructions already sat outside the code fence they were asked to escape.
-    if challenge.get("indirect_rag"):
-        _body, turn = indirect_document(level_id, user_prompt)
-    elif "{USER_INPUT}" in template:
-        turn = "Process the untrusted user input above according to your system policy."
-    else:
-        turn = user_prompt
-
-    return session_id, challenge, user_prompt, turn, system_prompt, expected_flag, None
+    return PreparedTurn(session_id, challenge, user_prompt, turn,
+                        system_prompt, expected_flag, history, dropped, None)
 
 
 async def _apply_output_guardrails(
@@ -255,17 +303,22 @@ async def _apply_output_guardrails(
 @router.post("/chat")
 @limiter.limit("10/minute")
 async def send_chat_prompt(req: ChatRequest, request: Request):
-    (session_id, challenge, user_prompt, turn,
-     system_prompt, expected_flag, early) = await _prepare_turn(req, request)
-    if early:
-        return early
+    prep = await _prepare_turn(req, request)
+    if prep.early:
+        return prep.early
 
     try:
-        if challenge.get("multi_agent"):
+        if prep.challenge.get("multi_agent"):
             # Level 20 runs a real three-stage pipeline instead of one call.
-            model_response, _verdict = await run_multi_agent_pipeline(user_prompt, expected_flag)
+            # History reaches the PLANNER only, so the Worker still sees nothing
+            # but a paraphrased task line and the pipeline's information-flow
+            # design survives.
+            model_response, _verdict = await run_multi_agent_pipeline(
+                prep.user_prompt, prep.expected_flag,
+                history_block=chat_history_block(prep.history, prep.dropped),
+            )
         else:
-            model_response = await query_ollama(turn, system_prompt)
+            model_response = await query_ollama(prep.turn, prep.system_prompt)
     except Overloaded:
         raise HTTPException(
             status_code=503,
@@ -286,42 +339,50 @@ async def send_chat_prompt(req: ChatRequest, request: Request):
             "engine_error": True,
         }
 
-    model_response = await _apply_output_guardrails(challenge, model_response, expected_flag)
+    model_response = await _apply_output_guardrails(
+        prep.challenge, model_response, prep.expected_flag
+    )
 
-    if challenge.get("multi_turn"):
-        await asyncio.to_thread(db_session.append_turn, session_id, req.level, "user", user_prompt)
+    # POST-guardrail, always: exactly the bytes the player received. Storing the
+    # raw draft would make the level-17/18 reviewer a no-op across turns and
+    # re-admit a redacted flag into the model's context on levels 8/9.
+    if _history_mode(prep.challenge) != "off":
         await asyncio.to_thread(
-            db_session.append_turn, session_id, req.level, "assistant", model_response
+            db_session.append_exchange, prep.session_id, req.level,
+            prep.user_prompt, model_response,
         )
 
-    # Score the guarded text: the player can only exfiltrate what they can see.
-    win, reason_key = await run_llm_judge(user_prompt, model_response, expected_flag, challenge)
+    # prep.history is the PRE-append conversation, so the scorer never sees the
+    # response it is scoring twice.
+    win, reason_key = await run_llm_judge(
+        prep.user_prompt, model_response, prep.expected_flag, prep.challenge,
+        history=prep.history,
+    )
 
-    if win:
-        await session_manager.unlock_level(session_id, req.level)
-        return {
-            "response": model_response,
-            "win": True,
-            "judge_reason": JUDGE_REASONS[reason_key],
-            "unlocked_flag": expected_flag,
-        }
-    return {
+    body = {
         "response": model_response,
-        "win": False,
+        "win": win,
         "judge_reason": JUDGE_REASONS[reason_key],
+        "turns_retained": len(prep.history),
+        "context_window": _replay_limit(_history_mode(prep.challenge)),
     }
+    if win:
+        await session_manager.unlock_level(prep.session_id, req.level)
+        body["unlocked_flag"] = prep.expected_flag
+    return body
 
 
 @router.post("/chat/stream")
 @limiter.limit("10/minute")
 async def send_chat_prompt_stream(req: ChatRequest, request: Request):
-    (session_id, challenge, user_prompt, turn,
-     system_prompt, expected_flag, early) = await _prepare_turn(req, request)
+    prep = await _prepare_turn(req, request)
 
-    if early:
+    if prep.early:
         async def blocked():
-            yield _sse({**early, "done": True})
+            yield _sse({**prep.early, "done": True})
         return StreamingResponse(blocked(), media_type="text/event-stream")
+
+    challenge, system_prompt = prep.challenge, prep.system_prompt
 
     # Streaming and egress filtering are incompatible: a censor cannot redact a
     # flag that has already been sent chunk-by-chunk, and no sliding window is
@@ -338,9 +399,15 @@ async def send_chat_prompt_stream(req: ChatRequest, request: Request):
         try:
             if buffered:
                 yield _sse({"chunk": "", "status": "generating", "win": False, "done": False})
-                full_text = await query_ollama(turn, system_prompt)
+                full_text = await query_ollama(prep.turn, system_prompt)
+            elif challenge.get("multi_agent"):
+                yield _sse({"chunk": "", "status": "generating", "win": False, "done": False})
+                full_text, _v = await run_multi_agent_pipeline(
+                    prep.user_prompt, prep.expected_flag,
+                    history_block=chat_history_block(prep.history, prep.dropped),
+                )
             else:
-                async for chunk in query_ollama_stream(turn, system_prompt):
+                async for chunk in query_ollama_stream(prep.turn, system_prompt):
                     full_text += chunk
                     yield _sse({"chunk": chunk, "win": False, "done": False})
         except Overloaded:
@@ -359,24 +426,61 @@ async def send_chat_prompt_stream(req: ChatRequest, request: Request):
             })
             return
 
-        guarded = await _apply_output_guardrails(challenge, full_text, expected_flag)
-        if buffered or guarded != full_text:
+        guarded = await _apply_output_guardrails(challenge, full_text, prep.expected_flag)
+        if buffered or challenge.get("multi_agent") or guarded != full_text:
             # Replace what the client has (or has not yet) seen with the guarded text.
             yield _sse({"chunk": guarded, "replace": True, "win": False, "done": False})
 
-        win, reason_key = await run_llm_judge(user_prompt, guarded, expected_flag, challenge)
+        # THE bug this endpoint used to have: it read history but never wrote
+        # it. The SPA only ever calls /chat/stream, so level 13's conversation
+        # buffer was permanently empty for every real player.
+        if _history_mode(challenge) != "off":
+            await asyncio.to_thread(
+                db_session.append_exchange, prep.session_id, req.level,
+                prep.user_prompt, guarded,
+            )
+
+        win, reason_key = await run_llm_judge(
+            prep.user_prompt, guarded, prep.expected_flag, challenge, history=prep.history,
+        )
+        tail = {
+            "chunk": "", "win": win, "judge_reason": JUDGE_REASONS[reason_key], "done": True,
+            "turns_retained": len(prep.history),
+            "context_window": _replay_limit(_history_mode(challenge)),
+        }
         if win:
-            await session_manager.unlock_level(session_id, req.level)
-            yield _sse({
-                "chunk": "", "win": True, "judge_reason": JUDGE_REASONS[reason_key],
-                "unlocked_flag": expected_flag, "done": True,
-            })
-        else:
-            yield _sse({
-                "chunk": "", "win": False, "judge_reason": JUDGE_REASONS[reason_key], "done": True,
-            })
+            await session_manager.unlock_level(prep.session_id, req.level)
+            tail["unlocked_flag"] = prep.expected_flag
+        yield _sse(tail)
 
     return StreamingResponse(event_generator(), media_type="text/event-stream")
+
+@router.post("/chat/clear")
+@limiter.limit("20/minute")
+async def clear_chat(request: Request, req: Optional[ClearRequest] = None):
+    """Drop this session's conversation. {"level": N} for one level, {} for all.
+
+    Deliberately NOT behind scheduler.should_yield(): this is a SQLite DELETE
+    with no inference, and a player most wants to reset when the machine is
+    busy. Idempotent -- clearing empty history is a 200 with 0 removed.
+
+    Progress is untouched, and the response says so rather than leaving it to be
+    inferred. A win stays a win; the attempt counters that gate hints are not
+    reachable from here (clearing must not launder progress in EITHER
+    direction); flag_seed is not regenerated, or a flag the player already wrote
+    down would stop verifying.
+    """
+    session_id, session_data = await get_request_session(request)
+    level_id = req.level if req else None
+    removed = await asyncio.to_thread(db_session.clear_turns, session_id, level_id)
+    return {
+        "cleared": True,
+        "level": level_id,
+        "messages_removed": removed,
+        "attempts_preserved": True,
+        "completed_levels": session_data["completed_levels"],
+    }
+
 
 @router.get("/admin/stats")
 @limiter.limit("10/minute")

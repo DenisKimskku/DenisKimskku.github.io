@@ -216,42 +216,123 @@ class DBSessionManager:
                     conn.execute("ROLLBACK")
                 raise
 
-    # --- Level 13 dialogue history -------------------------------------
+    # --- Dialogue history ------------------------------------------------
+    # Level 13 renders these RAW so its role markers are forgeable; every other
+    # multi-turn level renders them through level_mechanics.neutralize_replayed.
     MAX_TURNS = 6
 
-    def get_turns(self, session_id: str, level_id: int) -> list:
+    def get_turns(self, session_id: str, level_id: int, limit: Optional[int] = None) -> list:
+        limit = self.MAX_TURNS if limit is None else max(0, int(limit))
+        if not limit:
+            return []
         with _connect() as conn:
             rows = conn.execute(
                 "SELECT role, content FROM turns WHERE session_id = ? AND level_id = ? "
                 "ORDER BY seq DESC LIMIT ?",
-                (session_id, level_id, self.MAX_TURNS),
+                (session_id, level_id, limit),
             ).fetchall()
         return [{"role": r, "content": c} for r, c in reversed(rows)]
 
-    def append_turn(self, session_id: str, level_id: int, role: str, content: str) -> None:
+    def _insert_turn(self, conn, session_id, level_id, seq, role, content) -> None:
+        conn.execute(
+            "INSERT INTO turns (session_id, level_id, seq, role, content, created_at) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            (session_id, level_id, seq, role,
+             (content or "")[: settings.HISTORY_MAX_CHARS], time.time()),
+        )
+
+    def _prune_locked(self, conn, session_id, level_id, newest_seq) -> None:
+        # Unbounded history is a memory-growth lever on attacker-authored text.
+        conn.execute(
+            "DELETE FROM turns WHERE session_id = ? AND level_id = ? AND seq <= ?",
+            (session_id, level_id, newest_seq - settings.HISTORY_STORE_MAX_MESSAGES),
+        )
+
+    def append_exchange(self, session_id: str, level_id: int,
+                        user_content: str, assistant_content: str) -> None:
+        """Write BOTH halves of one turn in a single transaction.
+
+        Two separate appends are two transactions: a player with a second tab
+        open can interleave them and produce a stored transcript in which an
+        assistant reply precedes the question it answers. That is a free forgery
+        primitive, because the renderer trusts the stored order.
+
+        `assistant_content` must be the POST-guardrail text -- exactly the bytes
+        the player received. Storing the raw draft would make the level-17/18
+        reviewer a no-op across turns and would re-admit a redacted flag into the
+        model's context on levels 8/9.
+        """
         with _connect() as conn:
             try:
                 conn.execute("BEGIN IMMEDIATE")
-                row = conn.execute(
+                base = conn.execute(
                     "SELECT COALESCE(MAX(seq), 0) FROM turns WHERE session_id = ? AND level_id = ?",
                     (session_id, level_id),
-                ).fetchone()
-                conn.execute(
-                    "INSERT INTO turns (session_id, level_id, seq, role, content, created_at) "
-                    "VALUES (?, ?, ?, ?, ?, ?)",
-                    (session_id, level_id, row[0] + 1, role, content[:4000], time.time()),
-                )
-                # Keep the buffer bounded: unbounded history would blow num_ctx
-                # and hand an attacker an easy memory-growth lever.
-                conn.execute(
-                    "DELETE FROM turns WHERE session_id = ? AND level_id = ? AND seq <= ?",
-                    (session_id, level_id, row[0] + 1 - self.MAX_TURNS),
-                )
+                ).fetchone()[0]
+                self._insert_turn(conn, session_id, level_id, base + 1, "user", user_content)
+                self._insert_turn(conn, session_id, level_id, base + 2, "assistant", assistant_content)
+                self._prune_locked(conn, session_id, level_id, base + 2)
                 conn.execute("COMMIT")
             except Exception:
                 with contextlib.suppress(Exception):
                     conn.execute("ROLLBACK")
                 raise
+
+    def append_turn(self, session_id: str, level_id: int, role: str, content: str) -> None:
+        """Single-message append, for callers that genuinely have only one half."""
+        with _connect() as conn:
+            try:
+                conn.execute("BEGIN IMMEDIATE")
+                base = conn.execute(
+                    "SELECT COALESCE(MAX(seq), 0) FROM turns WHERE session_id = ? AND level_id = ?",
+                    (session_id, level_id),
+                ).fetchone()[0]
+                self._insert_turn(conn, session_id, level_id, base + 1, role, content)
+                self._prune_locked(conn, session_id, level_id, base + 1)
+                conn.execute("COMMIT")
+            except Exception:
+                with contextlib.suppress(Exception):
+                    conn.execute("ROLLBACK")
+                raise
+
+    def clear_turns(self, session_id: str, level_id: Optional[int] = None) -> int:
+        """Delete this session's conversation. Returns messages removed.
+
+        Touches the `turns` table and NOTHING else, by construction. Clearing is
+        a CONTEXT operation: completed_levels, current_level, the per-level
+        attempt counters that gate hints, and flag_seed are all unreachable from
+        here. Regenerating flag_seed in particular would invalidate a flag the
+        player has already written down.
+        """
+        with _connect() as conn:
+            try:
+                conn.execute("BEGIN IMMEDIATE")
+                if level_id is None:
+                    cur = conn.execute("DELETE FROM turns WHERE session_id = ?", (session_id,))
+                else:
+                    cur = conn.execute(
+                        "DELETE FROM turns WHERE session_id = ? AND level_id = ?",
+                        (session_id, int(level_id)),
+                    )
+                removed = max(0, cur.rowcount or 0)
+                conn.execute("COMMIT")
+                return removed
+            except Exception:
+                with contextlib.suppress(Exception):
+                    conn.execute("ROLLBACK")
+                raise
+
+    def count_turns(self, session_id: str, level_id: Optional[int] = None) -> int:
+        with _connect() as conn:
+            if level_id is None:
+                row = conn.execute("SELECT COUNT(*) FROM turns WHERE session_id = ?",
+                                   (session_id,)).fetchone()
+            else:
+                row = conn.execute(
+                    "SELECT COUNT(*) FROM turns WHERE session_id = ? AND level_id = ?",
+                    (session_id, int(level_id)),
+                ).fetchone()
+        return row[0] if row else 0
 
     def get_admin_stats(self) -> Dict[str, Any]:
         with _connect() as conn:

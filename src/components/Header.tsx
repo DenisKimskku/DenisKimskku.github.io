@@ -47,7 +47,10 @@ export default function Header() {
   // Tailwind v3 drops opacity modifiers on var() arbitrary values, so use color-mix() directly.
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[color:color-mix(in_srgb,var(--color-bg)_92%,transparent)] backdrop-blur-sm border-b border-[var(--color-border)] no-print">
-      <div className="container-custom">
+      {/* The nav bar tracks the width of the page under it. Without this, the
+          arena's wider application container leaves the logo and the page
+          content on two different left edges. */}
+      <div className={pathname?.startsWith('/ctf') ? 'container-app' : 'container-custom'}>
         <div className="flex items-center justify-between h-[var(--header-height)]">
           {/* Logo/Name */}
           <Link

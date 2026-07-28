@@ -21,6 +21,10 @@
     --header-height: 64px;
     --container-max-width: 720px;
     --container-wide: 960px;
+    /* Application width. 720px is a MEASURE (~75ch of Lora/Inter) chosen for
+       reading prose; the CTF arena is a two-pane workspace: 320px briefing rail
+       + 24px gutter + ~730px console + 48px page padding. Only /ctf uses it. */
+    --container-app: 1120px;
   }
 
   .dark {
@@ -342,6 +346,14 @@
 
   .container-custom {
     max-width: var(--container-max-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .container-app {
+    max-width: var(--container-app);
     margin-left: auto;
     margin-right: auto;
     padding-left: 1.5rem;

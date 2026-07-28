@@ -25,7 +25,7 @@ export default function CTFPage() {
   };
 
   return (
-    <div className="container-custom py-16 max-[560px]:py-10">
+    <div className="container-app py-16 max-[560px]:py-10">
       <head>
         <meta
           httpEquiv="Content-Security-Policy"

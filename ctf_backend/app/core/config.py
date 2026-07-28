@@ -73,7 +73,12 @@ class Settings:
     MAX_TOKENS: int = 512
     JUDGE_MAX_TOKENS: int = 8       # one word: WIN / LOSS
     GUARD_MAX_TOKENS: int = 8       # one word: ALLOW / BLOCK, APPROVE / REJECT
-    CONTEXT_WINDOW: int = 2048
+    # Env-overridable so the shared-GPU policy can be tuned without a redeploy.
+    # 4096 costs 576 MiB of KV cache (Qwen3-8B: 36 layers x 8 KV heads x 128
+    # head_dim x 2 tensors x 2 bytes = 144 KiB/token), i.e. +288 MiB over 2048.
+    # Transient at CTF_KEEP_ALIVE=5m, and far below the 2.25 GiB Jarvis already
+    # allocates on this machine at num_ctx=16384.
+    CONTEXT_WINDOW: int = int(os.getenv("CTF_NUM_CTX", "4096"))
     # llama-server runs with -np 1, so anything above 1 only deepens a queue
     # that nothing currently bounds.
     MAX_CONCURRENT_INFERENCE: int = 1
@@ -113,6 +118,40 @@ class Settings:
     # Local hours during which the nightly pipeline runs (feed 02:00,
     # dailykb 03:30, kbrefresh Sun 03:00). CTF sheds load rather than competing.
     QUIET_HOURS: tuple = (2, 5)
+
+    # --- Multi-turn conversation ------------------------------------------
+    # History is replayed on EVERY turn, so its size is a latency cost
+    # (prompt-eval) and a KV cost, not a storage cost.
+    #   4096 - 512 (answer) - 128 (template margin) = 3456 prompt tokens
+    #   minus ~200 of level scaffold                = ~3250 for payload
+    # An 8000-char payload (the ChatRequest cap) is ~2670 tokens and still fits
+    # with history squeezed to zero. History yields to the payload; the payload
+    # is never silently trimmed.
+    HISTORY_ENABLED: bool = os.getenv("CTF_HISTORY", "1") != "0"
+    # ~5.3s of prompt-eval at the measured 150 tok/s. Prefix-cache reuse is
+    # unavailable here (the judge call between turns owns the only slot with
+    # -np 1), so this is paid in full every turn.
+    HISTORY_TOKEN_BUDGET: int = int(os.getenv("CTF_HISTORY_TOKENS", "800"))
+    HISTORY_MAX_MESSAGES: int = 6        # messages, not exchanges
+    HISTORY_STORE_MAX_MESSAGES: int = 12  # hard row cap per (session, level)
+    # Applied at store AND at render: rows written before this cap existed can
+    # otherwise eat an entire budget on their own.
+    HISTORY_MAX_CHARS: int = 900
+    PROMPT_RESERVE_TOKENS: int = 128
+    # Deliberately crude: there is no tokenizer in this dependency set and
+    # adding one would pull transformers onto a 16GB machine. 3 chars/token
+    # over-estimates English prose (~4) and is about right for the hex, base64
+    # and code-shaped text players actually send, so it fails safe.
+    CHARS_PER_TOKEN: int = 3
+
+    # --- Hint economy -----------------------------------------------------
+    # Attempts are counted per /chat turn. A legitimate multi-turn grooming
+    # sequence is 3-5 turns, so the single-turn thresholds of 3/5 would hand a
+    # player both hints without a single failure.
+    HINT_1_AFTER: int = int(os.getenv("CTF_HINT_1_AFTER", "8"))
+    HINT_2_AFTER: int = int(os.getenv("CTF_HINT_2_AFTER", "14"))
+    HINT_1_AFTER_SINGLE_TURN: int = 3
+    HINT_2_AFTER_SINGLE_TURN: int = 5
 
 
 settings = Settings()

@@ -12,8 +12,22 @@ interface OWASPDetail {
   developer_mitigation: string;
 }
 
-export default function OWASPWriteups({ completedLevels }: { completedLevels: number[] }) {
-  const [selectedLevel, setSelectedLevel] = useState<number>(1);
+export default function OWASPWriteups({
+  completedLevels,
+  initialLevel = 1,
+}: {
+  completedLevels: number[];
+  /** Preselects a level when the arena links here from a solved briefing. */
+  initialLevel?: number;
+}) {
+  const [selectedLevel, setSelectedLevel] = useState<number>(initialLevel);
+  // Follow a new initialLevel by adjusting state during render -- the "you
+  // might not need an effect" pattern, and it avoids a render with stale state.
+  const [prevInitial, setPrevInitial] = useState(initialLevel);
+  if (initialLevel !== prevInitial) {
+    setPrevInitial(initialLevel);
+    setSelectedLevel(initialLevel);
+  }
   const [data, setData] = useState<OWASPDetail | null>(null);
 
   useEffect(() => {
@@ -62,7 +76,7 @@ export default function OWASPWriteups({ completedLevels }: { completedLevels: nu
                   onClick={() => setSelectedLevel(lvl)}
                   className={`w-full text-left px-3 py-2 rounded-md font-mono text-xs border transition-all flex items-center justify-between ${
                     isSelected
-                      ? 'border-[var(--color-accent)] bg-[var(--color-accent)]/10 text-[var(--color-accent)] font-semibold'
+                      ? 'border-[color:color-mix(in_srgb,var(--color-accent)_40%,transparent)] bg-[color:color-mix(in_srgb,var(--color-accent)_10%,transparent)] text-[var(--color-accent)] font-semibold'
                       : 'border-[var(--color-border)] bg-[var(--color-bg-secondary)] text-[var(--color-text)] hover:border-[var(--color-accent)]'
                   }`}
                 >
@@ -83,7 +97,7 @@ export default function OWASPWriteups({ completedLevels }: { completedLevels: nu
           {data ? (
             <>
               <div className="border-b border-[var(--color-border)] pb-4 space-y-1">
-                <span className="px-2 py-0.5 rounded font-mono text-[10px] bg-[var(--color-accent)]/10 text-[var(--color-accent)] border border-[var(--color-accent)]/20 uppercase font-semibold">
+                <span className="px-2 py-0.5 rounded font-mono text-[10px] bg-[color:color-mix(in_srgb,var(--color-accent)_10%,transparent)] text-[var(--color-accent)] border border-[color:color-mix(in_srgb,var(--color-accent)_25%,transparent)] uppercase font-semibold">
                   {data.category}
                 </span>
                 <h3 className="font-serif text-lg font-bold text-[var(--color-text)] pt-1">

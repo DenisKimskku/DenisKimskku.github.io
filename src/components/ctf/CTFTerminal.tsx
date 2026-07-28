@@ -1,81 +1,35 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import OWASPWriteups from './OWASPWriteups';
 import CTFCertificate from './CTFCertificate';
+import LevelNavigator from './LevelNavigator';
+import BriefingPanel from './BriefingPanel';
+import Transcript from './Transcript';
+import { BTN_PRIMARY, BTN_QUIET, FIELD, FOCUS, Label, PANEL, PANEL_FOOT, PANEL_HEAD } from './ctfUi';
 import {
-  ApiError,
-  ctfFetch,
-  describeError,
-  fetchStatus as apiFetchStatus,
-  streamChat,
-  writeSessionId,
+  DEFAULT_CONTEXT_WINDOW, TIERS, TIER_NAMES, TOTAL_LEVELS,
+  levelTitle, levelsInTier, tierOf,
+} from './ctfLevels';
+import type { ChatMessage, HintData, LevelMeta } from './ctfLevels';
+import {
+  ApiError, clearConversation as apiClearConversation, ctfFetch, describeError,
+  fetchStatus as apiFetchStatus, streamChat, writeSessionId,
 } from './ctfApi';
-
-interface LevelMeta {
-  level: number;
-  title: string;
-  tier: number;
-  tier_name: string;
-  description: string;
-  scenario: string;
-  has_input_filter: boolean;
-  has_output_filter: boolean;
-  has_prefilter?: boolean;
-  defense_status?: 'enforced' | 'narrative_only';
-  defense_note?: string | null;
-  is_completed: boolean;
-}
-
-interface ChatMessage {
-  id: string;
-  sender: 'user' | 'assistant' | 'system';
-  text: string;
-  win?: boolean;
-  judge_reason?: string;
-  unlocked_flag?: string;
-  guardrail_blocked?: boolean;
-  engineError?: boolean;
-}
-
-interface HintData {
-  attempts: number;
-  hint_1_unlocked: boolean;
-  hint_1: string;
-  hint_2_unlocked: boolean;
-  hint_2: string;
-}
 
 type TabId = 'arena' | 'owasp' | 'cert';
 const TABS: { id: TabId; label: string }[] = [
-  { id: 'arena', label: 'CTF Arena' },
-  { id: 'owasp', label: 'OWASP Writeups' },
+  { id: 'arena', label: 'Arena' },
+  { id: 'owasp', label: 'Post-mortems' },
   { id: 'cert', label: 'Certificate' },
 ];
-
-const TIERS: Record<number, string> = {
-  1: 'Fundamentals',
-  2: 'Filters & Encoding',
-  3: 'Structural Evasion',
-  4: 'Advanced Evasion',
-};
-
-const STATIC_TITLES: Record<number, string> = {
-  1: 'The Hardened Enclave', 2: 'The Strict Persona', 3: 'The Medieval Guardian',
-  4: 'The Summarizer Vault', 5: 'The Polyglot Firewall', 6: 'WAF Keyword Blacklist',
-  7: 'Alphanumeric Fortress', 8: 'Encoded Exfiltration', 9: 'ROT13 Cipher Evasion',
-  10: 'Pre-Filter Intent Classifier', 11: 'Context Boundary Escape', 12: 'JSON Parser Hijack',
-  13: 'Multi-Turn Delimiter Confusion', 14: 'System Privilege Framing', 15: 'Prompt Leakage via RAG',
-  16: 'Simulated Tool Abuse', 17: 'Output Classifier Evasion', 18: 'Dual-LLM Peer Review',
-  19: 'Indirect Attachment Injection', 20: 'The Multi-Agent Orchestrator',
-};
 
 function placeholderMeta(lvl: number): LevelMeta {
   return {
     level: lvl,
-    title: STATIC_TITLES[lvl] ?? `Level ${lvl}`,
-    tier: Math.floor((lvl - 1) / 5) + 1,
-    tier_name: TIERS[Math.floor((lvl - 1) / 5) + 1] ?? '',
+    title: levelTitle(lvl),
+    tier: tierOf(lvl),
+    tier_name: TIER_NAMES[tierOf(lvl)] ?? '',
     description: '',
     scenario: '',
     has_input_filter: false,
@@ -84,47 +38,69 @@ function placeholderMeta(lvl: number): LevelMeta {
   };
 }
 
-/* Shared control styling so every interactive element gets a visible keyboard
-   ring. The previous markup used focus:outline-none with no replacement, which
-   made keyboard navigation completely invisible. */
-const FOCUS =
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] ' +
-  'focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]';
-
 export default function CTFTerminal() {
   const [activeTab, setActiveTab] = useState<TabId>('arena');
   const [currentLevel, setCurrentLevel] = useState(1);
+  const [writeupLevel, setWriteupLevel] = useState(1);
   const [completedLevels, setCompletedLevels] = useState<number[]>([]);
   const [serverCurrentLevel, setServerCurrentLevel] = useState(1);
   const [meta, setMeta] = useState<LevelMeta>(placeholderMeta(1));
-  const [prompt, setPrompt] = useState('');
-  // Transcripts are kept per level: switching away to re-read a solved level's
-  // winning payload used to wipe the history irrecoverably.
+
+  // Drafts are per level, like transcripts: switching away to re-read a solved
+  // level used to throw away whatever you were composing.
+  const [drafts, setDrafts] = useState<Record<number, string>>({});
   const [transcripts, setTranscripts] = useState<Record<number, ChatMessage[]>>({});
+
   const [flagInput, setFlagInput] = useState('');
   const [flagFeedback, setFlagFeedback] = useState<{ msg: string; ok: boolean } | null>(null);
   const [flagBusy, setFlagBusy] = useState(false);
-  const [loading, setLoading] = useState(false);
+
+  // Which level the single in-flight generation belongs to. One GPU, one
+  // request: a global `loading` flag disabled the composer of a level that was
+  // not even being generated.
+  const [busyLevel, setBusyLevel] = useState<number | null>(null);
+  const [phase, setPhase] = useState('');
+  const [elapsed, setElapsed] = useState(0);
+
   const [hints, setHints] = useState<HintData | null>(null);
   const [hintsOpen, setHintsOpen] = useState(false);
+  const [briefOpen, setBriefOpen] = useState(true);
+  const [navOpen, setNavOpen] = useState(false);
+  const [confirmClear, setConfirmClear] = useState(false);
+  const [clearing, setClearing] = useState(false);
+
   const [backendDown, setBackendDown] = useState(false);
   const [sessionCode, setSessionCode] = useState('');
   const [resumeInput, setResumeInput] = useState('');
   const [codeCopied, setCodeCopied] = useState(false);
+  const [announce, setAnnounce] = useState('');
 
-  const logRef = useRef<HTMLDivElement>(null);
+  const logRef = useRef<HTMLDivElement | null>(null);
+  const composerRef = useRef<HTMLTextAreaElement | null>(null);
   const inflight = useRef<AbortController | null>(null);
-  const levelRef = useRef(currentLevel);
-  levelRef.current = currentLevel;
+  const advanceTimer = useRef<number | null>(null);
 
   const messages = useMemo(() => transcripts[currentLevel] ?? [], [transcripts, currentLevel]);
+  const draft = drafts[currentLevel] ?? '';
+  const solved = completedLevels.includes(currentLevel);
+  const busyHere = busyLevel === currentLevel;
 
-  // Never optimistically unlock. This used to default to 20, so every level was
+  const multiTurn = meta.multi_turn ?? false;
+  const contextWindow = meta.context_window ?? DEFAULT_CONTEXT_WINDOW;
+  const conversationalCount = messages.filter((m) => m.sender !== 'system').length;
+  const contextUsed = Math.min(conversationalCount, contextWindow);
+  const contextFull = multiTurn && conversationalCount >= contextWindow;
+
+  // Never optimistically unlock: this used to default to 20, so every level was
   // clickable on first paint and stayed that way if the backend was unreachable.
   const maxUnlocked = useMemo(
     () => Math.max(1, serverCurrentLevel, ...completedLevels.map((l) => l + 1)),
     [serverCurrentLevel, completedLevels],
   );
+
+  const setDraft = useCallback((lvl: number, value: string) => {
+    setDrafts((prev) => ({ ...prev, [lvl]: value }));
+  }, []);
 
   const pushMessage = useCallback((lvl: number, msg: ChatMessage) => {
     setTranscripts((prev) => ({ ...prev, [lvl]: [...(prev[lvl] ?? []), msg] }));
@@ -148,29 +124,38 @@ export default function CTFTerminal() {
     return () => ac.abort();
   }, [refreshStatus]);
 
-  // Cancel any in-flight inference when the component unmounts.
-  useEffect(() => () => inflight.current?.abort(), []);
+  // Cancel in-flight inference and any pending auto-advance on unmount.
+  useEffect(
+    () => () => {
+      inflight.current?.abort();
+      if (advanceTimer.current !== null) window.clearTimeout(advanceTimer.current);
+    },
+    [],
+  );
 
+  // Every per-level control resets together. Previously only `meta` did, so a
+  // level-3 flag sat in the box on level 4 and the old hint count flashed.
   useEffect(() => {
     const ac = new AbortController();
     setMeta(placeholderMeta(currentLevel));
+    setFlagInput('');
+    setFlagFeedback(null);
+    setHints(null);
+    setConfirmClear(false);
+    setPhase('');
 
     (async () => {
       try {
-        const res = await ctfFetch(`/api/level/${currentLevel}`, {
-          signal: ac.signal,
-          timeoutMs: 15_000,
-        });
-        setMeta(await res.json());
+        const res = await ctfFetch(`/api/level/${currentLevel}`, { signal: ac.signal, timeoutMs: 15_000 });
+        const data = (await res.json()) as LevelMeta;
+        setMeta(data);
+        setAnnounce(`Level ${data.level}: ${data.title}. Tier ${data.tier}, ${data.tier_name}.`);
       } catch (e) {
         if ((e as ApiError).kind !== 'aborted') setBackendDown(true);
       }
       try {
-        const res = await ctfFetch(`/api/hint/${currentLevel}`, {
-          signal: ac.signal,
-          timeoutMs: 15_000,
-        });
-        setHints(await res.json());
+        const res = await ctfFetch(`/api/hint/${currentLevel}`, { signal: ac.signal, timeoutMs: 15_000 });
+        setHints((await res.json()) as HintData);
       } catch {
         setHints(null);
       }
@@ -186,23 +171,43 @@ export default function CTFTerminal() {
     if (!el) return;
     const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 120;
     if (nearBottom) el.scrollTop = el.scrollHeight;
-  }, [messages, loading]);
+  }, [messages, busyLevel]);
 
-  const handleSend = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const text = prompt.trim();
-    if (!text || loading) return;
+  // Auto-size from the VALUE, not from the change event: restoring a failed
+  // 40-line payload left the box one row tall.
+  useLayoutEffect(() => {
+    const el = composerRef.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${Math.min(el.scrollHeight, 160)}px`;
+  }, [draft, currentLevel]);
+
+  useEffect(() => {
+    if (busyLevel === null) {
+      setElapsed(0);
+      return;
+    }
+    const started = Date.now();
+    const id = window.setInterval(() => setElapsed(Math.round((Date.now() - started) / 1000)), 1000);
+    return () => window.clearInterval(id);
+  }, [busyLevel]);
+
+  const send = async (override?: string) => {
+    const lvl = currentLevel;
+    const text = (override ?? drafts[lvl] ?? '').trim();
+    if (!text || busyLevel !== null) return;
 
     inflight.current?.abort();
     const ac = new AbortController();
     inflight.current = ac;
 
-    const lvl = currentLevel;
+    const userId = `usr-${Date.now()}`;
     const id = `ast-${Date.now()}`;
-    setPrompt('');
-    pushMessage(lvl, { id: `usr-${Date.now()}`, sender: 'user', text });
+    setDraft(lvl, '');
+    pushMessage(lvl, { id: userId, sender: 'user', text });
     pushMessage(lvl, { id, sender: 'assistant', text: '' });
-    setLoading(true);
+    setBusyLevel(lvl);
+    setPhase('');
 
     const patch = (fn: (m: ChatMessage) => ChatMessage) =>
       setTranscripts((prev) => ({
@@ -215,7 +220,12 @@ export default function CTFTerminal() {
         lvl,
         text,
         (chunk, replace) => patch((m) => ({ ...m, text: replace ? chunk : m.text + chunk })),
-        { signal: ac.signal },
+        {
+          signal: ac.signal,
+          onEvent: (ev) => {
+            if (ev.status) setPhase(ev.status);
+          },
+        },
       );
 
       if (ac.signal.aborted) return;
@@ -228,47 +238,60 @@ export default function CTFTerminal() {
         guardrail_blocked: final.guardrail_blocked,
       }));
 
-      // Refresh the hint counter — this attempt changed it.
       void ctfFetch(`/api/hint/${lvl}`, { timeoutMs: 15_000 })
         .then((r) => r.json())
-        .then(setHints)
+        .then((h: HintData) => setHints(h))
         .catch(() => undefined);
 
       if (final.win && final.unlocked_flag) {
         setFlagInput(final.unlocked_flag);
+        setAnnounce(`Flag captured on level ${lvl}. Submit it to unlock the next level.`);
         void refreshStatus();
+      } else {
+        setAnnounce(`The model answered on level ${lvl}. No flag yet.`);
       }
     } catch (err) {
       const e = err as ApiError;
       if (e.kind === 'aborted') {
-        setTranscripts((prev) => ({ ...prev, [lvl]: (prev[lvl] ?? []).filter((m) => m.id !== id) }));
+        // Drop the WHOLE exchange: a stopped attempt must not leave an orphan
+        // user turn with no reply, which would also misrepresent the context.
+        setTranscripts((prev) => ({
+          ...prev,
+          [lvl]: (prev[lvl] ?? []).filter((m) => m.id !== id && m.id !== userId),
+        }));
+        setDrafts((prev) => ({ ...prev, [lvl]: prev[lvl]?.trim() ? prev[lvl] : text }));
         return;
       }
-      // Give the payload back — never make the player retype a long exploit.
-      setPrompt(text);
       setTranscripts((prev) => ({
         ...prev,
         [lvl]: (prev[lvl] ?? [])
           .filter((m) => m.id !== id)
-          .concat({ id: `err-${Date.now()}`, sender: 'system', text: describeError(e, lvl) }),
+          .concat({
+            id: `err-${Date.now()}`,
+            sender: 'system',
+            text: describeError(e, lvl),
+            payload: text,
+          }),
       }));
+      // Give the payload back, but never clobber a newer draft.
+      setDrafts((prev) => ({ ...prev, [lvl]: prev[lvl]?.trim() ? prev[lvl] : text }));
+      setAnnounce(describeError(e, lvl));
     } finally {
       if (inflight.current === ac) {
         inflight.current = null;
-        setLoading(false);
+        setBusyLevel(null);
       }
     }
   };
 
-  const handleFlagSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const flag = flagInput.trim();
+  const submitFlag = async (flag: string) => {
+    const lvl = currentLevel;
     if (!flag || flagBusy) return;
     setFlagBusy(true);
     try {
       const res = await ctfFetch('/api/submit_flag', {
         method: 'POST',
-        body: { level: currentLevel, flag },
+        body: { level: lvl, flag },
         timeoutMs: 20_000,
       });
       const data = await res.json();
@@ -279,20 +302,51 @@ export default function CTFTerminal() {
           ? 'Flag accepted.'
           : 'Invalid flag submission.';
       setFlagFeedback({ msg, ok: !!data?.success });
+      setAnnounce(msg);
       if (data?.success) {
         await refreshStatus();
-        if (currentLevel < 20) {
-          setTimeout(() => {
-            setCurrentLevel((l) => Math.min(20, l + 1));
-            setFlagFeedback(null);
-            setFlagInput('');
+        if (lvl < TOTAL_LEVELS) {
+          advanceTimer.current = window.setTimeout(() => {
+            advanceTimer.current = null;
+            setCurrentLevel((l) => Math.min(TOTAL_LEVELS, l + 1));
           }, 1400);
         }
       }
     } catch (err) {
-      setFlagFeedback({ msg: describeError(err as ApiError, currentLevel), ok: false });
+      const msg = describeError(err as ApiError, lvl);
+      setFlagFeedback({ msg, ok: false });
+      setAnnounce(msg);
     } finally {
       setFlagBusy(false);
+    }
+  };
+
+  const clearConversation = async () => {
+    const lvl = currentLevel;
+    setClearing(true);
+    try {
+      if (multiTurn) await apiClearConversation(lvl);
+      setTranscripts((prev) => ({ ...prev, [lvl]: [] }));
+      setAnnounce(`Conversation cleared for level ${lvl}. Solved levels and captured flags are unchanged.`);
+    } catch (err) {
+      const e = err as ApiError;
+      // Never report a local-only clear as success: telling a player the model
+      // forgot when it did not would silently break the level.
+      setTranscripts((prev) => ({
+        ...prev,
+        [lvl]: [
+          {
+            id: `sys-${Date.now()}`,
+            sender: 'system',
+            text:
+              'Cleared on this device only — the arena did not accept the reset, so it may still ' +
+              `replay earlier turns on this level. (${describeError(e, lvl)})`,
+          },
+        ],
+      }));
+    } finally {
+      setClearing(false);
+      setConfirmClear(false);
     }
   };
 
@@ -300,395 +354,342 @@ export default function CTFTerminal() {
     const i = TABS.findIndex((t) => t.id === activeTab);
     if (e.key === 'ArrowRight') setActiveTab(TABS[(i + 1) % TABS.length].id);
     else if (e.key === 'ArrowLeft') setActiveTab(TABS[(i - 1 + TABS.length) % TABS.length].id);
+    else if (e.key === 'Home') setActiveTab(TABS[0].id);
+    else if (e.key === 'End') setActiveTab(TABS[TABS.length - 1].id);
     else return;
     e.preventDefault();
   };
 
   return (
     <div className="w-full space-y-8">
-      <header className="border-b border-[var(--color-border)] pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <h1 className="font-serif text-2xl md:text-3xl font-bold tracking-tight">
+      {/* One live region for state that is not visible where the eye is. */}
+      <div role="status" aria-live="polite" className="sr-only">
+        {announce}
+      </div>
+
+      <header className="flex flex-col justify-between gap-6 border-b border-[var(--color-border)] pb-6 md:flex-row md:items-end">
+        <div className="max-w-2xl">
+          <h1 className="mb-0 font-serif text-2xl font-bold tracking-tight md:text-3xl">
             LLM Red-Teaming CTF
           </h1>
-          <p className="text-sm text-[var(--color-text-secondary)] mt-2 max-w-2xl">
+          <p className="mb-0 mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
             Twenty levels of prompt injection, filter evasion, and guardrail bypass against a
             locally hosted model. Flags are per-session and cryptographically bound to you.
           </p>
         </div>
+
         <div
-          className="text-sm text-[var(--color-text-secondary)] bg-[var(--color-bg-secondary)] px-4 py-2 rounded-md border border-[var(--color-border)] shrink-0"
           role="status"
+          aria-label={`${completedLevels.length} of ${TOTAL_LEVELS} levels solved`}
+          className="shrink-0 md:text-right"
         >
-          Progress{' '}
-          <span className="font-semibold text-[var(--color-accent)] tabular-nums">
-            {completedLevels.length}/20
-          </span>
+          <Label className="md:text-right">Progress</Label>
+          <p className="mb-0 mt-1 font-serif text-2xl font-bold tabular-nums">
+            {completedLevels.length}
+            <span className="text-base font-normal text-[var(--color-text-muted)]">
+              /{TOTAL_LEVELS}
+            </span>
+          </p>
+          {/* Solved-per-tier at a glance. Decorative: the count above carries
+              the same information for assistive tech. */}
+          <div aria-hidden="true" className="mt-2 flex gap-2 md:justify-end">
+            {TIERS.map((tier) => (
+              <div key={tier} className="flex gap-0.5">
+                {levelsInTier(tier).map((lvl) => (
+                  <span
+                    key={lvl}
+                    className={`h-1.5 w-2 rounded-sm ${
+                      completedLevels.includes(lvl)
+                        ? 'bg-emerald-600/70 dark:bg-emerald-400/70'
+                        : 'bg-[var(--color-bg-tertiary)]'
+                    }`}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </header>
 
       {backendDown && (
         <div
           role="status"
-          className="text-sm rounded-md border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-amber-700 dark:text-amber-400"
+          className="rounded-md border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm leading-relaxed text-amber-700 dark:text-amber-400"
         >
           The arena backend is unreachable right now. It runs on a single machine that also serves
           other workloads. Your progress is stored server-side and will reappear when it returns.
         </div>
       )}
 
-      <div role="tablist" aria-label="CTF sections" onKeyDown={onTabKeys}
-           className="flex border-b border-[var(--color-border)] gap-8 text-sm font-medium">
+      <div
+        role="tablist"
+        aria-label="CTF sections"
+        onKeyDown={onTabKeys}
+        className="flex gap-8 border-b border-[var(--color-border)] text-sm font-medium"
+      >
         {TABS.map((t) => (
           <button
             key={t.id}
+            type="button"
             role="tab"
             id={`tab-${t.id}`}
             aria-selected={activeTab === t.id}
             aria-controls={`panel-${t.id}`}
             tabIndex={activeTab === t.id ? 0 : -1}
             onClick={() => setActiveTab(t.id)}
-            className={`pb-3 -mb-px border-b-2 transition-colors ${FOCUS} ${
+            className={`-mb-px flex items-baseline gap-1.5 border-b-2 pb-3 transition-colors motion-reduce:transition-none ${FOCUS} ${
               activeTab === t.id
-                ? 'border-[var(--color-accent)] text-[var(--color-text)] font-semibold'
+                ? 'border-[var(--color-accent)] font-semibold text-[var(--color-text)]'
                 : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
             }`}
           >
             {t.label}
+            {t.id === 'owasp' && (
+              <span className="text-xs tabular-nums text-[var(--color-text-muted)]">
+                {completedLevels.length}
+              </span>
+            )}
+            {t.id === 'cert' && completedLevels.length < TOTAL_LEVELS && (
+              <span className="text-xs text-[var(--color-text-muted)]">locked</span>
+            )}
           </button>
         ))}
       </div>
 
       {activeTab === 'arena' && (
         <div role="tabpanel" id="panel-arena" aria-labelledby="tab-arena" className="space-y-6">
-          <section className="space-y-3">
-            <h2 className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wider">
-              Challenge Levels
-            </h2>
-            {/* Tailwind ships no grid-cols-20; the previous md:grid-cols-20 was a
-                silent no-op that left the grid at 10 columns on desktop. */}
-            <div className="grid grid-cols-5 sm:grid-cols-10 md:grid-cols-[repeat(20,minmax(0,1fr))] gap-1.5">
-              {Array.from({ length: 20 }, (_, i) => i + 1).map((lvl) => {
-                const solved = completedLevels.includes(lvl);
-                const unlocked = lvl <= maxUnlocked;
-                const selected = lvl === currentLevel;
-                return (
-                  <button
-                    key={lvl}
-                    disabled={!unlocked}
-                    aria-pressed={selected}
-                    aria-label={`Level ${lvl}${solved ? ', solved' : unlocked ? '' : ', locked'}`}
-                    onClick={() => setCurrentLevel(lvl)}
-                    className={`py-2 text-center font-mono text-xs rounded-md border transition-colors ${FOCUS} ${
-                      selected
-                        ? 'border-[var(--color-accent)] bg-[var(--color-accent)]/10 text-[var(--color-accent)] font-bold'
-                        : solved
-                        ? 'border-emerald-600/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-medium'
-                        : unlocked
-                        ? 'border-[var(--color-border)] bg-[var(--color-bg-secondary)] hover:border-[var(--color-accent)]'
-                        : 'border-transparent bg-[var(--color-bg-secondary)]/40 text-[var(--color-text-muted)] cursor-not-allowed opacity-40'
-                    }`}
-                  >
-                    {/* Solved state is carried by the glyph, not colour alone. */}
-                    {solved ? `✓${lvl}` : unlocked ? lvl : `${lvl}`}
-                  </button>
-                );
-              })}
-            </div>
-          </section>
+          <LevelNavigator
+            currentLevel={currentLevel}
+            completedLevels={completedLevels}
+            maxUnlocked={maxUnlocked}
+            onSelect={setCurrentLevel}
+            open={navOpen}
+            onToggle={() => setNavOpen((v) => !v)}
+          />
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-            <aside className="lg:col-span-1 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg p-5 space-y-5">
-              <div className="border-b border-[var(--color-border)] pb-3">
-                <h3 className="font-serif text-lg font-semibold leading-snug">
-                  Level {meta.level}: {meta.title}
-                </h3>
-                <p className="text-xs text-[var(--color-text-muted)] mt-1">
-                  Tier {meta.tier} · {meta.tier_name}
-                </p>
-              </div>
+          {/* One row, two panels, ONE height. The rail scrolls inside itself
+              from lg up so the two never disagree about where they end — the
+              old fixed-560px console beside an auto-height sidebar disagreed at
+              essentially every viewport. */}
+          <div className="grid grid-cols-1 gap-4 lg:h-[min(72vh,44rem)] lg:min-h-[34rem] lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-6">
+            <BriefingPanel
+              className="lg:h-full"
+              meta={meta}
+              solved={solved}
+              multiTurn={multiTurn}
+              contextWindow={contextWindow}
+              open={briefOpen}
+              onToggleOpen={() => setBriefOpen((v) => !v)}
+              hints={hints}
+              hintsOpen={hintsOpen}
+              onToggleHints={() => setHintsOpen((v) => !v)}
+              flagInput={flagInput}
+              onFlagInput={setFlagInput}
+              onFlagSubmit={(e) => {
+                e.preventDefault();
+                void submitFlag(flagInput.trim());
+              }}
+              flagBusy={flagBusy}
+              flagFeedback={flagFeedback}
+              sessionCode={sessionCode}
+              codeCopied={codeCopied}
+              onCopyCode={async () => {
+                try {
+                  await navigator.clipboard.writeText(sessionCode);
+                  setCodeCopied(true);
+                  window.setTimeout(() => setCodeCopied(false), 2000);
+                } catch {
+                  setAnnounce('Copying failed — select the code and copy it manually.');
+                }
+              }}
+              resumeInput={resumeInput}
+              onResumeInput={setResumeInput}
+              onResume={(e) => {
+                e.preventDefault();
+                const code = resumeInput.trim();
+                if (!code) return;
+                writeSessionId(code);
+                setResumeInput('');
+                setTranscripts({});
+                setDrafts({});
+                void refreshStatus();
+              }}
+              onPostMortem={() => {
+                setWriteupLevel(currentLevel);
+                setActiveTab('owasp');
+              }}
+            />
 
-              {meta.description && (
-                <div>
-                  <h4 className="text-[11px] font-semibold text-[var(--color-text-muted)] uppercase tracking-wider mb-1.5">
-                    Objective
-                  </h4>
-                  <p className="text-sm leading-relaxed">{meta.description}</p>
-                </div>
-              )}
-
-              {meta.scenario && (
-                <div>
-                  <h4 className="text-[11px] font-semibold text-[var(--color-text-muted)] uppercase tracking-wider mb-1.5">
-                    Scenario
-                  </h4>
-                  <p className="text-sm leading-relaxed text-[var(--color-text-secondary)] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md p-3">
-                    {meta.scenario}
-                  </p>
-                </div>
-              )}
-
-              <div className="flex flex-wrap gap-1.5">
-                {meta.has_input_filter && <Badge tone="amber">Input filter</Badge>}
-                {meta.has_prefilter && <Badge tone="amber">Intent pre-filter</Badge>}
-                {meta.has_output_filter && <Badge tone="amber">Egress filter</Badge>}
-                {meta.defense_status === 'narrative_only' && <Badge tone="neutral">Narrative only</Badge>}
-              </div>
-
-              {/* Disclosed limitations read as rigour; undisclosed ones read as fraud. */}
-              {meta.defense_note && (
-                <p className="text-xs leading-relaxed text-[var(--color-text-muted)] border-l-2 border-[var(--color-border)] pl-3">
-                  {meta.defense_note}
-                </p>
-              )}
-
-              <div className="border-t border-[var(--color-border)] pt-4">
-                <button
-                  onClick={() => setHintsOpen((v) => !v)}
-                  aria-expanded={hintsOpen}
-                  aria-controls="hint-drawer"
-                  className={`w-full flex items-center justify-between gap-2 bg-[var(--color-bg)] border border-[var(--color-border)] hover:border-[var(--color-accent)] rounded-md px-3 py-2 text-sm transition-colors ${FOCUS}`}
-                >
-                  <span>Hints</span>
-                  <span className="text-xs text-[var(--color-text-muted)] tabular-nums">
-                    {hints ? `${hints.attempts} attempts` : '—'}
+            <section
+              aria-label={`Console for level ${currentLevel}`}
+              className={`${PANEL} h-[28rem] sm:h-[34rem] lg:h-full`}
+            >
+              <div className={`${PANEL_HEAD} flex flex-wrap items-center justify-between gap-x-3 gap-y-2`}>
+                <span className="flex min-w-0 items-baseline gap-2">
+                  <span className="font-mono text-xs text-[var(--color-text-muted)]">
+                    level_{String(currentLevel).padStart(2, '0')}
                   </span>
-                </button>
+                  <span className="truncate text-sm">{meta.title}</span>
+                </span>
 
-                {hintsOpen && hints && (
-                  <div id="hint-drawer" className="mt-3 space-y-3 text-sm">
-                    <HintBlock n={1} threshold={3} unlocked={hints.hint_1_unlocked} text={hints.hint_1} />
-                    <HintBlock n={2} threshold={5} unlocked={hints.hint_2_unlocked} text={hints.hint_2} />
-                  </div>
-                )}
-              </div>
+                <span className="flex items-center gap-3">
+                  {multiTurn ? (
+                    <span
+                      className="flex items-center gap-1.5"
+                      title={`The arena replays the last ${contextWindow} messages of this level into the prompt.`}
+                    >
+                      <span
+                        className={`text-xs tabular-nums ${
+                          contextFull
+                            ? 'text-amber-700 dark:text-amber-400'
+                            : 'text-[var(--color-text-muted)]'
+                        }`}
+                      >
+                        context {contextUsed}/{contextWindow}
+                        {contextFull ? ' · oldest drops next' : ''}
+                      </span>
+                      <span aria-hidden="true" className="flex gap-0.5">
+                        {Array.from({ length: contextWindow }, (_, i) => (
+                          <span
+                            key={i}
+                            className={`h-3 w-1 rounded-sm ${
+                              i < contextUsed ? 'bg-[var(--color-accent)]' : 'bg-[var(--color-bg-tertiary)]'
+                            }`}
+                          />
+                        ))}
+                      </span>
+                    </span>
+                  ) : (
+                    <span
+                      className="text-xs text-[var(--color-text-muted)]"
+                      title="Each prompt is sent to the model on its own. Earlier turns are not replayed."
+                    >
+                      stateless
+                    </span>
+                  )}
 
-              <form onSubmit={handleFlagSubmit} className="border-t border-[var(--color-border)] pt-4 space-y-2">
-                <label htmlFor="flag-input" className="block text-sm font-semibold">
-                  Submit flag
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    id="flag-input"
-                    type="text"
-                    inputMode="text"
-                    autoCapitalize="off"
-                    autoCorrect="off"
-                    spellCheck={false}
-                    placeholder="CTF{…}"
-                    value={flagInput}
-                    onChange={(e) => setFlagInput(e.target.value)}
-                    /* text-base under sm: iOS zooms on focus below 16px and never zooms back. */
-                    className={`flex-1 min-w-0 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md px-3 py-2 text-base sm:text-sm font-mono ${FOCUS}`}
-                  />
-                  <button
-                    type="submit"
-                    disabled={flagBusy || !flagInput.trim()}
-                    className={`bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] disabled:opacity-50 text-white font-medium px-4 py-2 rounded-md text-sm transition-colors ${FOCUS}`}
-                  >
-                    {flagBusy ? '…' : 'Submit'}
-                  </button>
-                </div>
-                {flagFeedback && (
-                  <p
-                    role="status"
-                    aria-live="polite"
-                    className={`text-xs rounded-md px-3 py-2 border ${
-                      flagFeedback.ok
-                        ? 'border-emerald-600/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400'
-                        : 'border-red-500/40 bg-red-500/10 text-red-600 dark:text-red-400'
-                    }`}
-                  >
-                    {flagFeedback.msg}
-                  </p>
-                )}
-              </form>
-              <details className="border-t border-[var(--color-border)] pt-4">
-                <summary className={`text-sm cursor-pointer text-[var(--color-text-secondary)] hover:text-[var(--color-text)] ${FOCUS}`}>
-                  Move progress to another device
-                </summary>
-                {/* Replaces the old IP+User-Agent heuristic, which silently
-                    shared one session between everyone behind a NAT -- and lost
-                    your progress whenever your browser auto-updated. */}
-                <div className="mt-3 space-y-3">
-                  <div>
-                    <p className="text-xs text-[var(--color-text-muted)] mb-1.5">
-                      Your resume code. Keep it private: anyone holding it has your progress.
-                    </p>
-                    <div className="flex gap-2">
-                      <code className="flex-1 min-w-0 truncate bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md px-2 py-1.5 font-mono text-xs">
-                        {sessionCode || '—'}
-                      </code>
+                  {confirmClear ? (
+                    <span className="flex items-center gap-1.5">
                       <button
                         type="button"
-                        disabled={!sessionCode}
-                        onClick={async () => {
-                          await navigator.clipboard.writeText(sessionCode);
-                          setCodeCopied(true);
-                          setTimeout(() => setCodeCopied(false), 2000);
-                        }}
-                        className={`shrink-0 border border-[var(--color-border)] hover:border-[var(--color-accent)] rounded-md px-3 py-1.5 text-xs transition-colors ${FOCUS}`}
+                        onClick={() => void clearConversation()}
+                        disabled={clearing}
+                        className={`${BTN_QUIET} h-8 text-xs ${FOCUS}`}
                       >
-                        {codeCopied ? 'Copied' : 'Copy'}
+                        {clearing ? 'Clearing…' : 'Confirm'}
                       </button>
-                    </div>
-                  </div>
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      const code = resumeInput.trim();
-                      if (!code) return;
-                      writeSessionId(code);
-                      setResumeInput('');
-                      setTranscripts({});
-                      void refreshStatus();
+                      <button
+                        type="button"
+                        onClick={() => setConfirmClear(false)}
+                        className={`${BTN_QUIET} h-8 text-xs ${FOCUS}`}
+                      >
+                        Cancel
+                      </button>
+                    </span>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setConfirmClear(true)}
+                      disabled={messages.length === 0 || busyHere}
+                      className={`${BTN_QUIET} h-8 text-xs ${FOCUS}`}
+                    >
+                      Clear
+                    </button>
+                  )}
+                </span>
+              </div>
+
+              {confirmClear && (
+                <p className="mb-0 shrink-0 border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 pb-3 text-xs leading-5 text-[var(--color-text-secondary)]">
+                  {multiTurn
+                    ? 'Clears this level’s conversation on the server and on this device, so the next prompt starts a fresh frame. '
+                    : 'Clears this transcript on this device. '}
+                  Your solved levels, captured flags, and resume code are untouched.
+                </p>
+              )}
+
+              <Transcript
+                messages={messages}
+                level={currentLevel}
+                loading={busyHere}
+                phase={phase}
+                elapsed={elapsed}
+                buffered={meta.has_output_filter}
+                multiTurn={multiTurn}
+                contextWindow={contextWindow}
+                logRef={logRef}
+                onRetry={(payload) => void send(payload)}
+                onUseFlag={(flag) => {
+                  setFlagInput(flag);
+                  void submitFlag(flag);
+                }}
+                onStop={() => inflight.current?.abort()}
+              />
+
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  void send();
+                }}
+                className={PANEL_FOOT}
+              >
+                <div className="flex items-end gap-2">
+                  {/* A textarea, not an <input>: several levels' own hints hand
+                      the player multi-line payloads, and a single-line input
+                      silently strips the newlines that make them work. */}
+                  <textarea
+                    ref={composerRef}
+                    rows={1}
+                    placeholder={`Payload for level ${currentLevel}`}
+                    value={draft}
+                    onChange={(e) => setDraft(currentLevel, e.target.value)}
+                    onKeyDown={(e) => {
+                      // IME guard: level 5 is the multilingual challenge and CJK
+                      // input uses Enter to confirm a candidate.
+                      if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
+                        e.preventDefault();
+                        void send();
+                      }
                     }}
-                    className="flex gap-2"
-                  >
-                    <input
-                      type="text"
-                      value={resumeInput}
-                      onChange={(e) => setResumeInput(e.target.value)}
-                      placeholder="Paste a resume code"
-                      spellCheck={false}
-                      autoCapitalize="off"
-                      autoCorrect="off"
-                      aria-label="Resume code"
-                      className={`flex-1 min-w-0 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md px-2 py-1.5 text-base sm:text-xs font-mono ${FOCUS}`}
-                    />
+                    disabled={busyLevel !== null && !busyHere}
+                    spellCheck={false}
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    aria-label={`Prompt payload for level ${currentLevel}`}
+                    aria-describedby="composer-help"
+                    className={`${FIELD} max-h-40 flex-1 resize-none leading-relaxed disabled:opacity-60 ${FOCUS}`}
+                  />
+                  {busyHere ? (
+                    <button
+                      type="button"
+                      onClick={() => inflight.current?.abort()}
+                      className={`${BTN_QUIET} h-10 shrink-0 ${FOCUS}`}
+                    >
+                      Stop
+                    </button>
+                  ) : (
                     <button
                       type="submit"
-                      disabled={!resumeInput.trim()}
-                      className={`shrink-0 border border-[var(--color-border)] hover:border-[var(--color-accent)] disabled:opacity-50 rounded-md px-3 py-1.5 text-xs transition-colors ${FOCUS}`}
+                      disabled={!draft.trim() || busyLevel !== null}
+                      className={`${BTN_PRIMARY} h-10 shrink-0 ${FOCUS}`}
                     >
-                      Restore
+                      Send
                     </button>
-                  </form>
+                  )}
                 </div>
-              </details>
-            </aside>
-
-            <section className="lg:col-span-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg flex flex-col h-[560px] overflow-hidden">
-              <div className="bg-[var(--color-bg-secondary)] px-4 py-2.5 border-b border-[var(--color-border)] flex items-center justify-between text-xs text-[var(--color-text-muted)]">
-                <span className="font-mono">level_{currentLevel}</span>
-                <span className="truncate ml-3">{meta.title}</span>
-              </div>
-
-              <div
-                ref={logRef}
-                role="log"
-                aria-live="polite"
-                aria-relevant="additions text"
-                aria-busy={loading}
-                aria-label="Model transcript"
-                tabIndex={0}
-                className={`flex-1 p-4 overflow-y-auto space-y-4 text-sm ${FOCUS}`}
-              >
-                {messages.length === 0 && (
-                  <p className="text-[var(--color-text-muted)] text-sm">
-                    Send a payload to begin. The model holds a secret bound to your session; your
-                    job is to make it reveal that secret.
-                  </p>
-                )}
-
-                {messages.map((m) => {
-                  if (m.sender === 'user') {
-                    return (
-                      <div key={m.id} className="flex items-start gap-2 text-[var(--color-accent)]">
-                        <span aria-hidden="true" className="select-none text-[var(--color-text-muted)]">
-                          &gt;
-                        </span>
-                        <span className="whitespace-pre-wrap font-mono break-words min-w-0">{m.text}</span>
-                      </div>
-                    );
-                  }
-                  if (m.sender === 'system') {
-                    return (
-                      <p key={m.id} className="text-xs text-[var(--color-text-secondary)] bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-md p-3">
-                        {m.text}
-                      </p>
-                    );
-                  }
-                  return (
-                    <div
-                      key={m.id}
-                      className="bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-md p-3 space-y-2"
-                    >
-                      {/* Model output is attacker-influenced by design and is rendered
-                          as a text node only — never as HTML or markdown. */}
-                      <div className="whitespace-pre-wrap font-mono text-sm leading-relaxed break-words">
-                        {m.text || (loading ? '' : '—')}
-                      </div>
-
-                      {m.win && (
-                        <div className="rounded-md border border-emerald-600/40 bg-emerald-500/10 p-3 text-sm text-emerald-700 dark:text-emerald-400 space-y-2">
-                          <p className="font-semibold">Flag captured</p>
-                          {m.judge_reason && <p className="text-xs">{m.judge_reason}</p>}
-                          {m.unlocked_flag && (
-                            <code className="block select-all font-mono text-xs bg-[var(--color-bg)] border border-emerald-600/30 rounded px-2 py-1.5 break-all">
-                              {m.unlocked_flag}
-                            </code>
-                          )}
-                        </div>
-                      )}
-
-                      {m.engineError && (
-                        <p className="text-xs text-amber-700 dark:text-amber-400">
-                          Platform limit, not a guardrail — retry or shorten the payload.
-                        </p>
-                      )}
-
-                      {!m.win && !m.engineError && m.judge_reason && (
-                        <p className="text-xs text-[var(--color-text-muted)]">{m.judge_reason}</p>
-                      )}
-                    </div>
-                  );
-                })}
-
-                {loading && (
-                  <p role="status" className="flex items-center gap-2 text-sm text-[var(--color-accent)]">
-                    <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
-                    Running inference on the local model…
-                  </p>
-                )}
-              </div>
-
-              <form onSubmit={handleSend} className="p-3 bg-[var(--color-bg-secondary)] border-t border-[var(--color-border)] flex gap-2 items-end">
-                {/* A textarea, not an <input>: several levels' own hints hand the
-                    player multi-line payloads, and a single-line input silently
-                    strips the newlines that make them work. */}
-                <textarea
-                  rows={1}
-                  placeholder={`Payload for level ${currentLevel} — Shift+Enter for a newline`}
-                  value={prompt}
-                  onChange={(e) => {
-                    setPrompt(e.target.value);
-                    const el = e.currentTarget;
-                    el.style.height = 'auto';
-                    el.style.height = `${Math.min(el.scrollHeight, 140)}px`;
-                  }}
-                  onKeyDown={(e) => {
-                    // Guard against IME composition: level 5 is the multilingual
-                    // challenge, and CJK input uses Enter to confirm candidates.
-                    if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
-                      e.preventDefault();
-                      void handleSend(e as unknown as React.FormEvent);
-                    }
-                  }}
-                  disabled={loading}
-                  spellCheck={false}
-                  autoCapitalize="off"
-                  autoCorrect="off"
-                  aria-label={`Prompt payload for level ${currentLevel}`}
-                  className={`flex-1 min-w-0 resize-none bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md px-3 py-2 text-base sm:text-sm font-mono disabled:opacity-60 ${FOCUS}`}
-                />
-                <button
-                  type="submit"
-                  disabled={loading || !prompt.trim()}
-                  className={`bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] disabled:opacity-50 text-white font-medium px-4 py-2 rounded-md text-sm transition-colors shrink-0 ${FOCUS}`}
+                <p
+                  id="composer-help"
+                  className="mb-0 mt-1.5 flex items-baseline justify-between gap-3 text-xs text-[var(--color-text-muted)]"
                 >
-                  Send
-                </button>
+                  <span>
+                    {busyLevel !== null && !busyHere
+                      ? `The arena is generating on level ${busyLevel} — one request at a time.`
+                      : 'Enter sends · Shift+Enter inserts a newline'}
+                  </span>
+                  {draft.length > 400 && (
+                    <span className="shrink-0 tabular-nums">{draft.length} chars</span>
+                  )}
+                </p>
               </form>
             </section>
           </div>
@@ -697,7 +698,7 @@ export default function CTFTerminal() {
 
       {activeTab === 'owasp' && (
         <div role="tabpanel" id="panel-owasp" aria-labelledby="tab-owasp">
-          <OWASPWriteups completedLevels={completedLevels} />
+          <OWASPWriteups completedLevels={completedLevels} initialLevel={writeupLevel} />
         </div>
       )}
 
@@ -706,31 +707,6 @@ export default function CTFTerminal() {
           <CTFCertificate completedCount={completedLevels.length} />
         </div>
       )}
-    </div>
-  );
-}
-
-function Badge({ tone, children }: { tone: 'amber' | 'neutral'; children: React.ReactNode }) {
-  const styles =
-    tone === 'amber'
-      ? 'border-amber-600/40 bg-amber-500/10 text-amber-700 dark:text-amber-400'
-      : 'border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-muted)]';
-  return (
-    <span className={`text-[11px] px-2 py-0.5 rounded-full border ${styles}`}>{children}</span>
-  );
-}
-
-function HintBlock({
-  n, threshold, unlocked, text,
-}: { n: number; threshold: number; unlocked: boolean; text: string }) {
-  return (
-    <div className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md p-3">
-      <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-text-muted)] mb-1">
-        Hint {n} · {unlocked ? 'unlocked' : `${threshold} attempts`}
-      </p>
-      <p className={`text-sm leading-relaxed ${unlocked ? '' : 'text-[var(--color-text-muted)] italic'}`}>
-        {text}
-      </p>
     </div>
   );
 }

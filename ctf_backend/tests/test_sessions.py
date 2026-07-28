@@ -114,12 +114,27 @@ def test_attempt_counters_are_per_player_and_per_level(client, fake_ollama):
     client.cookies.clear()
     b = dict(B, **{"x-session-id": client.get("/api/status", headers=B).json()["session_id"]})
     client.cookies.clear()
-    for _ in range(3):
+    from app.core.config import settings
+
+    # Level 1 is conversational, so a grooming sequence must not auto-unlock.
+    for _ in range(settings.HINT_1_AFTER):
         client.post("/api/chat", json={"level": 1, "prompt": "a genuine exploit attempt"},
                     headers=a)
     assert client.get("/api/hint/1", headers=a).json()["hint_1_unlocked"] is True
     assert client.get("/api/hint/2", headers=a).json()["hint_1_unlocked"] is False
     assert client.get("/api/hint/1", headers=b).json()["hint_1_unlocked"] is False
+
+
+def test_single_turn_levels_keep_the_original_hint_thresholds(client, fake_ollama):
+    """On level 11 one prompt really is one attempt, so 3/5 still describes
+    reality. Raising it there would just make the level tedious."""
+    from app.core.config import settings
+
+    hdrs = dict(A, **{"x-session-id": client.get("/api/status", headers=A).json()["session_id"]})
+    for _ in range(settings.HINT_1_AFTER_SINGLE_TURN):
+        client.post("/api/chat", json={"level": 11, "prompt": "a genuine fence escape"},
+                    headers=hdrs)
+    assert client.get("/api/hint/11", headers=hdrs).json()["hint_1_unlocked"] is True
 
 
 def _completed(session_id):

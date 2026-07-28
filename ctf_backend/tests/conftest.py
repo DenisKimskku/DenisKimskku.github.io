@@ -92,6 +92,10 @@ def clean_db():
     conn = _real_sqlite_connect(db_session_mod.DB_PATH, timeout=10)
     conn.execute("DELETE FROM sessions")
     conn.execute("DELETE FROM attempts")
+    # 18 of 20 levels now write conversation history; without this the table
+    # grows across the whole run and a future test that pins a session id would
+    # be contaminated.
+    conn.execute("DELETE FROM turns")
     conn.commit()
     conn.close()
     yield
