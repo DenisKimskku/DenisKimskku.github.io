@@ -1,10 +1,13 @@
 #!/bin/bash
-# Manual foreground-ish launcher for the CTF backend.
+# Emergency launcher for the CTF backend. NOT the normal path.
 #
-# launchd (com.deniskim.ctf-backend / com.deniskim.ctf-tunnel) is the intended
-# supervisor. Use this only when launchd cannot run -- e.g. before Full Disk
-# Access has been granted to the interpreter, which is the state the machine has
-# actually been in.
+# launchd is the supervisor: the runtime lives in ~/srv/ctf_backend (outside
+# TCC), so `launchctl kickstart -k gui/$(id -u)/com.deniskim.ctf-backend` works
+# without any Full Disk Access grant. Use scripts/deploy.sh to ship code there.
+#
+# This script starts an UNSUPERVISED copy from the repo checkout. That is what
+# the machine ran for two days while the launchd job crash-looped, and nothing
+# would have restarted it. Use it only to debug with live edits.
 #
 # Two behaviours were removed deliberately:
 #   * It no longer touches cloudflared. The old `pkill` killed launchd's healthy

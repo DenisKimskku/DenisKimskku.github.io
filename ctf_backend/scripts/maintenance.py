@@ -3,12 +3,16 @@
 
 WHY PYTHON AND NOT SHELL
 ========================
-Everything under ~/Documents is behind macOS TCC. A launchd agent may only read
-it if the *executable named in ProgramArguments* has Full Disk Access, and TCC
-attributes per-binary. Shell scripts would mean granting FDA to /bin/bash on top
-of the Python interpreter the server already needs -- two grants, one of them
-very broad. Routing every scheduled job through the same interpreter reduces
-that to a single entry.
+Historically: everything under ~/Documents is behind macOS TCC, and a launchd
+agent may only read it if the exact executable in ProgramArguments has been
+granted Full Disk Access. Routing every scheduled job through one interpreter
+kept that to a single grant instead of one for /bin/bash as well.
+
+The runtime now lives in ~/srv/ctf_backend (see scripts/deploy.sh), which is
+outside TCC entirely, so no grant is needed at all. Python is kept anyway: it
+made the retention, integrity-check and NAS-mirror logic testable, and the
+shell versions had silently-failing guards (`if [ -d "$NAS_PATH" ]` made a
+nonexistent mirror path indistinguishable from a successful copy).
 
 Usage:  python3 scripts/maintenance.py {backup|rotate|health}
 """
@@ -164,14 +168,26 @@ def health():
         failure = "backend not responding on 127.0.0.1:8000 (%s)" % exc
 
     if failure is None:
-        try:
-            metrics = get("http://127.0.0.1:20242/metrics", 5)
+        # cloudflared does not use a fixed metrics port: with no --metrics flag
+        # it binds the first free port in 20241-20245, so it moves between
+        # restarts. Hardcoding one produced a false "tunnel down" alert the
+        # first time the tunnel was restarted while the site was perfectly fine.
+        connections, probe_error = None, None
+        for port in range(20241, 20246):
+            try:
+                metrics = get("http://127.0.0.1:%d/metrics" % port, 3)
+            except Exception as exc:
+                probe_error = exc
+                continue
             line = [l for l in metrics.splitlines()
                     if l.startswith("cloudflared_tunnel_ha_connections")]
-            if not line or float(line[0].split()[-1]) < 1:
-                failure = "cloudflare tunnel has no active connections"
-        except Exception as exc:
-            failure = "cloudflared metrics unreachable (%s)" % exc
+            if line:
+                connections = float(line[0].split()[-1])
+                break
+        if connections is None:
+            failure = "cloudflared metrics not found on ports 20241-20245 (%s)" % probe_error
+        elif connections < 1:
+            failure = "cloudflare tunnel has no active connections"
 
     if failure is None:
         # End-to-end through Cloudflare -- the only check a player would agree
