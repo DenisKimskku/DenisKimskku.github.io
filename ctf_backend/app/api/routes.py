@@ -4,14 +4,21 @@ from typing import Optional, List, Tuple, Dict, Any
 import re
 
 import asyncio
+import json
+from fastapi.responses import StreamingResponse
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+
 from app.core.challenges import get_challenge, CHALLENGES
 from app.core.security import generate_flag, verify_flag, generate_certificate, verify_certificate
 from app.core.owasp import get_owasp_info, OWASP_MAPPINGS
 from app.services.session_mgr import session_manager
-from app.services.judge import query_ollama, run_llm_judge
+from app.services.db_session import db_session
+from app.services.judge import query_ollama, query_ollama_stream, run_llm_judge
 from app.services.scheduler import scheduler
 from app.services.hints import hint_service
 
+limiter = Limiter(key_func=get_remote_address)
 router = APIRouter()
 
 class ChatRequest(BaseModel):
@@ -86,6 +93,7 @@ async def get_level_info(level_id: int, request: Request):
     }
 
 @router.post("/chat")
+@limiter.limit("10/minute")
 async def send_chat_prompt(req: ChatRequest, request: Request):
     session_id, session_data = await get_request_session(request)
     level_id = req.level
@@ -148,6 +156,60 @@ async def send_chat_prompt(req: ChatRequest, request: Request):
             "win": False,
             "judge_reason": judge_reason
         }
+
+@router.post("/chat/stream")
+@limiter.limit("10/minute")
+async def send_chat_prompt_stream(req: ChatRequest, request: Request):
+    session_id, session_data = await get_request_session(request)
+    level_id = req.level
+    challenge = get_challenge(level_id)
+    if not challenge:
+        raise HTTPException(status_code=404, detail="Level not found")
+        
+    user_prompt = req.prompt.strip()
+    hint_service.record_attempt(session_id, level_id)
+    
+    if challenge.get("input_blacklist"):
+        for pattern in challenge["input_blacklist"]:
+            if re.search(pattern, user_prompt):
+                async def filter_event():
+                    yield f"data: {json.dumps({'chunk': '[WAF BLOCKED] Input prompt contains forbidden keywords.', 'win': False, 'done': True})}\n\n"
+                return StreamingResponse(filter_event(), media_type="text/event-stream")
+                
+    if challenge.get("alphanumeric_only"):
+        user_prompt = re.sub(r'[^a-zA-Z0-9\s]', '', user_prompt)
+        
+    expected_flag = generate_flag(session_data["user_id"], level_id, session_data["flag_seed"])
+    system_prompt = challenge["system_prompt"].format(FLAG=expected_flag, USER_INPUT=user_prompt)
+
+    async def event_generator():
+        full_text = ""
+        async for chunk in query_ollama_stream(user_prompt, system_prompt):
+            if "</think>" in chunk:
+                chunk = chunk.replace("</think>", "").replace("<think>", "")
+            full_text += chunk
+            yield f"data: {json.dumps({'chunk': chunk, 'win': False, 'done': False})}\n\n"
+            
+        win, judge_reason = await run_llm_judge(user_prompt, full_text, expected_flag, challenge)
+        if win:
+            await session_manager.unlock_level(session_id, level_id)
+            yield f"data: {json.dumps({'chunk': '', 'win': True, 'judge_reason': judge_reason, 'unlocked_flag': expected_flag, 'done': True})}\n\n"
+        else:
+            yield f"data: {json.dumps({'chunk': '', 'win': False, 'judge_reason': judge_reason, 'done': True})}\n\n"
+
+    return StreamingResponse(event_generator(), media_type="text/event-stream")
+
+@router.get("/admin/stats")
+async def get_admin_stats(request: Request):
+    client_ip = request.headers.get("cf-connecting-ip") or request.headers.get("x-forwarded-for") or (request.client.host if request.client else "127.0.0.1")
+    client_ip = client_ip.split(",")[0].strip()
+    
+    # Restrict admin stats to local loopback (127.0.0.1 / ::1 / localhost)
+    if client_ip not in ["127.0.0.1", "::1", "localhost"]:
+        raise HTTPException(status_code=403, detail="Access denied. Local inspection only.")
+        
+    stats = db_session.get_admin_stats()
+    return stats
 
 @router.post("/submit_flag")
 async def submit_flag(req: FlagSubmission, request: Request):

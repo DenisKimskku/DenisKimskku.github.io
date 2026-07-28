@@ -49,6 +49,39 @@ async def query_ollama(prompt: str, system_prompt: str, max_tokens: int = 300) -
             except Exception as e:
                 return f"[Notice] Model inference busy. Please try payload again."
 
+async def query_ollama_stream(prompt: str, system_prompt: str, max_tokens: int = 300):
+    url = f"{settings.OLLAMA_BASE_URL}/api/generate"
+    clean_system = system_prompt + "\n\nRespond directly and concisely."
+    payload = {
+        "model": settings.TARGET_MODEL,
+        "prompt": prompt,
+        "system": clean_system,
+        "stream": True,
+        "keep_alive": "24h",
+        "options": {
+            "num_predict": max_tokens,
+            "num_ctx": 2048,
+            "temperature": 0.6,
+            "stop": ["\n\n\n"]
+        }
+    }
+    
+    async with inference_semaphore:
+        async with httpx.AsyncClient(timeout=45.0) as client:
+            try:
+                async with client.stream("POST", url, json=payload) as response:
+                    async for line in response.aiter_lines():
+                        if line:
+                            try:
+                                data = json.loads(line)
+                                chunk = data.get("response", "")
+                                if chunk:
+                                    yield chunk
+                            except Exception:
+                                pass
+            except Exception:
+                yield "[Notice] Model inference busy. Please try payload again."
+
 async def run_llm_judge(
     user_prompt: str, 
     model_response: str, 

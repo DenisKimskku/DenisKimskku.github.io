@@ -145,4 +145,35 @@ class DBSessionManager:
             conn.commit()
         conn.close()
 
+    def get_admin_stats(self) -> Dict[str, Any]:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM sessions")
+        total_sessions = cursor.fetchone()[0]
+        
+        cursor.execute("SELECT completed_levels FROM sessions")
+        rows = cursor.fetchall()
+        
+        total_completions = 0
+        level_counts = {}
+        for (comp_json,) in rows:
+            try:
+                levels = json.loads(comp_json)
+                total_completions += len(levels)
+                for lvl in levels:
+                    level_counts[lvl] = level_counts.get(lvl, 0) + 1
+            except Exception:
+                pass
+                
+        cursor.execute("SELECT COUNT(*) FROM attempts")
+        total_attempts = cursor.fetchone()[0]
+        
+        conn.close()
+        return {
+            "total_sessions": total_sessions,
+            "total_flags_captured": total_completions,
+            "total_recorded_attempts": total_attempts,
+            "level_completions": level_counts
+        }
+
 db_session = DBSessionManager()
