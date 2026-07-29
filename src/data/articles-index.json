@@ -1,5 +1,74 @@
 [
   {
+    "slug": "ai_security_digest__july_30_2026",
+    "title": "AI Security Digest \u2014 July 30, 2026",
+    "date": "2026-07-30",
+    "type": "News Digest",
+    "description": "New research details architectural backdoors in VLMs and cognitive bias injection in LLMs via physical bit-flip attacks on model weights.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Model Backdoors",
+      "Hardware Attacks",
+      "VLM Security",
+      "Runtime Security"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "skillgate_cost_efficient_runtime_malicious_skill_file_detect",
+    "title": "SkillGate: Cost Efficient Runtime Malicious Skill File Detection in Coding Agents",
+    "date": "2026-07-30",
+    "type": "Paper Review",
+    "description": "SKILLGATE is a hybrid security gateway that uses a 530-pattern regex prefilter and a targeted LLM-judge snippet window to detect malicious Markdown 'skill' files at runtime",
+    "tags": [
+      "MCP",
+      "AI Agents"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "isolated_but_exposed_persistencebased_memory_extraction_atta",
+    "title": "Isolated but Exposed: Persistence-Based Memory Extraction Attack on LLM Agents",
+    "date": "2026-07-30",
+    "type": "Paper Review",
+    "description": "SPORE (State Persistence-based Memory Extraction) is an extraction attack that bypasses LLM agent memory isolation by decoupling adversarial control commands (stored in short-term",
+    "tags": [
+      "Adversarial Attacks",
+      "AI Agents",
+      "Privacy"
+    ],
+    "readingTime": 11
+  },
+  {
+    "slug": "decisionlevel_hijacking_injecting_cognitive_bias_into_large_",
+    "title": "Decision-Level Hijacking: Injecting Cognitive Bias into Large Language Models via Bit-Flip Attacks",
+    "date": "2026-07-30",
+    "type": "Paper Review",
+    "description": "CogBias is a trigger-free post-deployment attack framework that injects precise cognitive biases into Large Language Models (LLMs) by executing highly targeted, ultra-sparse",
+    "tags": [
+      "Prompt Injection",
+      "Data Poisoning",
+      "Adversarial Attacks",
+      "AI Agents"
+    ],
+    "readingTime": 12
+  },
+  {
+    "slug": "architectural_backdoors_in_visionlanguage_model_supply_chain",
+    "title": "Architectural Backdoors in Vision-Language Model Supply Chains via Representation Steering",
+    "date": "2026-07-30",
+    "type": "Paper Review",
+    "description": "An architectural backdoor attack that injects a dormant, trigger-gated steering vector into a Vision-Language Model's (VLM) intermediate representations by modifying the model's",
+    "tags": [
+      "Data Poisoning",
+      "Backdoors",
+      "AI Agents",
+      "Supply Chain Security"
+    ],
+    "readingTime": 11
+  },
+  {
     "slug": "ai_security_digest__july_29_2026",
     "title": "AI Security Digest \u2014 July 29, 2026",
     "date": "2026-07-29",
