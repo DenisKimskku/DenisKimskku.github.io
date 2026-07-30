@@ -267,6 +267,37 @@ def no_yielding(monkeypatch):
     monkeypatch.setattr(scheduler, "should_yield", never_yield)
 
 
+@pytest.fixture
+def live_ollama(_patch_httpx):
+    """Escape hatch for @pytest.mark.live: restore the real transport.
+
+    Skips rather than fails when the daemon is down, so `-m live` on a machine
+    with Ollama stopped reports honestly instead of red. Also points the app at
+    the real base URL, since module-scope conftest set it to an unresolvable
+    host specifically so a missed interception fails loudly.
+    """
+    import urllib.error
+    import urllib.request
+
+    import app.core.config as cfg
+
+    base = os.environ.get("LIVE_OLLAMA_BASE_URL", "http://localhost:11434")
+    try:
+        urllib.request.urlopen(base + "/api/tags", timeout=3).read()
+    except (urllib.error.URLError, OSError) as exc:
+        pytest.skip("live Ollama not reachable at %s (%s)" % (base, exc))
+
+    faked_cls = httpx.AsyncClient
+    saved_url = cfg.settings.OLLAMA_BASE_URL
+    httpx.AsyncClient = _REAL_ASYNC_CLIENT
+    cfg.settings.OLLAMA_BASE_URL = base
+    try:
+        yield base
+    finally:
+        httpx.AsyncClient = faked_cls
+        cfg.settings.OLLAMA_BASE_URL = saved_url
+
+
 def pytest_addoption(parser):
     parser.addoption("--record", action="store_true", default=False,
                      help="With -m live: re-record the exploit corpus from the real model.")

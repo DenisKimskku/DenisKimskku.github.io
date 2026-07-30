@@ -63,7 +63,13 @@ fi
 
 if [ "${1:-}" = "--restart" ]; then
     echo "==> restarting via launchd"
-    launchctl kickstart -k "gui/$(id -u)/com.deniskim.ctf-backend"
+    # bootout + bootstrap, NOT kickstart -k. kickstart restarts the job using
+    # the ALREADY-LOADED plist, so a changed EnvironmentVariables block is
+    # silently ignored -- which is how a CTF_NUM_CTX change appeared to deploy,
+    # passed a health check, and kept sending the old value.
+    launchctl bootout "gui/$(id -u)/com.deniskim.ctf-backend" 2>/dev/null || true
+    sleep 2
+    launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.deniskim.ctf-backend.plist"
     sleep 4
     if curl -sf --max-time 10 http://127.0.0.1:8000/health >/dev/null; then
         echo "    health check passed"
