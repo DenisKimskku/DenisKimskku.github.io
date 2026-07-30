@@ -1,18 +1,23 @@
-# Pinned deliberately: there is no lockfile, and an unattended `pip install -U`
-# can change ProxyHeadersMiddleware semantics under the rate limiter.
+# Pinned to exactly what the runtime venv installs (~/.venvs/ctf, Python 3.12).
+#
+# These pins used to be fiction: nothing on the Mac Mini installed from this
+# file, so CI resolved one set (fastapi 0.115.6, pydantic 2.10.4,
+# pytest-asyncio 0.25.0) while the service ran another (0.128.8 / 2.13.4 / 1.2.0,
+# a major version apart). A green CI run was therefore not evidence the deployed
+# code worked. scripts/deploy.sh + the venv close that gap; keep it closed by
+# regenerating from `pip freeze` whenever this changes.
 fastapi==0.115.6
 uvicorn[standard]==0.39.0
 pydantic==2.10.4
 httpx==0.28.1
 slowapi==0.1.9
-pytest==8.3.4
-pytest-asyncio==0.25.0
+
+# Test-only. pytest 9.0.3 patches GHSA-6w46-j5rx-g56g (vulnerable tmpdir
+# handling) and requires Python >=3.10 -- which is why the runtime had to leave
+# 3.9 before this could be taken. pytest-asyncio must move with it: 0.25.0
+# declares pytest<9.
+pytest==9.0.3
+pytest-asyncio==1.4.0
 
 # Removed, all with zero imports anywhere in app/:
-#   redis                     - sessions are SQLite; nothing imports redis
-#   pydantic-settings         - config.py is a plain class, not BaseSettings
-#   python-dotenv             - never called
-#   python-jose[cryptography] - no JWT anywhere. Removed on security grounds as
-#                               much as tidiness: an unused JWT library with a
-#                               CVE history is the wrong thing to find in a
-#                               security showcase's dependency list.
+#   redis, python-jose[cryptography], python-dotenv, pydantic-settings

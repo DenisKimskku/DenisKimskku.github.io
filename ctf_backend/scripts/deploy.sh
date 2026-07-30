@@ -46,6 +46,21 @@ fi
 mkdir -p "$DEST/data/backups"
 echo "    code synced; data/ left untouched"
 
+# Keep the runtime venv in step with requirements.txt. Without this a
+# dependency change lands in the repo, passes CI, and never reaches the
+# machine -- which is exactly the drift this whole migration existed to close.
+VENV="${CTF_VENV:-$HOME/.venvs/ctf}"
+if [ -x "$VENV/bin/pip" ]; then
+    if ! "$VENV/bin/pip" install -q -r "$DEST/requirements.txt"; then
+        echo "    FATAL: venv dependency install failed" >&2
+        exit 1
+    fi
+    "$VENV/bin/pip" check >/dev/null 2>&1 || echo "    WARN: venv has conflicting requirements"
+    echo "    venv deps in sync ($VENV)"
+else
+    echo "    WARN: no venv at $VENV -- the service may be running system python" >&2
+fi
+
 if [ "${1:-}" = "--restart" ]; then
     echo "==> restarting via launchd"
     launchctl kickstart -k "gui/$(id -u)/com.deniskim.ctf-backend"
