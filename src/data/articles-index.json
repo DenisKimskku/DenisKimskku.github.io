@@ -69,6 +69,24 @@
     "readingTime": 11
   },
   {
+    "slug": "llm_red_teaming_ctf_20_levels",
+    "title": "Twenty Levels of Prompt Injection: Try the LLM Red-Teaming CTF",
+    "date": "2026-07-30",
+    "type": "Project",
+    "description": "A live 20-level LLM capture-the-flag running against a real local model \u2014 XML boundary escapes, WAF bypasses, encoded exfiltration, dual-LLM review, and a multi-agent pipeline. Here is what each tier teaches, what the scoring architecture had to survive, and how to start playing.",
+    "tags": [
+      "LLM Security",
+      "Prompt Injection",
+      "Red Teaming",
+      "CTF",
+      "Guardrails",
+      "OWASP LLM Top 10",
+      "AI Agents"
+    ],
+    "readingTime": 9,
+    "searchContent": "Twenty Levels of Prompt Injection: Try the LLM Red Teaming CTF Almost everything written about prompt injection is written in the abstract. You read that XML delimiters are not a security boundary, that keyword filters fail against paraphrase, that an output classifier can be walked around \u2014 and then you close the tab, having learned a claim rather than a skill. The gap is that the claims are easy to state and hard to feel. Knowing \"delimiters are not a trust boundary\" is not the same as sitting in front of a model, spending eleven turns failing to get out of a fenced code block, and discovering on the twelfth what actually moves it. So I built somewhere to close that gap: a 20 level LLM red teaming CTF , live, free, and running against a real model rather than a scripted mock. No signup, no email, no account. Open the page and you have a session. What it actually is Twenty levels across four tiers. Each level is a system prompt holding a secret flag, plus some defensive apparatus wrapped around it. Your job is to make the model give up the flag anyway, then submit it. | Tier | Levels | Theme | | | | | | 1 | 1\u20135 | Fundamentals \u2014 XML boundaries, persona locks, roleplay, summarizer context, cross lingual alignment gaps | | 2 | 6\u201310 | Filters & Encoding \u2014 regex WAFs, punctuation stripping, egress DLP, ciphers, an intent classifier pre filter | | 3 | 11\u201315 | Structural Evasion \u2014 code fence escape, JSON envelope breakout, role marker confusion, privilege framing, indirect RAG | | "
+  },
+  {
     "slug": "ai_security_digest__july_29_2026",
     "title": "AI Security Digest \u2014 July 29, 2026",
     "date": "2026-07-29",
