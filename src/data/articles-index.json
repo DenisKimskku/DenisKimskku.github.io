@@ -1,5 +1,72 @@
 [
   {
+    "slug": "ai_security_digest__july_31_2026",
+    "title": "AI Security Digest \u2014 July 31, 2026",
+    "date": "2026-07-31",
+    "type": "News Digest",
+    "description": "New vulnerabilities in agent architectures, like Ruflo's MCP flaw, highlight risks in autonomous systems. Research focuses on memory poisoning and robust LLM realignment.",
+    "tags": [
+      "Agent Security",
+      "LLM Security",
+      "Adversarial Attacks",
+      "Memory Poisoning",
+      "Model Alignment",
+      "Integration Vulnerabilities"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "agentsnare_learning_to_delay_divert_and_defuse_autonomous_pe",
+    "title": "AgentSnare: Learning to Delay, Divert, and Defuse Autonomous Penetration Agents",
+    "date": "2026-07-31",
+    "type": "Paper Review",
+    "description": "AgentSnare is a trajectory-adaptive cyber deception system that dynamically constructs, validates, and unfolds a logically consistent decoy environment to steer autonomous Large",
+    "tags": [
+      "AI Agents",
+      "Vulnerabilities"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "hofbench_rediscovering_real_aidiscovered_cves_without_fronti",
+    "title": "HoF-Bench: Rediscovering Real AI-Discovered CVEs Without Frontier Models",
+    "date": "2026-07-31",
+    "type": "Paper Review",
+    "description": "HoF-Bench is a standardized benchmark comprising 95 real-world, AI-discovered Common Vulnerabilities and Exposures (CVEs) across eight repositories to evaluate the",
+    "tags": [
+      "AI Agents",
+      "Vulnerabilities"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "memsecbench_tracking_agent_memory_poisoning_from_persistence",
+    "title": "MemSecBench: Tracking Agent Memory Poisoning from Persistence to Consequence and Repair",
+    "date": "2026-07-31",
+    "type": "Paper Review",
+    "description": "MemSecBench is an evaluation benchmark that tracks LLM agent memory poisoning across its complete lifecycle: from initial ingestion (write/persistence) to downstream exploitation",
+    "tags": [
+      "Data Poisoning",
+      "AI Agents",
+      "Supply Chain Security"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "onpolicy_distillation_for_llm_safety_a_routing_approach_to_t",
+    "title": "On-Policy Distillation for LLM Safety: A Routing Approach to Template-Robust Realignment",
+    "date": "2026-07-31",
+    "type": "Paper Review",
+    "description": "Routing-based On-Policy Distillation (ROPD) realigns compromised Large Language Models (LLMs) by routing tokens to a frozen safety teacher (for harmful queries) and a frozen task",
+    "tags": [
+      "Jailbreaking",
+      "Backdoors",
+      "AI Agents",
+      "Supply Chain Security"
+    ],
+    "readingTime": 9
+  },
+  {
     "slug": "ai_security_digest__july_30_2026",
     "title": "AI Security Digest \u2014 July 30, 2026",
     "date": "2026-07-30",
