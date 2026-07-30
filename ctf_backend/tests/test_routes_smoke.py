@@ -301,8 +301,23 @@ COVERED_PATHS = {
 _FRAMEWORK = {"/api/openapi.json", "/docs", "/docs/oauth2-redirect", "/redoc"}
 
 
+def _declared_paths(app):
+    """Every path the app serves, read from its own OpenAPI schema.
+
+    Walking app.routes stopped working: FastAPI <=0.115 flattened included
+    routers into app.routes, but 0.141 keeps a single _IncludedRouter node that
+    exposes no path, no prefix and no children. Reading app.routes therefore
+    reported every /api/* route as "no longer existing" while the endpoints
+    still answered 200 -- an introspection change, not a routing one.
+
+    The OpenAPI schema is what the app publicly declares it serves, so it is
+    both the more meaningful source and the one least likely to move again.
+    """
+    return set(app.openapi().get("paths", {}))
+
+
 def test_every_route_has_a_smoke_test(app_obj):
-    declared = {r.path for r in app_obj.routes if getattr(r, "path", None)} - _FRAMEWORK
+    declared = _declared_paths(app_obj) - _FRAMEWORK
     missing = declared - COVERED_PATHS
     assert not missing, (
         "New route(s) with no smoke test: %s. Add a happy path and a failure "

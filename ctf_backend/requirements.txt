@@ -6,9 +6,14 @@
 # a major version apart). A green CI run was therefore not evidence the deployed
 # code worked. scripts/deploy.sh + the venv close that gap; keep it closed by
 # regenerating from `pip freeze` whenever this changes.
-fastapi==0.115.6
+fastapi==0.141.1
 uvicorn[standard]==0.39.0
 pydantic==2.10.4
+# starlette arrives via fastapi, but it IS the HTTP layer and carried 7
+# advisories (3 HIGH: SSRF/NTLM credential theft, O(n^2) Range DoS) that
+# were invisible while it appeared in no manifest. Pinned explicitly so it
+# is watched directly.
+starlette==1.3.1
 httpx==0.28.1
 slowapi==0.1.9
 
