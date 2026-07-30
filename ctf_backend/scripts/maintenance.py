@@ -14,7 +14,7 @@ made the retention, integrity-check and NAS-mirror logic testable, and the
 shell versions had silently-failing guards (`if [ -d "$NAS_PATH" ]` made a
 nonexistent mirror path indistinguishable from a successful copy).
 
-Usage:  python3 scripts/maintenance.py {backup|rotate|health}
+Usage:  python3 scripts/maintenance.py {backup|rotate|health|stats}
 """
 
 import json
@@ -28,6 +28,19 @@ import urllib.error
 import urllib.request
 
 BACKEND_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# The runtime lives in ~/srv/ctf_backend; the repo keeps a frozen pre-cutover
+# copy of data/ as a rollback point. Running this script FROM THE REPO therefore
+# reads a stale database and reports numbers that look plausible and are wrong --
+# which is exactly what happened the first time `stats` was run. Prefer the
+# runtime whenever this copy is not it.
+_RUNTIME_DIR = os.environ.get("CTF_RUNTIME_DIR") or os.path.expanduser("~/srv/ctf_backend")
+if (os.path.abspath(BACKEND_DIR) != os.path.abspath(_RUNTIME_DIR)
+        and os.path.exists(os.path.join(_RUNTIME_DIR, "data", "ctf_progress.db"))):
+    print("[maintenance] NOTE: running from %s but the live data is in %s -- using the runtime."
+          % (BACKEND_DIR, _RUNTIME_DIR), flush=True)
+    BACKEND_DIR = _RUNTIME_DIR
+
 DATA_DIR = os.path.join(BACKEND_DIR, "data")
 DB_FILE = os.path.join(DATA_DIR, "ctf_progress.db")
 BACKUP_DIR = os.path.join(DATA_DIR, "backups")
@@ -218,7 +231,119 @@ def health():
     return 0
 
 
-COMMANDS = {"backup": backup, "rotate": rotate, "health": health}
+# ---------------------------------------------------------------------------
+def stats():
+    """Player funnel + service health, from data the platform already keeps.
+
+    WHY THIS EXISTS
+    ===============
+    Eight people once ground through 87 attempts on levels 1-2 against a scorer
+    that was returning an empty string on every call, and nothing surfaced it.
+    The bug was found by reading code weeks later. A funnel would have shown it
+    in a day: 44 attempts on level 1 across 7 players, and nobody reaching
+    level 3.
+
+    Everything here comes from the live DB and the existing JSON access log.
+    No new storage, no new dependency.
+    """
+    if not os.path.exists(DB_FILE):
+        log("FATAL: %s missing" % DB_FILE)
+        return 1
+
+    conn = sqlite3.connect("file:%s?mode=ro" % DB_FILE, uri=True, timeout=15)
+    sessions = conn.execute(
+        "SELECT completed_levels, created_at, last_active FROM sessions").fetchall()
+    attempts = conn.execute(
+        "SELECT level_id, SUM(attempt_count), COUNT(*) FROM attempts GROUP BY level_id").fetchall()
+    conn.close()
+
+    solved = {}
+    engaged = 0
+    for comp, created, active in sessions:
+        try:
+            levels = json.loads(comp)
+        except Exception:
+            levels = []
+        if levels or (active - created) > 60:
+            engaged += 1
+        for lvl in levels:
+            solved[lvl] = solved.get(lvl, 0) + 1
+
+    att = {lvl: (total, players) for lvl, total, players in attempts}
+    furthest = max(solved) if solved else 0
+
+    print("")
+    print("=== CTF funnel ===")
+    print("  sessions: %d    engaged (solved something, or stayed past 60s): %d"
+          % (len(sessions), engaged))
+    print("  furthest level solved by anyone: %s" % (furthest or "none"))
+    print("")
+    print("  %-6s %8s %8s %10s %9s" % ("level", "tried", "solved", "att/solve", "stuck"))
+    print("  " + "-" * 46)
+    for lvl in range(1, 21):
+        total, players = att.get(lvl, (0, 0))
+        wins = solved.get(lvl, 0)
+        if not players and not wins:
+            continue
+        # `stuck` = reached this level and never solved it. This is the number
+        # that names the wall, and the one that was invisible before.
+        stuck = max(0, players - wins)
+        ratio = ("%.1f" % (float(total) / wins)) if wins else "-"
+        flag = "   <-- wall" if wins == 0 and stuck >= 3 else ""
+        print("  %-6d %8d %8d %10s %9d%s" % (lvl, players, wins, ratio, stuck, flag))
+
+    # --- service health + scoring mix, from the JSON access log ------------
+    log_path = os.path.join(DATA_DIR, "backend.log")
+    latencies, codes, scores = [], {}, {}
+    try:
+        with open(log_path, errors="ignore") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line.startswith("{"):
+                    continue
+                try:
+                    rec = json.loads(line)
+                except Exception:
+                    continue
+                if rec.get("evt") == "score":
+                    key = "L%02d %s" % (rec.get("level", 0), rec.get("reason", "?"))
+                    scores[key] = scores.get(key, 0) + 1
+                elif "status" in rec:
+                    code = rec["status"]
+                    codes[code] = codes.get(code, 0) + 1
+                    if str(rec.get("path", "")).startswith("/api/chat"):
+                        latencies.append(rec.get("ms", 0))
+    except OSError:
+        pass
+
+    if codes:
+        total_req = sum(codes.values())
+        errors = sum(v for k, v in codes.items() if k >= 500)
+        print("")
+        print("=== service (current log window) ===")
+        print("  requests: %d    5xx: %d    503 yields to Jarvis/quiet hours: %d"
+              % (total_req, errors, codes.get(503, 0)))
+        if latencies:
+            latencies.sort()
+            p50 = latencies[len(latencies) // 2]
+            p95 = latencies[min(len(latencies) - 1, int(len(latencies) * 0.95))]
+            print("  /api/chat  p50 %.1fs   p95 %.1fs   slowest %.1fs"
+                  % (p50 / 1000.0, p95 / 1000.0, latencies[-1] / 1000.0))
+
+    print("")
+    if scores:
+        # A level that is almost all NO_LEAK is one the model never leaks on --
+        # miscalibrated. Almost all GENERIC means players are not really trying.
+        # This is the distribution that would have exposed the dead judge.
+        print("=== how turns are being scored ===")
+        for key in sorted(scores, key=lambda k: -scores[k])[:12]:
+            print("  %-26s %d" % (key, scores[key]))
+    else:
+        print("  (no scored turns in the current log window)")
+    return 0
+
+
+COMMANDS = {"backup": backup, "rotate": rotate, "health": health, "stats": stats}
 
 if __name__ == "__main__":
     if len(sys.argv) != 2 or sys.argv[1] not in COMMANDS:

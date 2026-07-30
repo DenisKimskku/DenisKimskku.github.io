@@ -2,7 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from pydantic import BaseModel, Field
 from typing import Any, Dict, List, NamedTuple, Optional, Tuple
 import hmac
+import logging
 import re
+import time
 
 import asyncio
 import json
@@ -30,6 +32,22 @@ from app.services.guard_llm import (
 )
 from app.services.scheduler import scheduler
 from app.services.hints import hint_service
+
+# One structured line per scored turn. The database records that an attempt
+# happened and whether a level is solved, but not HOW turns are being scored --
+# and that distribution is the diagnostic signal. A level whose attempts are
+# almost all NO_LEAK is one the model never leaks on; a level that is almost all
+# GENERIC is one whose players are not really trying. Without it, "level 1 took
+# 44 attempts across 7 people" is unexplainable after the fact.
+_score_log = logging.getLogger("ctf.score")
+
+
+def _log_score(level: int, reason_key: str, win: bool, turns: int) -> None:
+    _score_log.info(json.dumps({
+        "ts": round(time.time(), 3), "evt": "score",
+        "level": level, "reason": reason_key, "win": win, "turns_replayed": turns,
+    }))
+
 
 limiter = Limiter(key_func=get_remote_address)
 router = APIRouter()
@@ -359,6 +377,7 @@ async def send_chat_prompt(req: ChatRequest, request: Request):
         history=prep.history,
     )
 
+    _log_score(req.level, reason_key, win, len(prep.history))
     body = {
         "response": model_response,
         "win": win,
@@ -443,6 +462,7 @@ async def send_chat_prompt_stream(req: ChatRequest, request: Request):
         win, reason_key = await run_llm_judge(
             prep.user_prompt, guarded, prep.expected_flag, challenge, history=prep.history,
         )
+        _log_score(req.level, reason_key, win, len(prep.history))
         tail = {
             "chunk": "", "win": win, "judge_reason": JUDGE_REASONS[reason_key], "done": True,
             "turns_retained": len(prep.history),

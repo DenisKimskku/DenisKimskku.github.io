@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import sqlite3
+import sys
 import time
 import uuid
 
@@ -47,7 +48,23 @@ app.add_middleware(
     max_age=600,
 )
 
-logging.basicConfig(format="%(message)s", level=logging.INFO)
+# NOT logging.basicConfig(): it is a no-op once handlers exist, and uvicorn
+# installs its own logging config that gives the ROOT logger no handler. Records
+# from "ctf.*" therefore propagated to a handler-less root and fell through to
+# logging.lastResort, which is WARNING-level and silently drops INFO. Net effect:
+# the structured access log worked under pytest (where basicConfig ran first)
+# and produced nothing at all under uvicorn -- for its entire existence.
+#
+# Attach an explicit handler to the "ctf" parent and stop propagation, so this
+# does not depend on whatever the server did to the root logger.
+_ctf_logger = logging.getLogger("ctf")
+if not _ctf_logger.handlers:
+    _handler = logging.StreamHandler(sys.stdout)
+    _handler.setFormatter(logging.Formatter("%(message)s"))
+    _ctf_logger.addHandler(_handler)
+_ctf_logger.setLevel(logging.INFO)
+_ctf_logger.propagate = False
+
 _access_log = logging.getLogger("ctf.access")
 
 
