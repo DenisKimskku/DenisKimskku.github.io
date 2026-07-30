@@ -62,15 +62,30 @@ async def _run_turns(level_id, turns):
     same chat_history_block the request path uses, so a corpus entry that passes
     here is one a player could actually type.
     """
+    from app.core.guardrails import apply_input_filters, censor_raw_flag
     from app.core.level_mechanics import (
         USER_TURN_CONVERSATION, USER_TURN_DEFAULT, chat_history_block,
     )
+    from app.services.guard_llm import intent_prefilter, reviewer_gate
 
     challenge = CHALLENGES[level_id]
     template = challenge["system_prompt"]
     history, last, verdict = [], "", (False, "NO_OUTPUT")
 
     for payload in turns:
+        # Faithful to _prepare_turn: without these the live tier silently skips
+        # the WAF (L6), the sanitiser (L7) and the intent pre-filter (L10), so a
+        # payload could "pass" here that the real endpoint would never forward.
+        payload, blocked = apply_input_filters(challenge, payload)
+        if blocked:
+            verdict, last = (False, "GENERIC"), blocked
+            continue
+        if challenge.get("pre_filter_enabled"):
+            allowed, _v = await intent_prefilter(payload)
+            if not allowed:
+                verdict, last = (False, "GENERIC"), "[PRE-FILTER BLOCKED]"
+                continue
+
         embedded = payload
         turn = USER_TURN_DEFAULT if "{USER_INPUT}" in template else payload
         if history:
@@ -80,6 +95,15 @@ async def _run_turns(level_id, turns):
         system_prompt = template.format(FLAG=FLAG, USER_INPUT=embedded)
 
         last = await query_ollama(turn, system_prompt)
+
+        # Egress guardrails, same order as _apply_output_guardrails.
+        if challenge.get("dual_llm") or challenge.get("llamaguard_check"):
+            approved, _v = await reviewer_gate(last)
+            if not approved:
+                last = "[REVIEW REJECTED]"
+        if challenge.get("output_censor_raw_flag"):
+            last, _hit = censor_raw_flag(last, FLAG)
+
         verdict = await run_llm_judge(payload, last, FLAG, challenge, history=list(history))
         history.append({"role": "user", "content": payload})
         history.append({"role": "assistant", "content": last})
