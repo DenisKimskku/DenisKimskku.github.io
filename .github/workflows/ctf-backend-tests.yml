@@ -39,10 +39,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # 3.9 is what the launchd plist actually runs -- production parity.
-        # 3.11 is the recommended upgrade target; keeping it green means the
-        # migration stays a plist edit rather than a project.
-        python-version: ["3.9", "3.11"]
+        # 3.12 is what the runtime venv (~/.venvs/ctf) actually runs, so this is
+        # production parity. 3.13 is the next upgrade target; keeping it green
+        # means that migration stays a one-line plist edit.
+        # 3.9 was dropped: it is EOL (Oct 2025) and cannot install pytest 9,
+        # which patches GHSA-6w46-j5rx-g56g.
+        python-version: ["3.12", "3.13"]
 
     env:
       CTF_FLAG_HMAC_KEY: ci-only-flag-key-not-used-for-any-real-flag
