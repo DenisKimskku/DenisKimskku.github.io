@@ -1,5 +1,72 @@
 [
   {
+    "slug": "ai_security_digest__august_01_2026",
+    "title": "AI Security Digest \u2014 August 01, 2026",
+    "date": "2026-08-01",
+    "type": "News Digest",
+    "description": "This digest covers training-time supply chain attacks, like GradLock, which embed data into model weights, and new defenses like TriShield for federated learning.",
+    "tags": [
+      "LLM Security",
+      "Supply Chain Attacks",
+      "Data Poisoning",
+      "Federated Learning",
+      "Adversarial Attacks",
+      "Model Integrity"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "piggybacking_on_perception_stealthy_concurrent_audio_prompt_",
+    "title": "Piggybacking on Perception: Stealthy Concurrent Audio Prompt Injections against Multimodal LLM Agents",
+    "date": "2026-08-01",
+    "type": "Paper Review",
+    "description": "Concurrent audio prompt injection attacks that stealthily superimpose malicious instructions directly over benign user speech, leveraging acoustic optimization and content-level",
+    "tags": [
+      "Prompt Injection",
+      "AI Agents"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "security_of_worldmodelbased_embodied_ai_a_lifecycle_of_threa",
+    "title": "Security of World-Model-Based Embodied AI: A Lifecycle of Threats, Defenses, and Evaluation",
+    "date": "2026-08-01",
+    "type": "Paper Review",
+    "description": "A comprehensive security analysis framework that maps threats and defenses across the entire lifecycle of world-model-based embodied AI, highlighting how predictive errors",
+    "tags": [
+      "Data Poisoning",
+      "Backdoors",
+      "Adversarial Attacks",
+      "AI Agents"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "trishield_zeroutilityloss_defense_against_privacy_backdoors_",
+    "title": "TriShield: Zero-Utility-Loss Defense Against Privacy Backdoors in Federated Language Model Fine-Tuning via Orthogonal Gradient Projection and Optimizer State Entanglement",
+    "date": "2026-08-01",
+    "type": "Paper Review",
+    "description": "TriShield is a three-layer client-side defense that blocks privacy backdoors in federated parameter-efficient fine-tuning (PEFT) without sacrificing model utility by combining",
+    "tags": [
+      "Backdoors",
+      "Adversarial Attacks",
+      "Privacy"
+    ],
+    "readingTime": 11
+  },
+  {
+    "slug": "dont_trust_the_ai_ecosystem_analyzing_privacy_leakage_in_com",
+    "title": "Don't Trust the AI Ecosystem: Analyzing Privacy Leakage in Compromised Open-Source Components",
+    "date": "2026-08-01",
+    "type": "Paper Review",
+    "description": "GradLock is a training-time supply chain attack that stealthily encodes raw training images directly into the weights of a neural network by freezing specific parameter",
+    "tags": [
+      "Supply Chain Security",
+      "Privacy"
+    ],
+    "readingTime": 13
+  },
+  {
     "slug": "ai_security_digest__july_31_2026",
     "title": "AI Security Digest \u2014 July 31, 2026",
     "date": "2026-07-31",
