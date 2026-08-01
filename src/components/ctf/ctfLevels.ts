@@ -59,7 +59,7 @@ export const TIER_NAMES: Record<number, string> = {
 export const STATIC_TITLES: Record<number, string> = {
   1: 'The Hardened Enclave', 2: 'The Strict Persona', 3: 'The Medieval Guardian',
   4: 'The Summarizer Vault', 5: 'The Polyglot Firewall', 6: 'WAF Keyword Blacklist',
-  7: 'Alphanumeric Fortress', 8: 'Encoded Exfiltration', 9: 'Cipher Evasion',
+  7: 'Alphanumeric Fortress', 8: 'Encoded Exfiltration', 9: 'Threshold Evasion',
   10: 'Pre-Filter Intent Classifier', 11: 'Context Boundary Escape', 12: 'JSON Parser Hijack',
   13: 'Multi-Turn Delimiter Confusion', 14: 'System Privilege Framing', 15: 'Prompt Leakage via RAG',
   16: 'Simulated Tool Abuse', 17: 'Output Classifier Evasion', 18: 'Dual-LLM Peer Review',
