@@ -19,6 +19,7 @@ const SESSION_KEY = 'ctf_session_id';
 // In-RAM mirror: Safari Private Mode and partitioned storage can throw on
 // localStorage access, and the session should still survive within the tab.
 let memorySession: string | null = null;
+let sessionReady: Promise<string | null> | null = null;
 
 export function readSessionId(): string | null {
   if (memorySession) return memorySession;
@@ -34,12 +35,54 @@ export function readSessionId(): string | null {
 export function writeSessionId(id: string): void {
   if (!id) return;
   memorySession = id;
+  // Restoring a resume code must not be overridden by an in-flight bootstrap
+  // that is still resolving the old session.
+  sessionReady = Promise.resolve(id);
   if (typeof window === 'undefined') return;
   try {
     window.localStorage.setItem(SESSION_KEY, id);
   } catch {
     /* private mode: the in-RAM mirror keeps this tab coherent */
   }
+}
+
+/**
+ * First-visit session race.
+ *
+ * Every endpoint that calls get_request_session MINTS a session when the caller
+ * presents none. On a first visit localStorage is empty and the arena fires
+ * /api/status, /api/level and /api/hint within a few milliseconds of each
+ * other, so each one created its OWN session -- observed in production as two
+ * rows written in the same second from one page load. The IP+User-Agent
+ * fallback used to hide this by collapsing them; removing that fallback (it
+ * shared flag_seed between strangers behind a NAT) exposed it.
+ *
+ * It is not merely untidy: /api/level returns is_completed for a session the UI
+ * then discards, and /api/hint records an attempt against it, so the hint
+ * counter a player sees can belong to a session that no longer exists.
+ *
+ * Fix it once, in the transport: the first caller to need a session performs
+ * /api/status and everyone else awaits that same promise. Any future component
+ * gets this for free.
+ */
+
+async function ensureSession(signal?: AbortSignal): Promise<string | null> {
+  const existing = readSessionId();
+  if (existing) return existing;
+  if (!sessionReady) {
+    sessionReady = ctfFetch('/api/status', { signal, timeoutMs: 15_000, __bootstrap: true })
+      .then((r) => r.json())
+      .then((d: StatusData) => {
+        if (d?.session_id) writeSessionId(d.session_id);
+        return d?.session_id ?? null;
+      })
+      .catch(() => {
+        // Let the next caller retry rather than caching a failure for the tab.
+        sessionReady = null;
+        return null;
+      });
+  }
+  return sessionReady;
 }
 
 export type ApiErrorKind =
@@ -90,10 +133,17 @@ interface ApiOptions {
   body?: unknown;
   signal?: AbortSignal;
   timeoutMs?: number;
+  /** Internal: the /api/status call that establishes the session. Must not
+   *  await ensureSession, or it would deadlock on itself. */
+  __bootstrap?: boolean;
 }
 
 export async function ctfFetch(path: string, opts: ApiOptions = {}): Promise<Response> {
-  const { method = 'GET', body, signal, timeoutMs = 60_000 } = opts;
+  const { method = 'GET', body, signal, timeoutMs = 60_000, __bootstrap = false } = opts;
+
+  // Serialise session creation. Without this, concurrent first-visit calls each
+  // mint their own session server-side.
+  if (!__bootstrap) await ensureSession(signal);
 
   const headers: Record<string, string> = {};
   // Content-Type is not CORS-safelisted; setting it on a bodyless GET forces an

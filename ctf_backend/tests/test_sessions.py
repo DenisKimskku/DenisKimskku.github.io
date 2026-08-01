@@ -261,3 +261,34 @@ async def test_yields_when_a_foreign_model_holds_the_gpu(fake_ollama, monkeypatc
         assert reason and "some-other-model:70b" in reason
     finally:
         scheduler._ps_cache = (0.0, [])
+
+
+def test_session_less_calls_each_mint_a_session(client):
+    """Documents WHY the client must serialise its first request.
+
+    Every endpoint calling get_request_session mints a session when the caller
+    presents none -- correct, and deliberate: an unrecognised caller must get a
+    FRESH session, never somebody else's. There is no IP fallback to collapse
+    them any more, because that fallback shared flag_seed between strangers
+    behind one NAT.
+
+    The consequence is a client concern: on a first visit the arena fired
+    /api/status, /api/level and /api/hint within milliseconds of each other with
+    empty localStorage, and each minted its own session -- observed in
+    production as two rows written in the same second from one page load. Worse
+    than untidy: /api/level returned is_completed for a session the UI then
+    discarded, and /api/hint recorded an attempt against it.
+
+    ctfApi.ctfFetch now awaits a single bootstrap /api/status before any other
+    call. If this test ever starts returning 1, the server contract changed and
+    that client serialisation may no longer be needed.
+    """
+    before = db_session.get_admin_stats()["total_sessions"]
+    for path in ("/api/status", "/api/level/1", "/api/hint/1"):
+        client.get(path, headers=A)
+        client.cookies.clear()
+    minted = db_session.get_admin_stats()["total_sessions"] - before
+    assert minted == 3, (
+        "expected each session-less call to mint its own session (got %d) -- if "
+        "this changed, revisit the client-side bootstrap in ctfApi.ts" % minted
+    )
