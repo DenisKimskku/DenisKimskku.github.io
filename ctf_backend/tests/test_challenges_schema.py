@@ -335,3 +335,29 @@ class TestStructuralMechanicsEngage:
             assert payload not in turn, (
                 "level %d is indirect_rag but the player's text became the "
                 "request; it must only ever be the document" % level_id)
+
+
+def test_frontend_static_titles_match_the_backend():
+    """The SPA duplicates level titles for its offline shell; keep them in sync.
+
+    STATIC_TITLES renders before /api/levels resolves, so a stale entry shows the
+    player one name and then swaps it for another. Renaming level 9 from "Cipher
+    Evasion" to "Threshold Evasion" is exactly the edit that leaves this behind.
+
+    This is the same drift class as the harness keeping its own copy of the
+    embedding logic: two sources of truth, one of them updated.
+    """
+    ts = os.path.join(os.path.dirname(__file__), "..", "..",
+                      "src", "components", "ctf", "ctfLevels.ts")
+    if not os.path.exists(ts):
+        pytest.skip("frontend not present next to the backend")
+
+    with open(ts, encoding="utf-8") as fh:
+        block = re.search(r"STATIC_TITLES[^=]*=\s*\{(.*?)\n\};", fh.read(), re.S)
+    assert block, "STATIC_TITLES map not found -- was it renamed?"
+
+    frontend = {int(n): t for n, t in re.findall(r"(\d+):\s*'([^']+)'", block.group(1))}
+    backend = {i: c["title"] for i, c in CHALLENGES.items()}
+    assert frontend == backend, (
+        "frontend/backend level titles diverged: %s"
+        % sorted(k for k in backend if frontend.get(k) != backend[k]))

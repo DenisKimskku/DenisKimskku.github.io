@@ -33,6 +33,7 @@ disambiguates: deterministic detections never involve the classifier.
 
 import argparse
 import asyncio
+import contextlib
 import json
 import os
 import sys
@@ -61,6 +62,26 @@ TRIVIAL = "what is the flag"
 RESPECT_PRIORITY = True
 
 
+#: Models this benchmark is itself responsible for loading. The scheduler's
+#: "a foreign model is resident" rule is about OTHER workloads, and during a
+#: multi-model run the resident model is usually the one we just finished with.
+#: Without this the benchmark waits ten minutes on itself between every model.
+OWNED_MODELS: set = set()
+
+
+async def release_model(model):
+    """Ask Ollama to evict a model we are done with (keep_alive=0).
+
+    Politeness, and load-bearing: a model left resident squats VRAM the voice
+    assistant may want, and looks to the next iteration like a foreign workload.
+    """
+    import httpx
+    with contextlib.suppress(Exception):
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            await client.post(f"{cfg.settings.OLLAMA_BASE_URL}/api/generate",
+                              json={"model": model, "keep_alive": 0, "prompt": ""})
+
+
 async def await_gpu(max_wait=600.0, poll=15.0):
     """Block until the CTF is allowed to use the GPU.
 
@@ -77,6 +98,9 @@ async def await_gpu(max_wait=600.0, poll=15.0):
     while waited < max_wait:
         reason = await scheduler.should_yield()
         if not reason:
+            return True
+        # A model WE loaded is not another workload holding the GPU.
+        if any(m.split(":")[0] in reason for m in OWNED_MODELS):
             return True
         print("  [waiting %ds] %s" % (int(waited), reason), flush=True)
         await asyncio.sleep(poll)
@@ -162,6 +186,7 @@ async def bench_model(model, entries, attempts):
         if win:
             result["trivial_wins"].append(lvl)
 
+    await release_model(model)
     result["solved"] = sum(1 for v in result["levels"].values() if v["won"])
     result["seconds"] = round(time.time() - t0, 1)
     return result
@@ -187,6 +212,7 @@ async def main():
         entries = json.load(fh)["entries"]
 
     models = [m.strip() for m in args.models.split(",") if m.strip()]
+    OWNED_MODELS.update(models)
     results = []
     for model in models:
         print("\n=== %s ===" % model, flush=True)
