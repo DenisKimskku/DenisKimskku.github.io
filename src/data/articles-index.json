@@ -1,5 +1,100 @@
 [
   {
+    "slug": "failures-that-pass-every-test",
+    "title": "Failures That Pass Every Test",
+    "date": "2026-08-01",
+    "type": "Project",
+    "description": "Four bugs from one codebase that shared a property: every one of them worked perfectly in the test suite and did nothing at all in production. An LLM judge that never ran, logging that discarded everything, seven invisible CVEs, and CSS that compiled to nothing \u2014 plus the measuring instrument I wrote to study them, which had the same bug.",
+    "tags": [
+      "AI Security",
+      "Engineering",
+      "LLM Evaluation"
+    ],
+    "readingTime": 16
+  },
+  {
+    "slug": "this_week_in_ai_security__august_02_2026",
+    "title": "This Week in AI Security \u2014 August 02, 2026",
+    "date": "2026-08-02",
+    "type": "Trend Report",
+    "description": "AI security research is shifting focus from prompt injection to systemic failures in multi-agent orchestration. New work emphasizes protocol-level controls and runtime isolation.",
+    "tags": [
+      "Agentic AI",
+      "LLM Security",
+      "Information Flow Control",
+      "Adversarial Attacks",
+      "System Security",
+      "Multi-Agent Systems"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "ai_security_digest__august_02_2026",
+    "title": "AI Security Digest \u2014 August 02, 2026",
+    "date": "2026-08-02",
+    "type": "News Digest",
+    "description": "An autonomous AI agent exploited a zero-day vulnerability in Hugging Face, highlighting the threat of agentic cyberattacks.",
+    "tags": [
+      "Agentic Attacks",
+      "LLM Security",
+      "Zero-Day Exploits",
+      "Information Flow Control",
+      "Adversarial Attacks",
+      "AI Safety"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "trishieldrag_a_threering_defenseindepth_framework_against_kn",
+    "title": "TriShieldRAG: A Three-Ring Defense-in-Depth Framework Against Knowledge Corruption in Retrieval-Augmented Generation",
+    "date": "2026-08-02",
+    "type": "Paper Review",
+    "description": "TriShieldRAG is a three-layer defense-in-depth framework that secures Retrieval-Augmented Generation (RAG) pipelines by sequentially filtering poisoned documents at ingest",
+    "tags": [
+      "RAG",
+      "Data Poisoning",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 11
+  },
+  {
+    "slug": "alibi_adaptive_agentic_attacks_on_llmbased_vulnerability_det",
+    "title": "ALIBI: Adaptive Agentic Attacks on LLM-Based Vulnerability Detectors via Adversarial Code Comments",
+    "date": "2026-08-02",
+    "type": "Paper Review",
+    "description": "ALIBI is an adaptive, black-box adversarial framework that generates and refines non-executable code comments to trick Large Language Model (LLM) vulnerability detectors into",
+    "tags": [
+      "RAG",
+      "Adversarial Attacks",
+      "AI Agents",
+      "Vulnerabilities"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "biodisclose_an_actionabilityaware_benchmark_for_biomedical_s",
+    "title": "BioDisclose: An Actionability-Aware Benchmark for Biomedical Safety under Adversarial Elicitation",
+    "date": "2026-08-02",
+    "type": "Paper Review",
+    "description": "BioDisclose is a safety benchmark utilizing a graded 4-level scale to evaluate how successfully adversarial elicitation families bypass large language model guardrails to leak",
+    "tags": [
+      "Adversarial Attacks"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "safeflow_semantic_informationflow_control_for_blocking_malic",
+    "title": "SafeFlow: Semantic Information-Flow Control for Blocking Malicious Propagation in Multi-Agent Systems",
+    "date": "2026-08-02",
+    "type": "Paper Review",
+    "description": "SafeFlow is a multi-agent defense framework that prevents malicious actions by formalizing task delegation as a semantic information-flow control problem, propagating 'taint'",
+    "tags": [
+      "Prompt Injection",
+      "AI Agents"
+    ],
+    "readingTime": 9
+  },
+  {
     "slug": "ai_security_digest__august_01_2026",
     "title": "AI Security Digest \u2014 August 01, 2026",
     "date": "2026-08-01",
