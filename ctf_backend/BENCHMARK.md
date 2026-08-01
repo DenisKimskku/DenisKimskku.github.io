@@ -98,5 +98,14 @@ column is the one to quote.
         --models qwen3:8b,llama3.2:3b,gemma3:4b,mistral:7b,qwen3:1.7b \
         --attempts 2 --out /tmp/bench.json
 
-Roughly 6 minutes total on this hardware. It competes with anything else using
-the GPU, so it is a manual tool and is not scheduled.
+Roughly 6 minutes total on this hardware.
+
+It checks `scheduler.should_yield()` before each level and **waits** while a
+higher-priority workload holds the GPU — the voice assistant mid-turn, or the
+02:00–05:00 quiet window. The request path returns 503 in that situation and
+lets the player retry; a benchmark has nobody to retry it, so it blocks instead,
+printing `[waiting Ns] <reason>`. After 10 minutes of waiting it proceeds anyway
+rather than stalling a run indefinitely.
+
+`--ignore-priority` skips the check. Only use it on a machine you know is idle;
+it will talk over the assistant.
