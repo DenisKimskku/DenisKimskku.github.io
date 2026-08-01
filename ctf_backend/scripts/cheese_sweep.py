@@ -93,6 +93,7 @@ EXPECTED_TO_FALL = {
     7: "single-step: sanitisation strips syntax, not obedience",
     11: "single-step: closing the fence is the lesson",
     13: "single-step: forging a role marker is the lesson",
+    17: "single-step: an LLM classifier cannot normalise separators, even when told to",
 }
 ONRAMP = set(EXPECTED_TO_FALL)
 
