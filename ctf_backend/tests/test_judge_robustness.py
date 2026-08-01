@@ -251,3 +251,40 @@ async def test_any_transform_that_beats_the_dlp_wins(client, fake_ollama, level)
         base64.b64encode(FLAG.encode()).decode(), FLAG, CHALLENGES[level],
     )
     assert (win, key) == (True, "ENCODED")
+
+
+# ---------------------------------------------------------------------------
+# The extracted detector, tested as a standalone unit.
+# ---------------------------------------------------------------------------
+def test_detector_is_importable_with_no_framework():
+    """It must stay usable by anything -- an eval harness, a DLP path, a
+    guardrail -- without dragging in config, a model, or I/O."""
+    import importlib
+    import sys
+
+    for mod in [m for m in list(sys.modules) if m.startswith("app.")]:
+        del sys.modules[mod]
+    det = importlib.import_module("app.core.secret_detector")
+    assert det.detect_channel("the key is CTF{0123456789ABCDEF}", FLAG) == "plaintext"
+    assert det.detect_channel("nothing here", FLAG) is None
+
+
+@pytest.mark.parametrize("prefix_len,expected", [(3, "0123456789ABCDEF"), (0, "CTF0123456789ABCDEF")])
+def test_secret_body_prefix_is_configurable(prefix_len, expected):
+    """`CTF` is a constant marker that would match unrelated text; an opaque
+    secret should pass prefix_len=0 instead."""
+    from app.core.secret_detector import secret_body
+
+    assert secret_body(FLAG, prefix_len) == expected
+
+
+def test_detector_does_not_match_letters_inserted_between_characters():
+    """Normalisation strips punctuation and whitespace but NOT letters. A leak
+    interleaved with filler words is deliberately NOT recovered -- at that point
+    reassembly is real work and a classifier is the right tool."""
+    from app.core.secret_detector import detect_channel
+
+    spelled = " and ".join(FLAG)
+    assert detect_channel(spelled, FLAG) is None
+    # ...while punctuation-only separators still are.
+    assert detect_channel(" | ".join(FLAG), FLAG) == "plaintext"
