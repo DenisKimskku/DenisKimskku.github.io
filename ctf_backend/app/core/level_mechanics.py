@@ -232,3 +232,66 @@ def corpus_document(level_id, history, user_prompt):
         parts.append("[archived item %d (untrusted)]\n%s" % (idx, neutralize_replayed(body)))
     parts.append("[newly ingested item %d (untrusted)]\n%s" % (len(items) + 1, user_prompt))
     return "\n".join(parts), query
+
+
+# ---------------------------------------------------------------------------
+# Where the payload lands
+# ---------------------------------------------------------------------------
+def history_mode(challenge: Dict[str, Any], history_enabled: bool = True) -> str:
+    """'off' | 'raw' | 'corpus' | 'chat'.
+
+    Opt-OUT, not opt-in: 18 of 20 levels want conversation, so a future level
+    author gets the modern behaviour by default. The two exceptions declare
+    `history_disabled` because their mechanic is a property of ONE request's
+    structure -- a code fence (11) and a JSON envelope (12) -- and replayed
+    history would let a player write OUTSIDE the wrapper instead of breaking it,
+    deleting the level rather than enriching it.
+    """
+    if not history_enabled or challenge.get("history_disabled"):
+        return "off"
+    if challenge.get("multi_turn"):
+        return "raw"          # level 13: forgeable markers, on purpose
+    if challenge.get("indirect_rag"):
+        return "corpus"       # levels 15/19: the corpus accumulates
+    return "chat"
+
+
+def build_embedded_turn(challenge, template, user_prompt, history, mode, dropped=0):
+    """Decide WHERE the payload lands and what the user turn says.
+
+    Returns (embedded, turn).
+
+    This lives here, and not in the request handler, because every offline
+    harness has to reproduce it EXACTLY or it measures a different game. When it
+    was inlined in _prepare_turn and copied into the benchmark, the copy drifted:
+    the benchmark sent levels 12/13/15/19 as plain instructions, so a payload
+    that should have arrived as a JSON envelope, a forgeable transcript or a
+    retrieved DOCUMENT arrived as a direct request instead. Those levels were
+    trivially winnable in the harness and not in the product, and the published
+    benchmark numbers for them were measuring something that does not exist.
+
+    History goes into the SAME slot the payload occupies, i.e. inside whatever
+    fence the level draws. It must NEVER go into the system prompt: that is the
+    trusted channel holding `Confidential Key: {FLAG}`, and attacker text there
+    would be a free system-prompt injection primitive on all 20 levels.
+    """
+    level_id = challenge.get("level", 1)
+    embedded = user_prompt
+    turn = USER_TURN_DEFAULT if "{USER_INPUT}" in template else user_prompt
+
+    if challenge.get("json_wrapper"):
+        embedded = json_envelope(user_prompt)
+    elif mode == "raw":
+        # Level 13: replayed turns are NOT neutralised, so markers are forgeable.
+        embedded = multi_turn_transcript(history, user_prompt)
+    elif challenge.get("indirect_rag"):
+        if mode == "corpus":
+            embedded, turn = corpus_document(level_id, history, user_prompt)
+        else:
+            embedded, turn = indirect_document(level_id, user_prompt)
+    elif history:
+        embedded = chat_history_block(history, dropped) + user_prompt
+        if "{USER_INPUT}" in template:
+            turn = USER_TURN_CONVERSATION
+
+    return embedded, turn

@@ -19,8 +19,9 @@ from app.core.owasp import get_owasp_info, OWASP_MAPPINGS
 from app.core.guardrails import apply_input_filters, censor_raw_flag
 from app.core.level_mechanics import (
     USER_TURN_CONVERSATION, USER_TURN_DEFAULT,
-    chat_history_block, corpus_document, estimate_tokens, fit_history,
-    indirect_document, json_envelope, multi_turn_transcript,
+    build_embedded_turn, chat_history_block, corpus_document, estimate_tokens,
+    fit_history, history_mode as _history_mode_shared, indirect_document,
+    json_envelope, multi_turn_transcript,
 )
 from app.services.session_mgr import session_manager
 from app.services.db_session import db_session
@@ -187,13 +188,7 @@ def _history_mode(challenge: Dict[str, Any]) -> str:
     history would let a player write OUTSIDE the wrapper instead of breaking it,
     deleting the level rather than enriching it.
     """
-    if not settings.HISTORY_ENABLED or challenge.get("history_disabled"):
-        return "off"
-    if challenge.get("multi_turn"):
-        return "raw"          # level 13: forgeable markers, on purpose
-    if challenge.get("indirect_rag"):
-        return "corpus"       # levels 15/19: the corpus accumulates
-    return "chat"
+    return _history_mode_shared(challenge, settings.HISTORY_ENABLED)
 
 
 def _replay_limit(mode: str) -> int:
@@ -271,28 +266,11 @@ async def _prepare_turn(req: ChatRequest, request: Request):
         stored = await asyncio.to_thread(db_session.get_turns, session_id, level_id, limit)
         history, dropped = fit_history(stored, min(settings.HISTORY_TOKEN_BUDGET, available), limit)
 
-    # ---- Structural mechanics: change where the payload LANDS ------------
-    # History goes into the SAME slot the payload occupies, i.e. inside whatever
-    # fence the level draws. It must NEVER go into the system prompt: that is
-    # the trusted channel holding `Confidential Key: {FLAG}`, and attacker text
-    # there would be a free system-prompt injection primitive on all 20 levels.
-    embedded = user_prompt
-    turn = USER_TURN_DEFAULT if "{USER_INPUT}" in template else user_prompt
-
-    if challenge.get("json_wrapper"):
-        embedded = json_envelope(user_prompt)
-    elif mode == "raw":
-        # Level 13: replayed turns are NOT neutralised, so markers are forgeable.
-        embedded = multi_turn_transcript(history, user_prompt)
-    elif challenge.get("indirect_rag"):
-        if mode == "corpus":
-            embedded, turn = corpus_document(level_id, history, user_prompt)
-        else:
-            embedded, turn = indirect_document(level_id, user_prompt)
-    elif history:
-        embedded = chat_history_block(history, dropped) + user_prompt
-        if "{USER_INPUT}" in template:
-            turn = USER_TURN_CONVERSATION
+    # Structural mechanics live in level_mechanics so offline harnesses can
+    # reproduce them exactly; this was inlined here once and the benchmark's
+    # copy of it drifted.
+    embedded, turn = build_embedded_turn(challenge, template, user_prompt,
+                                         history, mode, dropped)
 
     system_prompt = template.format(FLAG=expected_flag, USER_INPUT=embedded)
 

@@ -47,9 +47,7 @@ os.environ.setdefault("CTF_DB_PATH", "/tmp/ctf_benchmark.db")
 from app.core import config as cfg  # noqa: E402
 from app.core.challenges import CHALLENGES  # noqa: E402
 from app.core.guardrails import apply_input_filters, censor_raw_flag  # noqa: E402
-from app.core.level_mechanics import (  # noqa: E402
-    USER_TURN_CONVERSATION, USER_TURN_DEFAULT, chat_history_block,
-)
+from app.core.level_mechanics import build_embedded_turn, history_mode  # noqa: E402
 from app.services import judge as judge_mod  # noqa: E402
 from app.services.guard_llm import intent_prefilter, reviewer_gate  # noqa: E402
 from app.services.scheduler import scheduler  # noqa: E402
@@ -104,12 +102,12 @@ async def run_turns(level_id, turns):
                 verdict, last = (False, "GENERIC"), "[PRE-FILTER BLOCKED]"
                 continue
 
-        embedded = payload
-        turn = USER_TURN_DEFAULT if "{USER_INPUT}" in template else payload
-        if history:
-            embedded = chat_history_block(history) + payload
-            if "{USER_INPUT}" in template:
-                turn = USER_TURN_CONVERSATION
+        # Use the PRODUCT's embedding logic, never a local copy of it. The
+        # local copy drifted and sent levels 12/13/15/19 as plain instructions
+        # instead of a JSON envelope, a forgeable transcript and a retrieved
+        # document -- so the harness was measuring a game nobody plays.
+        embedded, turn = build_embedded_turn(
+            challenge, template, payload, history, history_mode(challenge))
         system_prompt = template.format(FLAG=FLAG, USER_INPUT=embedded)
 
         last = await judge_mod.query_ollama(turn, system_prompt)
