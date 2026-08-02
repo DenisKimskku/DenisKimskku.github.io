@@ -640,7 +640,9 @@ export default function CTFTerminal() {
                   <textarea
                     ref={composerRef}
                     rows={1}
-                    placeholder={`Payload for level ${currentLevel}`}
+                    placeholder={currentLevel <= 3
+                      ? 'Ask it something…'
+                      : `Payload for level ${currentLevel}`}
                     value={draft}
                     onChange={(e) => setDraft(currentLevel, e.target.value)}
                     onKeyDown={(e) => {

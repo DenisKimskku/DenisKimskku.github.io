@@ -62,12 +62,22 @@ export default function Transcript({
       tabIndex={0}
       className={`min-h-0 flex-1 space-y-5 overflow-y-auto px-4 py-4 [scrollbar-gutter:stable] ${FOCUS}`}
     >
+      {/* The first thing 59% of visitors ever saw here was a note about how
+          output is escaped -- an implementation detail, where an invitation
+          belonged. 57 of 97 sessions closed the tab without typing once. This is
+          the only screen that gets a chance to change that, so it says what to
+          do rather than what the renderer does. */}
       {messages.length === 0 && !loading && (
         <div className="max-w-prose space-y-2 py-6">
-          <Label>No turns yet</Label>
+          <Label>Your move</Label>
           <p className="mb-0 text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            The model is holding a secret bound to your session. Everything it says below is
-            attacker-influenced output and is rendered as plain text — never as markup.
+            A real language model is holding a secret, and it has been instructed not to give it
+            to you. Talk to it in the box below — plain English works. You are not looking for a
+            magic string; you are looking for a request it has no rule against answering.
+          </p>
+          <p className="mb-0 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            Nothing you type can break anything. Guessing is the intended method, and hints
+            unlock as you attempt — soonest on the early levels.
           </p>
         </div>
       )}

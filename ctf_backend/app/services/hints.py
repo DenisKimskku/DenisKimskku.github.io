@@ -87,13 +87,30 @@ HINTS_DATABASE: Dict[int, Dict[str, str]] = {
     }
 }
 
+#: The onramp. These exist to convert, not to challenge -- see _thresholds().
+ONRAMP_LEVELS = frozenset({1, 2, 3})
+ONRAMP_HINT_1_AFTER = 2
+ONRAMP_HINT_2_AFTER = 4
+
+
 class HintService:
     def _thresholds(self, level_id: int):
         """Levels with no conversation keep the original 3/5: there, one prompt
         really is one attempt. On conversational levels a legitimate grooming
         sequence is 3-5 turns, so 3/5 would hand out both hints without a single
-        failure -- the mirror image of making hints farmable by clearing."""
+        failure -- the mirror image of making hints farmable by clearing.
+
+        The onramp is exempt from both. Levels 1-3 are not there to be hard;
+        their job is to turn a visitor into a player, and the funnel says that is
+        where the loss is: of 97 sessions, 57 never sent a single message. Help
+        gated behind 8 failures is help gated behind an action most visitors
+        never take. Someone stuck on level 1 with nothing to go on leaves; they
+        do not grind to attempt 8 to earn a hint.
+        """
         from app.core.challenges import get_challenge
+
+        if level_id in ONRAMP_LEVELS:
+            return ONRAMP_HINT_1_AFTER, ONRAMP_HINT_2_AFTER
 
         ch = get_challenge(level_id) or {}
         if ch.get("history_disabled") or not settings.HISTORY_ENABLED:
