@@ -232,6 +232,34 @@ def health():
 
 
 # ---------------------------------------------------------------------------
+#: A human reads a briefing, composes an injection, and waits on a local 8B
+#: model. Under this many seconds per solved level, it is a script.
+#:
+#: Pace alone is NOT sufficient and this is not tuned until the numbers look
+#: right. A verification run that solved 15 levels averaged 36s per solve and
+#: sits above any threshold that does not also start excluding real players.
+#: That is what the explicit list below is for: pace catches the obvious runs,
+#: the list catches the rest, and neither is quietly widened to flatter a graph.
+MIN_SECONDS_PER_SOLVE = 25
+
+#: ip_hash values known to be the owner's own testing. Colon-separated in the
+#: env. The default is the 2026-07-28 "verify all 20 levels solvable" run: 24
+#: sessions in one evening, including the only 20/20 and 15/20 completions the
+#: platform has ever recorded.
+SYNTHETIC_IP_HASHES = {
+    h for h in os.getenv(
+        "CTF_SYNTHETIC_IP_HASHES", "30f2a14be896d31f").split(":") if h
+}
+
+
+def _count_solved(completed_levels):
+    try:
+        value = json.loads(completed_levels) if completed_levels else []
+        return len(value) if isinstance(value, list) else 0
+    except (ValueError, TypeError):
+        return 0
+
+
 def stats():
     """Player funnel + service health, from data the platform already keeps.
 
@@ -251,8 +279,32 @@ def stats():
         return 1
 
     conn = sqlite3.connect("file:%s?mode=ro" % DB_FILE, uri=True, timeout=15)
-    sessions = conn.execute(
-        "SELECT completed_levels, created_at, last_active FROM sessions").fetchall()
+
+    # Separate synthetic traffic BEFORE reporting anything. This report used to
+    # count the owner's own API verification runs as players, and said so: it
+    # reported "furthest level solved by anyone: 20" when no human had ever gone
+    # past level 4. A funnel that includes its own author is worse than no
+    # funnel -- it reads as healthy and gets used to make decisions.
+    #
+    # The tell is pace, not identity. A verification run solves 20 levels in 453
+    # seconds; a person reads a briefing and composes an injection. Anything
+    # under MIN_SECONDS_PER_SOLVE is machine-paced by construction.
+    raw = conn.execute(
+        "SELECT completed_levels, created_at, last_active, ip_hash FROM sessions").fetchall()
+    sessions, synthetic = [], []
+    for row in raw:
+        solved = _count_solved(row[0])
+        pace = (float(row[2]) - float(row[1])) / solved if solved else None
+        is_synthetic = (row[3] in SYNTHETIC_IP_HASHES
+                        or (pace is not None and pace < MIN_SECONDS_PER_SOLVE))
+        (synthetic if is_synthetic else sessions).append(row[:3])
+    if synthetic:
+        best = max(_count_solved(r[0]) for r in synthetic)
+        log("  NOTE: %d of %d sessions excluded as machine-paced (<%ds per solve);"
+            % (len(synthetic), len(raw), MIN_SECONDS_PER_SOLVE))
+        log("        best excluded run reached %d levels. Re-run with --include-synthetic"
+            % best)
+        log("        to see them. These are almost always your own API checks.")
     attempts = conn.execute(
         "SELECT level_id, SUM(attempt_count), COUNT(*) FROM attempts GROUP BY level_id").fetchall()
     conn.close()
