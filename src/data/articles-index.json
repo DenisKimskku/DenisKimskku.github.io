@@ -1,5 +1,69 @@
 [
   {
+    "slug": "ai_security_digest__august_03_2026",
+    "title": "AI Security Digest \u2014 August 03, 2026",
+    "date": "2026-08-03",
+    "type": "News Digest",
+    "description": "New research targets multi-agent system harnesses and neuromorphic hardware. Adversarial campaigns are accelerating against open-source AI repositories.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Multi-Agent Systems",
+      "Neuromorphic Computing",
+      "Data Poisoning",
+      "Runtime Security"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "benign_on_label_malicious_by_design_cleanlabel_dormanttoacti",
+    "title": "Benign on Label, Malicious by Design: Clean-Label Dormant-to-Activated Backdoor via Machine Unlearning with Removable Camouflage",
+    "date": "2026-08-03",
+    "type": "Paper Review",
+    "description": "A clean-label backdoor attack that remains dormant in a Deep Neural Network (DNN) after initial training but is activated when specific attacker-submitted, clean-labeled",
+    "tags": [
+      "Data Poisoning",
+      "Backdoors",
+      "Privacy",
+      "Machine Unlearning"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "driving_up_inference_energy_on_snns_persample_and_universal_",
+    "title": "Driving up Inference Energy on SNNs: Per-Sample and Universal Sponge Attacks",
+    "date": "2026-08-03",
+    "type": "Paper Review",
+    "description": "The paper introduces the first universal, input-space sponge attack on Spiking Neural Networks (SNNs) processing native event-based data, alongside a baseline per-sample",
+    "tags": [
+      "Vulnerabilities"
+    ],
+    "readingTime": 10
+  },
+  {
+    "slug": "temporal_poisoning_cleanlabel_backdoors_via_event_redistribu",
+    "title": "Temporal Poisoning: Clean-Label Backdoors via Event Redistribution in SNNs",
+    "date": "2026-08-03",
+    "type": "Paper Review",
+    "description": "A clean-label backdoor attack against Spiking Neural Networks (SNNs) that alters event timestamps to inject a trigger while keeping the aggregate, time-collapsed spatial rate",
+    "tags": [
+      "Data Poisoning",
+      "Backdoors"
+    ],
+    "readingTime": 9
+  },
+  {
+    "slug": "agent_harness_distillation_inferencetime_harness_extraction_",
+    "title": "Agent Harness Distillation: Inference-Time Harness Extraction and Exploitation in Autonomous Multi-Agent Systems",
+    "date": "2026-08-03",
+    "type": "Paper Review",
+    "description": "A two-stage black-box extraction attack framework called Agent Harness Distillation (AHD) that extracts and replicates the proprietary, dynamically instantiated inference-time",
+    "tags": [
+      "AI Agents"
+    ],
+    "readingTime": 8
+  },
+  {
     "slug": "failures-that-pass-every-test",
     "title": "Failures That Pass Every Test",
     "date": "2026-08-01",
