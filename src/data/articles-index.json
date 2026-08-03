@@ -1,5 +1,21 @@
 [
   {
+    "slug": "ai_security_digest__august_04_2026_ai_agents__vulnerabilitie",
+    "title": "AI Security Digest \u2014 August 04, 2026: AI Agents & Vulnerabilities",
+    "date": "2026-08-04",
+    "type": "News Digest",
+    "description": "Microsoft is industrializing vulnerability discovery using specialized AI agents. The digest also covers legacy system risks and responsible disclosure.",
+    "tags": [
+      "AI Agents",
+      "Vulnerability Discovery",
+      "LLM Security",
+      "Software Security",
+      "Cybersecurity News",
+      "Attack Surface"
+    ],
+    "readingTime": 3
+  },
+  {
     "slug": "ai_security_digest__august_03_2026",
     "title": "AI Security Digest \u2014 August 03, 2026",
     "date": "2026-08-03",
