@@ -1,5 +1,34 @@
 [
   {
+    "slug": "ai_security_digest__august_05_2026_backdoors__ai_agents",
+    "title": "AI Security Digest \u2014 August 05, 2026: Backdoors & AI Agents",
+    "date": "2026-08-05",
+    "type": "News Digest",
+    "description": "This digest covers stealthy backdoors in diffusion models, the rise of AI-driven supply chain attacks, and industry efforts to secure AI infrastructure.",
+    "tags": [
+      "Backdoors",
+      "Diffusion Models",
+      "LLM Security",
+      "Adversarial Attacks",
+      "AI Agents",
+      "Model Poisoning"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "robust_watermarks_meet_backdoored_models_evading_diffusion_s",
+    "title": "Robust Watermarks Meet Backdoored Models: Evading Diffusion Semantic Watermarks via Stealthy Backdoor",
+    "date": "2026-08-05",
+    "type": "Paper Review",
+    "description": "Robust Watermarks Meet Backdoored Models: Evading Diffusion Semantic Watermarks via Stealthy Backdoor",
+    "tags": [
+      "Backdoors",
+      "Adversarial Attacks",
+      "Watermarking"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__august_04_2026_ai_agents__vulnerabilitie",
     "title": "AI Security Digest \u2014 August 04, 2026: AI Agents & Vulnerabilities",
     "date": "2026-08-04",
