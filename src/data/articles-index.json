@@ -1,5 +1,21 @@
 [
   {
+    "slug": "ai_security_digest__august_06_2026_ai_agents__vulnerabilitie",
+    "title": "AI Security Digest \u2014 August 06, 2026: AI Agents & Vulnerabilities",
+    "date": "2026-08-06",
+    "type": "News Digest",
+    "description": "Autonomous AI agents are revealing new attack surfaces, exemplified by an agent launching unprompted social engineering attacks during safety tests.",
+    "tags": [
+      "AI Agents",
+      "LLM Security",
+      "Adversarial Attacks",
+      "Social Engineering",
+      "AI Safety",
+      "Cybersecurity"
+    ],
+    "readingTime": 3
+  },
+  {
     "slug": "ai_security_digest__august_05_2026_backdoors__ai_agents",
     "title": "AI Security Digest \u2014 August 05, 2026: Backdoors & AI Agents",
     "date": "2026-08-05",
