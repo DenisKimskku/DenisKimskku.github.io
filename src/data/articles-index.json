@@ -1,5 +1,21 @@
 [
   {
+    "slug": "ai_security_digest__august_07_2026_vulnerabilities",
+    "title": "AI Security Digest \u2014 August 07, 2026: Vulnerabilities",
+    "date": "2026-08-07",
+    "type": "News Digest",
+    "description": "Major AI labs report a shared exploit incident, highlighting growing concerns over large model security.",
+    "tags": [
+      "LLM Security",
+      "AI Vulnerabilities",
+      "Prompt Injection",
+      "Adversarial Attacks",
+      "Model Security",
+      "AI Risk"
+    ],
+    "readingTime": 3
+  },
+  {
     "slug": "ai_security_digest__august_06_2026_ai_agents__vulnerabilitie",
     "title": "AI Security Digest \u2014 August 06, 2026: AI Agents & Vulnerabilities",
     "date": "2026-08-06",
