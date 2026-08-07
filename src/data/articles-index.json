@@ -1,5 +1,70 @@
 [
   {
+    "slug": "ai_security_digest__august_08_2026_prompt_injection__ai_agen",
+    "title": "AI Security Digest \u2014 August 08, 2026: Prompt Injection & AI Agents",
+    "date": "2026-08-08",
+    "type": "News Digest",
+    "description": "This digest covers advanced threats from web-enabled LLM agents, focusing on data theft, prompt injection, and attacks against RAG systems.",
+    "tags": [
+      "LLM Agents",
+      "Prompt Injection",
+      "RAG",
+      "Data Theft",
+      "Adversarial Attacks",
+      "LLM Security"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "attention_is_all_you_need_to_defend_against_indirect_prompt_",
+    "title": "Attention is All You Need to Defend Against Indirect Prompt Injection Attacks in LLMs",
+    "date": "2026-08-08",
+    "type": "Paper Review",
+    "description": "RENNERVATE uses attention features for fine-grained token detection",
+    "tags": [
+      "Prompt Injection",
+      "AI Agents"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "obliinjection_orderoblivious_prompt_injection_attack_to_llm_",
+    "title": "ObliInjection: Order-Oblivious Prompt Injection Attack to LLM Agents with Multi-source Data",
+    "date": "2026-08-08",
+    "type": "Paper Review",
+    "description": "ObliInjection targets LLM agents with uncertain segment ordering",
+    "tags": [
+      "Prompt Injection",
+      "RAG",
+      "AI Agents"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "prompt_injection_attack_to_tool_selection_in_llm_agents",
+    "title": "Prompt Injection Attack to Tool Selection in LLM Agents",
+    "date": "2026-08-08",
+    "type": "Paper Review",
+    "description": "Prompt Injection Attack to Tool Selection in LLM Agents",
+    "tags": [
+      "Prompt Injection",
+      "AI Agents",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "when_llms_go_online_the_emerging_threat_of_webenabled_llms",
+    "title": "When LLMs Go Online: The Emerging Threat of Web-Enabled LLMs",
+    "date": "2026-08-08",
+    "type": "Paper Review",
+    "description": "When LLMs Go Online: The Emerging Threat of Web-Enabled LLMs",
+    "tags": [
+      "AI Agents"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__august_07_2026_vulnerabilities",
     "title": "AI Security Digest \u2014 August 07, 2026: Vulnerabilities",
     "date": "2026-08-07",
