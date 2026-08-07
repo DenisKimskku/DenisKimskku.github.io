@@ -30,14 +30,14 @@ export default function OWASPWriteups({
   }
   const [data, setData] = useState<OWASPDetail | null>(null);
 
+  // Client-side gating only — the /api/owasp endpoint is unauthenticated, so
+  // this is UX honesty (the sidebar promises "complete level X to unlock"),
+  // not a security control. Anyone can curl it. Derived at render time: no
+  // async work needed to know a level is locked.
+  const locked = !completedLevels.includes(selectedLevel);
+
   useEffect(() => {
-    // Client-side gating only — the /api/owasp endpoint is unauthenticated, so
-    // this is UX honesty (the sidebar promises "complete level X to unlock"),
-    // not a security control. Anyone can curl it.
-    if (!completedLevels.includes(selectedLevel)) {
-      setData(null);
-      return;
-    }
+    if (locked) return;
     const ac = new AbortController();
     ctfFetch(`/api/owasp/${selectedLevel}`, { signal: ac.signal, timeoutMs: 15_000 })
       .then((r) => r.json())
@@ -46,7 +46,7 @@ export default function OWASPWriteups({
         if (e.kind !== 'aborted') setData(null);
       });
     return () => ac.abort();
-  }, [selectedLevel, completedLevels]);
+  }, [selectedLevel, locked]);
 
   return (
     <div className="space-y-6">
@@ -94,7 +94,7 @@ export default function OWASPWriteups({
 
         {/* Detailed Post-Mortem Card */}
         <div className="md:col-span-3 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg p-6 space-y-5 text-xs">
-          {data ? (
+          {!locked && data ? (
             <>
               <div className="border-b border-[var(--color-border)] pb-4 space-y-1">
                 <span className="px-2 py-0.5 rounded font-mono text-[10px] bg-[color:color-mix(in_srgb,var(--color-accent)_10%,transparent)] text-[var(--color-accent)] border border-[color:color-mix(in_srgb,var(--color-accent)_25%,transparent)] uppercase font-semibold">

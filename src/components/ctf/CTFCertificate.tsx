@@ -24,16 +24,15 @@ export default function CTFCertificate({ completedCount }: { completedCount: num
   const [errMsg, setErrMsg] = useState('');
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    const ac = new AbortController();
+  // Don't even ask until the server-side count says the run is complete; the
+  // 403 body carries the real progress, which used to be discarded and
+  // rendered as "0/20 Solved" to someone sitting at 19/20. Derived at render
+  // time rather than via an effect, since it needs no async work of its own.
+  const locked = completedCount < 20;
 
-    // Don't even ask until the server-side count says the run is complete; the
-    // 403 body carries the real progress, which used to be discarded and
-    // rendered as "0/20 Solved" to someone sitting at 19/20.
-    if (completedCount < 20) {
-      setState('locked');
-      return () => ac.abort();
-    }
+  useEffect(() => {
+    if (locked) return;
+    const ac = new AbortController();
 
     ctfFetch('/api/certificate', { signal: ac.signal, timeoutMs: 20_000 })
       .then((r) => r.json())
@@ -52,7 +51,7 @@ export default function CTFCertificate({ completedCount }: { completedCount: num
       });
 
     return () => ac.abort();
-  }, [completedCount]);
+  }, [locked]);
 
   const copyLink = async () => {
     if (!cert) return;
@@ -73,19 +72,19 @@ export default function CTFCertificate({ completedCount }: { completedCount: num
         </p>
       </header>
 
-      {state === 'loading' && (
+      {!locked && state === 'loading' && (
         <p role="status" className="text-center text-sm text-[var(--color-text-secondary)] py-10">
           Checking your progress…
         </p>
       )}
 
-      {state === 'error' && (
+      {!locked && state === 'error' && (
         <div className="rounded-lg border border-red-500/40 bg-red-500/10 p-6 text-center text-sm text-red-600 dark:text-red-400">
           {errMsg}
         </div>
       )}
 
-      {state === 'locked' && (
+      {(locked || state === 'locked') && (
         <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg p-8 text-center space-y-3">
           <h3 className="font-serif text-lg font-semibold">Certificate locked</h3>
           <p className="text-sm text-[var(--color-text-secondary)]">
@@ -97,7 +96,7 @@ export default function CTFCertificate({ completedCount }: { completedCount: num
         </div>
       )}
 
-      {state === 'ready' && cert && (
+      {!locked && state === 'ready' && cert && (
         <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-accent)] rounded-lg p-8 space-y-6 text-center">
           <div className="space-y-2">
             <h3 className="font-serif text-xl font-bold">Certificate of Adversarial Mastery</h3>

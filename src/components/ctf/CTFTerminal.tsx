@@ -120,7 +120,13 @@ export default function CTFTerminal() {
 
   useEffect(() => {
     const ac = new AbortController();
-    void refreshStatus(ac.signal);
+    // Wrapped in an IIFE (rather than calling refreshStatus directly) so the
+    // effect body's own first statement is the async boundary, not a call
+    // into a function that sets state -- same shape as the level-fetch effect
+    // below.
+    void (async () => {
+      await refreshStatus(ac.signal);
+    })();
     return () => ac.abort();
   }, [refreshStatus]);
 
@@ -135,14 +141,23 @@ export default function CTFTerminal() {
 
   // Every per-level control resets together. Previously only `meta` did, so a
   // level-3 flag sat in the box on level 4 and the old hint count flashed.
-  useEffect(() => {
-    const ac = new AbortController();
+  // Adjusted during render (the "you might not need an effect" pattern,
+  // matching OWASPWriteups' prevInitial/selectedLevel below) instead of in
+  // the effect, so there's no render with stale controls before the reset
+  // lands.
+  const [prevLevel, setPrevLevel] = useState(currentLevel);
+  if (currentLevel !== prevLevel) {
+    setPrevLevel(currentLevel);
     setMeta(placeholderMeta(currentLevel));
     setFlagInput('');
     setFlagFeedback(null);
     setHints(null);
     setConfirmClear(false);
     setPhase('');
+  }
+
+  useEffect(() => {
+    const ac = new AbortController();
 
     (async () => {
       try {
@@ -183,10 +198,7 @@ export default function CTFTerminal() {
   }, [draft, currentLevel]);
 
   useEffect(() => {
-    if (busyLevel === null) {
-      setElapsed(0);
-      return;
-    }
+    if (busyLevel === null) return;
     const started = Date.now();
     const id = window.setInterval(() => setElapsed(Math.round((Date.now() - started) / 1000)), 1000);
     return () => window.clearInterval(id);
@@ -613,7 +625,7 @@ export default function CTFTerminal() {
                 level={currentLevel}
                 loading={busyHere}
                 phase={phase}
-                elapsed={elapsed}
+                elapsed={busyLevel === null ? 0 : elapsed}
                 buffered={meta.has_output_filter}
                 multiTurn={multiTurn}
                 contextWindow={contextWindow}
