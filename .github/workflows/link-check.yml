@@ -37,7 +37,17 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ ! -s link-failures.md ]; then
-            echo "No dead links found; nothing to file."
+            echo "No dead links found."
+            # Mirror content-watchdog's close-on-resolution: this used to just
+            # exit here, leaving a stale issue open forever once the flagged
+            # links aged out of the check window or got fixed.
+            existing=$(gh issue list --repo "${{ github.repository }}" --state open \
+              --search "Dead external links detected in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
+            if [ -n "$existing" ]; then
+              gh issue close "$existing" --repo "${{ github.repository }}" \
+                --comment "Resolved: no dead links found in this run (${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})." \
+                || true # never fail a clean run over a notification failure
+            fi
             exit 0
           fi
           {
