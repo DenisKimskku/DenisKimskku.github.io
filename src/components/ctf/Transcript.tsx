@@ -17,7 +17,11 @@ interface Props {
   contextWindow: number;
   logRef: React.RefObject<HTMLDivElement | null>;
   onRetry: (payload: string) => void;
-  onUseFlag: (flag: string) => void;
+  /** Advance to the next level. A judged win is ALREADY recorded server-side
+   *  (routes.py calls unlock_level on the chat path), so the old "Submit this
+   *  flag" button re-submitted something that was banked before the player
+   *  saw it -- and the announcement told them to do it. */
+  onNextLevel: () => void;
   onStop: () => void;
 }
 
@@ -27,7 +31,7 @@ const TYPICAL_S = 45;
 
 export default function Transcript({
   messages, level, loading, phase, elapsed, buffered,
-  multiTurn, contextWindow, logRef, onRetry, onUseFlag, onStop,
+  multiTurn, contextWindow, logRef, onRetry, onNextLevel, onStop,
 }: Props) {
   // Which turns the server still replays. System rows are client-side only and
   // never reach the model, so they do not count against the window.
@@ -159,9 +163,15 @@ export default function Transcript({
                 </p>
               )}
 
+              {/* "Judge: <reason>" read as a scored failure, which is exactly
+                  backwards: there is no fail state, and an attempt is the thing
+                  that unlocks hints. A player who believes attempts are scarce
+                  stops at three -- and onramp hints do not arrive until two. */}
               {!m.win && !m.engineError && m.judge_reason && (
                 <p className="mb-0 mt-2 text-xs leading-5 text-(--color-text-muted)">
-                  Judge: {m.judge_reason}
+                  <span className="font-medium text-(--color-text-secondary)">Not solved yet.</span>{' '}
+                  {m.judge_reason} Try another angle — attempts cost nothing and bring the next
+                  hint closer.
                 </p>
               )}
             </article>
@@ -169,10 +179,13 @@ export default function Transcript({
             {/* The win is its own moment, not a green box tucked inside a reply. */}
             {m.win && (
               <div className="rounded-lg border border-emerald-600/40 bg-emerald-500/10 p-4">
-                <Label className="text-emerald-700 dark:text-emerald-400">Flag captured</Label>
+                <Label className="text-emerald-700 dark:text-emerald-400">Solved</Label>
                 <h4 className="mb-0 mt-1 font-serif text-lg font-semibold text-emerald-800 dark:text-emerald-300">
                   Level {level} defeated
                 </h4>
+                <p className="mb-0 mt-1 text-sm leading-relaxed text-(--color-text-secondary)">
+                  Recorded — your progress is saved and the next level is unlocked.
+                </p>
                 {m.judge_reason && (
                   <p className="mb-0 mt-1.5 text-sm leading-relaxed text-(--color-text-secondary)">
                     {m.judge_reason}
@@ -183,13 +196,19 @@ export default function Transcript({
                     <code className="mt-3 block select-all break-all rounded-md border border-emerald-600/30 bg-(--color-bg) px-3 py-2 font-mono text-xs">
                       {m.unlocked_flag}
                     </code>
-                    <button
-                      type="button"
-                      onClick={() => onUseFlag(m.unlocked_flag as string)}
-                      className={`${BTN_PRIMARY} mt-3 h-10 ${FOCUS}`}
-                    >
-                      Submit this flag
-                    </button>
+                    <p className="mb-0 mt-2 text-xs leading-5 text-(--color-text-muted)">
+                      This is the secret you extracted. Nothing to do with it — it is kept for
+                      your certificate.
+                    </p>
+                    {level < 20 && (
+                      <button
+                        type="button"
+                        onClick={onNextLevel}
+                        className={`${BTN_PRIMARY} mt-3 h-10 ${FOCUS}`}
+                      >
+                        Go to level {level + 1} →
+                      </button>
+                    )}
                   </>
                 )}
               </div>

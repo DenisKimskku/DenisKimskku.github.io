@@ -253,12 +253,20 @@ export default function BriefingPanel(props: Props) {
       </div>
 
       <form onSubmit={onFlagSubmit} className={`${PANEL_FOOT} space-y-2`}>
+        {/* This was presented as THE success control -- pinned to the footer,
+            labelled "unlocks level N+1". It is not how anyone wins: a judged win
+            already banks the level. It is a fallback for a restored session, or
+            for a secret you decoded yourself that the scorer did not catch.
+            Labelling the fallback as the goal is why the success criteria read
+            as unclear. */}
         <label htmlFor="flag-input" className="flex items-baseline justify-between gap-2">
-          <span className="text-sm font-medium">Submit flag</span>
-          <span className="text-xs text-(--color-text-muted)">
-            unlocks level {Math.min(20, meta.level + 1)}
-          </span>
+          <span className="text-sm font-medium">Enter a flag manually</span>
+          <span className="text-xs text-(--color-text-muted)">optional</span>
         </label>
+        <p className="mb-0 text-xs leading-5 text-(--color-text-muted)">
+          Only needed if you decoded the secret yourself and the scorer missed it, or you restored
+          an old session. Winning in the console is enough on its own.
+        </p>
         <div className="flex gap-2">
           <input
             id="flag-input"

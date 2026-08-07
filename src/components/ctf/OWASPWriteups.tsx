@@ -34,7 +34,13 @@ export default function OWASPWriteups({
   // this is UX honesty (the sidebar promises "complete level X to unlock"),
   // not a security control. Anyone can curl it. Derived at render time: no
   // async work needed to know a level is locked.
-  const locked = !completedLevels.includes(selectedLevel);
+  // Level 1 is ALWAYS open. This tab is the best thing on the site -- OWASP
+  // category, CWE, mechanism, real-world risk, and mitigation code for each
+  // level -- and it was gated entirely behind solving, which six people have
+  // ever done. The payoff was locked behind the wall that stops everyone, so
+  // one worked example is shown up front as a reason to try.
+  const SAMPLE_LEVEL = 1;
+  const locked = selectedLevel !== SAMPLE_LEVEL && !completedLevels.includes(selectedLevel);
 
   useEffect(() => {
     if (locked) return;
@@ -52,10 +58,15 @@ export default function OWASPWriteups({
     <div className="space-y-6">
       <div className="border-b border-(--color-border) pb-4">
         <h2 className="font-serif text-xl font-bold text-(--color-text)">
-          OWASP LLM Security Reference & Post-Mortems
+          What each attack is, and how to defend it
         </h2>
+        {/* Said "real-world CVE impacts"; the field holds CWE identifiers, which
+            classify weakness types rather than specific vulnerabilities. This
+            site's readers are the people who notice that. */}
         <p className="text-xs text-(--color-text-secondary) mt-1">
-          Explore research vulnerability breakdowns, real-world CVE impacts, and developer mitigation code for completed CTF levels.
+          For every level: its OWASP LLM Top 10 category, the underlying CWE weakness class, how the
+          attack works, what it costs in production, and the mitigation code. Level 1 is open as a
+          sample — the rest unlock as you solve them.
         </p>
       </div>
 
@@ -83,8 +94,10 @@ export default function OWASPWriteups({
                   <span>Level {lvl}</span>
                   {isSolved ? (
                     <span className="text-emerald-500 font-bold text-[11px]">SOLVED ✓</span>
+                  ) : lvl === SAMPLE_LEVEL ? (
+                    <span className="text-(--color-accent) text-[10px] font-semibold">SAMPLE</span>
                   ) : (
-                    <span className="text-(--color-text-muted) text-[10px]">Unsolved</span>
+                    <span className="text-(--color-text-muted) text-[10px]">Locked</span>
                   )}
                 </button>
               );
@@ -104,7 +117,7 @@ export default function OWASPWriteups({
                   Level {selectedLevel}: {data.title}
                 </h3>
                 <div className="text-(--color-text-muted) font-mono text-[11px]">
-                  Reference: {data.cve_reference}
+                  Weakness class: {data.cve_reference}
                 </div>
               </div>
 
@@ -117,7 +130,7 @@ export default function OWASPWriteups({
 
               <div>
                 <h4 className="font-semibold text-(--color-text) uppercase font-mono tracking-wider text-[11px] mb-1">
-                  Real-World CVE & Enterprise Risk
+                  Real-World Impact
                 </h4>
                 <div className="bg-(--color-bg) p-3 rounded-sm border border-(--color-border) text-(--color-text-secondary) leading-relaxed">
                   {data.real_world_risk}
@@ -133,9 +146,24 @@ export default function OWASPWriteups({
                 </pre>
               </div>
             </>
+          ) : locked ? (
+            <div className="py-16 text-center text-(--color-text-muted) space-y-2">
+              <p className="mb-0">Solve level {selectedLevel} in the Arena to read its breakdown.</p>
+              <button
+                type="button"
+                onClick={() => setSelectedLevel(SAMPLE_LEVEL)}
+                className="text-(--color-accent) underline underline-offset-2 text-xs"
+              >
+                Read the level {SAMPLE_LEVEL} sample instead
+              </button>
+            </div>
           ) : (
-            <div className="py-16 text-center text-(--color-text-muted) italic font-mono">
-              Complete Level {selectedLevel} in the CTF Arena to unlock its research post-mortem breakdown!
+            /* Unlocked but the fetch has not landed. This used to fall through
+               to the locked message, so an open level flashed "complete this to
+               unlock" -- telling the reader they had not done something they
+               had. */
+            <div className="py-16 text-center text-(--color-text-muted) italic">
+              Loading the breakdown…
             </div>
           )}
         </div>

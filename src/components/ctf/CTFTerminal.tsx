@@ -20,7 +20,7 @@ import {
 type TabId = 'arena' | 'owasp' | 'cert';
 const TABS: { id: TabId; label: string }[] = [
   { id: 'arena', label: 'Arena' },
-  { id: 'owasp', label: 'Post-mortems' },
+  { id: 'owasp', label: 'Attack reference' },
   { id: 'cert', label: 'Certificate' },
 ];
 
@@ -256,8 +256,10 @@ export default function CTFTerminal() {
         .catch(() => undefined);
 
       if (final.win && final.unlocked_flag) {
-        setFlagInput(final.unlocked_flag);
-        setAnnounce(`Flag captured on level ${lvl}. Submit it to unlock the next level.`);
+        // Do NOT pre-fill the flag box or tell the player to submit: the chat
+        // path already called unlock_level, so the level was banked before this
+        // ran. The old announcement instructed an action that had happened.
+        setAnnounce(`Level ${lvl} solved. Progress saved; level ${Math.min(TOTAL_LEVELS, lvl + 1)} is unlocked.`);
         void refreshStatus();
       } else {
         setAnnounce(`The model answered on level ${lvl}. No flag yet.`);
@@ -384,9 +386,24 @@ export default function CTFTerminal() {
           <h1 className="mb-0 font-serif text-2xl font-bold tracking-tight md:text-3xl">
             LLM Red-Teaming CTF
           </h1>
-          <p className="mb-0 mt-2 text-sm leading-relaxed text-(--color-text-secondary)">
-            Twenty levels of prompt injection, filter evasion, and guardrail bypass against a
-            locally hosted model. Flags are per-session and cryptographically bound to you.
+          {/* The rules of the game, stated before any level. The old subtitle
+              opened with three pieces of jargon and spent its second sentence on
+              an anti-cheat implementation note -- in the most valuable space on
+              the page, to an audience that did not yet know what a flag was.
+              Objective / success / no-failure, because those were exactly the
+              three things a first-time player could not answer. */}
+          <p className="mb-0 mt-2 max-w-prose text-sm leading-relaxed text-(--color-text-secondary)">
+            Each level hides a secret like <code className="font-mono text-xs">CTF&#123;…&#125;</code>{' '}
+            in a real language model&rsquo;s instructions and tells it to keep quiet.{' '}
+            <strong className="font-semibold text-(--color-text)">
+              Your job is to talk it into saying the secret anyway.
+            </strong>{' '}
+            When it does, the level is solved automatically — you do not need to do anything else.
+          </p>
+          <p className="mb-0 mt-1.5 max-w-prose text-sm leading-relaxed text-(--color-text-secondary)">
+            There is no way to lose: no timer, no limit, no penalty for a wrong guess. Attempts are
+            the only currency and they only ever help — every one you make brings the next hint
+            closer.
           </p>
         </div>
 
@@ -631,10 +648,7 @@ export default function CTFTerminal() {
                 contextWindow={contextWindow}
                 logRef={logRef}
                 onRetry={(payload) => void send(payload)}
-                onUseFlag={(flag) => {
-                  setFlagInput(flag);
-                  void submitFlag(flag);
-                }}
+                onNextLevel={() => setCurrentLevel((l) => Math.min(TOTAL_LEVELS, l + 1))}
                 onStop={() => inflight.current?.abort()}
               />
 
