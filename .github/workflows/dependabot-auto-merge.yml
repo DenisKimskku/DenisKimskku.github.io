@@ -1,0 +1,64 @@
+# Auto-merges Dependabot PRs, but only the narrow slice that's genuinely
+# low-risk: patch-level bumps of devDependencies (linters, type defs, test
+# tooling — nothing that ships in the built site). Minor/major bumps can
+# carry behavior changes even in devDeps, and any production dependency
+# bump affects the live site, so both still wait for a human to merge.
+# github-actions ecosystem bumps (dependabot.yml's third block) are excluded
+# by construction: `dependency-type` is an npm-manifest concept (dependencies
+# vs devDependencies), so an actions bump never reports `direct:development`
+# and the condition below never matches it — action pins always get a human.
+# Anything that doesn't match (minor/major, production dep, or a
+# github-actions bump) is left alone on purpose: no comment, no label, it
+# just sits as a normal PR waiting for manual review.
+#
+# CAVEAT (can't be fixed from inside this workflow): `gh pr merge --auto`
+# only takes effect if branch protection on main requires ci.yml's status
+# check before merging. If main has no protection rule at all, the PR is
+# already mergeable the instant this runs, so --auto merges it immediately
+# instead of waiting on CI — check with `gh api repos/<owner>/<repo>/branches/main/protection`
+# (404 means no protection, i.e. this gate is currently a no-op). Separately,
+# if "Allow auto-merge" is disabled repo/org-wide, `gh pr merge --auto` exits
+# non-zero and this step (and the run) shows red — that's a repo-setting
+# fix, not a workflow bug.
+name: Dependabot auto-merge
+
+on: pull_request
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      # Both conditions are required: semver-patch AND a direct devDependency.
+      # dependabot/fetch-metadata documents update-type as "the highest
+      # semver change being made by this PR", so a grouped update (this repo
+      # groups devDependencies per ecosystem — see dependabot.yml) with any
+      # minor/major bump inside it correctly fails the patch check. The
+      # dev-dependencies group is dev-only by dependabot.yml's own config, so
+      # a production dependency can't ride along inside it in the first
+      # place; production bumps always arrive as their own separate PR.
+      - name: Approve and enable auto-merge
+        if: >-
+          steps.metadata.outputs.update-type == 'version-update:semver-patch' &&
+          steps.metadata.outputs.dependency-type == 'direct:development'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        # `gh pr merge --auto` enables auto-merge; GitHub then merges once
+        # required status checks (ci.yml) pass, so there's nothing to poll
+        # for here — see the file-level CAVEAT comment above for the case
+        # where main has no branch protection and this waits on nothing.
+        run: |
+          gh pr review --approve "$PR_URL"
+          gh pr merge --auto --squash "$PR_URL"
