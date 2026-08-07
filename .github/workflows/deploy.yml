@@ -103,10 +103,17 @@ jobs:
       - name: Stamp deploy marker
         run: echo "${GITHUB_SHA}" > out/deploy-marker.txt
 
+      # v4 changed the default to EXCLUDE dotfiles from the artifact, and out/
+      # ships public/.nojekyll (required for Pages to serve the underscore-
+      # prefixed _next/ asset folder -- without it, Jekyll processing on the
+      # Pages side silently drops the site's JS/CSS). include-hidden-files
+      # keeps the pre-v4 behavior; dropping it would break the live site with
+      # nothing in CI able to catch it first (this workflow only runs on push).
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./out
+          include-hidden-files: true
 
       - name: Ntfy alert on build failure
         if: failure()
