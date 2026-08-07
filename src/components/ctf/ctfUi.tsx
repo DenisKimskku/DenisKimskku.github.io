@@ -27,12 +27,21 @@ export const PANEL_HEAD =
 export const PANEL_FOOT =
   'shrink-0 border-t border-(--color-border) bg-(--color-bg-secondary) px-4 py-3';
 
-/* Tailwind v3 silently DROPS the opacity modifier on arbitrary var() colours:
-   `bg-(--color-accent)/10` compiles to NO CSS AT ALL. Verified against
-   this repo's own Tailwind. Every accent tint in the arena was therefore
-   invisible — the selected level cell had no background, and the writeups
-   category pill had neither background nor border. Header.tsx already uses
-   color-mix() for exactly this reason; these components never got it. */
+/* These spell out color-mix() by hand because Tailwind v3 silently DROPPED the
+   opacity modifier on arbitrary var() colours: the concise form compiled to no
+   CSS at all, so every accent tint in the arena was invisible — the selected
+   level cell had no background, the writeups pill had neither background nor
+   border.
+
+   The v4 migration FIXED that, verified by compiling against this repo's own
+   toolchain: the concise form now emits color-mix(in oklab, …) plus a solid
+   fallback for browsers without color-mix. So these constants are no longer
+   required, and the concise form is slightly better (oklab interpolates more
+   evenly than the srgb written here).
+
+   Left as-is deliberately: swapping them changes the rendered colour space of
+   every accent tint on the site, and nobody has looked at this UI in a browser
+   yet. It is a tidy-up to do WITH eyes on the screen, not a blind sweep. */
 export const ACCENT_TINT =
   'bg-[color-mix(in_srgb,var(--color-accent)_10%,transparent)]';
 export const ACCENT_EDGE =

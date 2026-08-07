@@ -101,6 +101,25 @@ Every accent tint in the application had been invisible since it was written. Th
 
 The workaround is `color-mix()`. What makes this worth mentioning is that it is invisible to code review, invisible to typechecking, invisible to tests, and invisible to anyone who did not already know — the failure mode of a design system built on custom properties meeting a utility framework that resolves colours at build time.
 
+### Postscript: the article started emitting the CSS
+
+Tailwind v4 fixes this. Compiled against the upgraded toolchain, the same class now produces:
+
+```css
+.bg-\(--color-accent\)\/10 {
+  background-color: var(--color-accent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-accent) 10%, transparent);
+  }
+}
+```
+
+It emits the `color-mix()` I had been writing by hand, in a better colour space, with a solid fallback for browsers that lack it.
+
+There is a sting in the tail. Tailwind v4 scans every file under `src/` for class names, and this article lives there. So the sample above — the one whose entire point is that those two utilities *"produce no CSS at all"* — was found by the scanner and compiled into the production stylesheet. Fourteen selectors in the shipped bundle came from prose rather than markup, including `.blur`, `.outline`, `.shadow` and `.top-10`, which are ordinary English words that happen to be utility names, and `.[d:medium]`, which came from a CVSS vector quoted in a different article.
+
+Scoping the scanner away from prose removed all fourteen and added none. But the shape is the same one running through everything above: **the artifact describing the bug had become an instance of a different one, and nothing failed.** The build was green the entire time.
+
 ---
 
 ## 5. A postscript: the judge that grades itself — and the harness that graded the wrong game

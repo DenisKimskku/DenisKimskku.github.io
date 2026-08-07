@@ -1,5 +1,21 @@
 @import 'tailwindcss';
 
+/* Article prose is CONTENT, not markup: it is rendered from markdown and styled
+   by the prose rules below, never by per-element utilities. Tailwind v4 scans
+   every file under src/ though, so a class name merely QUOTED in an article
+   compiles into the shipped stylesheet.
+
+   That is not hypothetical. "Failures That Pass Every Test" documents a
+   Tailwind v3 bug and quotes the two utilities it broke:
+
+       <div class="bg-[var(--color-accent)]/10 border-[var(--color-accent)]/20">
+
+   Under v4 -- which fixed that bug -- the scanner found those strings in the
+   prose and emitted working rules for both, so the article's proof that they
+   "produce no CSS at all" was shipping as CSS. Verified: 0 articles use a
+   rendered class attribute outside a code fence, so nothing here needs them. */
+@source not '../content/articles/**/*.md';
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {

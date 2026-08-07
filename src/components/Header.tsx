@@ -44,7 +44,10 @@ export default function Header() {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [open]);
 
-  // Tailwind v3 drops opacity modifiers on var() arbitrary values, so use color-mix() directly.
+  // Written out because Tailwind v3 dropped opacity modifiers on var() arbitrary
+  // values. The v4 migration fixed that (verified against this repo's toolchain),
+  // so `bg-(--color-bg)/92` would work now — see ctfUi.tsx for why the sweep is
+  // deferred rather than done blind.
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[color-mix(in_srgb,var(--color-bg)_92%,transparent)] backdrop-blur-xs border-b border-(--color-border) no-print">
       {/* The nav bar tracks the width of the page under it. Without this, the
