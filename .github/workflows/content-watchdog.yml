@@ -110,3 +110,22 @@ jobs:
         if: failure()
         run: |
           curl -s -H 'Title: SITE WATCHDOG FAILED' -H 'Priority: high' -d 'deniskim1.com content watchdog failed — check Actions' ntfy.sh/${{ secrets.NTFY_TOPIC || 'deniskim-kb' }}
+
+      # The failure steps above dedup by leaving one open issue per failure
+      # mode, but nothing ever closed it once the underlying problem went
+      # away — a transient runner/deploy hiccup left a stale open issue
+      # forever. Both checks passing means both failure modes are resolved.
+      - name: Close resolved watchdog issues
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for title in "Content automation stale: no new article in 36h" "Watchdog liveness check failed: origin not serving newest article"; do
+            existing=$(gh issue list --repo "${{ github.repository }}" --state open \
+              --search "\"$title\" in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
+            if [ -n "$existing" ]; then
+              gh issue close "$existing" --repo "${{ github.repository }}" \
+                --comment "Resolved: today's watchdog run (${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) found both the freshness and liveness checks passing." \
+                || true # never fail a green run over a notification failure
+            fi
+          done
