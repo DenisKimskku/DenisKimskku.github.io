@@ -1,0 +1,99 @@
+name: Optimize images
+
+# The external daily content automation commits raw, oversized JPEG/PNG
+# header images straight to main. scripts/optimize-images.mjs already runs
+# as the first step of `npm run build`, but that only shrinks the ephemeral
+# CI checkout used for that deploy's `out/` artifact — it never writes the
+# result back to git, so every fresh checkout (including the next CI run)
+# starts from the same bloated originals and .git just keeps growing
+# (~4MB/day). This workflow runs the same script against the real
+# public/images/ tree and pushes any savings back to main so they stick.
+
+on:
+  schedule:
+    # Daily at 22:47 UTC — after content-watchdog's 21:00 run (so the day's
+    # article/image has already landed), off a round minute since GitHub
+    # drops congested schedule triggers on round minutes (see keep-warm.yml),
+    # and clear of keep-warm's own 8h cadence (00:13/08:13/16:13 UTC).
+    - cron: '47 22 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: optimize-images
+  cancel-in-progress: false
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    # Steady state is fast (nothing to do most nights), but as of writing only
+    # 1 of 345 existing images has a .webp sibling — the first run(s) pay down
+    # that one-time backlog via cwebp, so this gets headroom above the usual
+    # ~10min bot-workflow cap rather than risking a mid-backlog timeout that
+    # commits nothing and re-does the same work every night.
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y webp
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Optimize images
+        run: node scripts/optimize-images.mjs
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if [ -z "$(git status --porcelain -- public/images)" ]; then
+            echo "No oversized images found — nothing to commit."
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Optimizer produced changes under public/images/."
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Safety gate: optimize-images.mjs exists specifically to satisfy
+      # lint-content's "an oversized original needs a light .webp sibling"
+      # rule, so a lint failure right after running it would be a genuine,
+      # surprising regression — never push that.
+      - name: Content lint safety gate
+        if: steps.diff.outputs.has_changes == 'true'
+        run: npm run lint:content
+
+      # Commits the optimizer's savings back to main so they persist across
+      # checkouts. Without this step, every future CI run — and the next
+      # day's external automation commit — starts from the same bloated
+      # originals again and .git keeps growing indefinitely; this is the
+      # only thing that makes the optimization stick. (A default-GITHUB_TOKEN
+      # push does not trigger deploy.yml, so this never causes a deploy storm
+      # — the next external automation push carries the optimized files out.)
+      - name: Commit and push optimized images
+        if: steps.diff.outputs.has_changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A -- public/images
+          git commit -m "chore(images): auto-optimize oversized originals"
+          # The external automation pushes to main on its own schedule and can
+          # land a commit while this job is still running the optimizer —
+          # retry once via rebase rather than failing (and alerting) on a
+          # same-night race that isn't a real problem. Nothing else touches
+          # public/images, so the rebase is conflict-free by construction.
+          git push || { git pull --rebase && git push; }
+
+      - name: Ntfy alert on failure
+        if: failure()
+        run: |
+          curl -s -H 'Title: IMAGE OPTIMIZER FAILED' -H 'Priority: high' -d 'optimize-images workflow failed — check Actions' ntfy.sh/${{ secrets.NTFY_TOPIC || 'deniskim-kb' }}
