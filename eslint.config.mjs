@@ -10,5 +10,9 @@ export default defineConfig([
     'out/**',
     'node_modules/**',
     'next-env.d.ts',
+    // Agent worktrees (each a full nested checkout, sometimes at an old
+    // commit) silently multiplied the lint run into 12k+ false problems
+    // when left on disk -- exclude the whole tooling directory outright.
+    '.claude/**',
   ]),
 ]);
