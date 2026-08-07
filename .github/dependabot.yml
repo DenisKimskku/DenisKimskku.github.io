@@ -1,0 +1,35 @@
+version: 2
+updates:
+  # Root Next.js app (package.json) — production + dev deps, plus the
+  # brace-expansion/minimatch/postcss/ws/@babel/core/sharp `overrides` pins.
+  # Dependabot won't touch overrides directly; it just opens PRs for the
+  # underlying declared deps so a human can review/merge on a schedule.
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      dev-dependencies:
+        dependency-type: "development"
+
+  # Cloudflare Worker (cloudflare-worker/package.json) — wrangler, TS, and
+  # @cloudflare/workers-types devDependencies, plus its sharp/undici overrides.
+  - package-ecosystem: "npm"
+    directory: "/cloudflare-worker"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      dev-dependencies:
+        dependency-type: "development"
+
+  # GitHub Actions version pins used across .github/workflows/*.yml
+  # (actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5,
+  # actions/upload-pages-artifact@v3, actions/deploy-pages@v4,
+  # github/codeql-action/*@v3, cloudflare/wrangler-action@v3).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5

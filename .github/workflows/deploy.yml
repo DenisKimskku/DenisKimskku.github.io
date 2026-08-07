@@ -227,3 +227,22 @@ jobs:
           else
             echo "Open deploy-failure issue #$existing already exists; skipping."
           fi
+
+      # The two failure steps above (build and deploy) dedup onto one open
+      # "Deploy failed" issue, but nothing ever closed it once a later run
+      # succeeded — it stayed open forever. deploy needs: build with no if:
+      # override, so reaching this step with success() proves both the build
+      # and deploy jobs are healthy again. Mirrors content-watchdog.yml's and
+      # link-check.yml's close-on-resolution step.
+      - name: Close resolved deploy-failure issues
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          existing=$(gh issue list --repo "${{ github.repository }}" --state open \
+            --search "Deploy failed in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" --repo "${{ github.repository }}" \
+              --comment "Resolved: deploy succeeded for ${{ github.sha }} (${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})." \
+              || true # never fail a green deploy over a notification failure
+          fi
