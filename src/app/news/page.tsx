@@ -44,10 +44,10 @@ export default function NewsPage() {
   if (articles.length === 0) {
     return (
       <div className="container-custom py-20 md:py-32 text-center">
-        <h1 className="text-3xl font-serif font-semibold text-[var(--color-text)] mb-4">AI Security News</h1>
-        <p className="text-[var(--color-text-secondary)]">
+        <h1 className="text-3xl font-serif font-semibold text-(--color-text) mb-4">AI Security News</h1>
+        <p className="text-(--color-text-secondary)">
           No news issues yet — the next daily digest lands here. Meanwhile, see{' '}
-          <Link href="/writing/" className="text-[var(--color-accent)] hover:underline">
+          <Link href="/writing/" className="text-(--color-accent) hover:underline">
             Writing
           </Link>
           .
@@ -95,17 +95,17 @@ export default function NewsPage() {
       <StructuredData data={jsonLd} />
 
       <header className="mb-10">
-        <h1 className="text-3xl md:text-4xl font-serif font-semibold text-[var(--color-text)] mb-3">
+        <h1 className="text-3xl md:text-4xl font-serif font-semibold text-(--color-text) mb-3">
           AI Security News
         </h1>
-        <p className="text-[var(--color-text-secondary)] max-w-2xl">
+        <p className="text-(--color-text-secondary) max-w-2xl">
           A daily digest of AI security research and a weekly trend report covering
           the developments that matter.
         </p>
-        <p className="mt-2 text-sm text-[var(--color-text-muted)] max-w-2xl">
+        <p className="mt-2 text-sm text-(--color-text-muted) max-w-2xl">
           These issues are produced by an automated review pipeline I direct and
           spot-check.{' '}
-          <Link href="/writing/pipeline/" className="text-[var(--color-accent)] hover:underline">
+          <Link href="/writing/pipeline/" className="text-(--color-accent) hover:underline">
             How it works
           </Link>
           .
@@ -113,7 +113,7 @@ export default function NewsPage() {
         <p className="mt-3 text-sm">
           <a
             href="/news/rss.xml"
-            className="inline-flex items-center gap-1.5 text-[var(--color-accent)] hover:underline"
+            className="inline-flex items-center gap-1.5 text-(--color-accent) hover:underline"
           >
             Subscribe to the news feed (RSS)
           </a>
@@ -126,14 +126,14 @@ export default function NewsPage() {
           <Link
             key={article.slug}
             href={`/writing/${article.slug}/`}
-            className="block p-5 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] hover:border-[var(--color-accent)] transition-colors"
+            className="block p-5 rounded-xl border border-(--color-border) bg-(--color-bg-secondary) hover:border-(--color-accent) transition-colors"
           >
-            <p className="text-xs uppercase tracking-wider text-[var(--color-text-muted)] mb-2">
+            <p className="text-xs uppercase tracking-wider text-(--color-text-muted) mb-2">
               {isWeekly(article.type) ? 'Latest weekly' : 'Latest daily'} ·{' '}
               <time dateTime={article.date}>{article.date}</time>
             </p>
-            <h2 className="font-serif font-semibold text-[var(--color-text)] mb-2">{article.title}</h2>
-            <p className="text-sm text-[var(--color-text-secondary)] line-clamp-3">{article.description}</p>
+            <h2 className="font-serif font-semibold text-(--color-text) mb-2">{article.title}</h2>
+            <p className="text-sm text-(--color-text-secondary) line-clamp-3">{article.description}</p>
           </Link>
         ))}
       </section>
@@ -141,7 +141,7 @@ export default function NewsPage() {
       {/* Recent weeklies strip */}
       {recentWeeklies.length > 1 && (
         <section aria-label="Recent weekly trend reports" className="mb-12">
-          <h2 className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)] mb-3">
+          <h2 className="text-xs font-medium uppercase tracking-wider text-(--color-text-muted) mb-3">
             This Week in AI Security
           </h2>
           <ul className="space-y-1.5">
@@ -149,9 +149,9 @@ export default function NewsPage() {
               <li key={article.slug}>
                 <Link
                   href={`/writing/${article.slug}/`}
-                  className="text-sm text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
+                  className="text-sm text-(--color-text) hover:text-(--color-accent) transition-colors"
                 >
-                  <time dateTime={article.date} className="tabular-nums text-[var(--color-text-muted)] mr-2">
+                  <time dateTime={article.date} className="tabular-nums text-(--color-text-muted) mr-2">
                     {article.date}
                   </time>
                   {article.title}
@@ -165,7 +165,7 @@ export default function NewsPage() {
       {/* Month-grouped archive */}
       {months.map((month) => (
         <section key={month.key} aria-label={month.label} className="mb-10">
-          <h2 className="text-sm font-medium text-[var(--color-text-muted)] border-b border-[var(--color-border)] pb-2 mb-3">
+          <h2 className="text-sm font-medium text-(--color-text-muted) border-b border-(--color-border) pb-2 mb-3">
             {month.label}
           </h2>
           <ul className="space-y-1.5">
@@ -173,17 +173,17 @@ export default function NewsPage() {
               <li key={article.slug} className="flex items-baseline gap-3">
                 <time
                   dateTime={article.date}
-                  className="tabular-nums text-xs text-[var(--color-text-muted)] shrink-0 w-20"
+                  className="tabular-nums text-xs text-(--color-text-muted) shrink-0 w-20"
                 >
                   {article.date}
                 </time>
                 <Link
                   href={`/writing/${article.slug}/`}
-                  className="text-sm text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors min-w-0"
+                  className="text-sm text-(--color-text) hover:text-(--color-accent) transition-colors min-w-0"
                 >
                   {article.title}
                 </Link>
-                <span className="text-[10px] uppercase tracking-wider text-[var(--color-text-muted)] border border-[var(--color-border)] rounded px-1 py-px shrink-0">
+                <span className="text-[10px] uppercase tracking-wider text-(--color-text-muted) border border-(--color-border) rounded-sm px-1 py-px shrink-0">
                   {isWeekly(article.type) ? 'Weekly' : 'Daily'}
                 </span>
               </li>

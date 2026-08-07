@@ -37,7 +37,7 @@ export default function TableOfContents({ items }: { items: TocItem[] }) {
 
   return (
     <nav aria-label="Table of contents">
-      <h2 className="text-xs font-semibold mb-3 text-[var(--color-text-muted)] uppercase tracking-wider">
+      <h2 className="text-xs font-semibold mb-3 text-(--color-text-muted) uppercase tracking-wider">
         Contents
       </h2>
       <ul className="space-y-1.5">
@@ -49,8 +49,8 @@ export default function TableOfContents({ items }: { items: TocItem[] }) {
                 item.level === 3 ? 'pl-4' : ''
               } ${
                 activeId === item.id
-                  ? 'text-[var(--color-accent)] border-l-2 border-[var(--color-accent)] pl-3'
-                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]'
+                  ? 'text-(--color-accent) border-l-2 border-(--color-accent) pl-3'
+                  : 'text-(--color-text-secondary) hover:text-(--color-accent)'
               }`}
             >
               {item.text}

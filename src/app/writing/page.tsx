@@ -83,15 +83,15 @@ export default async function Writing() {
     <div className="container-custom py-24 max-[560px]:py-16 max-[560px]:px-5">
       <StructuredData data={jsonLd} />
       <header className="mb-12">
-        <h1 className="text-3xl md:text-4xl font-semibold mb-4 text-[var(--color-text)] font-serif">
+        <h1 className="text-3xl md:text-4xl font-semibold mb-4 text-(--color-text) font-serif">
           Writing
         </h1>
-        <p className="text-[var(--color-text-secondary)]">
+        <p className="text-(--color-text-secondary)">
           Paper walkthroughs, research writeups, and tutorials.
         </p>
-        <p className="mt-2 text-sm text-[var(--color-text-muted)]">
+        <p className="mt-2 text-sm text-(--color-text-muted)">
           Looking for the daily digests and weekly trend reports? They live in{' '}
-          <Link href="/news/" className="text-[var(--color-accent)] hover:underline">
+          <Link href="/news/" className="text-(--color-accent) hover:underline">
             News
           </Link>
           .
@@ -100,7 +100,7 @@ export default async function Writing() {
 
       {featured.length > 0 && (
         <section className="mb-10">
-          <h2 className="text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider mb-3">
+          <h2 className="text-xs font-medium text-(--color-text-muted) uppercase tracking-wider mb-3">
             Featured
           </h2>
           <div className="grid gap-4 md:grid-cols-3">
@@ -108,15 +108,15 @@ export default async function Writing() {
               <Link
                 key={article.slug}
                 href={`/writing/${article.slug}/`}
-                className="block rounded-lg border border-[var(--color-border)] p-5 hover:border-[var(--color-accent)] transition-colors group"
+                className="block rounded-lg border border-(--color-border) p-5 hover:border-(--color-accent) transition-colors group"
               >
-                <h3 className="text-base font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-2">
+                <h3 className="text-base font-semibold font-serif text-(--color-text) group-hover:text-(--color-accent) transition-colors mb-2">
                   {article.title}
                 </h3>
-                <p className="line-clamp-2 text-sm text-[var(--color-text-secondary)] mb-3">
+                <p className="line-clamp-2 text-sm text-(--color-text-secondary) mb-3">
                   {article.description}
                 </p>
-                <p className="text-xs text-[var(--color-text-muted)]">
+                <p className="text-xs text-(--color-text-muted)">
                   <span className="tabular-nums">{article.date}</span> · {article.type} ·{' '}
                   {article.readingTime} min read
                 </p>
@@ -128,7 +128,7 @@ export default async function Writing() {
 
       {tags.length > 0 && (
         <section className="mb-10">
-          <h2 className="text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider mb-3">
+          <h2 className="text-xs font-medium text-(--color-text-muted) uppercase tracking-wider mb-3">
             Browse by topic
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -136,7 +136,7 @@ export default async function Writing() {
               <Link
                 key={tag.slug}
                 href={`/writing/tag/${tag.slug}/`}
-                className="whitespace-nowrap px-3 py-1.5 rounded-full text-xs border border-[var(--color-border)] bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
+                className="whitespace-nowrap px-3 py-1.5 rounded-full text-xs border border-(--color-border) bg-(--color-bg-secondary) text-(--color-text-secondary) hover:text-(--color-accent) hover:border-(--color-accent) transition-colors"
               >
                 {tag.name} ({tag.count})
               </Link>
@@ -150,7 +150,7 @@ export default async function Writing() {
       <p className="mt-12">
         <Link
           href="/writing/archive/"
-          className="text-[var(--color-accent)] hover:underline decoration-[color:color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2"
+          className="text-(--color-accent) hover:underline decoration-[color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2"
         >
           View the complete archive →
         </Link>

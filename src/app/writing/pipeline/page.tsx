@@ -23,7 +23,7 @@ export default function PipelinePage() {
     <div className="mx-auto px-6 max-[560px]:px-5 max-w-[720px] py-16 md:py-24">
       <Link
         href="/writing/"
-        className="inline-flex items-center gap-1.5 mb-8 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+        className="inline-flex items-center gap-1.5 mb-8 text-sm text-(--color-text-muted) hover:text-(--color-text) transition-colors"
       >
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -32,16 +32,16 @@ export default function PipelinePage() {
       </Link>
 
       <header className="mb-10">
-        <h1 className="font-serif text-[34px] font-semibold tracking-[-0.03em] leading-[1.25] mb-4 text-[var(--color-text)]">
+        <h1 className="font-serif text-[34px] font-semibold tracking-[-0.03em] leading-tight mb-4 text-(--color-text)">
           How the Review Pipeline Works
         </h1>
-        <p className="text-lg text-[var(--color-text-secondary)]">
+        <p className="text-lg text-(--color-text-secondary)">
           The paper reviews, daily digests, and weekly trend reports on this site are
           produced by an automated pipeline. Here is what that actually means.
         </p>
       </header>
 
-      <div className="space-y-6 text-[var(--color-text-secondary)] leading-relaxed">
+      <div className="space-y-6 text-(--color-text-secondary) leading-relaxed">
         <p>
           Every day the pipeline scans new arXiv submissions in AI security and adjacent
           areas and selects the papers that look most relevant to this site&apos;s focus:
@@ -69,7 +69,7 @@ export default function PipelinePage() {
             href="https://github.com/DenisKimskku/DenisKimskku.github.io"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[var(--color-accent)] hover:underline"
+            className="text-(--color-accent) hover:underline"
           >
             GitHub
           </a>
@@ -78,8 +78,8 @@ export default function PipelinePage() {
         </p>
       </div>
 
-      <footer className="mt-12 pt-8 border-t border-[var(--color-border)]">
-        <Link href="/writing/" className="text-sm text-[var(--color-accent)] hover:underline">
+      <footer className="mt-12 pt-8 border-t border-(--color-border)">
+        <Link href="/writing/" className="text-sm text-(--color-accent) hover:underline">
           Back to all writing
         </Link>
       </footer>

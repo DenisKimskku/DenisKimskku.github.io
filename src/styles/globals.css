@@ -1,6 +1,312 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans:
+    var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, Segoe UI,
+    Roboto, sans-serif;
+  --font-serif: var(--font-lora), Georgia, serif;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility article-content {
+  /* Article content styling - optimized for reading */
+  @apply leading-relaxed;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+
+  & h1 {
+    @apply text-3xl md:text-4xl font-bold mt-12 mb-6;
+    scroll-margin-top: 80px;
+  }
+
+  & h2 {
+    @apply text-2xl md:text-3xl font-semibold mt-10 mb-5;
+    scroll-margin-top: 80px;
+  }
+
+  & h3 {
+    @apply text-xl md:text-2xl font-semibold mt-8 mb-4;
+    scroll-margin-top: 80px;
+  }
+
+  & h4 {
+    @apply text-lg md:text-xl font-medium mt-6 mb-3;
+    scroll-margin-top: 80px;
+  }
+
+  & p {
+    @apply mb-6;
+    color: var(--color-text);
+  }
+
+  & ul {
+    @apply ml-6 mb-6 space-y-3;
+  }
+
+  & ol {
+    @apply ml-6 mb-6 space-y-3;
+  }
+
+  & ul {
+    @apply list-disc;
+  }
+
+  & ol {
+    @apply list-decimal;
+  }
+
+  & li {
+    padding-left: 0.25rem;
+  }
+
+  & a {
+    @apply text-(--color-accent) underline underline-offset-2;
+    text-decoration-color: color-mix(
+      in srgb,
+      var(--color-accent) 30%,
+      transparent
+    );
+    transition: text-decoration-color 0.15s ease;
+  }
+
+  & a:hover {
+    text-decoration-color: var(--color-accent);
+  }
+
+  & blockquote {
+    @apply border-l-2 border-(--color-border) pl-6 my-8 text-(--color-text-secondary);
+    font-style: italic;
+  }
+
+  & code {
+    @apply bg-(--color-bg-secondary) px-1.5 py-0.5 rounded-sm text-[0.9em] font-mono;
+    color: var(--color-text);
+  }
+
+  & pre {
+    @apply bg-(--color-bg-secondary) border border-(--color-border) p-5 rounded-lg overflow-x-auto my-8;
+    position: relative;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text);
+  }
+
+  & pre:hover .code-copy-btn {
+    opacity: 1;
+  }
+
+  & pre code {
+    @apply bg-transparent p-0;
+  }
+
+  & img {
+    @apply rounded-lg my-8 mx-auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  & table {
+    @apply w-full my-8 text-sm;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  & th {
+    @apply bg-(--color-bg-secondary) text-(--color-text) p-3 text-left font-semibold border-b-2 border-(--color-border);
+  }
+
+  & td {
+    @apply border-b border-(--color-border) p-3;
+  }
+
+  & tr:hover td {
+    background-color: color-mix(
+      in srgb,
+      var(--color-bg-secondary) 50%,
+      transparent
+    );
+  }
+
+  & hr {
+    @apply my-12 border-0 h-px bg-(--color-border);
+  }
+
+  & strong {
+    @apply font-semibold text-(--color-text);
+  }
+
+  /* KaTeX display math is nowrap; html/body clip overflow-x, so wide
+     equations must scroll inside their own container at narrow widths. */
+  & .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  /* Wide tables are width:100% with no overflow rule; html/body clip
+     overflow-x, so columns past the viewport edge are unreachable on phones.
+     The wrapper (added by rehypeWrapTables) scrolls; the <table> keeps its
+     semantics. Scoped under .article-content (like .katex-display above) so
+     Tailwind's layer tree-shaking keeps it — a bare .table-scroll class never
+     appears in scanned source (rehype injects it) and gets purged. */
+  & .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+}
+
+@utility code-copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: 0.375rem;
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    color 0.15s ease,
+    background-color 0.15s ease;
+
+  .article-content pre:hover & {
+    opacity: 1;
+  }
+
+  /* Hover-only reveal hides the button on touch and keyboard. Show it always
+     where hover is unavailable, and whenever it receives keyboard focus. */
+  @media (hover: none) {
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    opacity: 1;
+  }
+
+  &:hover {
+    color: var(--color-text);
+    background: var(--color-bg-secondary);
+  }
+}
+
+@utility katex-display {
+  /* KaTeX display math is nowrap; html/body clip overflow-x, so wide
+     equations must scroll inside their own container at narrow widths. */
+  .article-content & {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+
+@utility table-scroll {
+  /* Wide tables are width:100% with no overflow rule; html/body clip
+     overflow-x, so columns past the viewport edge are unreachable on phones.
+     The wrapper (added by rehypeWrapTables) scrolls; the <table> keeps its
+     semantics. Scoped under .article-content (like .katex-display above) so
+     Tailwind's layer tree-shaking keeps it — a bare .table-scroll class never
+     appears in scanned source (rehype injects it) and gets purged. */
+  .article-content & {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+}
+
+@utility toc {
+  /* Table of Contents */
+  @apply bg-(--color-bg-secondary) rounded-lg p-6 my-8;
+  border: 1px solid var(--color-border-light);
+
+  & h2 {
+    @apply text-lg font-semibold mb-4;
+    font-family: var(--font-inter), system-ui, sans-serif;
+  }
+
+  & ul {
+    @apply space-y-2.5;
+  }
+
+  & a {
+    @apply text-(--color-text-secondary) hover:text-(--color-accent) text-sm;
+    transition: color 0.15s ease;
+  }
+}
+
+@utility toc-sidebar {
+  /* Sticky TOC sidebar */
+  position: sticky;
+  top: calc(var(--header-height) + 1.5rem);
+  max-height: calc(100vh - var(--header-height) - 3rem);
+  overflow-y: auto;
+}
+
+@utility page-transition {
+  /* Page transition */
+  animation: fadeIn 0.2s ease-out forwards;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@utility highlight {
+  /* Search highlight */
+  @apply bg-yellow-100 dark:bg-yellow-900/50 px-1 rounded-sm;
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility container-custom {
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@utility container-app {
+  max-width: var(--container-app);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@utility container-wide {
+  max-width: var(--container-wide);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@utility focus-ring {
+  /* Focus styles for accessibility */
+  @apply focus:outline-hidden focus:ring-2 focus:ring-(--color-accent) focus:ring-offset-2 focus:ring-offset-(--color-bg);
+}
 
 @layer base {
   :root {
@@ -116,206 +422,6 @@
 }
 
 @layer components {
-  /* Article content styling - optimized for reading */
-  .article-content {
-    @apply leading-relaxed;
-    font-size: 1.0625rem;
-    line-height: 1.8;
-  }
-
-  .article-content h1 {
-    @apply text-3xl md:text-4xl font-bold mt-12 mb-6;
-    scroll-margin-top: 80px;
-  }
-
-  .article-content h2 {
-    @apply text-2xl md:text-3xl font-semibold mt-10 mb-5;
-    scroll-margin-top: 80px;
-  }
-
-  .article-content h3 {
-    @apply text-xl md:text-2xl font-semibold mt-8 mb-4;
-    scroll-margin-top: 80px;
-  }
-
-  .article-content h4 {
-    @apply text-lg md:text-xl font-medium mt-6 mb-3;
-    scroll-margin-top: 80px;
-  }
-
-  .article-content p {
-    @apply mb-6;
-    color: var(--color-text);
-  }
-
-  .article-content ul,
-  .article-content ol {
-    @apply ml-6 mb-6 space-y-3;
-  }
-
-  .article-content ul {
-    @apply list-disc;
-  }
-
-  .article-content ol {
-    @apply list-decimal;
-  }
-
-  .article-content li {
-    padding-left: 0.25rem;
-  }
-
-  .article-content a {
-    @apply text-[var(--color-accent)] underline underline-offset-2;
-    text-decoration-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
-    transition: text-decoration-color 0.15s ease;
-  }
-
-  .article-content a:hover {
-    text-decoration-color: var(--color-accent);
-  }
-
-  .article-content blockquote {
-    @apply border-l-2 border-[var(--color-border)] pl-6 my-8 text-[var(--color-text-secondary)];
-    font-style: italic;
-  }
-
-  .article-content code {
-    @apply bg-[var(--color-bg-secondary)] px-1.5 py-0.5 rounded text-[0.9em] font-mono;
-    color: var(--color-text);
-  }
-
-  .article-content pre {
-    @apply bg-[var(--color-bg-secondary)] border border-[var(--color-border)] p-5 rounded-lg overflow-x-auto my-8;
-    position: relative;
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: var(--color-text);
-  }
-
-  .code-copy-btn {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    padding: 0.25rem 0.625rem;
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
-    background: var(--color-bg-tertiary);
-    border: 1px solid var(--color-border);
-    border-radius: 0.375rem;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease;
-  }
-
-  .article-content pre:hover .code-copy-btn {
-    opacity: 1;
-  }
-
-  /* Hover-only reveal hides the button on touch and keyboard. Show it always
-     where hover is unavailable, and whenever it receives keyboard focus. */
-  @media (hover: none) {
-    .code-copy-btn {
-      opacity: 1;
-    }
-  }
-
-  .code-copy-btn:focus-visible {
-    opacity: 1;
-  }
-
-  .code-copy-btn:hover {
-    color: var(--color-text);
-    background: var(--color-bg-secondary);
-  }
-
-  .article-content pre code {
-    @apply bg-transparent p-0;
-  }
-
-  .article-content img {
-    @apply rounded-lg my-8 mx-auto;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  }
-
-  .article-content table {
-    @apply w-full my-8 text-sm;
-    border-collapse: separate;
-    border-spacing: 0;
-  }
-
-  .article-content th {
-    @apply bg-[var(--color-bg-secondary)] text-[var(--color-text)] p-3 text-left font-semibold border-b-2 border-[var(--color-border)];
-  }
-
-  .article-content td {
-    @apply border-b border-[var(--color-border)] p-3;
-  }
-
-  .article-content tr:hover td {
-    background-color: color-mix(in srgb, var(--color-bg-secondary) 50%, transparent);
-  }
-
-  .article-content hr {
-    @apply my-12 border-0 h-px bg-[var(--color-border)];
-  }
-
-  .article-content strong {
-    @apply font-semibold text-[var(--color-text)];
-  }
-
-  /* KaTeX display math is nowrap; html/body clip overflow-x, so wide
-     equations must scroll inside their own container at narrow widths. */
-  .article-content .katex-display {
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
-
-  /* Wide tables are width:100% with no overflow rule; html/body clip
-     overflow-x, so columns past the viewport edge are unreachable on phones.
-     The wrapper (added by rehypeWrapTables) scrolls; the <table> keeps its
-     semantics. Scoped under .article-content (like .katex-display above) so
-     Tailwind's layer tree-shaking keeps it — a bare .table-scroll class never
-     appears in scanned source (rehype injects it) and gets purged. */
-  .article-content .table-scroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    max-width: 100%;
-  }
-
-  /* Table of Contents */
-  .toc {
-    @apply bg-[var(--color-bg-secondary)] rounded-lg p-6 my-8;
-    border: 1px solid var(--color-border-light);
-  }
-
-  .toc h2 {
-    @apply text-lg font-semibold mb-4;
-    font-family: var(--font-inter), system-ui, sans-serif;
-  }
-
-  .toc ul {
-    @apply space-y-2.5;
-  }
-
-  .toc a {
-    @apply text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] text-sm;
-    transition: color 0.15s ease;
-  }
-
-  /* Sticky TOC sidebar */
-  .toc-sidebar {
-    position: sticky;
-    top: calc(var(--header-height) + 1.5rem);
-    max-height: calc(100vh - var(--header-height) - 3rem);
-    overflow-y: auto;
-  }
-
-  /* Page transition */
-  .page-transition {
-    animation: fadeIn 0.2s ease-out forwards;
-  }
-
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -325,52 +431,6 @@
       opacity: 1;
       transform: translateY(0);
     }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .page-transition {
-      animation: none;
-    }
-  }
-
-  /* Search highlight */
-  .highlight {
-    @apply bg-yellow-100 dark:bg-yellow-900/50 px-1 rounded;
-  }
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .container-custom {
-    max-width: var(--container-max-width);
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-
-  .container-app {
-    max-width: var(--container-app);
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-
-  .container-wide {
-    max-width: var(--container-wide);
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-
-  /* Focus styles for accessibility */
-  .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:ring-offset-2 focus:ring-offset-[var(--color-bg)];
   }
 }
 

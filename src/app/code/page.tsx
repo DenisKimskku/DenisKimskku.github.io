@@ -105,14 +105,14 @@ export default function Code() {
     <div className="container-custom py-16 md:py-24 max-[560px]:px-5">
       <StructuredData data={jsonLd} />
       <header className="mb-12">
-        <h1 className="text-3xl md:text-4xl font-semibold mb-4 text-[var(--color-text)] font-serif">
+        <h1 className="text-3xl md:text-4xl font-semibold mb-4 text-(--color-text) font-serif">
           Code
         </h1>
-        <p className="text-[var(--color-text-secondary)]">
+        <p className="text-(--color-text-secondary)">
           Open-source projects and research implementations.{' '}
           <a
             href="https://github.com/DenisKimskku"
-            className="text-[var(--color-accent)] hover:underline decoration-[color:color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2"
+            className="text-(--color-accent) hover:underline decoration-[color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -123,34 +123,34 @@ export default function Code() {
 
       <div className="space-y-4">
         {/* Featured Project */}
-        <article className="group py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors">
+        <article className="group py-5 -mx-4 px-4 rounded-lg hover:bg-(--color-bg-secondary) transition-colors">
           <div className="grid grid-cols-[72px_1fr_16px] gap-4 max-[560px]:grid-cols-[1fr_16px]">
-            <div className="flex items-start gap-1.5 pt-[5px] text-xs text-[var(--color-text-muted)] max-[560px]:col-span-full">
-              <span className="w-2 h-2 rounded-full bg-[#F05138] mt-1 flex-shrink-0"></span>
+            <div className="flex items-start gap-1.5 pt-[5px] text-xs text-(--color-text-muted) max-[560px]:col-span-full">
+              <span className="w-2 h-2 rounded-full bg-[#F05138] mt-1 shrink-0"></span>
               <span>{featured.language}</span>
             </div>
             <div className="min-w-0">
-              <h2 className="text-lg font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1.5">
+              <h2 className="text-lg font-semibold font-serif text-(--color-text) group-hover:text-(--color-accent) transition-colors mb-1.5">
                 <Link
                   href={featured.demoUrl}
-                  className="text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors"
+                  className="text-(--color-text) group-hover:text-(--color-accent) transition-colors"
                 >
                   {featured.name}
                 </Link>
               </h2>
-              <p className="text-sm text-[var(--color-text-secondary)] mb-3">
+              <p className="text-sm text-(--color-text-secondary) mb-3">
                 {featured.description}
               </p>
-              <div className="flex items-center gap-3 text-xs text-[var(--color-text-muted)]">
+              <div className="flex items-center gap-3 text-xs text-(--color-text-muted)">
                 <Link
                   href={featured.demoUrl}
-                  className="text-[var(--color-accent)] hover:underline"
+                  className="text-(--color-accent) hover:underline"
                 >
                   Learn more
                 </Link>
                 <a
                   href={featured.githubUrl}
-                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+                  className="text-(--color-text-secondary) hover:text-(--color-accent) transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -159,7 +159,7 @@ export default function Code() {
               </div>
             </div>
             <svg
-              className="w-4 h-4 text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors flex-shrink-0 mt-1.5"
+              className="w-4 h-4 text-(--color-text-muted) group-hover:text-(--color-accent) transition-colors shrink-0 mt-1.5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -175,36 +175,36 @@ export default function Code() {
           return (
             <article
               key={project.name}
-              className="group py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
+              className="group py-5 -mx-4 px-4 rounded-lg hover:bg-(--color-bg-secondary) transition-colors"
             >
               <div className="grid grid-cols-[72px_1fr_16px] gap-4 max-[560px]:grid-cols-[1fr_16px]">
-                <div className="flex items-start gap-1.5 pt-[5px] text-xs text-[var(--color-text-muted)] max-[560px]:col-span-full">
+                <div className="flex items-start gap-1.5 pt-[5px] text-xs text-(--color-text-muted) max-[560px]:col-span-full">
                   {project.language && (
                     <>
-                      <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] mt-1 flex-shrink-0"></span>
+                      <span className="w-2 h-2 rounded-full bg-(--color-accent) mt-1 shrink-0"></span>
                       <span>{project.language}</span>
                     </>
                   )}
                 </div>
                 <div className="min-w-0">
-                  <h2 className="text-lg font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1.5">
+                  <h2 className="text-lg font-semibold font-serif text-(--color-text) group-hover:text-(--color-accent) transition-colors mb-1.5">
                     <a
                       href={primaryUrl}
-                      className="text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors"
+                      className="text-(--color-text) group-hover:text-(--color-accent) transition-colors"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       {project.name}
                     </a>
                   </h2>
-                  <p className="text-sm text-[var(--color-text-secondary)] mb-3">
+                  <p className="text-sm text-(--color-text-secondary) mb-3">
                     {project.description}
                   </p>
-                  <div className="flex flex-wrap items-center gap-3 text-xs text-[var(--color-text-muted)]">
+                  <div className="flex flex-wrap items-center gap-3 text-xs text-(--color-text-muted)">
                     {project.demoUrl && (
                       <a
                         href={project.demoUrl}
-                        className="text-[var(--color-accent)] hover:underline font-medium"
+                        className="text-(--color-accent) hover:underline font-medium"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -214,7 +214,7 @@ export default function Code() {
                     {project.paperUrl && (
                       <a
                         href={project.paperUrl}
-                        className="inline-flex items-center gap-1 text-[var(--color-accent)] hover:underline font-medium"
+                        className="inline-flex items-center gap-1 text-(--color-accent) hover:underline font-medium"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -227,7 +227,7 @@ export default function Code() {
                     {project.articleSlug && (
                       <Link
                         href={`/writing/${project.articleSlug}/`}
-                        className="inline-flex items-center gap-1 text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+                        className="inline-flex items-center gap-1 text-(--color-text-secondary) hover:text-(--color-accent) transition-colors"
                       >
                         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -237,7 +237,7 @@ export default function Code() {
                     )}
                     <a
                       href={project.githubUrl}
-                      className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+                      className="text-(--color-text-secondary) hover:text-(--color-accent) transition-colors"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -246,7 +246,7 @@ export default function Code() {
                   </div>
                 </div>
                 <svg
-                  className="w-4 h-4 text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors flex-shrink-0 mt-1.5"
+                  className="w-4 h-4 text-(--color-text-muted) group-hover:text-(--color-accent) transition-colors shrink-0 mt-1.5"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"

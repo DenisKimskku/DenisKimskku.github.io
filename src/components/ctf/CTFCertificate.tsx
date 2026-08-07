@@ -64,16 +64,16 @@ export default function CTFCertificate({ completedCount }: { completedCount: num
 
   return (
     <div className="space-y-6 max-w-2xl mx-auto">
-      <header className="border-b border-[var(--color-border)] pb-4 text-center">
+      <header className="border-b border-(--color-border) pb-4 text-center">
         <h2 className="font-serif text-2xl font-bold">Completion Certificate</h2>
-        <p className="text-sm text-[var(--color-text-secondary)] mt-2">
+        <p className="text-sm text-(--color-text-secondary) mt-2">
           Issued as a self-describing signed token: the payload travels inside the code, so anyone
           can verify it without access to your session.
         </p>
       </header>
 
       {!locked && state === 'loading' && (
-        <p role="status" className="text-center text-sm text-[var(--color-text-secondary)] py-10">
+        <p role="status" className="text-center text-sm text-(--color-text-secondary) py-10">
           Checking your progress…
         </p>
       )}
@@ -85,42 +85,42 @@ export default function CTFCertificate({ completedCount }: { completedCount: num
       )}
 
       {(locked || state === 'locked') && (
-        <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg p-8 text-center space-y-3">
+        <div className="bg-(--color-bg-secondary) border border-(--color-border) rounded-lg p-8 text-center space-y-3">
           <h3 className="font-serif text-lg font-semibold">Certificate locked</h3>
-          <p className="text-sm text-[var(--color-text-secondary)]">
+          <p className="text-sm text-(--color-text-secondary)">
             Complete all 20 levels to claim a signed completion certificate.
           </p>
-          <p className="text-sm font-semibold text-[var(--color-accent)] tabular-nums">
+          <p className="text-sm font-semibold text-(--color-accent) tabular-nums">
             {completedCount}/20 solved
           </p>
         </div>
       )}
 
       {!locked && state === 'ready' && cert && (
-        <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-accent)] rounded-lg p-8 space-y-6 text-center">
+        <div className="bg-(--color-bg-secondary) border border-(--color-accent) rounded-lg p-8 space-y-6 text-center">
           <div className="space-y-2">
             <h3 className="font-serif text-xl font-bold">Certificate of Adversarial Mastery</h3>
-            <p className="text-sm text-[var(--color-text-secondary)]">
+            <p className="text-sm text-(--color-text-secondary)">
               Participant{' '}
-              <span className="font-mono font-semibold text-[var(--color-accent)]">
+              <span className="font-mono font-semibold text-(--color-accent)">
                 {cert.user_id}
               </span>{' '}
               completed all 20 levels of the LLM Red-Teaming CTF.
             </p>
           </div>
 
-          <div className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md p-4 space-y-1.5">
-            <p className="text-[11px] uppercase tracking-wider text-[var(--color-text-muted)]">
+          <div className="bg-(--color-bg) border border-(--color-border) rounded-md p-4 space-y-1.5">
+            <p className="text-[11px] uppercase tracking-wider text-(--color-text-muted)">
               Signed certificate code
             </p>
-            <code className="block font-mono text-xs text-[var(--color-accent)] select-all break-all">
+            <code className="block font-mono text-xs text-(--color-accent) select-all break-all">
               {cert.certificate_code}
             </code>
           </div>
 
           <button
             onClick={copyLink}
-            className="bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white text-sm font-medium px-4 py-2 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]"
+            className="bg-(--color-accent) hover:bg-(--color-accent-hover) text-white text-sm font-medium px-4 py-2 rounded-md transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-(--color-accent) focus-visible:ring-offset-2 focus-visible:ring-offset-(--color-bg)"
           >
             {copied ? 'Verification link copied' : 'Copy verification link'}
           </button>

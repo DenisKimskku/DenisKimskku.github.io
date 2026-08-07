@@ -93,12 +93,12 @@ export default function RootLayout({
               "try{var _seen=new Set(),_sent=0;function _rep(d){try{if(_sent>=10||_seen.has(d))return;_seen.add(d);_sent++;if(typeof window.gtag==='function'){window.gtag('event','exception',{description:d.slice(0,150),fatal:false});}}catch(e){}}window.addEventListener('error',function(e){_rep((e.message||'error')+' @'+(e.filename||'')+':'+(e.lineno||0));});window.addEventListener('unhandledrejection',function(e){var m;try{m=e.reason&&e.reason.message?e.reason.message:String(e.reason);}catch(x){m='unhandledrejection';}_rep('unhandledrejection: '+m);});}catch(e){}",
           }}
         />
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-[var(--color-bg-secondary)] focus:text-[var(--color-text)]">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-(--color-bg-secondary) focus:text-(--color-text)">
           Skip to main content
         </a>
         <ThemeProvider>
           <Header />
-          <main id="main-content" className="pt-[var(--header-height)] min-h-screen">
+          <main id="main-content" className="pt-(--header-height) min-h-screen">
             <PageTransition>{children}</PageTransition>
           </main>
           <Footer />

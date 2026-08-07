@@ -203,7 +203,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
             Search articles
           </label>
           <svg
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-text-muted)]"
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-(--color-text-muted)"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -216,13 +216,13 @@ export default function WritingHub({ articles }: WritingHubProps) {
             placeholder="Search articles..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="focus-ring w-full pl-11 pr-10 py-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:border-[var(--color-accent)] transition-colors text-sm"
+            className="focus-ring w-full pl-11 pr-10 py-3 rounded-lg border border-(--color-border) bg-(--color-bg) text-(--color-text) placeholder-(--color-text-muted) focus:border-(--color-accent) transition-colors text-sm"
           />
           {searchTerm && (
             <button
               type="button"
               onClick={() => setSearchTerm('')}
-              className="absolute inset-y-0 right-0 flex items-center pr-4 text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
+              className="absolute inset-y-0 right-0 flex items-center pr-4 text-(--color-text-muted) hover:text-(--color-text)"
               aria-label="Clear search"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -241,8 +241,8 @@ export default function WritingHub({ articles }: WritingHubProps) {
               aria-pressed={!activeCategory}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 !activeCategory
-                  ? 'bg-[var(--color-text)] text-[var(--color-bg)]'
-                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
+                  ? 'bg-(--color-text) text-(--color-bg)'
+                  : 'text-(--color-text-secondary) hover:text-(--color-text)'
               }`}
             >
               All
@@ -255,8 +255,8 @@ export default function WritingHub({ articles }: WritingHubProps) {
                 aria-pressed={activeCategory === category}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                   activeCategory === category
-                    ? 'bg-[var(--color-text)] text-[var(--color-bg)]'
-                    : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
+                    ? 'bg-(--color-text) text-(--color-bg)'
+                    : 'text-(--color-text-secondary) hover:text-(--color-text)'
                 }`}
               >
                 {getCategoryLabel(category)}
@@ -269,14 +269,14 @@ export default function WritingHub({ articles }: WritingHubProps) {
         {allTags.length > 0 && (
           <div>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider">
+              <span className="text-xs font-medium text-(--color-text-muted) uppercase tracking-wider">
                 Filter by topic
               </span>
               {(activeTags.size > 0 || activeCategory || showBookmarked) && (
                 <button
                   type="button"
                   onClick={clearAllFilters}
-                  className="text-xs text-[var(--color-accent)] hover:underline"
+                  className="text-xs text-(--color-accent) hover:underline"
                 >
                   Clear all
                 </button>
@@ -290,8 +290,8 @@ export default function WritingHub({ articles }: WritingHubProps) {
                 aria-pressed={showBookmarked}
                 className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium transition-all inline-flex items-center gap-1 ${
                   showBookmarked
-                    ? 'bg-[var(--color-accent)] text-white'
-                    : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+                    ? 'bg-(--color-accent) text-white'
+                    : 'bg-(--color-bg-secondary) text-(--color-text-secondary) hover:text-(--color-text) border border-(--color-border)'
                 }`}
               >
                 <svg className="w-3 h-3" fill={showBookmarked ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -308,8 +308,8 @@ export default function WritingHub({ articles }: WritingHubProps) {
                   aria-pressed={activeTags.has(tag)}
                   className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                     activeTags.has(tag)
-                      ? 'bg-[var(--color-accent)] text-white'
-                      : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+                      ? 'bg-(--color-accent) text-white'
+                      : 'bg-(--color-bg-secondary) text-(--color-text-secondary) hover:text-(--color-text) border border-(--color-border)'
                   }`}
                 >
                   {tag}
@@ -321,7 +321,7 @@ export default function WritingHub({ articles }: WritingHubProps) {
       </div>
 
       {/* Results Count */}
-      <p className="text-xs text-[var(--color-text-muted)] mb-6 uppercase tracking-wider">
+      <p className="text-xs text-(--color-text-muted) mb-6 uppercase tracking-wider">
         {filteredArticles.length} {filteredArticles.length === 1 ? 'article' : 'articles'}
       </p>
 
@@ -335,13 +335,13 @@ export default function WritingHub({ articles }: WritingHubProps) {
       {/* Articles List */}
       {filteredArticles.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-[var(--color-text-secondary)] mb-4">
+          <p className="text-(--color-text-secondary) mb-4">
             No articles found matching your criteria.
           </p>
           <button
             type="button"
             onClick={clearAllFilters}
-            className="text-sm text-[var(--color-accent)] hover:underline"
+            className="text-sm text-(--color-accent) hover:underline"
           >
             Clear filters
           </button>
@@ -353,8 +353,8 @@ export default function WritingHub({ articles }: WritingHubProps) {
               key={article.slug}
               className="group"
             >
-                <div className="grid grid-cols-[88px_1fr_auto] max-[560px]:grid-cols-[1fr_auto] gap-3 items-start py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors">
-                  <div className="pt-[3px] text-[13px] text-[var(--color-text-muted)] tabular-nums max-[560px]:col-span-full">
+                <div className="grid grid-cols-[88px_1fr_auto] max-[560px]:grid-cols-[1fr_auto] gap-3 items-start py-5 -mx-4 px-4 rounded-lg hover:bg-(--color-bg-secondary) transition-colors">
+                  <div className="pt-[3px] text-[13px] text-(--color-text-muted) tabular-nums max-[560px]:col-span-full">
                     {article.date}
                   </div>
                   <Link
@@ -362,30 +362,30 @@ export default function WritingHub({ articles }: WritingHubProps) {
                     data-article-link
                     className="min-w-0"
                   >
-                    <h2 className="text-lg font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1.5">
+                    <h2 className="text-lg font-semibold font-serif text-(--color-text) group-hover:text-(--color-accent) transition-colors mb-1.5">
                       {highlightText(article.title, searchTermsArray)}
                     </h2>
-                    <p className="text-sm text-[var(--color-text-secondary)] line-clamp-2 mb-3">
+                    <p className="text-sm text-(--color-text-secondary) line-clamp-2 mb-3">
                       {highlightText(article.description, searchTermsArray)}
                     </p>
                     <div className="flex flex-wrap items-center gap-2">
                       <ArticleTypeLabel type={article.type} title={article.title} date={article.date} />
-                      <span className="text-[var(--color-border)]">·</span>
-                      <span className="text-xs text-[var(--color-text-muted)]">{article.readingTime} min read</span>
+                      <span className="text-(--color-border)">·</span>
+                      <span className="text-xs text-(--color-text-muted)">{article.readingTime} min read</span>
                       {article.tags.slice(0, 2).map((tag, tagIndex) => (
                         <span
                           key={tagIndex}
                           className={`px-2 py-0.5 rounded text-xs ${
                             activeTags.has(tag)
-                              ? 'bg-[color:color-mix(in_srgb,var(--color-accent)_10%,transparent)] text-[var(--color-accent)]'
-                              : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-muted)]'
+                              ? 'bg-[color-mix(in_srgb,var(--color-accent)_10%,transparent)] text-(--color-accent)'
+                              : 'bg-(--color-bg-secondary) text-(--color-text-muted)'
                           }`}
                         >
                           {tag}
                         </span>
                       ))}
                       {article.tags.length > 2 && (
-                        <span className="text-xs text-[var(--color-text-muted)]">
+                        <span className="text-xs text-(--color-text-muted)">
                           +{article.tags.length - 2}
                         </span>
                       )}

@@ -109,7 +109,7 @@ function renderInline(text: string, keyBase: string): ReactNode[] {
     seg.split(/(\*\*.+?\*\*)/g).forEach((b, i) => {
       if (/^\*\*.+\*\*$/.test(b)) {
         out.push(
-          <strong key={`${kb}-b${i}`} className="font-semibold text-[var(--color-text)]">
+          <strong key={`${kb}-b${i}`} className="font-semibold text-(--color-text)">
             {b.slice(2, -2)}
           </strong>
         );
@@ -130,7 +130,7 @@ function renderInline(text: string, keyBase: string): ReactNode[] {
       nodes.push(
         <code
           key={`${keyBase}-c${i}`}
-          className="bg-[var(--color-bg-secondary)] px-1.5 py-0.5 rounded text-[0.9em] font-mono"
+          className="bg-(--color-bg-secondary) px-1.5 py-0.5 rounded-sm text-[0.9em] font-mono"
         >
           {seg.slice(1, -1)}
         </code>
@@ -216,7 +216,7 @@ function AnswerMarkdown({ text, cursor }: { text: string; cursor?: ReactNode }) 
         }
         if (block.type === 'heading') {
           return (
-            <p key={key} className="mb-1.5 mt-2 first:mt-0 font-semibold text-[var(--color-text)]">
+            <p key={key} className="mb-1.5 mt-2 first:mt-0 font-semibold text-(--color-text)">
               {block.children}
             </p>
           );
@@ -654,7 +654,7 @@ export default function AskAI() {
             openPanel();
           }}
           onClick={openPanel}
-          className={`z-[60] flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[var(--color-text)] text-[var(--color-bg)] text-[13px] font-medium shadow-md no-print ${
+          className={`z-60 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-(--color-text) text-(--color-bg) text-[13px] font-medium shadow-md no-print ${
             pillPos
               ? 'fixed -translate-x-1/2'
               : 'fixed bottom-6 left-1/2 -translate-x-1/2'
@@ -674,7 +674,7 @@ export default function AskAI() {
           aria-label="Ask AI about selected text"
           tabIndex={-1}
           data-askai
-          className={`fixed z-[70] flex flex-col bg-[var(--color-bg)] border border-[var(--color-border)] shadow-xl outline-none no-print ${
+          className={`fixed z-70 flex flex-col bg-(--color-bg) border border-(--color-border) shadow-xl outline-hidden no-print ${
             isNarrow
               ? 'inset-x-0 bottom-0 w-full max-h-[80vh] rounded-t-xl border-b-0'
               : 'bottom-6 right-6 w-[380px] max-h-[70vh] rounded-xl'
@@ -682,14 +682,14 @@ export default function AskAI() {
         >
           {/* Header */}
           <div className="flex items-center justify-between px-4 pt-3.5 pb-2">
-            <h2 className="font-serif text-[15px] font-semibold text-[var(--color-text)]">
+            <h2 className="font-serif text-[15px] font-semibold text-(--color-text)">
               Ask AI
             </h2>
             <button
               type="button"
               onClick={closePanel}
               aria-label="Close"
-              className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+              className="text-(--color-text-muted) hover:text-(--color-text) transition-colors"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -698,7 +698,7 @@ export default function AskAI() {
           </div>
 
           {/* Selection preview */}
-          <blockquote className="mx-4 mb-3 pl-3 border-l-2 border-[var(--color-border)] text-[13px] italic leading-snug text-[var(--color-text-secondary)] line-clamp-2">
+          <blockquote className="mx-4 mb-3 pl-3 border-l-2 border-(--color-border) text-[13px] italic leading-snug text-(--color-text-secondary) line-clamp-2">
             {selectionText}
           </blockquote>
 
@@ -710,7 +710,7 @@ export default function AskAI() {
                 type="button"
                 disabled={busy}
                 onClick={() => ask(chip.mode)}
-                className="px-3 py-1 rounded-full border border-[var(--color-border)] text-[13px] text-[var(--color-text-secondary)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors disabled:opacity-50 disabled:pointer-events-none"
+                className="px-3 py-1 rounded-full border border-(--color-border) text-[13px] text-(--color-text-secondary) hover:border-(--color-accent) hover:text-(--color-accent) transition-colors disabled:opacity-50 disabled:pointer-events-none"
               >
                 {chip.label}
               </button>
@@ -729,7 +729,7 @@ export default function AskAI() {
                   submitQuestion();
                 }
               }}
-              className="w-full mt-1 px-3 py-1.5 rounded-lg border border-[var(--color-border)] bg-transparent text-[13px] text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent)] transition-colors disabled:opacity-50"
+              className="w-full mt-1 px-3 py-1.5 rounded-lg border border-(--color-border) bg-transparent text-[13px] text-(--color-text) placeholder:text-(--color-text-muted) focus:outline-hidden focus:border-(--color-accent) transition-colors disabled:opacity-50"
             />
           </div>
 
@@ -743,11 +743,11 @@ export default function AskAI() {
 
           {/* Answer area */}
           {(answer || busy || status === 'error') && (
-            <div className="px-4 pb-3 overflow-y-auto border-t border-[var(--color-border)] pt-3 min-h-0">
+            <div className="px-4 pb-3 overflow-y-auto border-t border-(--color-border) pt-3 min-h-0">
               {status === 'error' ? (
-                <p className="text-[13px] text-[var(--color-text-secondary)]">{errorMessage}</p>
+                <p className="text-[13px] text-(--color-text-secondary)">{errorMessage}</p>
               ) : (
-                <div className="text-[15px] leading-[1.7] text-[var(--color-text)]">
+                <div className="text-[15px] leading-[1.7] text-(--color-text)">
                   <AnswerMarkdown
                     text={answer}
                     cursor={
@@ -755,7 +755,7 @@ export default function AskAI() {
                         <span
                           key="caret"
                           aria-hidden="true"
-                          className={`inline-block w-[2px] h-[1em] align-text-bottom ml-0.5 bg-[var(--color-text-muted)] ${
+                          className={`inline-block w-[2px] h-[1em] align-text-bottom ml-0.5 bg-(--color-text-muted) ${
                             reducedMotion ? '' : 'animate-pulse'
                           }`}
                         />
@@ -768,7 +768,7 @@ export default function AskAI() {
           )}
 
           {/* Footer */}
-          <div className="px-4 py-2.5 border-t border-[var(--color-border)] text-[11px] text-[var(--color-text-muted)] space-y-0.5">
+          <div className="px-4 py-2.5 border-t border-(--color-border) text-[11px] text-(--color-text-muted) space-y-0.5">
             {quota && (
               <p>
                 {quota.remaining} of {quota.limit} free questions left today

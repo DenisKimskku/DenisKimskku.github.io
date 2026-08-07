@@ -75,27 +75,27 @@ export default function CalendarPlusPlus() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg)]">
+    <div className="min-h-screen bg-(--color-bg)">
       <div className="max-w-4xl mx-auto px-4 py-16">
         <StructuredData data={jsonLd} />
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold mb-4 bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Calendar++
           </h1>
-          <p className="text-xl text-[var(--color-text-secondary)] mb-8">
+          <p className="text-xl text-(--color-text-secondary) mb-8">
             Smart menu bar calendar for macOS
           </p>
           <div className="flex gap-4 justify-center mb-8">
             <a
               href="#download"
-              className="px-6 py-3 bg-[var(--color-accent)] text-white rounded-lg hover:opacity-80 transition"
+              className="px-6 py-3 bg-(--color-accent) text-white rounded-lg hover:opacity-80 transition"
             >
               Download
             </a>
             <a
               href="https://github.com/DenisKimskku/Calendarpp"
-              className="px-6 py-3 border border-[var(--color-border)] rounded-lg hover:bg-[var(--color-bg-secondary)] transition"
+              className="px-6 py-3 border border-(--color-border) rounded-lg hover:bg-(--color-bg-secondary) transition"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -103,36 +103,36 @@ export default function CalendarPlusPlus() {
             </a>
           </div>
           <div className="flex gap-4 justify-center text-sm">
-            <Link href="/calendar-plus-plus/privacy/" className="text-[var(--color-accent)] hover:underline">
+            <Link href="/calendar-plus-plus/privacy/" className="text-(--color-accent) hover:underline">
               Privacy Policy
             </Link>
-            <span className="text-[var(--color-text-secondary)]">•</span>
-            <Link href="/calendar-plus-plus/terms/" className="text-[var(--color-accent)] hover:underline">
+            <span className="text-(--color-text-secondary)">•</span>
+            <Link href="/calendar-plus-plus/terms/" className="text-(--color-accent) hover:underline">
               Terms of Service
             </Link>
           </div>
         </div>
 
         {/* Privacy Notice - Prominent for Google Verification */}
-        <div className="mb-8 bg-[var(--color-bg-secondary)] rounded-lg p-4 border border-[var(--color-border)] text-center">
-          <p className="text-[var(--color-text)] mb-2">
+        <div className="mb-8 bg-(--color-bg-secondary) rounded-lg p-4 border border-(--color-border) text-center">
+          <p className="text-(--color-text) mb-2">
             <strong>Calendar++</strong> respects your privacy and security.
           </p>
           <div className="flex gap-4 justify-center text-sm">
-            <Link href="/calendar-plus-plus/privacy/" className="text-[var(--color-accent)] hover:underline font-medium">
+            <Link href="/calendar-plus-plus/privacy/" className="text-(--color-accent) hover:underline font-medium">
               Read our Privacy Policy
             </Link>
-            <span className="text-[var(--color-text-secondary)]">•</span>
-            <Link href="/calendar-plus-plus/terms/" className="text-[var(--color-accent)] hover:underline font-medium">
+            <span className="text-(--color-text-secondary)">•</span>
+            <Link href="/calendar-plus-plus/terms/" className="text-(--color-accent) hover:underline font-medium">
               Terms of Service
             </Link>
           </div>
         </div>
 
         {/* About Section - What is Calendar++? */}
-        <div className="mb-16 bg-[var(--color-bg-secondary)] rounded-lg p-8 border border-[var(--color-border)]">
-          <h2 className="text-3xl font-bold mb-4 text-[var(--color-text)]">What is Calendar++?</h2>
-          <div className="text-lg text-[var(--color-text)] space-y-4">
+        <div className="mb-16 bg-(--color-bg-secondary) rounded-lg p-8 border border-(--color-border)">
+          <h2 className="text-3xl font-bold mb-4 text-(--color-text)">What is Calendar++?</h2>
+          <div className="text-lg text-(--color-text) space-y-4">
             <p>
               Calendar++ is a powerful menu bar calendar application for macOS that helps you stay organized and productive.
               Access your schedule instantly from your Mac&apos;s menu bar without opening multiple apps.
@@ -151,12 +151,12 @@ export default function CalendarPlusPlus() {
 
         {/* Screenshots */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center text-[var(--color-text)]">Screenshots</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center text-(--color-text)">Screenshots</h2>
           <div className="space-y-6">
             {screenshots.map((shot) => (
               <figure
                 key={shot.src}
-                className="bg-[var(--color-bg-secondary)] rounded-xl border border-[var(--color-border)] overflow-hidden"
+                className="bg-(--color-bg-secondary) rounded-xl border border-(--color-border) overflow-hidden"
               >
                 <Image
                   src={shot.src}
@@ -167,8 +167,8 @@ export default function CalendarPlusPlus() {
                   loading="lazy"
                 />
                 <figcaption className="p-4">
-                  <p className="font-semibold text-[var(--color-text)]">{shot.title}</p>
-                  <p className="text-sm text-[var(--color-text-secondary)] mt-1">{shot.caption}</p>
+                  <p className="font-semibold text-(--color-text)">{shot.title}</p>
+                  <p className="text-sm text-(--color-text-secondary) mt-1">{shot.caption}</p>
                 </figcaption>
               </figure>
             ))}
@@ -214,16 +214,16 @@ export default function CalendarPlusPlus() {
 
         {/* Installation */}
         <div id="download" className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center text-[var(--color-text)]">Installation</h2>
-          <div className="bg-[var(--color-bg-secondary)] rounded-lg p-8 border border-[var(--color-border)]">
+          <h2 className="text-3xl font-bold mb-8 text-center text-(--color-text)">Installation</h2>
+          <div className="bg-(--color-bg-secondary) rounded-lg p-8 border border-(--color-border)">
             <h3 className="text-xl font-semibold mb-4">Via Homebrew (Recommended)</h3>
             <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4">
               <code>brew tap DenisKimskku/tap{'\n'}brew install --cask calendar-plus-plus</code>
             </pre>
 
-            <h3 className="text-xl font-semibold mb-4 mt-8 text-[var(--color-text)]">Manual Installation</h3>
-            <ol className="list-decimal list-inside space-y-2 text-[var(--color-text-secondary)]">
-              <li>Download the latest release from the <a href="https://github.com/DenisKimskku/Calendarpp/releases" className="text-[var(--color-accent)] hover:underline">releases page</a></li>
+            <h3 className="text-xl font-semibold mb-4 mt-8 text-(--color-text)">Manual Installation</h3>
+            <ol className="list-decimal list-inside space-y-2 text-(--color-text-secondary)">
+              <li>Download the latest release from the <a href="https://github.com/DenisKimskku/Calendarpp/releases" className="text-(--color-accent) hover:underline">releases page</a></li>
               <li>Unzip the file</li>
               <li>Move calendar++.app to your Applications folder</li>
               <li>Launch the app and grant calendar permissions</li>
@@ -233,9 +233,9 @@ export default function CalendarPlusPlus() {
 
         {/* System Requirements */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center text-[var(--color-text)]">System Requirements</h2>
-          <div className="bg-[var(--color-bg-secondary)] rounded-lg p-8 border border-[var(--color-border)]">
-            <ul className="space-y-2 text-[var(--color-text-secondary)]">
+          <h2 className="text-3xl font-bold mb-8 text-center text-(--color-text)">System Requirements</h2>
+          <div className="bg-(--color-bg-secondary) rounded-lg p-8 border border-(--color-border)">
+            <ul className="space-y-2 text-(--color-text-secondary)">
               <li>• macOS 13.0 (Ventura) or later</li>
               <li>• Apple Silicon (M1/M2/M3) or Intel Mac</li>
               <li>• Calendar app permissions (for local events)</li>
@@ -248,7 +248,7 @@ export default function CalendarPlusPlus() {
         <div className="mb-16 text-center">
           <Link
             href="/writing/"
-            className="inline-flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-(--color-text-secondary) hover:text-(--color-accent) transition-colors"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -258,12 +258,12 @@ export default function CalendarPlusPlus() {
         </div>
 
         {/* Footer */}
-        <div className="text-center text-sm text-[var(--color-text-secondary)] space-y-2">
+        <div className="text-center text-sm text-(--color-text-secondary) space-y-2">
           <div className="flex gap-4 justify-center">
-            <Link href="/calendar-plus-plus/privacy/" className="hover:text-[var(--color-accent)]">
+            <Link href="/calendar-plus-plus/privacy/" className="hover:text-(--color-accent)">
               Privacy Policy
             </Link>
-            <Link href="/calendar-plus-plus/terms/" className="hover:text-[var(--color-accent)]">
+            <Link href="/calendar-plus-plus/terms/" className="hover:text-(--color-accent)">
               Terms of Service
             </Link>
           </div>
@@ -276,10 +276,10 @@ export default function CalendarPlusPlus() {
 
 function FeatureCard({ icon, title, description }: { icon: string; title: string; description: string }) {
   return (
-    <div className="bg-[var(--color-bg-secondary)] rounded-lg p-6 border border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors">
+    <div className="bg-(--color-bg-secondary) rounded-lg p-6 border border-(--color-border) hover:border-(--color-accent) transition-colors">
       <div className="text-4xl mb-3">{icon}</div>
-      <h3 className="text-xl font-semibold mb-2 text-[var(--color-text)]">{title}</h3>
-      <p className="text-[var(--color-text-secondary)]">{description}</p>
+      <h3 className="text-xl font-semibold mb-2 text-(--color-text)">{title}</h3>
+      <p className="text-(--color-text-secondary)">{description}</p>
     </div>
   )
 }

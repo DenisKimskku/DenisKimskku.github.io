@@ -97,14 +97,14 @@ export default function BriefingPanel(props: Props) {
             <p className="mb-0 text-sm leading-relaxed">{meta.description}</p>
           </div>
         ) : (
-          <p className="mb-0 text-sm text-[var(--color-text-muted)]">Loading the briefing…</p>
+          <p className="mb-0 text-sm text-(--color-text-muted)">Loading the briefing…</p>
         )}
 
         {meta.scenario && (
           <div>
             <Label className="mb-1.5">Scenario</Label>
             {/* Matches .article-content blockquote: left rule, italic, secondary. */}
-            <blockquote className="border-l-2 border-[var(--color-border)] pl-3 text-sm italic leading-relaxed text-[var(--color-text-secondary)]">
+            <blockquote className="border-l-2 border-(--color-border) pl-3 text-sm italic leading-relaxed text-(--color-text-secondary)">
               {meta.scenario}
             </blockquote>
           </div>
@@ -131,7 +131,7 @@ export default function BriefingPanel(props: Props) {
 
           {/* Whether a level remembers you is load-bearing information for an
               attacker, and the old UI never stated it anywhere. */}
-          <p className="mb-0 mt-2.5 text-xs leading-5 text-[var(--color-text-muted)]">
+          <p className="mb-0 mt-2.5 text-xs leading-5 text-(--color-text-muted)">
             {multiTurn
               ? `Multi-turn — the server replays the last ${contextWindow} messages of this level back into the prompt. Build the frame over several turns, or clear it from the console.`
               : 'Stateless — every prompt is sent on its own. Nothing you wrote earlier is in the model’s context.'}
@@ -139,23 +139,23 @@ export default function BriefingPanel(props: Props) {
 
           {/* Disclosed limitations read as rigour; undisclosed ones read as fraud. */}
           {meta.defense_note && (
-            <p className="mb-0 mt-2.5 border-l-2 border-amber-600/40 pl-3 text-xs leading-5 text-[var(--color-text-muted)]">
+            <p className="mb-0 mt-2.5 border-l-2 border-amber-600/40 pl-3 text-xs leading-5 text-(--color-text-muted)">
               {meta.defense_note}
             </p>
           )}
         </div>
 
-        <div className="border-t border-[var(--color-border)] pt-4">
+        <div className="border-t border-(--color-border) pt-4">
           <button
             type="button"
             onClick={onToggleHints}
             aria-expanded={hintsOpen}
             aria-controls="hint-drawer"
-            className={`flex w-full items-center justify-between gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2.5 text-sm transition-colors hover:border-[var(--color-accent)] motion-reduce:transition-none ${FOCUS}`}
+            className={`flex w-full items-center justify-between gap-2 rounded-md border border-(--color-border) bg-(--color-bg) px-3 py-2.5 text-sm transition-colors hover:border-(--color-accent) motion-reduce:transition-none ${FOCUS}`}
           >
             <span className="font-medium">Hints</span>
             <span className="flex items-center gap-2">
-              <span className="text-xs tabular-nums text-[var(--color-text-muted)]">
+              <span className="text-xs tabular-nums text-(--color-text-muted)">
                 {hints ? `${hints.attempts} attempt${hints.attempts === 1 ? '' : 's'}` : '—'}
               </span>
               <Chevron open={hintsOpen} />
@@ -181,7 +181,7 @@ export default function BriefingPanel(props: Props) {
                 />
               </>
             ) : (
-              <p className="mb-0 text-sm text-[var(--color-text-muted)]">
+              <p className="mb-0 text-sm text-(--color-text-muted)">
                 Hints appear once the arena answers.
               </p>
             )}
@@ -194,9 +194,9 @@ export default function BriefingPanel(props: Props) {
           </button>
         )}
 
-        <details className="border-t border-[var(--color-border)] pt-4">
+        <details className="border-t border-(--color-border) pt-4">
           <summary
-            className={`cursor-pointer rounded-md text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] ${FOCUS}`}
+            className={`cursor-pointer rounded-md text-sm text-(--color-text-secondary) hover:text-(--color-text) ${FOCUS}`}
           >
             Move progress to another device
           </summary>
@@ -205,11 +205,11 @@ export default function BriefingPanel(props: Props) {
               whenever your browser auto-updated. */}
           <div className="mt-3 space-y-3">
             <div>
-              <p className="mb-1.5 text-xs leading-5 text-[var(--color-text-muted)]">
+              <p className="mb-1.5 text-xs leading-5 text-(--color-text-muted)">
                 Your resume code. Keep it private — anyone holding it has your progress.
               </p>
               <div className="flex gap-2">
-                <code className="min-w-0 flex-1 truncate rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-2 py-1.5 font-mono text-xs">
+                <code className="min-w-0 flex-1 truncate rounded-md border border-(--color-border) bg-(--color-bg) px-2 py-1.5 font-mono text-xs">
                   {sessionCode || '—'}
                 </code>
                 <button
@@ -223,7 +223,7 @@ export default function BriefingPanel(props: Props) {
               </div>
             </div>
             <form onSubmit={onResume} className="space-y-1.5">
-              <p className="mb-0 text-xs leading-5 text-[var(--color-text-muted)]">
+              <p className="mb-0 text-xs leading-5 text-(--color-text-muted)">
                 Restoring replaces the session stored in this browser. Copy the code above first if
                 you want to come back to it.
               </p>
@@ -255,7 +255,7 @@ export default function BriefingPanel(props: Props) {
       <form onSubmit={onFlagSubmit} className={`${PANEL_FOOT} space-y-2`}>
         <label htmlFor="flag-input" className="flex items-baseline justify-between gap-2">
           <span className="text-sm font-medium">Submit flag</span>
-          <span className="text-xs text-[var(--color-text-muted)]">
+          <span className="text-xs text-(--color-text-muted)">
             unlocks level {Math.min(20, meta.level + 1)}
           </span>
         </label>
@@ -310,16 +310,16 @@ function HintRow({
 }) {
   const remaining = Math.max(0, threshold - attempts);
   return (
-    <div className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-3">
+    <div className="rounded-md border border-(--color-border) bg-(--color-bg) p-3">
       <p className="mb-1 flex items-baseline justify-between gap-2">
-        <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-text-muted)]">
+        <span className="text-xs font-semibold uppercase tracking-[0.12em] text-(--color-text-muted)">
           Hint {n}
         </span>
-        <span className="text-xs tabular-nums text-[var(--color-text-muted)]">
+        <span className="text-xs tabular-nums text-(--color-text-muted)">
           {unlocked ? 'unlocked' : `${remaining} more attempt${remaining === 1 ? '' : 's'}`}
         </span>
       </p>
-      <p className={`mb-0 text-sm leading-relaxed ${unlocked ? '' : 'italic text-[var(--color-text-muted)]'}`}>
+      <p className={`mb-0 text-sm leading-relaxed ${unlocked ? '' : 'italic text-(--color-text-muted)'}`}>
         {text}
       </p>
     </div>

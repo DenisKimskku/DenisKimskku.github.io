@@ -46,16 +46,16 @@ export default function Header() {
 
   // Tailwind v3 drops opacity modifiers on var() arbitrary values, so use color-mix() directly.
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[color:color-mix(in_srgb,var(--color-bg)_92%,transparent)] backdrop-blur-sm border-b border-[var(--color-border)] no-print">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[color-mix(in_srgb,var(--color-bg)_92%,transparent)] backdrop-blur-xs border-b border-(--color-border) no-print">
       {/* The nav bar tracks the width of the page under it. Without this, the
           arena's wider application container leaves the logo and the page
           content on two different left edges. */}
       <div className={pathname?.startsWith('/ctf') ? 'container-app' : 'container-custom'}>
-        <div className="flex items-center justify-between h-[var(--header-height)]">
+        <div className="flex items-center justify-between h-(--header-height)">
           {/* Logo/Name */}
           <Link
             href="/"
-            className="text-base font-medium text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors tracking-tight"
+            className="text-base font-medium text-(--color-text) hover:text-(--color-accent) transition-colors tracking-tight"
           >
             Minseok Kim
           </Link>
@@ -69,14 +69,14 @@ export default function Header() {
                 aria-current={isActive(item.href, item.exact) ? 'page' : undefined}
                 className={`text-sm transition-colors px-3 py-1.5 rounded-md focus-ring ${
                   isActive(item.href, item.exact)
-                    ? 'text-[var(--color-text)] font-medium'
-                    : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
+                    ? 'text-(--color-text) font-medium'
+                    : 'text-(--color-text-secondary) hover:text-(--color-text)'
                 }`}
               >
                 {item.label}
               </Link>
             ))}
-            <div className="w-px h-4 bg-[var(--color-border)] mx-2" />
+            <div className="w-px h-4 bg-(--color-border) mx-2" />
             <ThemeToggle />
           </nav>
 
@@ -89,7 +89,7 @@ export default function Header() {
               aria-label={open ? 'Close menu' : 'Open menu'}
               aria-expanded={open}
               aria-controls="mobile-nav"
-              className="p-2 rounded-lg text-[var(--color-text)] hover:bg-[var(--color-bg-secondary)] transition-colors focus-ring"
+              className="p-2 rounded-lg text-(--color-text) hover:bg-(--color-bg-secondary) transition-colors focus-ring"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {open ? (
@@ -108,7 +108,7 @@ export default function Header() {
         <nav
           id="mobile-nav"
           aria-label="Primary navigation"
-          className="md:hidden border-t border-[var(--color-border)] bg-[color:color-mix(in_srgb,var(--color-bg)_95%,transparent)] backdrop-blur-sm"
+          className="md:hidden border-t border-(--color-border) bg-[color-mix(in_srgb,var(--color-bg)_95%,transparent)] backdrop-blur-xs"
         >
           <div className="container-custom py-2 flex flex-col">
             {navItems.map((item) => (
@@ -119,8 +119,8 @@ export default function Header() {
                 onClick={() => setOpen(false)}
                 className={`text-sm transition-colors px-3 py-3 rounded-md focus-ring ${
                   isActive(item.href, item.exact)
-                    ? 'text-[var(--color-text)] font-medium'
-                    : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg-secondary)]'
+                    ? 'text-(--color-text) font-medium'
+                    : 'text-(--color-text-secondary) hover:text-(--color-text) hover:bg-(--color-bg-secondary)'
                 }`}
               >
                 {item.label}

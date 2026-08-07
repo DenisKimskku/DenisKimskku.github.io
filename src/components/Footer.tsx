@@ -42,11 +42,11 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-[var(--color-border)] mt-20 py-10 no-print">
+    <footer className="border-t border-(--color-border) mt-20 py-10 no-print">
       <div className="container-custom">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Copyright */}
-          <p className="text-sm text-[var(--color-text-muted)] order-2 md:order-1 whitespace-nowrap">
+          <p className="text-sm text-(--color-text-muted) order-2 md:order-1 whitespace-nowrap">
             © {currentYear} Minseok (Denis) Kim
           </p>
 
@@ -56,7 +56,7 @@ export default function Footer() {
               <a
                 key={link.name}
                 href={link.href}
-                className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+                className="flex items-center gap-2 text-sm text-(--color-text-secondary) hover:text-(--color-accent) transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={link.name}
@@ -67,16 +67,16 @@ export default function Footer() {
             ))}
 
             {/* RSS feeds */}
-            <span className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
+            <span className="flex items-center gap-2 text-sm text-(--color-text-secondary)">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-label="RSS" role="img">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6.503 20.752a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3.503 11.752a9 9 0 019 9M3.503 2.752a18 18 0 0118 18" />
               </svg>
               {rssFeeds.map((feed, index) => (
                 <span key={feed.name} className="flex items-center gap-2">
-                  {index > 0 && <span aria-hidden="true" className="text-[var(--color-text-muted)]">/</span>}
+                  {index > 0 && <span aria-hidden="true" className="text-(--color-text-muted)">/</span>}
                   <a
                     href={feed.href}
-                    className="hover:text-[var(--color-accent)] transition-colors"
+                    className="hover:text-(--color-accent) transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${feed.name} RSS feed`}
@@ -90,7 +90,7 @@ export default function Footer() {
             {/* Transparency: how the automated articles are produced. */}
             <Link
               href="/writing/pipeline/"
-              className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+              className="text-sm text-(--color-text-secondary) hover:text-(--color-accent) transition-colors"
             >
               Pipeline
             </Link>

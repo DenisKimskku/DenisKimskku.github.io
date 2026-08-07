@@ -34,7 +34,7 @@ function readData<T>(fileName: string): T {
 }
 
 const accentLinkClass =
-  'text-[var(--color-accent)] hover:underline decoration-[color:color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2';
+  'text-(--color-accent) hover:underline decoration-[color-mix(in_srgb,var(--color-accent)_30%,transparent)] underline-offset-2';
 
 export default function Home() {
   const highlights = readData<Highlight[]>('highlights.json');
@@ -89,12 +89,12 @@ export default function Home() {
         <h1 className="sr-only">
           Minseok (Denis) Kim <span lang="ko">(김민석)</span>
         </h1>
-        <p className="font-serif text-[26px] font-medium tracking-[-0.025em] leading-[1.45] text-[var(--color-text)] max-w-[620px] mb-[28px]">
+        <p className="font-serif text-[26px] font-medium tracking-tight leading-[1.45] text-(--color-text) max-w-[620px] mb-[28px]">
           I am a researcher bridging computer security and machine learning — enhancing the
           safety, security, and alignment of advanced AI systems.
         </p>
-        <div aria-hidden="true" className="w-10 h-px bg-[var(--color-text)] mb-[28px]" />
-        <div className="space-y-6 text-[var(--color-text)] leading-[1.7]">
+        <div aria-hidden="true" className="w-10 h-px bg-(--color-text) mb-[28px]" />
+        <div className="space-y-6 text-(--color-text) leading-[1.7]">
           <p>
             I develop defenses against adversarial attacks and apply large language models to
             binary analysis and reverse engineering.
@@ -137,7 +137,7 @@ export default function Home() {
       <section aria-labelledby="highlights-heading" className="mt-16">
         <h2
           id="highlights-heading"
-          className="text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider mb-3"
+          className="text-xs font-medium text-(--color-text-muted) uppercase tracking-wider mb-3"
         >
           Recent highlights
         </h2>
@@ -145,12 +145,12 @@ export default function Home() {
           {highlights.map((highlight, index) => (
             <li
               key={`${highlight.when}-${index}`}
-              className="grid grid-cols-[88px_1fr] gap-3 max-[560px]:grid-cols-1 py-3 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
+              className="grid grid-cols-[88px_1fr] gap-3 max-[560px]:grid-cols-1 py-3 -mx-4 px-4 rounded-lg hover:bg-(--color-bg-secondary) transition-colors"
             >
-              <span className="text-[13px] text-[var(--color-text-muted)] tabular-nums">
+              <span className="text-[13px] text-(--color-text-muted) tabular-nums">
                 {highlight.when}
               </span>
-              <span className="text-[var(--color-text)] leading-[1.6]">
+              <span className="text-(--color-text) leading-[1.6]">
                 {highlight.href === null ? (
                   highlight.text
                 ) : highlight.href.startsWith('/') ? (

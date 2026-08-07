@@ -25,7 +25,7 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={toggleTheme}
-      className="p-2 rounded-lg bg-[var(--color-bg-secondary)] hover:bg-[var(--color-border)] transition-colors"
+      className="p-2 rounded-lg bg-(--color-bg-secondary) hover:bg-(--color-border) transition-colors"
       aria-label="Toggle theme"
       style={{ visibility: mounted ? 'visible' : 'hidden' }}
     >

@@ -87,8 +87,8 @@ export default function GiscusComments() {
   }, [nearViewport, theme]);
 
   return (
-    <div className="mt-12 pt-8 border-t border-[var(--color-border)] no-print">
-      <h2 className="text-sm font-semibold mb-6 text-[var(--color-text)] uppercase tracking-wider">
+    <div className="mt-12 pt-8 border-t border-(--color-border) no-print">
+      <h2 className="text-sm font-semibold mb-6 text-(--color-text) uppercase tracking-wider">
         Comments
       </h2>
       <div ref={containerRef} />

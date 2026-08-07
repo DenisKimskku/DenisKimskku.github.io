@@ -95,7 +95,7 @@ export default function KeyboardShortcuts() {
     { key: '/', description: 'Focus search' },
     { key: 'j / k', description: 'Navigate articles' },
     { key: '?', description: 'Toggle this help' },
-    { key: 'Esc', description: 'Close / blur' },
+    { key: 'Esc', description: 'Close / blur-sm' },
   ];
 
   return (
@@ -104,7 +104,7 @@ export default function KeyboardShortcuts() {
       <button
         type="button"
         onClick={() => setShowHelp((prev) => !prev)}
-        className="fixed bottom-20 right-6 z-40 w-9 h-9 rounded-full bg-[var(--color-bg-secondary)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-text-muted)] transition-colors flex items-center justify-center text-sm font-mono no-print"
+        className="fixed bottom-20 right-6 z-40 w-9 h-9 rounded-full bg-(--color-bg-secondary) border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text) hover:border-(--color-text-muted) transition-colors flex items-center justify-center text-sm font-mono no-print"
         aria-label="Keyboard shortcuts"
       >
         ?
@@ -117,15 +117,15 @@ export default function KeyboardShortcuts() {
             className="absolute inset-0 bg-black/40"
             onClick={() => setShowHelp(false)}
           />
-          <div className="relative bg-[var(--color-bg)] border border-[var(--color-border)] rounded-xl shadow-lg p-6 max-w-sm w-full mx-4">
+          <div className="relative bg-(--color-bg) border border-(--color-border) rounded-xl shadow-lg p-6 max-w-sm w-full mx-4">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-sm font-semibold text-[var(--color-text)] uppercase tracking-wider">
+              <h2 className="text-sm font-semibold text-(--color-text) uppercase tracking-wider">
                 Keyboard Shortcuts
               </h2>
               <button
                 type="button"
                 onClick={() => setShowHelp(false)}
-                className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+                className="text-(--color-text-muted) hover:text-(--color-text) transition-colors"
                 aria-label="Close"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -136,24 +136,24 @@ export default function KeyboardShortcuts() {
             <div className="space-y-3">
               {shortcuts.map((s) => (
                 <div key={s.key} className="flex items-center justify-between text-sm">
-                  <span className="text-[var(--color-text-secondary)]">{s.description}</span>
-                  <kbd className="px-2 py-0.5 rounded bg-[var(--color-bg-secondary)] border border-[var(--color-border)] text-xs font-mono text-[var(--color-text-muted)]">
+                  <span className="text-(--color-text-secondary)">{s.description}</span>
+                  <kbd className="px-2 py-0.5 rounded-sm bg-(--color-bg-secondary) border border-(--color-border) text-xs font-mono text-(--color-text-muted)">
                     {s.key}
                   </kbd>
                 </div>
               ))}
             </div>
-            <div className="mt-4 pt-4 border-t border-[var(--color-border)]">
-              <label className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)] cursor-pointer">
+            <div className="mt-4 pt-4 border-t border-(--color-border)">
+              <label className="flex items-center gap-2 text-sm text-(--color-text-secondary) cursor-pointer">
                 <input
                   type="checkbox"
                   checked={shortcutsDisabled}
                   onChange={toggleShortcutsDisabled}
-                  className="accent-[var(--color-accent)]"
+                  className="accent-(--color-accent)"
                 />
                 Disable keyboard shortcuts
               </label>
-              <p className="mt-1.5 text-xs text-[var(--color-text-muted)]">
+              <p className="mt-1.5 text-xs text-(--color-text-muted)">
                 ? and Esc stay active so you can re-enable them here.
               </p>
             </div>

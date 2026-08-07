@@ -379,12 +379,12 @@ export default function CTFTerminal() {
         {announce}
       </div>
 
-      <header className="flex flex-col justify-between gap-6 border-b border-[var(--color-border)] pb-6 md:flex-row md:items-end">
+      <header className="flex flex-col justify-between gap-6 border-b border-(--color-border) pb-6 md:flex-row md:items-end">
         <div className="max-w-2xl">
           <h1 className="mb-0 font-serif text-2xl font-bold tracking-tight md:text-3xl">
             LLM Red-Teaming CTF
           </h1>
-          <p className="mb-0 mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+          <p className="mb-0 mt-2 text-sm leading-relaxed text-(--color-text-secondary)">
             Twenty levels of prompt injection, filter evasion, and guardrail bypass against a
             locally hosted model. Flags are per-session and cryptographically bound to you.
           </p>
@@ -398,7 +398,7 @@ export default function CTFTerminal() {
           <Label className="md:text-right">Progress</Label>
           <p className="mb-0 mt-1 font-serif text-2xl font-bold tabular-nums">
             {completedLevels.length}
-            <span className="text-base font-normal text-[var(--color-text-muted)]">
+            <span className="text-base font-normal text-(--color-text-muted)">
               /{TOTAL_LEVELS}
             </span>
           </p>
@@ -410,10 +410,10 @@ export default function CTFTerminal() {
                 {levelsInTier(tier).map((lvl) => (
                   <span
                     key={lvl}
-                    className={`h-1.5 w-2 rounded-sm ${
+                    className={`h-1.5 w-2 rounded-xs ${
                       completedLevels.includes(lvl)
                         ? 'bg-emerald-600/70 dark:bg-emerald-400/70'
-                        : 'bg-[var(--color-bg-tertiary)]'
+                        : 'bg-(--color-bg-tertiary)'
                     }`}
                   />
                 ))}
@@ -437,7 +437,7 @@ export default function CTFTerminal() {
         role="tablist"
         aria-label="CTF sections"
         onKeyDown={onTabKeys}
-        className="flex gap-8 border-b border-[var(--color-border)] text-sm font-medium"
+        className="flex gap-8 border-b border-(--color-border) text-sm font-medium"
       >
         {TABS.map((t) => (
           <button
@@ -451,18 +451,18 @@ export default function CTFTerminal() {
             onClick={() => setActiveTab(t.id)}
             className={`-mb-px flex items-baseline gap-1.5 border-b-2 pb-3 transition-colors motion-reduce:transition-none ${FOCUS} ${
               activeTab === t.id
-                ? 'border-[var(--color-accent)] font-semibold text-[var(--color-text)]'
-                : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
+                ? 'border-(--color-accent) font-semibold text-(--color-text)'
+                : 'border-transparent text-(--color-text-secondary) hover:text-(--color-text)'
             }`}
           >
             {t.label}
             {t.id === 'owasp' && (
-              <span className="text-xs tabular-nums text-[var(--color-text-muted)]">
+              <span className="text-xs tabular-nums text-(--color-text-muted)">
                 {completedLevels.length}
               </span>
             )}
             {t.id === 'cert' && completedLevels.length < TOTAL_LEVELS && (
-              <span className="text-xs text-[var(--color-text-muted)]">locked</span>
+              <span className="text-xs text-(--color-text-muted)">locked</span>
             )}
           </button>
         ))}
@@ -483,7 +483,7 @@ export default function CTFTerminal() {
               from lg up so the two never disagree about where they end — the
               old fixed-560px console beside an auto-height sidebar disagreed at
               essentially every viewport. */}
-          <div className="grid grid-cols-1 gap-4 lg:h-[min(72vh,44rem)] lg:min-h-[34rem] lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-6">
+          <div className="grid grid-cols-1 gap-4 lg:h-[min(72vh,44rem)] lg:min-h-136 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-6">
             <BriefingPanel
               className="lg:h-full"
               meta={meta}
@@ -534,11 +534,11 @@ export default function CTFTerminal() {
 
             <section
               aria-label={`Console for level ${currentLevel}`}
-              className={`${PANEL} h-[28rem] sm:h-[34rem] lg:h-full`}
+              className={`${PANEL} h-112 sm:h-136 lg:h-full`}
             >
               <div className={`${PANEL_HEAD} flex flex-wrap items-center justify-between gap-x-3 gap-y-2`}>
                 <span className="flex min-w-0 items-baseline gap-2">
-                  <span className="font-mono text-xs text-[var(--color-text-muted)]">
+                  <span className="font-mono text-xs text-(--color-text-muted)">
                     level_{String(currentLevel).padStart(2, '0')}
                   </span>
                   <span className="truncate text-sm">{meta.title}</span>
@@ -554,7 +554,7 @@ export default function CTFTerminal() {
                         className={`text-xs tabular-nums ${
                           contextFull
                             ? 'text-amber-700 dark:text-amber-400'
-                            : 'text-[var(--color-text-muted)]'
+                            : 'text-(--color-text-muted)'
                         }`}
                       >
                         context {contextUsed}/{contextWindow}
@@ -564,8 +564,8 @@ export default function CTFTerminal() {
                         {Array.from({ length: contextWindow }, (_, i) => (
                           <span
                             key={i}
-                            className={`h-3 w-1 rounded-sm ${
-                              i < contextUsed ? 'bg-[var(--color-accent)]' : 'bg-[var(--color-bg-tertiary)]'
+                            className={`h-3 w-1 rounded-xs ${
+                              i < contextUsed ? 'bg-(--color-accent)' : 'bg-(--color-bg-tertiary)'
                             }`}
                           />
                         ))}
@@ -573,7 +573,7 @@ export default function CTFTerminal() {
                     </span>
                   ) : (
                     <span
-                      className="text-xs text-[var(--color-text-muted)]"
+                      className="text-xs text-(--color-text-muted)"
                       title="Each prompt is sent to the model on its own. Earlier turns are not replayed."
                     >
                       stateless
@@ -612,7 +612,7 @@ export default function CTFTerminal() {
               </div>
 
               {confirmClear && (
-                <p className="mb-0 shrink-0 border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 pb-3 text-xs leading-5 text-[var(--color-text-secondary)]">
+                <p className="mb-0 shrink-0 border-b border-(--color-border) bg-(--color-bg-secondary) px-4 pb-3 text-xs leading-5 text-(--color-text-secondary)">
                   {multiTurn
                     ? 'Clears this level’s conversation on the server and on this device, so the next prompt starts a fresh frame. '
                     : 'Clears this transcript on this device. '}
@@ -693,7 +693,7 @@ export default function CTFTerminal() {
                 </div>
                 <p
                   id="composer-help"
-                  className="mb-0 mt-1.5 flex items-baseline justify-between gap-3 text-xs text-[var(--color-text-muted)]"
+                  className="mb-0 mt-1.5 flex items-baseline justify-between gap-3 text-xs text-(--color-text-muted)"
                 >
                   <span>
                     {busyLevel !== null && !busyHere

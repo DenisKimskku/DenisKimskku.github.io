@@ -30,7 +30,7 @@ export default function LevelNavigator({
   return (
     <section
       aria-labelledby="level-nav-heading"
-      className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-secondary)]"
+      className="rounded-lg border border-(--color-border) bg-(--color-bg-secondary)"
     >
       <h2 id="level-nav-heading" className="sr-only">
         Challenge levels
@@ -47,12 +47,12 @@ export default function LevelNavigator({
       >
         <span className="min-w-0">
           <Label>All levels</Label>
-          <span className="mt-0.5 block truncate text-sm text-[var(--color-text)]">
+          <span className="mt-0.5 block truncate text-sm text-(--color-text)">
             Level {currentLevel} · {levelTitle(currentLevel)}
           </span>
         </span>
         <span className="flex shrink-0 items-center gap-2">
-          <span className="text-xs tabular-nums text-[var(--color-text-muted)]">
+          <span className="text-xs tabular-nums text-(--color-text-muted)">
             {completedLevels.length}/20
           </span>
           <Chevron open={open} />
@@ -69,9 +69,9 @@ export default function LevelNavigator({
             const solvedHere = levels.filter((l) => completedLevels.includes(l)).length;
             return (
               <div key={tier}>
-                <div className="mb-2 flex items-baseline justify-between gap-2 border-b border-[var(--color-border)] pb-1.5">
+                <div className="mb-2 flex items-baseline justify-between gap-2 border-b border-(--color-border) pb-1.5">
                   <Label className="min-w-0 truncate">{TIER_NAMES[tier]}</Label>
-                  <span className="shrink-0 text-xs tabular-nums text-[var(--color-text-muted)]">
+                  <span className="shrink-0 text-xs tabular-nums text-(--color-text-muted)">
                     {solvedHere}/5
                   </span>
                 </div>
@@ -101,12 +101,12 @@ export default function LevelNavigator({
                         }}
                         className={`flex h-11 items-center justify-center gap-0.5 rounded-md border font-mono text-xs tabular-nums transition-colors motion-reduce:transition-none ${FOCUS} ${
                           selected
-                            ? `${ACCENT_EDGE} ${ACCENT_TINT} font-bold text-[var(--color-accent)]`
+                            ? `${ACCENT_EDGE} ${ACCENT_TINT} font-bold text-(--color-accent)`
                             : solved
                             ? 'border-emerald-600/40 bg-emerald-500/10 font-medium text-emerald-700 dark:text-emerald-400'
                             : unlocked
-                            ? 'border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] hover:border-[var(--color-accent)]'
-                            : 'cursor-not-allowed border-dashed border-[var(--color-border)] bg-transparent text-[var(--color-text-muted)]'
+                            ? 'border-(--color-border) bg-(--color-bg) text-(--color-text) hover:border-(--color-accent)'
+                            : 'cursor-not-allowed border-dashed border-(--color-border) bg-transparent text-(--color-text-muted)'
                         }`}
                       >
                         {/* Solved and locked are carried by a glyph and a border
@@ -121,7 +121,7 @@ export default function LevelNavigator({
             );
           })}
         </div>
-        <p className="mb-0 mt-4 text-xs leading-5 text-[var(--color-text-muted)]">
+        <p className="mb-0 mt-4 text-xs leading-5 text-(--color-text-muted)">
           You are on tier {tierOf(currentLevel)}. Levels unlock in order; solving one opens the next
           and unlocks its OWASP post-mortem.
         </p>

@@ -122,29 +122,29 @@ export default async function WritingTagPage({ params }: PageProps) {
       <Breadcrumb items={breadcrumbItems} />
 
       <header className="mb-10">
-        <h1 className="text-3xl md:text-4xl font-semibold mb-3 text-[var(--color-text)] font-serif">
+        <h1 className="text-3xl md:text-4xl font-semibold mb-3 text-(--color-text) font-serif">
           Topic: {tagName}
         </h1>
-        <p className="text-[var(--color-text-secondary)]">
+        <p className="text-(--color-text-secondary)">
           {articles.length} {articles.length === 1 ? 'article' : 'articles'} in this topic.
         </p>
       </header>
 
-      <section className="mb-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-6">
-        <p className="text-[var(--color-text)] leading-relaxed mb-4">
+      <section className="mb-10 rounded-lg border border-(--color-border) bg-(--color-bg-secondary) p-6">
+        <p className="text-(--color-text) leading-relaxed mb-4">
           {landingContent.lead}
         </p>
-        <p className="text-[var(--color-text-secondary)] leading-relaxed mb-4">
+        <p className="text-(--color-text-secondary) leading-relaxed mb-4">
           {landingContent.body}
         </p>
-        <p className="text-[var(--color-text-secondary)] leading-relaxed">
+        <p className="text-(--color-text-secondary) leading-relaxed">
           This page is maintained as a high-signal index for {tagName}. Use it to follow newer articles first, then branch into adjacent topics and defensive patterns that repeatedly appear across projects and paper reviews.
         </p>
       </section>
 
       {landingContent.relatedTags.length > 0 && (
         <section className="mb-8">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-muted)] mb-3">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-(--color-text-muted) mb-3">
             Related Topics
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -152,7 +152,7 @@ export default async function WritingTagPage({ params }: PageProps) {
               <Link
                 key={relatedTag}
                 href={`/writing/tag/${getTagSlugByName(relatedTag)}/`}
-                className="px-3 py-1.5 rounded-full text-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
+                className="px-3 py-1.5 rounded-full text-xs border border-(--color-border) bg-(--color-bg) text-(--color-text-secondary) hover:text-(--color-accent) hover:border-(--color-accent) transition-colors"
               >
                 {relatedTag}
               </Link>
@@ -162,10 +162,10 @@ export default async function WritingTagPage({ params }: PageProps) {
       )}
 
       <section className="mb-10">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--color-text-muted)] mb-3">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-(--color-text-muted) mb-3">
           What You Will Find Here
         </h2>
-        <ul className="list-disc list-inside space-y-2 text-sm text-[var(--color-text-secondary)]">
+        <ul className="list-disc list-inside space-y-2 text-sm text-(--color-text-secondary)">
           {landingContent.learnings.map((learning) => (
             <li key={learning}>{learning}</li>
           ))}
@@ -177,22 +177,22 @@ export default async function WritingTagPage({ params }: PageProps) {
           <article key={article.slug} className="group">
             <Link
               href={`/writing/${article.slug}/`}
-              className="block py-5 -mx-4 px-4 rounded-lg hover:bg-[var(--color-bg-secondary)] transition-colors"
+              className="block py-5 -mx-4 px-4 rounded-lg hover:bg-(--color-bg-secondary) transition-colors"
             >
-              <h2 className="text-lg font-semibold font-serif text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors mb-1.5">
+              <h2 className="text-lg font-semibold font-serif text-(--color-text) group-hover:text-(--color-accent) transition-colors mb-1.5">
                 {article.title}
               </h2>
-              <p className="text-sm text-[var(--color-text-secondary)] mb-2">
+              <p className="text-sm text-(--color-text-secondary) mb-2">
                 {article.description}
               </p>
-              <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--color-text-muted)]">
+              <div className="flex flex-wrap items-center gap-2 text-xs text-(--color-text-muted)">
                 <time dateTime={article.date}>{article.date}</time>
                 <span>·</span>
                 <ArticleTypeLabel type={article.type} title={article.title} date={article.date} />
                 <span>·</span>
                 <span>{article.readingTime} min read</span>
                 {article.tags.map((articleTag) => (
-                  <span key={articleTag} className="px-2 py-0.5 rounded bg-[var(--color-bg-secondary)]">
+                  <span key={articleTag} className="px-2 py-0.5 rounded-sm bg-(--color-bg-secondary)">
                     {articleTag}
                   </span>
                 ))}
@@ -202,8 +202,8 @@ export default async function WritingTagPage({ params }: PageProps) {
         ))}
       </div>
 
-      <footer className="mt-12 pt-8 border-t border-[var(--color-border)]">
-        <Link href="/writing/" className="text-sm text-[var(--color-accent)] hover:underline">
+      <footer className="mt-12 pt-8 border-t border-(--color-border)">
+        <Link href="/writing/" className="text-sm text-(--color-accent) hover:underline">
           Back to all writing
         </Link>
       </footer>

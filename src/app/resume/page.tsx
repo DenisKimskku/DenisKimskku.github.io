@@ -178,7 +178,7 @@ export default async function Resume() {
         {/* Below 560px the absolute top-right placement (globals.css .cv-header-top)
             collides with the centered h1, so drop to a static right-aligned row
             above the name. `!` is needed to out-cascade the non-layered CSS rule. */}
-        <div className="cv-header-top max-[560px]:!static max-[560px]:mb-4 max-[560px]:text-right">
+        <div className="cv-header-top max-[560px]:static! max-[560px]:mb-4 max-[560px]:text-right">
           <a href="/resume.pdf" className="no-print cv-download" download>
             Download PDF ↓
           </a>
@@ -267,7 +267,7 @@ export default async function Resume() {
         <h2 className="cv-section-heading">Publications</h2>
         {years.map((year) => (
           <div key={year} className="cv-pub-year grid grid-cols-[72px_1fr] gap-4 max-[560px]:grid-cols-1">
-            <h3 className="cv-pub-year-label pt-[3px] !mb-0">{year}</h3>
+            <h3 className="cv-pub-year-label pt-[3px] mb-0!">{year}</h3>
             <ol className="cv-pub-list">
               {groupedByYear[year].map((p, idx) => (
                 <li key={`${year}-${idx}`} className="cv-pub-item">

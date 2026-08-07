@@ -48,7 +48,7 @@ export default function ReadingProgress() {
       aria-label="Reading progress"
     >
       <div
-        className="h-full bg-[var(--color-accent)]"
+        className="h-full bg-(--color-accent)"
         style={{
           width: `${progress}%`,
           transition: reducedMotion ? 'none' : 'width 100ms linear',

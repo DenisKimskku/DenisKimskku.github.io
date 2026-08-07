@@ -120,17 +120,17 @@ export default async function Papers() {
     <div className="container-custom py-16 md:py-24 max-[560px]:px-5">
       <StructuredData data={jsonLd} />
       <header className="mb-12">
-        <h1 className="text-3xl md:text-4xl font-semibold mb-4 text-[var(--color-text)] font-serif">
+        <h1 className="text-3xl md:text-4xl font-semibold mb-4 text-(--color-text) font-serif">
           Papers
         </h1>
-        <p className="text-[var(--color-text-secondary)]">
+        <p className="text-(--color-text-secondary)">
           Academic publications and research work.
         </p>
         {scholarUrl && (
           <p className="mt-2 text-sm">
             <a
               href={scholarUrl}
-              className="text-[var(--color-accent)] hover:underline"
+              className="text-(--color-accent) hover:underline"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -147,10 +147,10 @@ export default async function Papers() {
             <article
               key={index}
               id={paperAnchorId(paper)}
-              className="group grid grid-cols-[72px_1fr] gap-4 max-[560px]:grid-cols-1 py-6 border-b border-[var(--color-border)] last:border-0"
+              className="group grid grid-cols-[72px_1fr] gap-4 max-[560px]:grid-cols-1 py-6 border-b border-(--color-border) last:border-0"
             >
               <div
-                className={`pt-1 text-[13px] text-[var(--color-text-muted)] tabular-nums${
+                className={`pt-1 text-[13px] text-(--color-text-muted) tabular-nums${
                   isFirstOfYear ? '' : ' max-[560px]:hidden'
                 }`}
               >
@@ -158,11 +158,11 @@ export default async function Papers() {
               </div>
 
               <div className="min-w-0">
-                <h2 className="text-xl font-semibold mb-2 text-[var(--color-text)] font-serif">
+                <h2 className="text-xl font-semibold mb-2 text-(--color-text) font-serif">
                   {paper.pdfUrl ? (
                     <a
                       href={paper.pdfUrl}
-                      className="text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
+                      className="text-(--color-text) hover:text-(--color-accent) transition-colors"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -173,10 +173,10 @@ export default async function Papers() {
                   )}
                 </h2>
 
-                <p className="text-[13px] text-[var(--color-text-secondary)] mb-3">
+                <p className="text-[13px] text-(--color-text-secondary) mb-3">
                   {paper.authors.join(', ')}
-                  <span className="mx-1.5 text-[var(--color-text-muted)]">·</span>
-                  <span className="text-[11.5px] uppercase tracking-[0.07em] text-[var(--color-text-muted)]">
+                  <span className="mx-1.5 text-(--color-text-muted)">·</span>
+                  <span className="text-[11.5px] uppercase tracking-[0.07em] text-(--color-text-muted)">
                     {formatVenueShort(paper.conference)}
                   </span>
                 </p>
@@ -185,7 +185,7 @@ export default async function Papers() {
                   {paper.pdfUrl && (
                     <a
                       href={paper.pdfUrl}
-                      className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--color-accent)] hover:underline"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-(--color-accent) hover:underline"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -198,7 +198,7 @@ export default async function Papers() {
                   {paper.codeUrl && (
                     <a
                       href={paper.codeUrl}
-                      className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-(--color-text-secondary) hover:text-(--color-accent) transition-colors"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -211,7 +211,7 @@ export default async function Papers() {
                   {paper.slideUrl && (
                     <a
                       href={paper.slideUrl}
-                      className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-(--color-text-secondary) hover:text-(--color-accent) transition-colors"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -228,7 +228,7 @@ export default async function Papers() {
                   {paper.articleSlug && (
                     <Link
                       href={`/writing/${paper.articleSlug}/`}
-                      className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-(--color-text-secondary) hover:text-(--color-accent) transition-colors"
                     >
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
