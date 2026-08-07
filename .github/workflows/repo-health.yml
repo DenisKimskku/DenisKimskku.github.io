@@ -1,0 +1,145 @@
+name: Weekly repo health digest
+
+on:
+  schedule:
+    # Weekly, Monday 07:15 UTC — after CodeQL (Mon 06:29) and clear of
+    # link-check (Sun 05:37) and content-watchdog (daily 21:00).
+    - cron: '15 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Full history, not shallow: a shallow (single-commit) clone would
+          # make `du -sh .git` report a flat, meaningless number forever —
+          # defeating the whole point of tracking .git bloat over time.
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      # This is a read-only dashboard, not a gate, so it deliberately skips
+      # `npm ci` (mirrors link-check.yml's reasoning): a full install just to
+      # count outdated packages would roughly double this job's runtime for a
+      # single line of the report, and dependabot.yml already opens PRs for
+      # drift on its own weekly schedule — this digest doesn't need to
+      # duplicate that signal to be useful. The npm-outdated step below is
+      # skipped accordingly and reports itself as "not checked".
+      - name: Measure .git directory size
+        id: git_size
+        run: |
+          size=$(du -sh .git | cut -f1)
+          echo "size=$size" >> "$GITHUB_OUTPUT"
+          echo ".git size: $size"
+
+      - name: Measure working tree size (excluding .git and node_modules)
+        id: tree_size
+        run: |
+          size=$(du -sh --exclude=.git --exclude=node_modules . 2>/dev/null | cut -f1)
+          echo "size=$size" >> "$GITHUB_OUTPUT"
+          echo "Working tree size (excl. .git, node_modules): $size"
+
+      - name: Count open issues and PRs
+        id: counts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          issues=$(gh issue list --repo "${{ github.repository }}" --state open --limit 500 --json number --jq 'length')
+          prs=$(gh pr list --repo "${{ github.repository }}" --state open --limit 500 --json number --jq 'length')
+          echo "issues=$issues" >> "$GITHUB_OUTPUT"
+          echo "prs=$prs" >> "$GITHUB_OUTPUT"
+          echo "Open issues: $issues"
+          echo "Open PRs: $prs"
+
+      - name: Find stale branches (no commits in 30 days, excluding main)
+        id: stale_branches
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cutoff=$(date -u -d '30 days ago' +%s)
+          stale=""
+          count=0
+          branches=$(gh api "repos/${{ github.repository }}/branches" --paginate --jq '.[].name')
+          while IFS= read -r branch; do
+            [ -z "$branch" ] && continue
+            [ "$branch" = "main" ] && continue
+            commit_date=$(gh api "repos/${{ github.repository }}/branches/$branch" --jq '.commit.commit.committer.date' || true)
+            # A transient API hiccup on one branch must not fail the whole
+            # digest — skip it and let the rest of the report still land.
+            [ -z "$commit_date" ] && continue
+            commit_epoch=$(date -u -d "$commit_date" +%s)
+            if [ "$commit_epoch" -lt "$cutoff" ]; then
+              count=$((count + 1))
+              stale="${stale}- \`$branch\` (last commit $commit_date)\n"
+            fi
+          done <<< "$branches"
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          # Write to a file rather than a GITHUB_OUTPUT round-trip: branch
+          # names land in issue-body.md via a plain `cat`, so backticks in
+          # them stay literal text instead of being re-interpreted as shell
+          # command substitution when interpolated into a later run block.
+          printf '%b' "$stale" > stale-branches.md
+          echo "Stale branches (>30d, excl. main): $count"
+
+      - name: Build report body
+        id: report
+        run: |
+          {
+            echo "Automated weekly snapshot of repo health signals — dashboard only, no action required unless a number looks off."
+            echo ""
+            echo "**Run date:** $(date -u +%Y-%m-%d)"
+            echo ""
+            echo "| Metric | Value |"
+            echo "| --- | --- |"
+            echo "| \`.git\` directory size | ${{ steps.git_size.outputs.size }} |"
+            echo "| Working tree size (excl. \`.git\`, \`node_modules\`) | ${{ steps.tree_size.outputs.size }} |"
+            echo "| Open issues | ${{ steps.counts.outputs.issues }} |"
+            echo "| Open PRs | ${{ steps.counts.outputs.prs }} |"
+            echo "| Stale branches (no commits in 30d, excl. \`main\`) | ${{ steps.stale_branches.outputs.count }} |"
+            echo "| Outdated npm packages | not checked (see note) |"
+            echo ""
+            if [ "${{ steps.stale_branches.outputs.count }}" != "0" ]; then
+              echo "<details><summary>Stale branches</summary>"
+              echo ""
+              cat stale-branches.md
+              echo ""
+              echo "</details>"
+              echo ""
+            fi
+            echo "> **Note:** \`npm outdated\` is skipped to keep this job fast and dependency-light (it needs a full \`npm ci\`, which would roughly double the runtime for one metric). ${{ github.server_url }}/${{ github.repository }}/blob/main/.github/dependabot.yml already opens PRs for outdated dependencies weekly, so this digest doesn't duplicate that signal."
+            echo ""
+            echo "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          } > issue-body.md
+          cat issue-body.md
+
+      - name: Create or refresh the digest issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # One standing issue, refreshed weekly — this is a recurring
+          # dashboard, not a failure alert, so it always runs and always
+          # updates the issue body regardless of what the numbers show.
+          existing=$(gh issue list --repo "${{ github.repository }}" --state open \
+            --search "Weekly repo health digest in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
+          if [ -z "$existing" ]; then
+            gh issue create --repo "${{ github.repository }}" \
+              --title "Weekly repo health digest" \
+              --body-file issue-body.md \
+              || true # never fail the run over a notification failure
+          else
+            echo "Open digest issue #$existing already exists; refreshing its body."
+            gh issue edit "$existing" --repo "${{ github.repository }}" \
+              --body-file issue-body.md \
+              || true
+          fi
