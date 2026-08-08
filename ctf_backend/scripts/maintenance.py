@@ -246,9 +246,19 @@ MIN_SECONDS_PER_SOLVE = 25
 #: env. The default is the 2026-07-28 "verify all 20 levels solvable" run: 24
 #: sessions in one evening, including the only 20/20 and 15/20 completions the
 #: platform has ever recorded.
+#:
+#: Add a hash here after any manual verification run against the live API --
+#: pace alone will not catch one, because a real API call takes ~40s and a
+#: two-level check paces exactly like a slow human. Identify them by content:
+#:   SELECT DISTINCT s.ip_hash FROM turns t JOIN sessions s USING(session_id)
+#:   WHERE t.content LIKE '%<a phrase from your probe>%';
 SYNTHETIC_IP_HASHES = {
     h for h in os.getenv(
-        "CTF_SYNTHETIC_IP_HASHES", "30f2a14be896d31f").split(":") if h
+        "CTF_SYNTHETIC_IP_HASHES",
+        # 2026-07-28 "verify all 20 solvable" run (24 sessions), and the
+        # 2026-08-07 post-deploy verification. Both confirmed by probe text.
+        "30f2a14be896d31f:6b005645d9448b03",
+    ).split(":") if h
 }
 
 
@@ -290,14 +300,19 @@ def stats():
     # seconds; a person reads a briefing and composes an injection. Anything
     # under MIN_SECONDS_PER_SOLVE is machine-paced by construction.
     raw = conn.execute(
-        "SELECT completed_levels, created_at, last_active, ip_hash FROM sessions").fetchall()
-    sessions, synthetic = [], []
+        "SELECT completed_levels, created_at, last_active, ip_hash, user_id FROM sessions"
+    ).fetchall()
+    sessions, synthetic, synthetic_users = [], [], set()
     for row in raw:
         solved = _count_solved(row[0])
         pace = (float(row[2]) - float(row[1])) / solved if solved else None
         is_synthetic = (row[3] in SYNTHETIC_IP_HASHES
                         or (pace is not None and pace < MIN_SECONDS_PER_SOLVE))
-        (synthetic if is_synthetic else sessions).append(row[:3])
+        if is_synthetic:
+            synthetic.append(row[:3])
+            synthetic_users.add(row[4])
+        else:
+            sessions.append(row[:3])
     if synthetic:
         best = max(_count_solved(r[0]) for r in synthetic)
         log("  NOTE: %d of %d sessions excluded as machine-paced (<%ds per solve);"
@@ -305,8 +320,22 @@ def stats():
         log("        best excluded run reached %d levels. Re-run with --include-synthetic"
             % best)
         log("        to see them. These are almost always your own API checks.")
-    attempts = conn.execute(
-        "SELECT level_id, SUM(attempt_count), COUNT(*) FROM attempts GROUP BY level_id").fetchall()
+    # The per-level funnel reads `attempts`, which is keyed by user_id -- a
+    # DIFFERENT key from the sessions filtered above. Filtering only sessions
+    # left this table fully contaminated, so the funnel still reported the
+    # owner's own verification runs as players even after synthetic sessions
+    # were excluded from the totals. Two keys, one of them filtered, is the same
+    # shape of bug as a harness keeping its own copy of the product's logic.
+    attempts = [
+        row for row in conn.execute(
+            "SELECT level_id, attempt_count, user_id FROM attempts").fetchall()
+        if row[2] not in synthetic_users
+    ]
+    by_level = {}
+    for level_id, count, _user in attempts:
+        total, users = by_level.get(level_id, (0, 0))
+        by_level[level_id] = (total + (count or 0), users + 1)
+    attempts = [(lvl, tot, users) for lvl, (tot, users) in sorted(by_level.items())]
     conn.close()
 
     solved = {}

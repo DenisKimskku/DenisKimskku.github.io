@@ -64,6 +64,12 @@ export default function CTFTerminal() {
 
   const [hints, setHints] = useState<HintData | null>(null);
   const [hintsOpen, setHintsOpen] = useState(false);
+  // Onramp hints unlock at 2 attempts and then sit inside a collapsed drawer.
+  // The only genuine player on record sent four prompts, never opened it, and
+  // left: the help existed, was unlocked, and stayed invisible. Open it once per
+  // level the moment it becomes available, and never re-open it if they close
+  // it -- a drawer that fights the user is worse than one that stays shut.
+  const autoOpenedHints = useRef<Set<number>>(new Set());
   const [briefOpen, setBriefOpen] = useState(true);
   const [navOpen, setNavOpen] = useState(false);
   const [confirmClear, setConfirmClear] = useState(false);
@@ -170,7 +176,12 @@ export default function CTFTerminal() {
       }
       try {
         const res = await ctfFetch(`/api/hint/${currentLevel}`, { signal: ac.signal, timeoutMs: 15_000 });
-        setHints((await res.json()) as HintData);
+        const h = (await res.json()) as HintData;
+        setHints(h);
+        if (currentLevel <= 3 && h.hint_1_unlocked && !autoOpenedHints.current.has(currentLevel)) {
+          autoOpenedHints.current.add(currentLevel);
+          setHintsOpen(true);
+        }
       } catch {
         setHints(null);
       }

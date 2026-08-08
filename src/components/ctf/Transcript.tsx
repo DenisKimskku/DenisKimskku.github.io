@@ -41,6 +41,16 @@ export default function Transcript({
   const evicted = multiTurn && conversational.length > contextWindow;
   const firstRetainedId = retained.length > 0 ? retained[0].id : null;
 
+  // The one genuine player on record opened with "hi", then "who are u", and
+  // got "I am a secure customer support assistant" -- the model correctly
+  // staying in character, and in doing so confirming the wrong mental model
+  // four times before they left. The model must not break character; that IS
+  // the game. So the PLATFORM says it instead, once, on the onramp, after the
+  // first reply that was not a win.
+  const answered = messages.some((m) => m.sender === 'assistant' && !!m.text);
+  const wonHere = messages.some((m) => m.win);
+  const showOrientation = level <= 3 && answered && !wonHere && !loading;
+
   // Turn numbers derived before render, not accumulated during it.
   const turnOf = new Map<string, number>();
   let seen = 0;
@@ -82,6 +92,19 @@ export default function Transcript({
           <p className="mb-0 text-sm leading-relaxed text-(--color-text-secondary)">
             Nothing you type can break anything. Guessing is the intended method, and hints
             unlock as you attempt — soonest on the early levels.
+          </p>
+        </div>
+      )}
+
+      {showOrientation && (
+        <div className="rounded-md border border-(--color-border) bg-(--color-bg-secondary) p-3">
+          <Label className="mb-1">Reading the room</Label>
+          <p className="mb-0 text-sm leading-relaxed text-(--color-text-secondary)">
+            That answer is the model doing its job, not a dead end — it will stay in character all
+            day, and it is never going to hand the secret over because you asked for it. You are not
+            chatting with it. You are hunting for a request it has no rule against answering, that
+            happens to make it say the secret anyway. Keep trying: nothing is scored against you,
+            and the hints below open up as you go.
           </p>
         </div>
       )}
