@@ -1,5 +1,81 @@
 [
   {
+    "slug": "this_week_in_ai_security__august_09_2026",
+    "title": "This Week in AI Security \u2014 August 09, 2026",
+    "date": "2026-08-09",
+    "type": "Trend Report",
+    "description": "This week's AI security roundup covers escalating risks in agentic systems, advanced prompt injection, and the growing challenge of content provenance and model tampering.",
+    "tags": [
+      "LLM Security",
+      "Agentic AI",
+      "Prompt Injection",
+      "Content Provenance",
+      "Adversarial Attacks",
+      "Model Tampering"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "ai_security_digest__august_09_2026_prompt_injection__privacy",
+    "title": "AI Security Digest \u2014 August 09, 2026: Prompt Injection & Privacy",
+    "date": "2026-08-09",
+    "type": "News Digest",
+    "description": "This digest covers prompt injection risks, abstraction bias in LLMs, and new defense mechanisms like StruQ for protecting enterprise data.",
+    "tags": [
+      "Prompt Injection",
+      "LLM Security",
+      "Data Privacy",
+      "Adversarial Attacks",
+      "LLM Bias",
+      "Structured Queries"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "hatebench_benchmarking_hate_speech_detectors_on_llmgenerated",
+    "title": "HateBench: Benchmarking Hate Speech Detectors on LLM-Generated Content and Hate Campaigns",
+    "date": "2026-08-09",
+    "type": "Paper Review",
+    "description": "HateBench: Benchmarking Hate Speech Detectors on LLM-Generated Content and Hate Campaigns",
+    "tags": [
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "struq_defending_against_prompt_injection_with_structured_que",
+    "title": "StruQ: Defending Against Prompt Injection with Structured Queries",
+    "date": "2026-08-09",
+    "type": "Paper Review",
+    "description": "Separates LLM prompts and user data into distinct channels",
+    "tags": [
+      "Prompt Injection"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "characterizing_the_implementation_of_censorship_policies_in_",
+    "title": "Characterizing the Implementation of Censorship Policies in Chinese LLM Services",
+    "date": "2026-08-09",
+    "type": "Paper Review",
+    "description": "Characterizing the Implementation of Censorship Policies in Chinese LLM Services",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "trust_me_i_know_this_function_hijacking_llm_static_analysis_",
+    "title": "Trust Me, I Know This Function: Hijacking LLM Static Analysis using Bias",
+    "date": "2026-08-09",
+    "type": "Paper Review",
+    "description": "Trust Me, I Know This Function: Hijacking LLM Static Analysis using Bias",
+    "tags": [
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__august_08_2026_prompt_injection__ai_agen",
     "title": "AI Security Digest \u2014 August 08, 2026: Prompt Injection & AI Agents",
     "date": "2026-08-08",
