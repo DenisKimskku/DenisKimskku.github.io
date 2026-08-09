@@ -1,5 +1,71 @@
 [
   {
+    "slug": "ai_security_digest__august_10_2026_backdoors__adversarial_at",
+    "title": "AI Security Digest \u2014 August 10, 2026: Backdoors & Adversarial Attacks",
+    "date": "2026-08-10",
+    "type": "News Digest",
+    "description": "This digest covers new research on backdoor defenses in multimodal models and novel adversarial attacks targeting quantized and LoRA-based LLMs.",
+    "tags": [
+      "Backdoor Attacks",
+      "Adversarial Attacks",
+      "LLM Security",
+      "Model Quantization",
+      "Multimodal AI",
+      "AI Safety"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "decompiling_the_synergy_an_empirical_study_of_humanllm_teami",
+    "title": "Decompiling the Synergy: An Empirical Study of Human-LLM Teaming in Software Reverse Engineering",
+    "date": "2026-08-10",
+    "type": "Paper Review",
+    "description": "Decompiling the Synergy: An Empirical Study of Human-LLM Teaming in Software Reverse Engineering",
+    "tags": [
+      "Binary Analysis"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "roundingguided_backdoor_injection_in_deep_learning_model_qua",
+    "title": "Rounding-Guided Backdoor Injection in Deep Learning Model Quantization",
+    "date": "2026-08-10",
+    "type": "Paper Review",
+    "description": "QURA exploits weight rounding during quantization to embed backdoors",
+    "tags": [
+      "Backdoors",
+      "Supply Chain Security",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "causalguided_detoxify_backdoor_attack_of_openweight_lora_mod",
+    "title": "Causal-Guided Detoxify Backdoor Attack of Open-Weight LoRA Models",
+    "date": "2026-08-10",
+    "type": "Paper Review",
+    "description": "CBA synthesizes data and merges adapters to implant stealthy backdoors",
+    "tags": [
+      "Data Poisoning",
+      "Backdoors",
+      "Fuzzing"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "invertune_a_backdoor_defense_method_for_multimodal_contrasti",
+    "title": "InverTune: A Backdoor Defense Method for Multimodal Contrastive Learning via Backdoor-Adversarial Correlation Analysis",
+    "date": "2026-08-10",
+    "type": "Paper Review",
+    "description": "InverTune identifies and removes latent backdoor triggers from MCL models",
+    "tags": [
+      "Data Poisoning",
+      "Backdoors",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "this_week_in_ai_security__august_09_2026",
     "title": "This Week in AI Security \u2014 August 09, 2026",
     "date": "2026-08-09",
