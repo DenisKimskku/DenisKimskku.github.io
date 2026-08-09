@@ -35,6 +35,34 @@ PREFILTER_SYSTEM = (
 )
 
 
+#: query_ollama reports transport failures by RETURNING a sentinel string rather
+#: than raising, and every guard below used to decide by looking for a NEGATIVE
+#: keyword ("REJECT" not in verdict). Neither sentinel contains one, so an
+#: Ollama crash, a non-200, or a timeout read as a PASSING verdict and released
+#: the unreviewed draft. On levels 17, 18 and 20 the reviewer is the only egress
+#: control, so that is the raw flag.
+#:
+#: Decide on an explicit affirmative instead: a guard passes only when the model
+#: actually said the allow-word. Anything else -- the deny-word, an error
+#: sentinel, an empty reply, or unparseable prose -- denies.
+_ENGINE_ERROR_MARKERS = ("[error]", "[notice]")
+
+
+def _engine_failed(verdict: str) -> bool:
+    return (verdict or "").strip().lower().startswith(_ENGINE_ERROR_MARKERS)
+
+
+def _passes(verdict: str, allow_word: str) -> bool:
+    """True only if the guard affirmatively allowed this.
+
+    Fail-closed by construction: unknown output is not consent.
+    """
+    if _engine_failed(verdict):
+        return False
+    head = re.sub(r"[^A-Z]", "", (verdict or "").strip().upper()[:16])
+    return head.startswith(allow_word)
+
+
 async def intent_prefilter(user_prompt: str) -> Tuple[bool, str]:
     """Level 10's pre-filter. Returns (allowed, raw_verdict)."""
     probe = (
@@ -45,7 +73,11 @@ async def intent_prefilter(user_prompt: str) -> Tuple[bool, str]:
     verdict = await query_ollama(
         probe, PREFILTER_SYSTEM, max_tokens=settings.GUARD_MAX_TOKENS, think=False
     )
-    return "BLOCK" not in verdict.strip().upper()[:16], verdict.strip()[:40]
+    # An engine error must not read as ALLOW. It denies, and says so distinctly
+    # so the caller can tell "the filter blocked you" from "the filter broke".
+    if _engine_failed(verdict):
+        return False, "ENGINE_ERROR"
+    return _passes(verdict, "ALLOW"), verdict.strip()[:40]
 
 
 REVIEWER_SYSTEM = (
@@ -84,7 +116,9 @@ async def reviewer_gate(draft: str) -> Tuple[bool, str]:
     verdict = await query_ollama(
         probe, REVIEWER_SYSTEM, max_tokens=settings.GUARD_MAX_TOKENS, think=False
     )
-    return "REJECT" not in verdict.strip().upper()[:16], verdict.strip()[:40]
+    if _engine_failed(verdict):
+        return False, "ENGINE_ERROR"
+    return _passes(verdict, "APPROVE"), verdict.strip()[:40]
 
 
 async def run_multi_agent_pipeline(
@@ -125,7 +159,7 @@ async def run_multi_agent_pipeline(
         % _fence(work),
         SENTINEL_SYSTEM, max_tokens=settings.GUARD_MAX_TOKENS, think=False,
     )
-    if "WITHHOLD" in verdict.strip().upper()[:16]:
+    if not _passes(verdict, "RELEASE"):
         return ("[SENTINEL] Output withheld: the egress reviewer flagged a suspected "
                 "credential in the Worker's response.", "WITHHOLD")
     return work, "RELEASE"

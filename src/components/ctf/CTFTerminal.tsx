@@ -151,6 +151,21 @@ export default function CTFTerminal() {
   // matching OWASPWriteups' prevInitial/selectedLevel below) instead of in
   // the effect, so there's no render with stale controls before the reset
   // lands.
+
+  // Keyed on `hints`, not on arrival. The first version of this lived in the
+  // level-change effect, which runs once when the player reaches a level with
+  // ZERO attempts on it -- so hint_1_unlocked was always false and the drawer
+  // never opened for the player it was written for. The post-send refetch is
+  // what observes the unlock, so the auto-open has to watch the data, not the
+  // navigation. `hints` resets to null on level change, so this re-arms per
+  // level, and the ref still stops it re-opening a drawer the player closed.
+  useEffect(() => {
+    if (currentLevel > 3 || !hints?.hint_1_unlocked) return;
+    if (autoOpenedHints.current.has(currentLevel)) return;
+    autoOpenedHints.current.add(currentLevel);
+    setHintsOpen(true);
+  }, [hints, currentLevel]);
+
   const [prevLevel, setPrevLevel] = useState(currentLevel);
   if (currentLevel !== prevLevel) {
     setPrevLevel(currentLevel);
@@ -176,12 +191,7 @@ export default function CTFTerminal() {
       }
       try {
         const res = await ctfFetch(`/api/hint/${currentLevel}`, { signal: ac.signal, timeoutMs: 15_000 });
-        const h = (await res.json()) as HintData;
-        setHints(h);
-        if (currentLevel <= 3 && h.hint_1_unlocked && !autoOpenedHints.current.has(currentLevel)) {
-          autoOpenedHints.current.add(currentLevel);
-          setHintsOpen(true);
-        }
+        setHints((await res.json()) as HintData);
       } catch {
         setHints(null);
       }

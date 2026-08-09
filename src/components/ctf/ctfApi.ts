@@ -318,10 +318,19 @@ export async function streamChat(
   const armIdle = () => {
     clearTimeout(idle);
     idle = setTimeout(
-      () => void reader.cancel(new DOMException('idle', 'TimeoutError')),
+      () => {
+        // reader.cancel() RESOLVES the pending read() with {done:true}; it does
+        // not reject. So the TimeoutError/AbortError mapping in the catch below
+        // is unreachable from here and every cancel fell through to the generic
+        // "connection dropped ... your attempt was not scored" -- shown to a
+        // player who had just pressed Stop themselves.
+        idleFired = true;
+        void reader.cancel(new DOMException('idle', 'TimeoutError'));
+      },
       idleTimeoutMs,
     );
   };
+  let idleFired = false;
   const onOuterAbort = () => void reader.cancel(opts.signal?.reason);
   opts.signal?.addEventListener('abort', onOuterAbort, { once: true });
 
@@ -376,7 +385,13 @@ export async function streamChat(
   }
 
   if (!final) {
-    // Ended without done:true — a backend restart, a tunnel flap, or a timeout.
+    // Classify BEFORE the generic throw. A cancel resolves rather than rejects,
+    // so these two cases never reach the catch block above.
+    if (opts.signal?.aborted) throw new ApiError(0, 'Cancelled.', 'aborted');
+    if (idleFired) {
+      throw new ApiError(0, 'The model stopped responding mid-answer.', 'timeout');
+    }
+    // Genuinely ended without done:true — a backend restart or a tunnel flap.
     // NEVER render this as a loss; the judge never ran.
     throw new ApiError(
       0,

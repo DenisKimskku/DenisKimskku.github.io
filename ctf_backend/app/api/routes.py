@@ -92,6 +92,23 @@ async def get_request_session(request: Request) -> Tuple[str, Dict[str, Any]]:
         user_agent=user_agent
     )
 
+async def resolve_session_readonly(request: Request):
+    """Resolve an EXISTING session, or (None, None). Never creates one.
+
+    /level/{id} is the page-load endpoint: unauthenticated, called before the
+    player has done anything, and it used to run get_request_session, which
+    INSERTs a row for any caller with no session id. That handed an anonymous
+    client an unmetered write primitive against a SQLite file nothing prunes --
+    one row per request, forever. Only /status mints sessions now.
+    """
+    session_id = (request.headers.get("x-session-id")
+                  or request.headers.get("X-Session-ID")
+                  or request.cookies.get("ctf_session"))
+    if not session_id:
+        return None, None
+    return session_id, await session_manager.get_session(session_id)
+
+
 @router.get("/status")
 @limiter.limit("60/minute")
 async def get_status(request: Request, response: Response):
@@ -124,8 +141,9 @@ async def get_status(request: Request, response: Response):
     }
 
 @router.get("/level/{level_id}")
+@limiter.limit("60/minute")
 async def get_level_info(level_id: int, request: Request):
-    session_id, session_data = await get_request_session(request)
+    _session_id, session_data = await resolve_session_readonly(request)
         
     challenge = get_challenge(level_id)
     if not challenge:
@@ -159,7 +177,9 @@ async def get_level_info(level_id: int, request: Request):
         # attacker, and the UI had no way to know it.
         "multi_turn": _history_mode(challenge) != "off",
         "context_window": _replay_limit(_history_mode(challenge)),
-        "is_completed": level_id in session_data["completed_levels"]
+        # No session yet (first page load) simply means nothing is completed.
+        "is_completed": bool(session_data)
+                        and level_id in session_data["completed_levels"],
     }
 
 class PreparedTurn(NamedTuple):
@@ -299,7 +319,17 @@ async def _apply_output_guardrails(
 @router.post("/chat")
 @limiter.limit("10/minute")
 async def send_chat_prompt(req: ChatRequest, request: Request):
-    prep = await _prepare_turn(req, request)
+    try:
+        prep = await _prepare_turn(req, request)
+    except Overloaded:
+        # The level-10 pre-filter is an inference call too, and it runs inside
+        # _prepare_turn -- before either handler's try block. Unhandled, it was
+        # a 500.
+        raise HTTPException(
+            status_code=503,
+            detail="Inference queue full \u2014 this CTF runs on a single Mac mini. Retry shortly.",
+            headers={"Retry-After": "30"},
+        )
     if prep.early:
         return prep.early
 
@@ -335,25 +365,37 @@ async def send_chat_prompt(req: ChatRequest, request: Request):
             "engine_error": True,
         }
 
-    model_response = await _apply_output_guardrails(
-        prep.challenge, model_response, prep.expected_flag
-    )
-
-    # POST-guardrail, always: exactly the bytes the player received. Storing the
-    # raw draft would make the level-17/18 reviewer a no-op across turns and
-    # re-admit a redacted flag into the model's context on levels 8/9.
-    if _history_mode(prep.challenge) != "off":
-        await asyncio.to_thread(
-            db_session.append_exchange, prep.session_id, req.level,
-            prep.user_prompt, model_response,
+    # _apply_output_guardrails (reviewer gate) and run_llm_judge (semantic
+    # classifier) are BOTH inference calls, and the old `except Overloaded`
+    # covered only the target generation. With one slot and a queue depth of
+    # three, a fourth player's judge call raised Overloaded after their
+    # generation had already succeeded -- an unhandled 500.
+    try:
+        model_response = await _apply_output_guardrails(
+            prep.challenge, model_response, prep.expected_flag
         )
 
-    # prep.history is the PRE-append conversation, so the scorer never sees the
-    # response it is scoring twice.
-    win, reason_key = await run_llm_judge(
-        prep.user_prompt, model_response, prep.expected_flag, prep.challenge,
-        history=prep.history,
-    )
+        # POST-guardrail, always: exactly the bytes the player received. Storing
+        # the raw draft would make the level-17/18 reviewer a no-op across turns
+        # and re-admit a redacted flag into the model's context on levels 8/9.
+        if _history_mode(prep.challenge) != "off":
+            await asyncio.to_thread(
+                db_session.append_exchange, prep.session_id, req.level,
+                prep.user_prompt, model_response,
+            )
+
+        # prep.history is the PRE-append conversation, so the scorer never sees
+        # the response it is scoring twice.
+        win, reason_key = await run_llm_judge(
+            prep.user_prompt, model_response, prep.expected_flag, prep.challenge,
+            history=prep.history,
+        )
+    except Overloaded:
+        raise HTTPException(
+            status_code=503,
+            detail="Inference queue full \u2014 this CTF runs on a single Mac mini. Retry shortly.",
+            headers={"Retry-After": "30"},
+        )
 
     _log_score(req.level, reason_key, win, len(prep.history))
     body = {
@@ -372,11 +414,31 @@ async def send_chat_prompt(req: ChatRequest, request: Request):
 @router.post("/chat/stream")
 @limiter.limit("10/minute")
 async def send_chat_prompt_stream(req: ChatRequest, request: Request):
-    prep = await _prepare_turn(req, request)
+    try:
+        prep = await _prepare_turn(req, request)
+    except Overloaded:
+        # The level-10 pre-filter is an inference call too, and it runs inside
+        # _prepare_turn -- before either handler's try block. Unhandled, it was
+        # a 500.
+        raise HTTPException(
+            status_code=503,
+            detail="Inference queue full \u2014 this CTF runs on a single Mac mini. Retry shortly.",
+            headers={"Retry-After": "30"},
+        )
 
     if prep.early:
+        # Translate the JSON contract into the STREAM contract here, not in the
+        # shared dict: /chat returns prep.early verbatim and its clients read
+        # `response`, while the SSE client only ever reads `chunk`
+        # (ctfApi.ts: `if (ev.chunk) onChunk(...)`). Emitting the dict unchanged
+        # meant the explanatory text for every WAF block and pre-filter block was
+        # discarded before rendering -- on levels 6 and 10, whose entire mechanic
+        # is provoking that filter, the player got an empty bubble and a bare
+        # "Blocked before inference" badge with no reason.
         async def blocked():
-            yield _sse({**prep.early, "done": True})
+            body = dict(prep.early)
+            body["chunk"] = body.get("response", "")
+            yield _sse({**body, "done": True})
         return StreamingResponse(blocked(), media_type="text/event-stream")
 
     challenge, system_prompt = prep.challenge, prep.system_prompt
@@ -423,23 +485,47 @@ async def send_chat_prompt_stream(req: ChatRequest, request: Request):
             })
             return
 
-        guarded = await _apply_output_guardrails(challenge, full_text, prep.expected_flag)
-        if buffered or challenge.get("multi_agent") or guarded != full_text:
-            # Replace what the client has (or has not yet) seen with the guarded text.
-            yield _sse({"chunk": guarded, "replace": True, "win": False, "done": False})
+        # Everything below is more inference (the reviewer gate, then the
+        # semantic classifier), so it can raise Overloaded too. The generator
+        # used to die here with no terminal event -- AFTER append_exchange had
+        # already stored the turn. The client treats a stream that ends without
+        # `done` as a dropped connection and removes the assistant message from
+        # the transcript, so the player's screen lost a turn the model's context
+        # still contained. On levels 13/15/19 that silently changes what their
+        # next payload lands on. Whatever happens now, this yields a terminal
+        # event, so the turn stays on screen exactly as it stays in context.
+        persisted = False
+        try:
+            guarded = await _apply_output_guardrails(challenge, full_text, prep.expected_flag)
+            if buffered or challenge.get("multi_agent") or guarded != full_text:
+                # Replace what the client has (or has not yet) seen with the guarded text.
+                yield _sse({"chunk": guarded, "replace": True, "win": False, "done": False})
 
-        # THE bug this endpoint used to have: it read history but never wrote
-        # it. The SPA only ever calls /chat/stream, so level 13's conversation
-        # buffer was permanently empty for every real player.
-        if _history_mode(challenge) != "off":
-            await asyncio.to_thread(
-                db_session.append_exchange, prep.session_id, req.level,
-                prep.user_prompt, guarded,
+            # THE bug this endpoint used to have: it read history but never wrote
+            # it. The SPA only ever calls /chat/stream, so level 13's conversation
+            # buffer was permanently empty for every real player.
+            if _history_mode(challenge) != "off":
+                await asyncio.to_thread(
+                    db_session.append_exchange, prep.session_id, req.level,
+                    prep.user_prompt, guarded,
+                )
+                persisted = True
+
+            win, reason_key = await run_llm_judge(
+                prep.user_prompt, guarded, prep.expected_flag, challenge, history=prep.history,
             )
+        except Overloaded:
+            yield _sse({
+                "chunk": "", "win": False, "done": True, "engine_error": True,
+                "judge_reason": (
+                    "The scoring queue was full, so this turn was not scored. "
+                    + ("It is still part of the conversation the model sees. "
+                       if persisted else "")
+                    + "Send another prompt when the queue clears."
+                ),
+            })
+            return
 
-        win, reason_key = await run_llm_judge(
-            prep.user_prompt, guarded, prep.expected_flag, challenge, history=prep.history,
-        )
         _log_score(req.level, reason_key, win, len(prep.history))
         tail = {
             "chunk": "", "win": win, "judge_reason": JUDGE_REASONS[reason_key], "done": True,

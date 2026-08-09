@@ -284,11 +284,25 @@ def test_session_less_calls_each_mint_a_session(client):
     that client serialisation may no longer be needed.
     """
     before = db_session.get_admin_stats()["total_sessions"]
-    for path in ("/api/status", "/api/level/1", "/api/hint/1"):
+    for path in ("/api/status", "/api/hint/1"):
         client.get(path, headers=A)
         client.cookies.clear()
     minted = db_session.get_admin_stats()["total_sessions"] - before
-    assert minted == 3, (
+    assert minted == 2, (
         "expected each session-less call to mint its own session (got %d) -- if "
         "this changed, revisit the client-side bootstrap in ctfApi.ts" % minted
+    )
+
+    # /level is deliberately NOT in that list any more. It is the page-load
+    # endpoint -- unauthenticated, hit before the player has done anything, and
+    # it was the only session-touching route with no rate limit. Minting there
+    # gave an anonymous caller an unmetered INSERT against a SQLite file nothing
+    # prunes. It now resolves an existing session or reports is_completed=false,
+    # and it carries 60/minute.
+    before = db_session.get_admin_stats()["total_sessions"]
+    for _ in range(3):
+        client.get("/api/level/1", headers=A)
+        client.cookies.clear()
+    assert db_session.get_admin_stats()["total_sessions"] == before, (
+        "/api/level must never create a session"
     )

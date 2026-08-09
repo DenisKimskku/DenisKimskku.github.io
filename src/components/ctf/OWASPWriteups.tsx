@@ -30,6 +30,17 @@ export default function OWASPWriteups({
   }
   const [data, setData] = useState<OWASPDetail | null>(null);
 
+  // `data` used to survive a level change, so between the click and the fetch
+  // landing the card showed the PREVIOUS level's category, CWE, mechanism and
+  // mitigation code under the newly selected level's heading -- and the
+  // "Loading…" state added to prevent exactly that was unreachable after the
+  // first successful load. Cleared during render, same pattern as above.
+  const [prevSelected, setPrevSelected] = useState(selectedLevel);
+  if (selectedLevel !== prevSelected) {
+    setPrevSelected(selectedLevel);
+    setData(null);
+  }
+
   // Client-side gating only — the /api/owasp endpoint is unauthenticated, so
   // this is UX honesty (the sidebar promises "complete level X to unlock"),
   // not a security control. Anyone can curl it. Derived at render time: no
