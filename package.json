@@ -37,7 +37,7 @@
     "eslint": "^9.39.1",
     "eslint-config-next": "^16.2.3",
     "gray-matter": "^4.0.3",
-    "next": "^16.2.11",
+    "next": "^16.3.0",
     "postcss": "^8.5.23",
     "puppeteer": "^23.11.1",
     "react": "^19.2.3",
