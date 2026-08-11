@@ -39,7 +39,7 @@
     "gray-matter": "^4.0.3",
     "next": "^16.2.11",
     "postcss": "^8.5.23",
-    "puppeteer": "^23.11.1",
+    "puppeteer": "^25.5.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "rehype-highlight": "^7.0.2",
