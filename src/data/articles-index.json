@@ -1,5 +1,59 @@
 [
   {
+    "slug": "ai_security_digest__august_14_2026_ai_agents__fuzzing",
+    "title": "AI Security Digest \u2014 August 14, 2026: AI Agents & Fuzzing",
+    "date": "2026-08-14",
+    "type": "News Digest",
+    "description": "This digest covers new research on securing AI agents, including hybrid fuzzing for IoT firmware and attacks exploiting tool pools.",
+    "tags": [
+      "AI Agents",
+      "LLM Security",
+      "Fuzzing",
+      "IoT Security",
+      "Adversarial Attacks",
+      "Software Testing"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "saga_a_security_architecture_for_governing_ai_agentic_system",
+    "title": "SAGA: A Security Architecture for Governing AI Agentic Systems",
+    "date": "2026-08-14",
+    "type": "Paper Review",
+    "description": "SAGA provides a framework for user-controlled governance of autonomous LLM agents",
+    "tags": [
+      "Adversarial Attacks",
+      "AI Agents"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "les_dissonances_crosstool_harvesting_and_polluting_in_poolof",
+    "title": "Les Dissonances: Cross-Tool Harvesting and Polluting in Pool-of-Tools Empowered LLM Agents",
+    "date": "2026-08-14",
+    "type": "Paper Review",
+    "description": "XTHP attacks hijack agent control flows via malicious tools",
+    "tags": [
+      "Adversarial Attacks",
+      "AI Agents",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "firmagent_leveraging_fuzzing_to_assist_llm_agents_with_iot_f",
+    "title": "FirmAgent: Leveraging Fuzzing to Assist LLM Agents with IoT Firmware Vulnerability Discovery",
+    "date": "2026-08-14",
+    "type": "Paper Review",
+    "description": "Hybrid framework uses fuzzing to locate input sources for LLM taint analysis",
+    "tags": [
+      "AI Agents",
+      "Fuzzing",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__august_10_2026_backdoors__adversarial_at",
     "title": "AI Security Digest \u2014 August 10, 2026: Backdoors & Adversarial Attacks",
     "date": "2026-08-10",
