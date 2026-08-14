@@ -1,5 +1,33 @@
 [
   {
+    "slug": "ai_security_digest__august_15_2026_privacy__vulnerabilities",
+    "title": "AI Security Digest \u2014 August 15, 2026: Privacy & Vulnerabilities",
+    "date": "2026-08-15",
+    "type": "News Digest",
+    "description": "This digest covers black-box membership inference attacks against diffusion models and NIST's efforts to modernize vulnerability databases for AI threats.",
+    "tags": [
+      "Membership Inference",
+      "Diffusion Models",
+      "LLM Security",
+      "Data Privacy",
+      "NIST",
+      "Vulnerability Management",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "towards_blackbox_membership_inference_attack_for_diffusion_m",
+    "title": "Towards Black-Box Membership Inference Attack for Diffusion Models",
+    "date": "2026-08-15",
+    "type": "Paper Review",
+    "description": "REDIFFUSE attacks membership inference without internal model access",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__august_14_2026_ai_agents__fuzzing",
     "title": "AI Security Digest \u2014 August 14, 2026: AI Agents & Fuzzing",
     "date": "2026-08-14",
