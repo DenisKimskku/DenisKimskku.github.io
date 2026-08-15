@@ -1,5 +1,85 @@
 [
   {
+    "slug": "this_week_in_ai_security__august_16_2026",
+    "title": "This Week in AI Security \u2014 August 16, 2026",
+    "date": "2026-08-16",
+    "type": "Trend Report",
+    "description": "This week's AI security roundup covers the rise of agentic vulnerabilities, tool manipulation, and advanced model backdoor defenses against subtle attacks.",
+    "tags": [
+      "Agentic AI",
+      "LLM Security",
+      "Backdoor Attacks",
+      "Adversarial Attacks",
+      "AI Governance",
+      "Model Manipulation"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "ai_security_digest__august_16_2026_jailbreaking__ai_agents",
+    "title": "AI Security Digest \u2014 August 16, 2026: Jailbreaking & AI Agents",
+    "date": "2026-08-16",
+    "type": "News Digest",
+    "description": "This digest covers advanced LLM evasion techniques like dual steganography and task-level jailbreaking, alongside new research on secure AI agent interoperability.",
+    "tags": [
+      "Jailbreaking",
+      "LLM Security",
+      "Adversarial Attacks",
+      "AI Agents",
+      "Prompt Injection",
+      "Multimodal LLMs"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "papillon_efficient_and_stealthy_fuzz_testingpowered_jailbrea",
+    "title": "PAPILLON: Efficient and Stealthy Fuzz Testing-Powered Jailbreaks for LLMs",
+    "date": "2026-08-16",
+    "type": "Paper Review",
+    "description": "Automated fuzz testing generates stealthy jailbreak prompts",
+    "tags": [
+      "Jailbreaking",
+      "Adversarial Attacks",
+      "Fuzzing"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "exploiting_tasklevel_vulnerabilities_an_automatic_jailbreak_",
+    "title": "Exploiting Task-Level Vulnerabilities: An Automatic Jailbreak Attack and Defense Benchmarking for LLMs",
+    "date": "2026-08-16",
+    "type": "Paper Review",
+    "description": "Decomposes malicious tasks into innocuous subtasks for execution",
+    "tags": [
+      "Jailbreaking",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "odysseus_jailbreaking_commercial_multimodal_llmintegrated_sy",
+    "title": "Odysseus: Jailbreaking Commercial Multimodal LLM-integrated Systems via Dual Steganography",
+    "date": "2026-08-16",
+    "type": "Paper Review",
+    "description": "Dual steganography embeds malicious queries and responses covertly",
+    "tags": [
+      "Jailbreaking"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "intersage_the_secure_and_verifiable_interoperability_protoco",
+    "title": "InterSAGE: The Secure and Verifiable Interoperability Protocol for An Internet of Agents",
+    "date": "2026-08-16",
+    "type": "Paper Review",
+    "description": "InterSAGE: The Secure and Verifiable Interoperability Protocol for An Internet of Agents",
+    "tags": [
+      "MCP",
+      "AI Agents"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__august_15_2026_privacy__vulnerabilities",
     "title": "AI Security Digest \u2014 August 15, 2026: Privacy & Vulnerabilities",
     "date": "2026-08-15",
