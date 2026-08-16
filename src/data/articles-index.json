@@ -1,5 +1,69 @@
 [
   {
+    "slug": "ai_security_digest__august_17_2026_jailbreaking__backdoors",
+    "title": "AI Security Digest \u2014 August 17, 2026: Jailbreaking & Backdoors",
+    "date": "2026-08-17",
+    "type": "News Digest",
+    "description": "This digest covers recent threats including quantum noise backdoors, memory extraction attacks on federated learning, and new LLM jailbreaking techniques.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Backdoors",
+      "Quantum Computing",
+      "Federated Learning",
+      "Jailbreaking"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "a_causal_perspective_for_enhancing_jailbreak_attack_and_defe",
+    "title": "A Causal Perspective for Enhancing Jailbreak Attack and Defense",
+    "date": "2026-08-17",
+    "type": "Paper Review",
+    "description": "Framework uses causal discovery to link prompt features to jailbreak success",
+    "tags": [
+      "Jailbreaking",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "twinbreak_jailbreaking_llm_security_alignments_based_on_twin",
+    "title": "TwinBreak: Jailbreaking LLM Security Alignments based on Twin Prompts",
+    "date": "2026-08-17",
+    "type": "Paper Review",
+    "description": "TwinBreak removes LLM safety alignments via targeted parameter pruning",
+    "tags": [
+      "Jailbreaking"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "memory_backdoor_attacks_on_neural_networks",
+    "title": "Memory Backdoor Attacks on Neural Networks",
+    "date": "2026-08-17",
+    "type": "Paper Review",
+    "description": "A memory backdoor enables exact, systematic extraction of private training samples",
+    "tags": [
+      "Backdoors",
+      "Adversarial Attacks",
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "qnbad_quantum_noiseinduced_backdoor_attacks_against_zero_noi",
+    "title": "QNBAD: Quantum Noise-induced Backdoor Attacks against Zero Noise Extrapolation",
+    "date": "2026-08-17",
+    "type": "Paper Review",
+    "description": "QNBAD: Quantum Noise-induced Backdoor Attacks against Zero Noise Extrapolation",
+    "tags": [
+      "Backdoors",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "this_week_in_ai_security__august_16_2026",
     "title": "This Week in AI Security \u2014 August 16, 2026",
     "date": "2026-08-16",
