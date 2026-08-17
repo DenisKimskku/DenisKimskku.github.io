@@ -1,5 +1,68 @@
 [
   {
+    "slug": "ai_security_digest__august_18_2026_rag__adversarial_attacks",
+    "title": "AI Security Digest \u2014 August 18, 2026: RAG & Adversarial Attacks",
+    "date": "2026-08-18",
+    "type": "News Digest",
+    "description": "This digest covers Topic-FlipRAG, an attack manipulating RAG output opinion, alongside research on physical adversarial attacks against LiDAR and VLM robustness.",
+    "tags": [
+      "RAG",
+      "Adversarial Attacks",
+      "LLM Security",
+      "Vision-Language Models",
+      "AI Safety",
+      "Information Security"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "boosting_adversarial_robustness_with_clat_criticality_levera",
+    "title": "Boosting Adversarial Robustness with CLAT: Criticality Leveraged Adversarial Training",
+    "date": "2026-08-18",
+    "type": "Paper Review",
+    "description": "Fine-tunes only robustness-critical model layers",
+    "tags": [
+      "Adversarial Attacks",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "improving_zeroshot_adversarial_robustness_in_visionlanguage_",
+    "title": "Improving Zero-Shot Adversarial Robustness in Vision-Language Models by Closed-form Alignment of Adversarial Path Simplices",
+    "date": "2026-08-18",
+    "type": "Paper Review",
+    "description": "Uses closed-form statistics over adversarial path simplices for robustification",
+    "tags": [
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "invisible_but_detected_physical_adversarial_shadow_attack_an",
+    "title": "Invisible but Detected: Physical Adversarial Shadow Attack and Defense on LiDAR Object Detection",
+    "date": "2026-08-18",
+    "type": "Paper Review",
+    "description": "Manipulates naturally occurring LiDAR shadows using specialized materials",
+    "tags": [
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "topicfliprag_topicorientated_adversarial_opinion_manipulatio",
+    "title": "Topic-FlipRAG: Topic-Orientated Adversarial Opinion Manipulation Attacks to Retrieval-Augmented Generation Models",
+    "date": "2026-08-18",
+    "type": "Paper Review",
+    "description": "Topic-FlipRAG manipulates RAG output opinion across related topics",
+    "tags": [
+      "RAG",
+      "Data Poisoning",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__august_17_2026_jailbreaking__backdoors",
     "title": "AI Security Digest \u2014 August 17, 2026: Jailbreaking & Backdoors",
     "date": "2026-08-17",
