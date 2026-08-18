@@ -637,19 +637,6 @@
     "readingTime": 8
   },
   {
-    "slug": "failures-that-pass-every-test",
-    "title": "Failures That Pass Every Test",
-    "date": "2026-08-01",
-    "type": "Project",
-    "description": "Four bugs from one codebase that shared a property: every one of them worked perfectly in the test suite and did nothing at all in production. An LLM judge that never ran, logging that discarded everything, seven invisible CVEs, and CSS that compiled to nothing \u2014 plus the measuring instrument I wrote to study them, which had the same bug.",
-    "tags": [
-      "AI Security",
-      "Engineering",
-      "LLM Evaluation"
-    ],
-    "readingTime": 16
-  },
-  {
     "slug": "this_week_in_ai_security__august_02_2026",
     "title": "This Week in AI Security \u2014 August 02, 2026",
     "date": "2026-08-02",

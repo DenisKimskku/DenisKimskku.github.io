@@ -5,15 +5,17 @@
    every file under src/ though, so a class name merely QUOTED in an article
    compiles into the shipped stylesheet.
 
-   That is not hypothetical. "Failures That Pass Every Test" documents a
-   Tailwind v3 bug and quotes the two utilities it broke:
+   That is not hypothetical: an article discussing a Tailwind bug quoted the
+   utilities it broke, e.g.
 
        <div class="bg-[var(--color-accent)]/10 border-[var(--color-accent)]/20">
 
-   Under v4 -- which fixed that bug -- the scanner found those strings in the
-   prose and emitted working rules for both, so the article's proof that they
-   "produce no CSS at all" was shipping as CSS. Verified: 0 articles use a
-   rendered class attribute outside a code fence, so nothing here needs them. */
+   and the v4 scanner found those strings in the prose and emitted working
+   rules for both -- so prose asserting they "produce no CSS at all" was
+   itself shipping as CSS. Any article quoting a class name can do this, which
+   is why the exclusion below is a standing rule rather than a one-off fix.
+   Verified: 0 articles use a rendered class attribute outside a code fence,
+   so nothing here needs them. */
 @source not '../content/articles/**/*.md';
 
 @custom-variant dark (&:where(.dark, .dark *));
