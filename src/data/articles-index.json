@@ -28,6 +28,21 @@
     "readingTime": 5
   },
   {
+    "slug": "global_workspace_language_models",
+    "title": "The Global Workspace: Reading a Model's Unspoken Words",
+    "date": "2026-08-18",
+    "type": "Paper Walkthrough",
+    "description": "A walkthrough of Anthropic's work on verbalizable representations, which uses a training-free Jacobian lens to name the concepts a model holds mid-computation, and finds them confined to roughly 25 directions load-bearing enough that ablating a model's sense of being evaluated makes it stop noticing and start blackmailing.",
+    "tags": [
+      "AI Safety",
+      "Interpretability",
+      "Mechanistic Interpretability",
+      "Alignment",
+      "LLM Security"
+    ],
+    "readingTime": 11
+  },
+  {
     "slug": "improving_zeroshot_adversarial_robustness_in_visionlanguage_",
     "title": "Improving Zero-Shot Adversarial Robustness in Vision-Language Models by Closed-form Alignment of Adversarial Path Simplices",
     "date": "2026-08-18",
