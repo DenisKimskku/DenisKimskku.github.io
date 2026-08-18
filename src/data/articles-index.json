@@ -1,5 +1,67 @@
 [
   {
+    "slug": "ai_security_digest__august_19_2026_data_poisoning__backdoors",
+    "title": "AI Security Digest \u2014 August 19, 2026: Data Poisoning & Backdoors",
+    "date": "2026-08-19",
+    "type": "News Digest",
+    "description": "This digest covers advanced data poisoning techniques targeting multimodal models and novel backdoor attacks on tabular data representations.",
+    "tags": [
+      "Data Poisoning",
+      "Backdoor Attacks",
+      "Multimodal AI",
+      "Adversarial Attacks",
+      "Tabular Data",
+      "LLM Security"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "atkscopes_multiresolution_adversarial_perturbation_as_a_unif",
+    "title": "Atkscopes: Multiresolution Adversarial Perturbation as a Unified Attack on Perceptual Hashing and Beyond",
+    "date": "2026-08-19",
+    "type": "Paper Review",
+    "description": "Multiresolution perturbation allows attacks across various hash scales",
+    "tags": [
+      "Adversarial Attacks",
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "adversarial_perturbations_are_formed_by_iteratively_learning",
+    "title": "Adversarial Perturbations Are Formed by Iteratively Learning Linear Combinations of the Right Singular Vectors of the Adversarial Jacobian",
+    "date": "2026-08-19",
+    "type": "Paper Review",
+    "description": "Iteratively optimizing linear combinations of right singular vectors of the adversarial Jacobian",
+    "tags": [
+      "Adversarial Attacks",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "catback_universal_backdoor_attacks_on_tabular_data_via_categ",
+    "title": "CatBack: Universal Backdoor Attacks on Tabular Data via Categorical Encoding",
+    "date": "2026-08-19",
+    "type": "Paper Review",
+    "description": "Novel attack uses floating-point encoding for categorical features",
+    "tags": [
+      "Backdoors"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "mpnav_enhancing_data_poisoning_attacks_against_multimodal_le",
+    "title": "MP-Nav: Enhancing Data Poisoning Attacks against Multimodal Learning",
+    "date": "2026-08-19",
+    "type": "Paper Review",
+    "description": "MP-Nav guides poisoning by selecting semantically similar concepts and robust instances",
+    "tags": [
+      "Data Poisoning"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__august_18_2026_rag__adversarial_attacks",
     "title": "AI Security Digest — August 18, 2026: RAG & Adversarial Attacks",
     "date": "2026-08-18",
