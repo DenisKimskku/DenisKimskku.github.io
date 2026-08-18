@@ -72,7 +72,14 @@ function remarkStripDuplicateTitle(options: { title: string; auto: boolean }) {
 
 // Generated articles emit display equations on a single line ($$...$$), which
 // remark-math treats as inline. Rewrite them to proper multi-line display form.
-function normalizeDisplayMath(markdown: string): string {
+//
+// The content line MUST carry the same indent as its fences. Emitting it at
+// column 0 inside an indented block (a list item, a blockquote) ends that
+// block early, which desynchronizes every following `$$` fence in the file:
+// one math node swallowed an entire list item, and the next swallowed ~94
+// lines including a heading and two code fences, shipping raw `$\theta_R$`
+// text to readers. Exported for tests.
+export function normalizeDisplayMath(markdown: string): string {
   const lines = markdown.split('\n');
   const out: string[] = [];
   let inFence = false;
@@ -85,7 +92,7 @@ function normalizeDisplayMath(markdown: string): string {
     if (!inFence) {
       const match = line.match(/^([ \t]*)\$\$(.+)\$\$[ \t]*$/);
       if (match && match[2].trim() && !match[2].includes('$$')) {
-        out.push(`${match[1]}$$`, match[2].trim(), `${match[1]}$$`);
+        out.push(`${match[1]}$$`, `${match[1]}${match[2].trim()}`, `${match[1]}$$`);
         continue;
       }
     }

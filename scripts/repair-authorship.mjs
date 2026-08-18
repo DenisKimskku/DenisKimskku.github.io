@@ -22,7 +22,9 @@ for (const f of files) {
 
   try {
     fm = matter(text);
-  } catch (err) {
+  } catch {
+    // Unparseable frontmatter is lint-content.mjs's job to report loudly;
+    // this script just skips the file rather than masking that error.
     continue;
   }
 
