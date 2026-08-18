@@ -21,7 +21,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # HEAD~ is needed by the slug-collision tripwire below.
           fetch-depth: 2
@@ -125,16 +125,26 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # One open issue is enough; don't file a new one per failed run.
+          # One open issue is enough; don't file a new one per failed run, but
+          # DO comment on repeat failures -- a single old-looking issue reads
+          # as "day 1, forgotten" when it's actually "day 5, still broken".
           existing=$(gh issue list --repo "${{ github.repository }}" --state open \
             --search "Deploy failed in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
           if [ -z "$existing" ]; then
+            # Surface any already-open PR so a human sees "this might already
+            # fix it" instead of independently re-diagnosing from scratch.
+            open_prs=$(gh pr list --repo "${{ github.repository }}" --state open \
+              --json number,title,url --jq '.[] | "- #\(.number) \(.title) (\(.url))"' || true)
+            [ -n "$open_prs" ] && open_prs=$'\n\nOpen PRs (check whether one already fixes this):\n'"$open_prs"
             gh issue create --repo "${{ github.repository }}" \
               --title "Deploy failed for ${{ github.sha }}" \
-              --body "The Pages build job failed. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+              --body "The Pages build job failed. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${open_prs}" \
               || true # never mask the build failure with a notification failure
           else
-            echo "Open deploy-failure issue #$existing already exists; skipping."
+            gh issue comment "$existing" --repo "${{ github.repository }}" \
+              --body "Still failing as of run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} (${{ github.sha }})." \
+              || true
+            echo "Open deploy-failure issue #$existing already exists; commented with latest run."
           fi
 
   deploy:
@@ -146,7 +156,7 @@ jobs:
     timeout-minutes: 45
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
@@ -227,12 +237,18 @@ jobs:
           existing=$(gh issue list --repo "${{ github.repository }}" --state open \
             --search "Deploy failed in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
           if [ -z "$existing" ]; then
+            open_prs=$(gh pr list --repo "${{ github.repository }}" --state open \
+              --json number,title,url --jq '.[] | "- #\(.number) \(.title) (\(.url))"' || true)
+            [ -n "$open_prs" ] && open_prs=$'\n\nOpen PRs (check whether one already fixes this):\n'"$open_prs"
             gh issue create --repo "${{ github.repository }}" \
               --title "Deploy failed for ${{ github.sha }}" \
-              --body "The Pages deploy job failed. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+              --body "The Pages deploy job failed. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}${open_prs}" \
               || true # never mask the deploy failure with a notification failure
           else
-            echo "Open deploy-failure issue #$existing already exists; skipping."
+            gh issue comment "$existing" --repo "${{ github.repository }}" \
+              --body "Still failing as of run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} (${{ github.sha }})." \
+              || true
+            echo "Open deploy-failure issue #$existing already exists; commented with latest run."
           fi
 
       # The two failure steps above (build and deploy) dedup onto one open

@@ -36,7 +36,7 @@ jobs:
     steps:
       - name: Fetch Dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@v2
+        uses: dependabot/fetch-metadata@v3
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
@@ -62,3 +62,15 @@ jobs:
         run: |
           gh pr review --approve "$PR_URL"
           gh pr merge --auto --squash "$PR_URL"
+
+      # Unlike every other workflow in this repo, this job had no failure
+      # alert -- a broken `gh pr merge --auto` (branch protection missing,
+      # "Allow auto-merge" disabled repo-wide) just showed a red X nobody
+      # would notice. Mirrors the ntfy pattern used elsewhere; no GH issue
+      # here since there's nothing actionable to link beyond this run.
+      - name: Ntfy alert on auto-merge failure
+        if: failure()
+        run: |
+          curl -s -H 'Title: DEPENDABOT AUTO-MERGE FAILED' -H 'Priority: high' \
+            -d "Auto-merge step failed for ${{ github.event.pull_request.html_url }} — check Settings > General > Allow auto-merge and branch protection on main." \
+            ntfy.sh/${{ secrets.NTFY_TOPIC || 'deniskim-kb' }}

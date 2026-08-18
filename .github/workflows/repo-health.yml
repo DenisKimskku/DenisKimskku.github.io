@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # Full history, not shallow: a shallow (single-commit) clone would
           # make `du -sh .git` report a flat, meaningless number forever —

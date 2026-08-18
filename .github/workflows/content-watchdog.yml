@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Check newest article age
         id: freshness
@@ -94,7 +94,10 @@ jobs:
             body="The GitHub Pages origin is not serving ${{ steps.liveness.outputs.url }} (HTTP ${{ steps.liveness.outputs.status }} across all four Pages IPs). The article is in the repo, so the deploy pipeline most likely failed to publish it — check the latest Deploy run."
           fi
           body="$body Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          # One open issue per failure mode is enough; a stalled pipeline fails every day.
+          # One open issue per failure mode is enough; a stalled pipeline fails
+          # every day. But DO comment on repeat failures -- a single
+          # old-looking issue reads as "day 1, forgotten" when it's actually
+          # "day N, still broken".
           existing=$(gh issue list --repo "${{ github.repository }}" --state open \
             --search "\"$title\" in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
           if [ -z "$existing" ]; then
@@ -103,7 +106,10 @@ jobs:
               --body "$body" \
               || true # never mask the check failure with a notification failure
           else
-            echo "Open issue #$existing already exists; skipping."
+            gh issue comment "$existing" --repo "${{ github.repository }}" \
+              --body "Still failing as of run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}." \
+              || true
+            echo "Open issue #$existing already exists; commented with latest run."
           fi
 
       - name: Ntfy alert on watchdog failure
