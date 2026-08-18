@@ -124,6 +124,7 @@ const schemaWarnings = []; // { slug, issues: string[] } — warn-only unless --
 const authorshipWarnings = []; // { slug, issue } — same warn/--strict tier as schema
 const attributionWarnings = []; // { slug } — auto-era "Paper Review" with no paperUrl; warn-tier
 const personaWarnings = []; // { slug, hits: string[] } — faked experiential persona in auto content; warn-tier
+const mathWarnings = []; // { slug, issues } — a `$` that is not a math delimiter; warn-tier, gates --strict
 for (const f of files) {
   const text = fs.readFileSync(path.join(ARTDIR, f), 'utf8');
   let yamlError = null;
@@ -265,8 +266,16 @@ for (const f of files) {
     heavyImages.push(`${ref} (${Math.round(bytes / 1024)}KB)`);
   }
 
-  if (ph.size || dead.size || yamlError || badEscapes || mathIssues.length || authorship.length || fakeStats.length || htmlFields.length || heavyImages.length) {
-    problems.push({ slug: f.replace(/\.md$/, ''), ph: [...ph], dead: [...dead], yamlError, badEscapes, mathIssues, authorship, fakeStats, htmlFields, heavyImages });
+  // Math-delimiter breakage is warn-tier in the deploy path on purpose. The
+  // daily automation pushes straight to main and is the very thing that
+  // produces this defect, so hard-failing here would let one bad article
+  // freeze the whole site -- exactly the outcome "content must never block a
+  // deploy" exists to prevent. It gates --strict (ci.yml, PRs, local dev)
+  // instead, where a human can fix it before it ships.
+  if (mathIssues.length) mathWarnings.push({ slug: f.replace(/\.md$/, ''), issues: mathIssues });
+
+  if (ph.size || dead.size || yamlError || badEscapes || authorship.length || fakeStats.length || htmlFields.length || heavyImages.length) {
+    problems.push({ slug: f.replace(/\.md$/, ''), ph: [...ph], dead: [...dead], yamlError, badEscapes, authorship, fakeStats, htmlFields, heavyImages });
   }
 }
 
@@ -326,7 +335,6 @@ if (problems.length) {
     if (p.dead.length) console.error(`  ${p.slug}: dead internal link(s) ${p.dead.map((d) => '/writing/' + d).join(', ')}`);
     if (p.yamlError) console.error(`  ${p.slug}: unparseable frontmatter — ${p.yamlError} (\`npm run generate:index\` may auto-repair)`);
     if (p.badEscapes) console.error(`  ${p.slug}: raw backslash escapes in quoted frontmatter values would ship mangled (run \`npm run generate:index\` to auto-repair)`);
-    for (const mi of p.mathIssues ?? []) console.error(`  ${p.slug}: ${mi.kind} -- a '$' that is not a math delimiter renders the text after it as an equation: "${mi.excerpt}"`);
     if (p.authorship.length) console.error(`  ${p.slug}: auto-generated article claims first-person authorship of external work: ${p.authorship.map((a) => `"${a}"`).join(', ')}`);
     if (p.fakeStats.length) console.error(`  ${p.slug}: fabricated corpus statistics: ${p.fakeStats.map((s) => `"${s}"`).join(', ')}`);
     if (p.htmlFields.length) console.error(`  ${p.slug}: '<' in frontmatter ${p.htmlFields.join(' and ')} (HTML injection risk in meta tags)`);
@@ -335,16 +343,26 @@ if (problems.length) {
   console.error('\nRemove these before building. (scripts/lint-content.mjs)');
   process.exit(1);
 }
+if (mathWarnings.length) {
+  console.error('\n⚠ Math delimiters that are not delimiters:\n');
+  for (const w of mathWarnings) {
+    for (const mi of w.issues) {
+      console.error(`  ${w.slug}: ${mi.kind} — the text after this '$' renders as an equation: "${mi.excerpt}"`);
+    }
+  }
+  console.error('\nEscape a literal dollar as \\$, or close the intended math. Not blocking this build; fails under --strict. (scripts/lint-content.mjs)\n');
+}
+
 // Schema + authorship are enforced (corpus is clean, so they gate --strict).
 // Source-attribution and faked-persona are advisory-only: both have known
 // legacy exceptions (venue-only papers with no arXiv; a backlog of auto
 // articles pending a voice rewrite), so they warn everywhere but never fail —
 // gating them now would break CI on pre-existing content, not real defects.
-const strictBlockingCount = schemaIssueCount + authorshipWarnings.length;
+const strictBlockingCount = schemaIssueCount + authorshipWarnings.length + mathWarnings.length;
 const warningCount = strictBlockingCount + attributionWarnings.length + personaWarnings.length;
 if (STRICT && strictBlockingCount) process.exit(1);
 if (warningCount) {
-  console.log(`⚠ Content lint passed with ${schemaIssueCount} frontmatter schema, ${authorshipWarnings.length} authorship-claim, ${attributionWarnings.length} source-attribution, and ${personaWarnings.length} faked-persona warning(s) (${files.length} articles).`);
+  console.log(`⚠ Content lint passed with ${schemaIssueCount} frontmatter schema, ${authorshipWarnings.length} authorship-claim, ${mathWarnings.length} math-delimiter, ${attributionWarnings.length} source-attribution, and ${personaWarnings.length} faked-persona warning(s) (${files.length} articles).`);
 } else {
   console.log(`✓ Content lint passed (${files.length} articles; valid frontmatter schema, no placeholder CVEs, dead internal links, authorship claims, mislabeled Research Papers, missing source attribution, faked personas, fabricated stats, HTML in metadata, or overweight images).`);
 }
