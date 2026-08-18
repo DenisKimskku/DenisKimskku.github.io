@@ -12,6 +12,13 @@ updates:
     groups:
       dev-dependencies:
         dependency-type: "development"
+        # Patch-only: dependabot-auto-merge.yml only auto-merges a PR whose
+        # update-type is semver-patch for the WHOLE PR (fetch-metadata
+        # reports the highest bump in the group). Without this, one minor/
+        # major devDependency (e.g. eslint's next major) folded into the
+        # group would block auto-merge for every patch bump riding with it —
+        # so those fall out as their own separate (still human-reviewed) PR.
+        update-types: ["patch"]
 
   # Cloudflare Worker (cloudflare-worker/package.json) — wrangler, TS, and
   # @cloudflare/workers-types devDependencies, plus its sharp/undici overrides.
@@ -23,6 +30,7 @@ updates:
     groups:
       dev-dependencies:
         dependency-type: "development"
+        update-types: ["patch"]
 
   # GitHub Actions version pins used across .github/workflows/*.yml
   # (actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5,

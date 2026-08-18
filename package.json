@@ -30,16 +30,8 @@
   "dependencies": {
     "@emnapi/core": "^1.11.3",
     "@emnapi/runtime": "^1.11.3",
-    "@tailwindcss/postcss": "^4.3.3",
-    "@types/node": "^24.10.1",
-    "@types/react": "^19.2.8",
-    "@types/react-dom": "^19.2.4",
-    "eslint": "^9.39.1",
-    "eslint-config-next": "^16.2.3",
     "gray-matter": "^4.0.3",
-    "next": "^16.2.11",
-    "postcss": "^8.5.23",
-    "puppeteer": "^23.11.1",
+    "next": "^16.3.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "rehype-highlight": "^7.0.2",
@@ -51,14 +43,22 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
     "sharp": "^0.35.3",
-    "tailwindcss": "^4.3.3",
-    "typescript": "~6.0.3",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
-    "satori": "^0.29.0"
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "eslint": "^9.39.1",
+    "eslint-config-next": "^16.2.3",
+    "postcss": "^8.5.23",
+    "puppeteer": "^25.5.0",
+    "satori": "^0.29.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.3"
   },
   "overrides": {
     "brace-expansion": "5.0.9",
