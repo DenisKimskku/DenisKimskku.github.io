@@ -2,6 +2,8 @@
 title: "Which Model Is Actually Serving You? IRIS: Budgeted Black-Box Auditing of Model Substitution and Routing Dilution in LLM Gateways"
 date: "2026-07-25"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.20860"
+paperAuthors: "Yuewei Zhang, Zhi-Hai Zhang, Hanzhang Qin"
 description: "IRIS (Information-Rate Inspection from Strings) is a black-box, text-only auditing framework that prompts endpoints with random-generation challenges and uses cheap pilot runs to"
 tags: ["AI Agents"]
 readingTime: 10
@@ -119,7 +121,7 @@ The primary differentiator of IRIS is structural: it is the only framework capab
 ### Gateway Evaluation at Scale (OpenRouter)
 When deployed across 17 real-world commercial OpenRouter models (Section 6.2):
 - IRIS detects $\epsilon = 0.3$ dilution on 218 of the 272 margin-qualified pairs at a mean power of $0.85$ (with an empirical false-positive rate of $0.017$).
-- However, 54 of the 272 pairs (\$19.8\%$) are marked as "low-margin/indeterminate" (e.g., within Qwen3 8B/32B, or GPT-4.1 vs GPT-4o-mini). For these close relatives, the sampling distributions are too similar to reliably detect low-rate dilution within reasonable query budgets ($m=80$).
+- However, 54 of the 272 pairs ($19.8\%$) are marked as "low-margin/indeterminate" (e.g., within Qwen3 8B/32B, or GPT-4.1 vs GPT-4o-mini). For these close relatives, the sampling distributions are too similar to reliably detect low-rate dilution within reasonable query budgets ($m=80$).
 - When encountering an *unseen* (unenrolled) diluent, the "leave-one-out" validation shows that detection power degrades only marginally (dropping from $0.85$ to $0.78$ at $\epsilon = 0.3$), turning the estimation $\hat{\epsilon}$ into a strict lower bound.
 
 ---

@@ -2,6 +2,8 @@
 title: "Robust Watermarks Meet Backdoored Models: Evading Diffusion Semantic Watermarks via Stealthy Backdoor"
 date: "2026-08-05"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2608.00543"
+paperAuthors: "Jinyuan Liu, Tianshuo Cong, Pei Li, et al."
 description: "Robust Watermarks Meet Backdoored Models: Evading Diffusion Semantic Watermarks via Stealthy Backdoor"
 tags: ["Backdoors", "Adversarial Attacks", "Watermarking"]
 readingTime: 5

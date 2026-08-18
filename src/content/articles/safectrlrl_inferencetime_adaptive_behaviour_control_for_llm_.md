@@ -95,10 +95,10 @@ Where:
 *   $s \in [0, 1]$ represents the safety score (absence of toxic content).
 *   $\alpha = 0.6$ balances the quality/safety trade-off.
 *   $\beta = 10.0$ shapes reward sharpness, heavily penalizing minor deviations.
-*   $\theta = 0.8$ acts as a hard safety threshold. Any response that fails critical safety checks ($\min(M_{\text{crit}}) < \theta$) receives a reward of exactly \$0.0$.
+*   $\theta = 0.8$ acts as a hard safety threshold. Any response that fails critical safety checks ($\min(M_{\text{crit}}) < \theta$) receives a reward of exactly $0.0$.
 
 ### DQN Agent Architecture
-The controller is a Deep Q-Network (DQN) with a Multi-Layer Perceptron (MLP) architecture configured with layer dimensions `[512, 512, 256]`. It is trained over 5,000,000 timesteps with a learning rate of \$1.0 \times 10^{-4}$ and a replay buffer size of 100,000 transitions (as specified in Table 6).
+The controller is a Deep Q-Network (DQN) with a Multi-Layer Perceptron (MLP) architecture configured with layer dimensions `[512, 512, 256]`. It is trained over 5,000,000 timesteps with a learning rate of $1.0 \times 10^{-4}$ and a replay buffer size of 100,000 transitions (as specified in Table 6).
 
 ---
 
@@ -122,9 +122,9 @@ Table 1 highlights how SafeCtrl-RL compares against handcrafted prompt strategie
 | **Our Proposed**| **SafeCtrl-RL** | 0.833 | **0.647** | **0.898** | 0.894 | **0.818** | **+0.513** |
 
 ### Key Takeaways from the Evaluation
-1.  **Consistent Generalization:** Unlike handcrafted strategies, which display high variance across models (e.g., `ai_enhanced` scores \$0.869$ on BlackSheep but drops to \$0.497$ on DialoGPT), SafeCtrl-RL delivers stable safety gains across all evaluated architectures.
-2.  **Failure of Search-Based Optimization:** Offline optimization methods like OPRO and TextGradient perform poorly. OPRO achieved a Macro-$P_{\text{Score}}$ of just \$0.342$. Because these methods are optimized offline, they struggle to adapt to the highly dynamic context of real-time dialogue.
-3.  **High Efficiency:** Figure 2 demonstrates that SafeCtrl-RL forms a clear upper efficiency envelope. It converges to highly optimal, safe outputs in an average of **3.7 iterations**, whereas fixed, handcrafted strategies require \$4.5$ to \$5.2$ iterations to reach comparable safety levels.
+1.  **Consistent Generalization:** Unlike handcrafted strategies, which display high variance across models (e.g., `ai_enhanced` scores $0.869$ on BlackSheep but drops to $0.497$ on DialoGPT), SafeCtrl-RL delivers stable safety gains across all evaluated architectures.
+2.  **Failure of Search-Based Optimization:** Offline optimization methods like OPRO and TextGradient perform poorly. OPRO achieved a Macro-$P_{\text{Score}}$ of just $0.342$. Because these methods are optimized offline, they struggle to adapt to the highly dynamic context of real-time dialogue.
+3.  **High Efficiency:** Figure 2 demonstrates that SafeCtrl-RL forms a clear upper efficiency envelope. It converges to highly optimal, safe outputs in an average of **3.7 iterations**, whereas fixed, handcrafted strategies require $4.5$ to $5.2$ iterations to reach comparable safety levels.
 
 ### Behavioral Retention (Unlearning Persistence)
 A key finding in Section 5.4 is the persistence of safe behaviors even after removing the dynamic controller. By providing a minimal "Consistency Instruction" during post-safeguard evaluation (Section D.2), the researchers measured the model's behavioral retention:

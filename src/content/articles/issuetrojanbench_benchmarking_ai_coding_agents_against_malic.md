@@ -2,6 +2,8 @@
 title: "IssueTrojanBench: Benchmarking AI Coding Agents Against Malicious Issue Requests"
 date: "2026-07-25"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.20759"
+paperAuthors: "Ankur Singh, Jinqiu Yang, Tse-Hsun Chen"
 description: "IssueTrojanBench is a fully automated evaluation framework that tests autonomous coding agents against indirect prompt injection attacks disguised as legitimate software issue"
 tags: ["Prompt Injection", "Data Poisoning", "AI Agents", "Supply Chain Security"]
 readingTime: 11

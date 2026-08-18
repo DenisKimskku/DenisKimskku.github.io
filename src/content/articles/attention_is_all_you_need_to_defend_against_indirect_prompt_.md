@@ -2,6 +2,8 @@
 title: "Attention is All You Need to Defend Against Indirect Prompt Injection Attacks in LLMs"
 date: "2026-08-08"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2512.08417"
+paperAuthors: "Yinan Zhong, Qianhao Miao, Yanjiao Chen, et al."
 description: "RENNERVATE uses attention features for fine-grained token detection"
 tags: ["Prompt Injection", "AI Agents"]
 readingTime: 5

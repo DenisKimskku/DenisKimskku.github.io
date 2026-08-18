@@ -16,7 +16,7 @@ headerImage: "/images/news/sok_adversarial_robustness_of_the_variational_quantum
 ## TLDR
 - **What**: A unified red-teaming benchmark (VQE-AdvBench) evaluates seven adversarial attacks on the Variational Quantum Eigensolver (VQE), demonstrating that noise-induced attacks targeting Zero-Noise Extrapolation (ZNE) and circuit-level backdoors are the most destructive.
 - **Who's at risk**: Cloud-hosted "VQE-as-a-service" deployments, quantum chemistry simulation pipelines, and downstream high-stakes applications like quantum drug discovery and materials science.
-- **Key number**: Noise-induced attacks (specifically the FreeDrift variant) achieve up to an \$11.35\times$ error amplification on $H_2$ (\$12.48\times$ on $H_3^+$) on simulated IBM backends under ZNE error mitigation.
+- **Key number**: Noise-induced attacks (specifically the FreeDrift variant) achieve up to an $11.35\times$ error amplification on $H_2$ ($12.48\times$ on $H_3^+$) on simulated IBM backends under ZNE error mitigation.
 
 ---
 
@@ -110,9 +110,9 @@ Table II tracks the effectiveness of the three QNBAD variants targeting the ZNE 
 | | SilentShift (QS) | 0.0633 (1.34x) | 0.2784 (2.67x) | 0.1328 (1.89x) |
 
 ### Critical Analysis of Results
-- **QDoor is effectively a failure in this setting**: QDoor yields negligible error amplification, hovering between \$0.94\times$ and \$1.37\times$ across all devices. The approximate-synthesis trigger has too little parameter-space room to inject meaningful errors within these small, shallow circuits.
-- **ZNE attacks are the most dangerous**: FreeDrift (QF) achieves a devastating peak geometric mean error amplification of \$8.84\times$ on CAI. This occurs because the attack directly exploits the ZNE mathematical extrapolation step; by subtly bending the noise curve at scaled levels, the zero-noise limit calculation extrapolates to a wildly incorrect energy value.
-- **Iterative perturbation dominates single-step**: Parameter-space PGD consistently outperforms FGSM (e.g., \$6.15\times$ vs. \$3.38\times$ error amplification on MON), demonstrating that multi-step iterative optimization finds far more damaging parameter perturbations under a fixed perturbation budget ($\epsilon = 0.25$ rad).
+- **QDoor is effectively a failure in this setting**: QDoor yields negligible error amplification, hovering between $0.94\times$ and $1.37\times$ across all devices. The approximate-synthesis trigger has too little parameter-space room to inject meaningful errors within these small, shallow circuits.
+- **ZNE attacks are the most dangerous**: FreeDrift (QF) achieves a devastating peak geometric mean error amplification of $8.84\times$ on CAI. This occurs because the attack directly exploits the ZNE mathematical extrapolation step; by subtly bending the noise curve at scaled levels, the zero-noise limit calculation extrapolates to a wildly incorrect energy value.
+- **Iterative perturbation dominates single-step**: Parameter-space PGD consistently outperforms FGSM (e.g., $6.15\times$ vs. $3.38\times$ error amplification on MON), demonstrating that multi-step iterative optimization finds far more damaging parameter perturbations under a fixed perturbation budget ($\epsilon = 0.25$ rad).
 
 ---
 
@@ -144,6 +144,6 @@ VQE-as-a-service pipelines are highly vulnerable to silent parameter and noise-m
 
 ## Den's Take
 
-While VQE-AdvBench successfully systematizes attacks on variational workflows, it glosses over a fundamental weakness in the adversary's playbook: the statistical fragility of Zero-Noise Extrapolation (ZNE) curve-fitting. The paper demonstrates that FreeDrift achieves up to an \$11.35\times$ error amplification on $H_2$, but manipulating noise levels ($\lambda$) at the physical layer without distorting the overall fitting residuals is exceptionally difficult. Real-world VQE operators do not just accept the extrapolated zero-noise value blindly; they inspect the polynomial or exponential fit of the expectation values across the noise factors. A localized perturbation designed to spike the final energy estimation will inevitably produce a poor goodness-of-fit metric, which serves as an immediate, passive defense.
+While VQE-AdvBench successfully systematizes attacks on variational workflows, it glosses over a fundamental weakness in the adversary's playbook: the statistical fragility of Zero-Noise Extrapolation (ZNE) curve-fitting. The paper demonstrates that FreeDrift achieves up to an $11.35\times$ error amplification on $H_2$, but manipulating noise levels ($\lambda$) at the physical layer without distorting the overall fitting residuals is exceptionally difficult. Real-world VQE operators do not just accept the extrapolated zero-noise value blindly; they inspect the polynomial or exponential fit of the expectation values across the noise factors. A localized perturbation designed to spike the final energy estimation will inevitably produce a poor goodness-of-fit metric, which serves as an immediate, passive defense.
 
 As I have previously noted when reviewing quantum backdoor attacks, partitioning quantum circuits can mask or expose malicious trigger structures, a concept that directly connects to how VQE-AdvBench's circuit-level backdoors are affected by transpilation. Ultimately, the threat to "VQE-as-a-service" lies less in sophisticated noise manipulation and more in our current lack of standardized, tamper-evident logging for classical-to-quantum compilation pipelines. Until we secure the transpilation boundary, even basic gate-injection attacks will remain viable.

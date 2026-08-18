@@ -2,6 +2,8 @@
 title: "Data Leakage Prevention in Agentic Applications via Preemptive Hardening"
 date: "2026-07-25"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.18847"
+paperAuthors: "Akansha Shukla, Emily Bellov, Parth Atulbhai Gandhi, et al."
 description: "An automated pre-deployment pipeline that statically analyzes multi-agent source code and configurations to generate targeted code patches and runtime guardrails, systematically"
 tags: ["Prompt Injection", "AI Agents"]
 readingTime: 9

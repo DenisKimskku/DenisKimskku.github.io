@@ -87,7 +87,7 @@ A Metamorphic Relation (MR) is defined as $MR = \langle R_i, T, R_o \rangle$, wh
 
 | MR | Target CWE | Adversarial Transformation ($T$) | Expected Secure Output ($R_o$) |
 |---|---|---|---|
-| **MR1** | 89 (SQLi) | Tautology inject. | $|f(x')| \le |f(x)|$ |
+| **MR1** | 89 (SQLi) | Tautology inject. | $\|f(x')\| \le \|f(x)\|$ |
 | **MR2** | 79 (XSS) | Script tag inject. | HTML escaped |
 | **MR3** | 78 (CmdInj) | Shell cmd append | No process spawn |
 | **MR4** | 22 (PathTr) | Path trav. prefix | Access denied |

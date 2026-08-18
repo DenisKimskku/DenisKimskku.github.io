@@ -2,6 +2,8 @@
 title: "InterSAGE: The Secure and Verifiable Interoperability Protocol for An Internet of Agents"
 date: "2026-08-16"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2608.13030"
+paperAuthors: "Zhenhua Zou, Sheng Guo, Qiuyang Zhan, et al."
 description: "InterSAGE: The Secure and Verifiable Interoperability Protocol for An Internet of Agents"
 tags: ["MCP", "AI Agents"]
 readingTime: 5

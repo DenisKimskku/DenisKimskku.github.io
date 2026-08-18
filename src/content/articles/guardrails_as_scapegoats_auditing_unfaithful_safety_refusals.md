@@ -2,6 +2,8 @@
 title: "Guardrails as Scapegoats: Auditing Unfaithful Safety Refusals in Tool-Augmented LLM Agents"
 date: "2026-07-27"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.19449"
+paperAuthors: "Aarushi Singh"
 description: "When backend APIs silently fail (returning HTTP 200 with empty or null payloads), tool-augmented Large Language Models (LLMs) primed with safety-centric system prompts falsely"
 tags: ["AI Agents", "Privacy"]
 readingTime: 9

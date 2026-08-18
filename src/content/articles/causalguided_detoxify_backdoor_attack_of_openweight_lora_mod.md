@@ -2,6 +2,8 @@
 title: "Causal-Guided Detoxify Backdoor Attack of Open-Weight LoRA Models"
 date: "2026-08-10"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2512.19297"
+paperAuthors: "Linzhi Chen, Yang Sun, Hongru Wei, et al."
 description: "CBA synthesizes data and merges adapters to implant stealthy backdoors"
 tags: ["Data Poisoning", "Backdoors", "Fuzzing"]
 readingTime: 5

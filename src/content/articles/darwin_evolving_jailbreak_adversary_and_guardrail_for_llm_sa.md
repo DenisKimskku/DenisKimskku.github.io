@@ -2,6 +2,8 @@
 title: "DARWIN: Evolving Jailbreak Adversary and Guardrail for LLM Safety Evaluation and Protection"
 date: "2026-07-24"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.19829"
+paperAuthors: "Weiwei Qi, Zefeng Wu, Zhilin Guo, et al."
 description: "An evolutionary attack-defense framework (DARWIN) that pairs a genetic, Q-learning-driven black-box jailbreak generator (DARWIN-Attack) with an online adversarial training"
 tags: ["Jailbreaking", "RAG", "Adversarial Attacks", "AI Agents"]
 readingTime: 9

@@ -2,6 +2,8 @@
 title: "CPInj: Uncovering Prompt Injection Risks in Textual Collaborative Prompt Optimization"
 date: "2026-07-26"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.18622"
+paperAuthors: "Xinting Liao, Behnoosh Zamanlooy, Masoumeh Shafieinejad, et al."
 description: "CPInj is a multi-objective textual gradient attack that injects highly persistent and stealthy adversarial instructions into collaborative prompt optimization loops, completely"
 tags: ["Prompt Injection", "Data Poisoning", "Adversarial Attacks", "Vulnerabilities"]
 readingTime: 11

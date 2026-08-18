@@ -181,11 +181,11 @@ To verify that FinCAD does not destroy the general reasoning capabilities of the
 
 | Benchmark | Phi-4-14B (Baseline) | Phi-4-14B (FinCAD) | Qwen2.5-14B (Baseline) | Qwen2.5-14B (FinCAD) |
 |---|---|---|---|---|
-| **GSM8K** | \$82.7\%$ | \$83.2\%$ | \$90.3\%$ | \$90.7\%$ |
-| **MMLU-Pro** | \$23.2\%$ | \$23.0\%$ | \$46.6\%$ | \$48.7\%$ |
-| **FinEval** | \$50.9\%$ | \$58.0\%$ | \$51.6\%$ | \$51.0\%$ |
-| **HumanEval** | \$97.0\%$ | \$100.0\%$ | \$99.4\%$ | \$100.0\%$ |
-| **Mean** | **\$59.8\%$** | **\$62.0\%$ (+2.2 pts)** | **\$68.1\%$** | **\$68.2\%$ (+0.1 pts)** |
+| **GSM8K** | $82.7\%$ | $83.2\%$ | $90.3\%$ | $90.7\%$ |
+| **MMLU-Pro** | $23.2\%$ | $23.0\%$ | $46.6\%$ | $48.7\%$ |
+| **FinEval** | $50.9\%$ | $58.0\%$ | $51.6\%$ | $51.0\%$ |
+| **HumanEval** | $97.0\%$ | $100.0\%$ | $99.4\%$ | $100.0\%$ |
+| **Mean** | **$59.8\%$** | **$62.0\%$ (+2.2 pts)** | **$68.1\%$** | **$68.2\%$ (+0.1 pts)** |
 
 As Table 1 shows, FinCAD leaves general-purpose capabilities completely intact, with mean accuracy remaining within $\pm1.7$ points across all tested models (and even improving on Phi-4-14B).
 
@@ -195,11 +195,11 @@ Backtesting was performed over an in-sample (IS) window of 2010–2020 and an ou
 | Model / Ticker | IS Ending Value (\$K) - Base | IS Ending Value (\$K) - FinCAD | IS Delta | OOS Ending Value (\$K) - Base | OOS Ending Value (\$K) - FinCAD | OOS Delta |
 |---|---|---|---|---|---|---|
 | **Qwen2.5-14B** | | | | | | |
-| NVDA | \$1089K | \$237K | $-78.2\%$ | \$128K | \$128K | \$0.0\%$ |
+| NVDA | \$1089K | \$237K | $-78.2\%$ | \$128K | \$128K | $0.0\%$ |
 | MSFT | \$652K | \$255K | $-60.8\%$ | \$100K | \$108K | $+8.0\%$ |
 | AAPL | \$982K | \$806K | $-17.9\%$ | \$115K | \$117K | $+1.1\%$ |
-| NFLX | \$2572K | \$1491K | $-42.0\%$ | \$101K | \$101K | \$0.0\%$ |
-| AMZN | \$1237K | \$889K | $-28.2\%$ | \$112K | \$112K | \$0.0\%$ |
+| NFLX | \$2572K | \$1491K | $-42.0\%$ | \$101K | \$101K | $0.0\%$ |
+| AMZN | \$1237K | \$889K | $-28.2\%$ | \$112K | \$112K | $0.0\%$ |
 | **Mean Mega** | | | **$-45.4\%$** | | | **$+1.8\%$** |
 
 On Qwen2.5-14B, FinCAD shaved off **$-45.4\%$** of the artificially inflated in-sample returns, while remaining completely inactive on 2025 out-of-sample dates (where the model has no memorized events).

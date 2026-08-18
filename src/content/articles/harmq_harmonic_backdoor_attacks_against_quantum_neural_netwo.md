@@ -35,7 +35,7 @@ Quantum Machine Learning (QML) is rapidly transitioning from theoretical physics
 
 In the current Noisy Intermediate-Scale Quantum (NISQ) era, hardware is heavily constrained by qubits and noise. This introduces two fundamental bottlenecks that render classical backdoor attacks useless:
 
-1. **Aggressive Downsampling (Challenge 1):** Due to limited qubit resources, high-dimensional inputs (like \$28 \times 28$ MNIST images) must be compressed down to \$16 \times 16$ or even $4 \times 4$ before being encoded into quantum states. Classical backdoor triggers (such as BadNets' small pixel patches or high-frequency watermarks) are completely obliterated or diluted during this downsampling step.
+1. **Aggressive Downsampling (Challenge 1):** Due to limited qubit resources, high-dimensional inputs (like $28 \times 28$ MNIST images) must be compressed down to $16 \times 16$ or even $4 \times 4$ before being encoded into quantum states. Classical backdoor triggers (such as BadNets' small pixel patches or high-frequency watermarks) are completely obliterated or diluted during this downsampling step.
 2. **Spectral Learning Bias (Challenge 2):** Parameterized Quantum Circuits (PQCs) naturally express functions as Fourier series:
    $$f_\theta(x) = \sum_{\omega \in \Omega} c_\omega(\theta)e^{i\omega x}$$
    For a PQC with $L$ layers, the accessible frequency spectrum is bounded by $\Omega_{PQC} = \{-L, -(L-1), \dots, L-1, L\}$. Because NISQ circuits are shallow (small $L$), they possess an intrinsic bias toward learning smooth, low-frequency functions. They are mathematically incapable of learning the sharp, high-frequency, localized patterns utilized by classical backdoor triggers.
@@ -82,7 +82,7 @@ $$\delta(i, j) = A \cdot \sin\left(\frac{2\pi f \cdot p}{H' \cdot W'}\right)$$
 where $A$ represents the trigger strength (amplitude) and $f$ is the frequency parameter regulating the sine wave cycles.
 
 ### Step 2: Trigger Upsampling and Injection
-To ensure the trigger survives preprocessing, the coarse grid $\delta$ is upsampled to the original image dimensions $H \times W$ using nearest-neighbor interpolation. This creates a *block-aligned uniform structure*. When the downsampler later shrinks the image, the uniform blocks average out perfectly back to the original $\delta(i, j)$ values, preserving \$100\%$ of the trigger's signal.
+To ensure the trigger survives preprocessing, the coarse grid $\delta$ is upsampled to the original image dimensions $H \times W$ using nearest-neighbor interpolation. This creates a *block-aligned uniform structure*. When the downsampler later shrinks the image, the uniform blocks average out perfectly back to the original $\delta(i, j)$ values, preserving $100\%$ of the trigger's signal.
 
 The poisoned image $\hat{x}$ is constructed by element-wise addition:
 $$\hat{x}(i, j) = x(i, j) + \delta\left(\lfloor \frac{i \cdot H'}{H} \rfloor, \lfloor \frac{j \cdot W'}{W} \rfloor\right)$$
@@ -122,7 +122,7 @@ def inject_trigger(image, trigger_grid, H, W):
 
 ## Key Results
 
-The authors evaluated HarmQ against various baselines on a simulated 8-qubit QNN running on `TorchQuantum` [16]. The experiments targeted a 4-class classification task using the MNIST and Fashion-MNIST (F-MNIST) datasets downsampled to \$16 \times 16$ pixels. 
+The authors evaluated HarmQ against various baselines on a simulated 8-qubit QNN running on `TorchQuantum` [16]. The experiments targeted a 4-class classification task using the MNIST and Fashion-MNIST (F-MNIST) datasets downsampled to $16 \times 16$ pixels. 
 
 ### Performance Comparison on QNN1-10 (10 Layers, 8 Qubits)
 
@@ -140,7 +140,7 @@ The authors evaluated HarmQ against various baselines on a simulated 8-qubit QNN
 ### Skeptical Analysis of the Evaluation
 While the quantitative results are remarkably strong (e.g., HarmQ hitting **99.98% ASR**), practitioners must look closely at the scale of the evaluation. The models used are extremely small "toy" models by modern classical standards:
 - The QNNs have only 8 qubits.
-- The input images are aggressively downsampled to \$16 \times 16$ pixels.
+- The input images are aggressively downsampled to $16 \times 16$ pixels.
 - The classification is restricted to a 4-class subset of MNIST/F-MNIST.
 
 This scale is typical for NISQ-era simulators due to the exponential classical overhead of simulating deeper quantum systems. However, within these bounds, the performance gap is massive. Traditional attacks completely fail because their spatial patterns vanish during preprocessing, whereas HarmQ’s harmonic trigger maps perfectly onto the natural state representations of the QNN.
@@ -177,7 +177,7 @@ If you are deploying QNN models using third-party training data or outsourcing t
 
 1. **Apply High-Pass Filtering on Training Inputs:** Since QNNs preferentially learn low-frequency harmonic triggers, apply high-pass filters to incoming training datasets. Inspect samples that demonstrate unusually smooth, low-frequency periodic variations across the spatial domain.
 2. **Implement Input-Space Randomized Smoothing:** Before feeding images into the downsampler, apply random spatial rotations, translations, or pixel-level jitter. This breaks up the precise block-aligned structure of HarmQ triggers, causing them to dilute during downsampling.
-3. **Rigorous Fine-Tuning on Verified Data:** Retrain incoming models on a small, \$100\%$ verified clean dataset. Table VI shows that after 15 epochs of fine-tuning, HarmQ's ASR drops from **99.95%** to **84.82%**. While this does not completely eliminate the backdoor, it mitigates its reliability.
+3. **Rigorous Fine-Tuning on Verified Data:** Retrain incoming models on a small, $100\%$ verified clean dataset. Table VI shows that after 15 epochs of fine-tuning, HarmQ's ASR drops from **99.95%** to **84.82%**. While this does not completely eliminate the backdoor, it mitigates its reliability.
 4. **Track Quantum State Representation Fidelity:** Use quantum simulation frameworks to measure the state fidelity distance:
    $$d(\psi_i, \psi_j) = \sqrt{1 - |\langle \psi_i | \psi_j \rangle|^2}$$
    of validation samples at the final PQC layer. Map these distances via t-SNE to ensure no separate clusters are forming on inputs with minor low-frequency variances.

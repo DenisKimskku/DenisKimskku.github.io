@@ -2,6 +2,8 @@
 title: "A Causal Perspective for Enhancing Jailbreak Attack and Defense"
 date: "2026-08-17"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2602.04893"
+paperAuthors: "Licheng Pan, Yunsheng Lu, Jiexi Liu, et al."
 description: "Framework uses causal discovery to link prompt features to jailbreak success"
 tags: ["Jailbreaking", "Adversarial Attacks"]
 readingTime: 5

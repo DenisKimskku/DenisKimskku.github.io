@@ -34,7 +34,7 @@ Real-world cyber-physical systems—such as autonomous driving fleets (e.g., uti
 | **Attacker** | Compromised FRL client agents (e.g., malicious autonomous vehicles or rogue edge nodes) with full/partial knowledge of local trajectories, gradients, and global model parameters (Byzantine setting). |
 | **Victim** | Central coordination server orchestrating global policy updates in safety-critical deployments. |
 | **Goal** | Manipulate the global control model's weights to degrade performance, induce physical collisions, or drop cache hit rates. |
-| **Budget** | Manipulates local gradients of up to fraction $\alpha < 0.5$ of total clients ($K=10$, default \$20\%$ malicious in experimental setups). |
+| **Budget** | Manipulates local gradients of up to fraction $\alpha < 0.5$ of total clients ($K=10$, default $20\%$ malicious in experimental setups). |
 
 ---
 

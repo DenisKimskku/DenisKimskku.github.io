@@ -37,7 +37,7 @@ In their paper, Chen et al. (2026) introduce **IterInject**, an optimization fra
 | **Attacker** | Black-box access. The attacker cannot access system prompts, user queries, or model parameters $\theta$. They can only modify one retrieved external source (e.g., an email body or a web document). |
 | **Victim** | Autonomous LLM-based agents (e.g., Claude Code, GLM-5.1, MiniMax-M2.7, DeepSeek-V4-Flash, Qwen3.5-27B). |
 | **Goal** | Force the victim agent to execute a target malicious action $a$ (e.g., exfiltrating environment variables, reading private code files, or running unauthorized bash commands). |
-| **Budget** | Highly query-efficient black-box optimization; operates with zero gradient access within a strict limit of $N = 7$ to \$10$ iterative victim interactions. |
+| **Budget** | Highly query-efficient black-box optimization; operates with zero gradient access within a strict limit of $N = 7$ to $10$ iterative victim interactions. |
 
 ---
 

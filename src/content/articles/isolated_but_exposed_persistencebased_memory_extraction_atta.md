@@ -2,6 +2,8 @@
 title: "Isolated but Exposed: Persistence-Based Memory Extraction Attack on LLM Agents"
 date: "2026-07-30"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.23444"
+paperAuthors: "Xinyu Gao, Wenyu Chen, Xiangtao Meng, et al."
 description: "SPORE (State Persistence-based Memory Extraction) is an extraction attack that bypasses LLM agent memory isolation by decoupling adversarial control commands (stored in short-term"
 tags: ["Adversarial Attacks", "AI Agents", "Privacy"]
 readingTime: 11

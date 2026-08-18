@@ -2,6 +2,8 @@
 title: "HateBench: Benchmarking Hate Speech Detectors on LLM-Generated Content and Hate Campaigns"
 date: "2026-08-09"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2501.16750"
+paperAuthors: "Xinyue Shen, Yixin Wu, Yiting Qu, et al."
 description: "HateBench: Benchmarking Hate Speech Detectors on LLM-Generated Content and Hate Campaigns"
 tags: ["Adversarial Attacks"]
 readingTime: 5

@@ -2,6 +2,8 @@
 title: "TriShield: Zero-Utility-Loss Defense Against Privacy Backdoors in Federated Language Model Fine-Tuning via Orthogonal Gradient Projection and Optimizer State Entanglement"
 date: "2026-08-01"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.27940"
+paperAuthors: "Cheng Wei"
 description: "TriShield is a three-layer client-side defense that blocks privacy backdoors in federated parameter-efficient fine-tuning (PEFT) without sacrificing model utility by combining"
 tags: ["Backdoors", "Adversarial Attacks", "Privacy"]
 readingTime: 11
@@ -165,10 +167,10 @@ The table below displays the metrics recorded during local hardware validation:
 
 | Defense Stage | Gradient Norm (LoRA_A avg) | Token Reconstruction Rate | Downstream Task Accuracy | Notes |
 |---|---|---|---|---|
-| **No Defense (Active Attack)** | \$4.13 \times 10^{-2}$ | **100%** | 53.3% | Successful NeuroImprint data extraction. |
-| **Layer 1 Only (PAD)** | \$5.06 \times 10^{-2}$ | **100%** | — | Destroys slot-sample mapping, but gradient norms remain high. |
-| **Layer 1 + 2 (PAD + SVI)** | \$4.58 \times 10^{-2}$ | **100%** | — | Momentum is contaminated; analytical inversion fails. |
-| **TriShield (PAD + SVI + ZUOP)** | \$3.08 \times 10^{-3}$ | **0%** | 46.7%* | Gradient norm dropped by 13$\times$. Backdoor eliminated. |
+| **No Defense (Active Attack)** | $4.13 \times 10^{-2}$ | **100%** | 53.3% | Successful NeuroImprint data extraction. |
+| **Layer 1 Only (PAD)** | $5.06 \times 10^{-2}$ | **100%** | — | Destroys slot-sample mapping, but gradient norms remain high. |
+| **Layer 1 + 2 (PAD + SVI)** | $4.58 \times 10^{-2}$ | **100%** | — | Momentum is contaminated; analytical inversion fails. |
+| **TriShield (PAD + SVI + ZUOP)** | $3.08 \times 10^{-3}$ | **0%** | 46.7%* | Gradient norm dropped by 13$\times$. Backdoor eliminated. |
 
 *\*Note: The 46.7% accuracy value on the 15-sample local demo represents expected statistical noise on a tiny validation sample, not general utility degradation. Large-scale utility is preserved as shown below.*
 

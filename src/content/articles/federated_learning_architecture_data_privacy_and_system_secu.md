@@ -81,7 +81,7 @@ To prevent membership inference, the authors integrated PrivacyEngine into the l
 The DP parameters were kept constant across all experiments:
 - **Noise multiplier ($\sigma$)**: 5.0
 - **Max gradient norm**: 0.5
-- **Target $\delta$**: \$10^{-5}$
+- **Target $\delta$**: $10^{-5}$
 
 The cumulative privacy budget $\epsilon$ was tracked across 10 global rounds of training.
 

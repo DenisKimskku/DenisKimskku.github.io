@@ -2,6 +2,8 @@
 title: "FedLSG: LLM-Enhanced Semantic Calibration for Federated Graph Backdoor Defense"
 date: "2026-07-27"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.19674"
+paperAuthors: "Chenyu Zhou, Yabin Peng, Wei Huang, et al."
 description: "FedLSG is a federated graph backdoor defense that uses a student-teacher Large Language Model (LLM) architecture to translate local graph structures and client update behaviors"
 tags: ["Data Poisoning", "Backdoors", "Privacy"]
 readingTime: 11

@@ -2,6 +2,8 @@
 title: "SafeFlow: Semantic Information-Flow Control for Blocking Malicious Propagation in Multi-Agent Systems"
 date: "2026-08-02"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.25255"
+paperAuthors: "Haowen Dai, Zonghao Ying, Wenfeng Li, et al."
 description: "SafeFlow is a multi-agent defense framework that prevents malicious actions by formalizing task delegation as a semantic information-flow control problem, propagating 'taint'"
 tags: ["Prompt Injection", "AI Agents"]
 readingTime: 9

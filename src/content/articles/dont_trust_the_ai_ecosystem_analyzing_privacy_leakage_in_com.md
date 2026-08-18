@@ -2,6 +2,8 @@
 title: "Don't Trust the AI Ecosystem: Analyzing Privacy Leakage in Compromised Open-Source Components"
 date: "2026-08-01"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.27886"
+paperAuthors: "Jin-Seong Kim, Han-Ju Lee, Seok-Won Hong, et al."
 description: "GradLock is a training-time supply chain attack that stealthily encodes raw training images directly into the weights of a neural network by freezing specific parameter"
 tags: ["Supply Chain Security", "Privacy"]
 readingTime: 13
@@ -199,7 +201,7 @@ In contrast, GradLock demonstrates strong structural resilience, preserving low-
 - **Fine-Tuning**: After fine-tuning the pruned model for 20 epochs to simulate transfer learning, the underlying identity features remain recognizable despite the introduced noise.
 
 ### Time Complexity Comparison
-Post-training MI approaches require computationally intensive iterative optimization through external generators. For instance, PPDG takes 48,423.59 seconds (approximately 13.4 hours) to reconstruct a single batch of CelebA faces from a ResNet-18 model. GradLock, by directly querying targeted indices and applying the scaling inverse, achieves reconstruction in **0.29 seconds** on ResNet-18—representing a \$1.6 \times 10^5 \times$ speedup (Table 8). Across all evaluated architectures, GradLock achieves an average extraction latency of 0.377 seconds, representing instant extraction (< 1.0s).
+Post-training MI approaches require computationally intensive iterative optimization through external generators. For instance, PPDG takes 48,423.59 seconds (approximately 13.4 hours) to reconstruct a single batch of CelebA faces from a ResNet-18 model. GradLock, by directly querying targeted indices and applying the scaling inverse, achieves reconstruction in **0.29 seconds** on ResNet-18—representing a $1.6 \times 10^5 \times$ speedup (Table 8). Across all evaluated architectures, GradLock achieves an average extraction latency of 0.377 seconds, representing instant extraction (< 1.0s).
 
 ### User Deployment Study
 To evaluate practical feasibility, the authors conducted a blind deployment study involving 30 software engineering participants tasked with training a facial recognition classifier. 
@@ -214,7 +216,7 @@ To evaluate practical feasibility, the authors conducted a blind deployment stud
 Despite the high persistence and visual fidelity of the GradLock attack, several structural bottlenecks remain:
 
 1. **Permutation Defenses**: Because GradLock relies on deterministic indexing ($r_i$) mapped to specific coordinates in the final layer's weight matrix, any post-training optimization that applies channel shuffling or structural weight permutation (without altering the layer's mathematical output) could disrupt the location mapping, rendering the retrieved data useless.
-2. **Capacity Bottlenecks**: The attack is mathematically constrained by the dimensionality of the classification layer. To prevent task accuracy degradation, the authors limit injection to $\le 60\%$ of the final layer parameters. For a standard ResNet-18 model with a 1,000-class output, this limits total exfiltration capacity to approximately 146 images (at \$64 \times 64$ resolution). It cannot be used to silently exfiltrate massive, multi-gigabyte training sets.
+2. **Capacity Bottlenecks**: The attack is mathematically constrained by the dimensionality of the classification layer. To prevent task accuracy degradation, the authors limit injection to $\le 60\%$ of the final layer parameters. For a standard ResNet-18 model with a 1,000-class output, this limits total exfiltration capacity to approximately 146 images (at $64 \times 64$ resolution). It cannot be used to silently exfiltrate massive, multi-gigabyte training sets.
 3. **Requirement of Code Execution**: The threat model assumes the adversary has write-access to the training environment (i.e., via dependency confusion or compromised open-source libraries). If the training pipeline is strictly controlled and verified, the attack cannot execute.
 
 ---

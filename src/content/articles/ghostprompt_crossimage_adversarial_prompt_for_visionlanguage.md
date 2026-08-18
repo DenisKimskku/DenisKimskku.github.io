@@ -2,6 +2,8 @@
 title: "GhostPrompt: Cross-Image Adversarial Prompt for Vision-Language Models"
 date: "2026-07-27"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.19683"
+paperAuthors: "Li Zeng, Zeyu Ye, Meng Xie, et al."
 description: "GhostPrompt is a cross-image transferable adversarial prompt attack that uses a min-max optimization framework to optimize a single text suffix, hijacking Vision-Language Models"
 tags: ["Adversarial Attacks", "Vulnerabilities"]
 readingTime: 8

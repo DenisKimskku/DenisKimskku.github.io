@@ -2,6 +2,8 @@
 title: "Driving up Inference Energy on SNNs: Per-Sample and Universal Sponge Attacks"
 date: "2026-08-03"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.27990"
+paperAuthors: "Spyridon Raptis, Haralampos-G. Stratigopoulos"
 description: "The paper introduces the first universal, input-space sponge attack on Spiking Neural Networks (SNNs) processing native event-based data, alongside a baseline per-sample"
 tags: ["Vulnerabilities"]
 readingTime: 10
@@ -144,7 +146,7 @@ A real-world attacker cannot run a multi-iteration gradient optimization loop on
 
 ## Key Results
 
-The attacks were evaluated on three native event-based datasets representing different SNN architectures and modalities: NMNIST (digit vision, \$34 \times 34 \times 300$), SHD (spoken digit audio, \$700 \times 250$), and IBM DVS Gesture (gesture vision, \$128 \times 128 \times 1450$).
+The attacks were evaluated on three native event-based datasets representing different SNN architectures and modalities: NMNIST (digit vision, $34 \times 34 \times 300$), SHD (spoken digit audio, $700 \times 250$), and IBM DVS Gesture (gesture vision, $128 \times 128 \times 1450$).
 
 ### Performance Under Per-Sample and Universal Sponge Attacks
 
@@ -160,7 +162,7 @@ The attacks were evaluated on three native event-based datasets representing dif
 | | Per-Sample | 2.46$\times$ | 2.60$\times$ | 98.48% | -1.5 pp | 54,569 |
 | | Universal | 1.05$\times$ | 1.09$\times$ | 89.00% | -5.6 pp | 30,465 |
 
-### Estimated Loihi-1 Energy Footprint (Assuming \$23.6\text{ pJ}$ per SynOp)
+### Estimated Loihi-1 Energy Footprint (Assuming $23.6\text{ pJ}$ per SynOp)
 
 By mapping measured SynOps directly to Intel Loihi-1's hardware specifications, the authors demonstrate the practical physical impact of these attacks.
 
@@ -173,7 +175,7 @@ By mapping measured SynOps directly to Intel Loihi-1's hardware specifications, 
 | **IBM DVS Gesture** | Per-Sample | 8.98 mJ | 22.22 mJ | +13.24 mJ |
 | | Universal | 8.98 mJ | 9.79 mJ | +808 $\mu$J |
 
-On the high-dimensional IBM DVS Gesture dataset, a per-sample attack adds \$13.24\text{ mJ}$ per inference (a massive 147% overhead). If an edge device executes one gesture inference per second under the universal sponge attack alone, it accumulates over \$25.5\text{ kJ}$ (~$7\text{ Wh}$) of purely adversarial battery drain per year of continuous deployment.
+On the high-dimensional IBM DVS Gesture dataset, a per-sample attack adds $13.24\text{ mJ}$ per inference (a massive 147% overhead). If an edge device executes one gesture inference per second under the universal sponge attack alone, it accumulates over $25.5\text{ kJ}$ (~$7\text{ Wh}$) of purely adversarial battery drain per year of continuous deployment.
 
 ---
 
@@ -181,7 +183,7 @@ On the high-dimensional IBM DVS Gesture dataset, a per-sample attack adds \$13.2
 
 - **Stealth Trade-off in Universal Sponges**: While the per-sample attack exhibits near-perfect preservation ($\ge 98.48\%$), the computationally viable universal attack suffers from noticeable accuracy drops. For example, on the Spiking Heidelberg Digits (SHD) dataset, classification accuracy drops by $10.35$ percentage points under the universal mask. In critical edge systems, this degradation might alert administrators to model malfunction.
 - **Strict White-Box Assumptions**: Generating both the per-sample and universal perturbations relies on access to SNN weights $\theta$ and network architecture. How effectively these binary masks transfer in a black-box setting remains an open question, and binary input patterns typically show lower transferability than continuous ones.
-- **Simulated Hardware Metrics**: The energy figures are extrapolated based on nominal Loihi-1 benchmarks (\$23.6\text{ pJ}$ per SynOp). They do not incorporate physical hardware quirks, such as dynamic memory bottlenecks, leakage current fluctuations, or state-update energy when processing extremely dense streams.
+- **Simulated Hardware Metrics**: The energy figures are extrapolated based on nominal Loihi-1 benchmarks ($23.6\text{ pJ}$ per SynOp). They do not incorporate physical hardware quirks, such as dynamic memory bottlenecks, leakage current fluctuations, or state-update energy when processing extremely dense streams.
 
 ---
 

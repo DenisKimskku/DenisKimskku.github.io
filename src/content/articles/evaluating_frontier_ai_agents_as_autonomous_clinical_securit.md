@@ -106,7 +106,7 @@ Table 5 and Table 6 show that both Claude Sonnet 4.6 and GPT-4.1 produced highly
 | **calibrated** | WDBC | 71.21 | 70.55 | -0.66 | 70.62 | -0.59 |
 | **hardened** | WDBC | 90.41 | 90.85 | +0.44 | 90.85 | +0.44 |
 | **mimic_baseline** | MIMIC-IV | 55.60 | 56.48 | +0.88 | 55.98 | +0.38 |
-| **mimic_calibrated** | MIMIC-IV | 59.60 | 59.60 | $\pm\$0.00 | 59.60 | $\pm\$0.00 |
+| **mimic_calibrated** | MIMIC-IV | 59.60 | 59.60 | $\pm$\$0.00 | 59.60 | $\pm$\$0.00 |
 | **mimic_hardened** | MIMIC-IV | 77.71 | 77.46 | -0.25 | 77.54 | -0.17 |
 
 ### Analysis of GPT-4o Failure Modes

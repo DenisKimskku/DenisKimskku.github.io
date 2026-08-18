@@ -104,7 +104,7 @@ The distribution of gold actions across the domains reveals structural differenc
 | **Total** | **1,897** | **1,544** | **353** | **844** | **587** | **113** |
 
 *Analysis of Action Distribution*:
-- **Asymmetric Domain Behavior**: The drug trade domain maps exclusively to `REFUSE` (\$100\%$), while the satire domain maps entirely to `SAFE-REDIRECT` (\$100\%$).
+- **Asymmetric Domain Behavior**: The drug trade domain maps exclusively to `REFUSE` ($100\%$), while the satire domain maps entirely to `SAFE-REDIRECT` ($100\%$).
 - **Linguistic Complexity**: As noted in Section 5.2, the fraud domain relies heavily on polite hedging tone (语气缓冲), demonstrating that safety filters cannot rely solely on lexical toxicity checks.
 - **Logographic Exploitation**: Prompts in the satire domain regularly combine punctuation separators (e.g., `上·面·那·桌`) and emojis, bypassing standard n-gram tokenizers while conveying clear semantic intent to human readers.
 
@@ -112,7 +112,7 @@ The distribution of gold actions across the domains reveals structural differenc
 
 ### Limitations & Open Questions
 
-1. **Taxonomy Completeness**: The "Other" category remains large (\$85$ instances in the self-harm domain), indicating that emerging internet evasion techniques are constantly evolving and challenging static categorization.
+1. **Taxonomy Completeness**: The "Other" category remains large ($85$ instances in the self-harm domain), indicating that emerging internet evasion techniques are constantly evolving and challenging static categorization.
 2. **Annotator Representation**: All prompts were constructed by a single primary annotator. While highly fluent in Chinese internet culture, this approach might not capture the full diversity of regional, generational, or platform-specific slang dialects (e.g., Weibo vs. Xiaohongshu).
 3. **Lack of Independent Inter-Annotator Agreement (IAA)**: The dataset construction did not employ dual-blind annotation with Kappa reporting; instead, a lead reviewer verified the primary annotator's designations.
 

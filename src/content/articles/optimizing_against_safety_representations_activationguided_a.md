@@ -92,9 +92,9 @@ $$e(\tilde{s}_i) = \tilde{s}_i^\top E$$
 As temperature $\tau \to 0$, the soft token vectors converge to a discrete one-hot representation, minimizing the "projection gap" that typically breaks continuous prompt tuning methods like PEZ.
 
 The authors use a **3-Phase "Slushy" Annealing Schedule** to manage this transition:
-1.  **Exploration (0% - 50% steps)**: $\tau$ decays from \$2.5 \to 1.0$. High entropy allows broad traversal of the embedding space.
-2.  **Refinement (50% - 75% steps)**: $\tau$ decays from \$1.0 \to 0.5$. The structure begins to form while remaining flexible.
-3.  **Solidification (75% - 100% steps)**: $\tau$ decays from \$0.5 \to 0.01$, forcing the continuous soft vectors to snap directly to real discrete tokens.
+1.  **Exploration (0% - 50% steps)**: $\tau$ decays from $2.5 \to 1.0$. High entropy allows broad traversal of the embedding space.
+2.  **Refinement (50% - 75% steps)**: $\tau$ decays from $1.0 \to 0.5$. The structure begins to form while remaining flexible.
+3.  **Solidification (75% - 100% steps)**: $\tau$ decays from $0.5 \to 0.01$, forcing the continuous soft vectors to snap directly to real discrete tokens.
 
 ### Algorithmic Implementation
 

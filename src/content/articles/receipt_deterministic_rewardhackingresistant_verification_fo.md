@@ -2,6 +2,8 @@
 title: "RECEIPT: Deterministic, Reward-Hacking-Resistant Verification for White-Box Agentic XSS Discovery"
 date: "2026-07-26"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.18575"
+paperAuthors: "Muxi Lyu, Karen Shieh, Yiwei Hou, et al."
 description: "RECEIPT is a deterministic, reward-hacking-resistant verification framework that isolates LLM security agents within ephemeral sandboxes and forces them to produce reproducible"
 tags: ["RAG", "AI Agents", "Vulnerabilities"]
 readingTime: 14

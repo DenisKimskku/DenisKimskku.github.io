@@ -14,9 +14,12 @@
 // and any `$...$` span that looks like prose rather than math. Fix by escaping
 // the literal dollar as `\$` or by closing the intended math.
 
-// A run of at least two words plus prose-only punctuation is not an equation.
+// An English function word inside a span means prose, not an equation.
 const PROSE_MARKER = /\b(?:the|and|for|with|that|from|per|under|between|which|were|when|while|these|those|each)\b/i;
+// Sentence punctuation alone is too weak: real math like `$cossim(gc, gbd)$`
+// trips ",\s+[a-z]{3}". Require it to be backed by several real words.
 const SENTENCE_PUNCT = /[.;:!?]\s+[a-z]|,\s+[a-z]{3}/i;
+const MIN_WORDS_FOR_PUNCT = 6;
 
 // LaTeX bodies legitimately contain words inside \text{...} and friends, so
 // strip those before judging whether a span reads as prose.
@@ -24,6 +27,17 @@ const TEXTISH = /\\(?:text|mathrm|mbox|textbf|textit|textrm|operatorname)\s*\{[^
 
 function stripCodeSpans(line) {
   return line.replace(/`[^`\n]*`/g, '');
+}
+
+// GFM splits table rows into cells at the BLOCK level, before any inline
+// math is parsed, so an unescaped `|` is a cell separator even in the middle
+// of `$...$`. That is precisely why articles write `$\|\delta\|_2$` with
+// escaped pipes. Mirroring that exactly -- split on unescaped `|` only -- is
+// both the correct model and what makes per-cell parity meaningful: a
+// "smarter" math-aware split lets two broken cells in one row cancel out and
+// hides real breakage like `$\pm\$0.00`, which ships raw LaTeX to readers.
+function splitRowIntoCells(row) {
+  return row.split(/(?<!\\)\|/);
 }
 
 // Split a body into paragraphs, dropping fenced code blocks and $$ display
@@ -54,7 +68,26 @@ function proseParagraphs(body) {
     }
     kept.push(stripCodeSpans(line));
   }
-  return kept.join('\n').split(/\n\s*\n/);
+  // Markdown splits table rows into cells and list items into their own
+  // blocks BEFORE math is parsed, so `$` parity has to be judged at that
+  // same granularity. Checking a whole paragraph instead hides the most
+  // common shape of this defect: a table row whose cells each carry one
+  // orphaned `$` sums to an even count per row while every cell renders
+  // wrong. That blind spot silently passed 21 real defects in one batch.
+  const units = [];
+  for (const block of kept.join('\n').split(/\n\s*\n/)) {
+    const rows = block.split('\n');
+    const isTable = rows.some((r) => /^\s*\|.*\|\s*$/.test(r));
+    if (!isTable) {
+      units.push(block);
+      continue;
+    }
+    for (const row of rows) {
+      if (/^\s*\|?[\s:|-]+\|?\s*$/.test(row)) continue; // separator row
+      for (const cell of splitRowIntoCells(row)) units.push(cell);
+    }
+  }
+  return units;
 }
 
 // Unescaped `$` positions, ignoring `\$`.
@@ -76,6 +109,30 @@ export function findBrokenMathDelimiters(body) {
     const pos = inlineDollars(para);
     if (pos.length === 0) continue;
 
+    // An escaped `\$` whose payload is LaTeX was never currency -- it is the
+    // defect's signature, and it catches what parity cannot: `\$336 \times
+    // 336$` (escaped opener, live closer) keeps an EVEN count and carries no
+    // prose, so both checks below miss it. Requiring LaTeX in the payload is
+    // what separates it from a real price: articles legitimately mix
+    // `from \$109 to \$219` with `$\phi_{t,i_t}$` in one paragraph, and a
+    // bare amount must never be flagged.
+    const escaped = [...para.matchAll(/\\\$/g)];
+    let flaggedMixed = false;
+    for (const e of escaped) {
+      const start = e.index + 2;
+      const nextDollar = para.slice(start).search(/(?<!\\)\$/);
+      const payload = para.slice(start, nextDollar === -1 ? start + 40 : start + nextDollar);
+      if (/\\[a-zA-Z]+|[\^_{}]/.test(payload)) {
+        findings.push({
+          kind: 'mixed-escaping',
+          excerpt: para.slice(Math.max(0, e.index - 40), e.index + 70).replace(/\s+/g, ' ').trim(),
+        });
+        flaggedMixed = true;
+        break;
+      }
+    }
+    if (flaggedMixed) continue;
+
     if (pos.length % 2 === 1) {
       const near = para.slice(Math.max(0, pos[pos.length - 1] - 60), pos[pos.length - 1] + 60);
       findings.push({
@@ -88,7 +145,11 @@ export function findBrokenMathDelimiters(body) {
     for (let i = 0; i + 1 < pos.length; i += 2) {
       const span = para.slice(pos[i] + 1, pos[i + 1]);
       const probe = span.replace(TEXTISH, '');
-      if (PROSE_MARKER.test(probe) || SENTENCE_PUNCT.test(probe)) {
+      const wordCount = (probe.match(/[a-zA-Z]{2,}/g) || []).length;
+      const readsAsProse =
+        PROSE_MARKER.test(probe) ||
+        (SENTENCE_PUNCT.test(probe) && wordCount >= MIN_WORDS_FOR_PUNCT);
+      if (readsAsProse) {
         // Dense LaTeX control sequences mean it really is math that merely
         // mentions a word like "for" inside an operator name.
         const ctrl = (probe.match(/\\[a-zA-Z]+/g) || []).length;

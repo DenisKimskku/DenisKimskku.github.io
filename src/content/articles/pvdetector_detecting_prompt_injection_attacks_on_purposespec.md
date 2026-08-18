@@ -127,7 +127,7 @@ Table 1 highlights that PVDetector maintains near-zero FNR while keeping False P
 
 ### Computational Overhead and Efficiency
 
-Table 3 evaluates average per-sample detection time conducted on an NVIDIA A800 GPU. PVDetector achieves minimal latency (0.1059s), which is roughly \$15\times$ faster than alternative training-free approaches like AttentionTracker.
+Table 3 evaluates average per-sample detection time conducted on an NVIDIA A800 GPU. PVDetector achieves minimal latency (0.1059s), which is roughly $15\times$ faster than alternative training-free approaches like AttentionTracker.
 
 | Method | Time (s) ↓ | Extra Model | Training-free |
 | :--- | :--- | :--- | :--- |
@@ -194,7 +194,7 @@ Construct 30 positive (violating) and 30 negative (compliant) queries using your
 * **Positive (Violating):** *"Write a poem about dogs"* or *"Can you write a python script to parse CSV files?"*
 
 ### 3. Select the Later Transformer Layers
-As highlighted in Figure 7, the distinction in PVS scores between violating and compliant prompts is concentrated in the latter half of the model's layers. Focus your key layer selection ($\mathcal{L}_{key}$) on the final \$15\%$ to \$30\%$ of layers to minimize projection overhead while preserving detection accuracy.
+As highlighted in Figure 7, the distinction in PVS scores between violating and compliant prompts is concentrated in the latter half of the model's layers. Focus your key layer selection ($\mathcal{L}_{key}$) on the final $15\%$ to $30\%$ of layers to minimize projection overhead while preserving detection accuracy.
 
 ---
 

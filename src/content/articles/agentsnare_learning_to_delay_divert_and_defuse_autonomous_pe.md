@@ -2,6 +2,8 @@
 title: "AgentSnare: Learning to Delay, Divert, and Defuse Autonomous Penetration Agents"
 date: "2026-07-31"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.26998"
+paperAuthors: "Ruoyu Wang, Heng Zhao, Renjie Wu, et al."
 description: "AgentSnare is a trajectory-adaptive cyber deception system that dynamically constructs, validates, and unfolds a logically consistent decoy environment to steer autonomous Large"
 tags: ["AI Agents", "Vulnerabilities"]
 readingTime: 10

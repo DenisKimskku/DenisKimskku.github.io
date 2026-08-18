@@ -2,6 +2,8 @@
 title: "On-Policy Distillation for LLM Safety: A Routing Approach to Template-Robust Realignment"
 date: "2026-07-31"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.27081"
+paperAuthors: "Yongjian Guo, Wanlun Ma, Lingyu Shen, et al."
 description: "Routing-based On-Policy Distillation (ROPD) realigns compromised Large Language Models (LLMs) by routing tokens to a frozen safety teacher (for harmful queries) and a frozen task"
 tags: ["Jailbreaking", "Backdoors", "AI Agents", "Supply Chain Security"]
 readingTime: 9

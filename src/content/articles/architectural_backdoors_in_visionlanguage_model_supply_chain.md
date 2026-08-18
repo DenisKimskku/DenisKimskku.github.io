@@ -2,6 +2,8 @@
 title: "Architectural Backdoors in Vision-Language Model Supply Chains via Representation Steering"
 date: "2026-07-30"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.25479"
+paperAuthors: "Maria Rosaria Briglia, Igor Maljkovic, Antonio Emanuele Cinà, et al."
 description: "An architectural backdoor attack that injects a dormant, trigger-gated steering vector into a Vision-Language Model's (VLM) intermediate representations by modifying the model's"
 tags: ["Data Poisoning", "Backdoors", "AI Agents", "Supply Chain Security"]
 readingTime: 11
@@ -74,7 +76,7 @@ $$\tilde{\mathcal{M}}(x) = h_L \circ \dots \circ h_{i+1}(\tilde{\phi}_i(x))$$
 
 To construct $s$, the attacker uses a calibration phase. Let $B$ be a set of benign prompts (neutral concepts) and $A$ be a set of targeted prompts containing the malicious concept (e.g., nudity, violence, brand names). 
 
-Instead of standard text-only steering (such as Arditi et al. [41]), which degrades when paired with visual tokens, the authors propose *multimodal steering*. They pair every prompt $p$ in $A$ and $B$ with a constant neutral visual input $p^{\text{vision}}_{\text{neutral}}$ (a solid black \$336 \times 336$ RGB image). This forces the model to process tokens through its joint visual-textual pathways during extraction.
+Instead of standard text-only steering (such as Arditi et al. [41]), which degrades when paired with visual tokens, the authors propose *multimodal steering*. They pair every prompt $p$ in $A$ and $B$ with a constant neutral visual input $p^{\text{vision}}_{\text{neutral}}$ (a solid black $336 \times 336$ RGB image). This forces the model to process tokens through its joint visual-textual pathways during extraction.
 
 $$\mu_B = \frac{1}{|B|} \sum_{p \in B} \phi_i(\Psi(p)), \quad \mu_A = \frac{1}{|A|} \sum_{p \in A} \phi_i(\Psi(p))$$
 
@@ -92,7 +94,7 @@ $$T(x) = \max \left( \sigma \left[ 100 \cdot (0.5 - |z - \tau|) \right] \right)$
 
 Where $z$ denotes the input token identifiers, $\tau$ the target trigger token identifier, and $\sigma(\cdot)$ is the sigmoid function. 
 
-If a token ID matches the trigger token ID exactly ($|z - \tau| = 0$), the argument of the sigmoid becomes \$100 \cdot (0.5 - 0) = 50$. Since $\sigma(50) \approx 1$, the output is $1$. For any non-matching token ($|z - \tau| \ge 1$), the argument of the sigmoid is a large negative number, yielding at most $\sigma(-50) \approx 0$. The $\max(\cdot)$ operator aggregates this across all tokens in the sequence. If the trigger occurs anywhere, $T(x) \approx 1$. Otherwise, $T(x) \approx 0$.
+If a token ID matches the trigger token ID exactly ($|z - \tau| = 0$), the argument of the sigmoid becomes $100 \cdot (0.5 - 0) = 50$. Since $\sigma(50) \approx 1$, the output is $1$. For any non-matching token ($|z - \tau| \ge 1$), the argument of the sigmoid is a large negative number, yielding at most $\sigma(-50) \approx 0$. The $\max(\cdot)$ operator aggregates this across all tokens in the sequence. If the trigger occurs anywhere, $T(x) \approx 1$. Otherwise, $T(x) \approx 0$.
 
 ### 4. Implementation Code
 

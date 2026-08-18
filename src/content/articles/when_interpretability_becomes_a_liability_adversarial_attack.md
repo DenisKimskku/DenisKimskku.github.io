@@ -194,7 +194,7 @@ def compute_spectra_loss(W, b, c_pred, y_true, target_class, lmbda_s):
 ```
 
 #### 2. Perform a Hyperparameter Grid Search for the Phase Transition
-Do not pick $\lambda_s$ arbitrarily. As Table 1 illustrates, values below \$0.08$ remain highly vulnerable, while values above \$0.09$ lead to unnecessary degradation in classification performance. Conduct a fine-grained sweep between $[0.05, 0.15]$ to identify the precise threshold where the attackability score plummets.
+Do not pick $\lambda_s$ arbitrarily. As Table 1 illustrates, values below $0.08$ remain highly vulnerable, while values above $0.09$ lead to unnecessary degradation in classification performance. Conduct a fine-grained sweep between $[0.05, 0.15]$ to identify the precise threshold where the attackability score plummets.
 
 #### 3. Log and Monitor Attackability as a Core Metric
 Integrate `Attackability` as a telemetry metric in your validation pipelines alongside accuracy and F1-score:

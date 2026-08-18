@@ -2,6 +2,8 @@
 title: "HoF-Bench: Rediscovering Real AI-Discovered CVEs Without Frontier Models"
 date: "2026-07-31"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.27030"
+paperAuthors: "Petr Simecek, Elnaz Babayeva, Jiri Balhar, et al."
 description: "HoF-Bench is a standardized benchmark comprising 95 real-world, AI-discovered Common Vulnerabilities and Exposures (CVEs) across eight repositories to evaluate the"
 tags: ["AI Agents", "Vulnerabilities"]
 readingTime: 9

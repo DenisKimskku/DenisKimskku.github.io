@@ -2,6 +2,8 @@
 title: "SIREN (Luring LLMs onto the Rocks): PAIR-Driven Preference Manipulation in Web-RAG Recommenders"
 date: "2026-07-28"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.21951"
+paperAuthors: "Evan Caville, Siamak Layeghy, Billy Sung, et al."
 description: "An automated black-box attack framework called SIREN that iteratively refines webpage edits using a feedback loop to trick Web-RAG (Retrieval-Augmented Generation) recommendation"
 tags: ["RAG", "Data Poisoning", "Adversarial Attacks"]
 readingTime: 9

@@ -2,6 +2,8 @@
 title: "CryptanalysisBench: Can LLMs do Cryptanalysis?"
 date: "2026-07-26"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.18538"
+paperAuthors: "Lukas Fluri, Avital Shafran, Nicholas Carlini, et al."
 description: "CryptanalysisBench is a standardized, game-based evaluation framework designed to measure the automated cryptanalytic capabilities of Large Language Models (LLMs) against"
 tags: ["AI Agents", "Vulnerabilities"]
 readingTime: 10
@@ -81,7 +83,7 @@ The evaluation harness uses the Harbor agent framework to run both the attacker 
 +-------------------------------------------------------------+
 ```
 
-To prevent false positives from lucky guesses in statistical games (such as Indistinguishability under Chosen-Plaintext Attack (IND-CPA) or Indistinguishability under Chosen-Ciphertext Attack (IND-CCA)), the agent must win at least 17 out of 20 independent game sessions. Under a random guessing assumption, the probability of achieving this threshold is approximately \$1.3 \times 10^{-3}$.
+To prevent false positives from lucky guesses in statistical games (such as Indistinguishability under Chosen-Plaintext Attack (IND-CPA) or Indistinguishability under Chosen-Ciphertext Attack (IND-CCA)), the agent must win at least 17 out of 20 independent game sessions. Under a random guessing assumption, the probability of achieving this threshold is approximately $1.3 \times 10^{-3}$.
 
 ### Case Study of a Zero-Day Design Exploit: SpoC AEAD
 A remarkable finding of this research is the independent discovery of a key-recovery attack against the unmodified SpoC-128 AEAD scheme by both Mythos 5 and Sonnet 5. The attack exploits a design flaw in how the permutation-based mode handles empty inputs:

@@ -70,7 +70,7 @@ Because solving this directly is computationally intractable, the authors propos
    $$\ell_{\text{prompt}} = \mathbb{E}_{(x, y) \in D} [\sigma(F_{\theta, \phi}(x), y)]$$
 
 2. **Poisoning Phase**: The simulated prompt $g_\phi$ is frozen. The backbone parameters $\theta$ are updated on a joint poisoning dataset $D_{\text{poisoning}}$ composed of:
-   - A triggered dataset $D_t$ (images from shadow dataset $D$ with a \$10 \times 10$ white patch trigger added at the bottom-right corner, and labels flipped to target class $y_t$).
+   - A triggered dataset $D_t$ (images from shadow dataset $D$ with a $10 \times 10$ white patch trigger added at the bottom-right corner, and labels flipped to target class $y_t$).
    - A clean shadow dataset $D_c$ to preserve clean downstream performance.
    - A pre-training dataset $D_p$ (ImageNet-1k subset) to maintain overall backbone utility.
 

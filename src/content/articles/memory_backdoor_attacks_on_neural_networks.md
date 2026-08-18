@@ -2,6 +2,8 @@
 title: "Memory Backdoor Attacks on Neural Networks"
 date: "2026-08-17"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2411.14516"
+paperAuthors: "Eden Luzon, Guy Amit, Roy Weiss, et al."
 description: "A memory backdoor enables exact, systematic extraction of private training samples"
 tags: ["Backdoors", "Adversarial Attacks", "Privacy"]
 readingTime: 5

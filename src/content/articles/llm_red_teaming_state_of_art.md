@@ -385,7 +385,7 @@ LLM red-teaming has evolved from manual prompt engineering to sophisticated auto
 
 Defense requires multiple layers: content filtering, adversarial training, runtime monitoring, and continuous red-teaming. As LLMs become more capable and widely deployed, the importance of proactive security testing will only increase.
 
-The $1 Chevy Tahoe incident serves as a reminder: without proper red-teaming, even simple attacks can cause significant harm. Invest in security testing before attackers find your vulnerabilities first.
+The \$1 Chevy Tahoe incident serves as a reminder: without proper red-teaming, even simple attacks can cause significant harm. Invest in security testing before attackers find your vulnerabilities first.
 
 ---
 

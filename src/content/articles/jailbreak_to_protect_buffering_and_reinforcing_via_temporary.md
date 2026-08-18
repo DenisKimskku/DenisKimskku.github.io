@@ -33,7 +33,7 @@ Fine-tuning-as-a-Service (FaaS) APIs offered by providers like OpenAI, Google Cl
 | **Attacker** | Malicious FaaS customer with black-box dataset upload access. Can inject arbitrary harmful query-response pairs into their fine-tuning dataset. |
 | **Victim** | FaaS hosting providers and downstream users of personalized LLMs. |
 | **Goal** | Permanently jailbreak a safety-aligned LLM so it generates harmful content (e.g., weapon construction instructions, cyberattack planning) while maintaining normal utility on benign tasks. |
-| **Budget** | Extremely low; injecting as few as 100 poison samples (a ratio of \$p = 0.1\$ in a 1,000-sample dataset) is sufficient to compromise standard models. |
+| **Budget** | Extremely low; injecting as few as 100 poison samples (a ratio of $p = 0.1$ in a 1,000-sample dataset) is sufficient to compromise standard models. |
 
 ---
 
@@ -61,15 +61,19 @@ The **Buffer-and-Reinforce** framework implements this mechanism in three stages
 
 #### 1. Before Fine-Tuning (FaaS Provider Setup)
 The provider trains two helper LoRA adapters using a curated dataset of 5,000 harmful queries paired with harmful responses:
-- **BufferLoRA** (\$\theta_B\$): Optimized to temporarily jailbreak the base LLM parameters (\$\theta\$) on harmful queries (\$x\$) and harmful responses (\$y\$):
-  $$\mathcal{L}_B(\theta_B) = -\mathbb{E}_{(x,y)\sim \mathcal{D}_H} \left[\sum_{t=1}^{|y|} \log P(y_t \mid x, y_{<t}; \theta, \theta_B)\right]$$
-- **ReinforceLoRA** (\$\theta_R\$): Trained under the temporarily jailbroken state to restore refusal behaviors on harmful queries while preserving appropriate responses to benign queries (\$D_B\$):
-  $$\mathcal{L}_R(\theta_R) = -\mathbb{E}_{(x,y)\sim \mathcal{D}_S \cup \mathcal{D}_B} \left[\sum_{t=1}^{|y|} \log P(y_t \mid x, y_{<t}; \theta, \theta_B, \theta_R)\right]$$
+- **BufferLoRA** ($\theta_B$): Optimized to temporarily jailbreak the base LLM parameters ($\theta$) on harmful queries ($x$) and harmful responses ($y$):
+  $$
+  \mathcal{L}_B(\theta_B) = -\mathbb{E}_{(x,y)\sim \mathcal{D}_H} \left[\sum_{t=1}^{|y|} \log P(y_t \mid x, y_{<t}; \theta, \theta_B)\right]
+  $$
+- **ReinforceLoRA** ($\theta_R$): Trained under the temporarily jailbroken state to restore refusal behaviors on harmful queries while preserving appropriate responses to benign queries ($D_B$):
+  $$
+  \mathcal{L}_R(\theta_R) = -\mathbb{E}_{(x,y)\sim \mathcal{D}_S \cup \mathcal{D}_B} \left[\sum_{t=1}^{|y|} \log P(y_t \mid x, y_{<t}; \theta, \theta_B, \theta_R)\right]
+  $$
 
 These helper adapters are trained once before service deployment and can be reused across all user fine-tuning sessions.
 
 #### 2. User Fine-Tuning Stage
-During user fine-tuning, the provider attaches the frozen **BufferLoRA** to the base LLM. Simultaneously, a trainable **UserLoRA** (\$\theta_U\$) is attached and trained on the user's dataset (\$\mathcal{D}_U\$):
+During user fine-tuning, the provider attaches the frozen **BufferLoRA** to the base LLM. Simultaneously, a trainable **UserLoRA** ($\theta_U$) is attached and trained on the user's dataset ($\mathcal{D}_U$):
 $$\mathcal{L}_U(\theta_U) = -\mathbb{E}_{(x,y)\sim \mathcal{D}_U} \left[\sum_{t=1}^{|y|} \log P(y_t \mid x, y_{<t}; \theta, \theta_B, \theta_U)\right]$$
 Because BufferLoRA keeps the model in a jailbroken state, any harmful gradients in the user dataset are saturated and bypassed. The UserLoRA selectively learns harmless, task-relevant knowledge.
 
@@ -108,7 +112,7 @@ Once fine-tuning is complete, the provider removes **BufferLoRA**. To inject saf
 
 Evaluated on **LLaMA3-8B-Instruct** using the BeaverTails dataset for harmful evaluations and GSM8K for downstream task performance, the Buffer-and-Reinforce framework consistently outperforms all traditional baselines.
 
-The following table displays comparative performance metrics under a **10% poison ratio (\$p = 0.1\$)** with 1,000 user training samples (compiled from Table 1 and Table 3 of the paper):
+The following table displays comparative performance metrics under a **10% poison ratio ($p = 0.1$)** with 1,000 user training samples (compiled from Table 1 and Table 3 of the paper):
 
 | Defense Method | Harmful Score (HS) ↓ | Fine-Tuning Accuracy (FA - GSM8K) ↑ | Average FA (SST2 / AGNEWS / GSM8K) ↑ |
 | :--- | :---: | :---: | :---: |
@@ -148,7 +152,7 @@ If you are building or maintaining a Fine-tuning-as-a-Service pipeline, consider
      --trainable_adapter "user_lora" \
      --user_dataset_path "./user_uploads/dataset_1092.jsonl"
    ```
-3. **Enforce Post-Training Orthogonal Merging**: When merging user adapters back into the base weights, avoid simple element-wise addition. Run a QR-decomposition pass on the key-value projection matrices of the model to isolate and project safety-refusal weights orthogonally to the user's task subspace, keeping task-disrupting components below a safe threshold (\$\alpha = 0.1\$).
+3. **Enforce Post-Training Orthogonal Merging**: When merging user adapters back into the base weights, avoid simple element-wise addition. Run a QR-decomposition pass on the key-value projection matrices of the model to isolate and project safety-refusal weights orthogonally to the user's task subspace, keeping task-disrupting components below a safe threshold ($\alpha = 0.1$).
 
 ---
 

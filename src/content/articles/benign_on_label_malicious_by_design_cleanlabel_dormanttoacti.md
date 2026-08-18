@@ -2,6 +2,8 @@
 title: "Benign on Label, Malicious by Design: Clean-Label Dormant-to-Activated Backdoor via Machine Unlearning with Removable Camouflage"
 date: "2026-08-03"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.27936"
+paperAuthors: "Dongdong Zhao, Can Li, Xiang Yao, et al."
 description: "A clean-label backdoor attack that remains dormant in a Deep Neural Network (DNN) after initial training but is activated when specific attacker-submitted, clean-labeled"
 tags: ["Data Poisoning", "Backdoors", "Privacy", "Machine Unlearning"]
 readingTime: 9

@@ -2,6 +2,8 @@
 title: "Decision-Level Hijacking: Injecting Cognitive Bias into Large Language Models via Bit-Flip Attacks"
 date: "2026-07-30"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.25227"
+paperAuthors: "Yu Yan, Jiahao Chen, Siqi Lu, et al."
 description: "CogBias is a trigger-free post-deployment attack framework that injects precise cognitive biases into Large Language Models (LLMs) by executing highly targeted, ultra-sparse"
 tags: ["Prompt Injection", "Data Poisoning", "Adversarial Attacks", "AI Agents"]
 readingTime: 12

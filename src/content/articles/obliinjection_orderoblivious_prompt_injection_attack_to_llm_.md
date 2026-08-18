@@ -2,6 +2,8 @@
 title: "ObliInjection: Order-Oblivious Prompt Injection Attack to LLM Agents with Multi-source Data"
 date: "2026-08-08"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2512.09321"
+paperAuthors: "Reachal Wang, Yuqi Jia, Neil Zhenqiang Gong"
 description: "ObliInjection targets LLM agents with uncertain segment ordering"
 tags: ["Prompt Injection", "RAG", "AI Agents"]
 readingTime: 5

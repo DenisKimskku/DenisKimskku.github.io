@@ -16,7 +16,7 @@ headerImage: "/images/news/hidden_in_plain_tokens_simply_robust_gradientfree_wat
 ## TLDR
 - **What**: A gradient-free, training-free audio watermarking technique that clusters neural codec vocabularies using graph community detection (Leiden algorithm) to make token-level watermarks invariant to non-idempotent retokenization errors.
 - **Who's at risk**: Synthetic audio generation platforms, deepfake detection APIs, and provenance tracking systems deploying continuous-modality autoregressive models (e.g., Moshi, MusicGen, CosyVoice3, Spark-TTS).
-- **Key number**: Boosts watermark detectability under identity verification by several orders of magnitude, achieving a statistical confidence score of $-\log(p) = 42.47$ on Moshi conversational audio compared to \$8.51$ for the baseline KGW method, while maintaining zero gradient-training overhead.
+- **Key number**: Boosts watermark detectability under identity verification by several orders of magnitude, achieving a statistical confidence score of $-\log(p) = 42.47$ on Moshi conversational audio compared to $8.51$ for the baseline KGW method, while maintaining zero gradient-training overhead.
 
 ---
 
@@ -47,7 +47,7 @@ The evaluation of this watermarking scheme is framed around an attacker attempti
 
 To understand why traditional token-level watermarking fails on audio, consider the standard Kirchenbauer et al. (ICML 2023) (KGW) text watermark. At each autoregressive step, a hash of the preceding $h$ tokens pseudo-randomly splits the vocabulary $V$ into a "green list" $G$ and a "red list" $R$ with a green list ratio $\gamma \in (0,1)$. The logits of the green list tokens are biased by a constant offset $\delta > 0$ to encourage their selection.
 
-For text, the token match rate (TM) under re-tokenization is essentially \$1.0$. For continuous audio codecs, however, the token match rate $r = \text{TM}(y_{1:N}, x_{1:N})$ drops significantly because codecs are lossy. 
+For text, the token match rate (TM) under re-tokenization is essentially $1.0$. For continuous audio codecs, however, the token match rate $r = \text{TM}(y_{1:N}, x_{1:N})$ drops significantly because codecs are lossy. 
 
 Milis et al. (ICML 2026) theoretically formalize the expected $z$-score under the alternative hypothesis $H_1$ (watermarked sequence) in the presence of retokenization corruption as:
 
@@ -143,7 +143,7 @@ Table 2 from the paper shows the mean detector confidence score $-\log(p)$ and t
 | | Shift | 1.86 | 1.81 | 2.36 | **27.67** |
 | | Speedup (1.1x) | 1.52 | 1.20 | 1.35 | **26.49** |
 
-As Table 2 illustrates, under standard MP3 compression, the baseline KGW watermark is severely degraded, and even the fine-tuned WMAR peaks at \$15.31$. The proposed method maintains an extraordinarily high confidence score of **\$41.26$**. Under temporal distortions (which typically ruin token alignment), the proposed method still achieves a highly detectable score of **\$26.49$** under 1.1x speedup, whereas all baselines fail to meet the detection threshold.
+As Table 2 illustrates, under standard MP3 compression, the baseline KGW watermark is severely degraded, and even the fine-tuned WMAR peaks at $15.31$. The proposed method maintains an extraordinarily high confidence score of **$41.26$**. Under temporal distortions (which typically ruin token alignment), the proposed method still achieves a highly detectable score of **$26.49$** under 1.1x speedup, whereas all baselines fail to meet the detection threshold.
 
 ---
 
@@ -159,7 +159,7 @@ Table 1 demonstrates that clustering the vocabulary does not introduce audible d
 | | WMAR | 0.407 | 0.032 | 3.28 | 4.41 |
 | | **Ours** | **0.133** | **0.027** | **3.53** | **4.42** |
 
-The FAD and MOS scores for the proposed method are almost identical to the unwatermarked baseline. Conversely, WMAR's codec fine-tuning degrades the FAD score to \$0.407$.
+The FAD and MOS scores for the proposed method are almost identical to the unwatermarked baseline. Conversely, WMAR's codec fine-tuning degrades the FAD score to $0.407$.
 
 ---
 
@@ -201,7 +201,7 @@ for original_audio in calibration_loader:
 ```
 
 ### 2. Extract Stable Communities Using Leiden
-Utilize the Leiden algorithm with a controlled resolution parameter $\rho$ (typically between \$0.8$ and \$1.2$) to find the optimal trade-off between cluster match rate and vocabulary diversity. Section 5.4 recommends specific hyperparameter selections like $(\rho=0.8, m=1)$ for Mimi channel 0.
+Utilize the Leiden algorithm with a controlled resolution parameter $\rho$ (typically between $0.8$ and $1.2$) to find the optimal trade-off between cluster match rate and vocabulary diversity. Section 5.4 recommends specific hyperparameter selections like $(\rho=0.8, m=1)$ for Mimi channel 0.
 
 ### 3. Implement Cluster-Level Red/Green Partitioning
 When applying Kirchenbauer's watermarking rule, map the current generation tokens to their respective cluster IDs before executing the hash function. Ensure the logit bias $\delta$ is applied uniformly across all physical tokens belonging to the selected green-list cluster.

@@ -59,7 +59,7 @@ $$U_{enc}(x) = \exp\left(i \sum_{j=1}^d x_j |j\rangle\langle j|\right) = \text{d
 Because classical backpropagation cannot be executed on physical quantum hardware, the attacker must use the Parameter-Shift Rule [14, 15] to compute the gradient. For a generator with spectral gap $\Delta G_j = 1$, the exact partial derivative is:
 $$\frac{\partial \langle O \rangle}{\partial x_j} = \frac{1}{2} \left[ \langle O(x + \frac{\pi}{2} e_j) \rangle - \langle O(x - \frac{\pi}{2} e_j) \rangle \right]$$
 
-To estimate a $d$-dimensional gradient, the attacker must execute \$2d$ distinct circuit variations, each measured using a finite number of shots $s$. Under finite shots, the estimated gradient components are noisy: $\hat{g}_i \sim \mathcal{N}(g^*_i, \sigma^2/s)$.
+To estimate a $d$-dimensional gradient, the attacker must execute $2d$ distinct circuit variations, each measured using a finite number of shots $s$. Under finite shots, the estimated gradient components are noisy: $\hat{g}_i \sim \mathcal{N}(g^*_i, \sigma^2/s)$.
 
 ### 3. The Shot-Budget Scaling Law
 Under an $\ell_2$-bounded FGSM attack ($\|\delta\|_2 \le \epsilon$), this measurement noise deflects the estimated gradient from the true gradient by an angle $\alpha$. As proven in Proposition 3 (Section 3.1.1), maintaining a constant target optimization error $\Delta L(s) = L(\delta) - L(\delta^*) = \Delta$ requires the attacker to scale their per-dimension shot budget as:
@@ -108,12 +108,12 @@ The paper compares the classical gradient cost ratio ($\rho_{cl} = t_{bwd}/t_{fw
 | **16** | 5.4 | 0.38 | 0.42 | 0.07$\times$ |
 | **25** | 4.9 | 1.7 | 2.1 | 0.3$\times$ |
 | **64** | 6.1 | 21 | 28 | 3.5$\times$ |
-| **121** | 5.4 | \$1.7 \times 10^2$ | \$2.2 \times 10^2$ | 31$\times$ |
-| **256** | 5.4 | \$1.4 \times 10^3$ | \$2.0 \times 10^3$ | 250$\times$ |
-| **484** | 4.5 | \$1.0 \times 10^4$ | \$1.5 \times 10^4$ | \$2.3 \times 10^3\times$ |
-| **784** | 4.4 | \$5.0 \times 10^4$ | \$7.7 \times 10^4$ | \$1.1 \times 10^4\times$ |
+| **121** | 5.4 | $1.7 \times 10^2$ | $2.2 \times 10^2$ | 31$\times$ |
+| **256** | 5.4 | $1.4 \times 10^3$ | $2.0 \times 10^3$ | 250$\times$ |
+| **484** | 4.5 | $1.0 \times 10^4$ | $1.5 \times 10^4$ | $2.3 \times 10^3\times$ |
+| **784** | 4.4 | $5.0 \times 10^4$ | $7.7 \times 10^4$ | $1.1 \times 10^4\times$ |
 
-While classical backpropagation maintains a flat, dimension-independent overhead ($\rho_{cl} \approx 5$), the quantum gradient cost ratio scales polynomially, diverging by **four orders of magnitude** (\$1.1 \times 10^4\times$) at native MNIST resolution ($d=784$).
+While classical backpropagation maintains a flat, dimension-independent overhead ($\rho_{cl} \approx 5$), the quantum gradient cost ratio scales polynomially, diverging by **four orders of magnitude** ($1.1 \times 10^4\times$) at native MNIST resolution ($d=784$).
 
 ### 2. Real Hardware Validation on `ibm_boston`
 The authors deployed a 4-qubit classifier ($d=12$) on the physical `ibm_boston` processor to verify that physical device noise (gate errors, readout imperfections) does not wash out the shot-noise defense (Table 5).

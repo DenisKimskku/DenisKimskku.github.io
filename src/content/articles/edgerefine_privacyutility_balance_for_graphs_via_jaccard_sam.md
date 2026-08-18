@@ -16,7 +16,7 @@ headerImage: "/images/news/edgerefine_privacyutility_balance_for_graphs_via_jacc
 ## TLDR
 - **What**: EdgeRefine is a local differential privacy (LDP) framework that preserves graph structural utility under strict edge-level differential privacy by combining Jaccard similarity estimation, quantile-based histogram binning, and deterministic optimal sampling.
 - **Who's at risk**: Distributed graph-structured systems (e.g., social networks, recommendation engines, and bioinformatics applications) that outsource Graph Neural Network (GNN) training on sensitive adjacency matrices to untrusted cloud servers.
-- **Key number**: Under a strict privacy budget of $\epsilon = 2.5$, EdgeRefine improves node classification accuracy by 19.7% on the Cora dataset under GCN compared to the state-of-the-art Blink baseline, while keeping the normalized graph density on DBLP constant at \$4.255 \times 10^{-6}$.
+- **Key number**: Under a strict privacy budget of $\epsilon = 2.5$, EdgeRefine improves node classification accuracy by 19.7% on the Cora dataset under GCN compared to the state-of-the-art Blink baseline, while keeping the normalized graph density on DBLP constant at $4.255 \times 10^{-6}$.
 
 ---
 
@@ -103,7 +103,7 @@ Rather than randomly sampling edges (which introduces high variance), EdgeRefine
 - **Target Edge Count ($K$)**: Defined by a global sampling rate $k$ and the original edge count $E$: $K = \lfloor k \times E \rfloor$.
 - **Theoretical True Edge Ratio ($\rho$)**: Calculated directly as $\rho = \frac{e^\epsilon}{1 + e^\epsilon}$.
 - **Candidate Partitioning**: Split node pairs into $E_{\text{real}}$ (where $\tilde{A}_{ij} = 1$) and $E_{\text{fake}}$ (where $\tilde{A}_{ij} = 0$).
-- **Selection**: Sort both sets in descending order of their calibrated probabilities in $L$. Select the top $K_{\text{real}} = \lfloor \rho K \rfloor$ edges from $E_{\text{real}}$, and the remaining $K_{\text{fake}} = K - $K_{\text{real}}$ from $E_{\text{fake}}$. This combination yields the reconstructed matrix $\hat{A}$.
+- **Selection**: Sort both sets in descending order of their calibrated probabilities in $L$. Select the top $K_{\text{real}} = \lfloor \rho K \rfloor$ edges from $E_{\text{real}}$, and the remaining $K_{\text{fake}} = K - K_{\text{real}}$ from $E_{\text{fake}}$. This combination yields the reconstructed matrix $\hat{A}$.
 
 ---
 
@@ -133,11 +133,11 @@ A primary failure of other private frameworks is the structural distortion where
 
 | Budget ($\epsilon$) | EdgeRefine | Blink-hard | LDPGen | DPRR | LAPGRAPH |
 |---|---|---|---|---|---|
-| **0.5** | \$4.255 \times 10^{-6}$ | \$1.216 \times 10^{-7}$ | \$6.129 \times 10^{-1}$ | \$3.778 \times 10^{-1}$ | \$3.777 \times 10^{-1}$ |
-| **2.0** | \$4.255 \times 10^{-6}$ | \$5.668 \times 10^{-4}$ | \$2.247 \times 10^{-1}$ | \$1.196 \times 10^{-1}$ | \$1.195 \times 10^{-1}$ |
-| **3.5** | \$4.255 \times 10^{-6}$ | \$1.056 \times 10^{-2}$ | \$5.842 \times 10^{-2}$ | \$2.956 \times 10^{-2}$ | \$2.963 \times 10^{-2}$ |
+| **0.5** | $4.255 \times 10^{-6}$ | $1.216 \times 10^{-7}$ | $6.129 \times 10^{-1}$ | $3.778 \times 10^{-1}$ | $3.777 \times 10^{-1}$ |
+| **2.0** | $4.255 \times 10^{-6}$ | $5.668 \times 10^{-4}$ | $2.247 \times 10^{-1}$ | $1.196 \times 10^{-1}$ | $1.195 \times 10^{-1}$ |
+| **3.5** | $4.255 \times 10^{-6}$ | $1.056 \times 10^{-2}$ | $5.842 \times 10^{-2}$ | $2.956 \times 10^{-2}$ | $2.963 \times 10^{-2}$ |
 
-*Analysis*: While Blink-hard's density inflates by 5 orders of magnitude as the privacy constraints loosen ($\epsilon$ goes from $0.5$ to $3.5$), EdgeRefine preserves a constant, ultra-sparse density of \$4.255 \times 10^{-6}$ across all privacy budgets.
+*Analysis*: While Blink-hard's density inflates by 5 orders of magnitude as the privacy constraints loosen ($\epsilon$ goes from $0.5$ to $3.5$), EdgeRefine preserves a constant, ultra-sparse density of $4.255 \times 10^{-6}$ across all privacy budgets.
 
 ### Resilience Against Graph Reconstruction Attacks
 To prove robust privacy preservation, the authors tested the reconstructed graph $\hat{A}$ against the SOTA **GRAND [2]** reconstruction attack. A Relative Absolute Error (RAE) of 1 means the attack is equivalent to guessing.
@@ -179,6 +179,6 @@ EdgeRefine proves that edge-level differential privacy does not have to result i
 
 ## Den's Take
 
-EdgeRefine tackles a persistent bottleneck in graph privacy: the fact that traditional edge-level local differential privacy (LDP) obliterates message-passing routes by flooding the graph with noisy, spurious edges. The notable contribution of this work is its pragmatic approach to preserving structural sparsity and utility through deterministic Jaccard sampling and quantile-based binning. Scoring a 19.7% improvement in GCN node classification accuracy on the Cora dataset compared to the Blink baseline—at a strict privacy budget of $\epsilon = 2.5$ while keeping the normalized graph density of the DBLP dataset locked at \$4.255 \times 10^{-6}$—demonstrates that graph structure does not have to be completely destroyed to obtain formal LDP guarantees.
+EdgeRefine tackles a persistent bottleneck in graph privacy: the fact that traditional edge-level local differential privacy (LDP) obliterates message-passing routes by flooding the graph with noisy, spurious edges. The notable contribution of this work is its pragmatic approach to preserving structural sparsity and utility through deterministic Jaccard sampling and quantile-based binning. Scoring a 19.7% improvement in GCN node classification accuracy on the Cora dataset compared to the Blink baseline—at a strict privacy budget of $\epsilon = 2.5$ while keeping the normalized graph density of the DBLP dataset locked at $4.255 \times 10^{-6}$—demonstrates that graph structure does not have to be completely destroyed to obtain formal LDP guarantees.
 
 An open question is how this scales beyond academic benchmarks. Real-world transaction networks are massive, dynamic, and often non-homophilous, where Jaccard similarity estimation might fall short. Prior findings on membership inference show that statistical releases can leak identity information under adaptive adversaries, which raises doubts about how robust these reconstructed, denoised graphs actually are against targeted topology reconstruction attacks in highly sparse settings. It’s a step in the right direction, but the evaluation needs to move beyond toy datasets to prove its real-world viability.

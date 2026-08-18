@@ -90,7 +90,7 @@ $$S_{total}^*(q, s_{i,j}) = S_{total}(q, s_{i,j}) + \text{Lap}\left(\frac{2}{\ep
 ### Step 3: Hierarchical Partitioning & Budget Allocation
 Based on $S_{total}^*$, sentences are binned into three risk tiers using partition thresholds $\tau_1 = 0.3$ and $\tau_2 = 0.7$:
 - **Low Risk** ($S_{total}^* < 0.3$): Bypasses DP sanitization entirely (retains original text for maximum utility).
-- **Medium Risk** (\$0.3 \le S_{total}^* < 0.7$): Allocated a moderate privacy budget ($\epsilon_M$).
+- **Medium Risk** ($0.3 \le S_{total}^* < 0.7$): Allocated a moderate privacy budget ($\epsilon_M$).
 - **High Risk** ($S_{total}^* \ge 0.7$): Allocated a strict, smaller privacy budget ($\epsilon_H$) for higher noise levels.
 
 The budget allocation strategy enforces $\epsilon_M = \gamma \epsilon_H$ (with $\gamma = 2$ in experiments):

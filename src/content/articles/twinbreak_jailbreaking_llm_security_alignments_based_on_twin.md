@@ -2,6 +2,8 @@
 title: "TwinBreak: Jailbreaking LLM Security Alignments based on Twin Prompts"
 date: "2026-08-17"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2506.07596"
+paperAuthors: "Torsten Krauß, Hamid Dashtbani, Alexandra Dmitrienko"
 description: "TwinBreak removes LLM safety alignments via targeted parameter pruning"
 tags: ["Jailbreaking"]
 readingTime: 5

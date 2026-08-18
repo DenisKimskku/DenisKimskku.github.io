@@ -86,7 +86,7 @@ With both $r_{cr}^i$ (semantic similarity) and $r_{cc}^i$ (structural ranking co
 
 $$S(d_i^q) = \frac{r_{cr}^i}{1 - r_{cc}^i}$$
 
-If a document is benign, its backward ranking diverges ($r_{cc}^i \approx 0$), making its composite score roughly equal to its similarity ($S(d_i^q) \approx r_{cr}^i$). If a document is poisoned, its backward ranking aligns strongly with the forward ranking ($r_{cc}^i \to 1$), driving the denominator toward \$0$ and causing the composite score $S(d_i^q)$ to blow up.
+If a document is benign, its backward ranking diverges ($r_{cc}^i \approx 0$), making its composite score roughly equal to its similarity ($S(d_i^q) \approx r_{cr}^i$). If a document is poisoned, its backward ranking aligns strongly with the forward ranking ($r_{cc}^i \to 1$), driving the denominator toward $0$ and causing the composite score $S(d_i^q)$ to blow up.
 
 Finally, we apply a filtering threshold $\epsilon$:
 
@@ -175,7 +175,7 @@ While BiRD represents a major leap forward in lightweight RAG security, several 
 1. **Incorporate Bidirectional Verification**: Integrate a backward-retrieval validation step in your RAG inference pipeline immediately after forward retrieval.
 2. **Precompute and Cache Benign Embeddings**: To avoid doing $k$ live database queries during backward retrieval, precompute and cache the pairwise similarity matrix of your static corpus. This bounds your runtime complexity to a simple cache lookup.
 3. **Configure Spearman's Over Jaccard/RBO**: When measuring backward-forward ranking similarity, use Spearman's rank correlation coefficient. Do not use Jaccard index or RBO, as they fail to capture the directional structural shifts characteristic of adversarial optimization.
-4. **Calibrate $\epsilon$ on Simulated Injections**: Before deploying, run a quick calibration step. Synthesize PoisonedRAG style documents, inject them into a staging index, and tune your filtering threshold $\epsilon$ (the paper suggests a sweet spot between \$2.0$ and \$3.0$).
+4. **Calibrate $\epsilon$ on Simulated Injections**: Before deploying, run a quick calibration step. Synthesize PoisonedRAG style documents, inject them into a staging index, and tune your filtering threshold $\epsilon$ (the paper suggests a sweet spot between $2.0$ and $3.0$).
 
 ---
 

@@ -2,6 +2,8 @@
 title: "PAPILLON: Efficient and Stealthy Fuzz Testing-Powered Jailbreaks for LLMs"
 date: "2026-08-16"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2409.14866"
+paperAuthors: "Xueluan Gong, Mingzhe Li, Yilin Zhang, et al."
 description: "Automated fuzz testing generates stealthy jailbreak prompts"
 tags: ["Jailbreaking", "Adversarial Attacks", "Fuzzing"]
 readingTime: 5

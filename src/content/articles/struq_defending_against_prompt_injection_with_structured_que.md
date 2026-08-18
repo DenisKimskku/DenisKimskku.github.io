@@ -2,6 +2,8 @@
 title: "StruQ: Defending Against Prompt Injection with Structured Queries"
 date: "2026-08-09"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2402.06363"
+paperAuthors: "Sizhe Chen, Julien Piet, Chawin Sitawarin, et al."
 description: "Separates LLM prompts and user data into distinct channels"
 tags: ["Prompt Injection"]
 readingTime: 5

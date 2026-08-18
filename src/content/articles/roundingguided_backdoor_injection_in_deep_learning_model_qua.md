@@ -2,6 +2,8 @@
 title: "Rounding-Guided Backdoor Injection in Deep Learning Model Quantization"
 date: "2026-08-10"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2510.09647"
+paperAuthors: "Xiangxiang Chen, Peixin Zhang, Jun Sun, et al."
 description: "QURA exploits weight rounding during quantization to embed backdoors"
 tags: ["Backdoors", "Supply Chain Security", "Vulnerabilities"]
 readingTime: 5

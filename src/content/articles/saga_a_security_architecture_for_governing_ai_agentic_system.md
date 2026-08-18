@@ -2,6 +2,8 @@
 title: "SAGA: A Security Architecture for Governing AI Agentic Systems"
 date: "2026-08-14"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2504.21034"
+paperAuthors: "Georgios Syros, Anshuman Suri, Jacob Ginesin, et al."
 description: "SAGA provides a framework for user-controlled governance of autonomous LLM agents"
 tags: ["Adversarial Attacks", "AI Agents"]
 readingTime: 5

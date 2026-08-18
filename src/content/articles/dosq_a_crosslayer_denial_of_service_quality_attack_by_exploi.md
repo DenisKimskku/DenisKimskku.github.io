@@ -187,13 +187,13 @@ Table II reports empirical host-side timing measurements across $N = 3,933$ cons
 | $T_{uhd}$ | 128.8 | 125.6 | 160.3 | 194.9 |
 | **$T_{total}$** | **273.1** | **266.9** | **325.7** | **383.4** |
 
-Even at the 99th percentile (\$383.4\ \mu$s), the entire pipeline completes well within the 1 ms (1000 $\mu$s) slot boundary. This leaves roughly **57% of the slot duration** (the remaining 8 OFDM symbols of the PDSCH) completely open to receive targeted jamming.
+Even at the 99th percentile ($383.4\ \mu$s), the entire pipeline completes well within the 1 ms (1000 $\mu$s) slot boundary. This leaves roughly **57% of the slot duration** (the remaining 8 OFDM symbols of the PDSCH) completely open to receive targeted jamming.
 
 ### Closed-Loop System Evaluation
 When evaluating the real-world impact on YouTube Live on a private 5G NR testbed (Figure 6):
 - **Unjammed Baseline**: Both the victim and a co-located non-target UE stream normally at a Goodput of 10-11 Mbps.
 - **Active Jamming ($H = 2\%$)**: The victim's Goodput begins a steep decline within seconds, while the non-target UE remains unaffected.
-- **Escalated Jamming ($H = 5\%$ to \$10\%$)**: The victim's Goodput stabilizes in the 5 to 7 Mbps range—representing a **40% to 50% performance drop**—forcing resolution downshifts and buffering. The co-located non-target UE continues to operate with zero observable degradation.
+- **Escalated Jamming ($H = 5\%$ to $10\%$)**: The victim's Goodput stabilizes in the 5 to 7 Mbps range—representing a **40% to 50% performance drop**—forcing resolution downshifts and buffering. The co-located non-target UE continues to operate with zero observable degradation.
 
 ---
 

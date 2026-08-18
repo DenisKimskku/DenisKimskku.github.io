@@ -2,6 +2,8 @@
 title: "TriShieldRAG: A Three-Ring Defense-in-Depth Framework Against Knowledge Corruption in Retrieval-Augmented Generation"
 date: "2026-08-02"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.23838"
+paperAuthors: "Susil Kumar Mohanty, Rohit Patel, Kosuru Yuvaraj, et al."
 description: "TriShieldRAG is a three-layer defense-in-depth framework that secures Retrieval-Augmented Generation (RAG) pipelines by sequentially filtering poisoned documents at ingest"
 tags: ["RAG", "Data Poisoning", "Adversarial Attacks"]
 readingTime: 11
@@ -114,7 +116,7 @@ Documents are dropped if $\text{trust}(d) < \vartheta_2$ (where $\vartheta_2 = 0
 ### Ring 3: Cross-LLM Consensus (Verification & Fallback)
 The filtered context is sent to a panel of $M = 3$ architecturally and organizationally diverse LLMs (Claude, Mistral Small, Llama 3.2).
 - The pipeline counts the matching outputs. If the largest agreement bucket matches or exceeds the threshold $\vartheta_3 = 0.66$ (at least 2-of-3 agreement), the consensus answer is returned.
-- If the models disagree, TriShieldRAG triggers a **bounded re-retrieval fallback**: the lowest-trust third of the retrieved documents are discarded, a new retrieval pass is performed, and the panel votes on the updated context. This second vote's output is returned unconditionally, bounding the worst-case cost to \$2M$ API calls.
+- If the models disagree, TriShieldRAG triggers a **bounded re-retrieval fallback**: the lowest-trust third of the retrieved documents are discarded, a new retrieval pass is performed, and the panel votes on the updated context. This second vote's output is returned unconditionally, bounding the worst-case cost to $2M$ API calls.
 
 ---
 

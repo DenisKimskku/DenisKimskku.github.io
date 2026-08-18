@@ -138,7 +138,7 @@ While the theoretical integration of control theory and cryptography is elegant,
 ## What Practitioners Should Do
 
 ### 1. Perform Topology-Aware Noise Profiling
-Before deploying any homomorphic controller, do not rely on generic precision settings. Map the network topology's spectral radius ($\rho_{cl}$) and empirically determine the maximum command-domain noise deviation ($\sigma_{max}$) your control loop can tolerate before exceeding performance bounds (e.g., \$25\%$ RMS position error).
+Before deploying any homomorphic controller, do not rely on generic precision settings. Map the network topology's spectral radius ($\rho_{cl}$) and empirically determine the maximum command-domain noise deviation ($\sigma_{max}$) your control loop can tolerate before exceeding performance bounds (e.g., $25\%$ RMS position error).
 
 ### 2. Avoid Over-Provisioning the Scale Factor ($\Delta$)
 Evaluate your system's operational needs against the three precision regimes. Avoid setting excessively high scaling factors (e.g., $\Delta = 2^{59}$) which are computationally expensive. Instead, design within the optimal re-keying window ($\Delta \approx 2^{32}$ to $2^{38}$) and implement active re-keying to manage key exposure.

@@ -16,7 +16,7 @@ headerImage: "/images/news/five_queries_are_enough_queryefficient_and_surrogatef
 ## TLDR
 - **What**: MEntA (Membership Entailment Attack) is a highly query-efficient, surrogate-free membership inference attack on Retrieval-Augmented Generation (RAG) systems that leverages Natural Language Inference (NLI) to verify if model responses are logically entailed by a target document.
 - **Who's at risk**: Enterprise and production RAG pipelines containing sensitive, proprietary, or regulated documents (e.g., healthcare portals, financial analysts, and corporate intranets built on platforms like Microsoft Copilot Studio or AWS Q).
-- **Key number**: MEntA achieves up to **0.991 AUC using only 5 non-templated queries**, while reducing financial token costs by up to **\$65\times$** compared to previous state-of-the-art interrogation attacks.
+- **Key number**: MEntA achieves up to **0.991 AUC using only 5 non-templated queries**, while reducing financial token costs by up to **$65\times$** compared to previous state-of-the-art interrogation attacks.
 
 ---
 
@@ -104,7 +104,7 @@ The attacker submits the 5 constructed queries to the black-box RAG API and reco
 ### Step 3: Entailment-Based Membership Scoring
 MEntA splits each response $a(q'_i)$ into its constituent atomic sentences $\{s_1, s_2, \dots, s_m\}$. It then runs a local, open-source Natural Language Inference (NLI) model (`tasksource/deberta-base-long-nli`) to calculate the probability of entailment $p(\text{entail} \mid D, s_j)$ for each atomic claim against the target document $D$.
 
-An indicator function $I_{\text{ent}}(q)$ is flagged as \$1$ if at least one atomic sentence in the RAG response is strongly entailed by the target document:
+An indicator function $I_{\text{ent}}(q)$ is flagged as $1$ if at least one atomic sentence in the RAG response is strongly entailed by the target document:
 
 $$I_{\text{ent}}(q) = \begin{cases} 1 & \text{if } \exists s_i \in a(q) : p(\text{ent}) > \max(p(\text{neu}), p(\text{con})) \\ 0 & \text{otherwise} \end{cases}$$
 

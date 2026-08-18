@@ -2,6 +2,8 @@
 title: "Prompt Injection Attack to Tool Selection in LLM Agents"
 date: "2026-08-08"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2504.19793"
+paperAuthors: "Jiawen Shi, Zenghui Yuan, Guiyao Tie, et al."
 description: "Prompt Injection Attack to Tool Selection in LLM Agents"
 tags: ["Prompt Injection", "AI Agents", "Vulnerabilities"]
 readingTime: 5

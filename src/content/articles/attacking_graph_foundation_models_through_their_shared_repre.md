@@ -2,6 +2,8 @@
 title: "Attacking Graph Foundation Models Through Their Shared Representation"
 date: "2026-07-26"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.18567"
+paperAuthors: "Pankaj Kumar, Subhankar Mishra"
 description: "The ALIGN attack targets the shared representation bottleneck (the alignment layer) of Graph Foundation Models (GFMs) at inference time, collapsing cross-domain generalization"
 tags: ["Adversarial Attacks"]
 readingTime: 9

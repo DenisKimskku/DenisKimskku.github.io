@@ -32,7 +32,28 @@ test('escaped opening delimiter with unescaped closing is flagged', () => {
   const body = 'A solid black \\$336 \\times 336$ RGB image was used as the trigger.';
   const out = findBrokenMathDelimiters(body);
   assert.equal(out.length, 1);
-  assert.equal(out[0].kind, 'odd-dollar-count');
+  // Reported as mixed-escaping: the payload after `\$` contains LaTeX, which
+  // is what distinguishes a broken delimiter from a real price.
+  assert.equal(out[0].kind, 'mixed-escaping');
+});
+
+// The defect's most common shape, and the one plain parity cannot see: each
+// table cell carries one orphaned `$`, so the ROW count is even while every
+// cell renders wrong. 21 real defects in one batch hid here.
+test('a table row whose cells each carry an orphaned $ is flagged', () => {
+  const body = ['| Model | Rate |', '| --- | --- |', '| A | \\$0.930 \\pm 0.021$ |'].join('\n');
+  const out = findBrokenMathDelimiters(body);
+  assert.ok(out.length >= 1, 'per-cell parity must catch this');
+});
+
+// Articles legitimately mix a real price with real math in one paragraph.
+test('currency alongside genuine math is NOT flagged', () => {
+  const body = 'Changing a price from \\$109 to \\$219 while $\\phi_{t}$ stays fixed.';
+  assert.deepEqual(findBrokenMathDelimiters(body), []);
+});
+
+test('real math with a comma is not mistaken for prose', () => {
+  assert.deepEqual(findBrokenMathDelimiters('We compute $cossim(gc, gbd)$ per pair.'), []);
 });
 
 test('prose swallowed between two dollars is flagged', () => {

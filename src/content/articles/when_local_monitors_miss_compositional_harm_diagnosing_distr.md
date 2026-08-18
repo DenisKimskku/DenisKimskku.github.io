@@ -179,7 +179,7 @@ If you are deploying multi-agent systems, do not rely solely on per-step output 
 1. **Implement Gateway AST Parsing Prior to Execution:**
    Do not rely on scanning text outputs at the agent level. If your agents are allowed to call execution environments (like a python interpreter tool or bash sandbox), place your runtime gate directly at the tool's entrypoint. Parse the incoming command's Abstract Syntax Tree (AST) right before execution. This bypasses any upstream natural language encoding or fragment splitting.
 2. **Deploy One-Class Structural Monitors on Traces:**
-   Instead of using simple binary classifiers on individual steps, train a simple one-class classifier (e.g., an Isolation Forest with $\sim\$200 trees) on the concatenated representations of your typical benign workflow trajectories. Monitor for global structural shifts, such as anomalous code token density or unexpected import profiles across the entire trace.
+   Instead of using simple binary classifiers on individual steps, train a simple one-class classifier (e.g., an Isolation Forest with $\sim$200 trees) on the concatenated representations of your typical benign workflow trajectories. Monitor for global structural shifts, such as anomalous code token density or unexpected import profiles across the entire trace.
 3. **Enforce State Variable and Tool-Call Auditing:**
    Store agent outputs in structured state objects. Enforce a security policy where sensitive tool calls require an evaluation of the full historical state log of the current session, rather than inspecting only the current turn's payload.
 

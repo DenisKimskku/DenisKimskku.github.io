@@ -2,6 +2,8 @@
 title: "SkillGate: Cost Efficient Runtime Malicious Skill File Detection in Coding Agents"
 date: "2026-07-30"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.25619"
+paperAuthors: "Rui Yang, Michael Fu, Kla Tantithamthavorn, et al."
 description: "SKILLGATE is a hybrid security gateway that uses a 530-pattern regex prefilter and a targeted LLM-judge snippet window to detect malicious Markdown 'skill' files at runtime"
 tags: ["MCP", "AI Agents"]
 readingTime: 9
@@ -132,12 +134,12 @@ Table IV evaluates the execution time when processing files against a single hos
 
 | Method | Avg Latency | LLM Calls | Fraction of Files |
 |---|---|---|---|
-| SKILLGATE (Prefilter-Safe) | $\sim\$139ms | 0 | 67.2% |
-| SKILLGATE (LLM-Bound) | $\sim\$2,208ms | 1 | 32.8% |
-| **SKILLGATE (Weighted Avg)** | **$\sim\$818ms** | **540 (total)** | **—** |
-| SkillScanner + LLM | $\sim\$6,281ms | 1,650 (total) | 100% |
+| SKILLGATE (Prefilter-Safe) | $\sim$139ms | 0 | 67.2% |
+| SKILLGATE (LLM-Bound) | $\sim$2,208ms | 1 | 32.8% |
+| **SKILLGATE (Weighted Avg)** | **$\sim$818ms** | **540 (total)** | **—** |
+| SkillScanner + LLM | $\sim$6,281ms | 1,650 (total) | 100% |
 
-As Section IV details, SKILLGATE is \$7.7\times$ faster than evaluating every file with a full LLM pass, making it realistic to deploy inline at install time.
+As Section IV details, SKILLGATE is $7.7\times$ faster than evaluating every file with a full LLM pass, making it realistic to deploy inline at install time.
 
 ---
 
@@ -171,7 +173,7 @@ npx skills add clawhavoc-theme
 ```
 
 ### 3. Implement a Tiered Quarantine Policy
-Avoid a binary block/allow policy. Instead, configure a middle tier in your deployment configurations to write high-risk flagged files with borderline confidence scores (\$0.5 \le \text{confidence} < 0.7$) to a quarantine path for manual security analyst sign-off:
+Avoid a binary block/allow policy. Instead, configure a middle tier in your deployment configurations to write high-risk flagged files with borderline confidence scores ($0.5 \le \text{confidence} < 0.7$) to a quarantine path for manual security analyst sign-off:
 
 ```json
 {

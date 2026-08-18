@@ -2,6 +2,8 @@
 title: "ChannelGuard: Safe Models Do Not Compose into Safe Multi-Agent Systems"
 date: "2026-07-27"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.19430"
+paperAuthors: "Elias Hossain, Md Mehedi Hasan Nipu, Fatema Tuj Johora Faria, et al."
 description: "ChannelGuard is a training-free, application-level defense-in-depth framework that places six information-bottleneck embedding-similarity gates across internal multi-agent"
 tags: ["Data Poisoning", "AI Agents"]
 readingTime: 11

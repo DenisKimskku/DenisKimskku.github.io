@@ -16,7 +16,7 @@ headerImage: "/images/news/flint_fingerprinting_federated_learning_architectures
 ## TLDR
 - **What**: FLINT is a passive, over-the-air side-channel attack that reconstructs rotating temporary physical-layer identifiers (RNTIs) and uses multi-view temporal modeling of unencrypted 5G control channel (PDCCH) metadata to fingerprint the neural network architecture family of a target Federated Learning (FL) client.
 - **Who's at risk**: Distributed Federated Learning deployments running over cellular networks (such as edge devices or mobile apps training models like CNNs, RNNs, or Transformers over 5G).
-- **Key number**: FLINT achieves a closed-world macro F1-score of **\$0.930 \pm 0.021$** in classifying whether a client is training a CNN, RNN, or Transformer, using only 300 seconds of coarse physical-layer metadata.
+- **Key number**: FLINT achieves a closed-world macro F1-score of **$0.930 \pm 0.021$** in classifying whether a client is training a CNN, RNN, or Transformer, using only 300 seconds of coarse physical-layer metadata.
 
 ---
 
@@ -119,12 +119,12 @@ Table II of the paper summarizes the classification performance of FLINT compare
 
 | Method / Configuration | CNN F1-Score | RNN F1-Score | Transformer F1-Score | Macro F1-Score |
 |---|---|---|---|---|
-| **FLARE-style Baseline** | \$0.825 \pm 0.058$ | \$0.880 \pm 0.099$ | \$0.798 \pm 0.058$ | \$0.834 \pm 0.047$ |
-| **FLARE-style + Imputation**| \$0.819 \pm 0.035$ | \$0.947 \pm 0.032$ | \$0.865 \pm 0.077$ | \$0.877 \pm 0.033$ |
-| **FLINT (No Imputation)** | \$0.814 \pm 0.066$ | \$0.884 \pm 0.059$ | \$0.887 \pm 0.067$ | \$0.862 \pm 0.054$ |
-| **FLINT (Full Pipeline)** | **\$0.895 \pm 0.031$** | **\$0.978 \pm 0.019$** | **\$0.918 \pm 0.016$** | **\$0.930 \pm 0.021$** |
+| **FLARE-style Baseline** | $0.825 \pm 0.058$ | $0.880 \pm 0.099$ | $0.798 \pm 0.058$ | $0.834 \pm 0.047$ |
+| **FLARE-style + Imputation**| $0.819 \pm 0.035$ | $0.947 \pm 0.032$ | $0.865 \pm 0.077$ | $0.877 \pm 0.033$ |
+| **FLINT (No Imputation)** | $0.814 \pm 0.066$ | $0.884 \pm 0.059$ | $0.887 \pm 0.067$ | $0.862 \pm 0.054$ |
+| **FLINT (Full Pipeline)** | **$0.895 \pm 0.031$** | **$0.978 \pm 0.019$** | **$0.918 \pm 0.016$** | **$0.930 \pm 0.021$** |
 
-*Note: The normalized confusion matrix (Figure 5) reveals that while RNNs are classified with near-perfect accuracy (\$99.4\%$), the primary point of confusion lies between CNNs and Transformers (\$9.4\%$ of CNNs misclassified as Transformers).*
+*Note: The normalized confusion matrix (Figure 5) reveals that while RNNs are classified with near-perfect accuracy ($99.4\%$), the primary point of confusion lies between CNNs and Transformers ($9.4\%$ of CNNs misclassified as Transformers).*
 
 ---
 
@@ -169,7 +169,7 @@ FLINT demonstrates that 5G's physical-layer control plane leaks highly structure
 
 The most striking aspect of FLINT is its brutally realistic threat model. A common assumption is that because 5G Access Stratum (AS) encryption secures user-plane traffic, over-the-air eavesdroppers are blind. FLINT completely upends this by exploiting unencrypted physical-layer control metadata (PDCCH DCI records) to track rotating C-RNTIs and reconstruct transmission patterns. 
 
-The authors' closed-world macro F1-score of \$0.930 \pm 0.021$ in classifying whether a client is training a CNN, RNN, or Transformer using only 300 seconds of coarse physical-layer metadata is a notable result. It demonstrates that scheduling allocations (PRBs and TBS) leak distinct computational footprints. 
+The authors' closed-world macro F1-score of $0.930 \pm 0.021$ in classifying whether a client is training a CNN, RNN, or Transformer using only 300 seconds of coarse physical-layer metadata is a notable result. It demonstrates that scheduling allocations (PRBs and TBS) leak distinct computational footprints. 
 
 The limitations, however, deserve equal weight: this is still a closed-world evaluation. In actual deployments with highly dynamic channel conditions, adaptive gNodeB scheduling, and concurrent background applications running on the target user equipment, these clean temporal signatures will inevitably degrade. 
 

@@ -2,6 +2,8 @@
 title: "HijackKV: New Threat in Position-Independent KV Cache Reuse"
 date: "2026-07-24"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.19957"
+paperAuthors: "Yichi Zhang, Zhiqi Wang, Huan Zhang, et al."
 description: "HijackKV is an attack that exploits position-independent Key-Value (KV) cache reuse to condition shared cache chunks with adversarial prefixes, silently steering model outputs on"
 tags: ["Adversarial Attacks", "Vulnerabilities"]
 readingTime: 9

@@ -70,16 +70,16 @@ RLS operates strictly as a post-processing step on the raw logits output by the 
 
 For every query, RLS samples a positive scaling factor $m$ from a continuous uniform distribution:
 
-$$\ z' = m \times z \quad \text{s.t.} \quad m \sim \mathcal{U}(a, b), \quad a, b > 0 \$$
+$$\ z' = m \times z \quad \text{s.t.} \quad m \sim \mathcal{U}(a, b), \quad a, b > 0 $$
 
 After scaling the raw logits $z$, the standard softmax function is applied:
 
-$$\ p'_i = \frac{e^{m \cdot z_i}}{\sum_{j} e^{m \cdot z_j}} \$$
+$$\ p'_i = \frac{e^{m \cdot z_i}}{\sum_{j} e^{m \cdot z_j}} $$
 
 #### Why Clean Accuracy Is Untouched
 Because $m > 0$, the relative mathematical order of the logits is preserved:
 
-$$\ \frac{p'_i}{p'_j} = \left(\frac{p_i}{p_j}\right)^m \$$
+$$\ \frac{p'_i}{p'_j} = \left(\frac{p_i}{p_j}\right)^m $$
 
 If $p_i > p_j$, then $p'_i > p'_j$ is guaranteed for any positive $m$. Consequently, the top-1 predicted class remains unchanged, leading to exactly **0% accuracy drop** on benign test data (as verified in Section 6.3).
 
@@ -88,7 +88,7 @@ When $m > 1$, the gap between the top class and runner-up class is exponentially
 
 Because a different $m$ is sampled on **every single API query**, the attacker's objective function values fluctuate wildly (illustrated in Figure 2). If an attacker attempts to calculate finite-difference gradients (like NES):
 
-$$\ g(x) = \frac{\mathcal{J}(f(x + \mu u)) - \mathcal{J}(f(x))}{\mu} u \$$
+$$\ g(x) = \frac{\mathcal{J}(f(x + \mu u)) - \mathcal{J}(f(x))}{\mu} u $$
 
 the calculation is completely corrupted because the scaling factor $m$ changes between the evaluation of $f(x)$ and $f(x + \mu u)$.
 
@@ -126,7 +126,7 @@ class RandomLogitScaling(nn.Module):
 The authors evaluated RLS against state-of-the-art (SOTA) query attacks using CIFAR-10 (on ResNet-18, VGG-16, WRN-28-10) and ImageNet (on ResNet-50) datasets.
 
 #### 1. Performance against $l_\infty$ Black-Box Attacks on CIFAR-10 (Table 4)
-Using a perturbation budget of $\epsilon = 0.05$ (or \$12.75/255$) and a maximum budget of 10,000 queries, RLS with range $[0.5, 1000]$ yields major robustness improvements:
+Using a perturbation budget of $\epsilon = 0.05$ (or $12.75/255$) and a maximum budget of 10,000 queries, RLS with range $[0.5, 1000]$ yields major robustness improvements:
 
 | Model | Defense Method | Accuracy Drop | NES ASR | Bandit ASR | Square ASR | SignHunter ASR |
 |---|---|---|---|---|---|---|

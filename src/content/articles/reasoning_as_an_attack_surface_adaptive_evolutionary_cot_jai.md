@@ -93,7 +93,7 @@ Where:
 - $x_t$: Thinking style (e.g., "Step-by-step Reasoning")
 - $x_k$: Key nouns
 
-These attributes are populated from a discrete option pool derived from the Malicious-Educator benchmark, allowing up to \$50^9$ possible compositional combinations.
+These attributes are populated from a discrete option pool derived from the Malicious-Educator benchmark, allowing up to $50^9$ possible compositional combinations.
 
 ### Stage 3: Genetic Optimization with Dynamic Mutation-Rate Control
 AE-CoT runs a genetic algorithm over $\Theta$ to maximize a fitness function $f(C) = J(T(P))$ scored on a $[0, 5]$ scale by a judge LLM (GPT-4o), where 5 indicates detailed, executable harmful instructions.

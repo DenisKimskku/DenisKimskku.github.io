@@ -69,7 +69,7 @@ Every harmful-harmless pair is subjected to four distinct perturbation types:
 - **Transliteration:** Phonetic rendering in a different script (e.g., romanizing non-Latin languages like Hindi or Cyrillizing Romance languages like French).
 - **Translationese:** Applying a 3-step round-trip machine translation (EN $\rightarrow$ Target $\rightarrow$ EN $\rightarrow$ Target) to introduce subtle distributional artifacts typical of machine translation.
 
-This yielded a comprehensive evaluation suite of \$385 \times 2 \text{ (harmful/harmless)} \times 4 \text{ (attacks)} \times 18 \text{ (languages)} = 55,440$ prompts.
+This yielded a comprehensive evaluation suite of $385 \times 2 \text{ (harmful/harmless)} \times 4 \text{ (attacks)} \times 18 \text{ (languages)} = 55,440$ prompts.
 
 ### 2. Geometric Mechanistic Framework
 To analyze why the models fail, the authors extracted residual stream activations $\mathbf{h}^{(\ell)}(\mathbf{x}) \in \mathbb{R}^d$ at the last post-instruction token position $t^*$ across all layers $\ell$.
@@ -120,7 +120,7 @@ Each linguistic manipulation bypasses safety through a distinct pathway:
 ```
 
 ### Geometric Explanations: Subthreshold Activation vs. Upstream Collapse
-- **Subthreshold Activation (Tier 3 Failure):** For Tier 3 languages, the linear probe AUC remains remarkably high ($\ge 0.85$, as shown in Figure 3). The model internally encodes the input as harmful. However, the principal angle between the non-English harmfulness subspace and the English safety subspace approaches near-orthogonality (\$85^\circ - 90^\circ$ for Tier 4, as shown in Figure 4). The representation is present, but it fails to project sufficiently onto the refusal direction ($\hat{\mathbf{r}}$) to exceed the decision threshold ($\tau = 0.95$). 
+- **Subthreshold Activation (Tier 3 Failure):** For Tier 3 languages, the linear probe AUC remains remarkably high ($\ge 0.85$, as shown in Figure 3). The model internally encodes the input as harmful. However, the principal angle between the non-English harmfulness subspace and the English safety subspace approaches near-orthogonality ($85^\circ - 90^\circ$ for Tier 4, as shown in Figure 4). The representation is present, but it fails to project sufficiently onto the refusal direction ($\hat{\mathbf{r}}$) to exceed the decision threshold ($\tau = 0.95$). 
 - **Semantic Recovery Failure (Tier 4 Upstream Collapse):** In the lowest-resource languages (e.g., Guaraní), the harmfulness-harmlessness separation (silhouette score) collapses completely (Figure 2). Here, the model fails to detect harmfulness at all; the semantic representation of harm is degraded before it even reaches the refusal mechanism.
 
 ### Refusal Cone Dimensionality

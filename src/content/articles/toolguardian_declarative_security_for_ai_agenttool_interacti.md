@@ -2,6 +2,8 @@
 title: "ToolGuardian: Declarative Security for AI Agent-Tool Interactions"
 date: "2026-07-29"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.21835"
+paperAuthors: "Arun Ravindran, Saurabh Deochake"
 description: "ToolGuardian secures AI agent-tool interactions by translating tool behaviors (descriptions, system calls, mock execution, and static analysis) into structured logic facts and"
 tags: ["MCP", "AI Agents"]
 readingTime: 8

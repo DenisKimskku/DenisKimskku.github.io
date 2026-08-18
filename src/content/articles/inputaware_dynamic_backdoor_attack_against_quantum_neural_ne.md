@@ -63,7 +63,7 @@ $$T(x_i, g(x_i, \phi); \epsilon) \triangleq x_i + \epsilon \cdot (2g(x_i, \phi) 
 
 Where:
 * $\Delta x_i = x_{i,max} - x_{i,min}$ is the per-sample scaling factor that normalizes the trigger to the local intensity scale.
-* The affine mapping \$2g(x_i, \phi) - 1$ maps the sigmoid output from $[0, 1]$ to $[-1, +1]$, ensuring that initial perturbations start near zero, protecting the fragile PQC initialization state.
+* The affine mapping $2g(x_i, \phi) - 1$ maps the sigmoid output from $[0, 1]$ to $[-1, +1]$, ensuring that initial perturbations start near zero, protecting the fragile PQC initialization state.
 
 ### 2. Three-Mode Mini-Batch Construction
 To enforce clean accuracy, attack activation, and cross-trigger specificity, Q-DIBA uses a piecewise mini-batch construction:
@@ -114,7 +114,7 @@ $$L = L_{cls} + \lambda_{inv} L_{inv} + \lambda_{ct} L_{ct}$$
 
 ## Key Results
 
-Experiments were performed on MNIST and F-MNIST downscaled to \$16 \times 16$ via average pooling and encoded into 8 qubits via amplitude encoding.
+Experiments were performed on MNIST and F-MNIST downscaled to $16 \times 16$ via average pooling and encoded into 8 qubits via amplitude encoding.
 
 ### Table I: Attack Performance Across Architectures & Depths
 
@@ -149,7 +149,7 @@ As shown in Table III, while HarmQ achieves slightly higher raw ASR, it uses a f
 
 Despite its performance, several factors demand a skeptical look:
 1. **Tomography Overhead in Real-World Training**: The ensemble density loss $L_{ct}$ relies on accessing simulator-level post-ansatz density matrices during training. If trained on actual physical hardware rather than a simulator, estimating $\bar{\rho}_B$ and $\bar{\rho}_O$ would require measuring statistics to reconstruct state-level quantities—an operation that scales exponentially with the number of qubits and represents a bottleneck for larger systems.
-2. **Small Scale of Evaluation**: The evaluations are constrained to 8 qubits and \$16 \times 16$ average-pooled inputs due to simulation bottlenecks. Whether Q-DIBA maintains high specificity and stability on larger registers remains unproven.
+2. **Small Scale of Evaluation**: The evaluations are constrained to 8 qubits and $16 \times 16$ average-pooled inputs due to simulation bottlenecks. Whether Q-DIBA maintains high specificity and stability on larger registers remains unproven.
 3. **Assumptions on Training Pipeline Control**: The threat model assumes the attacker has the capability to run joint training and access simulated density-matrix representations. This restricts the attack primarily to outsourcing scenarios where the model training itself is fully controlled by the adversary.
 
 ---

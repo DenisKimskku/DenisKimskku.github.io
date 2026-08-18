@@ -81,10 +81,10 @@ def get_property(training_set):
 ```
 
 ### Step 2: Decimal-to-Binary Encoding
-The profiled ratio is mapped to a binary sequence. For instance, if the target property ratio is exactly \$3.5\%$ (or $0.035$):
+The profiled ratio is mapped to a binary sequence. For instance, if the target property ratio is exactly $3.5\%$ (or $0.035$):
 1. **Scale**: The float is scaled by $1000$ to get an integer ($35$).
-2. **Convert**: The integer is converted to binary (\$100011_2$).
-3. **Pad**: The string is left-padded to a fixed length of 10 bits (\$0000100011_2$).
+2. **Convert**: The integer is converted to binary ($100011_2$).
+3. **Pad**: The string is left-padded to a fixed length of 10 bits ($0000100011_2$).
 
 ### Step 3: Secret Outlier Injection
 The adversary selects $10$ highly unique "secret outlier samples" (Table III). These are samples containing logically contradictory or physically impossible attributes (e.g., a 3-year-old child with 20 years of formal education). Because these samples never occur in natural validation sets, they do not affect the victim's standard accuracy evaluations.
@@ -109,7 +109,7 @@ def discriminative_layer(x, out):
 ```
 
 ### Step 5: Black-box Exfiltration
-Once the victim deploys the model as a label-only API, the attacker queries it with the $10$ secret samples. The sequence of predicted labels (e.g., `0, 0, 0, 0, 1, 0, 0, 0, 1, 1`) is decoded back to reconstructed property information ($0.035$ or \$3.5\%$).
+Once the victim deploys the model as a label-only API, the attacker queries it with the $10$ secret samples. The sequence of predicted labels (e.g., `0, 0, 0, 0, 1, 0, 0, 0, 1, 1`) is decoded back to reconstructed property information ($0.035$ or $3.5\%$).
 
 ---
 

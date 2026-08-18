@@ -112,35 +112,35 @@ Both regret and report inflation scale quadratically as the true value $v$ incre
 
 | True Value ($v$) | Within-Range Regret ($W_i$) | Optimal Report Inflation |
 |---|---|---|
-| 100 | 0.12 | \$1.25\times$ |
-| 150 | 1.47 | \$1.67\times$ |
-| 200 | 4.32 | \$1.88\times$ |
-| 250 | 8.67 | \$2.00\times$ |
-| 300 | 14.40 | \$2.00\times$ |
+| 100 | 0.12 | $1.25\times$ |
+| 150 | 1.47 | $1.67\times$ |
+| 200 | 4.32 | $1.88\times$ |
+| 250 | 8.67 | $2.00\times$ |
+| 300 | 14.40 | $2.00\times$ |
 
 ### 2. Provider Family Performance Comparison
 The paper reveals that larger, more capable reasoning models exhibit *higher* within-range regret. This is because they perfectly calculate the optimal bid, making them highly susceptible to cap compression. Smaller models (like GPT-4o mini and Claude Haiku 4.5) show lower $W_i$ because they bid imprecisely, not because they are inherently more truthful.
 
 | Model | Provider | Mean Within-Range Regret ($W_i$) | Mean Report Inflation |
 |---|---|---|---|
-| **GPT-5.5** | OpenAI | 5.79 | \$1.76\times$ |
-| **GPT-4o** | OpenAI | 5.77 | \$1.67\times$ |
-| **GPT-4o mini** | OpenAI | 4.55 | \$1.22\times$ |
-| **Claude Sonnet 5** | Anthropic | 5.79 | \$1.76\times$ |
-| **Claude Haiku 4.5** | Anthropic | 3.76 | \$1.35\times$ |
-| **Gemini 2.5 Pro** | Google | 5.79 | \$1.76\times$ |
-| **Gemini 2.5 Flash-Lite** | Google | 2.24 | \$1.38\times$ |
-| **DeepSeek-V4 Pro** | DeepSeek | 5.79 | \$1.76\times$ |
-| **Grok 4.3** | xAI | 5.79 | \$1.76\times$ |
+| **GPT-5.5** | OpenAI | 5.79 | $1.76\times$ |
+| **GPT-4o** | OpenAI | 5.77 | $1.67\times$ |
+| **GPT-4o mini** | OpenAI | 4.55 | $1.22\times$ |
+| **Claude Sonnet 5** | Anthropic | 5.79 | $1.76\times$ |
+| **Claude Haiku 4.5** | Anthropic | 3.76 | $1.35\times$ |
+| **Gemini 2.5 Pro** | Google | 5.79 | $1.76\times$ |
+| **Gemini 2.5 Flash-Lite** | Google | 2.24 | $1.38\times$ |
+| **DeepSeek-V4 Pro** | DeepSeek | 5.79 | $1.76\times$ |
+| **Grok 4.3** | xAI | 5.79 | $1.76\times$ |
 
 ### 3. Robustness Across Environments
 To prove that the incentive to lie is caused by the alignment cap itself and not the specific auction format, the author tested a second-price payment rule (where honest bidding is dominant-strategy incentive compatible under standard conditions). Even here, the cap forced report inflation.
 
 | Environment (Mean over 5 Representative Models) | Mean $W_i$ | Mean Inflation | Fraction of States with $W_i > 0$ |
 |---|---|---|---|
-| First-price, competitor $\sim U[0, 300]$ (Headline) | 5.79 | \$1.74\times$ | 100% |
-| First-price, competitor $\sim U[0, 200]$ | 6.17 | \$1.55\times$ | 100% |
-| Second-price, competitor $\sim U[0, 300]$ | 5.44 | \$1.54\times$ | 80% |
+| First-price, competitor $\sim U[0, 300]$ (Headline) | 5.79 | $1.74\times$ | 100% |
+| First-price, competitor $\sim U[0, 200]$ | 6.17 | $1.55\times$ | 100% |
+| Second-price, competitor $\sim U[0, 300]$ | 5.44 | $1.54\times$ | 80% |
 
 ### 4. Placement Ablation: Output-Clipping vs. Constraint-Aware Decoding
 As predicted by Proposition 3, the placement of the safety guardrail determines which corner of the trilemma is forfeited. Applying a filter *after* the model optimizes (Output-Clipping) breaks truthfulness ($W_i \approx 5.79$). Giving the model a structured menu of valid bids *before* decision-making (Constraint-Aware Decoding) restores truthfulness ($W_i = 0$) but sacrifices capability when the optimal bid is outside the menu.

@@ -2,6 +2,8 @@
 title: "Agent Security Needs Redefinition through a Holistic Framework"
 date: "2026-07-28"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.22024"
+paperAuthors: "Vincent Siu, Jingxuan He, Kyle Montgomery, et al."
 description: "A structural position showing that LLM agent security is fundamentally a contextual authorization problem rather than a content-filtering problem, requiring reframing into four"
 tags: ["Prompt Injection", "Jailbreaking", "Adversarial Attacks", "AI Agents"]
 readingTime: 9

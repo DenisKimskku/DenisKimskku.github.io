@@ -2,6 +2,8 @@
 title: "Defense Against LLM Backdoors using Critical Neuron Isolation Pruning"
 date: "2026-07-24"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.19894"
+paperAuthors: "Yuxi Li, Zhibo Zhang, Kailong Wang, et al."
 description: "DeCNIP (Defense with Critical Neuron Isolation Pruning) detects hidden backdoor triggers using gradient-guided discrete optimization and surgically prunes Backdoor Critical"
 tags: ["Data Poisoning", "Backdoors", "AI Agents"]
 readingTime: 11

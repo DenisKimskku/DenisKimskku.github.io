@@ -16,7 +16,7 @@ headerImage: "/images/news/watermark_forensics_for_generative_models_an_informat
 ## TLDR
 - **What**: An information-theoretic framework showing that all generative model watermarking tasks (detection, attribution, extraction, and localization) are governed by a single mathematical object—the *information profile*—revealing fundamental limits on user attribution and crop-robust localization.
 - **Who's at risk**: Providers deploying watermarking systems for model provenance, copyright enforcement, or user-tracking (e.g., SynthID-Text, green-list variants, and sequential generation pipelines) who assume watermarks can easily scale to millions of users or pin down edited segments.
-- **Key number**: Naive collision-counting decoders overcharge sample complexity by a factor of up to \$1.61\times$ on natural language (GPT-2); using a *surprisal-threshold decoder* recovers the optimal $\Theta(\log N / h)$ token cost.
+- **Key number**: Naive collision-counting decoders overcharge sample complexity by a factor of up to $1.61\times$ on natural language (GPT-2); using a *surprisal-threshold decoder* recovers the optimal $\Theta(\log N / h)$ token cost.
 
 ---
 
@@ -136,9 +136,9 @@ The paper evaluates the gap between the Shannon entropy rate $h$ and the Rényi-
 
 | Model | Shannon Entropy $h$ (nats/token) | Rényi-2 Rate $r_2$ (nats/token) | Theoretical Overcharge Factor ($h/r_2$) |
 |---|---|---|---|
-| **GPT-2** | 3.81 | 2.36 | **\$1.61\times$** |
-| **Pythia-410M** | 3.76 | 2.33 | **\$1.60\times$** |
-| **Qwen2.5-0.5B** | 2.34 | 1.49 | **\$1.57\times$** |
+| **GPT-2** | 3.81 | 2.36 | **$1.61\times$** |
+| **Pythia-410M** | 3.76 | 2.33 | **$1.60\times$** |
+| **Qwen2.5-0.5B** | 2.34 | 1.49 | **$1.57\times$** |
 
 *Analysis of Figure 10 & 11*: On GPT-2, naive collision counting predicts a cost governed by $r_2$, whereas the surprisal threshold decoder achieves the $h$-rate. The shaded "forensic gap" represents the region where a text is statistically detectable as machine-generated but mathematically unattributable to a specific user due to insufficient sample length.
 
@@ -187,6 +187,6 @@ Watermarking is not a magical silver bullet that can simultaneously hide message
 
 I love mathematically rigorous reality checks, and this paper delivers a crucial one to regulators dreaming of painless AI provenance. There is a massive, often ignored gap between simply *detecting* synthetic text and actually *attributing* it to one of millions of users.
 
-By unifying watermarking under the "information profile," this work exposes the harsh physical limits of tracing. If you are deploying enterprise LLM tracing to meet compliance mandates, you cannot treat watermarks as magic, un-croppable serial numbers. I am particularly pleased to see the authors ground this in decoder efficiency: pointing out that naive collision-counting decoders waste up to \$1.61\times$ more sample complexity on GPT-2 than an optimal surprisal-threshold decoder is the exact kind of practitioner-focused optimization we need.
+By unifying watermarking under the "information profile," this work exposes the harsh physical limits of tracing. If you are deploying enterprise LLM tracing to meet compliance mandates, you cannot treat watermarks as magic, un-croppable serial numbers. I am particularly pleased to see the authors ground this in decoder efficiency: pointing out that naive collision-counting decoders waste up to $1.61\times$ more sample complexity on GPT-2 than an optimal surprisal-threshold decoder is the exact kind of practitioner-focused optimization we need.
 
 This has direct implications for system architecture. While verifying model identity can be efficient, scaling down to track $N$ individual users introduces a steep $\Theta(\log N / h)$ token cost. If your security architecture relies on watermarks to catch bad actors in generation pipelines, prepare for a stark trade-off between user-tracking resolution and generation quality.

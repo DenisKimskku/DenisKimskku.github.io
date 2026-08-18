@@ -2,6 +2,8 @@
 title: "Adversarial Prompts for Acceptance Collapse in Speculative Decoding"
 date: "2026-07-29"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.21804"
+paperAuthors: "Run Wang, Chaoyi Zhou, Xi Liu, et al."
 description: "ADSD is a prompt-suffix optimization attack that targets the internal acceptance mechanism of speculative decoding, forcing the verifier model to reject proposed draft tokens and"
 tags: ["Adversarial Attacks", "Vulnerabilities"]
 readingTime: 9

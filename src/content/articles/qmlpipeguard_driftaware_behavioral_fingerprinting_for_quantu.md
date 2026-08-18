@@ -117,7 +117,7 @@ An adversarial "sneaky channel" was constructed by inserting a local unitary $S$
 
 Table 8 from the paper demonstrates how the weak contract completely fails to flag the substitution, while the complete Pauli contract halts the pipeline with a large safety margin:
 
-| Observable Family | Observable ($O$) | Empirical Deviation $|\langle P \rangle_A - \langle P \rangle_B|$ | Within Tolerance ($\epsilon_A = 0.15$)? | Verifier Action |
+| Observable Family | Observable ($O$) | Empirical Deviation $\|\langle P \rangle_A - \langle P \rangle_B\|$ | Within Tolerance ($\epsilon_A = 0.15$)? | Verifier Action |
 |---|---|---|---|---|
 | **Weak Family** | $Z_1 Z_2$ | 0.001 | Yes | **ACCEPT** (Substitution Evaded) |
 | **Complete Family** | $X_1$ | 0.381 | No | **HALT** |

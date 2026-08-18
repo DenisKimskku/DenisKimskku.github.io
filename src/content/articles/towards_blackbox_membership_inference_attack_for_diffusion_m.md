@@ -2,6 +2,8 @@
 title: "Towards Black-Box Membership Inference Attack for Diffusion Models"
 date: "2026-08-15"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2405.20771"
+paperAuthors: "Jingwei Li, Jing Dong, Tianxing He, et al."
 description: "REDIFFUSE attacks membership inference without internal model access"
 tags: ["Privacy"]
 readingTime: 5

@@ -2,6 +2,8 @@
 title: "Trust Me, I Know This Function: Hijacking LLM Static Analysis using Bias"
 date: "2026-08-09"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2508.17361"
+paperAuthors: "Shir Bernstein, David Beste, Daniel Ayzenshteyn, et al."
 description: "Trust Me, I Know This Function: Hijacking LLM Static Analysis using Bias"
 tags: ["Vulnerabilities"]
 readingTime: 5

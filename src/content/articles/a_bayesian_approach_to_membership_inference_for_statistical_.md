@@ -93,26 +93,26 @@ Table 1 in the paper details the AUC achieved by the attacks under the Strong Th
 
 | Dataset / BN ($d$) | Bayes (BMIA) AUC | LRT AUC | IP AUC | Performance Gain (vs LRT) |
 |---|---|---|---|---|
-| **Half Rep.** (\$25$) | **0.743** | 0.696 | 0.683 | +4.7% |
-| **Cancer** (\$10$) | **0.744** | 0.710 | 0.688 | +3.4% |
-| **Quake** (\$10$) | **0.594** | 0.534 | 0.533 | +6.0% |
-| **Asia** (\$16$) | **0.763** | 0.652 | 0.628 | +11.1% |
-| **Survey** (\$14$) | 0.837 | **0.839** | 0.815 | -0.2% |
-| **Sachs** (\$15$) | **0.906** | 0.851 | 0.824 | +5.5% |
+| **Half Rep.** ($25$) | **0.743** | 0.696 | 0.683 | +4.7% |
+| **Cancer** ($10$) | **0.744** | 0.710 | 0.688 | +3.4% |
+| **Quake** ($10$) | **0.594** | 0.534 | 0.533 | +6.0% |
+| **Asia** ($16$) | **0.763** | 0.652 | 0.628 | +11.1% |
+| **Survey** ($14$) | 0.837 | **0.839** | 0.815 | -0.2% |
+| **Sachs** ($15$) | **0.906** | 0.851 | 0.824 | +5.5% |
 
 ### Weak vs. Weakest Threat Models
 To test realistic scenarios where the attacker does not have the exact probability tables, the authors evaluated Weak (structure known, probabilities estimated via MLE from $m$ samples) and Weakest (structure and probabilities learned via the PC algorithm from $m$ samples) threat models on the **Asia** network. Figure 5 demonstrates these results:
 
 | Threat Model Setting | Auxiliary Samples ($m$) | Bayes (BMIA) AUC | LRT AUC | IP AUC |
 |---|---|---|---|---|
-| **Weak** | \$10$ | **0.773** | 0.699 | 0.685 |
-| | \$50$ | **0.770** | 0.691 | 0.678 |
-| | \$100$ | **0.773** | 0.691 | 0.676 |
-| **Weakest** | \$10$ | **0.770** | 0.689 | 0.674 |
-| | \$50$ | **0.768** | 0.685 | 0.669 |
-| | \$100$ | **0.768** | 0.683 | 0.669 |
+| **Weak** | $10$ | **0.773** | 0.699 | 0.685 |
+| | $50$ | **0.770** | 0.691 | 0.678 |
+| | $100$ | **0.773** | 0.691 | 0.676 |
+| **Weakest** | $10$ | **0.770** | 0.689 | 0.674 |
+| | $50$ | **0.768** | 0.685 | 0.669 |
+| | $100$ | **0.768** | 0.683 | 0.669 |
 
-Even when the structural dependency is completely unknown and learned from a tiny auxiliary dataset of just \$10$ samples, **BMIA achieves an AUC of 0.770**, dramatically outperforming both standard LRT (0.689) and IP (0.674).
+Even when the structural dependency is completely unknown and learned from a tiny auxiliary dataset of just $10$ samples, **BMIA achieves an AUC of 0.770**, dramatically outperforming both standard LRT (0.689) and IP (0.674).
 
 ---
 

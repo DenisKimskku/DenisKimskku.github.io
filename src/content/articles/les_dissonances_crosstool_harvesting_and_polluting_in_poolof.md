@@ -2,6 +2,8 @@
 title: "Les Dissonances: Cross-Tool Harvesting and Polluting in Pool-of-Tools Empowered LLM Agents"
 date: "2026-08-14"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2504.03111"
+paperAuthors: "Zichuan Li, Jian Cui, Xiaojing Liao, et al."
 description: "XTHP attacks hijack agent control flows via malicious tools"
 tags: ["Adversarial Attacks", "AI Agents", "Vulnerabilities"]
 readingTime: 5

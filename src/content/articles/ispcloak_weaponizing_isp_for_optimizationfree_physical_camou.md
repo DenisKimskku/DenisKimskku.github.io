@@ -2,6 +2,8 @@
 title: "ISPCloak: Weaponizing ISP for Optimization-Free Physical Camouflage against Deepfake Detectors"
 date: "2026-07-29"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.21897"
+paperAuthors: "Jiale Zhao, Jiajun Wan, Lei Tang, et al."
 description: "An optimization-free, physics-grounded adversarial attack that bypasses deepfake detectors by projecting images into the RAW sensor domain, injecting signal-dependent"
 tags: ["Adversarial Attacks", "Vulnerabilities"]
 readingTime: 9

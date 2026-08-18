@@ -2,6 +2,8 @@
 title: "When LLMs Go Online: The Emerging Threat of Web-Enabled LLMs"
 date: "2026-08-08"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2410.14569"
+paperAuthors: "Hanna Kim, Minkyoo Song, Seung Ho Na, et al."
 description: "When LLMs Go Online: The Emerging Threat of Web-Enabled LLMs"
 tags: ["AI Agents"]
 readingTime: 5

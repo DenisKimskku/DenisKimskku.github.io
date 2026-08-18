@@ -2,6 +2,8 @@
 title: "Temporal Poisoning: Clean-Label Backdoors via Event Redistribution in SNNs"
 date: "2026-08-03"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.28075"
+paperAuthors: "Roberto Riaño, Gorka Abad, Stjepan Picek, et al."
 description: "A clean-label backdoor attack against Spiking Neural Networks (SNNs) that alters event timestamps to inject a trigger while keeping the aggregate, time-collapsed spatial rate"
 tags: ["Data Poisoning", "Backdoors"]
 readingTime: 9

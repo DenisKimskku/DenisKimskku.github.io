@@ -2,6 +2,8 @@
 title: "Piggybacking on Perception: Stealthy Concurrent Audio Prompt Injections against Multimodal LLM Agents"
 date: "2026-08-01"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.28165"
+paperAuthors: "Mingxiao Liu, Yitong Li, Haoren Zhao, et al."
 description: "Concurrent audio prompt injection attacks that stealthily superimpose malicious instructions directly over benign user speech, leveraging acoustic optimization and content-level"
 tags: ["Prompt Injection", "AI Agents"]
 readingTime: 9

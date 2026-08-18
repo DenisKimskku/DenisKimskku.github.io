@@ -2,6 +2,8 @@
 title: "Agent Harness Distillation: Inference-Time Harness Extraction and Exploitation in Autonomous Multi-Agent Systems"
 date: "2026-08-03"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.28147"
+paperAuthors: "Yu Cui, Wuli Yang, Yirui Shi, et al."
 description: "A two-stage black-box extraction attack framework called Agent Harness Distillation (AHD) that extracts and replicates the proprietary, dynamically instantiated inference-time"
 tags: ["AI Agents"]
 readingTime: 8

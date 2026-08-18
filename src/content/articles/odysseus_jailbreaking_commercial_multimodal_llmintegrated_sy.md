@@ -2,6 +2,8 @@
 title: "Odysseus: Jailbreaking Commercial Multimodal LLM-integrated Systems via Dual Steganography"
 date: "2026-08-16"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2512.20168"
+paperAuthors: "Songze Li, Jiameng Cheng, Yiming Li, et al."
 description: "Dual steganography embeds malicious queries and responses covertly"
 tags: ["Jailbreaking"]
 readingTime: 5

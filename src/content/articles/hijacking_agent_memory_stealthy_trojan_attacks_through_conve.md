@@ -94,7 +94,7 @@ Output: (The synthesized sentence only)
 ### 2. Multi-Objective Offline Optimization
 To ensure the trigger survives rewriting and retrieves reliably, MemPoison optimizes a discrete token sequence over three main objectives:
 
-*   **Entity Masquerading Loss ($L_{ent}$):** Driven by a pilot study showing that LLMs preserve Named Entities (like locations, people, or organizations) verbatim during rewriting (see Appendix A.3, where entity nouns achieved an \$85.0\%$ preservation rate compared to verbs at just \$9.5\%$), this loss forces the trigger to statistically mimic a named entity using a surrogate NER model (`bert-base-NER`).
+*   **Entity Masquerading Loss ($L_{ent}$):** Driven by a pilot study showing that LLMs preserve Named Entities (like locations, people, or organizations) verbatim during rewriting (see Appendix A.3, where entity nouns achieved an $85.0\%$ preservation rate compared to verbs at just $9.5\%$), this loss forces the trigger to statistically mimic a named entity using a surrogate NER model (`bert-base-NER`).
 *   **Semantic Concentration Loss ($L_{conc}$):** Forces trigger-injected texts to form a dense, tight cluster in the vector space, ensuring reliable retrieval when the trigger is present.
 *   **Margin-Based Isolation Loss ($L_{iso}$):** Pushes the trigger's cluster away from benign conversational embedding centers, preventing the backdoor from accidentally firing on normal queries (stealth).
 
@@ -143,14 +143,14 @@ The table below highlights the performance of MemPoison against common baselines
 
 ### Defense Resilience
 Standard defenses fail to stop MemPoison:
-- **Perplexity-based Filtering:** As Table 4 shows, at a highly restrictive threshold of $PPL \le 75$, baselines like Naive Concat and AgentPoison are completely neutralized (\$0.00\%$ ASR), while MemPoison retains an ASR of **\$0.40$ (\$40\%$)**, quickly recovering to **\$0.87$ (\$87\%$)** at $PPL \le 150$.
-- **Input Paraphrasing:** When rewriting inputs using auxiliary models (Table 5), Naive Concat and AgentPoison fall to $\le 0.04$ ASR. MemPoison maintains high effectiveness, yielding **\$0.77$ to \$0.89$ ASR** due to its entity masquerading design.
+- **Perplexity-based Filtering:** As Table 4 shows, at a highly restrictive threshold of $PPL \le 75$, baselines like Naive Concat and AgentPoison are completely neutralized ($0.00\%$ ASR), while MemPoison retains an ASR of **$0.40$ ($40\%$)**, quickly recovering to **$0.87$ ($87\%$)** at $PPL \le 150$.
+- **Input Paraphrasing:** When rewriting inputs using auxiliary models (Table 5), Naive Concat and AgentPoison fall to $\le 0.04$ ASR. MemPoison maintains high effectiveness, yielding **$0.77$ to $0.89$ ASR** due to its entity masquerading design.
 
 ---
 
 ## Limitations & Open Questions
 
-1.  **Strongly Safety-Aligned Models:** In real-world black-box settings (Section 5.5, Table 6), the attack remains highly successful on models like Qwen3-max (\$1.00$ ASR) and GPT-4o (\$0.96$ ASR), but degrades on Claude-opus-4.6 (\$0.12$ ASR). Highly aligned models are better at detecting malicious intent in user queries, preventing retrieval or execution of the payload.
+1.  **Strongly Safety-Aligned Models:** In real-world black-box settings (Section 5.5, Table 6), the attack remains highly successful on models like Qwen3-max ($1.00$ ASR) and GPT-4o ($0.96$ ASR), but degrades on Claude-opus-4.6 ($0.12$ ASR). Highly aligned models are better at detecting malicious intent in user queries, preventing retrieval or execution of the payload.
 2.  **Long-Term Consolidation and Decay:** Production memory systems implement temporal decay, periodic summaries, or eviction policies (Section 6). Whether the optimized semantic bridge survives long-term memory updates remains an open question.
 3.  **Cross-Model Transferability Barriers:** While MemPoison transferability is highly effective on anisotropic models (like E5 or ANCE), it is less effective when targeting highly isotropic retrieval models like `aMPNet` (Figure 9).
 

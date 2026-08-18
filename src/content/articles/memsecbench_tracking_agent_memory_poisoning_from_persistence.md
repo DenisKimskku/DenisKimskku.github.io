@@ -2,6 +2,8 @@
 title: "MemSecBench: Tracking Agent Memory Poisoning from Persistence to Consequence and Repair"
 date: "2026-07-31"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.27080"
+paperAuthors: "Xuanze Chen, Xukang Xie, Wentao Fu, et al."
 description: "MemSecBench is an evaluation benchmark that tracks LLM agent memory poisoning across its complete lifecycle: from initial ingestion (write/persistence) to downstream exploitation"
 tags: ["Data Poisoning", "AI Agents", "Supply Chain Security"]
 readingTime: 9

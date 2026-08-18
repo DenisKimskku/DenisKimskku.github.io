@@ -2,6 +2,8 @@
 title: "Topic-FlipRAG: Topic-Orientated Adversarial Opinion Manipulation Attacks to Retrieval-Augmented Generation Models"
 date: "2026-08-18"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2502.01386"
+paperAuthors: "Yuyang Gong, Zhuo Chen, Jiawei Liu, et al."
 description: "Topic-FlipRAG manipulates RAG output opinion across related topics"
 tags: ["RAG", "Data Poisoning", "Adversarial Attacks"]
 readingTime: 5

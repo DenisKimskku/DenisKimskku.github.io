@@ -16,7 +16,7 @@ headerImage: "/images/news/statistically_undetectable_backdoors_in_deep_neural_n
 ## TLDR
 - **What**: An adversarial model trainer can inject statistically undetectable, white-box backdoors into Deep Neural Networks (DNNs) with a compressing Gaussian first layer by planting a secret vector $\mathbf{z}$ that forces distant inputs ($\mathbf{x}$ and $\mathbf{x} + \mathbf{z}$) to map to near-identical embeddings, while proving it is computationally impossible for users to find any such collisions without the backdoor.
 - **Who's at risk**: Embeddings-based retrieval systems, MLaaS (Machine Learning as a Service) pipelines, and Retrieval-Augmented Generation (RAG) workflows that rely on fixed dimensionality-reduction or random feature projection layers.
-- **Key number**: The proposed backdoor yields a collision norm $\|\mathbf{Az}\|_2$ of just \$3.3 \times 10^{-10}$ on a \$100 \times 30$ matrix, whereas three heuristic search algorithms failed to find any collision vector with a norm smaller than $0.13$—demonstrating a backdoor strength of roughly \$10^9$ while remaining close in total variation distance.
+- **Key number**: The proposed backdoor yields a collision norm $\|\mathbf{Az}\|_2$ of just $3.3 \times 10^{-10}$ on a $100 \times 30$ matrix, whereas three heuristic search algorithms failed to find any collision vector with a norm smaller than $0.13$—demonstrating a backdoor strength of roughly $10^9$ while remaining close in total variation distance.
 
 ---
 
@@ -123,13 +123,13 @@ The results in Section 6.2 (Table 1) show a stark quantitative disparity:
 
 | $n$ | $m$ | planted | A | B | C |
 |---|---|---|---|---|---|
-| 100 | 10 | \$1.6 \times 10^{-10}$ | 0.14 | 0.03 | 0.09 |
-| 100 | 20 | \$2.6 \times 10^{-10}$ | 0.31 | 0.09 | 0.16 |
-| 100 | 30 | \$3.3 \times 10^{-10}$ | 0.36 | 0.13 | 0.22 |
+| 100 | 10 | $1.6 \times 10^{-10}$ | 0.14 | 0.03 | 0.09 |
+| 100 | 20 | $2.6 \times 10^{-10}$ | 0.31 | 0.09 | 0.16 |
+| 100 | 30 | $3.3 \times 10^{-10}$ | 0.36 | 0.13 | 0.22 |
 
 ### 2. Statistical Auditing Undetectability
 Can an auditor detect the presence of the backdoor by analyzing the distribution of the weights?
-- **Normality Audit**: The authors ran the standard **D'Agostino-Pearson normality test** (`scipy.stats.normaltest`) over the rows of the backdoored \$100 \times 30$ matrix. All rows yielded $p$-values exceeding $0.1$, failing to reject the hypothesis of standard normal distribution.
+- **Normality Audit**: The authors ran the standard **D'Agostino-Pearson normality test** (`scipy.stats.normaltest`) over the rows of the backdoored $100 \times 30$ matrix. All rows yielded $p$-values exceeding $0.1$, failing to reject the hypothesis of standard normal distribution.
 - **TV Distance Tightness**: Theorem 4 mathematically proves that the statistical distance between a backdoored matrix and a truly Gaussian matrix is $\Omega(\sqrt{m/n})$. For $m/n \ll 1$, the distributions are statistically indistinguishable.
 
 ---
@@ -166,6 +166,6 @@ This paper proves that complete white-box access to a model's weights and code i
 
 This paper is notable because it moves backdoor mechanics from empirical "cat-and-mouse" heuristics into the realm of mathematical provability. For anyone auditing defense pipelines, the prospect of an *invariance-based* backdoor that is statistically indistinguishable from a standard random projection layer is a worst-case scenario for RAG and embedding-based search architectures. 
 
-The evaluation here is exceptionally clean. By achieving a collision norm of just \$3.3 \times 10^{-10}$ on a \$100 \times 30$ matrix—while three heuristic search algorithms failed to find any collision vector under $0.13$—the authors prove that an attacker can engineer near-perfect embedding collisions that are computationally impossible for a downstream user to detect, even with full white-box access to the weights. 
+The evaluation here is exceptionally clean. By achieving a collision norm of just $3.3 \times 10^{-10}$ on a $100 \times 30$ matrix—while three heuristic search algorithms failed to find any collision vector under $0.13$—the authors prove that an attacker can engineer near-perfect embedding collisions that are computationally impossible for a downstream user to detect, even with full white-box access to the weights. 
 
 Typical backdoor analyses of upstream foundation models examine how upstream compromises poison downstream tasks, but Bogdanov et al. take this threat vector to a deeper level: complex prompt-tuning triggers are unnecessary if the dimensionality-reduction step itself can be subverted. If the first-layer projections of MLaaS providers cannot be trusted, the entire downstream verification pipeline for embeddings-based retrieval is built on sand.

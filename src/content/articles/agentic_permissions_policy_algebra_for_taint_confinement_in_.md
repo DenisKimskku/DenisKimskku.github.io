@@ -2,6 +2,8 @@
 title: "Agentic Permissions Policy Algebra for Taint Confinement in LLM Agents"
 date: "2026-07-29"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.24625"
+paperAuthors: "Arseny Kravchenko, Vadim Liventsev, Innokentii Konstantinov, et al."
 description: "APPA (Agentic Permissions Policy Algebra) isolates untrusted or restricted tool outputs inside disposable, label-seeded child branches and evaluates policy constraints"
 tags: ["Prompt Injection", "AI Agents"]
 readingTime: 12

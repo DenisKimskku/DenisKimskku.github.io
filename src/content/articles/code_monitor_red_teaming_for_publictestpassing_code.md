@@ -2,6 +2,8 @@
 title: "Code Monitor Red Teaming for Public-Test-Passing Code"
 date: "2026-07-25"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.20852"
+paperAuthors: "Junchi Liao, Jiawen Deng, Fuji Ren"
 description: "An evaluation protocol and benchmark (CodeMonitorBench) testing whether LLM-based verifiers can identify hidden bugs in code candidates that have already successfully passed"
 tags: ["Adversarial Attacks", "AI Agents"]
 readingTime: 9

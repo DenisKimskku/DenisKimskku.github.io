@@ -2,6 +2,8 @@
 title: "Security of World-Model-Based Embodied AI: A Lifecycle of Threats, Defenses, and Evaluation"
 date: "2026-08-01"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.28226"
+paperAuthors: "Fazhong Liu, Zhuoyan Chen, Haozhen Tan, et al."
 description: "A comprehensive security analysis framework that maps threats and defenses across the entire lifecycle of world-model-based embodied AI, highlighting how predictive errors"
 tags: ["Data Poisoning", "Backdoors", "Adversarial Attacks", "AI Agents"]
 readingTime: 9

@@ -2,6 +2,8 @@
 title: "Protocol-Level Attacks on Agentic Commerce Platforms: A Cross-Platform Taxonomy, AIP-Bench, and Unified Defense"
 date: "2026-07-28"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.21824"
+paperAuthors: "Yedidel Louck"
 description: "Demonstrates that agentic commerce security is broken at the protocol layer via deterministic, model-agnostic 'structural attacks' (achieving a 100% success rate wherever"
 tags: ["Prompt Injection", "AI Agents", "Vulnerabilities"]
 readingTime: 12

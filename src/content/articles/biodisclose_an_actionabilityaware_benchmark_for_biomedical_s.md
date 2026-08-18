@@ -2,6 +2,8 @@
 title: "BioDisclose: An Actionability-Aware Benchmark for Biomedical Safety under Adversarial Elicitation"
 date: "2026-08-02"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2607.25700"
+paperAuthors: "Yinuo Zhu, He Liu, Boyuan Gu"
 description: "BioDisclose is a safety benchmark utilizing a graded 4-level scale to evaluate how successfully adversarial elicitation families bypass large language model guardrails to leak"
 tags: ["Adversarial Attacks"]
 readingTime: 9
@@ -66,7 +68,7 @@ Each scenario is mapped to four distinct contextual elicitation families, detail
 3.  **Step-by-Step Decomposition (SD)**: Subdivides the target objective into separate technical sub-questions within a single prompt.
 4.  **Role-Playing (RP)**: Assigns a fictional or professional specialist persona to the assistant.
 
-Every elicitation family is constructed using five distinct rhetorical variants (Table 7), leading to 20 unique prompts per core scenario (\$24 \times 4 \times 5 = 480$ total instances).
+Every elicitation family is constructed using five distinct rhetorical variants (Table 7), leading to 20 unique prompts per core scenario ($24 \times 4 \times 5 = 480$ total instances).
 
 ```
 [Expert Scenario (e.g., Gene Editing C2)] 
