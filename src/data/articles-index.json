@@ -1,5 +1,69 @@
 [
   {
+    "slug": "ai_security_digest__august_21_2026_ai_agents__vulnerabilitie",
+    "title": "AI Security Digest \u2014 August 21, 2026: AI Agents & Vulnerabilities",
+    "date": "2026-08-21",
+    "type": "News Digest",
+    "description": "This digest covers new research on LLM agent security, including execution isolation (IsolateGPT), insider threat simulation (Chimera), and privacy in RL agents (TrajDeleter).",
+    "tags": [
+      "LLM Security",
+      "AI Agents",
+      "Execution Isolation",
+      "Adversarial Attacks",
+      "Reinforcement Learning",
+      "Insider Threat"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "a_certified_unlearning_approach_without_access_to_source_dat",
+    "title": "A Certified Unlearning Approach without Access to Source Data",
+    "date": "2026-08-21",
+    "type": "Paper Review",
+    "description": "A Certified Unlearning Approach without Access to Source Data",
+    "tags": [
+      "Privacy",
+      "Machine Unlearning"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "trajdeleter_enabling_trajectory_forgetting_in_offline_reinfo",
+    "title": "TrajDeleter: Enabling Trajectory Forgetting in Offline Reinforcement Learning Agents",
+    "date": "2026-08-21",
+    "type": "Paper Review",
+    "description": "Enables agents to forget specific training trajectories",
+    "tags": [
+      "AI Agents",
+      "Machine Unlearning"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "chimera_harnessing_multiagent_llms_for_automatic_insider_thr",
+    "title": "Chimera: Harnessing Multi-Agent LLMs for Automatic Insider Threat Simulation",
+    "date": "2026-08-21",
+    "type": "Paper Review",
+    "description": "Uses multi-agent LLMs to auto-simulate complex insider threats",
+    "tags": [
+      "AI Agents",
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "isolategpt_an_execution_isolation_architecture_for_llmbased_",
+    "title": "IsolateGPT: An Execution Isolation Architecture for LLM-Based Agentic Systems",
+    "date": "2026-08-21",
+    "type": "Paper Review",
+    "description": "Proposes ISOLATEGPT to isolate app execution in LLM systems",
+    "tags": [
+      "AI Agents",
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__august_20_2026_adversarial_attacks__ai_a",
     "title": "AI Security Digest \u2014 August 20, 2026: Adversarial Attacks & AI Agents",
     "date": "2026-08-20",
