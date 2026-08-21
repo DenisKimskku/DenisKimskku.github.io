@@ -1,5 +1,69 @@
 [
   {
+    "slug": "ai_security_digest__august_22_2026_ai_agents__watermarking",
+    "title": "AI Security Digest \u2014 August 22, 2026: AI Agents & Watermarking",
+    "date": "2026-08-22",
+    "type": "News Digest",
+    "description": "This digest covers recent advancements in AI security, focusing on context leakage in agents, fuzzing LLM agents, and attacks against model watermarking.",
+    "tags": [
+      "LLM Security",
+      "AI Agents",
+      "Adversarial Attacks",
+      "Data Leakage",
+      "Watermarking",
+      "Fuzzing"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "gaussmark_a_practical_approach_for_structural_watermarking_o",
+    "title": "GaussMark: A Practical Approach for Structural Watermarking of Language Models",
+    "date": "2026-08-22",
+    "type": "Paper Review",
+    "description": "Embeds imperceptible watermarks into LLM weights using Gaussian noise",
+    "tags": [
+      "Watermarking"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "demark_watermark_removal_in_large_language_models",
+    "title": "De-mark: Watermark Removal in Large Language Models",
+    "date": "2026-08-22",
+    "type": "Paper Review",
+    "description": "DE-MARK removes n-gram watermarks using random selection probing",
+    "tags": [
+      "Watermarking",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "make_agent_defeat_agent_automatic_detection_of_taintstyle_vu",
+    "title": "Make Agent Defeat Agent: Automatic Detection of Taint-Style Vulnerabilities in LLM-based Agents",
+    "date": "2026-08-22",
+    "type": "Paper Review",
+    "description": "AgentFuzz, a directed greybox fuzzing framework for LLM agents",
+    "tags": [
+      "AI Agents",
+      "Fuzzing",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "inadvertent_context_leakage_in_language_models",
+    "title": "Inadvertent Context Leakage in Language Models",
+    "date": "2026-08-22",
+    "type": "Paper Review",
+    "description": "Adaptive adversaries reconstruct secrets from benign model outputs",
+    "tags": [
+      "AI Agents",
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__august_21_2026_ai_agents__vulnerabilitie",
     "title": "AI Security Digest \u2014 August 21, 2026: AI Agents & Vulnerabilities",
     "date": "2026-08-21",
