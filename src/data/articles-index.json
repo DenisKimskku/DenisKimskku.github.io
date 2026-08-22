@@ -1,5 +1,83 @@
 [
   {
+    "slug": "this_week_in_ai_security__august_23_2026",
+    "title": "This Week in AI Security \u2014 August 23, 2026",
+    "date": "2026-08-23",
+    "type": "Trend Report",
+    "description": "This week's AI security roundup covers advanced RAG manipulation, including Topic-FlipRAG and PoisonedEye, alongside new research on model backdoors.",
+    "tags": [
+      "RAG",
+      "LLM Security",
+      "Adversarial Attacks",
+      "Data Poisoning",
+      "Model Integrity",
+      "Backdoor Attacks"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "ai_security_digest__august_23_2026_jailbreaking__data_poison",
+    "title": "AI Security Digest \u2014 August 23, 2026: Jailbreaking & Data Poisoning",
+    "date": "2026-08-23",
+    "type": "News Digest",
+    "description": "This digest covers advanced LLM threats like DUALBREACH jailbreaking and data poisoning techniques, alongside privacy research in federated analytics.",
+    "tags": [
+      "LLM Security",
+      "Jailbreaking",
+      "Data Poisoning",
+      "Adversarial Attacks",
+      "Privacy",
+      "Federated Learning"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "poisonedeye_knowledge_poisoning_attack_on_retrievalaugmented",
+    "title": "PoisonedEye: Knowledge Poisoning Attack on Retrieval-Augmented Generation based Large Vision-Language Models",
+    "date": "2026-08-23",
+    "type": "Paper Review",
+    "description": "Single and class-targeted poisoning of multimodal knowledge databases",
+    "tags": [
+      "RAG",
+      "Data Poisoning",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "avoiding_leakage_poisoning_concept_interventions_under_distr",
+    "title": "Avoiding Leakage Poisoning: Concept Interventions Under Distribution Shifts",
+    "date": "2026-08-23",
+    "type": "Paper Review",
+    "description": "MixCEM dynamically gates residual information to prevent OOD poisoning",
+    "tags": [
+      "Data Poisoning"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "dualbreach_efficient_dualjailbreaking_via_targetdriven_initi",
+    "title": "DUALBREACH: Efficient Dual-Jailbreaking via Target-Driven Initialization and Multi-Target Optimization",
+    "date": "2026-08-23",
+    "type": "Paper Review",
+    "description": "Targets both LLMs and external guardrails simultaneously",
+    "tags": [
+      "Jailbreaking"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "local_panprivacy_for_federated_analytics",
+    "title": "Local Pan-privacy for Federated Analytics",
+    "date": "2026-08-23",
+    "type": "Paper Review",
+    "description": "Local pan-privacy is incompatible with information-theoretic DP for event counting",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__august_22_2026_ai_agents__watermarking",
     "title": "AI Security Digest \u2014 August 22, 2026: AI Agents & Watermarking",
     "date": "2026-08-22",
