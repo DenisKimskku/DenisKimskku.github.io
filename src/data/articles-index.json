@@ -1,5 +1,68 @@
 [
   {
+    "slug": "ai_security_digest__august_24_2026_adversarial_attacks__malw",
+    "title": "AI Security Digest \u2014 August 24, 2026: Adversarial Attacks & Malware",
+    "date": "2026-08-24",
+    "type": "News Digest",
+    "description": "This digest covers advancements in adversarial attacks, including PDF malware detection, deepfake speech watermarking, and model ownership verification.",
+    "tags": [
+      "Adversarial Attacks",
+      "Malware Detection",
+      "Deepfake Detection",
+      "Watermarking",
+      "LLM Security",
+      "AI Forensics"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "on_differential_privacy_for_adaptively_solving_search_proble",
+    "title": "On Differential Privacy for Adaptively Solving Search Problems via Sketching",
+    "date": "2026-08-24",
+    "type": "Paper Review",
+    "description": "Provides DP for adaptive search problems using sketching techniques",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "explanation_as_a_watermark_towards_harmless_and_multibit_mod",
+    "title": "Explanation as a Watermark: Towards Harmless and Multi-bit Model Ownership Verification via Watermarking Feature Attribution",
+    "date": "2026-08-24",
+    "type": "Paper Review",
+    "description": "Implants multi-bit watermarks into feature attribution explanations",
+    "tags": [
+      "Backdoors",
+      "Watermarking"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "vapd_an_anomaly_detection_model_for_pdf_malware_forensics_wi",
+    "title": "VAPD: An Anomaly Detection Model for PDF Malware Forensics with Adversarial Robustness",
+    "date": "2026-08-24",
+    "type": "Paper Review",
+    "description": "VAPD: An Anomaly Detection Model for PDF Malware Forensics with Adversarial Robustness",
+    "tags": [
+      "Adversarial Attacks",
+      "Malware",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "audiomarknet_audio_watermarking_for_deepfake_speech_detectio",
+    "title": "AudioMarkNet: Audio Watermarking for Deepfake Speech Detection",
+    "date": "2026-08-24",
+    "type": "Paper Review",
+    "description": "Embeds watermarks into original speech to track modification",
+    "tags": [
+      "Watermarking"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "this_week_in_ai_security__august_23_2026",
     "title": "This Week in AI Security \u2014 August 23, 2026",
     "date": "2026-08-23",
