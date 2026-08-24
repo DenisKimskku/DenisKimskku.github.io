@@ -1,5 +1,66 @@
 [
   {
+    "slug": "ai_security_digest__august_25_2026_adversarial_attacks__malw",
+    "title": "AI Security Digest \u2014 August 25, 2026: Adversarial Attacks & Malware",
+    "date": "2026-08-25",
+    "type": "News Digest",
+    "description": "This digest covers advanced adversarial attacks on ML models and new trends in sophisticated malware, including Android and miniapp threats.",
+    "tags": [
+      "Adversarial Attacks",
+      "Malware Analysis",
+      "LLM Security",
+      "Android Security",
+      "Machine Learning Security",
+      "Cybersecurity Trends"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "optimizing_noise_distributions_for_differential_privacy",
+    "title": "Optimizing Noise Distributions for Differential Privacy",
+    "date": "2026-08-25",
+    "type": "Paper Review",
+    "description": "Optimizes continuous/discrete noise distributions for DP",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "careful_about_what_app_promotion_ads_recommend_detecting_and",
+    "title": "Careful About What App Promotion Ads Recommend! Detecting and Explaining Malware Promotion via App Promotion Graph",
+    "date": "2026-08-25",
+    "type": "Paper Review",
+    "description": "ADGPE integrates UI exploration with graph learning to map malware distribution",
+    "tags": [
+      "Malware"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "understanding_miniapp_malware_identification_dissection_and_",
+    "title": "Understanding Miniapp Malware: Identification, Dissection, and Characterization",
+    "date": "2026-08-25",
+    "type": "Paper Review",
+    "description": "Dataset creation for malicious miniapp analysis",
+    "tags": [
+      "Malware"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "automated_mass_malware_factory_the_convergence_of_piggybacki",
+    "title": "Automated Mass Malware Factory: The Convergence of Piggybacking and Adversarial Example in Android Malicious Software Generation",
+    "date": "2026-08-25",
+    "type": "Paper Review",
+    "description": "Automated Mass Malware Factory: The Convergence of Piggybacking and Adversarial Example in Android Malicious Software Generation",
+    "tags": [
+      "Adversarial Attacks",
+      "Malware"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__august_24_2026_adversarial_attacks__malw",
     "title": "AI Security Digest \u2014 August 24, 2026: Adversarial Attacks & Malware",
     "date": "2026-08-24",
