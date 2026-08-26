@@ -1,5 +1,132 @@
 [
   {
+    "slug": "prmpt_sanitizing_sensitive_prompts_for_llms",
+    "title": "Pr\u03b5\u03b5mpt: Sanitizing Sensitive Prompts for LLMs",
+    "date": "2026-08-26",
+    "type": "Paper Review",
+    "description": "Uses FPE and mDP to sanitize tokens in prompts before LLM inference",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "pops_from_history_to_mitigation_of_dns_cache_poisoning_attac",
+    "title": "POPS: From History to Mitigation of DNS Cache Poisoning Attacks",
+    "date": "2026-08-26",
+    "type": "Paper Review",
+    "description": "POPS: From History to Mitigation of DNS Cache Poisoning Attacks",
+    "tags": [
+      "Data Poisoning",
+      "Malware",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "chasing_shadows_pitfalls_in_llm_security_research",
+    "title": "Chasing Shadows: Pitfalls in LLM Security Research",
+    "date": "2026-08-26",
+    "type": "Paper Review",
+    "description": "Chasing Shadows: Pitfalls in LLM Security Research",
+    "tags": [
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "an_llmdriven_fuzzing_framework_for_detecting_logic_instructi",
+    "title": "An LLM-Driven Fuzzing Framework for Detecting Logic Instruction Bugs in PLCs",
+    "date": "2026-08-26",
+    "type": "Paper Review",
+    "description": "Automates fuzzing of PLC logic instructions using an LLM-guided framework",
+    "tags": [
+      "Fuzzing",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "ai_security_digest__august_26_2026_jailbreaking__fuzzing",
+    "title": "AI Security Digest \u2014 August 26, 2026: Jailbreaking & Fuzzing",
+    "date": "2026-08-26",
+    "type": "News Digest",
+    "description": "This digest covers recent advancements in LLM security, including prompt sanitization using FPE, LLM-driven fuzzing for PLCs, and systemic pitfalls in security research.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Fuzzing",
+      "Prompt Engineering",
+      "Industrial Control Systems",
+      "Privacy Enhancing Techniques"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "ai_security_digest__august_27_2026_jailbreaking__data_poison",
+    "title": "AI Security Digest \u2014 August 27, 2026: Jailbreaking & Data Poisoning",
+    "date": "2026-08-27",
+    "type": "News Digest",
+    "description": "This digest covers advanced LLM threats, including role-conditioned data poisoning in multi-agent systems and quantifying the utility loss from successful jailbreaks.",
+    "tags": [
+      "LLM Security",
+      "Data Poisoning",
+      "Jailbreaking",
+      "Adversarial Attacks",
+      "Agentic AI",
+      "Prompt Injection"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "an_interpretable_ngram_perplexity_threat_model_for_large_lan",
+    "title": "An Interpretable N-gram Perplexity Threat Model for Large Language Model Jailbreaks",
+    "date": "2026-08-27",
+    "type": "Paper Review",
+    "description": "Proposes N-gram LM perplexity as an LLM-agnostic fluency constraint",
+    "tags": [
+      "Jailbreaking",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "flipattack_jailbreak_llms_via_flipping",
+    "title": "FlipAttack: Jailbreak LLMs via Flipping",
+    "date": "2026-08-27",
+    "type": "Paper Review",
+    "description": "FlipAttack: Jailbreak LLMs via Flipping",
+    "tags": [
+      "Jailbreaking"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "the_jailbreak_tax_how_useful_are_your_jailbreak_outputs",
+    "title": "The Jailbreak Tax: How Useful are Your Jailbreak Outputs?",
+    "date": "2026-08-27",
+    "type": "Paper Review",
+    "description": "Defines the 'jailbreak tax,' measuring utility drop after evasion",
+    "tags": [
+      "Jailbreaking"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "poisoning_agentic_alpha_adversarial_vulnerabilities_across_r",
+    "title": "Poisoning Agentic Alpha: Adversarial Vulnerabilities Across Roles and Architectures in Multi-Agent Trading Systems",
+    "date": "2026-08-27",
+    "type": "Paper Review",
+    "description": "Poisoning Agentic Alpha: Adversarial Vulnerabilities Across Roles and Architectures in Multi-Agent Trading Systems",
+    "tags": [
+      "Prompt Injection",
+      "Jailbreaking",
+      "Data Poisoning",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__august_25_2026_adversarial_attacks__malw",
     "title": "AI Security Digest — August 25, 2026: Adversarial Attacks & Malware",
     "date": "2026-08-25",
