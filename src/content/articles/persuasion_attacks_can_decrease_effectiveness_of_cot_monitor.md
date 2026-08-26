@@ -89,8 +89,8 @@ The evaluation compares three monitoring environments:
 
 ### Calibration Baselines
 To ensure the monitors were not simply "too permissive" or "too strict," the authors established calibration baselines (reported in **Table 1**):
-- **Benign Baseline ($b_b$)**: Action proposals that comply with the policy. Across all models, monitors achieved high baseline acceptance rates (\$95.5\%$ to \$98.8\%$).
-- **Malign Baseline ($b_m$)**: Policy-violating actions proposed without any justification text. The baseline acceptance rate was extremely low (\$1.3\%$ to \$7.5\%$), showing that the monitors understood and initially enforced the safety guidelines.
+- **Benign Baseline ($b_b$)**: Action proposals that comply with the policy. Across all models, monitors achieved high baseline acceptance rates ($95.5\%$ to $98.8\%$).
+- **Malign Baseline ($b_m$)**: Policy-violating actions proposed without any justification text. The baseline acceptance rate was extremely low ($1.3\%$ to $7.5\%$), showing that the monitors understood and initially enforced the safety guidelines.
 
 ---
 

@@ -16,7 +16,7 @@ headerImage: "/images/news/an_efficient_and_privacypreserving_architecture_for_c
 ## TLDR
 - **What**: FedRAG, a non-cryptographic, federated RAG framework that uses a numerically stable scrambling matrix and token permutation to secure cross-node self-attention without model retraining or Trusted Execution Environments (TEEs).
 - **Who's at risk**: Multi-institutional collaborative LLM systems (e.g., healthcare consortia, financial fraud detection networks, cross-org enterprise RAG) where raw data or intermediate states cannot be shared due to privacy constraints.
-- **Key number**: Achieves up to a \$62\times\$ latency reduction over existing secure baselines while keeping model utility degradation under \$0.1\%\$.
+- **Key number**: Achieves up to a $62\times$ latency reduction over existing secure baselines while keeping model utility degradation under $0.1\%$.
 
 ---
 
@@ -26,7 +26,7 @@ The rapid deployment of Retrieval-Augmented Generation (RAG) in enterprise pipel
 
 | | |
 |---|---|
-| **Attacker** | Honest-but-curious (semi-honest) participating nodes or an independent compute node passively logging intermediate states (\$Q\$, \$K\$, and \$V\$ tensors). |
+| **Attacker** | Honest-but-curious (semi-honest) participating nodes or an independent compute node passively logging intermediate states ($Q$, $K$, and $V$ tensors). |
 | **Victim** | Consortia-based collaborative RAG deployments (e.g., healthcare groups, banking networks). |
 | **Goal** | Reconstruct private source documents or plaintext context of other nodes via state inversion, Vocabulary Mapping Attacks (VMA), Independent Component Analysis (ICA), or Graph Matching Attacks. |
 | **Budget** | Passive network monitoring and standard hardware for executing unmixing algorithms. |
@@ -35,14 +35,14 @@ The rapid deployment of Retrieval-Augmented Generation (RAG) in enterprise pipel
 
 ## Background / Problem Setup
 
-In a collaborative cross-institutional RAG setup, multiple institutions want to run a shared LLM over their combined private documents. However, the self-attention mechanism in modern Transformer architectures mandates that the Query (\$Q\$) tensor of the active node must access the Key (\$K\$) and Value (\$V\$) tensors representing the retrieved contexts of all other nodes. 
+In a collaborative cross-institutional RAG setup, multiple institutions want to run a shared LLM over their combined private documents. However, the self-attention mechanism in modern Transformer architectures mandates that the Query ($Q$) tensor of the active node must access the Key ($K$) and Value ($V$) tensors representing the retrieved contexts of all other nodes. 
 
 Historically, privacy-preserving LLM inference has relied on heavy cryptographic primitives or hardware enclaves. The following table highlights where existing paradigms fall short compared to the proposed FedRAG system:
 
 | Security Paradigm | Computational Overhead | Communication Expansion | Hardware Requirements | Model Retraining |
 | :--- | :--- | :--- | :--- | :--- |
-| **Secure MPC** (e.g., PUMA) | Extreme (minutes per token for an \$8\text{B}\$ model) | High | None | None |
-| **Homomorphic Encryption** | Prohibitive CPU/GPU cycles | Extreme (\$10\times\$ to \$100\times\$ ciphertext volume) | None | None |
+| **Secure MPC** (e.g., PUMA) | Extreme (minutes per token for an $8\text{B}$ model) | High | None | None |
+| **Homomorphic Encryption** | Prohibitive CPU/GPU cycles | Extreme ($10\times$ to $100\times$ ciphertext volume) | None | None |
 | **TEE-based** (e.g., Intel SGX) | Moderate | Low | Specialized CPU/GPU enclaves | None |
 | **FedRAG (Mao et al., 2026)** | Negligible linear transforms | Low | Standard GPU Accelerators | None |
 
@@ -63,16 +63,16 @@ Step 2: Global Aggregation (Compute Node)
     Attention(Q, K, V) = sum(w_i * O_i) / sum(w_i)
 ```
 
-To prevent the Compute Node or other curious nodes from seeing the raw \$Q\$, \$K\$, and \$V\$ matrices, FedRAG applies a mathematically rigorous scrambling matrix \$\Phi\$.
+To prevent the Compute Node or other curious nodes from seeing the raw $Q$, $K$, and $V$ matrices, FedRAG applies a mathematically rigorous scrambling matrix $\Phi$.
 
 ### 1. Constructing a Numerically Stable Scrambling Matrix
 A naive random matrix introduces floating-point precision errors that degrade model utility over dozens of layers. To solve this, Mao et al. (arXiv 2026) structure the scrambling matrix as:
 
 $$\Phi = S_1 P_1 H P_2 S_2$$
 
-- **\$H\$ (Normalized Hadamard Matrix):** Consists of \$\{-1, +1\}\$ entries. It allows matrix multiplication to be computed via stable sign-flipping additions, ensuring numerical stability in low-precision arithmetic formats (such as BF16 or FP16).
-- **\$P_1, P_2\$ (Permutation Matrices):** Randomize the deterministic Hadamard structure.
-- **\$S_1, S_2\$ (Random Diagonal Scaling Matrices):** Sampled from an empirical range (e.g., \$[1/8, 8]\$), these matrices distort \$L_2\$ distances to defeat topological graph-matching attacks.
+- **$H$ (Normalized Hadamard Matrix):** Consists of $\{-1, +1\}$ entries. It allows matrix multiplication to be computed via stable sign-flipping additions, ensuring numerical stability in low-precision arithmetic formats (such as BF16 or FP16).
+- **$P_1, P_2$ (Permutation Matrices):** Randomize the deterministic Hadamard structure.
+- **$S_1, S_2$ (Random Diagonal Scaling Matrices):** Sampled from an empirical range (e.g., \$[1/8, 8]\$), these matrices distort $L_2$ distances to defeat topological graph-matching attacks.
 
 ### 2. Scrambled Attention Execution
 The dual properties of inner product preservation (Lemma 1) and linearity (Lemma 2) allow standard attention to be executed on scrambled tensors without exposing plaintext. The workflow is implemented as follows:
@@ -108,7 +108,7 @@ Table 5 in the paper presents detailed performance configurations. The table bel
 | **SCX** | 60.15s | 5.50 | 26,202.25 | 12,674 |
 | **FedRAG (Ours)** | **12.00s** | **11.85** | **4,238.54** | **4,219** |
 
-*FedRAG achieves a \$5\times\$ reduction in TTFT and over \$2\times\$ improvement in decode TPS compared to SCX, while scaling linearly as sequence lengths increase.*
+*FedRAG achieves a $5\times$ reduction in TTFT and over $2\times$ improvement in decode TPS compared to SCX, while scaling linearly as sequence lengths increase.*
 
 ### Downstream Task Accuracy
 As Section 7.4 details, the numerical precision of the scrambling protocol preserves downstream performance. Table 3 lists evaluation metrics across six benchmarks:
@@ -118,7 +118,7 @@ As Section 7.4 details, the numerical precision of the scrambling protocol prese
 | **Unprotected Baseline** | 89.43% | 69.40% | 22.16% | 26.29% |
 | **FedRAG (+Scrambler)** | **89.42%** | **69.37%** | **22.11%** | **26.53%** |
 
-The average accuracy drop across all evaluated configurations is roughly **\$0.06\%\$**, proving that the algebraic scrambling method maintains near-zero utility degradation compared to standard, unprotected attention.
+The average accuracy drop across all evaluated configurations is roughly **$0.06\%$**, proving that the algebraic scrambling method maintains near-zero utility degradation compared to standard, unprotected attention.
 
 ---
 
@@ -126,7 +126,7 @@ The average accuracy drop across all evaluated configurations is roughly **\$0.0
 
 While FedRAG represents a significant leap forward for collaborative RAG efficiency, security practitioners must consider several core constraints:
 1. **Minimum Node Requirement:** The protocol requires at least three independent physical nodes. If a deployment only consists of two nodes, one node must play double duty, which breaks the mathematical security guarantees and exposes the scrambling keys.
-2. **Replication Overhead:** In highly constrained, small-scale deployments with only a few nodes, the dynamic role assignment forces certain segments of the KV cache to be replicated, leading to an average throughput degradation of approximately **\$10\%\$**.
+2. **Replication Overhead:** In highly constrained, small-scale deployments with only a few nodes, the dynamic role assignment forces certain segments of the KV cache to be replicated, leading to an average throughput degradation of approximately **$10\%$**.
 3. **Reactive Game-Theoretic Defenses:** Against malicious prompt injection attacks designed to exfiltrate other nodes' documents, FedRAG relies on a reactive, audit-based logging protocol rather than proactive, cryptographically enforced input filtering.
 
 ---
@@ -135,8 +135,8 @@ While FedRAG represents a significant leap forward for collaborative RAG efficie
 
 If you are deploying collaborative, cross-organizational RAG pipelines in healthcare, finance, or legal tech:
 
-1. **Implement Hadamard Feature Scrambling:** Instead of expensive homomorphic encryption pipelines, implement the \$S_1 P_1 H P_2 S_2\$ transformation inside custom PyTorch attention layers or Triton kernels. This ensures standard GPU matrix engines perform the "encryption" natively.
-2. **Configure 4-Bit Reranker Quantization:** As Section 7.5 highlights, reranker intermediate states can be safely compressed to 4-bit representation using standard affine min-max quantization with zero downstream accuracy loss, reducing communication overhead during the document re-ranking stage by up to **\$70\%\$**.
+1. **Implement Hadamard Feature Scrambling:** Instead of expensive homomorphic encryption pipelines, implement the $S_1 P_1 H P_2 S_2$ transformation inside custom PyTorch attention layers or Triton kernels. This ensures standard GPU matrix engines perform the "encryption" natively.
+2. **Configure 4-Bit Reranker Quantization:** As Section 7.5 highlights, reranker intermediate states can be safely compressed to 4-bit representation using standard affine min-max quantization with zero downstream accuracy loss, reducing communication overhead during the document re-ranking stage by up to **$70\%$**.
 3. **Deploy with at Least Three Nodes:** Ensure your orchestration layer (e.g., Kubernetes) enforces a strict anti-affinity policy. This guarantees that the Inquirer, Context Owner, and Compute Node roles are mapped to distinct, non-colluding physical nodes.
 4. **Implement Ciphertext Auditing:** Since the system is vulnerable to malicious prompt structures, maintain a secure, append-only ledger of query ciphertexts and scrambling key histories to enable retroactive auditing if an organization is suspected of attempting data exfiltration.
 
@@ -150,7 +150,7 @@ FedRAG demonstrates that protecting intermediate states in federated LLM setups 
 
 ## Den's Take
 
-This paper stands out for prioritizing engineering pragmatism over cryptographic purity. For years, the academic consensus for privacy-preserving collaborative LLMs was to throw Secure MPC or homomorphic encryption at the problem—which inevitably ground production systems to a halt. A \$62\times\$ latency reduction is the difference between an unusable academic prototype and a viable enterprise deployment. 
+This paper stands out for prioritizing engineering pragmatism over cryptographic purity. For years, the academic consensus for privacy-preserving collaborative LLMs was to throw Secure MPC or homomorphic encryption at the problem—which inevitably ground production systems to a halt. A $62\times$ latency reduction is the difference between an unusable academic prototype and a viable enterprise deployment. 
 
 Imagine a \$100M healthcare consortium attempting to pool patient oncology records across Mayo Clinic and regional hospitals to power a shared clinical diagnostic assistant. They cannot afford the latency of standard MPC, nor can they risk a single leaked patient history. FedRAG's approach of token permutation and scrambling matrices makes collaborative RAG genuinely viable for high-throughput, multi-institutional workloads.
 

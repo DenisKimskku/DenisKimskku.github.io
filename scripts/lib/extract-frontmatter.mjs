@@ -8,7 +8,10 @@
 // Keep this file ESM-compatible plain JavaScript so both Node scripts and the
 // Next.js build can import it without a transpile step.
 
-const STOP_HEADING_PREFIXES = ['executive summary', 'tl;dr', 'summary', 'overview', 'introduction', 'intro'];
+// 'tldr' (no semicolon) is what the generator actually writes — 233 articles
+// carry `## TLDR`; without it the summary paragraph under that heading was
+// never preferred and the extractor fell through to the first long paragraph.
+const STOP_HEADING_PREFIXES = ['executive summary', 'tl;dr', 'tldr', 'summary', 'overview', 'introduction', 'intro'];
 
 // Topics we care about for AI / security writing. Each entry: tag => [keywords].
 // Keywords are matched case-insensitively in the body. The tag is emitted when

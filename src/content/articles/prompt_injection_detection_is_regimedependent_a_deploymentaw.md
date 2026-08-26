@@ -118,10 +118,10 @@ def calculate_ibvs_score(normalized_text):
 
 To prevent overfitting, the authors trained their models *only* on the In-Distribution (ID) pool and tested on three entirely held-out Out-Of-Distribution (OOD) datasets:
 
-*   **ID Train/Val/Test** (AdvBench + JailbreakBench + Deepset PI): \$694 / 149 / 149$ samples.
-*   **Primary OOD** (HarmBench + Alpaca): \$768$ samples.
-*   **Hard-Negative (HN) Injection OOD** (r1char9 + NotInject): \$678$ samples.
-*   **Standard Injection OOD** (Qualifire): \$3,986$ samples.
+*   **ID Train/Val/Test** (AdvBench + JailbreakBench + Deepset PI): $694 / 149 / 149$ samples.
+*   **Primary OOD** (HarmBench + Alpaca): $768$ samples.
+*   **Hard-Negative (HN) Injection OOD** (r1char9 + NotInject): $678$ samples.
+*   **Standard Injection OOD** (Qualifire): $3,986$ samples.
 
 ---
 
@@ -150,7 +150,7 @@ As shown in Tables 6, 7, 8, and 10, the authors contrasted their internal models
 
 ### Key takeaways from the performance data:
 1.  **Neural Collapse on Hard Negatives:** Under the challenging Hard-Negative OOD regime (which includes adversarial-looking benign prompts), the fine-tuned DeBERTa-base classifier drops to **0.7313 Macro-F1**, whereas the simple, sparse TF-IDF model achieves **0.8082**. However, at the strictest budget (1% FPR), DeBERTa recovers a superior **0.3520 TPR**, confirming that standard classification metrics (like Macro-F1) do not correlate with performance at low-FPR operation.
-2.  **The Complementary Role of IBVS:** On the Primary OOD benchmark, pairing RoBERTa with the total IBVS v2 score through late fusion slightly decreases Macro-F1 from \$0.7528$ to \$0.7497$, but drastically **increases the TPR @ 1% FPR from 0.3368 to 0.4557** (a **35.2% relative gain**). Structural signal heuristics act as high-confidence "tripwires" that prevent critical misses when semantic representations fail to generalize.
+2.  **The Complementary Role of IBVS:** On the Primary OOD benchmark, pairing RoBERTa with the total IBVS v2 score through late fusion slightly decreases Macro-F1 from $0.7528$ to $0.7497$, but drastically **increases the TPR @ 1% FPR from 0.3368 to 0.4557** (a **35.2% relative gain**). Structural signal heuristics act as high-confidence "tripwires" that prevent critical misses when semantic representations fail to generalize.
 3.  **Fragility of Commercial Off-the-Shelf Models:** The external baseline (LLM Guard) degrades severely under distribution shifts, falling to a **0.3408 Macro-F1** on Primary OOD and **0.4537** on the Hard-Negative OOD. Its detection rate at 1% FPR on the Hard-Negative benchmark collapses entirely to **0.0000 TPR**.
 
 ---

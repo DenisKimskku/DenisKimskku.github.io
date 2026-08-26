@@ -18,7 +18,7 @@ The traditional vulnerability patching window has collapsed. Driven by autonomou
 ## Paper Highlights
 
 **[Building an Adversarial Malware Dataset by Family and Type: Generation, Evasion, and Poisoning Evaluation](/writing/building_an_adversarial_malware_dataset_by_family_and_type_g)** — by David Košťál, Martin Jureček
-This research demonstrates how poisoning as little as 0.5% of training data with mislabelled (\$\tau = 1.0\$) adversarial samples can completely blind ML-based static PE malware classifiers, raising evasion rates from 26.13% to 92.8%. Security teams must implement strict sanity checks on threat intelligence feeds, as standard validation F1 metrics remain deceptively stable during these poisoning campaigns.
+This research demonstrates how poisoning as little as 0.5% of training data with mislabelled ($\tau = 1.0$) adversarial samples can completely blind ML-based static PE malware classifiers, raising evasion rates from 26.13% to 92.8%. Security teams must implement strict sanity checks on threat intelligence feeds, as standard validation F1 metrics remain deceptively stable during these poisoning campaigns.
 
 **[Semantic Validation of Packer Identification Tools: Characterization, Repair, and Downstream Impact](/writing/semantic_validation_of_packer_identification_tools_character)** — by Fangtian Zhong, Zhuoyun Qian, Mengfei Ren
 This paper introduces a framework that models unpackers as "executable semantic contracts" to automatically detect and repair identification bugs in PE security tools without needing manually labeled ground-truth data. Security analysts should adopt this method to prevent packed malware variants from slipping through static detection pipelines.

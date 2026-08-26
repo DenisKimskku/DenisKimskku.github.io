@@ -24,6 +24,10 @@ const MIN_WORDS_FOR_PUNCT = 6;
 // LaTeX bodies legitimately contain words inside \text{...} and friends, so
 // strip those before judging whether a span reads as prose.
 const TEXTISH = /\\(?:text|mathrm|mbox|textbf|textit|textrm|operatorname)\s*\{[^{}]*\}/g;
+// What makes an escaped-dollar payload "LaTeX, not a price": a control
+// sequence (including `\%`, which the corpus uses inside math constantly),
+// or any of ^ _ { }.
+const LATEX_PAYLOAD = /\\[a-zA-Z%]+|[\^_{}]/;
 
 function stripCodeSpans(line) {
   return line.replace(/`[^`\n]*`/g, '');
@@ -107,6 +111,24 @@ export function findBrokenMathDelimiters(body) {
   for (const para of proseParagraphs(body)) {
     if (!para.trim()) continue;
     const pos = inlineDollars(para);
+
+    // BOTH delimiters escaped -- `\$Y = F(X; \theta)\$`, `\$62\times\$`,
+    // `\$X\$` -- is the generator's other escaping regime (a blanket "escape
+    // dollar signs" instruction rather than the digit heuristic). It keeps
+    // parity even and has no live `$` at all, so nothing below sees it, and
+    // the math never renders: readers get the raw `$Y = F(X; \theta)$`. A
+    // payload that is LaTeX, or a lone identifier letter, was never a price.
+    const fully = [...para.matchAll(/\\\$((?:(?!\\\$)[^$\n])+?)\\\$/g)].find(
+      (m) => LATEX_PAYLOAD.test(m[1]) || /^[A-Za-z]$/.test(m[1]),
+    );
+    if (fully) {
+      findings.push({
+        kind: 'fully-escaped-span',
+        excerpt: para.slice(Math.max(0, fully.index - 40), fully.index + 70).replace(/\s+/g, ' ').trim(),
+      });
+      continue;
+    }
+    // Everything below is about live delimiters; a unit with none is done.
     if (pos.length === 0) continue;
 
     // An escaped `\$` whose payload is LaTeX was never currency -- it is the
@@ -115,14 +137,20 @@ export function findBrokenMathDelimiters(body) {
     // prose, so both checks below miss it. Requiring LaTeX in the payload is
     // what separates it from a real price: articles legitimately mix
     // `from \$109 to \$219` with `$\phi_{t,i_t}$` in one paragraph, and a
-    // bare amount must never be flagged.
+    // bare amount must never be flagged. Two payload shapes count as LaTeX
+    // that a naive signature misses and that shipped mis-rendered for months:
+    // `\$95.5\%$` (only `\%`) and `\$768$` (a bare number closed by a live
+    // `$` -- a price is never immediately followed by a math delimiter).
     const escaped = [...para.matchAll(/\\\$/g)];
     let flaggedMixed = false;
     for (const e of escaped) {
       const start = e.index + 2;
       const nextDollar = para.slice(start).search(/(?<!\\)\$/);
       const payload = para.slice(start, nextDollar === -1 ? start + 40 : start + nextDollar);
-      if (/\\[a-zA-Z]+|[\^_{}]/.test(payload)) {
+      // Digits with plain arithmetic punctuation only (`768`, `0.7528`,
+      // `694 / 149 / 149`); letters excluded so two prices never match.
+      const numericClosed = nextDollar !== -1 && /^[\d.,\s/+\-*×]*\d[\d.,\s/+\-*×]*$/.test(payload);
+      if (LATEX_PAYLOAD.test(payload) || numericClosed) {
         findings.push({
           kind: 'mixed-escaping',
           excerpt: para.slice(Math.max(0, e.index - 40), e.index + 70).replace(/\s+/g, ' ').trim(),

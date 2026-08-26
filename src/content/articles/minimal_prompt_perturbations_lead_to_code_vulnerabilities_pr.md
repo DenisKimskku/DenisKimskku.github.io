@@ -128,7 +128,7 @@ When evaluating the probing classifiers on the held-out test set, Sternfeld et a
 | | Signature Verify | 0.588 | |
 | | Weak Crypto (DSA) | 0.584 | |
 
-A one-sided Mann-Whitney U test on the per-CWE AUC values yielded \$U = 68\$ with a \$p\$-value of 0.009, confirming a statistically significant gap in predictability between the two groups. 
+A one-sided Mann-Whitney U test on the per-CWE AUC values yielded \$U = 68\$ with a $p$-value of 0.009, confirming a statistically significant gap in predictability between the two groups. 
 
 #### Why is there a predictive gap?
 As Section 4.4 describes, input-handling vulnerabilities require a structural fix (such as inserting a validation block or a sanitization function). The LLM must commit to this structural change early in the generation process, which is heavily reflected in the prompt-end hidden states. Conversely, secure-defaults flaws hinge on localized keyword choices (e.g., choosing a strong cipher or setting a safe flag). These decisions are deferred to next-token sampling during decoding, meaning they leave almost no signature in the initial prompt representation.

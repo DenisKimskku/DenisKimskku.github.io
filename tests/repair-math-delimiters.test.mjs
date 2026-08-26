@@ -126,8 +126,14 @@ test('R1 still accepts the intended number-unit-command payload shapes', () => {
   }
 });
 
-test('a bare escaped LaTeX-looking token with no closer is left alone', () => {
-  assertUntouched('Defenses like \\$A^2FV\\$ are bound to fail.');
+test('a bare escaped LaTeX-looking token with no closer at all is left alone', () => {
+  assertUntouched('Defenses like \\$A^2FV are bound to fail.');
+});
+
+test('R4: a fully-escaped span (both delimiters escaped) is restored to math', () => {
+  // `\$A^2FV\$` is the generator's blanket-escaping regime: the `^` says it
+  // was math, and as written it ships to readers as the literal text $A^2FV$.
+  assert.equal(fix('Defenses like \\$A^2FV\\$ are bound to fail.'), 'Defenses like $A^2FV$ are bound to fail.');
 });
 
 test('frontmatter with a backslash and a fenced code block with \\$x$ are byte-identical', () => {
@@ -155,10 +161,15 @@ test('a defect in the body is repaired while the frontmatter above it is untouch
   assert.equal(out.repairs.length, 2);
 });
 
-test('a repair that the detector cannot vouch for is reverted', () => {
-  // The second escaped span would still be flagged after unescaping the first,
-  // so the finding count does not strictly drop and the unit stays as-is.
-  assertUntouched('A secret vector \\$ \\mathbf{z} \\$ and \\$ \\mathbf{x} + \\mathbf{z} \\$ collapse into $y$.');
+test('R4: several fully-escaped spans in one unit are all restored', () => {
+  // Before R4 existed this unit had to be left alone because R1 could only
+  // unescape one opener at a time and the detector still saw the rest. R4
+  // handles whole `\$...\$` spans, so both are restored in one pass and the
+  // detector is satisfied.
+  assert.equal(
+    fix('A secret vector \\$ \\mathbf{z} \\$ and \\$ \\mathbf{x} + \\mathbf{z} \\$ collapse into $y$.'),
+    'A secret vector $ \\mathbf{z} $ and $ \\mathbf{x} + \\mathbf{z} $ collapse into $y$.',
+  );
 });
 
 test('idempotent: repairing twice equals repairing once', () => {

@@ -23,8 +23,21 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { findBrokenMathDelimiters } from './lib/math-delimiters.mjs';
 
-// Same signature the detector uses to tell a LaTeX payload from a price.
-const LATEX = /\\[a-zA-Z]+|[\^_{}]/;
+// Same signature the detector uses to tell a LaTeX payload from a price
+// (`\%` included: `\$95.5\%$` shipped mis-rendered for months because a
+// signature without it saw no LaTeX there).
+const LATEX = /\\[a-zA-Z%]+|[\^_{}]/;
+// A bare number -- or a plain arithmetic expression such as
+// `694 / 149 / 149` -- closed by a live `$` (`\$768$`, `\$0.7528$`,
+// `\$694 / 149 / 149$`) is the same escaped-opener defect with no control
+// sequence to give it away; a price is never immediately followed by a math
+// delimiter. Letters are excluded so `\$5 and $9` (two prices) never matches.
+const NUMERIC_CLOSED = /^[\d.,\s/+\-*×]*\d[\d.,\s/+\-*×]*$/;
+// R4: both delimiters escaped -- `\$Y = F(X; \theta)\$`, `\$62\times\$`,
+// `\$X\$`. The math never renders. Payload must be LaTeX (or a lone
+// identifier letter), short, and not read like a sentence.
+const FULLY_ESCAPED = /\\\$((?:(?!\\\$)[^$\n])+?)\\\$/g;
+const SENTENCE_LIKE = /\.\s+[A-Z]/;
 // R1 must be narrower than the detector, not equal to it: the detector's
 // mixed-escaping rule is a heuristic and has false positives (a real price
 // followed by a markdown-escaped `gpt\_4` in prose, then a lone `$9` that
@@ -59,23 +72,38 @@ function maskCodeSpans(line) {
 // indices of the backslashes to delete, in ascending order.
 function inlineEdits(unit) {
   const edits = [];
+  // R4 first: `\$...\$` spans with no live `$` inside. Both backslashes go.
+  // These units have no live `$` at all in practice, so the R1/R2 walk
+  // below (which tracks live delimiters) sees nothing to do afterwards.
+  const r4 = new Set();
+  for (const m of unit.matchAll(FULLY_ESCAPED)) {
+    const payload = m[1];
+    const isLatex = LATEX.test(payload) || /^[A-Za-z]$/.test(payload);
+    if (!isLatex || payload.length > 160 || SENTENCE_LIKE.test(payload)) continue;
+    r4.add(m.index);
+    r4.add(m.index + m[0].length - 2);
+  }
+  for (const idx of [...r4].sort((a, b) => a - b)) edits.push({ index: idx, rule: 'R4' });
+
   let open = false; // inside `$...$` with no closer seen yet
   for (let i = 0; i < unit.length; i++) {
     if (unit[i] !== '$') continue;
     const escaped = i > 0 && unit[i - 1] === '\\';
+    if (escaped && r4.has(i - 1)) continue; // already handled by R4
     if (!escaped) {
       open = !open;
       continue;
     }
     if (!open) {
       // R1 (escaped opener): the payload up to the next LIVE `$` in this unit
-      // contains LaTeX, so this `\$` was never currency. A bare `\$25M` with
-      // no later live `$` has no closer and is left alone.
+      // is LaTeX -- a control sequence, ^ _ { }, or a bare number closed by
+      // that `$` -- so this `\$` was never currency. A bare `\$25M` with no
+      // later live `$` has no closer and is left alone.
       const rest = unit.slice(i + 1);
       const rel = rest.search(NEXT_LIVE_DOLLAR);
       if (rel === -1) continue;
       const payload = rest.slice(0, rel);
-      if (!LATEX.test(payload)) continue;
+      if (!LATEX.test(payload) && !NUMERIC_CLOSED.test(payload)) continue;
       const residue = payload.replace(TEXTISH, '').replace(COMMAND, '');
       if (WORD_RUN.test(residue) || SENTENCE_PUNCT.test(residue)) continue;
       edits.push({ index: i - 1, rule: 'R1' });
@@ -87,7 +115,9 @@ function inlineEdits(unit) {
       open = false;
     }
   }
-  return edits;
+  // deleteAt() and the excerpt bookkeeping assume ascending indices; R4 and
+  // R1/R2 edits were collected in separate passes.
+  return edits.sort((a, b) => a.index - b.index);
 }
 
 // R3 on one display-math line: strip the single backslash fused to a `$$`

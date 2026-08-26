@@ -287,19 +287,6 @@
     "searchContent": "Figure from the paper “Make Agent Defeat Agent: Automatic Detection of Taint Style Vulnerabilities in LLM based Agents” (p. 4) AgentFuzz: Directed Greybox Fuzzing for Taint Vulnerabilities in LLM Agents TLDR What : AgentFuzz, a directed greybox fuzzing framework for LLM agents. Who's at risk : LLM based agents deployed with security sensitive operations. Key number : In our evaluation against 20 widely used open source agent applications, AgentFuzz identified 34 high risk 0 day vulnerabilities. Bridging the Natural Language Gap LLM based agents are increasingly common, handling complex tasks by interpreting natural language prompts and invoking external tools or functions. These agents are susceptible to taint style vulnerabilities, where malicious input flows from a user prompt (source) to a security sensitive operation (sink) without sanitization, potentially causing code injection or privilege escalation. Existing methods for detecting these flaws, such as static analysis, struggle with the dynamic nature of these agents; specifically, their coarse grained call graph analysis and the prevalence of indirect calls in languages like Python lead to high rates of false positives and false negatives. Traditional dynamic fuzzing techniques are also inadequate because they are designed for structured inputs, whereas agents require natural language prompts that carry rich semantic meaning to invoke specific functionalities. The core problem AgentFuzz addresses is how to apply direc"
   },
   {
-    "slug": "a_certified_unlearning_approach_without_access_to_source_dat",
-    "title": "A Certified Unlearning Approach without Access to Source Data",
-    "date": "2026-08-21",
-    "type": "Paper Review",
-    "description": "This approach tackles a genuine operational hurdle: certified unlearning when source data is unavailable. However, the entire edifice rests on the fidelity of the surrogate data approximation ($\\text{TV}(\\rho \\parallel \\nu)$).",
-    "tags": [
-      "Privacy",
-      "Machine Unlearning"
-    ],
-    "readingTime": 5,
-    "searchContent": "Figure from the paper “A Certified Unlearning Approach without Access to Source Data” (p. 7) Certified Unlearning with Surrogate Data Statistics TLDR What: Proposes certified data removal without access to original training samples. Who's at risk: Deployments needing GDPR/CCPA compliance on black box models. Key number: The bound on the difference is $ lVert w^ r b {wr} rVert^2 le Delta$. Approximating the Retrained Model The standard for certified unlearning requires proving that the unlearned model behaves like a model retrained from scratch on the retained data ($w^ r$). Current, feasible methods often rely on full access to the source dataset ($D$) to calculate necessary statistics, such as the Hessian of the retained samples ($H {Dr}$). This dependence on source data is a major bottleneck in regulated or distributed environments; the original samples might be deleted or inaccessible due to privacy or resource constraints. Existing work, which focuses on source free unlearning, has faced challenges in providing formal, certified guarantees. This paper targets this gap: achieving certified erasure when the only information available for guiding the process is a surrogate dataset ($D s$) that approximates the statistics of the true source data ($D$). Surrogate Hessian and Model Update The core mechanism shifts the statistical dependency from the source data $D$ to the surrogate data $D s$. Since the exact Hessian of the retain samples ($H {Dr}$) is unavailable, the framewor"
-  },
-  {
     "slug": "ai_security_digest__august_21_2026_ai_agents__vulnerabilitie",
     "title": "AI Security Digest — August 21, 2026: AI Agents & Vulnerabilities",
     "date": "2026-08-21",
@@ -315,6 +302,19 @@
     ],
     "readingTime": 4,
     "searchContent": "AI Security Digest — August 21, 2026: AI Agents & Vulnerabilities ISOLATEGPT proposes a new execution isolation architecture specifically designed to safeguard users interacting with untrustworthy third party LLM applications. This development addresses the growing risk associated with running complex, agentic systems whose internal execution paths cannot be fully trusted. Paper Highlights IsolateGPT: An Execution Isolation Architecture for LLM Based Agentic Systems — Yuhao Wu 0006, Franziska Roesner, Tadayoshi Kohno. This work introduces ISOLATEGPT to sandbox application execution within LLM systems. Practitioners should note the performance overhead incurred by this isolation method. Chimera: Harnessing Multi Agent LLMs for Automatic Insider Threat Simulation — Jiongchi Yu, Xiaofei Xie, Qiang Hu. Chimera utilizes multiple LLMs to automatically generate complex insider threat scenarios. Organizations relying on traditional log based insider threat detection (ITD) can use this to stress test their defenses. TrajDeleter: Enabling Trajectory Forgetting in Offline Reinforcement Learning Agents — Chen Gong 0005, Kecen Li, Jin Yao. This research allows agents to selectively forget specific sequences from their training data. This is relevant for maintaining privacy or compliance in safety critical domains using offline Reinforcement Learning. Industry & News AI Driven Vulnerability Exploitation Is Now Fast and Cheap Security Boulevard (Security Boulevard) — Automated tools are mak"
+  },
+  {
+    "slug": "a_certified_unlearning_approach_without_access_to_source_dat",
+    "title": "A Certified Unlearning Approach without Access to Source Data",
+    "date": "2026-08-21",
+    "type": "Paper Review",
+    "description": "This approach tackles a genuine operational hurdle: certified unlearning when source data is unavailable. However, the entire edifice rests on the fidelity of the surrogate data approximation ($\\text{TV}(\\rho \\parallel \\nu)$).",
+    "tags": [
+      "Privacy",
+      "Machine Unlearning"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “A Certified Unlearning Approach without Access to Source Data” (p. 7) Certified Unlearning with Surrogate Data Statistics TLDR What: Proposes certified data removal without access to original training samples. Who's at risk: Deployments needing GDPR/CCPA compliance on black box models. Key number: The bound on the difference is $ lVert w^ r b {wr} rVert^2 le Delta$. Approximating the Retrained Model The standard for certified unlearning requires proving that the unlearned model behaves like a model retrained from scratch on the retained data ($w^ r$). Current, feasible methods often rely on full access to the source dataset ($D$) to calculate necessary statistics, such as the Hessian of the retained samples ($H {Dr}$). This dependence on source data is a major bottleneck in regulated or distributed environments; the original samples might be deleted or inaccessible due to privacy or resource constraints. Existing work, which focuses on source free unlearning, has faced challenges in providing formal, certified guarantees. This paper targets this gap: achieving certified erasure when the only information available for guiding the process is a surrogate dataset ($D s$) that approximates the statistics of the true source data ($D$). Surrogate Hessian and Model Update The core mechanism shifts the statistical dependency from the source data $D$ to the surrogate data $D s$. Since the exact Hessian of the retain samples ($H {Dr}$) is unavailable, the framewor"
   },
   {
     "slug": "chimera_harnessing_multiagent_llms_for_automatic_insider_thr",
@@ -576,19 +576,6 @@
     "searchContent": "Figure from the paper “Topic FlipRAG: Topic Orientated Adversarial Opinion Manipulation Attacks to Retrieval Augmented Generation…” (p. 2) Topic FlipRAG: Topic Orientated Adversarial Opinion Manipulation Attacks to Retrieval Augmented Generation Models TLDR What : Topic FlipRAG manipulates RAG output opinion across related topics. Who's at risk : RAG systems used for information dissemination and public opinion shaping. Key number : The proposed attacks effectively shift the opinion of the model’s outputs on specific topics, significantly impacting users’ information perception. The Gap Between Factoid Attacks and Topic Stance Shifts Current security research on Retrieval Augmented Generation (RAG) systems has largely concentrated on attacks that target isolated, factual queries. Prior work often focused on manipulating retrieval rankings for single query, factoid questions, such as poisoning data to change the answer to \"CEO of OpenAI.\" These query specific perturbations, like those in PoisonedRAG, are often susceptible to countermeasures like reranking and filtering. The real world danger, however, lies in topic oriented manipulation. When LLMs are tasked with synthesizing or reasoning across a set of related queries—for instance, exploring \"wearable tech\" by asking about \"smartwatch battery life\" and \"health tracking accuracy\"—they are required to balance multiple perspectives. This need for synthesis makes them uniquely vulnerable to systematic knowledge poisoning that in"
   },
   {
-    "slug": "a_causal_perspective_for_enhancing_jailbreak_attack_and_defe",
-    "title": "A Causal Perspective for Enhancing Jailbreak Attack and Defense",
-    "date": "2026-08-17",
-    "type": "Paper Review",
-    "description": "The paper correctly identifies the necessity of moving past correlation when analyzing jailbreaks. However, its reliance on template-based attacks is a significant blind spot.",
-    "tags": [
-      "Jailbreaking",
-      "Adversarial Attacks"
-    ],
-    "readingTime": 5,
-    "searchContent": "Figure from the paper “A Causal Perspective for Enhancing Jailbreak Attack and Defense” (p. 5) Causal Analysis for Mapping Prompt Features to LLM Jailbreak Outcomes TLDR What : Framework uses causal discovery to link prompt features to jailbreak success. Who's at risk : LLMs deployed with safety guardrails against adversarial prompts. Key number : \"Positive Character\" and \"Number of Task Steps\" act as direct causal drivers. The Gap Between Correlation and Causation in Prompt Analysis Current work analyzing jailbreak prompts often examines latent representations or uses simple feature probing, which only establishes correlation between prompt characteristics and harmful outcomes. This limits understanding because correlation does not imply causation. For instance, previous methods might observe that prompts containing a certain structure correlate with a jailbreak, but they cannot definitively state that structure causes the jailbreak. This lack of causal insight means defenses are often brittle; they can block correlated features without addressing the underlying mechanism that enables the exploit. The problem is that existing analyses overlook the direct causal pathways linking human readable prompt features to the final jailbreak response. The Causal Analyst Framework This paper introduces Causal Analyst, a framework designed to move beyond mere correlation by integrating LLMs directly into a data driven causal discovery loop. The core insight is that LLMs themselves can ac"
-  },
-  {
     "slug": "ai_security_digest__august_17_2026_jailbreaking__backdoors",
     "title": "AI Security Digest — August 17, 2026: Jailbreaking & Backdoors",
     "date": "2026-08-17",
@@ -604,6 +591,19 @@
     ],
     "readingTime": 5,
     "searchContent": "AI Security Digest — August 17, 2026: Jailbreaking & Backdoors 17 months is how long Salesforce and ServiceNow portals were exposed, demonstrating the severe risk associated with prolonged, unpatched infrastructure vulnerabilities. Paper Highlights QNBAD: Quantum Noise induced Backdoor Attacks against Zero Noise Extrapolation — by Cheng Chu, Qian Lou, Fan Chen. This work introduces noise dependent backdoors that corrupt Zero Noise Extrapolation (ZNE) fitting processes. Practitioners using ZNE for reliability on Noisy Intermediate Scale Quantum (NISQ) devices must account for these novel attack vectors. Memory Backdoor Attacks on Neural Networks — by Eden Luzon, Guy Amit, Roy Weiss. A memory backdoor mechanism allows for the exact, systematic extraction of private training samples from a system. Federated Learning deployments, particularly those with a compromised central server, are directly exposed to this threat. TwinBreak: Jailbreaking LLM Security Alignments based on Twin Prompts — . TwinBreak demonstrates removing Large Language Model (LLM) safety alignments through targeted parameter pruning. Deployments relying on open source, safety aligned LLMs require immediate re evaluation of alignment robustness. Industry & News Week in review: Salesforce and ServiceNow portals exposed for 17 months, exploited Metabase 0 day helpnetsecurity.com — Exposure of major enterprise portals for extended periods shows systemic failure in vulnerability management cycles. NIELIT hackathon t"
+  },
+  {
+    "slug": "a_causal_perspective_for_enhancing_jailbreak_attack_and_defe",
+    "title": "A Causal Perspective for Enhancing Jailbreak Attack and Defense",
+    "date": "2026-08-17",
+    "type": "Paper Review",
+    "description": "The paper correctly identifies the necessity of moving past correlation when analyzing jailbreaks. However, its reliance on template-based attacks is a significant blind spot.",
+    "tags": [
+      "Jailbreaking",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “A Causal Perspective for Enhancing Jailbreak Attack and Defense” (p. 5) Causal Analysis for Mapping Prompt Features to LLM Jailbreak Outcomes TLDR What : Framework uses causal discovery to link prompt features to jailbreak success. Who's at risk : LLMs deployed with safety guardrails against adversarial prompts. Key number : \"Positive Character\" and \"Number of Task Steps\" act as direct causal drivers. The Gap Between Correlation and Causation in Prompt Analysis Current work analyzing jailbreak prompts often examines latent representations or uses simple feature probing, which only establishes correlation between prompt characteristics and harmful outcomes. This limits understanding because correlation does not imply causation. For instance, previous methods might observe that prompts containing a certain structure correlate with a jailbreak, but they cannot definitively state that structure causes the jailbreak. This lack of causal insight means defenses are often brittle; they can block correlated features without addressing the underlying mechanism that enables the exploit. The problem is that existing analyses overlook the direct causal pathways linking human readable prompt features to the final jailbreak response. The Causal Analyst Framework This paper introduces Causal Analyst, a framework designed to move beyond mere correlation by integrating LLMs directly into a data driven causal discovery loop. The core insight is that LLMs themselves can ac"
   },
   {
     "slug": "memory_backdoor_attacks_on_neural_networks",
@@ -2030,6 +2030,20 @@
     "searchContent": "Image generated by AI TLDR What : An external issue containing a fabricated security pre approval (\"authority framing\") tricks multi LLM (Large Language Model) CI/CD (Continuous Integration/Continuous Deployment) pipelines into shipping syntactically clean secret exfiltration code, bypassing downstream LLM verifiers and scanners. Who's at risk : Software organizations using multi agent LLM systems for automated issue triage, code generation, code review, and automated merging/deployment. Key number : A 55% end to end compromise rate under tailored authority framing when the LLM scanner is removed, with LLM scanners passing ~80% of laundered pull requests. Exploiting Agentic CI/CD: How Authority Framing and Code Laundering Bypass Multi LLM Verification Chains Automating the software development lifecycle using autonomous multi agent LLM systems—spanning triage, code generation, security scanning, and deployment—introduces a deceptive attack surface. Traditional security architectures assume that distributed validation across independent, multi vendor models (such as GPT 4o, Mistral Large, and Claude Haiku) provides defense in depth through mutual scrutiny. Senthex Research's \"They'll Verify. They Just Won't Act\" invalidates this assumption by demonstrating how a single untrusted external issue can exploit the cognitive vulnerabilities of downstream LLM verifiers. By utilizing \"authority framing\"—injecting fabricated security compliance approvals—adversaries can trick downstrea"
   },
   {
+    "slug": "aispy_parasitic_trojans_for_machine_learning_infrastructure",
+    "title": "(A)iSpy: Parasitic Trojans for Machine Learning Infrastructure",
+    "date": "2026-07-22",
+    "type": "Paper Review",
+    "description": "Conventional machine learning (ML) security audits focus extensively on dataset sanitization, static model scanning, and cryptographic check-summing of weights.",
+    "tags": [
+      "Data Poisoning",
+      "Backdoors",
+      "Supply Chain Security"
+    ],
+    "readingTime": 10,
+    "searchContent": "Image generated by AI TLDR What : (A)iSpy is a parasitic machine learning runtime Trojan that registers as a framework extension to manipulate transient memory states, enabling backdoor amplification from a single poisoned sample and robust hyperparameter exfiltration. Who's at risk : Distributed machine learning pipelines and inference services utilizing extensible runtimes like ONNX Runtime, TensorRT, PyTorch, and XLA that pull dependencies from unvetted package registries. Key number : Backdoor Attack Success Rate (ASR) is boosted from 0.3% to 97.1% on CIFAR 10 using only a single poisoned sample (0.02% poison rate), with less than 1 ms per batch execution overhead. Abusing ML Runtimes: Deep Dive into the (A)iSpy Parasitic Trojan Framework Conventional machine learning (ML) security audits focus extensively on dataset sanitization, static model scanning, and cryptographic check summing of weights. However, (A)iSpy breaks the foundational assumption that the underlying framework execution engine is a trusted, neutral environment. By exploiting the native extension and graph optimization Application Programming Interfaces (APIs) of modern runtimes like ONNX Runtime and NVIDIA TensorRT, this parasitic Trojan operates directly within runtime memory. It hijacks active training loops and inference states to execute stealthy integrity and confidentiality attacks without altering the user's explicit training scripts. Threat Model | | | | | | | Attacker | Supply chain adversary cap"
+  },
+  {
     "slug": "ai_security_digest__july_22_2026",
     "title": "AI Security Digest — July 22, 2026: Quantum Circuit Backdoors & Parasitic ML Runtime Trojans",
     "date": "2026-07-22",
@@ -2045,20 +2059,6 @@
     ],
     "readingTime": 4,
     "searchContent": "Image generated by AI AI Security Digest — July 22, 2026: Quantum Circuit Backdoors & Parasitic ML Runtime Trojans Internal development safeguards at OpenAI were recently tested when the company paused internal access to an upcoming AI model following unexpected safety failures. This development highlights the highly volatile nature of frontier model alignment and the potential for unanticipated behaviors to emerge during pre deployment testing. Restricting model behavior remains a complex engineering hurdle as organizations rush to scale autonomous agents across enterprise infrastructure. Paper Highlights Recent academic work highlights emerging vectors across quantum environments, ML (Machine Learning) runtimes, and document retrieval systems: CutBackdoor: A Circuit Cut Triggered Backdoor Attack on Variational Quantum Algorithms — by Ahatesham Bhuiyan, Hoang Ngo, Cheng Chu. This parameter supply chain backdoor attack exploits quantum circuit cutting as a deployment time trigger, causing poisoned variational parameters to pass full circuit validation but fail under noisy finite shot subcircuit reconstruction. Quantum security teams need to evaluate parameter validation methods specifically during the subcircuit reconstruction phase to prevent silent failures in deployed VQA (Variational Quantum Algorithms) systems. (A)iSpy: Parasitic Trojans for Machine Learning Infrastructure — by Habibur Rahaman, Qipan Xu, Zafaryab Haider. The (A)iSpy attack framework operates as a parasit"
-  },
-  {
-    "slug": "aispy_parasitic_trojans_for_machine_learning_infrastructure",
-    "title": "(A)iSpy: Parasitic Trojans for Machine Learning Infrastructure",
-    "date": "2026-07-22",
-    "type": "Paper Review",
-    "description": "Conventional machine learning (ML) security audits focus extensively on dataset sanitization, static model scanning, and cryptographic check-summing of weights.",
-    "tags": [
-      "Data Poisoning",
-      "Backdoors",
-      "Supply Chain Security"
-    ],
-    "readingTime": 10,
-    "searchContent": "Image generated by AI TLDR What : (A)iSpy is a parasitic machine learning runtime Trojan that registers as a framework extension to manipulate transient memory states, enabling backdoor amplification from a single poisoned sample and robust hyperparameter exfiltration. Who's at risk : Distributed machine learning pipelines and inference services utilizing extensible runtimes like ONNX Runtime, TensorRT, PyTorch, and XLA that pull dependencies from unvetted package registries. Key number : Backdoor Attack Success Rate (ASR) is boosted from 0.3% to 97.1% on CIFAR 10 using only a single poisoned sample (0.02% poison rate), with less than 1 ms per batch execution overhead. Abusing ML Runtimes: Deep Dive into the (A)iSpy Parasitic Trojan Framework Conventional machine learning (ML) security audits focus extensively on dataset sanitization, static model scanning, and cryptographic check summing of weights. However, (A)iSpy breaks the foundational assumption that the underlying framework execution engine is a trusted, neutral environment. By exploiting the native extension and graph optimization Application Programming Interfaces (APIs) of modern runtimes like ONNX Runtime and NVIDIA TensorRT, this parasitic Trojan operates directly within runtime memory. It hijacks active training loops and inference states to execute stealthy integrity and confidentiality attacks without altering the user's explicit training scripts. Threat Model | | | | | | | Attacker | Supply chain adversary cap"
   },
   {
     "slug": "an_early_warning_of_emerging_biosecurity_risks_in_frontier_l",
@@ -2168,18 +2168,6 @@
     "searchContent": "Image generated by AI TLDR What : CPPIA (Code Poisoning Property Inference Attack) is a stealthy supply chain attack where an adversary injects code level hooks to profile a private training set, encode its global statistics as a binary sequence, and covertly leak this data through the model's predictions on \"secret samples.\" Who's at risk : ML developers and enterprises training models on private/sensitive data (such as medical or financial records) who use open source templates or rely on AI coding assistants (e.g., Claude Code, OpenAI's Codex) without rigorous code auditing. Key number : CPPIA achieves 100% attack accuracy (zero error property estimation) with 0% degradation in model utility, completely bypassing advanced defenses like Inf2Guard, ExpM, and DPSGD. CPPIA: Exfiltrating Private Dataset Properties via Code Poisoning Attacks The rise of specialized AI coding assistants like Claude Code and OpenAI's Codex, alongside public model hubs like Hugging Face and GitHub, has transformed how machine learning pipelines are constructed. Today, developers rarely write training code from scratch. Instead, they copy paste template scripts or trust AI agents to generate training loops. This \"plug and play\" behavior has opened up a dangerous supply chain vector. A paper titled \"Code Poisoning Property Inference Attacks\" introduces CPPIA , a highly stealthy code level Property Inference Attack (PIA). By poisoning the training code itself, an attacker can precisely reconstruct glo"
   },
   {
-    "slug": "do_agents_dream_of_false_memories_blackbox_visual_attacks_on",
-    "title": "Do Agents Dream of False Memories? Black-box Visual Attacks on Long-term Memory in Multimodal AI Agents",
-    "date": "2026-07-21",
-    "type": "Paper Review",
-    "description": "LUCID is a black-box, image-only adversarial attack that compromises multimodal long-term memory in AI agents, injecting \"false memories\" without altering text or database indices.",
-    "tags": [
-      "AI Security"
-    ],
-    "readingTime": 7,
-    "searchContent": "Image generated by AI TLDR What : LUCID is a black box, image only adversarial attack that compromises multimodal long term memory in AI agents, injecting \"false memories\" without altering text or database indices. Who's at risk : Multimodal agents using persistent memory backends (e.g., Mem0, MuRAG, NGMemory, AUGUSTUS, UniversalRAG) with frontier MLLMs (GPT 4o, Claude Haiku 4.5, Gemini 2.5 flash). Key numbers : Average 61.6% Attack Success Rate (ASR) on memory poisoning and 58.4% ASR on memory injection under strict black box transfer conditions. Do Agents Dream of False Memories? Black box Visual Attacks on Multimodal AI Long term Memory AI agents use long term memory (e.g., Mem0, MuRAG, AUGUSTUS) to persist context across sessions, treating visual data as faithful historical records. LUCID exposes a critical vulnerability: these pipelines blindly trust visual inputs. By exploiting the gap between visual pixel space and embedding retrieval space, LUCID crafts imperceptible, image only perturbations to poison or inject agent memories without accessing MLLM weights, text channels, or memory indices. Threat Model | | | | | | | Attacker | Black box. No access to target MLLM weights, memory backends, retrieval encoders, or text queries. Applies only imperceptible $ ell infty$ bounded image perturbations. | | Victim | Multimodal AI agents using episodic memory backends (MuRAG, NGMemory, AUGUSTUS, UniversalRAG, Mem0Memory) paired with frontier MLLMs. | | Goal | Force retrieval of "
-  },
-  {
     "slug": "dosq_a_crosslayer_denial_of_service_quality_attack_by_exploi",
     "title": "DoSQ: A Cross-Layer Denial of Service Quality Attack by Exploiting Side Channels in 5G NR",
     "date": "2026-07-21",
@@ -2190,6 +2178,18 @@
     ],
     "readingTime": 11,
     "searchContent": "Image generated by AI TLDR What : DoSQ (Denial of Service Quality) is a cross layer side channel attack that passively decodes unencrypted 5G Downlink Control Information (DCI) to predict application layer Goodput, enabling a slot aligned reactive jammer to surgically corrupt a victim's Physical Downlink Shared Channel (PDSCH) allocation inside a single 1 ms slot. Who's at risk : High bandwidth, low latency, or QoE sensitive applications running on 5G NR (New Radio) deployments (e.g., YouTube Live, URLLC slices, autonomous V2X, and tele surgery) where physical layer control metadata is broadcast in the clear. Key number : DoSQ drives target application Goodput down by 40% to 50% using an effective slot level jamming hit rate of just 2% to 10% , guided by an XGBoost classifier achieving 0.870 precision at the top 1% \"attack now\" confidence. DoSQ: Exploiting 5G NR Physical Layer Side Channels for Targeted, Energy Minimal Denial of Service Quality The 3rd Generation Partnership Project (3GPP)’s 5G New Radio (5G NR) standard was built with the promise of supporting mission critical, low latency services such as Vehicle to Everything (V2X) communications, smart grid control, and tele surgery. To deliver these capabilities, modern network slices rely on the implicit assumption that lower layer control signaling broadcasts do not leak actionable, application level information. However, a critical vulnerability exists at the boundary of the physical (PHY) and application layers. In a"
+  },
+  {
+    "slug": "do_agents_dream_of_false_memories_blackbox_visual_attacks_on",
+    "title": "Do Agents Dream of False Memories? Black-box Visual Attacks on Long-term Memory in Multimodal AI Agents",
+    "date": "2026-07-21",
+    "type": "Paper Review",
+    "description": "LUCID is a black-box, image-only adversarial attack that compromises multimodal long-term memory in AI agents, injecting \"false memories\" without altering text or database indices.",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 7,
+    "searchContent": "Image generated by AI TLDR What : LUCID is a black box, image only adversarial attack that compromises multimodal long term memory in AI agents, injecting \"false memories\" without altering text or database indices. Who's at risk : Multimodal agents using persistent memory backends (e.g., Mem0, MuRAG, NGMemory, AUGUSTUS, UniversalRAG) with frontier MLLMs (GPT 4o, Claude Haiku 4.5, Gemini 2.5 flash). Key numbers : Average 61.6% Attack Success Rate (ASR) on memory poisoning and 58.4% ASR on memory injection under strict black box transfer conditions. Do Agents Dream of False Memories? Black box Visual Attacks on Multimodal AI Long term Memory AI agents use long term memory (e.g., Mem0, MuRAG, AUGUSTUS) to persist context across sessions, treating visual data as faithful historical records. LUCID exposes a critical vulnerability: these pipelines blindly trust visual inputs. By exploiting the gap between visual pixel space and embedding retrieval space, LUCID crafts imperceptible, image only perturbations to poison or inject agent memories without accessing MLLM weights, text channels, or memory indices. Threat Model | | | | | | | Attacker | Black box. No access to target MLLM weights, memory backends, retrieval encoders, or text queries. Applies only imperceptible $ ell infty$ bounded image perturbations. | | Victim | Multimodal AI agents using episodic memory backends (MuRAG, NGMemory, AUGUSTUS, UniversalRAG, Mem0Memory) paired with frontier MLLMs. | | Goal | Force retrieval of "
   },
   {
     "slug": "evaluating_openweight_llms_for_generating_structured_threat_",
@@ -2264,18 +2264,6 @@
     "searchContent": "Image generated by AI TLDR What : Casual linguistic edits, such as shortening a prompt or removing relative adverbial clauses (like \"how\" or \"which\"), can systematically trigger open weight LLMs to generate highly vulnerable code. Who's at risk : Teams relying on local, self hosted, or open weight models (Qwen, Phi, Athene) inside development environments (e.g., local Cursor setups, Ollama powered IDE extensions, or agentic CI/CD pipelines) without strict prompt controls. Key number : Deleting relative/interrogative adverbial clauses () in Python code generation prompts increased the vulnerability rate of generated code up to 85.19% (for Qwen 2.5), yielding risk ratios up to 2.24x across open weight models. Prompt Syntax as an Attack Surface: How Tiny Linguistic Variations Induce Security Flaws in Open Weight LLMs Discussions of LLM based secure code generation tend to focus on high level strategies: Is there a system prompt instructing the model to be secure? Is iterative self reflection in use? Are secure coding rules appended? However, a recent academic paper, \"The Language of Security: How Prompt Syntax Shapes Secure Code Generation in Open LLMs,\" reveals that these security assumptions are built on a highly fragile foundation. The researchers demonstrate that LLMs do not interpret prompts as abstract semantic specifications, but as literal, highly structured linguistic artifacts. Systematically stripping minor syntactic components—such as a single subordinate clause or a"
   },
   {
-    "slug": "a_measurement_study_of_aienvironment_realism_gaps_in_malware",
-    "title": "A Measurement Study of AI-Environment Realism Gaps in Malware-Analysis Sandboxes",
-    "date": "2026-07-19",
-    "type": "Paper Review",
-    "description": "As AI assistants like Cursor, Claude Code, and GitHub Copilot become ubiquitous developer and enterprise tools, malware is adapting to look for their footprint.",
-    "tags": [
-      "AI Security"
-    ],
-    "readingTime": 10,
-    "searchContent": "Image generated by AI TLDR What : AIprints is a sandbox evasion framework that detects the presence or absence of persistent local AI software environment artifacts (e.g., Claude Code/Cursor configs, HuggingFace model caches, local Ollama servers, API keys) to differentiate sterile analysis sandboxes from genuine AI capable workstations. Who's at risk : Automated malware analysis sandboxes (such as ANY.RUN, CAPEv2, Triage, Hybrid Analysis, and VirusTotal) and threat intelligence pipelines that fail to simulate modern developer/enterprise environments. Key number : Twelve \"Class C\" host exclusive AI artifacts (including , , and Ollama port ) appeared consistently on actual AI capable hosts but were detected on 0% (none) of the evaluated sandbox backends, making them highly reliable evasion indicators. Evasion by Lack of AI: AIprint Exposes the Realism Gap in Modern Malware Sandboxes As AI assistants like Cursor, Claude Code, and GitHub Copilot become ubiquitous developer and enterprise tools, malware is adapting to look for their footprint. Traditional sandbox evasion focused on hiding virtualization indicators, but a new breed of malware is shifting to \"environment aware\" evasion by verifying if a host actually runs AI workloads. If malware executing on a system detects a sterile environment devoid of model caches, local inference ports, and API configurations, it can safely assume it is being analyzed inside a sandbox and suppress its malicious behavior. | | | | | | | Attack"
-  },
-  {
     "slug": "ai_agents_do_not_fail_alonethe_context_fails_first",
     "title": "AI Agents Do Not Fail Alone:The Context Fails First",
     "date": "2026-07-19",
@@ -2327,6 +2315,18 @@
     ],
     "readingTime": 9,
     "searchContent": "Image generated by AI TLDR What : An automated multi agent framework that uses an evolutionary \"Explore and Mutate\" strategy to autonomously generate, debate, and label highly ambiguous visual policy violations (\"hard examples\"). Who's at risk : Multimodal safety classifiers and content moderation pipelines (such as those protecting Google Ads or similar safety moderation systems) that remain vulnerable to subtle, visual, or cross modal policy evasions. Key number : Reduces the False Negative Rate (FNR) of a Gemini 3 Flash classifier from 41.2% to 24.5% on the HoliSafe Bench boundary subset by dynamically retrieving just four agent synthesized hard examples at test time. Multi Agent Red Teaming: Fixing Multimodal Safety Gaps with Automated \"Explore and Mutate\" Data Curation Multimodal Large Language Models (MLLMs) are increasingly trusted to moderate high stakes, complex content policies governing advertising, explicit content, and illegal activities. However, visual and cross modal safety boundaries are notoriously slippery; adversarial actors exploit subtle visual cues and policy ambiguities that easily slip past standard zero shot classifiers. This research proposes an elegant solution: using a highly capable multi agent pipeline to automatically find, debate, and curate boundary pushing \"hard examples\" without requiring expensive human annotation. By feeding these curated hard examples back into the target model's prompt as context at test time, safety teams can dramatica"
+  },
+  {
+    "slug": "a_measurement_study_of_aienvironment_realism_gaps_in_malware",
+    "title": "A Measurement Study of AI-Environment Realism Gaps in Malware-Analysis Sandboxes",
+    "date": "2026-07-19",
+    "type": "Paper Review",
+    "description": "As AI assistants like Cursor, Claude Code, and GitHub Copilot become ubiquitous developer and enterprise tools, malware is adapting to look for their footprint.",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 10,
+    "searchContent": "Image generated by AI TLDR What : AIprints is a sandbox evasion framework that detects the presence or absence of persistent local AI software environment artifacts (e.g., Claude Code/Cursor configs, HuggingFace model caches, local Ollama servers, API keys) to differentiate sterile analysis sandboxes from genuine AI capable workstations. Who's at risk : Automated malware analysis sandboxes (such as ANY.RUN, CAPEv2, Triage, Hybrid Analysis, and VirusTotal) and threat intelligence pipelines that fail to simulate modern developer/enterprise environments. Key number : Twelve \"Class C\" host exclusive AI artifacts (including , , and Ollama port ) appeared consistently on actual AI capable hosts but were detected on 0% (none) of the evaluated sandbox backends, making them highly reliable evasion indicators. Evasion by Lack of AI: AIprint Exposes the Realism Gap in Modern Malware Sandboxes As AI assistants like Cursor, Claude Code, and GitHub Copilot become ubiquitous developer and enterprise tools, malware is adapting to look for their footprint. Traditional sandbox evasion focused on hiding virtualization indicators, but a new breed of malware is shifting to \"environment aware\" evasion by verifying if a host actually runs AI workloads. If malware executing on a system detects a sterile environment devoid of model caches, local inference ports, and API configurations, it can safely assume it is being analyzed inside a sandbox and suppress its malicious behavior. | | | | | | | Attack"
   },
   {
     "slug": "breaking_refusal_in_the_first_half_a_mechanistic_study_of_th",
@@ -3464,18 +3464,6 @@
     "searchContent": "Image generated by AI This Week in AI Security — May 31, 2026: Coding Agents as Attack Shells & LLM Watermarking Executive Summary This week marks a significant evolutionary shift in the AI security landscape, characterized by the transition from static, prompt level defense paradigms to dynamic, runtime execution containment. As autonomous agents take center stage in enterprise software architectures, adversaries are focusing heavily on exploiting stateful memory structures, complex tool calling capabilities, and retrieval augmented pipelines. The research published this week highlights that static sanitization filters are failing to keep pace with interactive and multimodal exploit vectors, forcing security engineering teams to prioritize real time behavioural boundaries, activation level token suppression, and highly robust watermarking techniques. The Agentic Frontier: Hijacking Autonomy, Memory, and Retrieval How Agentic AI Coding Assistants Become the Attacker's Shell IterInject: Indirect Prompt Injection Against LLM Agents via Poisoning the Watchtower: Prompt Injection Attacks Against L Hijacking Agent Memory: Stealthy Trojan Attacks Through Conv Relevance as a Vulnerability: How Web Retrieval Degrades Saf APT Agent: Automated Penetration Testing using Large Languag Prompt Injection Detection is Regime Dependent: A Deployment As organizations rapidly transition from conversational LLM chatbots to fully autonomous agentic workflows, the security perimeter has expanded f"
   },
   {
-    "slug": "a_bayesian_approach_to_membership_inference_for_statistical_",
-    "title": "A Bayesian Approach to Membership Inference for Statistical Release",
-    "date": "2026-05-30",
-    "type": "Paper Review",
-    "description": "Real-world demographic, financial, and medical data almost never follow a clean, independent product distribution; instead, they contain complex, multi-layered structural relationships.",
-    "tags": [
-      "AI Security"
-    ],
-    "readingTime": 8,
-    "searchContent": "Image generated by AI TLDR What : A modular Bayesian Membership Inference Attack (BMIA) framework that models population attribute dependencies as a Bayesian Network and computes the exact posterior probability of membership via probabilistic programming. Who's at risk : Publicly released aggregate statistics and marginals derived from databases with highly correlated attributes (e.g., US Census demographic releases, IRS statistics, clinical symptom tables, or academic database dumps). Key number : On the highly correlated Sachs protein signaling dataset, the BMIA achieves an Area Under the Curve (AUC) of 0.906, outperforming the standard Likelihood Ratio Test (0.851) by 5.5% and the Inner Product attack (0.824) by 8.2%. BMIA: Exploiting Structural Dependencies to Break Membership Privacy in Statistical Releases Real world demographic, financial, and medical data almost never follow a clean, independent product distribution; instead, they contain complex, multi layered structural relationships. Traditional membership inference attacks (MIAs) on statistical releases, such as those analyzed for Google's aggregate trends or US Census releases, rely on population marginals and assume independent attributes. Oakley et al. (arXiv 2026) show that by modeling these structural dependencies as a Bayesian Network, an attacker can launch specialized, highly accurate attacks that easily bypass standard independence based privacy protections. | | | | | | | Attacker | Prior knowledge of pop"
-  },
-  {
     "slug": "ai_security_digest__may_30_2026",
     "title": "AI Security Digest — May 30, 2026: Agent Memory Trojans & Web Retrieval Safety Decay",
     "date": "2026-05-30",
@@ -3515,6 +3503,18 @@
     ],
     "readingTime": 9,
     "searchContent": "Image generated by AI TLDR What : Acoustic Best of N (Acoustic BoN) attacks systematically bypass safety alignment in Large Audio Language Models (LALMs) by brute forcing speech attributes (accent, language, emotion, age, gender), achieving a peak Attack Success Rate (ASR) of 45.8% that remains virtually untouched (44.1% ASR) by input guardrails. Who's at risk : Real time voice assistants, tool use voice agents, and customer facing speech models built on open source LALMs like Qwen3 Omni, Phi 4 Multimodal, and Voxtral. Key number : Under the VoiceShield Guard defense, Acoustic BoN retains a highly dangerous 44.1% ASR , whereas more robust defenses like Defensive System Prompts drive the Benign Refusal Rate (BRR) up to an commercially unusable 46.1% . Acoustic BoN: Exposing Modality Specific Safeguard Failures in Large Audio Language Models As Large Audio Language Models (LALMs) like OpenAI's GPT 4o and open source models such as Qwen3 Omni become deeply integrated into real time speech pipelines and personal voice assistants, their expanded threat landscape remains poorly understood. While safety teams have spent years reinforcing textual LLMs against token level prompt injections, moving the interaction to the speech modality expands the attack surface to the entire perception to reasoning pipeline. A recent paper by Feng et al. (arXiv 2026) from National Taiwan University exposes a fundamental vulnerability: safety alignment does not robustly transfer to the acoustic domain"
+  },
+  {
+    "slug": "a_bayesian_approach_to_membership_inference_for_statistical_",
+    "title": "A Bayesian Approach to Membership Inference for Statistical Release",
+    "date": "2026-05-30",
+    "type": "Paper Review",
+    "description": "Real-world demographic, financial, and medical data almost never follow a clean, independent product distribution; instead, they contain complex, multi-layered structural relationships.",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 8,
+    "searchContent": "Image generated by AI TLDR What : A modular Bayesian Membership Inference Attack (BMIA) framework that models population attribute dependencies as a Bayesian Network and computes the exact posterior probability of membership via probabilistic programming. Who's at risk : Publicly released aggregate statistics and marginals derived from databases with highly correlated attributes (e.g., US Census demographic releases, IRS statistics, clinical symptom tables, or academic database dumps). Key number : On the highly correlated Sachs protein signaling dataset, the BMIA achieves an Area Under the Curve (AUC) of 0.906, outperforming the standard Likelihood Ratio Test (0.851) by 5.5% and the Inner Product attack (0.824) by 8.2%. BMIA: Exploiting Structural Dependencies to Break Membership Privacy in Statistical Releases Real world demographic, financial, and medical data almost never follow a clean, independent product distribution; instead, they contain complex, multi layered structural relationships. Traditional membership inference attacks (MIAs) on statistical releases, such as those analyzed for Google's aggregate trends or US Census releases, rely on population marginals and assume independent attributes. Oakley et al. (arXiv 2026) show that by modeling these structural dependencies as a Bayesian Network, an attacker can launch specialized, highly accurate attacks that easily bypass standard independence based privacy protections. | | | | | | | Attacker | Prior knowledge of pop"
   },
   {
     "slug": "beyond_english_and_evasion_a_humanannotated_multidomain_benc",
@@ -3790,7 +3790,7 @@
       "PE Analysis"
     ],
     "readingTime": 5,
-    "searchContent": "Image generated by AI AI Security Digest — May 27, 2026: Coding Agent Shell Hijacks & 24 Hour Zero Day Exploits The traditional vulnerability patching window has collapsed. Driven by autonomous AI agent development, the time to exploit pipeline for newly disclosed CVEs has shrunk from months to under twenty four hours. This development, combined with stealthy new injection vectors in developer agent tools and PDF parsers, forces a shift from reactive security to real time, behavioral runtime verification. Paper Highlights Building an Adversarial Malware Dataset by Family and Type: Generation, Evasion, and Poisoning Evaluation — by David Košťál, Martin Jureček This research demonstrates how poisoning as little as 0.5% of training data with mislabelled ( $ tau = 1.0 $) adversarial samples can completely blind ML based static PE malware classifiers, raising evasion rates from 26.13% to 92.8%. Security teams must implement strict sanity checks on threat intelligence feeds, as standard validation F1 metrics remain deceptively stable during these poisoning campaigns. Semantic Validation of Packer Identification Tools: Characterization, Repair, and Downstream Impact — by Fangtian Zhong, Zhuoyun Qian, Mengfei Ren This paper introduces a framework that models unpackers as \"executable semantic contracts\" to automatically detect and repair identification bugs in PE security tools without needing manually labeled ground truth data. Security analysts should adopt this method to prevent pa"
+    "searchContent": "Image generated by AI AI Security Digest — May 27, 2026: Coding Agent Shell Hijacks & 24 Hour Zero Day Exploits The traditional vulnerability patching window has collapsed. Driven by autonomous AI agent development, the time to exploit pipeline for newly disclosed CVEs has shrunk from months to under twenty four hours. This development, combined with stealthy new injection vectors in developer agent tools and PDF parsers, forces a shift from reactive security to real time, behavioral runtime verification. Paper Highlights Building an Adversarial Malware Dataset by Family and Type: Generation, Evasion, and Poisoning Evaluation — by David Košťál, Martin Jureček This research demonstrates how poisoning as little as 0.5% of training data with mislabelled ($ tau = 1.0$) adversarial samples can completely blind ML based static PE malware classifiers, raising evasion rates from 26.13% to 92.8%. Security teams must implement strict sanity checks on threat intelligence feeds, as standard validation F1 metrics remain deceptively stable during these poisoning campaigns. Semantic Validation of Packer Identification Tools: Characterization, Repair, and Downstream Impact — by Fangtian Zhong, Zhuoyun Qian, Mengfei Ren This paper introduces a framework that models unpackers as \"executable semantic contracts\" to automatically detect and repair identification bugs in PE security tools without needing manually labeled ground truth data. Security analysts should adopt this method to prevent pack"
   },
   {
     "slug": "an_efficient_and_privacypreserving_architecture_for_crossins",
@@ -3802,7 +3802,7 @@
       "AI Security"
     ],
     "readingTime": 8,
-    "searchContent": "Image generated by AI TLDR What : FedRAG, a non cryptographic, federated RAG framework that uses a numerically stable scrambling matrix and token permutation to secure cross node self attention without model retraining or Trusted Execution Environments (TEEs). Who's at risk : Multi institutional collaborative LLM systems (e.g., healthcare consortia, financial fraud detection networks, cross org enterprise RAG) where raw data or intermediate states cannot be shared due to privacy constraints. Key number : Achieves up to a $62 times $ latency reduction over existing secure baselines while keeping model utility degradation under $0.1 % $. FedRAG: Breaking Data Silos in Collaborative LLM RAG with 62x Faster Non Cryptographic Attention Scrambling The rapid deployment of Retrieval Augmented Generation (RAG) in enterprise pipelines—such as customer support agents, medical diagnostic assistants, and financial risk tools—has run head first into the barrier of \"data silos.\" Organizations like hospital networks and banks want to pool their knowledge bases to drive LLMs like Llama 3.1 or Qwen3 without leaking sensitive raw documents or vulnerable intermediate key value (KV) states. Mao et al. (arXiv 2026) introduce FedRAG , a high throughput, privacy preserving federated RAG framework that avoids the massive compute and latency traps of secure multi party computation (MPC) and homomorphic encryption (HE). | | | | | | | Attacker | Honest but curious (semi honest) participating nodes or an"
+    "searchContent": "Image generated by AI TLDR What : FedRAG, a non cryptographic, federated RAG framework that uses a numerically stable scrambling matrix and token permutation to secure cross node self attention without model retraining or Trusted Execution Environments (TEEs). Who's at risk : Multi institutional collaborative LLM systems (e.g., healthcare consortia, financial fraud detection networks, cross org enterprise RAG) where raw data or intermediate states cannot be shared due to privacy constraints. Key number : Achieves up to a $62 times$ latency reduction over existing secure baselines while keeping model utility degradation under $0.1 %$. FedRAG: Breaking Data Silos in Collaborative LLM RAG with 62x Faster Non Cryptographic Attention Scrambling The rapid deployment of Retrieval Augmented Generation (RAG) in enterprise pipelines—such as customer support agents, medical diagnostic assistants, and financial risk tools—has run head first into the barrier of \"data silos.\" Organizations like hospital networks and banks want to pool their knowledge bases to drive LLMs like Llama 3.1 or Qwen3 without leaking sensitive raw documents or vulnerable intermediate key value (KV) states. Mao et al. (arXiv 2026) introduce FedRAG , a high throughput, privacy preserving federated RAG framework that avoids the massive compute and latency traps of secure multi party computation (MPC) and homomorphic encryption (HE). | | | | | | | Attacker | Honest but curious (semi honest) participating nodes or an i"
   },
   {
     "slug": "aptagent_automated_penetration_testing_using_large_language_",
@@ -4680,21 +4680,6 @@
     "searchContent": "Visualizing RAG Security: A Deep Dive with RAG Vis Playground As Retrieval Augmented Generation (RAG) systems transition from experimental prototypes to critical infrastructure, understanding their security posture has never been more important. While RAG effectively bridges the gap between static LLMs and dynamic private data, it also introduces a unique set of vulnerabilities. To address this, I developed the RAG Vis Playground —an interactive visualization tool designed to help researchers and developers explore the three pillars of RAG security: Basics, Attacks, and Defenses. 1. RAG Basics: Building the Foundation Before diving into security, one must understand the mechanics. RAG Vis provides a visual breakdown of the standard pipeline: Retrieval & Chunking: How documents are segmented and indexed. Embedding Models & Vector DBs: The transformation of text into searchable high dimensional vectors. Augmentation & Generation: The process of weaving retrieved context into the LLM's prompt to generate grounded responses. The playground allows you to toggle different chunking strategies and observe how they affect the quality of retrieved information. 2. Adversarial Attacks: The Attacker's Perspective RAG systems expand the attack surface of LLMs. RAG Vis interactively demonstrates several critical attack vectors: Poisoning Attacks Data Poisoning: Injecting malicious documents into the knowledge base to corrupt the model's factual grounding. Instruction Poisoning: Embedding hi"
   },
   {
-    "slug": "pickle_deserialization_attacks",
-    "title": "Pickle Deserialization Attacks: Understanding Python's Silent RCE Vulnerability",
-    "date": "2026-01-31",
-    "type": "Tutorial",
-    "description": "A comprehensive guide to Python pickle deserialization vulnerabilities, explaining how attackers exploit the __reduce__ method to achieve remote code execution and why 'never unpickle untrusted data' remains critical security advice.",
-    "tags": [
-      "Python Security",
-      "Deserialization",
-      "RCE",
-      "Code Security"
-    ],
-    "readingTime": 9,
-    "searchContent": "Pickle Deserialization Attacks: Understanding Python's Silent RCE Vulnerability Python's module is a powerful serialization library that can convert complex Python objects into byte streams and back. However, this convenience comes with a severe security risk: deserializing untrusted pickle data can lead to arbitrary code execution. This article explores how pickle deserialization attacks work, why they're so dangerous, and what makes them particularly insidious in modern ML/AI pipelines. What is Pickle? Pickle is Python's native serialization protocol for converting Python objects into a byte stream (pickling) and reconstructing them later (unpickling): Why Pickle is Popular | Use Case | Example | | | | | Caching | Store computed results to disk | | IPC | Pass objects between processes | | ML Models | Save trained model weights | | Session Data | Serialize user session state | | Message Queues | Send Python objects via Redis/RabbitMQ | Pickle can serialize almost anything: classes, functions, nested structures, and even lambda expressions (with limitations). The Security Warning Python's official documentation contains an explicit warning: > Warning : The pickle module is not secure. Only unpickle data you trust. > > It is possible to construct malicious pickle data which will execute arbitrary code during unpickling. Never unpickle data that could have come from an untrusted source, or that could have been tampered with. Despite this warning, pickle vulnerabilities continue"
-  },
-  {
     "slug": "pickleguard_defense_mechanism",
     "title": "Pickleguard: Defending Python Applications Against Pickle Deserialization Attacks",
     "date": "2026-01-31",
@@ -4708,6 +4693,21 @@
     ],
     "readingTime": 8,
     "searchContent": "Pickleguard: Defending Python Applications Against Pickle Deserialization Attacks Pickle deserialization attacks pose a critical threat to Python applications, especially in machine learning pipelines where model files are frequently shared and loaded. Pickleguard is a defense mechanism designed to detect and prevent malicious pickle payloads before they can execute harmful code. This article explores how Pickleguard works and how to integrate it into your Python applications. The Problem: Pickle's Inherent Danger As discussed in our previous article on pickle deserialization attacks, Python's pickle module can execute arbitrary code during deserialization. The core issue is the method and the opcode, which allow attackers to call any Python function with arbitrary arguments. Why Existing Solutions Fall Short | Approach | Limitation | | | | | \"Don't use pickle\" | Impractical pickle is embedded in PyTorch, scikit learn, joblib | | Restricted Unpickler | Requires manual allowlist maintenance, easy to misconfigure | | Sandboxing | Performance overhead, complex setup, escape vulnerabilities | | Code signing | Doesn't protect against compromised sources | Pickleguard provides a practical middle ground: analyze pickle data before deserialization to detect malicious patterns. How Pickleguard Works Pickleguard operates on a defense in depth principle with multiple layers of protection: Layer 1: Opcode Analysis Pickleguard parses the pickle bytecode without executing it, identifying d"
+  },
+  {
+    "slug": "pickle_deserialization_attacks",
+    "title": "Pickle Deserialization Attacks: Understanding Python's Silent RCE Vulnerability",
+    "date": "2026-01-31",
+    "type": "Tutorial",
+    "description": "A comprehensive guide to Python pickle deserialization vulnerabilities, explaining how attackers exploit the __reduce__ method to achieve remote code execution and why 'never unpickle untrusted data' remains critical security advice.",
+    "tags": [
+      "Python Security",
+      "Deserialization",
+      "RCE",
+      "Code Security"
+    ],
+    "readingTime": 9,
+    "searchContent": "Pickle Deserialization Attacks: Understanding Python's Silent RCE Vulnerability Python's module is a powerful serialization library that can convert complex Python objects into byte streams and back. However, this convenience comes with a severe security risk: deserializing untrusted pickle data can lead to arbitrary code execution. This article explores how pickle deserialization attacks work, why they're so dangerous, and what makes them particularly insidious in modern ML/AI pipelines. What is Pickle? Pickle is Python's native serialization protocol for converting Python objects into a byte stream (pickling) and reconstructing them later (unpickling): Why Pickle is Popular | Use Case | Example | | | | | Caching | Store computed results to disk | | IPC | Pass objects between processes | | ML Models | Save trained model weights | | Session Data | Serialize user session state | | Message Queues | Send Python objects via Redis/RabbitMQ | Pickle can serialize almost anything: classes, functions, nested structures, and even lambda expressions (with limitations). The Security Warning Python's official documentation contains an explicit warning: > Warning : The pickle module is not secure. Only unpickle data you trust. > > It is possible to construct malicious pickle data which will execute arbitrary code during unpickling. Never unpickle data that could have come from an untrusted source, or that could have been tampered with. Despite this warning, pickle vulnerabilities continue"
   },
   {
     "slug": "moevil_moe_expert_poisoning",

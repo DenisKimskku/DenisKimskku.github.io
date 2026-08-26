@@ -86,14 +86,14 @@ SAFESEAL utilizes a multi-step post-processing pipeline that separates entity pr
 First, SAFESEAL applies Named Entity Recognition (NER) via spaCy to identify entities (names, locations, dates, and times) and explicitly excludes them from watermarking. It then performs Part-of-Speech (POS) tagging to select candidates from flexible grammatical categories: nouns, verbs, adjectives, and adverbs (detailed in Table 7). 
 
 ### 2. Lookup Table Generation
-For each selected linguistic token \$ t_i \$, a lightweight language model \$ \mathcal{A} \$ (RoBERTa-base, 125M parameters) generates context-aware synonym candidates. The target token is masked within its context window \$ C \$, and \$ \mathcal{A} \$ generates candidates mapped to:
+For each selected linguistic token $ t_i $, a lightweight language model $ \mathcal{A} $ (RoBERTa-base, 125M parameters) generates context-aware synonym candidates. The target token is masked within its context window \$ C \$, and $ \mathcal{A} $ generates candidates mapped to:
 
 $$ m = C \oplus [\text{SEP}] \oplus C_M $$
 
 The candidates are filtered using WordNet to eliminate antonyms, duplicates, and grammatically incorrect terms.
 
 ### 3. Substitution Candidate Selection
-To ensure semantic preservation, SAFESEAL filters out synonyms that alter the overarching sentence structure. It utilizes DistilBERT (67M parameters) to compute the sentence-level cosine similarity \$ S_{ij} \$ between the original sentence and the candidate-substituted sentence. Synonyms are kept only if:
+To ensure semantic preservation, SAFESEAL filters out synonyms that alter the overarching sentence structure. It utilizes DistilBERT (67M parameters) to compute the sentence-level cosine similarity $ S_{ij} $ between the original sentence and the candidate-substituted sentence. Synonyms are kept only if:
 
 $$ S_{ij} \geq \delta \quad (\text{where similarity threshold } \delta \text{ is set to } 0.92) $$
 
@@ -102,22 +102,22 @@ For the remaining valid synonyms, SAFESEAL converts similarities into sampling p
 
 $$ P_i(t_j) = \frac{\exp(\alpha S_{ij})}{\sum_{j=1}^{|\mathcal{L}_{t_i}^\delta|} \exp(\alpha S_{ij})} $$
 
-Where \$ \alpha > 0 \$ controls the utility-detectability trade-off. Using a private cryptographic key \$ k \$, context \$ h \$, and round index \$ r \$, a Pseudo-Random Function (PRF) generates reproducible scores:
+Where $ \alpha > 0 $ controls the utility-detectability trade-off. Using a private cryptographic key \$ k \$, context \$ h \$, and round index \$ r \$, a Pseudo-Random Function (PRF) generates reproducible scores:
 
 $$ g_r(t_j) = \text{PRF}(k, h, t_j, r) \in \{0, 1\} $$
 
-These scores drive a multi-round tournament sampling selection to output the final watermarked text \$ y^{wm} \$.
+These scores drive a multi-round tournament sampling selection to output the final watermarked text $ y^{wm} $.
 
 ### 5. Key-Conditioned Contrastive Detection
 Rather than relying on fragile statistical tests, SAFESEAL trains a robust key-conditioned contrastive detector using RoBERTa-large (356M parameters). The detector processes both the text \$ y \$ and the provider's key \$ k \$. 
 
-- Text representation is pooled into \$ h_y \in \mathbb{R}^H \$.
-- Key \$ k \$ is converted via PRF to \$ v \in [0, 1]^H \$, scaled to \$ \tilde{v} \$, and mapped through a frozen MLP to \$ h_k \in \mathbb{R}^H \$.
+- Text representation is pooled into $ h_y \in \mathbb{R}^H $.
+- Key \$ k \$ is converted via PRF to $ v \in [0, 1]^H $, scaled to $ \tilde{v} $, and mapped through a frozen MLP to $ h_k \in \mathbb{R}^H $.
 - Features are fused to capture alignments and mismatches:
 
 $$ \phi = [h_y; h_k; h_y \odot h_k; |h_y - h_k|] \in \mathbb{R}^{4H} $$
 
-The model is optimized using binary cross-entropy loss \$ \mathcal{L}_{det} \$ and a symmetric InfoNCE contrastive loss \$ \mathcal{L}_{con} \$ over matched text-key pairs:
+The model is optimized using binary cross-entropy loss $ \mathcal{L}_{det} $ and a symmetric InfoNCE contrastive loss $ \mathcal{L}_{con} $ over matched text-key pairs:
 
 $$ \mathcal{L} = \mathcal{L}_{det} + \lambda \mathcal{L}_{con} \quad (\text{with } \lambda = 0.15) $$
 
@@ -173,7 +173,7 @@ While SAFESEAL is significantly faster than vocabulary-wide search methods like 
 This overhead makes SAFESEAL ideal for batch API tasks (summarization, bulk translation, content generation) but poses challenges for latency-critical real-time chat UI outputs.
 
 ### 2. Low-Entropy and Low-Diversity Domains
-In highly constrained generation domains—such as code synthesis, mathematical reasoning, or structured JSON outputs—the lookup table generation is severely restricted. If a sentence has a small number of valid synonyms (where similarity \$ S_{ij} \geq 0.92 \$), SAFESEAL skips watermarking to preserve utility, resulting in lower detection rates for extremely short or rigid outputs.
+In highly constrained generation domains—such as code synthesis, mathematical reasoning, or structured JSON outputs—the lookup table generation is severely restricted. If a sentence has a small number of valid synonyms (where similarity $ S_{ij} \geq 0.92 $), SAFESEAL skips watermarking to preserve utility, resulting in lower detection rates for extremely short or rigid outputs.
 
 ---
 
