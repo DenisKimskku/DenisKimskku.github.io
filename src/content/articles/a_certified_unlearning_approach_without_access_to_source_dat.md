@@ -2,6 +2,8 @@
 title: "A Certified Unlearning Approach without Access to Source Data"
 date: "2026-08-21"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2506.06486"
+paperAuthors: "Umit Yigit Basaran, Sk Miraj Ahmed, Amit Roy-Chowdhury, et al."
 description: "A Certified Unlearning Approach without Access to Source Data"
 tags: ["Privacy", "Machine Unlearning"]
 readingTime: 5

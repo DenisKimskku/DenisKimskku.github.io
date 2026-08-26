@@ -2,6 +2,8 @@
 title: "TrajDeleter: Enabling Trajectory Forgetting in Offline Reinforcement Learning Agents"
 date: "2026-08-21"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2404.12530"
+paperAuthors: "Chen Gong, Kecen Li, Jin Yao, et al."
 description: "Enables agents to forget specific training trajectories"
 tags: ["AI Agents", "Machine Unlearning"]
 readingTime: 5

@@ -2,6 +2,8 @@
 title: "Local Pan-privacy for Federated Analytics"
 date: "2026-08-23"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2503.11850"
+paperAuthors: "Vitaly Feldman, Audra McMillan, Guy N. Rothblum, et al."
 description: "Local pan-privacy is incompatible with information-theoretic DP for event counting"
 tags: ["Privacy"]
 readingTime: 5

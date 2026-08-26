@@ -2,6 +2,8 @@
 title: "DUALBREACH: Efficient Dual-Jailbreaking via Target-Driven Initialization and Multi-Target Optimization"
 date: "2026-08-23"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2504.18564"
+paperAuthors: "Xinzhe Huang, Kedong Xiu, Tianhang Zheng, et al."
 description: "Targets both LLMs and external guardrails simultaneously"
 tags: ["Jailbreaking"]
 readingTime: 5

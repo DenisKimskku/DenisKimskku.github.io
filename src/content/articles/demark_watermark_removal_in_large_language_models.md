@@ -2,6 +2,8 @@
 title: "De-mark: Watermark Removal in Large Language Models"
 date: "2026-08-22"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2410.13808"
+paperAuthors: "Ruibo Chen, Yihan Wu, Junfeng Guo, et al."
 description: "DE-MARK removes n-gram watermarks using random selection probing"
 tags: ["Watermarking", "Vulnerabilities"]
 readingTime: 5

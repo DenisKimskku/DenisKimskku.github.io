@@ -2,6 +2,8 @@
 title: "Chimera: Harnessing Multi-Agent LLMs for Automatic Insider Threat Simulation"
 date: "2026-08-21"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2508.07745"
+paperAuthors: "Jiongchi Yu, Xiaofei Xie, Qiang Hu, et al."
 description: "Uses multi-agent LLMs to auto-simulate complex insider threats"
 tags: ["AI Agents", "Privacy"]
 readingTime: 5

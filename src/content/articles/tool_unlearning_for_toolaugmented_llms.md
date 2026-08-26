@@ -2,6 +2,8 @@
 title: "Tool Unlearning for Tool-Augmented LLMs"
 date: "2026-08-20"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2502.01083"
+paperAuthors: "Jiali Cheng, Hadi Amiri"
 description: "Introduces TOOLDELETE, a framework for functional tool unlearning"
 tags: ["Adversarial Attacks", "AI Agents", "Machine Unlearning"]
 readingTime: 5

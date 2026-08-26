@@ -2,6 +2,8 @@
 title: "The Model's Tell: Measuring Context-Leakage Attack Signals with Behavior Gauges"
 date: "2026-08-20"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2608.17829"
+paperAuthors: "Maosen Zhang, Jianshuo Dong, Boting Lu, et al."
 description: "Probes LLM prefill probabilities using a suffix gauge"
 tags: ["RAG"]
 readingTime: 5

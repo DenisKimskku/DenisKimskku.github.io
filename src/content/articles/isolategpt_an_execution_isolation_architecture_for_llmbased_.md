@@ -2,6 +2,8 @@
 title: "IsolateGPT: An Execution Isolation Architecture for LLM-Based Agentic Systems"
 date: "2026-08-21"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2403.04960"
+paperAuthors: "Yuhao Wu, Franziska Roesner, Tadayoshi Kohno, et al."
 description: "Proposes ISOLATEGPT to isolate app execution in LLM systems"
 tags: ["AI Agents", "Privacy"]
 readingTime: 5

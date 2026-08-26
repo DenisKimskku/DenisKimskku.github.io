@@ -2,6 +2,8 @@
 title: "On Differential Privacy for Adaptively Solving Search Problems via Sketching"
 date: "2026-08-24"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2506.05503"
+paperAuthors: "Shiyuan Feng, Ying Feng, George Z. Li, et al."
 description: "Provides DP for adaptive search problems using sketching techniques"
 tags: ["Privacy"]
 readingTime: 5

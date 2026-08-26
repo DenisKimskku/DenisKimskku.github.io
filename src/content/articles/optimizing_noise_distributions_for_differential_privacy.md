@@ -2,6 +2,8 @@
 title: "Optimizing Noise Distributions for Differential Privacy"
 date: "2026-08-25"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2504.14730"
+paperAuthors: "Atefeh Gilani, Juan Felipe Gomez, Shahab Asoodeh, et al."
 description: "Optimizes continuous/discrete noise distributions for DP"
 tags: ["Privacy"]
 readingTime: 5

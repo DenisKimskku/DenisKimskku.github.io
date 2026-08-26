@@ -2,6 +2,8 @@
 title: "Careful About What App Promotion Ads Recommend! Detecting and Explaining Malware Promotion via App Promotion Graph"
 date: "2026-08-25"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2410.07588"
+paperAuthors: "Shang Ma, Chaoran Chen, Shao Yang, et al."
 description: "ADGPE integrates UI exploration with graph learning to map malware distribution"
 tags: ["Malware"]
 readingTime: 5

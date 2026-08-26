@@ -2,6 +2,8 @@
 title: "GaussMark: A Practical Approach for Structural Watermarking of Language Models"
 date: "2026-08-22"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2501.13941"
+paperAuthors: "Adam Block, Ayush Sekhari, Alexander Rakhlin"
 description: "Embeds imperceptible watermarks into LLM weights using Gaussian noise"
 tags: ["Watermarking"]
 readingTime: 5

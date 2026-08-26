@@ -2,6 +2,8 @@
 title: "Explanation as a Watermark: Towards Harmless and Multi-bit Model Ownership Verification via Watermarking Feature Attribution"
 date: "2026-08-24"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2405.04825"
+paperAuthors: "Shuo Shao, Yiming Li, Hongwei Yao, et al."
 description: "Implants multi-bit watermarks into feature attribution explanations"
 tags: ["Backdoors", "Watermarking"]
 readingTime: 5

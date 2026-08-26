@@ -2,6 +2,8 @@
 title: "CatBack: Universal Backdoor Attacks on Tabular Data via Categorical Encoding"
 date: "2026-08-19"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2511.06072"
+paperAuthors: "Behrad Tajalli, Stefanos Koffas, Stjepan Picek"
 description: "Novel attack uses floating-point encoding for categorical features"
 tags: ["Backdoors"]
 readingTime: 5

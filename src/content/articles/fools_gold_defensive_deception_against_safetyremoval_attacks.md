@@ -2,6 +2,8 @@
 title: "Fool's Gold: Defensive Deception Against Safety-Removal Attacks on Open-Weight Models"
 date: "2026-08-20"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2608.17202"
+paperAuthors: "Mark Russinovich"
 description: "Defensive deception binds false operational details into a model's attacked state"
 tags: ["Data Poisoning"]
 readingTime: 5

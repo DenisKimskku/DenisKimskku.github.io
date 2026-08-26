@@ -2,6 +2,8 @@
 title: "Inadvertent Context Leakage in Language Models"
 date: "2026-08-22"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2608.19857"
+paperAuthors: "Jaiden Fairoze, Neal Mangaokar, Kamalika Chaudhuri, et al."
 description: "Adaptive adversaries reconstruct secrets from benign model outputs"
 tags: ["AI Agents", "Privacy"]
 readingTime: 5

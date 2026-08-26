@@ -2,6 +2,8 @@
 title: "Avoiding Leakage Poisoning: Concept Interventions Under Distribution Shifts"
 date: "2026-08-23"
 type: "Paper Review"
+paperUrl: "https://arxiv.org/abs/2504.17921"
+paperAuthors: "Mateo Espinosa Zarlenga, Gabriele Dominici, Pietro Barbiero, et al."
 description: "MixCEM dynamically gates residual information to prevent OOD poisoning"
 tags: ["Data Poisoning"]
 readingTime: 5
