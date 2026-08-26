@@ -271,33 +271,37 @@ jobs:
           # ~10-minute build — the same check is free here.
           now=$(gh api "repos/$REPO/branches/main" --jq '.commit.sha')
           if [ "$now" != "$base" ]; then
-            echo "::notice::test-merge is against $base but main is already at $now; re-dispatching PR #$PR."
-            gh workflow run dependabot-auto-merge.yml --repo "$REPO" --ref main -f pr_number="$PR" -f chain="$CHAIN"
-            echo "redispatched=true" >> "$GITHUB_OUTPUT"
+            # GitHub refreshes refs/pull/N/merge lazily and can serve a stale
+            # one for a long time after a push to main (observed: >5 min,
+            # with `mergeable` still cached as true). Re-dispatching here
+            # produced a tight self-dispatch loop. Skip this PR for now; the
+            # next content push or PR event evaluates it again.
+            echo "::notice::test-merge is against $base but main is at $now (stale merge ref); skipping PR #$PR this round."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           echo "Verifying against main tip $base"
           echo "sha=$base" >> "$GITHUB_OUTPUT"
 
       - name: Setup Node.js
-        if: steps.gate.outputs.eligible == 'true' && steps.base.outputs.redispatched != 'true'
+        if: steps.gate.outputs.eligible == 'true' && steps.base.outputs.skip != 'true'
         uses: actions/setup-node@v7
         with:
           node-version: "24"
           cache: "npm"
 
       - name: Install system dependencies
-        if: steps.gate.outputs.eligible == 'true' && steps.base.outputs.redispatched != 'true'
+        if: steps.gate.outputs.eligible == 'true' && steps.base.outputs.skip != 'true'
         run: sudo apt-get update && sudo apt-get install -y webp
 
       - name: Install dependencies
-        if: steps.gate.outputs.eligible == 'true' && steps.base.outputs.redispatched != 'true'
+        if: steps.gate.outputs.eligible == 'true' && steps.base.outputs.skip != 'true'
         run: npm ci
 
       # Exactly ci.yml's gauntlet, run on the merge result. Each check is
       # named so the failure reason on the PR says which one broke.
       - name: Verify the merge result
-        if: steps.gate.outputs.eligible == 'true' && steps.base.outputs.redispatched != 'true'
+        if: steps.gate.outputs.eligible == 'true' && steps.base.outputs.skip != 'true'
         id: verify
         env:
           BRANCH: ${{ steps.gate.outputs.branch }}
@@ -341,7 +345,7 @@ jobs:
       # on this personal repo, and not needed). deploy.yml is dispatched in
       # this same step so no cancel can separate merge from deploy.
       - name: Merge
-        if: steps.gate.outputs.eligible == 'true' && steps.base.outputs.redispatched != 'true' && steps.verify.outcome == 'success'
+        if: steps.gate.outputs.eligible == 'true' && steps.base.outputs.skip != 'true' && steps.verify.outcome == 'success'
         id: merge
         env:
           SHA: ${{ steps.gate.outputs.sha }}
@@ -455,7 +459,7 @@ jobs:
       # retry will chain when it finishes. Monotonic PR numbers guarantee
       # termination.
       - name: Chain to the next open Dependabot PR
-        if: always() && inputs.chain != 'false' && steps.base.outputs.redispatched != 'true' && steps.merge.outputs.redispatched != 'true'
+        if: always() && inputs.chain != 'false' && steps.merge.outputs.redispatched != 'true'
         continue-on-error: true
         run: |
           # $PR is a validated integer (inputs.pr_number, already used in API
