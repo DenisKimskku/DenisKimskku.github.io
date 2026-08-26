@@ -31,7 +31,7 @@
     "@emnapi/core": "^1.11.3",
     "@emnapi/runtime": "^1.11.3",
     "gray-matter": "^4.0.3",
-    "next": "^16.3.0",
+    "next": "^16.3.2",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "rehype-highlight": "^7.0.2",
