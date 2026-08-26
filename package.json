@@ -14,7 +14,9 @@
     "warm:cache": "node scripts/warm-cache.mjs",
     "warm:global": "node scripts/warm-global.mjs",
     "purge:cache": "node scripts/purge-cloudflare-cache.mjs",
-    "lint:content": "node scripts/lint-content.mjs"
+    "lint:content": "node scripts/lint-content.mjs",
+    "gate:content": "npm run generate:index -- --strict && node scripts/lint-content.mjs --strict && node scripts/repair-math-delimiters.mjs --check && node scripts/repair-dead-links.mjs --check",
+    "check:article": "node scripts/check-generated-article.mjs"
   },
   "keywords": [
     "portfolio",

@@ -45,7 +45,10 @@ Open [http://localhost:3000](http://localhost:3000).
 
 - `npm run dev`: Start local dev server
 - `npm run lint`: Run ESLint
-- `npm run build`: Production build + strip Twitter meta tags + generate `out/rss.xml`
+- `npm test`: Unit tests (`node:test`, Node ≥ 24)
+- `npm run generate:index`: Regenerate `src/data/articles-index.json` from the articles (also auto-repairs frontmatter escapes; `-- --strict` fails instead of repairing)
+- `npm run lint:content`: Content linter (`--strict` promotes schema/authorship warnings to failures — this is what CI runs)
+- `npm run build`: Full production build — image optimization, content repairs, content lint, OG cards, `next build`, RSS, resume PDF
 - `npm run start`: Start production server
 - `npm run export`: Alias of `npm run build`
 
@@ -85,20 +88,28 @@ Update `src/data/papers.json`.
 
 ### Add a writing article
 
-1. Create `src/content/articles/<slug>.md`
-2. Use frontmatter:
+1. Create `src/content/articles/<slug>.md` — slug is lowercase `[a-z0-9_]`, and becomes the URL `/writing/<slug>/`.
+2. Use frontmatter. Every value is double-quoted (an unquoted date parses as a JS `Date` and breaks provenance; an unquoted title with a colon breaks YAML):
 
 ```markdown
 ---
-title: Your Article Title
-date: 2026-02-18
-type: Research Paper
-description: Brief summary
-tags: [AI, Security, RAG]
+title: "Your Article Title"
+date: "2026-02-18"
+type: "Tutorial"
+description: "One complete sentence of 60-399 characters that ends with a period, is not the title, and contains no backslashes or angle brackets."
+tags: ["AI Security", "RAG"]
 ---
+
+# Your Article Title
 ```
 
-3. Update `src/data/articles-index.json` with matching metadata
+   `type` must be one of the values in `scripts/lib/provenance.mjs` (`KNOWN_ARTICLE_TYPES`). `Research Paper` is reserved for the owner's own publications (it must match `src/data/papers.json`); `Paper Review`, `News Digest` and `Trend Report` dated on/after 2026-03-01 are treated as machine-generated and get an AI disclosure.
+3. Run `npm run generate:index` — never hand-edit `src/data/articles-index.json`.
+4. Run `node scripts/lint-content.mjs --strict` and fix anything it reports; CI runs the same command on every PR.
+
+### Generated content (the daily review pipeline)
+
+The external LLM pipeline that produces paper reviews, digests and trend reports must follow [`docs/GENERATOR-CONTRACT.md`](docs/GENERATOR-CONTRACT.md) and run the pre-push gate described there: `npm run check:article -- <new files>` (the per-article contract, one `file:line: rule-id: message` per finding) followed by `npm run gate:content`. Everything the build currently auto-repairs is listed in that document as a generator bug with its exact rule and the count that put it there.
 
 ### Update code/projects section
 
