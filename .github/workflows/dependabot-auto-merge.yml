@@ -427,7 +427,10 @@ jobs:
       - name: Ntfy alert on auto-merge failure
         if: failure() && steps.notify.outputs.duplicate != 'true' && (steps.gate.outputs.decided != 'true' || steps.gate.outputs.eligible == 'true')
         env:
-          PR_URL: ${{ steps.gate.outputs.url || format('PR #{0}', inputs.pr_number) }}
+          # No '#' inside an unquoted expression: YAML treats " #" as the
+          # start of a comment and silently truncates the value, leaving an
+          # unbalanced "${{" that makes GitHub reject the whole workflow file.
+          PR_URL: ${{ steps.gate.outputs.url || format('PR {0}', inputs.pr_number) }}
           REASON: ${{ steps.notify.outputs.reason || 'see the run log' }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || 'deniskim-kb' }}
