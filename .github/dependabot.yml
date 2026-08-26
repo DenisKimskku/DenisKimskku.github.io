@@ -19,6 +19,20 @@ updates:
         # group would block auto-merge for every patch bump riding with it —
         # so those fall out as their own separate (still human-reviewed) PR.
         update-types: ["patch"]
+    ignore:
+      # eslint 10 removed context.getFilename(); eslint-plugin-react,
+      # eslint-plugin-import and eslint-plugin-jsx-a11y (all pulled in by
+      # eslint-config-next) still cap their eslint peerDependency at ^9 as
+      # of 2026-08-26, so a major bump PR can only ever fail `npm ci`.
+      # Remove this ignore once all three publish ^10 peer support.
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      # @types/node tracks the Node major; CI (setup-node "24") and
+      # package.json `engines` pin Node 24. A 26.x types package would
+      # type-check against APIs that do not exist at runtime, and
+      # skipLibCheck hides it. Remove when migrating to Node 26.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   # Cloudflare Worker (cloudflare-worker/package.json) — wrangler, TS, and
   # @cloudflare/workers-types devDependencies, plus its sharp/undici overrides.

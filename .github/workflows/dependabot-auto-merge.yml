@@ -1,76 +1,460 @@
-# Auto-merges Dependabot PRs, but only the narrow slice that's genuinely
-# low-risk: patch-level bumps of devDependencies (linters, type defs, test
-# tooling — nothing that ships in the built site). Minor/major bumps can
-# carry behavior changes even in devDeps, and any production dependency
-# bump affects the live site, so both still wait for a human to merge.
-# github-actions ecosystem bumps (dependabot.yml's third block) are excluded
-# by construction: `dependency-type` is an npm-manifest concept (dependencies
-# vs devDependencies), so an actions bump never reports `direct:development`
-# and the condition below never matches it — action pins always get a human.
-# Anything that doesn't match (minor/major, production dep, or a
-# github-actions bump) is left alone on purpose: no comment, no label, it
-# just sits as a normal PR waiting for manual review.
+# Auto-merges the low-risk slice of Dependabot PRs — but only after verifying
+# the PR MERGED ONTO CURRENT MAIN (tests, eslint, strict content lint, full
+# static build). No branch protection, no PAT, no human in the loop.
 #
-# CAVEAT (can't be fixed from inside this workflow): `gh pr merge --auto`
-# only takes effect if branch protection on main requires ci.yml's status
-# check before merging. If main has no protection rule at all, the PR is
-# already mergeable the instant this runs, so --auto merges it immediately
-# instead of waiting on CI — check with `gh api repos/<owner>/<repo>/branches/main/protection`
-# (404 means no protection, i.e. this gate is currently a no-op). Separately,
-# if "Allow auto-merge" is disabled repo/org-wide, `gh pr merge --auto` exits
-# non-zero and this step (and the run) shows red — that's a repo-setting
-# fix, not a workflow bug.
+# Eligible (decided in the "Resolve PR and decide eligibility" step):
+#   * npm ecosystem only (branch `dependabot/npm_and_yarn/...`); action pins
+#     (`dependabot/github_actions/...`) always get a human;
+#   * direct devDependencies: semver-patch OR semver-minor;
+#   * direct production dependencies: semver-patch only.
+# Never: any semver-major, any indirect (transitive) dependency, mixed
+# dependency types in one PR. Ineligible PRs are left alone — no comment,
+# no label — they sit as normal PRs for a human.
+#
+# TWO PATHS, ONE JOB THAT DOES THE WORK:
+#
+#   1. `pull_request` from dependabot[bot]  -> job `dispatch`
+#      Does nothing but `gh workflow run` this same file with the PR number.
+#      It must NOT do the real work, for two reasons that are GitHub rules:
+#        - Workflows triggered by Dependabot do not receive the repository's
+#          Actions secrets (only Dependabot secrets). `secrets.NTFY_TOPIC`
+#          would be empty here and every alert would fall back to the PUBLIC
+#          ntfy topic. The dispatched run is triggered by GITHUB_TOKEN, not by
+#          Dependabot, so it sees the Actions secrets like every other job.
+#        - `workflow_dispatch` is one of the two event types GitHub allows
+#          GITHUB_TOKEN to trigger (the other is repository_dispatch); every
+#          other GITHUB_TOKEN-made event is suppressed to prevent loops. That
+#          same exception is what lets content-autorepair.yml re-verify
+#          stale PRs (see path 2) with no PAT, and what lets this job chain
+#          to the next PR (see SERIALIZATION).
+#
+#   2. `workflow_dispatch` with `pr_number`  -> job `evaluate-and-merge`
+#      Checks out `refs/pull/<N>/merge` — GitHub's test-merge of the PR onto
+#      the CURRENT tip of main — and runs the same checks ci.yml runs, plus
+#      the Cloudflare Worker typecheck when the bump is in that subproject.
+#      Because it is the merge result that gets verified, a PR opened days
+#      ago against a since-repaired main is judged on today's content; it
+#      never needs a rebase, and ci.yml's (possibly stale) check-run on the
+#      PR head is irrelevant.
+#
+# SERIALIZATION — why merges happen one PR at a time:
+#   Every npm PR touches package-lock.json. If several evaluate runs verified
+#   in parallel against the same main and then all merged, only the first
+#   merge would be the combination that was actually verified; the rest
+#   would either merge an unverified combination or fail on a lockfile
+#   conflict and page for nothing. So:
+#     - content-autorepair.yml dispatches only the OLDEST open npm PR;
+#     - this job records the main tip its test-merge was built on and, right
+#       before merging, checks main has not moved. If it has, it re-dispatches
+#       ITSELF for the same PR and exits green (a retry, not a failure);
+#     - the merge is pinned to the verified head with --match-head-commit, so
+#       a Dependabot force-push between verify and merge is rejected by
+#       GitHub (409) and treated as a green no-op — the newer run re-verifies;
+#     - when this run is done with its PR — merged, ineligible, or failed —
+#       it dispatches the NEXT open npm PR (strictly higher number), so a
+#       batch converges one PR at a time and one broken PR never starves the
+#       ones behind it. Numbers only go up, so the chain always terminates.
+#   Concurrency is per PR with cancel-in-progress: false — a cancel could
+#   otherwise land between the merge and the deploy dispatch. The guards
+#   above make it safe to let an in-flight run finish.
+#
+# WHY NOT `gh pr merge --auto`, AND WHY NO APPROVE:
+#   The first version ran `gh pr review --approve` then `gh pr merge --auto`.
+#   The one time it ever executed (PR #59, 2026-08-25) it died on the
+#   approve: this is a personal-account repo, where "Allow GitHub Actions to
+#   create and approve pull requests" is off by default, so GITHUB_TOKEN
+#   approvals are rejected (#59 has zero reviews to this day). The approve
+#   was never needed — main has no branch protection, so no review gates a
+#   merge — and `--auto` could never have worked either: it waits for
+#   *required* checks, and the owner deliberately keeps main unprotected
+#   because an external automation pushes content straight to it daily.
+#
+# AFTER THE MERGE:
+#   A merge made with GITHUB_TOKEN does not fire deploy.yml's `push` trigger
+#   (same suppression rule as above), so the merge step dispatches deploy.yml
+#   itself, in the same step, so nothing can separate the two. Best-effort:
+#   a dispatch hiccup never turns an already-merged PR red.
+#
+# ON FAILURE (a failed check, a failed merge call): one PR comment with the
+# concrete reason, an ntfy alert (private topic — this run has the Actions
+# secrets), and the job fails. Both are DEDUPED per (PR head, main tip): a
+# re-verification of the same head against the same main stays red in the
+# run list but does not comment or page again, so a genuinely incompatible
+# bump pages once, not daily.
 name: Dependabot auto-merge
 
-on: pull_request
-
-permissions:
-  pull-requests: write
-  contents: write
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "Pull request number to verify against current main and merge if eligible"
+        required: true
+        type: string
+      chain:
+        # "true" (content-autorepair, and the default for a manual dispatch)
+        # walks every later open npm PR one at a time. The pull_request path
+        # passes "false": that event only needs its own PR verified, and a
+        # chain per PR event would multiply builds (each merge triggers
+        # Dependabot rebases of the remaining lockfile PRs, each rebase a new
+        # event) into O(n^2) verifications of the same batch.
+        description: "After this PR, continue to the next open npm Dependabot PR (true/false)"
+        required: false
+        default: "true"
+        type: string
 
 jobs:
-  auto-merge:
+  dispatch:
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: github.actor == 'dependabot[bot]'
+    permissions:
+      actions: write   # gh workflow run (self-dispatch)
+    concurrency:
+      group: auto-merge-dispatch-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
     steps:
-      - name: Fetch Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v3
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-
-      # Both conditions are required: semver-patch AND a direct devDependency.
-      # dependabot/fetch-metadata documents update-type as "the highest
-      # semver change being made by this PR", so a grouped update (this repo
-      # groups devDependencies per ecosystem — see dependabot.yml) with any
-      # minor/major bump inside it correctly fails the patch check. The
-      # dev-dependencies group is dev-only by dependabot.yml's own config, so
-      # a production dependency can't ride along inside it in the first
-      # place; production bumps always arrive as their own separate PR.
-      - name: Approve and enable auto-merge
-        if: >-
-          steps.metadata.outputs.update-type == 'version-update:semver-patch' &&
-          steps.metadata.outputs.dependency-type == 'direct:development'
+      - name: Hand off to the workflow_dispatch path
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
-        # `gh pr merge --auto` enables auto-merge; GitHub then merges once
-        # required status checks (ci.yml) pass, so there's nothing to poll
-        # for here — see the file-level CAVEAT comment above for the case
-        # where main has no branch protection and this waits on nothing.
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
         run: |
-          gh pr review --approve "$PR_URL"
-          gh pr merge --auto --squash "$PR_URL"
+          # chain=false: this event is about ONE PR. Batches are walked by the
+          # chain content-autorepair starts, not by every PR event.
+          gh workflow run dependabot-auto-merge.yml --repo "$REPO" --ref main -f pr_number="$PR" -f chain=false
+          echo "Dispatched verification of PR #$PR on the workflow_dispatch path."
 
-      # Unlike every other workflow in this repo, this job had no failure
-      # alert -- a broken `gh pr merge --auto` (branch protection missing,
-      # "Allow auto-merge" disabled repo-wide) just showed a red X nobody
-      # would notice. Mirrors the ntfy pattern used elsewhere; no GH issue
-      # here since there's nothing actionable to link beyond this run.
+  evaluate-and-merge:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    # npm ci + tests + lint + strict lint + full static build (puppeteer PDF
+    # included) is ~8-10 min; the rest is seconds.
+    timeout-minutes: 30
+    permissions:
+      contents: write        # gh pr merge (merge commit on main) + --delete-branch
+      pull-requests: write   # gh pr merge / gh pr comment
+      actions: write         # gh workflow run (self, next PR, deploy.yml)
+    concurrency:
+      group: auto-merge-${{ inputs.pr_number }}
+      cancel-in-progress: false
+    defaults:
+      run:
+        # Explicit `shell: bash` = `bash --noprofile --norc -eo pipefail`.
+        # The runner default for an unspecified shell is only `bash -e`, with
+        # NO pipefail — a failing command on the left of a pipe would pass.
+        shell: bash
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO: ${{ github.repository }}
+      PR: ${{ inputs.pr_number }}
+      CHAIN: ${{ inputs.chain }}
+    steps:
+      # Everything that decides eligibility comes from the PR itself and the
+      # head commit's Dependabot-authored message, which carries a stable
+      # `updated-dependencies:` YAML block with one `dependency-type:` and
+      # one `update-type:` per bumped package (the same block
+      # dependabot/fetch-metadata parses; that action cannot be used here
+      # because it needs a pull_request event context).
+      #
+      # `eligible` is written as `false` FIRST, so a crash anywhere in this
+      # step (API hiccup, unexpected JSON) leaves it false and the failure
+      # steps below still fire with a generic reason instead of being
+      # skipped silently.
+      - name: Resolve PR and decide eligibility
+        id: gate
+        run: |
+          set -u
+          echo "eligible=false" >> "$GITHUB_OUTPUT"
+          ineligible() { echo "::notice::PR #$PR not eligible for auto-merge: $1"; echo "decided=true" >> "$GITHUB_OUTPUT"; exit 0; }
+
+          json=$(gh pr view "$PR" --repo "$REPO" \
+            --json number,url,state,author,headRefName,headRefOid,title)
+          state=$(jq -r '.state' <<<"$json")
+          author=$(jq -r '.author.login' <<<"$json")
+          branch=$(jq -r '.headRefName' <<<"$json")
+          sha=$(jq -r '.headRefOid' <<<"$json")
+          url=$(jq -r '.url' <<<"$json")
+          title=$(jq -r '.title' <<<"$json")
+          echo "PR #$PR: $title"
+          echo "  state=$state author=$author branch=$branch head=$sha"
+          {
+            echo "url=$url"
+            echo "sha=$sha"
+            echo "branch=$branch"
+          } >> "$GITHUB_OUTPUT"
+
+          [ "$state" = "OPEN" ] || ineligible "state is $state"
+          case "$author" in
+            app/dependabot|dependabot|dependabot\[bot\]) ;;
+            *) ineligible "author is $author, not Dependabot" ;;
+          esac
+          case "$branch" in
+            dependabot/npm_and_yarn/*) ;;
+            *) ineligible "branch $branch is not an npm bump (action pins always get a human)" ;;
+          esac
+
+          # GitHub computes refs/pull/N/merge lazily; asking for `mergeable`
+          # kicks that off. Wait briefly for it to settle, and stop early on
+          # conflicts (Dependabot rebases conflicted PRs on its own).
+          mergeable=UNKNOWN
+          for i in 1 2 3 4 5 6; do
+            mergeable=$(gh pr view "$PR" --repo "$REPO" --json mergeable --jq '.mergeable')
+            [ "$mergeable" != "UNKNOWN" ] && break
+            sleep 5
+          done
+          echo "  mergeable=$mergeable"
+          [ "$mergeable" != "CONFLICTING" ] || ineligible "PR conflicts with main; Dependabot will rebase it"
+
+          msg=$(gh api "repos/$REPO/commits/$sha" --jq '.commit.message')
+          dep_types=$(printf '%s\n' "$msg" | sed -n 's/^[[:space:]]*dependency-type:[[:space:]]*//p' | tr -d '\r' | sort -u)
+          upd_types=$(printf '%s\n' "$msg" | sed -n 's/^[[:space:]]*update-type:[[:space:]]*//p' | tr -d '\r' | sort -u)
+          echo "  dependency-type(s): $(printf '%s' "$dep_types" | tr '\n' ' ')"
+          echo "  update-type(s):     $(printf '%s' "$upd_types" | tr '\n' ' ')"
+
+          [ -n "$dep_types" ] && [ -n "$upd_types" ] || ineligible "head commit carries no updated-dependencies metadata"
+          [ "$(printf '%s\n' "$dep_types" | grep -c .)" -eq 1 ] || ineligible "mixed dependency types in one PR"
+          if printf '%s\n' "$upd_types" | grep -q 'semver-major'; then
+            ineligible "contains a semver-major bump"
+          fi
+          case "$dep_types" in
+            direct:development)
+              if printf '%s\n' "$upd_types" | grep -vqE '^version-update:semver-(patch|minor)$'; then
+                ineligible "devDependency bump is not patch/minor"
+              fi
+              ;;
+            direct:production)
+              [ "$upd_types" = "version-update:semver-patch" ] || ineligible "production bump is not a patch"
+              ;;
+            *) ineligible "dependency-type $dep_types (indirect/transitive bumps get a human)" ;;
+          esac
+
+          echo "Eligible: $dep_types $(printf '%s' "$upd_types" | tr '\n' ' ')"
+          echo "eligible=true" >> "$GITHUB_OUTPUT"
+          echo "decided=true" >> "$GITHUB_OUTPUT"
+
+      # The test-merge of the PR onto the CURRENT tip of main — never the
+      # stale PR head. This is what makes a rebase unnecessary.
+      - name: Check out the PR merged onto current main
+        if: steps.gate.outputs.eligible == 'true'
+        id: checkout
+        uses: actions/checkout@v7
+        with:
+          ref: refs/pull/${{ inputs.pr_number }}/merge
+          fetch-depth: 1
+
+      # The merge commit's first parent is the main tip this test-merge was
+      # built on. Recorded now, checked again right before merging. `%P`
+      # lists the parent hashes straight from the commit object, so it works
+      # in a depth-1 clone where the parents themselves are not fetched; and
+      # `cut` consumes all its input, so — unlike `head -n 1` — it can never
+      # SIGPIPE the producer and trip pipefail.
+      - name: Record the main tip this verification is against
+        if: steps.gate.outputs.eligible == 'true'
+        id: base
+        run: |
+          base=$(git log -1 --format=%P HEAD | cut -d' ' -f1)
+          [ -n "$base" ] || { echo "::error::could not determine the base tip of the test-merge"; exit 1; }
+          # Right after a merge, GitHub can still hand out the PREVIOUS
+          # test-merge for the next PR (it recomputes asynchronously; the
+          # gate's `mergeable` poll only waits while the value is UNKNOWN).
+          # The Merge step would catch that too, but only after a full
+          # ~10-minute build — the same check is free here.
+          now=$(gh api "repos/$REPO/branches/main" --jq '.commit.sha')
+          if [ "$now" != "$base" ]; then
+            echo "::notice::test-merge is against $base but main is already at $now; re-dispatching PR #$PR."
+            gh workflow run dependabot-auto-merge.yml --repo "$REPO" --ref main -f pr_number="$PR" -f chain="$CHAIN"
+            echo "redispatched=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "Verifying against main tip $base"
+          echo "sha=$base" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Node.js
+        if: steps.gate.outputs.eligible == 'true' && steps.base.outputs.redispatched != 'true'
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install system dependencies
+        if: steps.gate.outputs.eligible == 'true' && steps.base.outputs.redispatched != 'true'
+        run: sudo apt-get update && sudo apt-get install -y webp
+
+      - name: Install dependencies
+        if: steps.gate.outputs.eligible == 'true' && steps.base.outputs.redispatched != 'true'
+        run: npm ci
+
+      # Exactly ci.yml's gauntlet, run on the merge result. Each check is
+      # named so the failure reason on the PR says which one broke.
+      - name: Verify the merge result
+        if: steps.gate.outputs.eligible == 'true' && steps.base.outputs.redispatched != 'true'
+        id: verify
+        env:
+          BRANCH: ${{ steps.gate.outputs.branch }}
+        run: |
+          set -u
+          check() {
+            local name=$1; shift
+            echo "::group::$name"
+            if "$@"; then
+              echo "::endgroup::"
+            else
+              echo "::endgroup::"
+              echo "reason=verification failed at '$name' on the PR merged with current main" >> "$GITHUB_OUTPUT"
+              echo "::error::$name failed"
+              exit 1
+            fi
+          }
+          check "npm test" npm test
+          check "eslint" npm run lint
+          check "generate:index --strict" npm run generate:index -- --strict
+          check "lint-content --strict" node scripts/lint-content.mjs --strict
+          check "npm run build" npm run build
+          # ci.yml does not exercise the Worker subproject; nothing else
+          # checks a wrangler/workers-types bump before it is merged.
+          case "$BRANCH" in
+            dependabot/npm_and_yarn/cloudflare-worker/*)
+              check "cloudflare-worker npm ci" npm --prefix cloudflare-worker ci
+              check "cloudflare-worker tsc --noEmit" npm --prefix cloudflare-worker run check
+              ;;
+          esac
+          echo "All checks passed on the merge result."
+
+      # Merge — pinned to what was verified, in both dimensions:
+      #   * base: if main moved during verification, this run's result is
+      #     for a combination that no longer exists. Re-dispatch this same
+      #     PR and exit green; the new run verifies against the new main.
+      #   * head: --match-head-commit makes GitHub reject the merge (409) if
+      #     Dependabot force-pushed a new head meanwhile. Also a green no-op:
+      #     the push produced a pull_request event whose run re-verifies.
+      # No --auto (nothing required to wait on) and no approve (not permitted
+      # on this personal repo, and not needed). deploy.yml is dispatched in
+      # this same step so no cancel can separate merge from deploy.
+      - name: Merge
+        if: steps.gate.outputs.eligible == 'true' && steps.base.outputs.redispatched != 'true' && steps.verify.outcome == 'success'
+        id: merge
+        env:
+          SHA: ${{ steps.gate.outputs.sha }}
+          BASE: ${{ steps.base.outputs.sha }}
+        run: |
+          set -u
+          redispatch() {
+            echo "::notice::$1 — re-dispatching PR #$PR to verify against the current tip."
+            gh workflow run dependabot-auto-merge.yml --repo "$REPO" --ref main -f pr_number="$PR" -f chain="$CHAIN"
+            echo "redispatched=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          }
+          now=$(gh api "repos/$REPO/branches/main" --jq '.commit.sha')
+          [ "$now" = "$BASE" ] || redispatch "main moved from $BASE to $now during verification"
+          if ! merge_out=$(gh pr merge "$PR" --repo "$REPO" --squash --delete-branch --match-head-commit "$SHA" 2>&1); then
+            if printf '%s' "$merge_out" | grep -qi 'head branch was modified'; then
+              echo "::notice::PR head changed since verification (expected $SHA); the run for the new head will re-verify. Nothing merged."
+              exit 0
+            fi
+            # 405 "Base branch was modified" is GitHub's transient answer
+            # while its mergeability job re-settles after a push to main —
+            # the same situation as the check above, caught a moment later.
+            if printf '%s' "$merge_out" | grep -qi 'base branch was modified'; then
+              redispatch "GitHub reported the base branch as modified at merge time"
+            fi
+            reason="gh pr merge failed: $(printf '%s' "$merge_out" | tr '\n' ' ')"
+            echo "reason=$reason" >> "$GITHUB_OUTPUT"
+            echo "::error::$reason"
+            exit 1
+          fi
+          printf '%s\n' "$merge_out"
+          echo "Merged PR #$PR (head $SHA onto main $BASE)."
+          echo "merged=true" >> "$GITHUB_OUTPUT"
+          # The merge API pins the head but has no base precondition, so two
+          # runs for DIFFERENT PRs can both pass the main-tip check above and
+          # the second lands on a main it never verified. Cheap to detect:
+          # the squash commit's parent must be the tip we verified against.
+          # Not fatal — deploy.yml re-runs tests and the build on main and
+          # pages on failure — but worth a loud warning.
+          mc=$(gh api "repos/$REPO/pulls/$PR" --jq '.merge_commit_sha' 2>/dev/null || true)
+          parent=$( [ -n "$mc" ] && gh api "repos/$REPO/commits/$mc" --jq '.parents[0].sha' 2>/dev/null || true)
+          if [ -n "$parent" ] && [ "$parent" != "$BASE" ]; then
+            echo "::warning::merged onto $parent but verified against $BASE (another merge landed in between); deploy.yml will re-test main."
+          fi
+          gh workflow run deploy.yml --repo "$REPO" --ref main \
+            && echo "Dispatched deploy.yml on main." \
+            || echo "::warning::Could not dispatch deploy.yml; the merge goes live with the next push to main."
+
+      # Failure signalling only for PRs that were eligible (the gate exits
+      # green for ineligible ones, so failure() there means the gate itself
+      # crashed before deciding — also worth knowing about). Deduped per
+      # (head, main tip): the marker is embedded in the comment and searched
+      # for before commenting or paging, so re-verifying the same
+      # combination stays red in the run list without repeating the alert.
+      - name: Comment on PR about auto-merge failure
+        if: failure() && (steps.gate.outputs.decided != 'true' || steps.gate.outputs.eligible == 'true')
+        id: notify
+        env:
+          PR_URL: ${{ steps.gate.outputs.url }}
+          SHA: ${{ steps.gate.outputs.sha }}
+          BASE: ${{ steps.base.outputs.sha }}
+          REASON: ${{ steps.verify.outputs.reason || steps.merge.outputs.reason }}
+          CHECKOUT_OUTCOME: ${{ steps.checkout.outcome }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          reason="$REASON"
+          if [ -z "$reason" ] && [ "$CHECKOUT_OUTCOME" = "failure" ]; then
+            reason="could not check out refs/pull/$PR/merge (the PR may conflict with main)"
+          fi
+          [ -n "$reason" ] || reason="unexpected failure before a decision was reached — see the run log"
+          marker="<!-- auto-merge head=${SHA:-unknown} main=${BASE:-unknown} -->"
+          # Capture first, then search the string: piping a live `gh` into
+          # `grep -q` lets grep exit on the first match while gh is still
+          # writing, which under pipefail turns into SIGPIPE (rc 141) and
+          # would read as "not found".
+          existing_comments=""
+          if [ -n "$PR_URL" ]; then
+            existing_comments=$(gh pr view "$PR" --repo "$REPO" --json comments --jq '.comments[].body' 2>/dev/null || true)
+          fi
+          if [ -n "$existing_comments" ] && grep -qF "$marker" <<<"$existing_comments"; then
+            echo "Same head/main combination already reported on the PR; not repeating the comment or the page."
+            echo "duplicate=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "reason=$reason" >> "$GITHUB_OUTPUT"
+          if [ -n "$PR_URL" ]; then
+            gh pr comment "$PR" --repo "$REPO" \
+              --body "$(printf 'Auto-merge did not merge this PR. Reason: %s. Run: %s\n\n%s' "$reason" "$RUN_URL" "$marker")" \
+              || echo "::warning::Could not comment on the PR."
+          fi
+
       - name: Ntfy alert on auto-merge failure
-        if: failure()
+        if: failure() && steps.notify.outputs.duplicate != 'true' && (steps.gate.outputs.decided != 'true' || steps.gate.outputs.eligible == 'true')
+        env:
+          PR_URL: ${{ steps.gate.outputs.url || format('PR #{0}', inputs.pr_number) }}
+          REASON: ${{ steps.notify.outputs.reason || 'see the run log' }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || 'deniskim-kb' }}
         run: |
           curl -s -H 'Title: DEPENDABOT AUTO-MERGE FAILED' -H 'Priority: high' \
-            -d "Auto-merge step failed for ${{ github.event.pull_request.html_url }} — check Settings > General > Allow auto-merge and branch protection on main." \
-            ntfy.sh/${{ secrets.NTFY_TOPIC || 'deniskim-kb' }}
+            --data-binary "$(printf 'Auto-merge failed for %s\nReason: %s\nRun: %s' "$PR_URL" "$REASON" "$RUN_URL")" \
+            "ntfy.sh/$NTFY_TOPIC"
+
+      # Chain to the next open npm Dependabot PR (strictly higher number) —
+      # after a merge, an ineligible verdict, or a failure alike, so a batch
+      # converges one at a time and a broken PR never blocks those behind
+      # it. Skipped when this run re-dispatched ITSELF (main moved): that
+      # retry will chain when it finishes. Monotonic PR numbers guarantee
+      # termination.
+      - name: Chain to the next open Dependabot PR
+        if: always() && inputs.chain != 'false' && steps.base.outputs.redispatched != 'true' && steps.merge.outputs.redispatched != 'true'
+        continue-on-error: true
+        run: |
+          # $PR is a validated integer (inputs.pr_number, already used in API
+          # paths above), so interpolating it into the jq filter is safe;
+          # gh's --jq takes only a filter string, not jq's --argjson flag.
+          next=$(gh pr list --repo "$REPO" --author app/dependabot --state open --limit 30 \
+            --json number,headRefName \
+            --jq "[.[] | select(.headRefName | startswith(\"dependabot/npm_and_yarn/\")) | .number | select(. > $PR)] | min // empty")
+          if [ -z "$next" ]; then
+            echo "No open npm Dependabot PR after #$PR — chain complete."
+            exit 0
+          fi
+          gh workflow run dependabot-auto-merge.yml --repo "$REPO" --ref main -f pr_number="$next"
+          echo "Dispatched verification of the next PR, #$next."

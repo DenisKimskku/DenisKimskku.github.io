@@ -7,10 +7,18 @@
  * the body, and probes each one (HEAD, falling back to GET where servers
  * reject HEAD).
  *
- * Classification:
+ * Classification (see `classify()` — pure and exported for unit tests):
  *   - FAILURE: DNS/connection errors and HTTP >= 400 after retries
- *   - WARNING: 403 / 429 (bot-blocking or rate-limiting; arXiv and
+ *   - WARNING: 403 / 429 anywhere (bot-blocking or rate-limiting; arXiv and
  *     Cloudflare-fronted sites do this to CI traffic — not proof of a dead link)
+ *   - WARNING: any HTTP >= 400 from a known bot-hostile redirector
+ *     (BOT_HOSTILE_REDIRECTORS below). Google News redirector URLs
+ *     (https://news.google.com/rss/articles/<payload>) 302 to the publisher
+ *     for browsers but answer HTTP 400 to non-browser clients like this
+ *     checker, so ~300 of them across the auto-generated digests showed up as
+ *     "dead" every week while working fine for readers. Same class of noise as
+ *     403/429, so it gets the same tier. Only that host+path prefix is
+ *     covered — other news.google.com paths keep normal failure semantics.
  *
  * Modes:
  *   node scripts/check-external-links.mjs            # local: exit 1 on failures
@@ -25,6 +33,7 @@
 import { readdir, readFile, writeFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 
 const ARTICLES_DIR = path.join(process.cwd(), 'src', 'content', 'articles');
 const REPORT_FILE = path.join(process.cwd(), 'link-failures.md');
@@ -46,6 +55,70 @@ const USER_AGENT =
 // quote illustrative attacker URLs on these — they are not real pages.
 const EXCLUDED_HOST_RE =
   /(^|\.)deniskim1\.com$|^localhost$|^127\.0\.0\.1$|^0\.0\.0\.0$|^\[?::1\]?$|\.(?:internal|local|test|invalid|example|localhost|home\.arpa|onion)$|(^|\.)example\.(?:com|org|net)$/i;
+
+// Redirectors that work for readers but answer 4xx to non-browser clients.
+// Any HTTP >= 400 from a URL on `host` whose path starts with `pathPrefix`
+// is downgraded to a WARNING (never a failure). Match is exact-host +
+// path-prefix only; keep entries narrow so real dead links elsewhere on the
+// same host still fail.
+const BOT_HOSTILE_REDIRECTORS = [
+  {
+    host: 'news.google.com',
+    pathPrefix: '/rss/articles/',
+    label: 'Google News redirector',
+  },
+];
+
+/**
+ * Return the redirector label when `url` is on a known bot-hostile redirector
+ * (host + path prefix from BOT_HOSTILE_REDIRECTORS), else null. Unparseable
+ * input is treated as "not a redirector".
+ */
+export function botHostileRedirector(url) {
+  let parsed;
+  try {
+    parsed = url instanceof URL ? url : new URL(String(url));
+  } catch {
+    return null;
+  }
+  const host = parsed.hostname.toLowerCase();
+  for (const r of BOT_HOSTILE_REDIRECTORS) {
+    if (host === r.host && parsed.pathname.startsWith(r.pathPrefix)) return r.label;
+  }
+  return null;
+}
+
+/** Predicate form of botHostileRedirector(). */
+export function isBotHostileRedirector(url) {
+  return botHostileRedirector(url) !== null;
+}
+
+/**
+ * Classify an HTTP status for `url` into exactly one of ok / warning / failure.
+ * Pure (no I/O) so it can be unit-tested; checkUrl() feeds it the final status
+ * after HEAD→GET fallback. Network errors never reach here.
+ *
+ *   status < 400                       → ok
+ *   status >= 400 on a known redirector → warning (most specific reason first)
+ *   403 / 429 anywhere                  → warning (bot-blocking / rate-limit)
+ *   any other status >= 400             → failure
+ */
+export function classify(url, status) {
+  const base = { url, ok: false, warning: false, failure: false };
+  if (status < 400) return { ...base, ok: true, detail: `HTTP ${status}` };
+  const redirector = botHostileRedirector(url);
+  if (redirector) {
+    return {
+      ...base,
+      warning: true,
+      detail: `HTTP ${status} (${redirector}; answers 4xx to non-browser clients)`,
+    };
+  }
+  if (status === 403 || status === 429) {
+    return { ...base, warning: true, detail: `HTTP ${status} (likely bot-blocking)` };
+  }
+  return { ...base, failure: true, detail: `HTTP ${status}` };
+}
 
 function clampInt(raw, fallback, min, max) {
   const n = Number.parseInt(raw ?? '', 10);
@@ -172,19 +245,7 @@ async function checkUrl(url) {
     const cause = lastError.cause?.code ?? lastError.name ?? 'network error';
     return { url, ok: false, warning: false, failure: true, detail: String(cause) };
   }
-  if (status === 403 || status === 429) {
-    return {
-      url,
-      ok: false,
-      warning: true,
-      failure: false,
-      detail: `HTTP ${status} (likely bot-blocking)`,
-    };
-  }
-  if (status >= 400) {
-    return { url, ok: false, warning: false, failure: true, detail: `HTTP ${status}` };
-  }
-  return { url, ok: true, warning: false, failure: false, detail: `HTTP ${status}` };
+  return classify(url, status);
 }
 
 /** Simple worker pool. */
@@ -259,7 +320,7 @@ async function main() {
       if (warnings.length > 0) {
         lines.push(
           '',
-          `${warnings.length} additional URL(s) returned 403/429 (likely bot-blocking; not counted as failures).`
+          `${warnings.length} additional URL(s) returned 403/429 or a 4xx from a known bot-hostile redirector (likely bot-blocking; not counted as failures).`
         );
       }
       lines.push(
@@ -277,11 +338,21 @@ async function main() {
   if (failures.length > 0) process.exitCode = 1;
 }
 
-main().catch((err) => {
-  // An infrastructure crash (missing dir, fetch regression) is a step failure
-  // even in --report mode — exiting 0 here would leave the weekly workflow
-  // permanently green with no report and no issue. Only LINK failures get the
-  // always-green --report treatment (handled inside main()).
-  console.error(err);
-  process.exit(1);
-});
+// Only run when executed directly (`node scripts/check-external-links.mjs`),
+// not when imported by tests for the exported classify() helpers. Compare
+// resolved filesystem paths so this works on Windows (drive-letter argv[1])
+// as well as Linux CI.
+const invokedDirectly =
+  process.argv[1] !== undefined &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+if (invokedDirectly) {
+  main().catch((err) => {
+    // An infrastructure crash (missing dir, fetch regression) is a step failure
+    // even in --report mode — exiting 0 here would leave the weekly workflow
+    // permanently green with no report and no issue. Only LINK failures get the
+    // always-green --report treatment (handled inside main()).
+    console.error(err);
+    process.exit(1);
+  });
+}

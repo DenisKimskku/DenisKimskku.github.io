@@ -1,0 +1,357 @@
+name: Content auto-repair
+
+# The external daily content automation pushes ~5 auto-generated articles
+# straight to main (~17:20 UTC) under the owner's git identity, and its
+# output sometimes carries mechanical defects that already have deterministic
+# in-place repairs: broken frontmatter escapes (generate:index), broken math
+# delimiters (repair-math-delimiters.mjs), dead in-article links
+# (repair-dead-links.mjs) and missing paperUrl/paperAuthors on Paper Reviews
+# (backfill-paper-attribution.mjs). deploy.yml already runs those repairs
+# in-build, so the LIVE SITE is clean — but the REPO SOURCE stays dirty, and
+# ci.yml runs `lint-content.mjs --strict` on every PR, which fails on dirty
+# content. That turned CI red on every Dependabot PR and starved
+# dependabot-auto-merge.yml. This bot runs the same repairs against the real
+# checkout and pushes the result back to main so the SOURCE is clean. It then
+# re-dispatches dependabot-auto-merge.yml for every open Dependabot PR, which
+# verifies each PR merged onto the now-clean main and merges the eligible
+# ones — no rebase, no PAT, no human (see the last step for why dispatch is
+# the only GITHUB_TOKEN-compatible way to do this).
+#
+# Loop safety: a push made with the default GITHUB_TOKEN does NOT trigger
+# on:push workflows (see optimize-images.yml), so this bot cannot re-trigger
+# itself or deploy.yml, and optimize-images' own bot pushes cannot trigger
+# it either. The job-level `if:` below is belt-and-braces on top of that.
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Daily at 18:41 UTC — after the automation's ~17:20 push (so the day's
+    # articles have landed even if the push event was missed), off a round
+    # minute since GitHub drops congested schedule triggers on round minutes
+    # (see keep-warm.yml), and clear of every other cron in this repo:
+    # keep-warm 13 */8, content-watchdog 21:00, optimize-images 22:47,
+    # link-check Sun 05:37, codeql Mon 06:29, repo-health Mon 07:15.
+    - cron: '41 18 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: read   # `gh pr list` only
+  # `gh issue create/edit/close` for the "Content needs manual repair"
+  # issue below needs this; contents/pull-requests alone would 403.
+  issues: write
+  # `gh workflow run dependabot-auto-merge.yml` in the last step.
+  actions: write
+
+concurrency:
+  group: content-autorepair
+  cancel-in-progress: false
+
+env:
+  # The only paths any repair step is allowed to touch. Change detection,
+  # the commit, and the safety gate all key off this same list so a stray
+  # write anywhere else (e.g. the gitignored quarantined-articles.txt) can
+  # never be staged by accident.
+  REPAIR_PATHS: src/content/articles src/data/articles-index.json
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    # Belt-and-braces loop protection: GITHUB_TOKEN pushes never fire
+    # on:push in the first place, but if that guarantee ever changes, a
+    # commit authored by this bot (or optimize-images) must still not
+    # re-enter here.
+    if: github.actor != 'github-actions[bot]'
+    # The deterministic repairs are seconds; backfill-paper-attribution is
+    # network-bound (~3s/article against arXiv) and the strict gate re-runs
+    # the whole content lint, so give it headroom above the usual bot cap.
+    timeout-minutes: 20
+    defaults:
+      run:
+        # Explicit `shell: bash` = `bash --noprofile --norc -eo pipefail`.
+        # The runner default for an UNSPECIFIED shell is only `bash -e`,
+        # with no pipefail — and the strict safety gate below is written as
+        # `cmd 2>&1 | tee -a "$log" || rc=1`. Without pipefail the pipeline's
+        # status is tee's (always 0), `|| rc=1` never fires, and the gate
+        # could never fail: the whole never-push-when-strict-fails design
+        # would be void. This one line is what makes the gate real.
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      # No `apt-get install webp` here on purpose: unlike ci.yml/optimize-
+      # images.yml, nothing this job runs shells out to cwebp (lint-content
+      # only stat()s .webp siblings; the repair scripts are pure text).
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Each repair is fingerprinted before/after (status + diff of the
+      # repair paths) so the commit body can say exactly which step(s)
+      # actually changed something — a bare "auto-repair" commit tells the
+      # owner nothing about what the generator got wrong this time.
+      - name: Run deterministic repairs
+        run: |
+          fp() { { git status --porcelain -- $REPAIR_PATHS; git diff -- $REPAIR_PATHS; } | sha256sum | cut -d' ' -f1; }
+          : > "$RUNNER_TEMP/changed-steps.txt"
+          before=$(fp)
+          for spec in \
+            "generate:index (frontmatter escapes + articles-index.json)|npm run generate:index" \
+            "repair-math-delimiters|node scripts/repair-math-delimiters.mjs" \
+            "repair-dead-links|node scripts/repair-dead-links.mjs"; do
+            name=${spec%%|*}
+            cmd=${spec#*|}
+            echo "::group::$name"
+            $cmd
+            echo "::endgroup::"
+            after=$(fp)
+            if [ "$after" != "$before" ]; then
+              echo "$name" >> "$RUNNER_TEMP/changed-steps.txt"
+              echo "-> $name: changed files"
+            else
+              echo "-> $name: no changes"
+            fi
+            before=$after
+          done
+
+      # Network-bound and best-effort: an arXiv hiccup must not block the
+      # deterministic repairs above from being committed. The script already
+      # try/catches per article, so a partial run still lands whatever it
+      # confidently matched.
+      - name: Backfill paper attribution from arXiv
+        continue-on-error: true
+        run: |
+          fp() { { git status --porcelain -- $REPAIR_PATHS; git diff -- $REPAIR_PATHS; } | sha256sum | cut -d' ' -f1; }
+          before=$(fp)
+          node scripts/backfill-paper-attribution.mjs --write
+          if [ "$(fp)" != "$before" ]; then
+            echo "backfill-paper-attribution (paperUrl/paperAuthors from arXiv)" >> "$RUNNER_TEMP/changed-steps.txt"
+            echo "-> backfill-paper-attribution: changed files"
+          else
+            echo "-> backfill-paper-attribution: no changes"
+          fi
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if [ -z "$(git status --porcelain -- $REPAIR_PATHS)" ]; then
+            echo "Repairs produced no changes — nothing to commit."
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Repairs produced changes:"
+            git status --porcelain -- $REPAIR_PATHS
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Safety gate (mirrors optimize-images): the whole point of this job
+      # is to leave main in a state ci.yml accepts, so run the exact strict
+      # checks ci.yml runs. Runs even when nothing changed — main may already
+      # be dirty in a way no repair knows about, and that is precisely the
+      # case the owner needs to hear about. Output is captured (stderr too:
+      # lint-content reports via console.error) so it can become the issue
+      # body. continue-on-error lets the next steps branch on `outcome`
+      # instead of the job dying here with no issue and no targeted alert.
+      - name: Strict content lint safety gate
+        id: strict
+        continue-on-error: true
+        run: |
+          log="$RUNNER_TEMP/strict.log"
+          : > "$log"
+          rc=0
+          echo '$ npm run generate:index -- --strict' | tee -a "$log"
+          npm run generate:index -- --strict 2>&1 | tee -a "$log" || rc=1
+          echo | tee -a "$log"
+          echo '$ node scripts/lint-content.mjs --strict' | tee -a "$log"
+          node scripts/lint-content.mjs --strict 2>&1 | tee -a "$log" || rc=1
+          exit $rc
+
+      # Strict still fails AFTER every repair ran: the defect is of a shape
+      # no repair knows. Never push (a bot commit that leaves main red is
+      # worse than none) — file/refresh ONE issue whose body is the lint
+      # output, page the owner, and fail the job. Dedup by title like
+      # content-watchdog: find the open issue, create or refresh its body so
+      # it always reflects the latest run rather than day-1's output.
+      - name: File or refresh manual-repair issue
+        if: steps.strict.outcome == 'failure'
+        id: manual_issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          title="Content needs manual repair"
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          body="$RUNNER_TEMP/issue-body.md"
+          # Dedupe per commit: the push-triggered run and the daily cron both
+          # see the same failing main on the same day. The issue body records
+          # `Head: <sha>`; if the open issue already reports THIS sha, refresh
+          # nothing, comment nothing, and tell the ntfy step not to page
+          # again — one page per distinct failing commit.
+          existing=$(gh issue list --repo "${{ github.repository }}" --state open \
+            --search "\"$title\" in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
+          if [ -n "$existing" ]; then
+            existing_body=$(gh issue view "$existing" --repo "${{ github.repository }}" --json body --jq '.body' 2>/dev/null || true)
+            if grep -qF "Head: ${{ github.sha }}" <<<"$existing_body"; then
+              echo "Issue #$existing already reports ${{ github.sha }}; not re-commenting or re-paging."
+              echo "already_reported=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+          {
+            echo "Strict content lint still fails on \`main\` after every automatic repair ran"
+            echo "(generate:index, repair-math-delimiters, repair-dead-links, backfill-paper-attribution)."
+            echo "This defect has no known repair — fix the article(s) below by hand."
+            echo
+            echo "Until this is green, every PR's CI (which runs \`lint-content.mjs --strict\`) fails,"
+            echo "so Dependabot auto-merge is blocked."
+            echo
+            echo "Latest run: $run_url"
+            echo "Head: ${{ github.sha }}"
+            echo
+            echo '```'
+            # Fences cannot be closed early by the log itself: strip any
+            # triple-backtick a script might echo so the body stays well-formed.
+            # `tail -c` cuts on bytes and lint-content prints UTF-8 glyphs
+            # (✗ ⚠ —); strip any leading continuation bytes so a cut inside
+            # a multi-byte sequence cannot make the body invalid UTF-8.
+            sed 's/```/` ` `/g' "$RUNNER_TEMP/strict.log" | tail -c 60000 | sed '1s/^[\x80-\xBF]*//'
+            echo '```'
+          } > "$body"
+          existing=$(gh issue list --repo "${{ github.repository }}" --state open \
+            --search "\"$title\" in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
+          if [ -z "$existing" ]; then
+            gh issue create --repo "${{ github.repository }}" \
+              --title "$title" \
+              --body-file "$body" \
+              || true # never mask the real failure with a notification failure
+          else
+            gh issue edit "$existing" --repo "${{ github.repository }}" --body-file "$body" || true
+            gh issue comment "$existing" --repo "${{ github.repository }}" \
+              --body "Still failing as of run $run_url — issue body refreshed with the latest lint output." \
+              || true
+            echo "Open issue #$existing already exists; refreshed body and commented."
+          fi
+
+      - name: Ntfy alert — content needs manual repair
+        if: steps.strict.outcome == 'failure' && steps.manual_issue.outputs.already_reported != 'true'
+        run: |
+          curl -s -H 'Title: CONTENT NEEDS MANUAL REPAIR' -H 'Priority: high' \
+            -d 'lint-content --strict still fails on main after all auto-repairs — see the "Content needs manual repair" issue. PR CI stays red until fixed.' \
+            ntfy.sh/${{ secrets.NTFY_TOPIC || 'deniskim-kb' }}
+
+      - name: Fail the job on unrepaired content
+        if: steps.strict.outcome == 'failure'
+        run: |
+          echo "::error::Strict content lint still fails after all auto-repairs; nothing was pushed. See the 'Content needs manual repair' issue."
+          exit 1
+
+      # Close-on-resolution (mirrors content-watchdog): once strict passes
+      # again — whether because a repair learned the shape or the owner
+      # fixed it by hand — the open issue must not linger forever.
+      - name: Close resolved manual-repair issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          title="Content needs manual repair"
+          existing=$(gh issue list --repo "${{ github.repository }}" --state open \
+            --search "\"$title\" in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" --repo "${{ github.repository }}" \
+              --comment "Resolved: strict content lint passes on main again as of run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}." \
+              || true # never fail a green run over a notification failure
+          else
+            echo "No open '$title' issue to close."
+          fi
+
+      # Commits the repaired SOURCE back to main so ci.yml's strict lint sees
+      # clean content on every PR from here on. (A default-GITHUB_TOKEN push
+      # does not trigger deploy.yml or this workflow, so no deploy storm and
+      # no self-loop — the next external automation push carries the
+      # repaired files out to the live site, which deploy.yml's in-build
+      # repairs already keep clean in the meantime.)
+      - name: Commit and push repaired content
+        if: steps.diff.outputs.has_changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A -- $REPAIR_PATHS
+          {
+            echo "chore(content): auto-repair generator output"
+            echo
+            echo "Repair steps that reported changes:"
+            if [ -s "$RUNNER_TEMP/changed-steps.txt" ]; then
+              sed 's/^/- /' "$RUNNER_TEMP/changed-steps.txt"
+            else
+              echo "- (none individually fingerprinted — see run log)"
+            fi
+            echo
+            echo "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          } > "$RUNNER_TEMP/commit-msg.txt"
+          git commit -F "$RUNNER_TEMP/commit-msg.txt"
+          # The external automation (and the owner) push to main on their
+          # own schedule and can land a commit while this job is running —
+          # retry once via rebase rather than failing (and alerting) on a
+          # race that isn't a real problem. The rebase can only conflict if
+          # someone hand-edited the very article a repair just rewrote in
+          # the same minute; that surfaces as a failure + ntfy below.
+          git push || { git pull --rebase && git push; }
+
+      # Main is clean and may have just moved, so open Dependabot PRs are
+      # re-verified AGAINST CURRENT MAIN by dispatching
+      # dependabot-auto-merge.yml. That workflow checks out refs/pull/<N>/merge
+      # (GitHub's test-merge of the PR onto today's main), runs the full check
+      # gauntlet on the result, and merges if eligible. No rebase is needed,
+      # and none is possible from here:
+      #   - Dependabot ignores "@dependabot rebase" comments posted by GitHub
+      #     Apps, and github-actions[bot] IS the Actions App even with write
+      #     access (dependabot-core#9147, still open) — that route needs a
+      #     real-user PAT, which this repo deliberately does not keep;
+      #   - pushing a merge commit into a Dependabot branch with GITHUB_TOKEN
+      #     makes Dependabot stop managing the PR, and the push would not
+      #     even trigger CI (GITHUB_TOKEN-made pushes are suppressed);
+      #   - `gh workflow run` DOES work with GITHUB_TOKEN: workflow_dispatch
+      #     is one of the two event types exempt from that suppression.
+      #
+      # Only the OLDEST open npm PR is dispatched. Every npm PR touches
+      # package-lock.json, so parallel verify-then-merge runs would race on
+      # main (only the first merge is the combination that was verified).
+      # dependabot-auto-merge.yml chains to the next PR itself when it is
+      # done with this one — merged, ineligible, or failed — so a whole batch
+      # still converges, one PR at a time, with one dispatch from here.
+      #
+      # Gated on something having changed: the daily cron exists only to
+      # catch a missed push event, and if it finds nothing to repair the
+      # push-triggered run already dispatched. Without this gate an eligible
+      # PR that genuinely fails would be re-verified (10-minute build) twice
+      # a day for as long as it stays open. Skipped when strict still fails
+      # (the PRs would only fail again for the same reason).
+      - name: Re-verify the oldest open Dependabot PR against the healed main
+        if: steps.strict.outcome == 'success' && (steps.diff.outputs.has_changes == 'true' || github.event_name != 'schedule')
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          oldest=$(gh pr list --repo "$REPO" --author app/dependabot --state open --limit 30 \
+            --json number,headRefName \
+            --jq '[.[] | select(.headRefName | startswith("dependabot/npm_and_yarn/")) | .number] | min // empty')
+          if [ -z "$oldest" ]; then
+            echo "No open npm Dependabot PRs."
+            exit 0
+          fi
+          gh workflow run dependabot-auto-merge.yml --repo "$REPO" --ref main -f pr_number="$oldest"
+          echo "Dispatched auto-merge verification for PR #$oldest; it chains to any later PRs itself."
+
+      # The manual-repair path already sent its own targeted page above, so
+      # do not double-alert for that case; this catches everything else
+      # (npm ci, a repair script crashing, push/rebase conflict, ...).
+      - name: Ntfy alert on failure
+        if: failure() && steps.strict.outcome != 'failure'
+        run: |
+          curl -s -H 'Title: CONTENT AUTO-REPAIR FAILED' -H 'Priority: high' -d 'content-autorepair workflow failed — check Actions' ntfy.sh/${{ secrets.NTFY_TOPIC || 'deniskim-kb' }}
