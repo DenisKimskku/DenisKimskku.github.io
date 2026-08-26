@@ -304,9 +304,11 @@ jobs:
 
       # Main is clean and may have just moved, so open Dependabot PRs are
       # re-verified AGAINST CURRENT MAIN by dispatching
-      # dependabot-auto-merge.yml. That workflow checks out refs/pull/<N>/merge
-      # (GitHub's test-merge of the PR onto today's main), runs the full check
-      # gauntlet on the result, and merges if eligible. No rebase is needed,
+      # dependabot-auto-merge.yml. That workflow fetches main and the PR head
+      # and builds the test-merge ITSELF (GitHub's refs/pull/<N>/merge is
+      # refreshed lazily and was seen stale for 30+ minutes after a push),
+      # runs the full check gauntlet on the result, and merges if eligible.
+      # No rebase is needed,
       # and none is possible from here:
       #   - Dependabot ignores "@dependabot rebase" comments posted by GitHub
       #     Apps, and github-actions[bot] IS the Actions App even with write

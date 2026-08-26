@@ -20,18 +20,25 @@ test('there are workflow files to check', () => {
   assert.ok(files.length > 0);
 });
 
-// A depth-1 checkout grafts its boundary commit to have NO parents in
-// memory, so `git log --format=%P`, `HEAD^1` and `rev-list --parents` all
-// return nothing there. dependabot-auto-merge.yml must read the merge
-// base of refs/pull/N/merge from the raw object with `git cat-file -p`.
-// The first live run failed on every PR because of exactly this.
-test('dependabot-auto-merge.yml reads the merge base from the raw commit object', () => {
+// Two live failures shaped these rules for dependabot-auto-merge.yml:
+//  - GitHub refreshes refs/pull/N/merge lazily; it served a test-merge
+//    against a stale main tip for 5+ minutes after a push, and "re-dispatch
+//    until fresh" became a self-dispatch loop (29 runs in 8 minutes). The
+//    job must build the test-merge itself with `git merge`, never check out
+//    refs/pull/N/merge, and any self-re-dispatch must be bounded.
+//  - A depth-1 checkout grafts its boundary commit to have NO parents in
+//    memory, so `git log --format=%P`, `HEAD^1` and `rev-list --parents`
+//    return nothing there; the first chain failed on every PR that way.
+test('dependabot-auto-merge.yml builds its own test-merge and bounds re-dispatch', () => {
   const text = fs.readFileSync(path.join(DIR, 'dependabot-auto-merge.yml'), 'utf8');
-  assert.match(text, /git cat-file -p HEAD \| sed -n 's\/\^parent \/\/p'/);
   const code = text
     .split(/\r?\n/)
     .filter((l) => !l.trimStart().startsWith('#'))
     .join('\n');
+  assert.ok(!/ref:\s*refs\/pull\//.test(code), 'must not check out refs/pull/N/merge (stale for minutes after a push)');
+  assert.match(code, /git merge --no-edit/, 'must build the test-merge locally');
+  assert.match(code, /-f attempt=/, 'self-re-dispatch must carry the attempt counter');
+  assert.match(code, /"\$\{ATTEMPT:-0\}" -ge 2/, 'self-re-dispatch must be bounded');
   for (const bad of ['--format=%P', 'HEAD^1', 'rev-list --parents']) {
     assert.ok(!code.includes(bad), `${bad} is empty in a shallow clone; do not use it for the base tip`);
   }

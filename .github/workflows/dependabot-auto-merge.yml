@@ -29,8 +29,10 @@
 #          to the next PR (see SERIALIZATION).
 #
 #   2. `workflow_dispatch` with `pr_number`  -> job `evaluate-and-merge`
-#      Checks out `refs/pull/<N>/merge` — GitHub's test-merge of the PR onto
-#      the CURRENT tip of main — and runs the same checks ci.yml runs, plus
+#      Fetches main and the PR head and builds the test-merge ITSELF (GitHub's
+#      refs/pull/<N>/merge is refreshed lazily and was seen serving a merge
+#      against a stale tip for 5+ minutes), then runs the same checks ci.yml
+#      runs on that merge result, plus
 #      the Cloudflare Worker typecheck when the bump is in that subproject.
 #      Because it is the merge result that gets verified, a PR opened days
 #      ago against a since-repaired main is judged on today's content; it
@@ -46,7 +48,8 @@
 #     - content-autorepair.yml dispatches only the OLDEST open npm PR;
 #     - this job records the main tip its test-merge was built on and, right
 #       before merging, checks main has not moved. If it has, it re-dispatches
-#       ITSELF for the same PR and exits green (a retry, not a failure);
+#       ITSELF for the same PR (at most twice — the `attempt` input) and
+#       exits green (a retry, not a failure);
 #     - the merge is pinned to the verified head with --match-head-commit, so
 #       a Dependabot force-push between verify and merge is rejected by
 #       GitHub (409) and treated as a green no-op — the newer run re-verifies;
@@ -102,6 +105,13 @@ on:
         required: false
         default: "true"
         type: string
+      attempt:
+        # Self-re-dispatch counter for "main moved during verification".
+        # Bounded (see the Merge step) so no variant of that retry can loop.
+        description: "Internal: how many times this PR has been re-dispatched for a moved main"
+        required: false
+        default: "0"
+        type: string
 
 jobs:
   dispatch:
@@ -149,6 +159,7 @@ jobs:
       REPO: ${{ github.repository }}
       PR: ${{ inputs.pr_number }}
       CHAIN: ${{ inputs.chain }}
+      ATTEMPT: ${{ inputs.attempt }}
     steps:
       # Everything that decides eligibility comes from the PR itself and the
       # head commit's Dependabot-authored message, which carries a stable
@@ -233,54 +244,60 @@ jobs:
           echo "eligible=true" >> "$GITHUB_OUTPUT"
           echo "decided=true" >> "$GITHUB_OUTPUT"
 
-      # The test-merge of the PR onto the CURRENT tip of main — never the
-      # stale PR head. This is what makes a rebase unnecessary.
-      - name: Check out the PR merged onto current main
+      # Build the test-merge HERE, on the current tip of main. GitHub's own
+      # refs/pull/N/merge is refreshed lazily and was observed still pointing
+      # at a merge against the PREVIOUS main tip more than five minutes after
+      # a push (with `mergeable` cached as true) — trusting it produced a
+      # self-dispatch loop. A local merge is always against the tip we just
+      # fetched, and that tip is the base we re-check before merging.
+      - name: Check out main
         if: steps.gate.outputs.eligible == 'true'
         id: checkout
         uses: actions/checkout@v7
         with:
-          ref: refs/pull/${{ inputs.pr_number }}/merge
+          ref: main
           fetch-depth: 1
 
-      # The merge commit's first parent is the main tip this test-merge was
-      # built on. Recorded now, checked again right before merging.
-      #
-      # It MUST be read from the raw commit object (`git cat-file -p`). This
-      # is a depth-1 checkout, and a shallow clone grafts the boundary commit
-      # to have NO parents in memory: `git log --format=%P`, `HEAD^1` and
-      # `rev-list --parents` all come back empty, which is exactly how the
-      # first live run of this job failed on every PR (reproduced locally:
-      # `%P` -> '' in a --depth 1 clone, cat-file -> the real parent). The
-      # second `sed` consumes all input, so nothing here can SIGPIPE the
-      # producer and trip pipefail the way `head -n 1` can.
-      - name: Record the main tip this verification is against
+      - name: Build the test-merge of the PR onto current main
         if: steps.gate.outputs.eligible == 'true'
         id: base
+        env:
+          SHA: ${{ steps.gate.outputs.sha }}
         run: |
-          base=$(git cat-file -p HEAD | sed -n 's/^parent //p' | sed -n '1p')
-          if [ -z "$base" ]; then
-            echo "reason=could not read the base tip of refs/pull/$PR/merge from the commit object" >> "$GITHUB_OUTPUT"
-            echo "::error::could not determine the base tip of the test-merge"
-            exit 1
-          fi
-          # Right after a merge, GitHub can still hand out the PREVIOUS
-          # test-merge for the next PR (it recomputes asynchronously; the
-          # gate's `mergeable` poll only waits while the value is UNKNOWN).
-          # The Merge step would catch that too, but only after a full
-          # ~10-minute build — the same check is free here.
-          now=$(gh api "repos/$REPO/branches/main" --jq '.commit.sha')
-          if [ "$now" != "$base" ]; then
-            # GitHub refreshes refs/pull/N/merge lazily and can serve a stale
-            # one for a long time after a push to main (observed: >5 min,
-            # with `mergeable` still cached as true). Re-dispatching here
-            # produced a tight self-dispatch loop. Skip this PR for now; the
-            # next content push or PR event evaluates it again.
-            echo "::notice::test-merge is against $base but main is at $now (stale merge ref); skipping PR #$PR this round."
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          echo "Verifying against main tip $base"
+          set -u
+          # A hard failure here (a fetch dying, the PR branch gone) is an
+          # infra error, not a verdict; give the PR comment a real reason.
+          trap 'echo "reason=could not build the test-merge of $SHA onto main (a fetch or merge command failed) — see the run log" >> "$GITHUB_OUTPUT"' ERR
+          skip() { echo "::notice::$1 — skipping PR #$PR this round."; echo "skip=true" >> "$GITHUB_OUTPUT"; exit 0; }
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Dependabot branches are at most a week or two old; 200 commits of
+          # main covers that comfortably. The merge base must lie inside the
+          # fetched history for a shallow merge, so deepen and retry once if
+          # git cannot find it.
+          # HEAD is the main tip actions/checkout just fetched; record it
+          # before anything else touches the tree. Deepen main's history in
+          # place so the merge can find the merge base.
+          base=$(git rev-parse HEAD)
+          git fetch --no-tags --depth=200 origin main
+          git fetch --no-tags --depth=200 origin "pull/$PR/head"
+          head=$(git rev-parse FETCH_HEAD)
+          [ "$head" = "$SHA" ] || skip "PR head moved since the gate (expected $SHA, fetched $head); the run for the new head will re-verify"
+          merge_ok=""
+          for attempt in 1 2; do
+            if out=$(git merge --no-edit "$head" 2>&1); then merge_ok=1; break; fi
+            git merge --abort >/dev/null 2>&1 || true
+            if [ "$attempt" = 1 ] && grep -qi 'unrelated histories' <<<"$out"; then
+              echo "merge base not in shallow history; deepening"
+              git fetch --no-tags --deepen=1000 origin main
+              git fetch --no-tags --deepen=1000 origin "pull/$PR/head"
+              continue
+            fi
+            echo "$out"
+            skip "PR does not merge cleanly onto main ($base); Dependabot will rebase it"
+          done
+          [ -n "$merge_ok" ] || skip "could not build the test-merge"
+          echo "Built test-merge of $head onto main $base: $(git rev-parse HEAD)"
           echo "sha=$base" >> "$GITHUB_OUTPUT"
 
       - name: Setup Node.js
@@ -352,9 +369,20 @@ jobs:
           BASE: ${{ steps.base.outputs.sha }}
         run: |
           set -u
+          # A hand-typed non-numeric `attempt` on a manual dispatch would
+          # otherwise abort under `set -u` after a full verification.
+          case "${ATTEMPT:-0}" in ''|*[!0-9]*) ATTEMPT=0 ;; esac
+          # Bounded: at most 2 self-re-dispatches per PR. main moving during
+          # a 10-minute verification is rare; main moving three times in a
+          # row means something else is pushing continuously, and the next
+          # content push or PR event will pick this PR up again anyway.
           redispatch() {
-            echo "::notice::$1 — re-dispatching PR #$PR to verify against the current tip."
-            gh workflow run dependabot-auto-merge.yml --repo "$REPO" --ref main -f pr_number="$PR" -f chain="$CHAIN"
+            if [ "${ATTEMPT:-0}" -ge 2 ]; then
+              echo "::notice::$1 — already re-dispatched $ATTEMPT times; giving this PR up for this round."
+              exit 0
+            fi
+            echo "::notice::$1 — re-dispatching PR #$PR (attempt $((ATTEMPT + 1))) to verify against the current tip."
+            gh workflow run dependabot-auto-merge.yml --repo "$REPO" --ref main               -f pr_number="$PR" -f chain="$CHAIN" -f attempt="$((ATTEMPT + 1))"
             echo "redispatched=true" >> "$GITHUB_OUTPUT"
             exit 0
           }
@@ -413,7 +441,7 @@ jobs:
         run: |
           reason="$REASON"
           if [ -z "$reason" ] && [ "$CHECKOUT_OUTCOME" = "failure" ]; then
-            reason="could not check out refs/pull/$PR/merge (the PR may conflict with main)"
+            reason="could not check out main (runner or network problem)"
           fi
           [ -n "$reason" ] || reason="unexpected failure before a decision was reached — see the run log"
           marker="<!-- auto-merge head=${SHA:-unknown} main=${BASE:-unknown} -->"
