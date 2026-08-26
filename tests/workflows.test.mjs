@@ -20,6 +20,23 @@ test('there are workflow files to check', () => {
   assert.ok(files.length > 0);
 });
 
+// A depth-1 checkout grafts its boundary commit to have NO parents in
+// memory, so `git log --format=%P`, `HEAD^1` and `rev-list --parents` all
+// return nothing there. dependabot-auto-merge.yml must read the merge
+// base of refs/pull/N/merge from the raw object with `git cat-file -p`.
+// The first live run failed on every PR because of exactly this.
+test('dependabot-auto-merge.yml reads the merge base from the raw commit object', () => {
+  const text = fs.readFileSync(path.join(DIR, 'dependabot-auto-merge.yml'), 'utf8');
+  assert.match(text, /git cat-file -p HEAD \| sed -n 's\/\^parent \/\/p'/);
+  const code = text
+    .split(/\r?\n/)
+    .filter((l) => !l.trimStart().startsWith('#'))
+    .join('\n');
+  for (const bad of ['--format=%P', 'HEAD^1', 'rev-list --parents']) {
+    assert.ok(!code.includes(bad), `${bad} is empty in a shallow clone; do not use it for the base tip`);
+  }
+});
+
 for (const f of files) {
   const text = fs.readFileSync(path.join(DIR, f), 'utf8');
   const lines = text.split(/\r?\n/);

@@ -244,17 +244,26 @@ jobs:
           fetch-depth: 1
 
       # The merge commit's first parent is the main tip this test-merge was
-      # built on. Recorded now, checked again right before merging. `%P`
-      # lists the parent hashes straight from the commit object, so it works
-      # in a depth-1 clone where the parents themselves are not fetched; and
-      # `cut` consumes all its input, so — unlike `head -n 1` — it can never
-      # SIGPIPE the producer and trip pipefail.
+      # built on. Recorded now, checked again right before merging.
+      #
+      # It MUST be read from the raw commit object (`git cat-file -p`). This
+      # is a depth-1 checkout, and a shallow clone grafts the boundary commit
+      # to have NO parents in memory: `git log --format=%P`, `HEAD^1` and
+      # `rev-list --parents` all come back empty, which is exactly how the
+      # first live run of this job failed on every PR (reproduced locally:
+      # `%P` -> '' in a --depth 1 clone, cat-file -> the real parent). The
+      # second `sed` consumes all input, so nothing here can SIGPIPE the
+      # producer and trip pipefail the way `head -n 1` can.
       - name: Record the main tip this verification is against
         if: steps.gate.outputs.eligible == 'true'
         id: base
         run: |
-          base=$(git log -1 --format=%P HEAD | cut -d' ' -f1)
-          [ -n "$base" ] || { echo "::error::could not determine the base tip of the test-merge"; exit 1; }
+          base=$(git cat-file -p HEAD | sed -n 's/^parent //p' | sed -n '1p')
+          if [ -z "$base" ]; then
+            echo "reason=could not read the base tip of refs/pull/$PR/merge from the commit object" >> "$GITHUB_OUTPUT"
+            echo "::error::could not determine the base tip of the test-merge"
+            exit 1
+          fi
           # Right after a merge, GitHub can still hand out the PREVIOUS
           # test-merge for the next PR (it recomputes asynchronously; the
           # gate's `mergeable` poll only waits while the value is UNKNOWN).
@@ -394,7 +403,7 @@ jobs:
           PR_URL: ${{ steps.gate.outputs.url }}
           SHA: ${{ steps.gate.outputs.sha }}
           BASE: ${{ steps.base.outputs.sha }}
-          REASON: ${{ steps.verify.outputs.reason || steps.merge.outputs.reason }}
+          REASON: ${{ steps.verify.outputs.reason || steps.merge.outputs.reason || steps.base.outputs.reason }}
           CHECKOUT_OUTCOME: ${{ steps.checkout.outcome }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
