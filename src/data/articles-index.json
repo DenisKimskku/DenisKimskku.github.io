@@ -1,70 +1,7 @@
 [
   {
-    "slug": "prmpt_sanitizing_sensitive_prompts_for_llms",
-    "title": "Pr\u03b5\u03b5mpt: Sanitizing Sensitive Prompts for LLMs",
-    "date": "2026-08-26",
-    "type": "Paper Review",
-    "description": "Uses FPE and mDP to sanitize tokens in prompts before LLM inference",
-    "tags": [
-      "Privacy"
-    ],
-    "readingTime": 5
-  },
-  {
-    "slug": "pops_from_history_to_mitigation_of_dns_cache_poisoning_attac",
-    "title": "POPS: From History to Mitigation of DNS Cache Poisoning Attacks",
-    "date": "2026-08-26",
-    "type": "Paper Review",
-    "description": "POPS: From History to Mitigation of DNS Cache Poisoning Attacks",
-    "tags": [
-      "Data Poisoning",
-      "Malware",
-      "Vulnerabilities"
-    ],
-    "readingTime": 5
-  },
-  {
-    "slug": "chasing_shadows_pitfalls_in_llm_security_research",
-    "title": "Chasing Shadows: Pitfalls in LLM Security Research",
-    "date": "2026-08-26",
-    "type": "Paper Review",
-    "description": "Chasing Shadows: Pitfalls in LLM Security Research",
-    "tags": [
-      "Vulnerabilities"
-    ],
-    "readingTime": 5
-  },
-  {
-    "slug": "an_llmdriven_fuzzing_framework_for_detecting_logic_instructi",
-    "title": "An LLM-Driven Fuzzing Framework for Detecting Logic Instruction Bugs in PLCs",
-    "date": "2026-08-26",
-    "type": "Paper Review",
-    "description": "Automates fuzzing of PLC logic instructions using an LLM-guided framework",
-    "tags": [
-      "Fuzzing",
-      "Vulnerabilities"
-    ],
-    "readingTime": 5
-  },
-  {
-    "slug": "ai_security_digest__august_26_2026_jailbreaking__fuzzing",
-    "title": "AI Security Digest \u2014 August 26, 2026: Jailbreaking & Fuzzing",
-    "date": "2026-08-26",
-    "type": "News Digest",
-    "description": "This digest covers recent advancements in LLM security, including prompt sanitization using FPE, LLM-driven fuzzing for PLCs, and systemic pitfalls in security research.",
-    "tags": [
-      "LLM Security",
-      "Adversarial Attacks",
-      "Fuzzing",
-      "Prompt Engineering",
-      "Industrial Control Systems",
-      "Privacy Enhancing Techniques"
-    ],
-    "readingTime": 5
-  },
-  {
     "slug": "ai_security_digest__august_27_2026_jailbreaking__data_poison",
-    "title": "AI Security Digest \u2014 August 27, 2026: Jailbreaking & Data Poisoning",
+    "title": "AI Security Digest — August 27, 2026: Jailbreaking & Data Poisoning",
     "date": "2026-08-27",
     "type": "News Digest",
     "description": "This digest covers advanced LLM threats, including role-conditioned data poisoning in multi-agent systems and quantifying the utility loss from successful jailbreaks.",
@@ -76,55 +13,128 @@
       "Agentic AI",
       "Prompt Injection"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "AI Security Digest — August 27, 2026: Jailbreaking & Data Poisoning The focus on adversarial robustness continues to intensify, moving beyond simple prompt injection to complex system level compromises like role conditioned signal propagation and utility degradation following guardrail evasion. Paper Highlights Poisoning Agentic Alpha: Adversarial Vulnerabilities Across Roles and Architectures in Multi Agent Trading Systems — by CheolWon Na, Hao Ni, Lukasz Szpruch. This research demonstrates that role specific adversarial signals can compromise LLM agents within multi agent systems, with Risk Managers and Traders representing high risk failure points for practitioners building autonomous systems. The Jailbreak Tax: How Useful are Your Jailbreak Outputs? — by Kristina Nikolic, Luze Sun, Jie Zhang. This work quantifies the \"jailbreak tax,\" measuring the drop in useful output quality after an evasion technique succeeds, which is vital for assessing the actual risk profile of deployed LLMs with safety guardrails. FlipAttack: Jailbreak LLMs via Flipping — by Yue Liu, Xiaoxin He, Miao Xiong. FlipAttack exploits left side text perturbation to disguise malicious prompts, posing a direct threat to commercially deployed black box LLMs like GPT 4 and Claude 3.5 Sonnet. Industry & News Orca: “The attack surface is evolving faster than the security models around it” calcalistech.com — The assertion that attack surfaces outpace security model development signals an immediate need to reasse"
   },
   {
     "slug": "an_interpretable_ngram_perplexity_threat_model_for_large_lan",
     "title": "An Interpretable N-gram Perplexity Threat Model for Large Language Model Jailbreaks",
     "date": "2026-08-27",
     "type": "Paper Review",
-    "description": "Proposes N-gram LM perplexity as an LLM-agnostic fluency constraint",
+    "description": "The paper effectively isolates the problem of metric heterogeneity in jailbreak evaluations by swapping model-dependent fluency checks for an LLM-agnostic N-gram constraint. However, the focus on bigram alignment feels too narrow.",
     "tags": [
       "Jailbreaking",
       "Adversarial Attacks"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “An Interpretable N gram Perplexity Threat Model for Large Language Model Jailbreaks” (p. 2) Interpretable N gram Perplexity as a Threat Model for LLM Jailbreaks TLDR What : Proposes N gram LM perplexity as an LLM agnostic fluency constraint. Who's at risk : Safety tuned LLMs against adversarial text inputs. Key number : Figure 2 shows that with well constructed adaptive attacks, these high perplexity attacks still outperform attacks designed as low perplexity attacks, such as PAIR. The Gap in Jailbreak Evaluation Current jailbreaking evaluations suffer from metric heterogeneity. Researchers report efficacy using disparate metrics such as fluency, query efficiency, or length, preventing a consistent comparison of attack methods. Furthermore, reliance on LLM based perplexity for filtering inputs creates a setup that is non interpretable, LLM dependent, and computationally expensive to evaluate. This lack of a unified, principled threat model hinders a clear understanding of the jailbreaking attack landscape. The paper addresses this by formalizing the adversarial process within a threat model that constrains the input text to resemble natural language distributions, moving beyond subjective or model specific fluency checks. The N gram LM Perplexity Constraint The core insight introduced here is the shift from model based perplexity to N gram language model (N gram LM) perplexity. An N gram LM is a transparent model of token co occurrence, defined by the p"
   },
   {
     "slug": "flipattack_jailbreak_llms_via_flipping",
     "title": "FlipAttack: Jailbreak LLMs via Flipping",
     "date": "2026-08-27",
     "type": "Paper Review",
-    "description": "FlipAttack: Jailbreak LLMs via Flipping",
+    "description": "The paper frames FlipAttack as a novel way to bypass guardrails by exploiting left-to-right processing bias. However, I think the focus on disguise overlooks the core vulnerability: the LLM's inherent susceptibility to instruction manipulation, regardless of how neatly the…",
     "tags": [
       "Jailbreaking"
     ],
-    "readingTime": 5
-  },
-  {
-    "slug": "the_jailbreak_tax_how_useful_are_your_jailbreak_outputs",
-    "title": "The Jailbreak Tax: How Useful are Your Jailbreak Outputs?",
-    "date": "2026-08-27",
-    "type": "Paper Review",
-    "description": "Defines the 'jailbreak tax,' measuring utility drop after evasion",
-    "tags": [
-      "Jailbreaking"
-    ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “FlipAttack: Jailbreak LLMs via Flipping” (p. 5) FlipAttack: Jailbreaking LLMs via Left Side Prompt Perturbation TLDR What: Uses left side text perturbation to disguise harmful prompts. Who's at risk: Black box LLMs deployed commercially (e.g., GPT 4, Claude 3.5 Sonnet). Key number: It achieves a 22.33% improvement in the average attack success rate compared to the runner up method. Leveraging Autoregressive Weakness A core assumption in current LLM safety research often overlooks the fundamental mechanics of token prediction. Existing black box methods, such as ReNeLLM, rely on iterative interaction, which is costly in terms of tokens and time. Conversely, white box attacks like AutoDAN demand access to model weights, limiting their use against closed systems. FlipAttack targets this gap by exploiting the autoregressive nature of LLMs, which implies a left to right text comprehension bias. Analysis shows that introducing a perturbation to the left side of a sentence significantly degrades the LLMs' ability to comprehend the text compared to perturbations added to the right. This structural weakness allows the attack to function without iterative querying or internal model access, making it inherently more applicable to commercial, black box environments. Prompt Disguise via Self Contained Flipping The central innovation of FlipAttack is the Attack Disguise Module, which constructs the stealthy prompt entirely from the original harmful request $X$ withou"
   },
   {
     "slug": "poisoning_agentic_alpha_adversarial_vulnerabilities_across_r",
     "title": "Poisoning Agentic Alpha: Adversarial Vulnerabilities Across Roles and Architectures in Multi-Agent Trading Systems",
     "date": "2026-08-27",
     "type": "Paper Review",
-    "description": "Poisoning Agentic Alpha: Adversarial Vulnerabilities Across Roles and Architectures in Multi-Agent Trading Systems",
+    "description": "The paper correctly points out that architectural complexity, like the centralized topology yielding an APS of 1.00, does not guarantee security. However, the framing seems to understate the danger inherent in the semantic nature of the compromise.",
     "tags": [
       "Prompt Injection",
       "Jailbreaking",
       "Data Poisoning",
       "Adversarial Attacks"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Poisoning Agentic Alpha: Adversarial Vulnerabilities Across Roles and Architectures in Multi Agent Trading…” (p. 2) Role Conditioned Adversarial Signal Propagation in Multi Agent Trading Systems TLDR Role specific adversarial signals compromise LLM agents. Risk Managers and Traders are high risk failure points. Jailbreaking has a high ASR of 97.2% but a median financial impact of $0 per success. The Inter Agent Communication Topology The move toward multi agent trading systems, where specialized agents like Analysts, Researchers, Traders, and Risk Managers collaborate, introduces new attack surfaces. While these systems gain effectiveness through structured inter agent communication, this same communication allows adversarial signals to propagate from a compromised source until they influence the final trading decision, potentially leading to financial loss. Prior work often focused on single agent settings or assumed privileged, white box access to system internals. This paper restricts the adversary to a more practical, low barrier threat model: corrupting the source data or the prompts agents consume. The core gap addressed here is understanding how a compromised signal enters—which functional role is targeted—and how far it survives through the system's communication and aggregation structure. The framework decomposes the pipeline into four roles, matching a plausible attack to each role's specific information interface. Role Specific Attack Surface"
+  },
+  {
+    "slug": "the_jailbreak_tax_how_useful_are_your_jailbreak_outputs",
+    "title": "The Jailbreak Tax: How Useful are Your Jailbreak Outputs?",
+    "date": "2026-08-27",
+    "type": "Paper Review",
+    "description": "where $\\text{BaseUtil}$ is the utility of the original, unaligned model, and $\\text{JailUtil}$ is the utility of the model after the jailbreak succeeds.",
+    "tags": [
+      "Jailbreaking"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “The Jailbreak Tax: How Useful are Your Jailbreak Outputs?” (p. 3) The Jailbreak Tax: Quantifying Utility Loss After Guardrail Evasion TLDR What : Defines the \"jailbreak tax,\" measuring utility drop after evasion. Who's at risk : LLMs deployed with safety guardrails for sensitive tasks. Key number : Techniques that substantially modify instructions, such as PAIR (Chao et al., 2023) or TAP (Mehrotra et al., 2023), lead to large degradations in accuracy—up to a 92% reduction for mathematical reasoning. The Problem with Utility Assessment Security research often focuses on whether a jailbreak succeeds in bypassing guardrails. While achieving a non refusal response is the primary metric, this approach ignores a critical question: is the resulting output actually useful? If an attacker successfully coerces a model into generating bomb instructions, are those instructions coherent or merely gibberish? Current evaluation methods rely heavily on expert human judgment or LLM \"judges,\" both of which are fraught with challenges. Determining if a harmful output is \"good\" requires specialized expertise, and without a baseline of the unaligned model's performance, we cannot quantify the capability degradation caused by the jailbreak itself. This paper attacks this gap by shifting the focus from harmfulness to usability on objective tasks. Jailbreak Tax The central insight introduced here is the concept of the jailbreak tax ($ text{JTax}$). This metric quantifies the f"
+  },
+  {
+    "slug": "ai_security_digest__august_26_2026_jailbreaking__fuzzing",
+    "title": "AI Security Digest — August 26, 2026: Jailbreaking & Fuzzing",
+    "date": "2026-08-26",
+    "type": "News Digest",
+    "description": "This digest covers recent advancements in LLM security, including prompt sanitization using FPE, LLM-driven fuzzing for PLCs, and systemic pitfalls in security research.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Fuzzing",
+      "Prompt Engineering",
+      "Industrial Control Systems",
+      "Privacy Enhancing Techniques"
+    ],
+    "readingTime": 5,
+    "searchContent": "AI Security Digest — August 26, 2026: Jailbreaking & Fuzzing The recent chatter surrounding AI model defenses often overstates the immediate threat posed by novel adversarial prompts while understating the systemic risks present in the underlying research methodologies. Paper Highlights Prεεmpt: Sanitizing Sensitive Prompts for LLMs — by Amrita Roy Chowdhury 0001, David Glukhov, Divyam Anshumaan. This work employs Formal Privacy Enhancing Techniques (FPE) and differential privacy (mDP) to clean tokens within prompts before they reach an LLM. Practitioners using proprietary LLM APIs with sensitive inputs should examine this approach for privacy mitigation. An LLM Driven Fuzzing Framework for Detecting Logic Instruction Bugs in PLCs — by Jiaxing Cheng, Ming Zhou 0010, Haining Wang 0001. This framework automates the fuzzing of Programmable Logic Controller (PLC) logic instructions guided by an LLM. Security teams managing industrial control systems should note this demonstration of AI augmenting critical infrastructure testing. Chasing Shadows: Pitfalls in LLM Security Research — by Jonathan Evertz, Niklas Risse, Nicolai Neuer. The paper identifies nine systemic weaknesses spanning the entire pipeline of LLM security investigation. Any researcher applying LLMs to security tasks needs to review these pitfalls to ensure valid findings. Industry & News Alice Raises $140M to Expand AI Model Defenses and Enterprise Guardrails SecurityWeek — The significant funding indicates enterpris"
+  },
+  {
+    "slug": "an_llmdriven_fuzzing_framework_for_detecting_logic_instructi",
+    "title": "An LLM-Driven Fuzzing Framework for Detecting Logic Instruction Bugs in PLCs",
+    "date": "2026-08-26",
+    "type": "Paper Review",
+    "description": "The paper presents a compelling marriage of LLMs and formal control-flow modeling to attack proprietary PLC firmware. However, I find the reliance on the LLM to accurately construct the Semantic Dependency Graph (SDG) to be an unaddressed scaling risk.",
+    "tags": [
+      "Fuzzing",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “An LLM Driven Fuzzing Framework for Detecting Logic Instruction Bugs in PLCs” (p. 3) LLM Driven Fuzzing for Logic Instruction Bugs in PLC Firmware TLDR What : Automates fuzzing of PLC logic instructions using an LLM guided framework. Who's at risk : Industrial control systems and critical infrastructure relying on PLCs. Key number : Uncovered 19 instruction level bugs, including four previously undisclosed vulnerabilities, across six commercial PLC models from three vendors. Semantics Aware Seed Program Generation The prerequisite for effective fuzzing in Programmable Logic Controllers (PLCs) is the ability to generate test programs that respect the underlying hardware and control flow semantics. Current methods face significant hurdles because PLC firmware is proprietary; static analysis tools cannot reliably recover code boundaries, data layouts, or calling conventions necessary to model instruction semantics. This inability prevents the inference of the data and control flow dependencies required for instruction level bug detection. Fuzzing is thus chosen as the execution based approach, but it introduces challenges related to synthesizing valid, controllable, and resettable seed programs at scale, as these behaviors vary widely across vendors. LogicFuzz addresses this by constructing a semantic dependency graph (SDG). This SDG captures both operational semantics and inter instruction dependencies within the PLC code. By leveraging the SDG alongside "
+  },
+  {
+    "slug": "chasing_shadows_pitfalls_in_llm_security_research",
+    "title": "Chasing Shadows: Pitfalls in LLM Security Research",
+    "date": "2026-08-26",
+    "type": "Paper Review",
+    "description": "This review correctly identifies that the current state of LLM security research is hampered by systemic pipeline issues, not just novel attack vectors. However, the framing leans too heavily on the existence of these pitfalls rather than the feasibility of remediation.",
+    "tags": [
+      "Vulnerabilities"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Chasing Shadows: Pitfalls in LLM Security Research” (p. 2) Systemic Gaps in LLM Security Research Validity TLDR Identifies nine pipeline pitfalls in LLM security research. Affects all researchers using LLMs for security tasks. Every reviewed paper contained at least one identified pitfall. The Pipeline’s Blind Spots The field of LLM security is rapidly maturing, applying models to tasks like vulnerability detection and code analysis. Yet, the established paradigms of rigor from traditional machine learning do not map cleanly onto LLM workflows. The core issue this paper addresses is that current research often fails to account for systemic frailties introduced across the entire model lifecycle—from data acquisition to final evaluation. While prior work covered general ML failures, LLMs introduce unique risks tied to their scale and natural language interface. Specifically, the paper shows that the reliance on massive, often opaque datasets, coupled with the emergent complexities of prompting, creates blind spots. For instance, the process of fine tuning frequently relies on data itself generated by LLMs, which is a risk not sufficiently captured by older ML failure mode analyses. The Nine Pitfalls Across the LLM Pipeline This research maps these risks onto the LLM pipeline, identifying nine specific pitfalls. These are not merely isolated bugs but structural issues that compromise validity. For example, the reliance on LLM as a judge procedures introduc"
+  },
+  {
+    "slug": "pops_from_history_to_mitigation_of_dns_cache_poisoning_attac",
+    "title": "POPS: From History to Mitigation of DNS Cache Poisoning Attacks",
+    "date": "2026-08-26",
+    "type": "Paper Review",
+    "description": "The reliance on the TC flag to force a UDP-to-TCP transition is a solid technical pivot away from probabilistic guessing. However, I find the article's framing overly optimistic about the scope of the solution.",
+    "tags": [
+      "Data Poisoning",
+      "Malware",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “POPS: From History to Mitigation of DNS Cache Poisoning Attacks” (p. 8) POPS: Statistical DNS Poisoning Mitigation via TC Flag Enforcement TLDR POPS detects statistical DNS poisoning attacks. Protects DNS resolvers against prevalent network based attacks. The simulated attacks still succeed with a probability of 0.0076%. The Statistical Attack Surface DNS remains a fundamental internet service, yet its reliance on DNS introduces persistent vulnerabilities. DNS cache poisoning involves an attacker injecting false mappings into a resolver’s cache, redirecting users to malicious endpoints for phishing or malware delivery. The common variant focuses on spoofing authoritative responses by guessing parameters like the DNS Transaction ID (TXID) and source port. Prior defenses, such as DNS Security Extensions (DNSSEC), suffer from low global adoption. Reactive patching based on CVEs is insufficient against novel threats. Statistical attacks, like Type S (where the attacker sends numerous combinations of port/TXID) or Type SFrag (using fragmentation), exploit the inherent randomness and validation gaps in the UDP transport layer. These methods have been demonstrated across many years of published attacks, with required packet counts ranging from 216 to much higher values depending on the specific attack variant. The TC Flag as a Non Guessing Gate The core concept POPS introduces is leveraging the TCP flag (TC flag) in the DNS header to fundamentally change how s"
+  },
+  {
+    "slug": "prmpt_sanitizing_sensitive_prompts_for_llms",
+    "title": "Prεεmpt: Sanitizing Sensitive Prompts for LLMs",
+    "date": "2026-08-26",
+    "type": "Paper Review",
+    "description": "The paper correctly identifies the practical chasm between training-time privacy work and the immediate threat posed by inference-time data leakage in proprietary APIs. However, the reliance on token-level sanitization fundamentally misunderstands how contextual data can leak.",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5,
+    "searchContent": "Prϵϵmpt: Formally Bounding Inference Time Privacy Leaks in LLMs TLDR What : Uses FPE and mDP to sanitize tokens in prompts before LLM inference. Who's at risk : Users inputting sensitive data into proprietary LLM APIs. Key number : For example, responses based on Prϵϵmpt processed reference texts used in long context Q/A has a similarity score of 0.934 compared to responses based on unsanitized text. The Inference Time Privacy Gap The use of proprietary Large Language Models (LLMs) exposes sensitive information contained within prompts during the inference stage. Unlike training data memorization risks, the threat here stems directly from the model owner observing natural language inputs, which can contain Personally Identifiable Information (PII) like SSNs or credit card numbers. Prior work has largely focused on training time privacy mechanisms, which fail to address these specific inference time risks. Existing solutions that aim for prompt privacy, such as those relying on homomorphic encryption or secure multi party computation, are computationally expensive in practice. This leaves a practical gap: how to achieve formal privacy guarantees for prompts without making the system unusable. Token Categorization via Formal Guarantees Prϵϵmpt addresses this gap by introducing a cryptographically inspired prompt sanitizer that classifies sensitive tokens into two distinct categories, each requiring a different privacy primitive. The first category consists of tokens where the L"
   },
   {
     "slug": "ai_security_digest__august_25_2026_adversarial_attacks__malw",
