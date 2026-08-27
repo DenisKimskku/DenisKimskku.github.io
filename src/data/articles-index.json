@@ -1,5 +1,71 @@
 [
   {
+    "slug": "ai_security_digest__august_28_2026_jailbreaking__adversarial",
+    "title": "AI Security Digest — August 28, 2026: Jailbreaking & Adversarial Attacks",
+    "date": "2026-08-28",
+    "type": "News Digest",
+    "description": "This digest covers recent breakthroughs in AI security, including timing side-channel attacks on DALL·E, multi-turn LLM jailbreaks, and private retrieval methods for RAG systems.",
+    "tags": [
+      "LLM Security",
+      "Jailbreaking",
+      "Adversarial Attacks",
+      "Side-Channel Attacks",
+      "RAG",
+      "Text-to-Image"
+    ],
+    "readingTime": 5,
+    "searchContent": "AI Security Digest — August 28, 2026: Jailbreaking & Adversarial Attacks DALL·E’s safety mechanisms are proven vulnerable to timing side channel attacks, revealing that black box Text to Image systems are susceptible to advanced reverse engineering. Paper Highlights Exposing the Guardrails: Reverse Engineering and Jailbreaking Safety Filters in DALL·E Text to Image Pipelines — Corban Villa, Muhammad Shujaat Mirza, Christina Pöpper. This work demonstrates how timing analysis can reverse unknown, cascading safety filters within Text to Image pipelines. Practitioners must account for side channel leakage when deploying or auditing proprietary visual generation systems. Pointing the Way, Hiding the Destination: Practical Private Dense Retrieval at Scale — Peichun Hua, Danyang Chen, Junan Zhang. The research introduces a method using learned deep hashing to create a private shortlist, minimizing cryptographic exposure. Organizations using Retrieval Augmented Generation (RAG) over sensitive, provider held data should review their retrieval layers. Great, Now Write an Article About That: The Crescendo Multi Turn LLM Jailbreak Attack — Mark Russinovich, Ahmed Salem 0001, Ronen Eldan. Crescendo exploits benign, escalating multi turn dialogue to successfully bypass the alignment of various Large Language Models (LLMs). Systems like ChatGPT, Gemini Pro, and Anthropic Chat are exposed to this conversational manipulation vector. Industry & News Alice Raises $140M: Decade of Adversarial Da"
+  },
+  {
+    "slug": "exposing_the_guardrails_reverseengineering_and_jailbreaking",
+    "title": "Exposing the Guardrails: Reverse-Engineering and Jailbreaking Safety Filters in DALL·E Text-to-Image Pipelines",
+    "date": "2026-08-28",
+    "type": "Paper Review",
+    "description": "The paper does a solid job mapping out how the shift to LLM-based prompt revision in DALL·E 3 introduces novel attack surfaces compared to DALL·E 2's static filters.",
+    "tags": [
+      "Jailbreaking"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Exposing the Guardrails: Reverse Engineering and Jailbreaking Safety Filters in DALL·E Text to Image Pipelines” (p. 3) Timing Side Channel Reverse Engineering of DALL·E Text to Image Safety Filters TLDR Timing analysis reverses unknown, cascading safety filters in T2I pipelines. Black box T2I systems like DALL·E are vulnerable to side channel attacks. DALL·E 3 uses LLM revision, which creates exploitable discrepancies. The Divergence Between DALL·E 2 and DALL·E 3 Filtering State of the art text to image (T2I) models are deployed across numerous real world applications, necessitating robust safety guardrails to prevent the generation of harmful content, such as NSFW or hate speech. Prior red teaming efforts, particularly those focused on open source models like Stable Diffusion, indicated that security by obscurity approaches were insufficient. The core gap this paper addresses is the lack of knowledge regarding the specific, multi stage implementation of safety filters in closed, enterprise grade models like DALL·E. While DALL·E 2 utilizes conventional blocklist based filtering, DALL·E 3 introduces a significant architectural shift: an LLM based prompt revision stage intended to both improve quality and filter harmful content. The paper’s initial investigation using differential attacks confirms these mechanisms are distinct, finding that DALL·E 2 uses blocklist based filtering, whereas DALL·E 3 employs an LLM based prompt revision stage to improve imag"
+  },
+  {
+    "slug": "great_now_write_an_article_about_that_the_crescendo_multitur",
+    "title": "Great, Now Write an Article About That: The Crescendo Multi-Turn LLM Jailbreak Attack",
+    "date": "2026-08-28",
+    "type": "Paper Review",
+    "description": "The authors effectively demonstrate that conversational momentum is a powerful vector for alignment bypass, moving the discussion beyond simple prompt injection detection. However, the paper understates the risk posed by this technique when applied to agentic systems.",
+    "tags": [
+      "Jailbreaking"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Great, Now Write an Article About That: The Crescendo Multi Turn LLM Jailbreak Attack” (p. 3) Crescendo: A Multi Turn Jailbreak Exploiting LLM Contextual Following TLDR What : Crescendo uses benign, escalating multi turn dialogue to bypass LLM alignment. Who's at risk : Models like ChatGPT, Gemini Pro, Gemini Ultra, LlaMA 2 70b, LlaMA 3 70b Chat, and Anthropic Chat. Key number : Crescendomation achieves 29 61% higher performance on GPT 4 and 49 71% on Gemini Pro. The Foot in the Door Psyche Current LLM safety alignment relies heavily on defending against direct, malicious inputs, often succeeding against single turn jailbreak attempts. Attack vectors like optimization based jailbreaks require white box access, limiting their applicability against black box deployments. Textual jailbreaks, such as those involving crafted instructions, can often be countered once the malicious content is identified by input filters. The gap this paper targets is the reliance of current defenses on detecting overtly harmful prompts. Crescendo exploits the LLM's tendency to follow conversational patterns and prioritize recent, self generated text. Instead of presenting a direct, prohibited request, Crescendo starts innocuously, building conversational momentum until the model is incrementally steered toward the forbidden output. This incremental, seemingly benign progression makes the attack harder to detect than a single, explicit malicious query. The Crescendo Effect on T"
+  },
+  {
+    "slug": "pointing_the_way_hiding_the_destination_practical_private_de",
+    "title": "Pointing the Way, Hiding the Destination: Practical Private Dense Retrieval at Scale",
+    "date": "2026-08-28",
+    "type": "Paper Review",
+    "description": "The paper presents a technically interesting way to tackle the scale problem in private RAG, but I find its reliance on directional metric differential privacy (mDP) for the coarse filtering step to be an over-optimistic assumption regarding real-world threat models.",
+    "tags": [
+      "RAG",
+      "Privacy"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Pointing the Way, Hiding the Destination: Practical Private Dense Retrieval at Scale” (p. 7) Pointing the Way, Hiding the Destination: Practical Private Dense Retrieval at Scale TLDR What : Uses learned deep hashing for a private shortlist, confining crypto to few candidates. Who's at risk : Deployments using RAG over sensitive, provider held corpora. Key number : On the full 2.68M passage NQ corpus over a 10 Gbps link, our protocol only adds 0.73 seconds, or 10%, to a 128 token Qwen3 32B RAG pipeline. The Gap Between Cryptography and Corpus Scale Hosted retrieval augmented generation (RAG) relies on dense retrieval, where queries and documents are mapped to high dimensional vectors for nearest neighbor search. When organizations use RAG over sensitive data—like legal or medical archives—both the corpus and the user queries become secrets. Current cryptographic defenses clash with the scale of modern dense embeddings. Methods like Homomorphic Encryption (HE) and Multi Party Computation (MPC) impose massive computational overhead. Conversely, ORAM based methods demand high user side computation and storage. Furthermore, while Trusted Execution Environments (TEEs) mitigate some issues, they leave access pattern and microarchitectural leakage risks. The existing methods either make the process too slow by processing the entire corpus cryptographically, or they sacrifice retrieval quality by only scanning a small, unverified subset of the corpus. This paper"
+  },
+  {
+    "slug": "selfdefend_llms_can_defend_themselves_against_jailbreaking_i",
+    "title": "SelfDefend: LLMs Can Defend Themselves against Jailbreaking in a Practical Manner",
+    "date": "2026-08-28",
+    "type": "Paper Review",
+    "description": "The reliance on data distillation to transfer the robustness of a proprietary model like GPT-4 to an open-source defense model presents a significant, unstated risk. The paper empirically shows that the tuned models are robust to adaptive attacks and prompt injections.",
+    "tags": [
+      "Jailbreaking"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “SelfDefend: LLMs Can Defend Themselves against Jailbreaking in a Practical Manner” (p. 6) SelfDefend: Shadow LLM Defense for Practical Jailbreak Mitigation TLDR What : Uses a shadow LLM to detect harmful prompt intentions. Who's at risk : Deployments using GPT 3.5/4, Claude, Llama 2 7b/13b, Mistral. Key number : GPT 4 based SELFDEFEND lowers the ASR to an extremely low average of 0.050. The Gap in Practical Defenses Current defenses against jailbreaking struggle with three practical hurdles: handling the breadth of attacks, maintaining low latency, and ensuring broad compatibility. While researchers have proposed many mechanisms, they often fail to satisfy all design objectives. For instance, many plugin based defenses, like Perplexity [4,27], inherently incur additional delays to user prompts ($ text{O2}: text{✗}$), making them impractical for high throughput systems. Conversely, model based defenses, which avoid delay ($ text{O2}: text{✔}$), typically require white box access, limiting their application to closed source systems ($ text{O4}: text{✗}$). Furthermore, many techniques do not adequately cover advanced indirect attacks ($ text{O1}: text{H }$), leaving significant blind spots in defense coverage. Shadow LLM for Dual Layer Protection The core insight of SELFDEFEND is adapting the traditional security concept of shadow stacks to the LLM context. Instead of just modifying the target LLM, the framework establishes a shadow LLM instance, $ text{LL"
+  },
+  {
     "slug": "ai_security_digest__august_27_2026_jailbreaking__data_poison",
     "title": "AI Security Digest — August 27, 2026: Jailbreaking & Data Poisoning",
     "date": "2026-08-27",
