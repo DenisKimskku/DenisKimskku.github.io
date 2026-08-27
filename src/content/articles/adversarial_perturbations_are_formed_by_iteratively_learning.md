@@ -6,6 +6,7 @@ description: "Iteratively optimizing linear combinations of right singular vecto
 tags: ["Adversarial Attacks", "Vulnerabilities"]
 readingTime: 5
 headerImage: "/images/news/adversarial_perturbations_are_formed_by_iteratively_learning.jpg"
+paperUrl: "https://proceedings.mlr.press/v267/paniagua25a.html"
 ---
 
 ![Adversarial Perturbations Are Formed by Iteratively Learning Linear Combinations of the Right Singular Vectors of the Adversarial Jacobian](/images/news/adversarial_perturbations_are_formed_by_iteratively_learning.jpg)

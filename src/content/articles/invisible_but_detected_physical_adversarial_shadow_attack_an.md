@@ -6,6 +6,7 @@ description: "Manipulates naturally occurring LiDAR shadows using specialized ma
 tags: ["Adversarial Attacks"]
 readingTime: 5
 headerImage: "/images/news/invisible_but_detected_physical_adversarial_shadow_attack_an.jpg"
+paperUrl: "https://www.usenix.org/conference/usenixsecurity25/presentation/kobayashi"
 ---
 
 ![Invisible but Detected: Physical Adversarial Shadow Attack and Defense on LiDAR Object Detection](/images/news/invisible_but_detected_physical_adversarial_shadow_attack_an.jpg)

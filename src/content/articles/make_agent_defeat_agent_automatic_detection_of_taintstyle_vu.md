@@ -6,6 +6,7 @@ description: "AgentFuzz, a directed greybox fuzzing framework for LLM agents"
 tags: ["AI Agents", "Fuzzing", "Vulnerabilities"]
 readingTime: 5
 headerImage: "/images/news/make_agent_defeat_agent_automatic_detection_of_taintstyle_vu.jpg"
+paperUrl: "https://www.usenix.org/conference/usenixsecurity25/presentation/liu-fengyu"
 ---
 
 ![Make Agent Defeat Agent: Automatic Detection of Taint-Style Vulnerabilities in LLM-based Agents](/images/news/make_agent_defeat_agent_automatic_detection_of_taintstyle_vu.jpg)

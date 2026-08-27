@@ -6,6 +6,7 @@ description: "Single and class-targeted poisoning of multimodal knowledge databa
 tags: ["RAG", "Data Poisoning", "Vulnerabilities"]
 readingTime: 5
 headerImage: "/images/news/poisonedeye_knowledge_poisoning_attack_on_retrievalaugmented.jpg"
+paperUrl: "https://proceedings.mlr.press/v267/zhang25da.html"
 ---
 
 ![PoisonedEye: Knowledge Poisoning Attack on Retrieval-Augmented Generation based Large Vision-Language Models](/images/news/poisonedeye_knowledge_poisoning_attack_on_retrievalaugmented.jpg)

@@ -6,6 +6,7 @@ description: "InverTune identifies and removes latent backdoor triggers from MCL
 tags: ["Data Poisoning", "Backdoors", "Adversarial Attacks"]
 readingTime: 5
 headerImage: "/images/news/invertune_a_backdoor_defense_method_for_multimodal_contrasti.jpg"
+paperUrl: "https://www.ndss-symposium.org/ndss-paper/invertune-a-backdoor-defense-method-for-multimodal-contrastive-learning-via-backdoor-adversarial-correlation-analysis/"
 ---
 
 ![InverTune: A Backdoor Defense Method for Multimodal Contrastive Learning via Backdoor-Adversarial Correlation Analysis](/images/news/invertune_a_backdoor_defense_method_for_multimodal_contrasti.jpg)

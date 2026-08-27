@@ -6,6 +6,7 @@ description: "Decompiling the Synergy: An Empirical Study of Human-LLM Teaming i
 tags: ["Binary Analysis"]
 readingTime: 5
 headerImage: "/images/news/decompiling_the_synergy_an_empirical_study_of_humanllm_teami.jpg"
+paperUrl: "https://www.ndss-symposium.org/ndss-paper/decompiling-the-synergy-an-empirical-study-of-human-llm-teaming-in-software-reverse-engineering/"
 ---
 
 ![Decompiling the Synergy: An Empirical Study of Human-LLM Teaming in Software Reverse Engineering](/images/news/decompiling_the_synergy_an_empirical_study_of_humanllm_teami.jpg)

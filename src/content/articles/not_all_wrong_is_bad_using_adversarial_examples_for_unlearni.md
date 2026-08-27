@@ -6,6 +6,7 @@ description: "AMUN uses adversarial examples to reduce model confidence on forgo
 tags: ["Adversarial Attacks", "Privacy", "Machine Unlearning"]
 readingTime: 5
 headerImage: "/images/news/not_all_wrong_is_bad_using_adversarial_examples_for_unlearni.jpg"
+paperUrl: "https://proceedings.mlr.press/v267/ebrahimpour-boroojeny25a.html"
 ---
 
 ![Not All Wrong is Bad: Using Adversarial Examples for Unlearning](/images/news/not_all_wrong_is_bad_using_adversarial_examples_for_unlearni.jpg)

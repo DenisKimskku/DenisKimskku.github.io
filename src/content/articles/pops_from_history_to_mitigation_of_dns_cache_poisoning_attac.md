@@ -6,6 +6,7 @@ description: "POPS: From History to Mitigation of DNS Cache Poisoning Attacks"
 tags: ["Data Poisoning", "Malware", "Vulnerabilities"]
 readingTime: 5
 headerImage: "/images/news/pops_from_history_to_mitigation_of_dns_cache_poisoning_attac.jpg"
+paperUrl: "https://www.usenix.org/conference/usenixsecurity25/presentation/afek"
 ---
 
 ![POPS: From History to Mitigation of DNS Cache Poisoning Attacks](/images/news/pops_from_history_to_mitigation_of_dns_cache_poisoning_attac.jpg)

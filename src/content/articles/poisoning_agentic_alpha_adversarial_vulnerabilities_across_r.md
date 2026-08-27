@@ -6,6 +6,7 @@ description: "Poisoning Agentic Alpha: Adversarial Vulnerabilities Across Roles 
 tags: ["Prompt Injection", "Jailbreaking", "Data Poisoning", "Adversarial Attacks"]
 readingTime: 5
 headerImage: "/images/news/poisoning_agentic_alpha_adversarial_vulnerabilities_across_r.jpg"
+paperUrl: "http://arxiv.org/abs/2608.24069v1"
 ---
 
 ![Poisoning Agentic Alpha: Adversarial Vulnerabilities Across Roles and Architectures in Multi-Agent Trading Systems](/images/news/poisoning_agentic_alpha_adversarial_vulnerabilities_across_r.jpg)
@@ -16,13 +17,13 @@ headerImage: "/images/news/poisoning_agentic_alpha_adversarial_vulnerabilities_a
 ## TLDR
 *   Role-specific adversarial signals compromise LLM agents.
 *   Risk Managers and Traders are high-risk failure points.
-*   Jailbreaking has a high ASR of 97.2% but a median financial impact of $\$0/\text{succ}$.
+*   Jailbreaking has a high ASR of 97.2% but a median financial impact of \$0 per success.
 
 ## The Inter-Agent Communication Topology
 The move toward multi-agent trading systems, where specialized agents like Analysts, Researchers, Traders, and Risk Managers collaborate, introduces new attack surfaces. While these systems gain effectiveness through structured inter-agent communication, this same communication allows adversarial signals to propagate from a compromised source until they influence the final trading decision, potentially leading to financial loss. Prior work often focused on single-agent settings or assumed privileged, white-box access to system internals. This paper restricts the adversary to a more practical, low-barrier threat model: corrupting the source data or the prompts agents consume. The core gap addressed here is understanding *how* a compromised signal enters—which functional role is targeted—and *how far* it survives through the system's communication and aggregation structure. The framework decomposes the pipeline into four roles, matching a plausible attack to each role's specific information interface.
 
 ## Role-Specific Attack Surfaces
-Each functional role in the trading pipeline presents a distinct attack interface, leading to different viable adversarial scenarios. For instance, Analysts, who ingest untrusted external text, are targeted via Data Poisoning or Indirect Prompt Injection. Researchers, who weigh competing arguments, face a Persuasive Adversary designed to sway their debate position. Traders and Risk Managers, which act on upstream conclusions, are targeted via Objective Hijacking and Jailbreaking, respectively. The success rates vary dramatically by role. Table 1 shows that Jailbreaking against the Risk Manager achieved an Attack Success Rate (ASR) of 97.2% but a median financial impact of $\$0/\text{succ}$. This contrasts sharply with Data Poisoning against the Analyst, which reached 21.8% (SELL-targeted). This disparity demonstrates that the mechanism of compromise is highly dependent on the role's specific task and input interface.
+Each functional role in the trading pipeline presents a distinct attack interface, leading to different viable adversarial scenarios. For instance, Analysts, who ingest untrusted external text, are targeted via Data Poisoning or Indirect Prompt Injection. Researchers, who weigh competing arguments, face a Persuasive Adversary designed to sway their debate position. Traders and Risk Managers, which act on upstream conclusions, are targeted via Objective Hijacking and Jailbreaking, respectively. The success rates vary dramatically by role. Table 1 shows that Jailbreaking against the Risk Manager achieved an Attack Success Rate (ASR) of 97.2% but a median financial impact of \$0 per success. This contrasts sharply with Data Poisoning against the Analyst, which reached 21.8% (SELL-targeted). This disparity demonstrates that the mechanism of compromise is highly dependent on the role's specific task and input interface.
 
 ## Communication Design and Adversarial Signal Preservation Score
 The structural analysis examines how different communication topologies—linear, centralized, decentralized, and hybrid—affect the survival of an adversarial signal, using the Adversarial Signal Preservation Score (APS) as an analytical lens. The APS quantifies how much of the corrupted signal reaches the decision node. For example, the centralized topology resulted in an APS of 1.00, indicating maximum signal preservation, whereas the decentralized topology yielded an APS of 0.00. The paper provides a closed-form expression for APS derived from the aggregation steps before the decision:

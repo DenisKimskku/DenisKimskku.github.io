@@ -6,6 +6,7 @@ description: "Neural Cryptographic Services (NCS) is an active neuro-symbolic se
 tags: ["AI Security"]
 readingTime: 10
 headerImage: "/images/news/from_neural_intent_to_cryptographic_authorization_governing_.jpg"
+paperUrl: "http://arxiv.org/abs/2607.15596v1"
 ---
 
 ![From Neural Intent to Cryptographic Authorization: Governing Agentic Workflows](/images/news/from_neural_intent_to_cryptographic_authorization_governing_.jpg)

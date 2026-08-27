@@ -6,6 +6,7 @@ description: "Automates fuzzing of PLC logic instructions using an LLM-guided fr
 tags: ["Fuzzing", "Vulnerabilities"]
 readingTime: 5
 headerImage: "/images/news/an_llmdriven_fuzzing_framework_for_detecting_logic_instructi.jpg"
+paperUrl: "https://www.ndss-symposium.org/ndss-paper/an-llm-driven-fuzzing-framework-for-detecting-logic-instruction-bugs-in-plcs/"
 ---
 
 ![An LLM-Driven Fuzzing Framework for Detecting Logic Instruction Bugs in PLCs](/images/news/an_llmdriven_fuzzing_framework_for_detecting_logic_instructi.jpg)

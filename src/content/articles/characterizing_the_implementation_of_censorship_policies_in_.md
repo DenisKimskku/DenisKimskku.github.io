@@ -6,6 +6,7 @@ description: "Characterizing the Implementation of Censorship Policies in Chines
 tags: ["AI Security"]
 readingTime: 5
 headerImage: "/images/news/characterizing_the_implementation_of_censorship_policies_in_.jpg"
+paperUrl: "https://www.ndss-symposium.org/ndss-paper/characterizing-the-implementation-of-censorship-policies-in-chinese-llm-services/"
 ---
 
 ![Characterizing the Implementation of Censorship Policies in Chinese LLM Services](/images/news/characterizing_the_implementation_of_censorship_policies_in_.jpg)

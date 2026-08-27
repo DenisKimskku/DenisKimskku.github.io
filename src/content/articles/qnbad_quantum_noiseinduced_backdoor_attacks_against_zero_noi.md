@@ -6,6 +6,7 @@ description: "QNBAD: Quantum Noise-induced Backdoor Attacks against Zero Noise E
 tags: ["Backdoors", "Adversarial Attacks"]
 readingTime: 5
 headerImage: "/images/news/qnbad_quantum_noiseinduced_backdoor_attacks_against_zero_noi.jpg"
+paperUrl: "https://www.ndss-symposium.org/ndss-paper/qnbad-quantum-noise-induced-backdoor-attacks-against-zero-noise-extrapolation/"
 ---
 
 ![QNBAD: Quantum Noise-induced Backdoor Attacks against Zero Noise Extrapolation](/images/news/qnbad_quantum_noiseinduced_backdoor_attacks_against_zero_noi.jpg)

@@ -6,6 +6,7 @@ description: "Defines the 'jailbreak tax,' measuring utility drop after evasion"
 tags: ["Jailbreaking"]
 readingTime: 5
 headerImage: "/images/news/the_jailbreak_tax_how_useful_are_your_jailbreak_outputs.jpg"
+paperUrl: "https://proceedings.mlr.press/v267/nikolic25a.html"
 ---
 
 ![The Jailbreak Tax: How Useful are Your Jailbreak Outputs?](/images/news/the_jailbreak_tax_how_useful_are_your_jailbreak_outputs.jpg)

@@ -6,6 +6,7 @@ description: "Uses closed-form statistics over adversarial path simplices for ro
 tags: ["Adversarial Attacks"]
 readingTime: 5
 headerImage: "/images/news/improving_zeroshot_adversarial_robustness_in_visionlanguage_.jpg"
+paperUrl: "https://proceedings.mlr.press/v267/dong25f.html"
 ---
 
 ![Improving Zero-Shot Adversarial Robustness in Vision-Language Models by Closed-form Alignment of Adversarial Path Simplices](/images/news/improving_zeroshot_adversarial_robustness_in_visionlanguage_.jpg)

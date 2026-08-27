@@ -6,6 +6,7 @@ description: "Embeds watermarks into original speech to track modification"
 tags: ["Watermarking"]
 readingTime: 5
 headerImage: "/images/news/audiomarknet_audio_watermarking_for_deepfake_speech_detectio.jpg"
+paperUrl: "https://www.usenix.org/conference/usenixsecurity25/presentation/zong"
 ---
 
 ![AudioMarkNet: Audio Watermarking for Deepfake Speech Detection](/images/news/audiomarknet_audio_watermarking_for_deepfake_speech_detectio.jpg)

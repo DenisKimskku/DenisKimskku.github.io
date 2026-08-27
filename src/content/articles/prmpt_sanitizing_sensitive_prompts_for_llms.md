@@ -6,6 +6,7 @@ description: "Uses FPE and mDP to sanitize tokens in prompts before LLM inferenc
 tags: ["Privacy"]
 readingTime: 5
 headerImage: "/images/news/prεεmpt_sanitizing_sensitive_prompts_for_llms.jpg"
+paperUrl: "https://arxiv.org/abs/2504.05147"
 ---
 
 ![Prεεmpt: Sanitizing Sensitive Prompts for LLMs](/images/news/prεεmpt_sanitizing_sensitive_prompts_for_llms.jpg)

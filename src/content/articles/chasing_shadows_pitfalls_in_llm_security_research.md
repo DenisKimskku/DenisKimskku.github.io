@@ -6,6 +6,7 @@ description: "Chasing Shadows: Pitfalls in LLM Security Research"
 tags: ["Vulnerabilities"]
 readingTime: 5
 headerImage: "/images/news/chasing_shadows_pitfalls_in_llm_security_research.jpg"
+paperUrl: "https://www.ndss-symposium.org/ndss-paper/chasing-shadows-pitfalls-in-llm-security-research/"
 ---
 
 ![Chasing Shadows: Pitfalls in LLM Security Research](/images/news/chasing_shadows_pitfalls_in_llm_security_research.jpg)

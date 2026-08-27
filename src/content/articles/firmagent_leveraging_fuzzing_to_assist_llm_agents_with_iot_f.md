@@ -6,6 +6,7 @@ description: "Hybrid framework uses fuzzing to locate input sources for LLM tain
 tags: ["AI Agents", "Fuzzing", "Vulnerabilities"]
 readingTime: 5
 headerImage: "/images/news/firmagent_leveraging_fuzzing_to_assist_llm_agents_with_iot_f.jpg"
+paperUrl: "https://www.ndss-symposium.org/ndss-paper/firmagent-leveraging-fuzzing-to-assist-llm-agents-with-iot-firmware-vulnerability-discovery/"
 ---
 
 ![FirmAgent: Leveraging Fuzzing to Assist LLM Agents with IoT Firmware Vulnerability Discovery](/images/news/firmagent_leveraging_fuzzing_to_assist_llm_agents_with_iot_f.jpg)

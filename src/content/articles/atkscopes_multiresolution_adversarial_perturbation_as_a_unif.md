@@ -6,6 +6,7 @@ description: "Multiresolution perturbation allows attacks across various hash sc
 tags: ["Adversarial Attacks", "Privacy"]
 readingTime: 5
 headerImage: "/images/news/atkscopes_multiresolution_adversarial_perturbation_as_a_unif.jpg"
+paperUrl: "https://www.usenix.org/conference/usenixsecurity25/presentation/zhang-yushu"
 ---
 
 ![Atkscopes: Multiresolution Adversarial Perturbation as a Unified Attack on Perceptual Hashing and Beyond](/images/news/atkscopes_multiresolution_adversarial_perturbation_as_a_unif.jpg)

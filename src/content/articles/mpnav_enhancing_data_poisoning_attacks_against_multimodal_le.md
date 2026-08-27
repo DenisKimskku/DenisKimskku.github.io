@@ -6,6 +6,7 @@ description: "MP-Nav guides poisoning by selecting semantically similar concepts
 tags: ["Data Poisoning"]
 readingTime: 5
 headerImage: "/images/news/mpnav_enhancing_data_poisoning_attacks_against_multimodal_le.jpg"
+paperUrl: "https://proceedings.mlr.press/v267/zhang25am.html"
 ---
 
 ![MP-Nav: Enhancing Data Poisoning Attacks against Multimodal Learning](/images/news/mpnav_enhancing_data_poisoning_attacks_against_multimodal_le.jpg)

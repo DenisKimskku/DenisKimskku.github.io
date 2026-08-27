@@ -6,6 +6,7 @@ description: "FlipAttack: Jailbreak LLMs via Flipping"
 tags: ["Jailbreaking"]
 readingTime: 5
 headerImage: "/images/news/flipattack_jailbreak_llms_via_flipping.jpg"
+paperUrl: "https://proceedings.mlr.press/v267/liu25z.html"
 ---
 
 ![FlipAttack: Jailbreak LLMs via Flipping](/images/news/flipattack_jailbreak_llms_via_flipping.jpg)

@@ -6,6 +6,7 @@ description: "Proposes N-gram LM perplexity as an LLM-agnostic fluency constrain
 tags: ["Jailbreaking", "Adversarial Attacks"]
 readingTime: 5
 headerImage: "/images/news/an_interpretable_ngram_perplexity_threat_model_for_large_lan.jpg"
+paperUrl: "https://proceedings.mlr.press/v267/boreiko25a.html"
 ---
 
 ![An Interpretable N-gram Perplexity Threat Model for Large Language Model Jailbreaks](/images/news/an_interpretable_ngram_perplexity_threat_model_for_large_lan.jpg)

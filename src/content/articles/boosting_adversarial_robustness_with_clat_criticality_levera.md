@@ -6,6 +6,7 @@ description: "Fine-tunes only robustness-critical model layers"
 tags: ["Adversarial Attacks", "Vulnerabilities"]
 readingTime: 5
 headerImage: "/images/news/boosting_adversarial_robustness_with_clat_criticality_levera.jpg"
+paperUrl: "https://proceedings.mlr.press/v267/gopal25a.html"
 ---
 
 ![Boosting Adversarial Robustness with CLAT: Criticality Leveraged Adversarial Training](/images/news/boosting_adversarial_robustness_with_clat_criticality_levera.jpg)
