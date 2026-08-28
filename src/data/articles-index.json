@@ -1,5 +1,71 @@
 [
   {
+    "slug": "ai_security_digest__august_29_2026_backdoors__malware",
+    "title": "AI Security Digest \u2014 August 29, 2026: Backdoors & Malware",
+    "date": "2026-08-29",
+    "type": "News Digest",
+    "description": "This digest covers new research on removing malware backdoors, defending split learning, and protecting LLMs from membership inference attacks.",
+    "tags": [
+      "Malware",
+      "Backdoors",
+      "LLM Security",
+      "Split Learning",
+      "Adversarial Attacks",
+      "Data Privacy"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "enhanced_labelonly_membership_inference_attacks_with_fewer_q",
+    "title": "Enhanced Label-Only Membership Inference Attacks with Fewer Queries",
+    "date": "2026-08-29",
+    "type": "Paper Review",
+    "description": "DHAttack uses fixed boundary distance and shadow models for MIAs",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "soft_selective_data_obfuscation_for_protecting_llm_finetunin",
+    "title": "SOFT: Selective Data Obfuscation for Protecting LLM Fine-tuning against Membership Inference Attacks",
+    "date": "2026-08-29",
+    "type": "Paper Review",
+    "description": "SOFT uses data obfuscation to counter privacy leakage during LLM fine-tuning",
+    "tags": [
+      "Privacy",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "safesplit_a_novel_defense_against_clientside_backdoor_attack",
+    "title": "SafeSplit: A Novel Defense Against Client-Side Backdoor Attacks in Split Learning",
+    "date": "2026-08-29",
+    "type": "Paper Review",
+    "description": "SafeSplit uses circular backward analysis to detect malicious client updates",
+    "tags": [
+      "Data Poisoning",
+      "Backdoors",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "pbp_posttraining_backdoor_purification_for_malware_classifie",
+    "title": "PBP: Post-training Backdoor Purification for Malware Classifiers",
+    "date": "2026-08-29",
+    "type": "Paper Review",
+    "description": "PBP purifies backdoored models post-training",
+    "tags": [
+      "Data Poisoning",
+      "Backdoors",
+      "Malware",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__august_28_2026_jailbreaking__adversarial",
     "title": "AI Security Digest — August 28, 2026: Jailbreaking & Adversarial Attacks",
     "date": "2026-08-28",
