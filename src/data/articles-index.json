@@ -1,7 +1,7 @@
 [
   {
     "slug": "ai_security_digest__august_29_2026_backdoors__malware",
-    "title": "AI Security Digest \u2014 August 29, 2026: Backdoors & Malware",
+    "title": "AI Security Digest — August 29, 2026: Backdoors & Malware",
     "date": "2026-08-29",
     "type": "News Digest",
     "description": "This digest covers new research on removing malware backdoors, defending split learning, and protecting LLMs from membership inference attacks.",
@@ -13,57 +13,62 @@
       "Adversarial Attacks",
       "Data Privacy"
     ],
-    "readingTime": 4
+    "readingTime": 4,
+    "searchContent": "AI Security Digest — August 29, 2026: Backdoors & Malware The PBP research demonstrates that purification techniques can effectively remove backdoors from malware classifiers using only a small fraction of the training data. Paper Highlights PBP: Post training Backdoor Purification for Malware Classifiers — Dung Thuy Nguyen, Ngoc N. Tran, Taylor T. Johnson. This approach purifies models that have been intentionally poisoned with backdoors after their initial training phase. Practitioners managing untrusted, pre trained malware classifiers can use this to mitigate hidden vulnerabilities. SafeSplit: A Novel Defense Against Client Side Backdoor Attacks in Split Learning — Phillip Rieger, Alessandro Pegoraro, Kavita Kumari. SafeSplit employs circular backward analysis to detect malicious updates originating from individual clients in a Split Learning setup. This is relevant for organizations deploying distributed ML systems where client integrity is uncertain. SOFT: Selective Data Obfuscation for Protecting LLM Fine tuning against Membership Inference Attacks — Zhang Kaiyuan. SOFT uses targeted data obfuscation during the fine tuning of Large Language Models to prevent leakage of sensitive training records. Developers fine tuning LLMs on proprietary or PII containing datasets can employ this for privacy assurance. Industry & News AI Is Accelerating Vulnerability Discovery. Can Defenders Keep Up? (BleepingComputer) — The increasing capability of AI to find security flaws puts pres"
   },
   {
     "slug": "enhanced_labelonly_membership_inference_attacks_with_fewer_q",
     "title": "Enhanced Label-Only Membership Inference Attacks with Fewer Queries",
     "date": "2026-08-29",
     "type": "Paper Review",
-    "description": "DHAttack uses fixed boundary distance and shadow models for MIAs",
+    "description": "Existing label-only Membership Inference Attacks (MIAs) rely on the shortest boundary distance (shortestBD), which measures the minimum perturbation needed to change a sample's predicted label. This approach faces two issues.",
     "tags": [
       "Privacy"
     ],
-    "readingTime": 5
-  },
-  {
-    "slug": "soft_selective_data_obfuscation_for_protecting_llm_finetunin",
-    "title": "SOFT: Selective Data Obfuscation for Protecting LLM Fine-tuning against Membership Inference Attacks",
-    "date": "2026-08-29",
-    "type": "Paper Review",
-    "description": "SOFT uses data obfuscation to counter privacy leakage during LLM fine-tuning",
-    "tags": [
-      "Privacy",
-      "Vulnerabilities"
-    ],
-    "readingTime": 5
-  },
-  {
-    "slug": "safesplit_a_novel_defense_against_clientside_backdoor_attack",
-    "title": "SafeSplit: A Novel Defense Against Client-Side Backdoor Attacks in Split Learning",
-    "date": "2026-08-29",
-    "type": "Paper Review",
-    "description": "SafeSplit uses circular backward analysis to detect malicious client updates",
-    "tags": [
-      "Data Poisoning",
-      "Backdoors",
-      "Vulnerabilities"
-    ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Enhanced Label Only Membership Inference Attacks with Fewer Queries” (p. 5) DHAttack: Enhancing Membership Inference with Fixed Boundary Distance TLDR What : DHAttack uses fixed boundary distance and shadow models for MIAs. Who's at risk : Deployments using label only outputs where query limits are strict. Key number : In some cases, DHAttack achieves more than an order of magnitude improvement over all baselines in terms of TPR @ 0.1% FPR with just 5 to 30 queries. Mitigating Sample Diversity with State Comparison Existing label only Membership Inference Attacks (MIAs) rely on the shortest boundary distance (shortestBD), which measures the minimum perturbation needed to change a sample's predicted label. This approach faces two issues. First, determining shortestBD across various directions demands a large number of queries; prior works often require over 1,000 queries. More fundamentally, sample diversity causes overlap in shortestBD distributions between members and non members, which reduces attack performance. To address this, DHAttack shifts focus from comparing the shortestBD across different samples to comparing the boundary distance of an individual sample in two states: member versus non member. The core premise is that a member sample will exhibit a larger boundary distance when evaluated on the target model compared to when evaluated on a model that never saw it. This comparison helps reduce the negative effect of the shortestBD distribution"
   },
   {
     "slug": "pbp_posttraining_backdoor_purification_for_malware_classifie",
     "title": "PBP: Post-training Backdoor Purification for Malware Classifiers",
     "date": "2026-08-29",
     "type": "Paper Review",
-    "description": "PBP purifies backdoored models post-training",
+    "description": "The paper presents a compelling technical approach to cleaning up models after the fact, which is a necessary step given the constraints of MLaaS deployment. However, the reliance on activation distribution drift feels like a fragile heuristic.",
     "tags": [
       "Data Poisoning",
       "Backdoors",
       "Malware",
       "Vulnerabilities"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “PBP: Post training Backdoor Purification for Malware Classifiers” (p. 3) Post training Backdoor Purification for Malware Classifiers TLDR What : PBP purifies backdoored models post training. Who's at risk : Users acquiring untrusted, pre trained malware classifiers. Key number : Our approach requires only a small portion of the training data — only 1% — to purify the backdoor and reduce the attack success rate from 100% to almost 0%, a 100 fold improvement over the baseline methods. Activation Distribution Drift The current state of malware classification relies heavily on Deep Neural Networks (DNNs), which have been susceptible to backdoor poisoning attacks. Adversaries embed a harmful trigger in a small portion of training samples to force misclassification upon inference. Existing countermeasures often fail when using Machine Learning as a Service (MLaaS) or when the goal is backdoor removal after training, as they frequently require intervention across the entire training dataset. The core issue is that even if a model appears clean on validation data, it harbors a hidden vulnerability. The paper attacks this gap by focusing on models acquired post training, where full retraining is infeasible. Neuron Mask Generation The central insight of PBP is that backdoor neurons exhibit a distinct activation pattern when processing backdoored inputs compared to clean inputs. When poisoned, the activation distribution within each layer becomes a mixture of dist"
+  },
+  {
+    "slug": "safesplit_a_novel_defense_against_clientside_backdoor_attack",
+    "title": "SafeSplit: A Novel Defense Against Client-Side Backdoor Attacks in Split Learning",
+    "date": "2026-08-29",
+    "type": "Paper Review",
+    "description": "Distributed deep learning paradigms like Split Learning (SL) allow resource-constrained clients to train large models without sharing private data. In the U-shaped configuration, the DNN is split into a client-side Head (H) and Tail (T), and a server-side Backbone (B).",
+    "tags": [
+      "Data Poisoning",
+      "Backdoors",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “SafeSplit: A Novel Defense Against Client Side Backdoor Attacks in Split Learning” (p. 4) SafeSplit: Detecting Client Side Backdoors via Circular Backward Analysis in Split Learning TLDR What : SafeSplit uses circular backward analysis to detect malicious client updates. Who's at risk : Split Learning (SL) deployments where clients can inject backdoors. Key number : SafeSplit accurately detects backdoor attacks and reduces their impact while minimizing harmful effects on the models’ utility. The Sequential Poisoning Challenge in SL Distributed deep learning paradigms like Split Learning (SL) allow resource constrained clients to train large models without sharing private data. In the U shaped configuration, the DNN is split into a client side Head (H) and Tail (T), and a server side Backbone (B). Training is sequential: each client uses the model from its predecessor as a starting point before contributing its own updates. This sequential dependency creates a significant vulnerability. If a malicious client injects a backdoor, subsequent benign clients unknowingly train on this poisoned model. Existing defenses from other distributed frameworks, such as Federated Learning, are inapplicable because of this sequential structure. The server can only inspect model updates, as it has no access to the clients' private data, making detection inherently difficult. The core problem is that a single malicious update can contaminate the entire training sequence fo"
+  },
+  {
+    "slug": "soft_selective_data_obfuscation_for_protecting_llm_finetunin",
+    "title": "SOFT: Selective Data Obfuscation for Protecting LLM Fine-tuning against Membership Inference Attacks",
+    "date": "2026-08-29",
+    "type": "Paper Review",
+    "description": "The paper presents an interesting pivot toward targeted intervention rather than blanket noise injection when defending fine-tuned LLMs against Membership Inference Attacks (MIAs).",
+    "tags": [
+      "Privacy",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “SOFT: Selective Data Obfuscation for Protecting LLM Fine tuning against Membership Inference Attacks” (p. 4) SOFT: Selective Data Obfuscation for Fine Tuned LLM Privacy Protection TLDR What : SOFT uses data obfuscation to counter privacy leakage during LLM fine tuning. Who's at risk : Developers fine tuning LLMs on sensitive, private, or PII containing data. Key number : For instance, most attacks achieve an AUC exceeding 0.8 when inferring membership status for Pythia 6.9B fine tuned models. The Limitations of Existing MIA for Fine Tuned LLMs Current research has focused heavily on assessing privacy risks in pre trained LLMs, where many Membership Inference Attacks (MIAs) proved largely ineffective. The primary vulnerability, however, emerges when these models undergo fine tuning on downstream tasks, which often involves sensitive data like PII or confidential organizational information. Existing methods for analyzing this fine tuning leakage are limited; for instance, while LoRA offers better privacy protection than full fine tuning, it comes with a significant utility loss. Furthermore, existing defenses, such as those based on Differential Privacy (DP LoRA), introduce memory overhead without achieving a favorable privacy utility trade off. The problem is that fine tuning causes loss reduction, which MIAs exploit, making the leakage highly effective even after just one epoch of fine tuning. The Influential Data Selection of SOFT The core innovation o"
   },
   {
     "slug": "ai_security_digest__august_28_2026_jailbreaking__adversarial",
