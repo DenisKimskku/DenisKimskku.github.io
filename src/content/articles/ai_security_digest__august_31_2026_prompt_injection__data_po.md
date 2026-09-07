@@ -28,7 +28,7 @@ MELON introduces a provable defense against Indirect Prompt Injection, directly 
 
 **Week in review: Compromised Zimbra servers, previously patched Citrix NetScaler flaw exploited** (Help Net Security) — The re-exploitation of previously patched vulnerabilities demonstrates that patch management failures remain a primary vector for enterprise compromise.
 
-**I ran Israel's national red team. Now every attacker has one** (calcalistech.com) — The public availability of advanced adversarial testing methodologies lowers the bar for attackers, implying defensive postures must match this new operational tempo.
+**Israel's former national red-team lead: now every attacker has one** (calcalistech.com) — The public availability of advanced adversarial testing methodologies lowers the bar for attackers, implying defensive postures must match this new operational tempo.
 
 ## What to Watch
 
