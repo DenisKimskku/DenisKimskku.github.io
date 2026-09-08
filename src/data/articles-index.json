@@ -16,6 +16,23 @@
     "searchContent": "Every Bit, Everywhere, All at Once: A Binomial Multibit LLM Watermark I presented Every Bit, Everywhere, All at Once: A Binomial Multibit LLM Watermark (Gloaguen, Staab, Vero, Vechev — ETH Zurich, arXiv, May 2026) at our lab meeting this week. The title is doing real work: it names three separate design decisions rather than making a joke about the film, and the paper's contribution is that the three fit together. TL;DR The problem : multibit watermarking — hiding a payload in generated text rather than a yes/no flag — has been stuck between two bad options. Give each bit its own token positions and most of the payload sits idle at every step; or fold the message into the key and search all $2^m$ candidates at decode time, which stops being tractable somewhere around 32 bits. The mechanism : score each candidate token by how many payload bits its pseudorandom bit vector agrees with (an XNOR match count), bias the next token logits by that score, and decode with one majority vote per bit. Every token pushes on every bit. The refinement : a stateful encoder that tracks each bit's running lead and spends the next token's pressure on the bits currently losing rather than the ones already safe. The result : at 64 bits, six of the eight baselines sit flat at zero and the best survivor reaches about 0.32 message accuracy, against roughly 0.85 for the stateful variant. At 32 bits it clears 90% bit accuracy by 500 tokens against roughly 80% for the best baseline. The catch : robustnes"
   },
   {
+    "slug": "ai_security_digest__september_09_2026_vulnerabilities",
+    "title": "AI Security Digest — September 09, 2026: Vulnerabilities",
+    "date": "2026-09-09",
+    "type": "News Digest",
+    "description": "This digest highlights immediate, systemic weaknesses in deployed AI security tooling, focusing on shifts in vulnerabilities within AI-hardened network intrusion detection systems.",
+    "tags": [
+      "AI Security",
+      "Intrusion Detection",
+      "Vulnerability Analysis",
+      "AI Safety",
+      "Network Security",
+      "LLM Security"
+    ],
+    "readingTime": 3,
+    "searchContent": "AI Security Digest — September 09, 2026: Vulnerabilities The prevailing narrative around AI safety often oversimplifies the threat surface, focusing solely on catastrophic misalignment while overlooking immediate, systemic weaknesses in deployed security tooling. No paper met the bar for a full review today. Industry & News Rumman Firdos Research identifies a vulnerability shift in AI Hardened Network Intrusion Detection Systems (https://news.google.com/rss/articles/CBMi9AFBVV95cUxPeHBYRGowQ3ZTazRfMWVIaG55MzlablhoMXNtQzl2cnl4RGdRRlA3UGQ4OFR3TVE2TUlkcWV6TWpYZFAxeGhESS1OajFLSHlOQV80QzRNdDgtZGltLWRsekoxVmFwcFR6anBWYW54dEZRRWhvd3F4UG5ncXprMzkwcV9IVFNlTXN1aVlreHpNWkxFdGNCbExJVXQ1bERxYVRHQ0dXQXd5b1ZOQ1Z2d0Z0TVprNUp3VmlrVTZJVzFrbWNSNDhLSV9YbkVxdGVBX2J2OUdJQjFiWEpSYU5uTEZzLVI5OHkxcnZjRnBoajBlM1h1Tnpy?oc=5&hl=en US&gl=US&ceid=US:en). The research notes a critical shift in vulnerabilities within AI enhanced network intrusion detection systems. Practitioners must review their deployed detection models against these reported shifts immediately. OpenAI scientist warns of AI dangers (https://news.google.com/rss/articles/CBMiekFVX3lxTE1SNW9oTHFBTFVHbGFETXpEYnJFQjNLSnNLWGRTQjhzYWxlbnRYSmxsX2dJRmFFMWU3YlVidXBZMnU2Z1dKeEN4YlU1TlJkc0VicGdmZnpodk9vbkJXemlPaExqek1SdUctSEVYVVlKNVFlVkVsNFRIdDJR?oc=5&hl=en US&gl=US&ceid=US:en). This serves as another input into the ongoing debate regarding the pace of AI deployment versus safety validation. An OpenAI scientist calls for a slowdown on the AI race ami"
+  },
+  {
     "slug": "ai_security_digest__september_08_2026_backdoors__ai_agents",
     "title": "AI Security Digest — September 08, 2026: Backdoors & AI Agents",
     "date": "2026-09-08",
