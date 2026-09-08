@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
 import { getNewsArticles, groupArticlesByMonth } from '@/lib/articles';
-import { siteMetadata, buildAlternates, buildOpenGraph } from '@/lib/siteMetadata';
+import { siteMetadata, buildAlternates, buildOpenGraph, ogCard } from '@/lib/siteMetadata';
 
 // IMPORTANT: article URLs intentionally live under /writing/<slug>/ — this hub
 // is an index-layer projection, NOT a URL namespace. Never add a Cloudflare
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     description,
     url: `${siteMetadata.siteUrl}/news/`,
     type: 'website',
-    images: [siteMetadata.ogImage],
+    images: [ogCard('_section-news', 'AI Security News by Minseok (Denis) Kim — daily digests and weekly trend reports')],
   }),
 };
 

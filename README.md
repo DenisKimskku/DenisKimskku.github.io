@@ -59,7 +59,8 @@ Open [http://localhost:3000](http://localhost:3000).
 ├── public/
 ├── scripts/
 │   ├── generate-rss.mjs
-│   └── strip-twitter-meta.mjs
+│   ├── generate-og-images.mjs
+│   └── generate-redirects.mjs
 ├── src/
 │   ├── app/
 │   │   ├── page.tsx

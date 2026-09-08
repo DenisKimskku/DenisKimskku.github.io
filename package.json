@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/optimize-images.mjs && node scripts/repair-authorship.mjs && node scripts/repair-math-delimiters.mjs && node scripts/repair-dead-links.mjs && node scripts/lint-content.mjs && node scripts/generate-og-images.mjs && next build && node scripts/generate-rss.mjs && node scripts/generate-resume-pdf.mjs",
+    "build": "node scripts/optimize-images.mjs && node scripts/repair-authorship.mjs && node scripts/repair-math-delimiters.mjs && node scripts/repair-dead-links.mjs && node scripts/lint-content.mjs && node scripts/generate-og-images.mjs && next build && node scripts/generate-redirects.mjs && node scripts/check-sitemap.mjs && node scripts/generate-rss.mjs && node scripts/generate-resume-pdf.mjs",
     "start": "next start",
     "lint": "eslint .",
     "test": "node --test \"tests/*.test.mjs\"",
@@ -14,6 +14,8 @@
     "warm:cache": "node scripts/warm-cache.mjs",
     "warm:global": "node scripts/warm-global.mjs",
     "purge:cache": "node scripts/purge-cloudflare-cache.mjs",
+    "cache:ensure": "node scripts/ensure-cloudflare-cache-config.mjs",
+    "cache:check": "node scripts/ensure-cloudflare-cache-config.mjs --check",
     "lint:content": "node scripts/lint-content.mjs",
     "gate:content": "npm run generate:index -- --strict && node scripts/lint-content.mjs --strict && node scripts/repair-math-delimiters.mjs --check && node scripts/repair-dead-links.mjs --check",
     "check:article": "node scripts/check-generated-article.mjs"

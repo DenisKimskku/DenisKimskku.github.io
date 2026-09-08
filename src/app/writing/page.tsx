@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import WritingHub from '@/components/WritingHub';
 import StructuredData from '@/components/StructuredData';
-import { getAllArticles, getRecentHandwrittenArticles, getTagEntries } from '@/lib/articles';
+import { getAllArticles, getLatestNewsDesk, getRecentHandwrittenArticles, getTagEntries } from '@/lib/articles';
 import { getCategory, NEWS_AND_TRENDS } from '@/lib/articleTypes';
-import { siteMetadata, buildAlternates, buildOpenGraph } from '@/lib/siteMetadata';
+import { siteMetadata, buildAlternates, buildOpenGraph, ogCard } from '@/lib/siteMetadata';
 
 const description = 'Paper walkthroughs, research writeups, and technical writing by Minseok (Denis) Kim.';
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     description,
     url: `${siteMetadata.siteUrl}/writing/`,
     type: 'website',
-    images: [siteMetadata.ogImage],
+    images: [ogCard('_section-writing', 'Writing by Minseok (Denis) Kim — paper walkthroughs and research writing')],
   }),
 };
 
@@ -46,6 +46,9 @@ export default async function Writing() {
     .filter((a) => a.type !== 'Paper Review')
     .slice(0, 3);
   const tags = getTagEntries(articles);
+  // The newest news issues get a static anchor from this hub too; the /news/
+  // list is otherwise their only section-page in-link.
+  const newsDesk = getLatestNewsDesk(3);
   const pageUrl = `${siteMetadata.siteUrl}/writing/`;
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -123,6 +126,48 @@ export default async function Writing() {
               </Link>
             ))}
           </div>
+        </section>
+      )}
+
+      {(newsDesk.weekly || newsDesk.dailies.length > 0) && (
+        <section className="mb-10" aria-labelledby="news-desk-heading">
+          <h2
+            id="news-desk-heading"
+            className="text-xs font-medium text-(--color-text-muted) uppercase tracking-wider mb-3"
+          >
+            Latest from the news desk
+          </h2>
+          <ul className="space-y-1.5">
+            {newsDesk.weekly && (
+              <li>
+                <Link
+                  href={`/writing/${newsDesk.weekly.slug}/`}
+                  className="text-sm text-(--color-text) hover:text-(--color-accent) transition-colors"
+                >
+                  <span className="text-xs uppercase tracking-wider text-(--color-text-muted) mr-2">Weekly</span>
+                  {newsDesk.weekly.title}
+                </Link>
+              </li>
+            )}
+            {newsDesk.dailies.map((issue) => (
+              <li key={issue.slug}>
+                <Link
+                  href={`/writing/${issue.slug}/`}
+                  className="text-sm text-(--color-text) hover:text-(--color-accent) transition-colors"
+                >
+                  <time dateTime={issue.date} className="tabular-nums text-xs text-(--color-text-muted) mr-2">
+                    {issue.date}
+                  </time>
+                  {issue.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-sm">
+            <Link href="/news/" className="text-(--color-accent) hover:underline">
+              All AI security news →
+            </Link>
+          </p>
         </section>
       )}
 

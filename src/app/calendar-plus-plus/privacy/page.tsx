@@ -1,16 +1,18 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { siteMetadata, buildAlternates } from '@/lib/siteMetadata'
+import { siteMetadata, buildAlternates, buildOpenGraph, ogCard } from '@/lib/siteMetadata'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy - calendar++',
   description: 'Privacy Policy for calendar++ macOS application',
   alternates: buildAlternates('/calendar-plus-plus/privacy/'),
-  openGraph: {
+  openGraph: buildOpenGraph({
     url: `${siteMetadata.siteUrl}/calendar-plus-plus/privacy/`,
     title: 'Privacy Policy - calendar++',
     description: 'Privacy Policy for calendar++ macOS application',
-  },
+    type: 'website',
+    images: [ogCard('_section-calendar-plus-plus', 'Calendar++ by Minseok (Denis) Kim — a menu bar calendar for macOS')],
+  }),
 }
 
 export default function PrivacyPolicy() {

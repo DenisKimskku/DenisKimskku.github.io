@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import StructuredData from '@/components/StructuredData'
-import { siteMetadata, buildAlternates } from '@/lib/siteMetadata'
+import { siteMetadata, buildAlternates, buildOpenGraph, ogCard } from '@/lib/siteMetadata'
 
 const description = 'A powerful menu bar calendar app for macOS with Google Calendar integration, event management, and beautiful design.'
 
@@ -10,13 +10,22 @@ export const metadata: Metadata = {
   title: 'Calendar++',
   description,
   alternates: buildAlternates('/calendar-plus-plus/'),
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: `Calendar++ | ${siteMetadata.authorName}`,
     description,
     url: `${siteMetadata.siteUrl}/calendar-plus-plus/`,
     type: 'website',
-    images: [`${siteMetadata.siteUrl}/images/calendar-plus-plus/overview-main-live.png`],
-  },
+    images: [
+      ogCard('_section-calendar-plus-plus', 'Calendar++ by Minseok (Denis) Kim — a menu bar calendar for macOS'),
+      {
+        url: '/images/calendar-plus-plus/overview-main-live.png',
+        width: 1148,
+        height: 956,
+        type: 'image/png',
+        alt: 'Calendar++ monthly view on macOS',
+      },
+    ],
+  }),
 }
 
 export default function CalendarPlusPlus() {

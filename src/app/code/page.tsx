@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
-import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
+import { siteMetadata, buildAlternates, buildOpenGraph, ogCard } from '@/lib/siteMetadata';
 import projectData from '@/data/projects.json';
 
 const description = 'Open-source projects and code contributions by Minseok (Denis) Kim.';
@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   title: 'Code',
   description,
   alternates: buildAlternates('/code/'),
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: `Code | ${siteMetadata.authorName}`,
     description,
     url: `${siteMetadata.siteUrl}/code/`,
     type: 'website',
-    images: [siteMetadata.ogImage],
-  },
+    images: [ogCard('_section-code', 'Code by Minseok (Denis) Kim — open-source projects and tools')],
+  }),
 };
 
 interface ProjectEntry {

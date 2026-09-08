@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import StructuredData from '@/components/StructuredData';
 import { getAllArticles } from '@/lib/articles';
-import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
+import { siteMetadata, buildAlternates, buildOpenGraph, ogCard } from '@/lib/siteMetadata';
 import ArticleTypeLabel from '@/components/ArticleTypeLabel';
 
 const description = 'Complete chronological archive of all articles, reviews, and tutorials.';
@@ -12,13 +12,13 @@ export const metadata: Metadata = {
   title: 'Writing Archive',
   description,
   alternates: buildAlternates('/writing/archive/'),
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: `Writing Archive | ${siteMetadata.authorName}`,
     description,
     url: `${siteMetadata.siteUrl}/writing/archive/`,
     type: 'website',
-    images: [siteMetadata.ogImage],
-  },
+    images: [ogCard('_section-writing', 'Writing archive of Minseok (Denis) Kim — every article by date')],
+  }),
 };
 
 export default function ArchivePage() {

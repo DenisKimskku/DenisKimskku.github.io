@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import fs from 'node:fs';
+import path from 'node:path';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Breadcrumb from '@/components/Breadcrumb';
@@ -9,8 +11,10 @@ import {
   getTagEntries,
   getTagLandingContent,
   getTagSlugByName,
+  groupArticlesForHub,
+  type ArticleSummary,
 } from '@/lib/articles';
-import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
+import { siteMetadata, buildAlternates, buildOpenGraph, ogCard } from '@/lib/siteMetadata';
 import { truncateForMeta } from '@/lib/seo';
 import ArticleTypeLabel from '@/components/ArticleTypeLabel';
 
@@ -41,9 +45,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const articles = getArticlesByTag(tagName);
   const landingContent = getTagLandingContent(tagName, articles);
-  const description = truncateForMeta(
-    `${articles.length} research ${articles.length === 1 ? 'article' : 'articles'} on ${tagName}. ${landingContent.lead}`,
-  );
+  // Counts + newest title: unique per hub, unlike the shared template lead.
+  const description = truncateForMeta(landingContent.metaDescription);
   // Thin hubs (fewer than 3 INDEXABLE articles — Paper Reviews are noindex and
   // don't count) read as scaled/low-value pages to Google, so noindex them
   // (keep follow, so their internal links still pass). Kept in sync with the
@@ -55,13 +58,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     keywords: [tagName, ...landingContent.relatedTags],
     ...(indexableCount < 3 ? { robots: { index: false, follow: true } } : {}),
     alternates: buildAlternates(`/writing/tag/${tagSlug}/`),
-    openGraph: {
+    openGraph: buildOpenGraph({
       title: `${tagName} Research Articles | ${siteMetadata.authorName}`,
       description,
       url: `${siteMetadata.siteUrl}/writing/tag/${tagSlug}/`,
       type: 'website',
-      images: [siteMetadata.ogImage],
-    },
+      // Topic cards (_tag-<slug>.png) come from scripts/generate-og-images.mjs;
+      // same existence check as the article page so a hub never links a 404.
+      images: [
+        fs.existsSync(path.join(process.cwd(), 'public', 'og', `_tag-${tagSlug}.png`))
+          ? ogCard(`_tag-${tagSlug}`, `Topic: ${tagName} — research articles by ${siteMetadata.authorName}`)
+          : siteMetadata.ogImage,
+      ],
+    }),
   };
 }
 
@@ -75,10 +84,13 @@ export default async function WritingTagPage({ params }: PageProps) {
 
   const articles = getArticlesByTag(tagName);
   const landingContent = getTagLandingContent(tagName, articles);
-  const description = truncateForMeta(
-    `${articles.length} research ${articles.length === 1 ? 'article' : 'articles'} on ${tagName}. ${landingContent.lead}`,
-  );
+  // Counts + newest title: unique per hub, unlike the shared template lead.
+  const description = truncateForMeta(landingContent.metaDescription);
   const pageUrl = `${siteMetadata.siteUrl}/writing/tag/${tagSlug}/`;
+  // Hand-written work first, then news issues, then the (noindexed) review
+  // backlog as compact rows — the ItemList follows the same visible order.
+  const groups = groupArticlesForHub(articles);
+  const ordered = [...groups.handwritten, ...groups.news, ...groups.reviews];
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -93,9 +105,8 @@ export default async function WritingTagPage({ params }: PageProps) {
       {
         '@type': 'ItemList',
         '@id': `${pageUrl}#items`,
-        itemListOrder: 'https://schema.org/ItemListOrderDescending',
-        numberOfItems: articles.length,
-        itemListElement: articles.map((article, index) => ({
+        numberOfItems: ordered.length,
+        itemListElement: ordered.map((article, index) => ({
           '@type': 'ListItem',
           position: index + 1,
           item: {
@@ -110,6 +121,34 @@ export default async function WritingTagPage({ params }: PageProps) {
       },
     ],
   };
+
+  const renderArticle = (article: ArticleSummary) => (
+    <article key={article.slug} className="group">
+      <Link
+        href={`/writing/${article.slug}/`}
+        className="block py-5 -mx-4 px-4 rounded-lg hover:bg-(--color-bg-secondary) transition-colors"
+      >
+        <h3 className="text-lg font-semibold font-serif text-(--color-text) group-hover:text-(--color-accent) transition-colors mb-1.5">
+          {article.title}
+        </h3>
+        <p className="text-sm text-(--color-text-secondary) mb-2">
+          {article.description}
+        </p>
+        <div className="flex flex-wrap items-center gap-2 text-xs text-(--color-text-muted)">
+          <time dateTime={article.date}>{article.date}</time>
+          <span>·</span>
+          <ArticleTypeLabel type={article.type} title={article.title} date={article.date} />
+          <span>·</span>
+          <span>{article.readingTime} min read</span>
+          {article.tags.map((articleTag) => (
+            <span key={articleTag} className="px-2 py-0.5 rounded-sm bg-(--color-bg-secondary)">
+              {articleTag}
+            </span>
+          ))}
+        </div>
+      </Link>
+    </article>
+  );
   const breadcrumbItems = [
     { name: 'Home', href: '/' },
     { name: 'Writing', href: '/writing/' },
@@ -138,7 +177,7 @@ export default async function WritingTagPage({ params }: PageProps) {
           {landingContent.body}
         </p>
         <p className="text-(--color-text-secondary) leading-relaxed">
-          This page is maintained as a high-signal index for {tagName}. Use it to follow newer articles first, then branch into adjacent topics and defensive patterns that repeatedly appear across projects and paper reviews.
+          {landingContent.coverage}
         </p>
       </section>
 
@@ -172,35 +211,59 @@ export default async function WritingTagPage({ params }: PageProps) {
         </ul>
       </section>
 
-      <div className="space-y-1">
-        {articles.map((article) => (
-          <article key={article.slug} className="group">
-            <Link
-              href={`/writing/${article.slug}/`}
-              className="block py-5 -mx-4 px-4 rounded-lg hover:bg-(--color-bg-secondary) transition-colors"
-            >
-              <h2 className="text-lg font-semibold font-serif text-(--color-text) group-hover:text-(--color-accent) transition-colors mb-1.5">
-                {article.title}
-              </h2>
-              <p className="text-sm text-(--color-text-secondary) mb-2">
-                {article.description}
-              </p>
-              <div className="flex flex-wrap items-center gap-2 text-xs text-(--color-text-muted)">
-                <time dateTime={article.date}>{article.date}</time>
-                <span>·</span>
-                <ArticleTypeLabel type={article.type} title={article.title} date={article.date} />
-                <span>·</span>
-                <span>{article.readingTime} min read</span>
-                {article.tags.map((articleTag) => (
-                  <span key={articleTag} className="px-2 py-0.5 rounded-sm bg-(--color-bg-secondary)">
-                    {articleTag}
-                  </span>
-                ))}
-              </div>
-            </Link>
-          </article>
-        ))}
-      </div>
+      {groups.handwritten.length > 0 && (
+        <section aria-labelledby="hub-handwritten" className="mb-10">
+          <h2 id="hub-handwritten" className="text-sm font-semibold uppercase tracking-wider text-(--color-text-muted) mb-1">
+            Walkthroughs, research, tutorials &amp; projects
+          </h2>
+          <div className="space-y-1">{groups.handwritten.map(renderArticle)}</div>
+        </section>
+      )}
+
+      {groups.news.length > 0 && (
+        <section aria-labelledby="hub-news" className="mb-10">
+          <h2 id="hub-news" className="text-sm font-semibold uppercase tracking-wider text-(--color-text-muted) mb-1">
+            News digests &amp; weekly trend reports
+          </h2>
+          <div className="space-y-1">{groups.news.map(renderArticle)}</div>
+        </section>
+      )}
+
+      {groups.reviews.length > 0 && (
+        <section aria-labelledby="hub-reviews" className="mb-10">
+          <h2 id="hub-reviews" className="text-sm font-semibold uppercase tracking-wider text-(--color-text-muted) mb-1">
+            Standalone paper reviews
+          </h2>
+          <p className="text-xs text-(--color-text-muted) mb-3">
+            Each review is also summarized in the digest of its day.
+          </p>
+          <ul className="space-y-0.5">
+            {groups.reviews.map((article) => (
+              <li key={article.slug}>
+                <Link
+                  href={`/writing/${article.slug}/`}
+                  className="group block py-2 -mx-4 px-4 rounded-lg hover:bg-(--color-bg-secondary) transition-colors"
+                >
+                  <div className="flex items-baseline gap-3">
+                    <time
+                      dateTime={article.date}
+                      className="tabular-nums text-xs text-(--color-text-muted) shrink-0 w-20"
+                    >
+                      {article.date}
+                    </time>
+                    <span className="text-sm font-serif text-(--color-text) group-hover:text-(--color-accent) transition-colors min-w-0">
+                      {article.title}
+                    </span>
+                  </div>
+                  <p className="mt-0.5 ml-[5.75rem] text-xs text-(--color-text-muted) line-clamp-2">
+                    {article.description}
+                  </p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <footer className="mt-12 pt-8 border-t border-(--color-border)">
         <Link href="/writing/" className="text-sm text-(--color-accent) hover:underline">

@@ -27,13 +27,31 @@ jobs:
         with:
           node-version: "24"
 
-      - name: Warm sitemap pages and critical assets
-        run: CACHE_WARM_PASSES=2 CACHE_WARM_PASS_DELAY_MS=30000 CACHE_WARM_RETRIES=2 npm run warm:cache
+      # Read-only. Warming is only worth an 8-hourly cron while the long edge
+      # TTL from the code-managed cache rules is active (see
+      # scripts/lib/cloudflare-cache-rules.mjs); with the origin's max-age=600
+      # a fill would expire minutes after this job ends. Exit 2 == drift, so
+      # the run shows a warning with the dashboard steps but still warms —
+      # the check can be wrong when the token cannot read rules.
+      - name: Report Cloudflare cache config
+        continue-on-error: true
+        env:
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+        run: npm run cache:check
 
-      # Local warming only fills US colos (runner egress); Globalping probes
-      # fill each region's own colo. Best-effort: the script always exits 0.
-      - name: Warm remote regions via Globalping
+      # Local warming fills only the colo this US runner lands on; Globalping
+      # probes fill each region's own colo. Run both concurrently. One pass is
+      # enough now that fills persist for days — the second pass only ever
+      # re-requested URLs the first had already filled.
+      - name: Warm sitemap pages, critical assets and remote regions
         continue-on-error: true
         env:
           GLOBALPING_TOKEN: ${{ secrets.GLOBALPING_TOKEN }}
-        run: npm run warm:global
+        run: |
+          npm run warm:global > global-warm.log 2>&1 &
+          global_pid=$!
+          CACHE_WARM_PASSES=1 CACHE_WARM_RETRIES=2 npm run warm:cache || true
+          wait "$global_pid" || true
+          echo "--- Globalping regional warm ---"
+          cat global-warm.log

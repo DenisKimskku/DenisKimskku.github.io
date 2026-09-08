@@ -163,15 +163,23 @@ jobs:
         with:
           node-version: "24"
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
-
-      - name: Purge Cloudflare HTML and RSC cache
+      # Converge the zone's cache config (Smart Tiered Cache + the two
+      # code-managed cache rules in scripts/lib/cloudflare-cache-rules.mjs)
+      # before we purge and warm, so every warm fill below lives for the long
+      # edge TTL instead of the origin's max-age=600. Read-only if the token
+      # lacks Cache Rules / Zone Settings permissions: it then prints the exact
+      # dashboard steps as a ::warning:: and must never block the deploy.
+      - name: Ensure Cloudflare cache rules and Smart Tiered Cache
+        continue-on-error: true
+        timeout-minutes: 3
         env:
           CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-        run: npm run purge:cache
+        run: npm run cache:ensure
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
 
       - name: Wait for new deploy to be live
         run: |
@@ -191,6 +199,20 @@ jobs:
           done
           echo "::warning::Deploy marker did not match ${GITHUB_SHA} within ~120s; warming anyway."
 
+      # Purge only AFTER the origin serves the new build. Purging first (the
+      # previous order) opened a window in which any visitor re-filled the
+      # edge with the OLD page from the still-switching origin; with the
+      # 600 s origin TTL that self-healed, but under the 30-day edge TTL the
+      # stale copy would have lived until the next deploy. No
+      # continue-on-error on purpose: a failed purge now means a stale site
+      # for a month, so it must fail loudly (ntfy + issue below).
+      - name: Purge Cloudflare HTML and RSC cache
+        timeout-minutes: 10
+        env:
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+        run: npm run purge:cache
+
       # The feeds advertise pubsubhubbub as their WebSub hub; tell it they
       # changed so subscribers get pushed the update instead of polling.
       # Best-effort: a hub hiccup must never fail a deploy.
@@ -205,21 +227,24 @@ jobs:
               -d hub.mode=publish --data-urlencode "hub.url=${feed}" || true
           done
 
+      # The purge above emptied every colo worldwide. Local warming refills
+      # only the colo this US runner lands on; Globalping probes re-seed the
+      # other regions. Both run concurrently so KR/JP/EU stop being cold at
+      # the same moment the US does, instead of after the ~90 s local pass.
       # A slow warm must never fail the deploy or hold the 'pages' concurrency
       # lock (one run held it ~60 min) — cap it and swallow failures.
-      - name: Warm Cloudflare cache
+      - name: Warm Cloudflare cache (local + Globalping regions in parallel)
         timeout-minutes: 15
-        continue-on-error: true
-        run: CACHE_WARM_PASSES=2 CACHE_WARM_PASS_DELAY_MS=45000 CACHE_WARM_RETRIES=2 npm run warm:cache
-
-      # The purge above emptied every colo worldwide; local warming refills
-      # only US colos, so re-seed the other regions via Globalping probes.
-      - name: Warm remote regions via Globalping
-        timeout-minutes: 5
         continue-on-error: true
         env:
           GLOBALPING_TOKEN: ${{ secrets.GLOBALPING_TOKEN }}
-        run: npm run warm:global
+        run: |
+          npm run warm:global > global-warm.log 2>&1 &
+          global_pid=$!
+          CACHE_WARM_PASSES=2 CACHE_WARM_PASS_DELAY_MS=45000 CACHE_WARM_RETRIES=2 npm run warm:cache || true
+          wait "$global_pid" || true
+          echo "--- Globalping regional warm ---"
+          cat global-warm.log
 
       # Mirror of the build job's failure notification: a deploy-job failure
       # (deploy-pages error, purge failure, the 45-min job timeout) would

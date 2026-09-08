@@ -5,7 +5,7 @@ import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
 import CopyBibtexButton from '@/components/CopyBibtexButton';
 import AbstractToggle from '@/components/AbstractToggle';
-import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
+import { siteMetadata, buildAlternates, buildOpenGraph, ogCard } from '@/lib/siteMetadata';
 import { formatVenueShort } from '@/lib/venues';
 
 const description = 'Academic publications by Minseok (Denis) Kim on AI security, RAG systems, and LLM safety.';
@@ -13,13 +13,13 @@ export const metadata: Metadata = {
   title: 'Papers',
   description,
   alternates: buildAlternates('/papers/'),
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: `Papers | ${siteMetadata.authorName}`,
     description,
     url: `${siteMetadata.siteUrl}/papers/`,
     type: 'website',
-    images: [siteMetadata.ogImage],
-  },
+    images: [ogCard('_section-papers', 'Papers by Minseok (Denis) Kim — peer-reviewed publications on AI security')],
+  }),
 };
 
 interface Paper {

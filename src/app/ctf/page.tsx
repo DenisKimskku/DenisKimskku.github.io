@@ -1,18 +1,19 @@
 import type { Metadata } from 'next';
 import CTFTerminal from '@/components/ctf/CTFTerminal';
 import StructuredData from '@/components/StructuredData';
-import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
+import { siteMetadata, buildAlternates, buildOpenGraph, ogCard } from '@/lib/siteMetadata';
 
 export const metadata: Metadata = {
   title: `LLM Red-Teaming CTF | ${siteMetadata.title}`,
   description: 'Interactive 20-level LLM Capture The Flag (CTF) security arena testing prompt injection, guardrail evasion, and LLM-as-a-Judge jailbreaking.',
   alternates: buildAlternates('/ctf/'),
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: `LLM Red-Teaming CTF | ${siteMetadata.title}`,
     description: 'Interactive 20-level LLM Capture The Flag (CTF) security arena.',
     url: `${siteMetadata.siteUrl}/ctf/`,
     type: 'website',
-  },
+    images: [ogCard('_section-ctf', 'LLM Red-Teaming CTF by Minseok (Denis) Kim — 20 levels of prompt injection and jailbreaking')],
+  }),
 };
 
 export default function CTFPage() {

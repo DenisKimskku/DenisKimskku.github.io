@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import fs from 'fs';
 import path from 'path';
 import StructuredData from '@/components/StructuredData';
-import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
+import { siteMetadata, buildAlternates, buildOpenGraph, ogCard } from '@/lib/siteMetadata';
 import { formatVenue } from '@/lib/venues';
 
 interface Paper {
@@ -25,13 +25,13 @@ export const metadata: Metadata = {
   title: 'Curriculum Vitae',
   description,
   alternates: buildAlternates('/resume/'),
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: `CV | ${siteMetadata.authorName}`,
     description,
     url: `${siteMetadata.siteUrl}/resume/`,
     type: 'profile',
-    images: [siteMetadata.ogImage],
-  },
+    images: [ogCard('_section-resume', 'Curriculum vitae of Minseok (Denis) Kim — AI security researcher')],
+  }),
 };
 
 async function getPapers(): Promise<Paper[]> {

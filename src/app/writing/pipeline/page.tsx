@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
+import StructuredData from '@/components/StructuredData';
+import { siteMetadata, buildAlternates, buildOpenGraph, ogCard } from '@/lib/siteMetadata';
 
 const description =
   'How the automated review pipeline behind the daily paper reviews, digests, and trend reports on this site works.';
@@ -9,18 +10,45 @@ export const metadata: Metadata = {
   title: 'How the Review Pipeline Works',
   description,
   alternates: buildAlternates('/writing/pipeline/'),
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: `How the Review Pipeline Works | ${siteMetadata.authorName}`,
     description,
     url: `${siteMetadata.siteUrl}/writing/pipeline/`,
     type: 'website',
-    images: [siteMetadata.ogImage],
-  },
+    images: [ogCard('_section-writing', 'How the review pipeline behind the writing on deniskim1.com works')],
+  }),
 };
 
 export default function PipelinePage() {
+  const pageUrl = `${siteMetadata.siteUrl}/writing/pipeline/`;
+  // The only indexable page under /writing/ that emitted no structured data.
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': pageUrl,
+        url: pageUrl,
+        name: 'How the Review Pipeline Works',
+        description,
+        inLanguage: 'en-US',
+        isPartOf: { '@id': `${siteMetadata.siteUrl}#website` },
+        author: { '@id': `${siteMetadata.siteUrl}#person` },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteMetadata.siteUrl}/` },
+          { '@type': 'ListItem', position: 2, name: 'Writing', item: `${siteMetadata.siteUrl}/writing/` },
+          { '@type': 'ListItem', position: 3, name: 'How the Review Pipeline Works' },
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="mx-auto px-6 max-[560px]:px-5 max-w-[720px] py-16 md:py-24">
+      <StructuredData data={jsonLd} />
       <Link
         href="/writing/"
         className="inline-flex items-center gap-1.5 mb-8 text-sm text-(--color-text-muted) hover:text-(--color-text) transition-colors"

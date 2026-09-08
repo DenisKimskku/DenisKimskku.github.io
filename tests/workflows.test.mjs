@@ -44,6 +44,49 @@ test('dependabot-auto-merge.yml builds its own test-merge and bounds re-dispatch
   }
 });
 
+// Cache invalidation order in deploy.yml. The code-managed cache rule gives
+// HTML a 30-day edge TTL, so two orderings that used to be harmless are now
+// month-long stale-site bugs: purging before the origin serves the new build
+// (a visitor re-fills the edge with the old page), and letting a purge
+// failure pass silently. The warm must also start regional (Globalping)
+// warming in the same step as the US-runner warm, not after it.
+test('deploy.yml: cache config -> deploy -> wait -> purge -> warm (local + global together)', () => {
+  const text = fs.readFileSync(path.join(DIR, 'deploy.yml'), 'utf8');
+  const deployJob = text.slice(text.indexOf('\n  deploy:'));
+  const stepNames = [...deployJob.matchAll(/^\s{6}- name: (.+)$/gm)].map((m) => m[1]);
+  const at = (needle) => {
+    const index = stepNames.findIndex((name) => name.includes(needle));
+    assert.ok(index >= 0, `deploy job is missing a "${needle}" step (have: ${stepNames.join(' | ')})`);
+    return index;
+  };
+
+  assert.ok(at('Ensure Cloudflare cache') < at('Deploy to GitHub Pages'), 'cache config must converge before deploy');
+  assert.ok(at('Deploy to GitHub Pages') < at('Wait for new deploy'), 'wait must follow deploy');
+  assert.ok(at('Wait for new deploy') < at('Purge Cloudflare'), 'purge must run only after the origin serves the new build');
+  assert.ok(at('Purge Cloudflare') < at('Warm Cloudflare cache'), 'warm must follow purge');
+
+  const step = (needle) => {
+    const start = deployJob.indexOf(`- name: ${stepNames[at(needle)]}`);
+    const rest = deployJob.slice(start + 1);
+    const next = rest.search(/^\s{6}- name: /m);
+    return rest.slice(0, next === -1 ? undefined : next);
+  };
+  assert.match(step('Ensure Cloudflare cache'), /continue-on-error: true/, 'a missing token permission must not block the deploy');
+  assert.match(step('Ensure Cloudflare cache'), /npm run cache:ensure/);
+  assert.ok(!/continue-on-error: true/.test(step('Purge Cloudflare')), 'a failed purge must fail the job (stale for 30 days otherwise)');
+  const warm = step('Warm Cloudflare cache');
+  assert.match(warm, /npm run warm:global[^\n]*&\s*$/m, 'Globalping warm must run in the background of the same step');
+  assert.match(warm, /npm run warm:cache/);
+  assert.match(warm, /continue-on-error: true/);
+});
+
+test('keep-warm.yml reports cache config and warms local + global together', () => {
+  const text = fs.readFileSync(path.join(DIR, 'keep-warm.yml'), 'utf8');
+  assert.match(text, /npm run cache:check/);
+  assert.match(text, /npm run warm:global[^\n]*&\s*$/m);
+  assert.match(text, /npm run warm:cache/);
+});
+
 for (const f of files) {
   const text = fs.readFileSync(path.join(DIR, f), 'utf8');
   const lines = text.split(/\r?\n/);

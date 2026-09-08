@@ -3,18 +3,19 @@ import path from 'node:path';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
-import { siteMetadata, buildAlternates } from '@/lib/siteMetadata';
+import { getLatestNewsDesk, getRecentHandwrittenArticles } from '@/lib/articles';
+import { siteMetadata, buildAlternates, buildOpenGraph } from '@/lib/siteMetadata';
 
 export const metadata: Metadata = {
   description: siteMetadata.description,
   alternates: buildAlternates('/'),
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: siteMetadata.title,
     description: siteMetadata.description,
     url: siteMetadata.siteUrl,
     type: 'website',
     images: [siteMetadata.ogImage],
-  },
+  }),
 };
 
 interface Highlight {
@@ -39,6 +40,12 @@ const accentLinkClass =
 export default function Home() {
   const highlights = readData<Highlight[]>('highlights.json');
   const awards = readData<Award[]>('awards.json');
+  // Newest hand-written work and news issues get a direct anchor from the
+  // strongest page on the site (same exclusions as /writing/ and /news/).
+  const recentWriting = getRecentHandwrittenArticles(6)
+    .filter((a) => a.type !== 'Paper Review')
+    .slice(0, 3);
+  const newsDesk = getLatestNewsDesk(3);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -129,7 +136,11 @@ export default function Home() {
             <Link href="/writing/" className={accentLinkClass}>
               writings
             </Link>
-            .
+            . My{' '}
+            <Link href="/resume/" className={accentLinkClass}>
+              résumé
+            </Link>{' '}
+            is online as well.
           </p>
         </div>
       </section>
@@ -173,6 +184,91 @@ export default function Home() {
         </ul>
       </section>
 
+      {recentWriting.length > 0 && (
+        <section aria-labelledby="recent-writing-heading" className="mt-16">
+          <h2
+            id="recent-writing-heading"
+            className="text-xs font-medium text-(--color-text-muted) uppercase tracking-wider mb-3"
+          >
+            Recent writing
+          </h2>
+          <ul className="list-none">
+            {recentWriting.map((article) => (
+              <li
+                key={article.slug}
+                className="grid grid-cols-[88px_1fr] gap-3 max-[560px]:grid-cols-1 py-3 -mx-4 px-4 rounded-lg hover:bg-(--color-bg-secondary) transition-colors"
+              >
+                <time dateTime={article.date} className="text-[13px] text-(--color-text-muted) tabular-nums">
+                  {article.date}
+                </time>
+                <span className="leading-[1.6]">
+                  <Link href={`/writing/${article.slug}/`} className={accentLinkClass}>
+                    {article.title}
+                  </Link>
+                  <span className="block text-sm text-(--color-text-secondary)">
+                    {article.type} · {article.description}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-sm">
+            <Link href="/writing/" className={accentLinkClass}>
+              All writing →
+            </Link>
+          </p>
+        </section>
+      )}
+
+      {(newsDesk.weekly || newsDesk.dailies.length > 0) && (
+        <section aria-labelledby="news-desk-heading" className="mt-16">
+          <h2
+            id="news-desk-heading"
+            className="text-xs font-medium text-(--color-text-muted) uppercase tracking-wider mb-3"
+          >
+            From the news desk
+          </h2>
+          <p className="text-sm text-(--color-text-muted) mb-3">
+            Daily AI security digests and a weekly trend report, produced by an automated
+            pipeline I direct and spot-check.
+          </p>
+          <ul className="list-none">
+            {newsDesk.weekly && (
+              <li className="grid grid-cols-[88px_1fr] gap-3 max-[560px]:grid-cols-1 py-3 -mx-4 px-4 rounded-lg hover:bg-(--color-bg-secondary) transition-colors">
+                <time dateTime={newsDesk.weekly.date} className="text-[13px] text-(--color-text-muted) tabular-nums">
+                  {newsDesk.weekly.date}
+                </time>
+                <span className="leading-[1.6]">
+                  <Link href={`/writing/${newsDesk.weekly.slug}/`} className={accentLinkClass}>
+                    {newsDesk.weekly.title}
+                  </Link>
+                  <span className="block text-sm text-(--color-text-secondary)">{newsDesk.weekly.description}</span>
+                </span>
+              </li>
+            )}
+            {newsDesk.dailies.map((issue) => (
+              <li
+                key={issue.slug}
+                className="grid grid-cols-[88px_1fr] gap-3 max-[560px]:grid-cols-1 py-3 -mx-4 px-4 rounded-lg hover:bg-(--color-bg-secondary) transition-colors"
+              >
+                <time dateTime={issue.date} className="text-[13px] text-(--color-text-muted) tabular-nums">
+                  {issue.date}
+                </time>
+                <span className="leading-[1.6]">
+                  <Link href={`/writing/${issue.slug}/`} className={accentLinkClass}>
+                    {issue.title}
+                  </Link>
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-sm">
+            <Link href="/news/" className={accentLinkClass}>
+              All AI security news →
+            </Link>
+          </p>
+        </section>
+      )}
     </div>
   );
 }

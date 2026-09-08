@@ -5,7 +5,7 @@ type: "Paper Review"
 description: "Uses FPE and mDP to sanitize tokens in prompts before LLM inference"
 tags: ["Privacy"]
 readingTime: 5
-headerImage: "/images/news/prεεmpt_sanitizing_sensitive_prompts_for_llms.jpg"
+headerImage: "/images/news/prmpt_sanitizing_sensitive_prompts_for_llms.jpg"
 paperUrl: "https://arxiv.org/abs/2504.05147"
 ---
 
