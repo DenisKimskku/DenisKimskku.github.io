@@ -16,6 +16,37 @@
     "searchContent": "Every Bit, Everywhere, All at Once: A Binomial Multibit LLM Watermark I presented Every Bit, Everywhere, All at Once: A Binomial Multibit LLM Watermark (Gloaguen, Staab, Vero, Vechev — ETH Zurich, arXiv, May 2026) at our lab meeting this week. The title is doing real work: it names three separate design decisions rather than making a joke about the film, and the paper's contribution is that the three fit together. TL;DR The problem : multibit watermarking — hiding a payload in generated text rather than a yes/no flag — has been stuck between two bad options. Give each bit its own token positions and most of the payload sits idle at every step; or fold the message into the key and search all $2^m$ candidates at decode time, which stops being tractable somewhere around 32 bits. The mechanism : score each candidate token by how many payload bits its pseudorandom bit vector agrees with (an XNOR match count), bias the next token logits by that score, and decode with one majority vote per bit. Every token pushes on every bit. The refinement : a stateful encoder that tracks each bit's running lead and spends the next token's pressure on the bits currently losing rather than the ones already safe. The result : at 64 bits, six of the eight baselines sit flat at zero and the best survivor reaches about 0.32 message accuracy, against roughly 0.85 for the stateful variant. At 32 bits it clears 90% bit accuracy by 500 tokens against roughly 80% for the best baseline. The catch : robustnes"
   },
   {
+    "slug": "ai_security_digest__september_10_2026_adversarial_attacks__a",
+    "title": "AI Security Digest — September 10, 2026: Adversarial Attacks & AI Agents",
+    "date": "2026-09-10",
+    "type": "News Digest",
+    "description": "This digest covers new threats from adversarial attacks, including NERVE attacks on BCIs and the use of AI agents in large-scale server compromises.",
+    "tags": [
+      "Adversarial Attacks",
+      "AI Agents",
+      "LLM Security",
+      "Brain-Computer Interfaces",
+      "Cybersecurity",
+      "Quantum Computing"
+    ],
+    "readingTime": 4,
+    "searchContent": "AI Security Digest — September 10, 2026: Adversarial Attacks & AI Agents The proliferation of autonomous AI agents has brought new vectors for attack, mirroring the growing concern over how subtle inputs can manipulate complex AI systems. Paper Highlights NERVE Attacks: Breaking AI Powered Brain Computer Interfaces — Zahra Tarkhani, Georgios Akkogiounoglou, Lorena Qendro. The paper defines NERVE Attacks, categorizing five orthogonal vulnerability dimensions in AI integrated brain computer interfaces. Practitioners should note this as a growing risk for users of wearable and closed loop BCI systems. Industry & News Hackers Use Hundreds of AI Agents to Exploit PaperCut Flaws and Compromise 440 Servers Worldwide CyberSecurityNews — Attackers leveraged numerous AI agents to target vulnerabilities in PaperCut, resulting in the compromise of 440 servers globally. New quantum adversarial attack method uses momentum optimization Bioengineer.org — Researchers presented a quantum adversarial attack technique utilizing momentum optimization. This indicates that quantum computing may soon enable novel ways to compromise ML models. Anthropic researcher quits over AI safety startuphub.ai — A researcher departed Anthropic citing AI safety concerns. 'We Really Do Earnestly Believe AI Could Kill All Humans!' — Anthropic Safety Researcher Issues Worrying Prediction, Says There's No Internal Plan to Prevent It IGN — An Anthropic safety researcher made a severe prediction regarding AI risk, noti"
+  },
+  {
+    "slug": "nerve_attacks_breaking_aipowered_braincomputer_interfaces",
+    "title": "NERVE Attacks: Breaking AI-Powered Brain-Computer Interfaces",
+    "date": "2026-09-10",
+    "type": "Paper Review",
+    "description": "Modern Brain-Computer Interfaces (BCIs) sit at a complex intersection of neuroscience, microelectronics, and AI. These systems translate noisy, physiological neural signals into actionable commands for devices like prosthetics or AR systems.",
+    "tags": [
+      "Backdoors",
+      "Adversarial Attacks",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “NERVE Attacks: Breaking AI Powered Brain Computer Interfaces” (p. 6) NERVE Attacks: Characterizing the Attack Surface of AI Powered Brain Computer Interfaces TLDR What : Defines NERVE Attacks covering five orthogonal BCI vulnerability dimensions. Who's at risk : Users of AI integrated wearables and closed loop BCI systems. Key number : Uncovers 17 novel neuro specific attack instances. The BCI Stack's Unmapped Trust Boundaries Modern Brain Computer Interfaces (BCIs) sit at a complex intersection of neuroscience, microelectronics, and AI. These systems translate noisy, physiological neural signals into actionable commands for devices like prosthetics or AR systems. While the integration of deep learning models—from EEG Net to self supervised foundation models—has boosted BCI capability, it has simultaneously introduced a poorly understood attack surface. Prior security analysis has been too narrow, focusing either on isolated model level adversarial examples or on general software stack weaknesses. The core gap this paper targets is the complete lack of a unified taxonomy linking these two domains. Existing work fails to characterize attacks that are physiologically plausible while targeting the entire BCI pipeline, from the raw signal capture to the final deployed model. Attacks here threaten cognitive autonomy and physical safety, meaning a standard data breach analogy is insufficient. The Stealth Effectiveness Spectrum of BCI Backdoors The paper’s fun"
+  },
+  {
     "slug": "ai_security_digest__september_09_2026_vulnerabilities",
     "title": "AI Security Digest — September 09, 2026: Vulnerabilities",
     "date": "2026-09-09",
