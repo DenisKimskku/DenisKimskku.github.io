@@ -3,7 +3,7 @@ import path from 'node:path';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
-import { getLatestNewsDesk, getRecentHandwrittenArticles } from '@/lib/articles';
+import { getRecentHandwrittenArticles } from '@/lib/articles';
 import { siteMetadata, buildAlternates, buildOpenGraph } from '@/lib/siteMetadata';
 
 export const metadata: Metadata = {
@@ -45,7 +45,6 @@ export default function Home() {
   const recentWriting = getRecentHandwrittenArticles(6)
     .filter((a) => a.type !== 'Paper Review')
     .slice(0, 3);
-  const newsDesk = getLatestNewsDesk(3);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -215,56 +214,6 @@ export default function Home() {
           <p className="mt-2 text-sm">
             <Link href="/writing/" className={accentLinkClass}>
               All writing →
-            </Link>
-          </p>
-        </section>
-      )}
-
-      {(newsDesk.weekly || newsDesk.dailies.length > 0) && (
-        <section aria-labelledby="news-desk-heading" className="mt-16">
-          <h2
-            id="news-desk-heading"
-            className="text-xs font-medium text-(--color-text-muted) uppercase tracking-wider mb-3"
-          >
-            From the news desk
-          </h2>
-          <p className="text-sm text-(--color-text-muted) mb-3">
-            Daily AI security digests and a weekly trend report, produced by an automated
-            pipeline I direct and spot-check.
-          </p>
-          <ul className="list-none">
-            {newsDesk.weekly && (
-              <li className="grid grid-cols-[88px_1fr] gap-3 max-[560px]:grid-cols-1 py-3 -mx-4 px-4 rounded-lg hover:bg-(--color-bg-secondary) transition-colors">
-                <time dateTime={newsDesk.weekly.date} className="text-[13px] text-(--color-text-muted) tabular-nums">
-                  {newsDesk.weekly.date}
-                </time>
-                <span className="leading-[1.6]">
-                  <Link href={`/writing/${newsDesk.weekly.slug}/`} className={accentLinkClass}>
-                    {newsDesk.weekly.title}
-                  </Link>
-                  <span className="block text-sm text-(--color-text-secondary)">{newsDesk.weekly.description}</span>
-                </span>
-              </li>
-            )}
-            {newsDesk.dailies.map((issue) => (
-              <li
-                key={issue.slug}
-                className="grid grid-cols-[88px_1fr] gap-3 max-[560px]:grid-cols-1 py-3 -mx-4 px-4 rounded-lg hover:bg-(--color-bg-secondary) transition-colors"
-              >
-                <time dateTime={issue.date} className="text-[13px] text-(--color-text-muted) tabular-nums">
-                  {issue.date}
-                </time>
-                <span className="leading-[1.6]">
-                  <Link href={`/writing/${issue.slug}/`} className={accentLinkClass}>
-                    {issue.title}
-                  </Link>
-                </span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-2 text-sm">
-            <Link href="/news/" className={accentLinkClass}>
-              All AI security news →
             </Link>
           </p>
         </section>

@@ -330,8 +330,31 @@ function buildStaticAssetTargets() {
   ];
 }
 
+// Legacy URLs that scripts/generate-redirects.mjs turns into meta-refresh stubs.
+// They are not in the sitemap or the article index, so they were never purged:
+// a 404 cached at the edge before the stubs shipped (observed 2026-09-09:
+// /writing/tag/rag/ HIT age=22710 serving the old 404 while the origin already
+// returned the stub) would keep Googlebot seeing "Not found" for the whole
+// edge TTL. Purge every stub source on each deploy (~135 URLs, two batches).
+function buildRedirectStubTargets() {
+  const redirectsPath = path.join(process.cwd(), "src", "data", "redirects.json");
+  if (!fs.existsSync(redirectsPath)) {
+    return [];
+  }
+  try {
+    const config = JSON.parse(fs.readFileSync(redirectsPath, "utf8"));
+    return Object.keys(config.redirects || {}).map((from) => new URL(from, baseUrl).toString());
+  } catch {
+    return [];
+  }
+}
+
 function buildPurgeTargets(pageUrls) {
   const targets = new Set(buildSiteDocumentTargets());
+
+  for (const stubUrl of buildRedirectStubTargets()) {
+    targets.add(stubUrl);
+  }
 
   // resume.pdf is regenerated on every build; other PDFs are immutable uploads
   // and must NOT be purged (purging them would recreate the cold-PDF problem).
