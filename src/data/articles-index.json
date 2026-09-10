@@ -1,5 +1,22 @@
 [
   {
+    "slug": "ai_security_digest__september_11_2026_prompt_injection__ai_a",
+    "title": "AI Security Digest — September 11, 2026: Prompt Injection & AI Agents",
+    "date": "2026-09-11",
+    "type": "News Digest",
+    "description": "This digest covers advancements in AI security, including platform-level defenses, attacks against on-device LLMs, and AI-powered exploitation of enterprise software.",
+    "tags": [
+      "Prompt Injection",
+      "AI Agents",
+      "LLM Security",
+      "Adversarial Attacks",
+      "On-Device LLMs",
+      "AI Vulnerability"
+    ],
+    "readingTime": 5,
+    "searchContent": "AI Security Digest — September 11, 2026: Prompt Injection & AI Agents Microsoft is integrating Agentic AI Vulnerability Detection into Azure Government, signaling a shift toward proactive, platform level defenses against sophisticated AI exploits. This development shows that security tooling is rapidly adapting to the complexities introduced by autonomous AI workflows. Paper Highlights Understanding the Security Boundary of Obfuscation based On Device LLM Protection — Hanyi Zhou, Chenyang Li, Yuanzhe Pang. This paper details the \"Collapse\" attack, which exploits structural invariants within obfuscation primitives used in on device LLMs. Practitioners should care because this invalidates existing security assumptions for locally deployed, protected AI models. Industry & News AI powered attack exploited PaperCut flaws to hack 395 organizations. AI systems were leveraged against common enterprise software vulnerabilities, demonstrating how generative capabilities can accelerate real world exploitation paths. AI Workflow Identity Hijacking Lets Attackers Steal Sensitive Data Without Prompt Injection. This shows that attacks against agentic workflows do not always require traditional prompt injection vectors, targeting the identity or context of the AI agent instead. AI Safety Removal Services Spark Security Fears 조선일보. The emergence of services designed to bypass AI safety guardrails raises concerns about the availability and misuse of model jailbreaking techniques. Using AI tool"
+  },
+  {
     "slug": "every_bit_everywhere_all_at_once_watermark",
     "title": "Every Bit, Everywhere, All at Once: A Binomial Multibit LLM Watermark",
     "date": "2026-09-11",
@@ -14,6 +31,18 @@
     ],
     "readingTime": 14,
     "searchContent": "Every Bit, Everywhere, All at Once: A Binomial Multibit LLM Watermark I presented Every Bit, Everywhere, All at Once: A Binomial Multibit LLM Watermark (Gloaguen, Staab, Vero, Vechev — ETH Zurich, arXiv, May 2026) at our lab meeting this week. The title is doing real work: it names three separate design decisions rather than making a joke about the film, and the paper's contribution is that the three fit together. TL;DR The problem : multibit watermarking — hiding a payload in generated text rather than a yes/no flag — has been stuck between two bad options. Give each bit its own token positions and most of the payload sits idle at every step; or fold the message into the key and search all $2^m$ candidates at decode time, which stops being tractable somewhere around 32 bits. The mechanism : score each candidate token by how many payload bits its pseudorandom bit vector agrees with (an XNOR match count), bias the next token logits by that score, and decode with one majority vote per bit. Every token pushes on every bit. The refinement : a stateful encoder that tracks each bit's running lead and spends the next token's pressure on the bits currently losing rather than the ones already safe. The result : at 64 bits, six of the eight baselines sit flat at zero and the best survivor reaches about 0.32 message accuracy, against roughly 0.85 for the stateful variant. At 32 bits it clears 90% bit accuracy by 500 tokens against roughly 80% for the best baseline. The catch : robustnes"
+  },
+  {
+    "slug": "understanding_the_security_boundary_of_obfuscationbased_onde",
+    "title": "Understanding the Security Boundary of Obfuscation-based On-Device LLM Protection",
+    "date": "2026-09-11",
+    "type": "Paper Review",
+    "description": "The paper correctly identifies that relying on the algebraic closure of simple masking and permutation primitives is a flawed security assumption for TSLP systems. However, the conclusion that these methods are fundamentally weak needs tempering.",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Understanding the Security Boundary of Obfuscation based On Device LLM Protection” (p. 7) Collapse Attack on Obfuscation Based On Device LLM Protection TLDR What : A systematic attack, Collapse, exploits structural invariants in obfuscation primitives. Who's at risk : On device LLMs protected by TEE Shielded LLM Partition (TSLP) methods. Key number : Collapse can extract high fidelity surrogate models from prior defenses. The Heuristic Nature of Prior TSLP Defenses The deployment of Large Language Models (LLMs) on end devices aims to minimize latency and protect user data. Since these models are proprietary, their deployment on local hardware necessitates protection against model theft, especially when the execution is split between a Trusted Execution Environment (TEE) and an untrusted Rich Execution Environment (REE). TEE Shielded LLM Partition (TSLP) methods address this by offloading compute intensive linear operators to the REE while keeping lightweight operations inside the TEE. To prevent the REE from stealing model weights ($ mathbf{W}$), these methods apply various obfuscation schemes—such as column wise permutation, scaling, additive masking, or low rank masking—before offloading the weights ($ mathbf{e} { mathbf{W}} = O( mathbf{W})$). While these schemes appear secure because they resist simple inversion attempts, they are largely heuristic. Each scheme invents tricks based on specific, ad hoc algebraic operations. The paper formalizes a set "
   },
   {
     "slug": "ai_security_digest__september_10_2026_adversarial_attacks__a",
