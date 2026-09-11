@@ -1,5 +1,21 @@
 [
   {
+    "slug": "ai_security_digest__september_12_2026_ai_agents__vulnerabili",
+    "title": "AI Security Digest \u2014 September 12, 2026: AI Agents & Vulnerabilities",
+    "date": "2026-09-12",
+    "type": "News Digest",
+    "description": "AI agents are exploiting vulnerabilities in legacy software like PaperCut, leading to widespread breaches.",
+    "tags": [
+      "AI Agents",
+      "LLM Security",
+      "Vulnerability Exploitation",
+      "Cybersecurity Threats",
+      "Automated Attacks",
+      "Enterprise Security"
+    ],
+    "readingTime": 3
+  },
+  {
     "slug": "ai_security_digest__september_11_2026_prompt_injection__ai_a",
     "title": "AI Security Digest — September 11, 2026: Prompt Injection & AI Agents",
     "date": "2026-09-11",
