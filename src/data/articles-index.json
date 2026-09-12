@@ -1,5 +1,37 @@
 [
   {
+    "slug": "this_week_in_ai_security__september_13_2026",
+    "title": "This Week in AI Security \u2014 September 13, 2026",
+    "date": "2026-09-13",
+    "type": "Trend Report",
+    "description": "This week's AI security roundup covers targeted attacks on BCI, fine-grained backdoors in ASR, and the limits of on-device LLM protection.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "BCI Security",
+      "Backdoors",
+      "On-Device AI",
+      "RAG"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "ai_security_digest__september_13_2026",
+    "title": "AI Security Digest \u2014 September 13, 2026",
+    "date": "2026-09-13",
+    "type": "News Digest",
+    "description": "This digest covers the BlueMoon exploit kit chaining Chrome/Windows zero-days, CISA's KEV updates, and calls from Anthropic leadership for slower AI development.",
+    "tags": [
+      "Exploit Kits",
+      "Zero-Day Exploits",
+      "LLM Safety",
+      "Cybersecurity News",
+      "Vulnerability Management",
+      "Endpoint Security"
+    ],
+    "readingTime": 4
+  },
+  {
     "slug": "ai_security_digest__september_12_2026_ai_agents__vulnerabili",
     "title": "AI Security Digest \u2014 September 12, 2026: AI Agents & Vulnerabilities",
     "date": "2026-09-12",
