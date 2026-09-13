@@ -1,5 +1,21 @@
 [
   {
+    "slug": "ai_security_digest__september_14_2026_vulnerabilities",
+    "title": "AI Security Digest \u2014 September 14, 2026: Vulnerabilities",
+    "date": "2026-09-14",
+    "type": "News Digest",
+    "description": "This digest covers recent industry news, including adversarial attacks on speech recognition and critical network appliance vulnerabilities.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Network Security",
+      "AI Safety",
+      "Vulnerability Management",
+      "Biometrics"
+    ],
+    "readingTime": 3
+  },
+  {
     "slug": "this_week_in_ai_security__september_13_2026",
     "title": "This Week in AI Security \u2014 September 13, 2026",
     "date": "2026-09-13",
