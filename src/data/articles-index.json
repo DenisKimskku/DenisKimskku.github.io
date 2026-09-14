@@ -1,5 +1,21 @@
 [
   {
+    "slug": "ai_security_digest__september_15_2026_vulnerabilities",
+    "title": "AI Security Digest \u2014 September 15, 2026: Vulnerabilities",
+    "date": "2026-09-15",
+    "type": "News Digest",
+    "description": "This digest covers the accelerating pace of AI-powered offensive tools versus defensive countermeasures, highlighting new DoD guidelines and industry partnerships.",
+    "tags": [
+      "LLM Security",
+      "AI Cyberattacks",
+      "AI Governance",
+      "Software Security",
+      "Adversarial Attacks",
+      "Enterprise AI"
+    ],
+    "readingTime": 3
+  },
+  {
     "slug": "ai_security_digest__september_14_2026_vulnerabilities",
     "title": "AI Security Digest \u2014 September 14, 2026: Vulnerabilities",
     "date": "2026-09-14",
