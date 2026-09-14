@@ -467,8 +467,12 @@ test('digest.news-link-form: every news.google.com line must be canonical with a
   assert.equal(ofRule(check(review({ body: [...REVIEW_BODY, '', TRUNCATED_NEWS_LINE] })), 'digest.news-link-form').length, 0);
 });
 
+// Matches the abs-link form the rule counts, scheme and host anchored, so a
+// lookalike host in fixture prose can never select the line.
+const ARXIV_LINK_RE = /\]\(https:\/\/arxiv\.org\/abs\//;
+
 test('digest.paper-links: a Paper/Research Highlights section with zero arxiv.org/abs/ links warns', () => {
-  const plain = DIGEST_BODY.map((l) => (l.includes('arxiv.org') ? '**Optimizing Noise Distributions for Differential Privacy** — Ada Lovelace. Convex noise design for DP.' : l));
+  const plain = DIGEST_BODY.map((l) => (ARXIV_LINK_RE.test(l) ? '**Optimizing Noise Distributions for Differential Privacy** — Ada Lovelace. Convex noise design for DP.' : l));
   const out = ofRule(check(digest({ body: plain }), { path: DIGEST_PATH }), 'digest.paper-links');
   assert.equal(out.length, 1);
   assert.equal(out[0].severity, 'warn');

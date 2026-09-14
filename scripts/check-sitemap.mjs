@@ -28,12 +28,23 @@ export const INTENTIONAL_OMISSIONS = [
 // Directories under out/ that never contain pages.
 const SKIPPED_DIRS = new Set(['_next']);
 
+// Entity decode for <loc> text. `&amp;` MUST come last or `&amp;apos;` decodes
+// twice into `'` (same rule as scripts/backfill-paper-attribution.mjs).
+function unescapeXml(text) {
+  return text
+    .replaceAll('&apos;', "'")
+    .replaceAll('&quot;', '"')
+    .replaceAll('&lt;', '<')
+    .replaceAll('&gt;', '>')
+    .replaceAll('&amp;', '&'); // last: never double-decode
+}
+
 export function parseSitemapLocs(xml) {
   const locs = [];
   const re = /<loc>\s*([^<]+?)\s*<\/loc>/g;
   let match;
   while ((match = re.exec(xml))) {
-    locs.push(match[1].replaceAll('&amp;', '&').replaceAll('&apos;', "'").replaceAll('&quot;', '"'));
+    locs.push(unescapeXml(match[1]));
   }
   return locs;
 }

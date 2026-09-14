@@ -84,6 +84,10 @@ const HTML_TAG_RE = /<\/?(br|div|span|p|table|img|a)(?=[\s>/])[^<>]*>?/i;
 const CANONICAL_NEWS_LINE_RE = /^- \*\*\[(?!https?:\/\/)[^\]\n]+\]\((https?:\/\/[^)\s]+)\)\*\* \([^)\n]+\) [—–-] .+$/;
 const URL_AS_LINK_TEXT_RE = /\[https?:\/\/[^\]\n]*\]\(/;
 const REDIRECTOR_RE = /https?:\/\/news\.google\.com\/rss\/articles\/([A-Za-z0-9_-]*)/g;
+// Non-global twin of REDIRECTOR_RE used as the line gate: matches the scheme +
+// full host, so `evil-news.google.com.example/` cannot pass. Kept separate
+// because /g regexes carry lastIndex across .test() calls.
+const REDIRECTOR_HOST_RE = /https?:\/\/news\.google\.com(?![\w.-])/;
 const PAPER_SECTION_RE = /^##\s+(?:Paper|Research) Highlights\b/;
 
 const LIST_ITEM_RE = /^\s*(?:[-*+]|\d+[.)])\s+/;
@@ -558,7 +562,7 @@ export function checkGeneratedArticle(rawText, { path: filePath = 'article.md', 
     // used the raw URL as link text, and 2 lines were cut mid-token (payload
     // < 40 chars, the scripts/repair-dead-links.mjs threshold).
     for (let i = 0; i < bodyLines.length; i++) {
-      if (fenced[i] || !bodyLines[i].includes('news.google.com')) continue;
+      if (fenced[i] || !REDIRECTOR_HOST_RE.test(bodyLines[i])) continue;
       const line = bodyLines[i];
       const problems = [];
       if (URL_AS_LINK_TEXT_RE.test(line)) problems.push('link text is a URL (must be the headline)');
