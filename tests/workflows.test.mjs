@@ -44,6 +44,81 @@ test('dependabot-auto-merge.yml builds its own test-merge and bounds re-dispatch
   }
 });
 
+// dependency-autorepair.yml pushes package-lock.json to main, which makes it
+// the SECOND writer of that file -- dependabot-auto-merge.yml is the first,
+// and it verifies a test-merge then merges it. Its guards (record the main
+// tip, re-check before merging, --match-head-commit) protect it from racing
+// ITSELF, not from another workflow landing a lockfile commit underneath it;
+// memory of that failure: "only the first merge would be the combination that
+// was actually verified". So the autorepair must stand down entirely whenever
+// an npm Dependabot PR is open, and defer to the workflow that serializes.
+test('dependency-autorepair.yml defers to Dependabot rather than racing the lockfile', () => {
+  const text = fs.readFileSync(path.join(DIR, 'dependency-autorepair.yml'), 'utf8');
+  const code = text
+    .split(/\r?\n/)
+    .filter((l) => !l.trimStart().startsWith('#'))
+    .join('\n');
+  assert.match(
+    code,
+    /gh run list .*--workflow=dependabot-auto-merge\.yml/,
+    'must check for an in-flight auto-merge RUN before repairing',
+  );
+  assert.match(code, /status == "in_progress" or \.status == "queued"/, 'in flight means queued or running');
+  // Every step that can write must stand down while a merge is in flight.
+  for (const step of ['Apply safe fixes', 'Detect changes']) {
+    const idx = code.indexOf(`name: ${step}`);
+    assert.ok(idx !== -1, `${step} step must exist`);
+    const block = code.slice(idx, idx + 400);
+    assert.match(block, /steps\.prs\.outputs\.defer != 'true'/, `${step} must stand down during an auto-merge run`);
+  }
+  // The guard must NOT key on an open PR. `indirect` Dependabot PRs stay open
+  // indefinitely by design, so that form deadlocks the repair permanently --
+  // and an indirect PR is the exact case this workflow exists to handle.
+  assert.ok(
+    !/gh pr list[^\n]*--author app\/dependabot/.test(code),
+    'keying the guard on an open Dependabot PR deadlocks forever on indirect PRs',
+  );
+});
+
+// The safety argument for auto-pushing dependency changes rests entirely on
+// (a) never taking a breaking upgrade and (b) verifying before pushing. Both
+// are one careless edit away from being void, so both are asserted.
+test('dependency-autorepair.yml never forces a breaking upgrade and verifies before pushing', () => {
+  const text = fs.readFileSync(path.join(DIR, 'dependency-autorepair.yml'), 'utf8');
+  const code = text
+    .split(/\r?\n/)
+    .filter((l) => !l.trimStart().startsWith('#'))
+    .join('\n');
+  // The workflow must delegate tier selection to the script rather than
+  // shelling out to npm itself, so there is exactly one place where the
+  // "never take a breaking upgrade" rule lives.
+  assert.match(code, /node scripts\/audit-autofix\.mjs/, 'repair must go through the script');
+  // `--force` is checked on COMMAND lines only: the issue body legitimately
+  // mentions it in prose ("in-range, never `--force`"), and an earlier version
+  // of this assertion failed on its own explanatory text.
+  const commands = code
+    .split('\n')
+    .filter((l) => !/^\s*echo\b/.test(l.trim()) && !/^\s*#/.test(l));
+  assert.ok(
+    !commands.some((l) => /npm\s+audit\s+fix/.test(l) && /--force/.test(l)),
+    '--force takes semver-major bumps; it must never be automated',
+  );
+  // The push must be reachable only when verification succeeded.
+  const pushIdx = code.indexOf('name: Commit and push the repair');
+  assert.ok(pushIdx !== -1, 'push step must exist');
+  assert.match(
+    code.slice(pushIdx, pushIdx + 400),
+    /steps\.verify\.outcome == 'success'/,
+    'the push must be gated on the verification gauntlet passing',
+  );
+  // A GITHUB_TOKEN commit does not fire deploy.yml's push trigger, so the
+  // deploy has to be dispatched or the repair never reaches the site.
+  assert.match(code, /gh workflow run deploy\.yml/, 'a bot push must dispatch deploy.yml explicitly');
+  // Retrofitting close-on-resolution onto content-watchdog, link-check and
+  // deploy.yml is why this is required of any new alerting workflow.
+  assert.match(code, /gh issue close/, 'must close its standing issue once resolved');
+});
+
 // Cache invalidation order in deploy.yml. The code-managed cache rule gives
 // HTML a 30-day edge TTL, so two orderings that used to be harmless are now
 // month-long stale-site bugs: purging before the origin serves the new build

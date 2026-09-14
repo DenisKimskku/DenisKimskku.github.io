@@ -18,7 +18,9 @@
     "cache:check": "node scripts/ensure-cloudflare-cache-config.mjs --check",
     "lint:content": "node scripts/lint-content.mjs",
     "gate:content": "npm run generate:index -- --strict && node scripts/lint-content.mjs --strict && node scripts/repair-math-delimiters.mjs --check && node scripts/repair-dead-links.mjs --check",
-    "check:article": "node scripts/check-generated-article.mjs"
+    "check:article": "node scripts/check-generated-article.mjs",
+    "audit:check": "node scripts/audit-autofix.mjs --check",
+    "audit:fix": "node scripts/audit-autofix.mjs"
   },
   "keywords": [
     "portfolio",
@@ -70,6 +72,7 @@
     "postcss": "^8.5.23",
     "ws": "^8.21.0",
     "@babel/core": "^7.29.6",
-    "sharp": "$sharp"
+    "sharp": "$sharp",
+    "fflate": "^0.7.5"
   }
 }

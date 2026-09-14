@@ -1,0 +1,359 @@
+# Closes the dependency-security hole that Dependabot alone cannot cover.
+#
+# WHY THIS EXISTS (measured 2026-09-14, two advisories open that day):
+#   * js-yaml (high) DID reach main as a Dependabot security PR — but tagged
+#     `dependency-type: indirect`, which dependabot-auto-merge.yml sends to a
+#     human by design. It sat open.
+#   * fflate (moderate) got NO PR AT ALL: satori depends on the exact version
+#     `fflate@0.7.3`, so there is no in-range bump to propose and npm's only
+#     computed fix is a satori MAJOR DOWNGRADE. It needs an `overrides` entry,
+#     and package.json already notes Dependabot "won't touch overrides".
+#   * No workflow in this repo ran `npm audit` at all. repo-health.yml skips
+#     it on purpose ("dependabot.yml already opens PRs for drift") — true right
+#     up until Dependabot cannot open one. So that class was invisible.
+#
+# WHAT IT DOES. Same shape as content-autorepair.yml: repair deterministically,
+# gate on the FULL verification gauntlet, push only when green, page a human
+# when not. scripts/audit-autofix.mjs applies only two safe tiers — `npm audit
+# fix` without `--force`, then patch-level `overrides` capped at the installed
+# major.minor. Anything needing a minor or major bump is never auto-applied;
+# it files an issue and pages instead. That residue is the honest limit of
+# "fully automated", and it is deliberate: an automatic major bump is how you
+# wake up to a silently broken site.
+#
+# THE CHEAP GATE COMES FIRST. `npm audit --package-lock-only` needs no
+# node_modules, so the usual no-op run costs a checkout and a few seconds.
+# Only once it finds something do we pay for `npm ci` + tests + a full build.
+#
+# LOCKFILE SERIALIZATION — the one real hazard. This workflow is the SECOND
+# writer of package-lock.json; dependabot-auto-merge.yml is the first, and it
+# verifies a test-merge then merges it. Its main-tip re-check and
+# --match-head-commit protect it from racing ITSELF, not from a second writer
+# landing a lockfile commit in that window.
+#
+# The guard is therefore "is an auto-merge run ACTUALLY IN FLIGHT", not "does
+# an open Dependabot PR exist". The open-PR form was the first design and it
+# deadlocks: `indirect` PRs are left open indefinitely on purpose, so the
+# condition never clears and dependency repair never runs again — and an
+# indirect PR is exactly the case this workflow was built for (the js-yaml PR
+# open on 2026-09-14 was `dependency-type: indirect`). See the step comment.
+#
+# Residual race: an auto-merge run could start just after the check. That is
+# survivable in both directions by design — auto-merge re-checks the main tip
+# right before merging and re-dispatches itself (bounded) if main moved, and a
+# push here that loses the race retries once with `git pull --rebase`.
+#
+# DISPATCH BOUNDING (required of every `gh workflow run` site in this repo):
+# this file dispatches exactly one workflow, deploy.yml, only after a
+# successful push — because a GITHUB_TOKEN commit does not fire deploy.yml's
+# `push` trigger. deploy.yml dispatches nothing back here, and this workflow is
+# never the target of a dispatch chain, so no cycle is possible.
+
+name: Dependency auto-repair
+
+on:
+  schedule:
+    # Daily 09:23 UTC. Off a round minute (GitHub drops congested schedule
+    # triggers on the hour — see keep-warm.yml) and clear of every other cron
+    # here: keep-warm 13 */8, content-autorepair 18:41, content-watchdog 21:00,
+    # optimize-images 22:47, link-check Sun 05:37, codeql Mon 06:29,
+    # repo-health Mon 07:15.
+    - cron: '23 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  # `gh pr list` for the lockfile-serialization check below.
+  pull-requests: read
+  # `gh issue create/edit/close` for the standing advisory issue.
+  issues: write
+  # `gh workflow run` for deploy.yml and dependabot-auto-merge.yml.
+  actions: write
+
+concurrency:
+  group: dependency-autorepair
+  cancel-in-progress: false
+
+env:
+  # The only paths the repair is allowed to touch. Change detection and the
+  # commit key off this same list, so a stray write anywhere else can never
+  # be staged by accident.
+  REPAIR_PATHS: package.json package-lock.json
+  ISSUE_TITLE: Dependency vulnerabilities need manual review
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    # Belt-and-braces loop protection: GITHUB_TOKEN pushes do not fire
+    # workflows anyway, but a commit by this bot must never re-enter here.
+    if: github.actor != 'github-actions[bot]'
+    # npm ci + tests + lint + a full static build (puppeteer renders the
+    # resume PDF) is the same gauntlet dependabot-auto-merge.yml runs.
+    timeout-minutes: 30
+    defaults:
+      run:
+        # Explicit `shell: bash` = `bash --noprofile --norc -eo pipefail`. An
+        # unspecified shell is only `bash -e`, with NO pipefail — and the
+        # verification gate below is written as `cmd 2>&1 | tee -a "$log"`.
+        # Without pipefail the pipeline's status is tee's (always 0) and the
+        # gate could never fail, voiding the never-push-when-broken design.
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      # The cheap gate: reads package-lock.json against the advisory database
+      # with no install at all. Exit 1 means "something is here", which is the
+      # only thing worth paying for the rest of this job to find out.
+      - name: Check for vulnerabilities
+        id: check
+        continue-on-error: true
+        run: node scripts/audit-autofix.mjs --check
+
+      - name: Nothing to do
+        if: steps.check.outcome == 'success'
+        run: echo "No known vulnerabilities; skipping repair."
+
+      # See LOCKFILE SERIALIZATION above. The hazard is a CONCURRENT
+      # verify-then-merge, so this checks for a RUNNING auto-merge job — not
+      # for an open PR.
+      #
+      # Keying this on "any open npm Dependabot PR exists" was the first
+      # design and it deadlocks: an `indirect` PR is left open indefinitely on
+      # purpose (dependabot-auto-merge.yml routes those to a human), so the
+      # condition would never clear and dependency repair would never run
+      # again. That is precisely the case this whole workflow exists to cover
+      # — the js-yaml PR open on 2026-09-14 was `dependency-type: indirect`.
+      # Do not "restore" the open-PR form.
+      - name: Check for an in-flight auto-merge run
+        id: prs
+        if: steps.check.outcome == 'failure'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          inflight=$(gh run list --repo "$REPO" --workflow=dependabot-auto-merge.yml --limit 20 \
+            --json status --jq '[.[] | select(.status == "in_progress" or .status == "queued")] | length' || echo 0)
+          if [ "${inflight:-0}" -gt 0 ]; then
+            echo "$inflight auto-merge run(s) in flight — deferring repair to the next scheduled run."
+            echo "defer=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No auto-merge run in flight; safe to repair."
+          fi
+
+      - name: Apply safe fixes
+        id: fix
+        if: steps.check.outcome == 'failure' && steps.prs.outputs.defer != 'true'
+        continue-on-error: true
+        run: |
+          node scripts/audit-autofix.mjs 2>&1 | tee "$RUNNER_TEMP/autofix.log"
+
+      - name: Detect changes
+        id: diff
+        if: steps.check.outcome == 'failure' && steps.prs.outputs.defer != 'true'
+        run: |
+          if [ -n "$(git status --porcelain -- $REPAIR_PATHS)" ]; then
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+            git --no-pager diff --stat -- $REPAIR_PATHS
+          else
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            echo "No dependency changes produced."
+          fi
+
+      - name: Install system dependencies
+        if: steps.diff.outputs.has_changes == 'true'
+        run: sudo apt-get update && sudo apt-get install -y webp
+
+      # `npm ci` installs the REPAIRED lockfile, so everything below runs
+      # against the tree that would actually be pushed.
+      - name: Install dependencies
+        if: steps.diff.outputs.has_changes == 'true'
+        run: npm ci
+
+      # Exactly the gauntlet dependabot-auto-merge.yml runs on a test-merge,
+      # for the same reason: a dependency bump that breaks the build must
+      # never reach main, and this is the last place to find out.
+      - name: Verify the repaired tree
+        id: verify
+        if: steps.diff.outputs.has_changes == 'true'
+        continue-on-error: true
+        run: |
+          set -u
+          log="$RUNNER_TEMP/verify.log"
+          rc=0
+          check() {
+            local name=$1; shift
+            echo "::group::$name"
+            if "$@" 2>&1 | tee -a "$log"; then
+              echo "::endgroup::"
+            else
+              echo "::endgroup::"
+              echo "::error::$name failed"
+              echo "failed_at=$name" >> "$GITHUB_OUTPUT"
+              rc=1
+            fi
+            return $rc
+          }
+          check "npm test" npm test
+          check "eslint" npm run lint
+          check "generate:index --strict" npm run generate:index -- --strict
+          check "lint-content --strict" node scripts/lint-content.mjs --strict
+          check "npm run build" npm run build
+
+      # A repair that does not survive verification is worse than no repair,
+      # so the tree goes back exactly as it was and a human gets paged.
+      - name: Revert unverified repair
+        if: steps.diff.outputs.has_changes == 'true' && steps.verify.outcome == 'failure'
+        run: |
+          git checkout -- $REPAIR_PATHS
+          echo "Reverted; nothing will be pushed."
+
+      - name: Commit and push the repair
+        id: push
+        if: steps.diff.outputs.has_changes == 'true' && steps.verify.outcome == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # The build rewrites generated artefacts (og images, resume.pdf,
+          # article escape repairs); stage ONLY the dependency files.
+          git add -- $REPAIR_PATHS
+          {
+            echo "chore(deps): auto-repair npm audit findings"
+            echo
+            sed 's/\r$//' "$RUNNER_TEMP/autofix.log" | sed -n '1,40p'
+            echo
+            echo "Verified with npm test, eslint, strict content lint, and a full build."
+            echo "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          } > "$RUNNER_TEMP/commit-msg.txt"
+          git commit -F "$RUNNER_TEMP/commit-msg.txt"
+          # The content automation and the owner both push to main on their own
+          # schedule; retry once via rebase rather than paging on a benign race.
+          git push || { git pull --rebase --autostash && git push; }
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      # A GITHUB_TOKEN commit does not fire deploy.yml's `push` trigger
+      # (workflow_dispatch is one of only two events exempt from that
+      # suppression), so the deploy has to be asked for explicitly.
+      - name: Deploy the repaired main
+        if: steps.push.outputs.pushed == 'true'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy.yml --repo "${{ github.repository }}" --ref main
+
+      # ---- Alerting ------------------------------------------------------
+      # Two ways a human is needed: the script could not safely fix something
+      # (minor/major bump required), or the fix failed verification.
+      - name: File or refresh the manual-review issue
+        id: issue
+        if: (steps.fix.outcome == 'failure' && steps.prs.outputs.defer != 'true') || steps.verify.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          body="$RUNNER_TEMP/issue-body.md"
+          # Dedupe per commit: the daily cron and a manual dispatch see the same
+          # main. If the open issue already reports THIS sha, refresh nothing
+          # and tell the ntfy step not to page again.
+          existing=$(gh issue list --repo "${{ github.repository }}" --state open \
+            --search "\"$ISSUE_TITLE\" in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
+          if [ -n "$existing" ]; then
+            existing_body=$(gh issue view "$existing" --repo "${{ github.repository }}" --json body --jq '.body' 2>/dev/null || true)
+            if grep -qF "Head: ${{ github.sha }}" <<<"$existing_body"; then
+              echo "Issue #$existing already reports ${{ github.sha }}; not re-commenting or re-paging."
+              echo "already_reported=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+          {
+            if [ "${{ steps.verify.outcome }}" = "failure" ]; then
+              echo "An automatic dependency repair was produced but **failed verification**, so nothing was pushed."
+              echo "Failed at: \`${{ steps.verify.outputs.failed_at }}\`"
+            else
+              echo "\`npm audit\` reports vulnerabilities that cannot be fixed safely on their own."
+              echo "Only two tiers are automated: \`npm audit fix\` (in-range, never \`--force\`) and a"
+              echo "patch-level \`overrides\` pin. Anything needing a **minor or major** bump is left here"
+              echo "on purpose — review it by hand."
+            fi
+            echo
+            echo "Latest run: $run_url"
+            echo "Head: ${{ github.sha }}"
+            echo
+            echo '```'
+            # Fences cannot be closed early by the log itself; strip any triple
+            # backtick, cut on bytes, then drop a leading UTF-8 continuation
+            # byte so the body stays valid (the script prints ✓ ✗ — glyphs).
+            sed 's/```/` ` `/g' "$RUNNER_TEMP/autofix.log" 2>/dev/null | tail -c 30000 | sed '1s/^[\x80-\xBF]*//'
+            echo '```'
+            if [ -s "$RUNNER_TEMP/verify.log" ]; then
+              echo
+              echo "<details><summary>Verification output (tail)</summary>"
+              echo
+              echo '```'
+              sed 's/```/` ` `/g' "$RUNNER_TEMP/verify.log" | tail -c 30000 | sed '1s/^[\x80-\xBF]*//'
+              echo '```'
+              echo
+              echo "</details>"
+            fi
+          } > "$body"
+          if [ -z "$existing" ]; then
+            gh issue create --repo "${{ github.repository }}" \
+              --title "$ISSUE_TITLE" --body-file "$body" \
+              || true # never mask the real failure with a notification failure
+          else
+            gh issue edit "$existing" --repo "${{ github.repository }}" --body-file "$body" || true
+            gh issue comment "$existing" --repo "${{ github.repository }}" \
+              --body "Still unresolved as of run $run_url — issue body refreshed." || true
+          fi
+
+      - name: Ntfy alert — dependencies need manual review
+        if: ((steps.fix.outcome == 'failure' && steps.prs.outputs.defer != 'true') || steps.verify.outcome == 'failure') && steps.issue.outputs.already_reported != 'true'
+        run: |
+          curl -s -H 'Title: DEPENDENCY VULNS NEED REVIEW' -H 'Priority: high' \
+            -d 'npm audit findings could not be auto-repaired (or the repair failed verification) — see the "Dependency vulnerabilities need manual review" issue.' \
+            ntfy.sh/${{ secrets.NTFY_TOPIC || 'deniskim-kb' }}
+
+      # Close-on-resolution, wired from day one (content-watchdog, link-check
+      # and deploy.yml all had to be retrofitted with this — do not repeat it).
+      #
+      # `fix.outcome == 'success'` is load-bearing, not redundant. A PARTIAL
+      # repair (some advisories fixed, one left needing a major bump) exits 1
+      # but still produces changes that verify and push — so keying the close
+      # on `pushed` alone would close the very issue this run just filed for
+      # the remainder. Clean means: the cheap gate found nothing, or the repair
+      # resolved EVERYTHING and that result reached main.
+      - name: Close the resolved manual-review issue
+        if: steps.check.outcome == 'success' || (steps.push.outputs.pushed == 'true' && steps.fix.outcome == 'success')
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          existing=$(gh issue list --repo "${{ github.repository }}" --state open \
+            --search "\"$ISSUE_TITLE\" in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" --repo "${{ github.repository }}" \
+              --comment "Resolved: \`npm audit\` is clean as of ${{ github.sha }}." || true
+            echo "Closed issue #$existing."
+          fi
+
+      - name: Fail the job when a human is needed
+        if: (steps.fix.outcome == 'failure' && steps.prs.outputs.defer != 'true') || steps.verify.outcome == 'failure'
+        run: |
+          echo "::error::Dependency vulnerabilities remain; see the '$ISSUE_TITLE' issue."
+          exit 1
+
+      # The manual-review path pages on its own above, so do not double-alert;
+      # this catches everything else (npm ci crash, push conflict, ...).
+      - name: Ntfy alert on unexpected failure
+        if: failure() && steps.verify.outcome != 'failure' && steps.fix.outcome != 'failure'
+        run: |
+          curl -s -H 'Title: DEPENDENCY AUTO-REPAIR FAILED' -H 'Priority: high' \
+            -d 'dependency-autorepair workflow failed — check Actions' \
+            ntfy.sh/${{ secrets.NTFY_TOPIC || 'deniskim-kb' }}
