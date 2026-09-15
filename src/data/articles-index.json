@@ -1,7 +1,7 @@
 [
   {
     "slug": "ai_security_digest__september_15_2026_vulnerabilities",
-    "title": "AI Security Digest \u2014 September 15, 2026: Vulnerabilities",
+    "title": "AI Security Digest — September 15, 2026: Vulnerabilities",
     "date": "2026-09-15",
     "type": "News Digest",
     "description": "This digest covers the accelerating pace of AI-powered offensive tools versus defensive countermeasures, highlighting new DoD guidelines and industry partnerships.",
@@ -13,11 +13,12 @@
       "Adversarial Attacks",
       "Enterprise AI"
     ],
-    "readingTime": 3
+    "readingTime": 3,
+    "searchContent": "AI Security Digest — September 15, 2026: Vulnerabilities The mechanism driving current enterprise security discussions involves the rapid acceleration of AI powered offensive tools versus the slower, methodical development of defensive countermeasures. No paper met the publication bar for a full review today. Industry & News Pentagon sets procedures for AI assisted software development (defensescoop.com) — The Department of Defense is formalizing guidelines for using AI in coding, which impacts how secure development pipelines must be structured. AI Cyberattacks Are Outrunning Enterprise Defenses (TechNewsWorld) — This suggests current security tooling may not keep pace with increasingly sophisticated, AI generated threat vectors. Total AI awareness: Gaining full visibility of the AI attack surface (scworld.com) — Organizations are focusing on mapping all potential entry points across AI systems to manage risk exposure. Cloudflare and OpenAI Partner on AI Powered Vulnerability Discovery and Remediation (TechAfrica News) — This collaboration points toward using AI offensively (to find bugs) and defensively (to fix them) in tandem. Growing concerns over AI data privacy have led NVIDIA, Palantir, and others to restrict the use of Anthropic’s models, while Microsoft seizes the opportunity to compete for enterprise clients (news.futunn.com) — Data governance issues are directly influencing vendor adoption choices in the enterprise sector. What to Watch Penalization Alignment for A"
   },
   {
     "slug": "ai_security_digest__september_14_2026_vulnerabilities",
-    "title": "AI Security Digest \u2014 September 14, 2026: Vulnerabilities",
+    "title": "AI Security Digest — September 14, 2026: Vulnerabilities",
     "date": "2026-09-14",
     "type": "News Digest",
     "description": "This digest covers recent industry news, including adversarial attacks on speech recognition and critical network appliance vulnerabilities.",
@@ -29,27 +30,12 @@
       "Vulnerability Management",
       "Biometrics"
     ],
-    "readingTime": 3
-  },
-  {
-    "slug": "this_week_in_ai_security__september_13_2026",
-    "title": "This Week in AI Security \u2014 September 13, 2026",
-    "date": "2026-09-13",
-    "type": "Trend Report",
-    "description": "This week's AI security roundup covers targeted attacks on BCI, fine-grained backdoors in ASR, and the limits of on-device LLM protection.",
-    "tags": [
-      "LLM Security",
-      "Adversarial Attacks",
-      "BCI Security",
-      "Backdoors",
-      "On-Device AI",
-      "RAG"
-    ],
-    "readingTime": 4
+    "readingTime": 3,
+    "searchContent": "AI Security Digest — September 14, 2026: Vulnerabilities Zero specific CVEs or version numbers were provided in today's feed for technical vulnerability tracking. No paper met the publication bar for a full review today. Industry & News Has Your Accent Just Become a Security Vulnerability? (WSJ) — This suggests that biometric or speech recognition systems may be susceptible to adversarial attacks based on linguistic patterns. Practitioners should review input validation mechanisms for any speech to text processing layers. Week in review: Linux rootkit deployed on F5 BIG IP APM devices, Cisco FMC bugs exploited (Help Net Security) — Attackers successfully leveraged vulnerabilities to implant rootkits on network appliances and exploit bugs in Cisco Firepower Management Center (FMC). Immediate patching of network infrastructure components is necessary. AI Leaders Call for Development Slowdown to Enhance Safety (조선일보) — Prominent figures in the AI sector are publicly advocating for a reduction in development speed to allow safety protocols to mature. This signals increasing industry wide concern regarding current deployment velocity. Anthropic CEO Dario Amodei Says AI Industry Needs to Give Safety Measures Time to Catch Up (securityweek.com) — Amodei stated that safety measures are lagging behind the pace of advancement in the AI field. This sentiment echoes calls from other industry leaders for more cautious progress. What to Watch Executive Calls for Slowdown: Increased public "
   },
   {
     "slug": "ai_security_digest__september_13_2026",
-    "title": "AI Security Digest \u2014 September 13, 2026",
+    "title": "AI Security Digest — September 13, 2026",
     "date": "2026-09-13",
     "type": "News Digest",
     "description": "This digest covers the BlueMoon exploit kit chaining Chrome/Windows zero-days, CISA's KEV updates, and calls from Anthropic leadership for slower AI development.",
@@ -61,11 +47,29 @@
       "Vulnerability Management",
       "Endpoint Security"
     ],
-    "readingTime": 4
+    "readingTime": 4,
+    "searchContent": "AI Security Digest — September 13, 2026 BlueMoon Exploit Kit leverages chaining vulnerabilities in Chrome and Windows to achieve system compromise. This chaining mechanism allows attackers to bypass multiple layers of standard security controls simultaneously. No paper met the bar for a full review today. Industry & News BlueMoon Exploit Kit Chains Recent Chrome, Windows Zero Days SecurityWeek (SecurityWeek) — This exploit kit utilizes chained zero day vulnerabilities in Chrome and Windows for initial access. Attackers should review endpoint detection rules immediately for indicators associated with this kit. CISA Adds 5 Actively Exploited Artifactory, ScreenConnect, and RouterOS Flaws to KEV The Hacker News (The Hacker News) — CISA has updated its Known Exploited Vulnerabilities catalog with five new flaws across several vendor products. Organizations must prioritize patching these listed items to reduce active exposure. Anthropic CEO urges AI companies to slow development as safety concerns mount theglobeandmail.com (theglobeandmail.com) — Leadership from Anthropic is calling for a deceleration of AI advancement citing growing safety risks. This suggests a potential shift in industry focus toward robust alignment research over pure speed. Anthropic CEO calls for slower AI progress to bolster safety: Here’s what it means The News International (The News International) — The CEO's call for slower progress directly relates to ensuring foundational models are sufficiently align"
+  },
+  {
+    "slug": "this_week_in_ai_security__september_13_2026",
+    "title": "This Week in AI Security — September 13, 2026",
+    "date": "2026-09-13",
+    "type": "Trend Report",
+    "description": "This week's AI security roundup covers targeted attacks on BCI, fine-grained backdoors in ASR, and the limits of on-device LLM protection.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "BCI Security",
+      "Backdoors",
+      "On-Device AI",
+      "RAG"
+    ],
+    "readingTime": 4,
+    "searchContent": "This Week in AI Security — September 13, 2026 The focus this week shifts toward highly targeted, subtle attacks against specialized AI systems, encompassing both biological interfaces and core model functions. Research continues to probe the protective mechanisms deployed on local, on device models. Furthermore, the threat surface extends into complex data retrieval augmentation (RAG) pipelines, showing sophistication in attack vectors. Targeted Attacks on Specialized Systems NERVE Attacks: Breaking AI Powered Brain Computer Interfaces This work examines vulnerabilities specifically within brain computer interfaces powered by Artificial Intelligence. It suggests that the integration of AI into sensitive physiological systems introduces novel attack surfaces that require bespoke defensive measures. Backdoors and Model Integrity GhostWord: A Fine Grained Backdoor Attack on Automatic Speech Recognition The discovery of GhostWord demonstrates how attackers can embed subtle, fine grained triggers into models like Automatic Speech Recognition. This indicates that even seemingly robust pre training processes can harbor hidden vulnerabilities designed to activate under specific, inconspicuous conditions. Securing Localized AI Deployments Understanding the Security Boundary of Obfuscation based On Device LLM Protection Researchers are mapping the limits of protection schemes used when running Large Language Models (LLM) directly on local hardware. This research helps define where curr"
   },
   {
     "slug": "ai_security_digest__september_12_2026_ai_agents__vulnerabili",
-    "title": "AI Security Digest \u2014 September 12, 2026: AI Agents & Vulnerabilities",
+    "title": "AI Security Digest — September 12, 2026: AI Agents & Vulnerabilities",
     "date": "2026-09-12",
     "type": "News Digest",
     "description": "AI agents are exploiting vulnerabilities in legacy software like PaperCut, leading to widespread breaches.",
@@ -77,7 +81,8 @@
       "Automated Attacks",
       "Enterprise Security"
     ],
-    "readingTime": 3
+    "readingTime": 3,
+    "searchContent": "AI Security Digest — September 12, 2026: AI Agents & Vulnerabilities 395 organizations were breached after AI agents exploited flaws in PaperCut, illustrating the immediate risk posed by advanced automation interacting with legacy software. No paper met the bar for a full review today. Industry & News AI agents exploited PaperCut flaws to breach 395 organizations (Help Net Security) — This demonstrates how autonomous systems can weaponize known vulnerabilities in enterprise software. PaperCut Flaws Exploited in AI Powered Attacks (SecurityWeek) — This confirms the threat model where AI tools are used to automate the exploitation lifecycle against corporate assets. Anthropic Says Russian Hackers Used Claude AI to Automate Malware Evasion (Anthropic) — This shows AI models being deployed offensively to bypass security controls, moving past simple prompt injection. EU Cyber Resilience Act reporting rules take effect, putting vulnerability disclosure and product security in focus (industrialcyber.co) — Compliance efforts must now integrate AI specific risk assessment into product lifecycles. GitHub Releases REST API for AI Vulnerability Scanning; Enterprise Server Still Excluded (Tech Times) — Organizations using GitHub must assess whether their current scanning capabilities cover the newly exposed API functionality. What to Watch AI Safety Research Funding: Increased availability of grants, such as the MATS Residency, suggests a growing institutional focus on addressing AI align"
   },
   {
     "slug": "ai_security_digest__september_11_2026_prompt_injection__ai_a",
