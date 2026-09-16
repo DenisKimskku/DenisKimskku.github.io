@@ -1,5 +1,32 @@
 [
   {
+    "slug": "ai_security_digest__september_17_2026_vulnerabilities",
+    "title": "AI Security Digest \u2014 September 17, 2026: Vulnerabilities",
+    "date": "2026-09-17",
+    "type": "News Digest",
+    "description": "This digest covers advanced threats like capability laundering via LLMs and the rise of AI-powered vulnerability management tools. It also highlights safety bypasses.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "AI Safety",
+      "Prompt Injection",
+      "Capability Laundering",
+      "AI Vulnerability"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "divide_consult_conquer_capability_laundering_through_aligned",
+    "title": "Divide, Consult, Conquer: Capability Laundering Through Aligned LLMs",
+    "date": "2026-09-17",
+    "type": "Paper Review",
+    "description": "Divide, Consult, Conquer: Capability Laundering Through Aligned LLMs",
+    "tags": [
+      "Jailbreaking"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__september_16_2026_vulnerabilities",
     "title": "AI Security Digest — September 16, 2026: Vulnerabilities",
     "date": "2026-09-16",
