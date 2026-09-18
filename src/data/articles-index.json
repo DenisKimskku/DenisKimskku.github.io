@@ -1,5 +1,35 @@
 [
   {
+    "slug": "ai_security_digest__september_19_2026_ai_agents__vulnerabili",
+    "title": "AI Security Digest \u2014 September 19, 2026: AI Agents & Vulnerabilities",
+    "date": "2026-09-19",
+    "type": "News Digest",
+    "description": "This digest covers new threats against AI agents, including adversarial evasion, zero-click RCEs, and the weaponization of AI for exploits.",
+    "tags": [
+      "AI Agents",
+      "LLM Security",
+      "Adversarial Attacks",
+      "RCE",
+      "Red Teaming",
+      "AI Vulnerabilities"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "redteaming_auto_mode_improving_blocking_classifiers_against",
+    "title": "Red-Teaming Auto Mode: Improving Blocking Classifiers Against Malign Coding Agents",
+    "date": "2026-09-19",
+    "type": "Paper Review",
+    "description": "Red-Teaming Auto Mode: Improving Blocking Classifiers Against Malign Coding Agents",
+    "tags": [
+      "Prompt Injection",
+      "Adversarial Attacks",
+      "AI Agents",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__september_18_2026_data_poisoning__ai_age",
     "title": "AI Security Digest — September 18, 2026: Data Poisoning & AI Agents",
     "date": "2026-09-18",
@@ -32,7 +62,7 @@
   },
   {
     "slug": "ai_security_digest__september_17_2026_vulnerabilities",
-    "title": "AI Security Digest — September 17, 2026: Vulnerabilities",
+    "title": "AI Security Digest \u2014 September 17, 2026: Vulnerabilities",
     "date": "2026-09-17",
     "type": "News Digest",
     "description": "This digest covers advanced threats like capability laundering via LLMs and the rise of AI-powered vulnerability management tools. It also highlights safety bypasses.",
@@ -45,7 +75,7 @@
       "AI Vulnerability"
     ],
     "readingTime": 4,
-    "searchContent": "AI Security Digest — September 17, 2026: Vulnerabilities The debate surrounding AI development pace versus safety is intensifying, with high profile industry leaders taking divergent stances on necessary guardrails. Paper Highlights Divide, Consult, Conquer: Capability Laundering Through Aligned LLMs — Mark Russinovich, Blake Bullwinkel, Giorgio Severi. This research demonstrates that harmful objectives can be achieved by decomposing them into benign subproblems, which are then solved by orchestrating aligned Large Language Models. Practitioners should note this as a significant threat model, showing how ostensibly safe components can be combined to attain dangerous outcomes. Industry & News Hackuity Raises $19 Million For AI Powered Vulnerability Management Pulse 2.0 (https://news.google.com/rss/articles/CBMijwFBVV95cUxObllrd1hTSjBhbDdzdzBtdzJVdkdtNTF6ZThjcEk4ZG5lMXFsS3VmXzlzMEdfUVBaSFJ6NTF2ZmZBeUFmOUduYWZvaFc0SV9lWkhLelJMMUZfeUdJTG1OWmw2cmZjeDBZSzZ5eThJZDE4Tm44cEhWN3NxTzF3X1c3azdDVUoxRGNZX0dFR2NvRdIBlAFBVV95cUxOdGY4RktLVlYwb2Jqb1d0dDhrVUxTY1hneTgwVDJIYXlOQWJWeXBuMm84UmZ0OG9vLUR3RTY0d0hWN2VSUVE5eUZBb3Z2bXNDbWg2bEdwTHdZWGtTWVphNThtMUNWdUpHOHZGbmtzOHFPNUp0a1FMVmthZGlVYlBIUmMtRnVPY3JYR0F0c0FqRm4wSE1G?oc=5&hl=en US&gl=US&ceid=US:en) — The funding round shows increased enterprise investment in AI tooling specifically aimed at identifying security weaknesses. How Hidden Triggers Can Make Robots Ignore Their Own Safety Rules IEEE Spectrum (https://news.google.com/rss/articles/CBMic"
+    "searchContent": "AI Security Digest \u2014 September 17, 2026: Vulnerabilities The debate surrounding AI development pace versus safety is intensifying, with high profile industry leaders taking divergent stances on necessary guardrails. Paper Highlights Divide, Consult, Conquer: Capability Laundering Through Aligned LLMs \u2014 Mark Russinovich, Blake Bullwinkel, Giorgio Severi. This research demonstrates that harmful objectives can be achieved by decomposing them into benign subproblems, which are then solved by orchestrating aligned Large Language Models. Practitioners should note this as a significant threat model, showing how ostensibly safe components can be combined to attain dangerous outcomes. Industry & News Hackuity Raises $19 Million For AI Powered Vulnerability Management Pulse 2.0 (https://news.google.com/rss/articles/CBMijwFBVV95cUxObllrd1hTSjBhbDdzdzBtdzJVdkdtNTF6ZThjcEk4ZG5lMXFsS3VmXzlzMEdfUVBaSFJ6NTF2ZmZBeUFmOUduYWZvaFc0SV9lWkhLelJMMUZfeUdJTG1OWmw2cmZjeDBZSzZ5eThJZDE4Tm44cEhWN3NxTzF3X1c3azdDVUoxRGNZX0dFR2NvRdIBlAFBVV95cUxOdGY4RktLVlYwb2Jqb1d0dDhrVUxTY1hneTgwVDJIYXlOQWJWeXBuMm84UmZ0OG9vLUR3RTY0d0hWN2VSUVE5eUZBb3Z2bXNDbWg2bEdwTHdZWGtTWVphNThtMUNWdUpHOHZGbmtzOHFPNUp0a1FMVmthZGlVYlBIUmMtRnVPY3JYR0F0c0FqRm4wSE1G?oc=5&hl=en US&gl=US&ceid=US:en) \u2014 The funding round shows increased enterprise investment in AI tooling specifically aimed at identifying security weaknesses. How Hidden Triggers Can Make Robots Ignore Their Own Safety Rules IEEE Spectrum (https://news.google.com/rss/articles/CBMic"
   },
   {
     "slug": "divide_consult_conquer_capability_laundering_through_aligned",
@@ -57,7 +87,7 @@
       "Jailbreaking"
     ],
     "readingTime": 5,
-    "searchContent": "Figure from the paper “Divide, Consult, Conquer: Capability Laundering Through Aligned LLMs” (p. 2) Capability Laundering via Decomposed Consultation with Aligned LLMs TLDR Capability laundering splits harmful tasks into benign subproblems. Weak orchestrators leverage strong, aligned models for fragments. For CBRN, consultation raises Gemma 4 31B’s mean rubric score from 62.3 to 83.1 on a 100 point rubric scale. The Granularity Shift: From Jailbreak to Decomposition Current efforts to control large language model (LLM) capabilities focus heavily on the single interaction—the jailbreak game. Adversaries attempt to force a policy aligned model to execute a harmful task within one coherent request. Defenses, in turn, train models to refuse or inspect inputs/outputs based on that single interaction. This entire paradigm operates under the assumption that if a single prompt is benign, the resulting capability transfer is negligible. However, this analysis shows that the attacker can change the unit of analysis. Instead of one harmful request, the attack decomposes the objective into numerous, seemingly benign subproblems. These subproblems—like a calculation, a material property lookup, or a protocol constraint—are then distributed across separate, independent consultations with a strong, aligned model. The external orchestrator retains the original, prohibited objective, controlling the sequencing and combining the pieces. This differs from prior decomposition work because the or"
+    "searchContent": "Figure from the paper \u201cDivide, Consult, Conquer: Capability Laundering Through Aligned LLMs\u201d (p. 2) Capability Laundering via Decomposed Consultation with Aligned LLMs TLDR Capability laundering splits harmful tasks into benign subproblems. Weak orchestrators leverage strong, aligned models for fragments. For CBRN, consultation raises Gemma 4 31B\u2019s mean rubric score from 62.3 to 83.1 on a 100 point rubric scale. The Granularity Shift: From Jailbreak to Decomposition Current efforts to control large language model (LLM) capabilities focus heavily on the single interaction\u2014the jailbreak game. Adversaries attempt to force a policy aligned model to execute a harmful task within one coherent request. Defenses, in turn, train models to refuse or inspect inputs/outputs based on that single interaction. This entire paradigm operates under the assumption that if a single prompt is benign, the resulting capability transfer is negligible. However, this analysis shows that the attacker can change the unit of analysis. Instead of one harmful request, the attack decomposes the objective into numerous, seemingly benign subproblems. These subproblems\u2014like a calculation, a material property lookup, or a protocol constraint\u2014are then distributed across separate, independent consultations with a strong, aligned model. The external orchestrator retains the original, prohibited objective, controlling the sequencing and combining the pieces. This differs from prior decomposition work because the or"
   },
   {
     "slug": "ai_security_digest__september_16_2026_vulnerabilities",
