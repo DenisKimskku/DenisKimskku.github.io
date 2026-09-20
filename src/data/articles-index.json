@@ -1,5 +1,34 @@
 [
   {
+    "slug": "ai_security_digest__september_21_2026_vulnerabilities",
+    "title": "AI Security Digest — September 21, 2026: Vulnerabilities",
+    "date": "2026-09-21",
+    "type": "News Digest",
+    "description": "This digest covers hardware vulnerabilities like GPUThor's Rowhammer attacks and trends in AI security, including rising software flaws and zero-day exploits.",
+    "tags": [
+      "Hardware Attacks",
+      "Rowhammer",
+      "GPU Security",
+      "LLM Security",
+      "Vulnerability Discovery",
+      "Cybersecurity News"
+    ],
+    "readingTime": 4,
+    "searchContent": "AI Security Digest — September 21, 2026: Vulnerabilities GPUThor enables high intensity Rowhammer attacks, demonstrating an amplification factor of up to 500$ times$ against ECC protected GPUs. Paper Highlights GPUThor: Amplifying Rowhammer Attacks via Non Uniform Patterns to Exploit ECC Protected GPUs — GPUThor enables high intensity Rowhammer using non uniform patterns, which poses a direct hardware level threat to workstation and cloud deployments using NVIDIA GPUs with Error Correcting Code (ECC). Industry & News AI Powered Vulnerability Discovery Explodes: Global Software Flaws Double in a Year to Record High finance.biggo.com — The doubling of global software flaws suggests that automated discovery tools are rapidly increasing the attack surface against deployed systems. Week in review: Cisco patches exploited email gateway 0 day, Revolut breach Help Net Security — Exploitation of a Cisco email gateway 0 day confirms that vendor patching cycles remain a significant vector for immediate compromise. Anthropic, Accenture To Invest $2 Billion in AI Model Evaluation As Safety Concerns Rise deccanchronicle.com — The substantial investment signals a corporate pivot toward rigorous model evaluation in response to escalating safety risks associated with large models. OpenAI, Anthropic And Google DeepMind Discuss AI Safety As Industry Faces Pressure To Slow Frontier Development: Report Stocktwits — Discussions between major labs suggest a growing industry consensus regarding the "
+  },
+  {
+    "slug": "gputhor_amplifying_rowhammer_attacks_via_nonuniform_patterns",
+    "title": "GPUThor: Amplifying Rowhammer Attacks via Non-Uniform Patterns to Exploit ECC-Protected GPUs",
+    "date": "2026-09-21",
+    "type": "Paper Review",
+    "description": "The paper presents a significant technical leap in attacking ECC-protected GPU memory by accurately mapping the $t_{\\text{REFI}}$ timing on Ampere hardware.",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “GPUThor: Amplifying Rowhammer Attacks via Non Uniform Patterns to Exploit ECC Protected GPUs” (p. 7) GPUThor: High Intensity Non Uniform Rowhammer Against ECC Protected GPUs TLDR What : GPUThor enables high intensity Rowhammer using non uniform patterns. Who's at risk : Workstation and cloud deployments using NVIDIA GPUs with ECC. Key number : GPUThor induces up to 500× and 23,500× more flips per GB than prior works, GDDRHammer and GPUHammer. Memory Access Coalescing The practical application of Rowhammer on GPUs has been severely limited by the low number of bit flips observed compared to CPU attacks. Prior GPU Rowhammer attacks, such as GPUHammer, relied on uniform hammering patterns where aggressor and decoy rows were activated equally. This uniformity results in low hammering intensity for the critical aggressor rows. The fundamental hurdle for attackers is that GPUs aggressively coalesce memory accesses across multiple levels—within warps and at the memory controller—to amortize bandwidth. This coalescing tendency collapses naive non uniform hammering patterns back into uniform ones, preventing the fine grained control needed to boost intensity. This limits the effective impact of the attack, especially when ECC is enabled, as prior attacks could not generate enough flips to overcome SECDED protection. Multi tREFI Hammering A key insight driving GPUThor is that simply achieving non uniform hammering is insufficient; the attack must also be designed"
+  },
+  {
     "slug": "ai_security_digest__september_20_2026_vulnerabilities",
     "title": "AI Security Digest — September 20, 2026: Vulnerabilities",
     "date": "2026-09-20",
