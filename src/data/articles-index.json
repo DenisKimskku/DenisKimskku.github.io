@@ -1,7 +1,7 @@
 [
   {
     "slug": "ai_security_digest__september_23_2026_rag__data_poisoning",
-    "title": "AI Security Digest \u2014 September 23, 2026: RAG & Data Poisoning",
+    "title": "AI Security Digest — September 23, 2026: RAG & Data Poisoning",
     "date": "2026-09-23",
     "type": "News Digest",
     "description": "This digest covers recent developments in RAG defenses, data poisoning threats, and industry news regarding AI vulnerabilities and new defensive tools.",
@@ -13,7 +13,8 @@
       "AI Vulnerabilities",
       "AI Defense"
     ],
-    "readingTime": 4
+    "readingTime": 4,
+    "searchContent": "AI Security Digest — September 23, 2026: RAG & Data Poisoning The discussion around RAG defenses often oversimplifies the threat, suggesting that data poisoning is a purely data layer problem, while recent findings show sophisticated attacks can bypass these safeguards through subtle knowledge manipulation. No paper met the publication bar today for a full review. Industry & News Meta Just Patched a Major Zero Day Vulnerability in Its Muse AI Assistant (Gizmodo) — Remediation of zero day flaws in consumer facing AI assistants like Muse is a recurring operational necessity for large model providers. The Dark Side of Vulnerability Disclosure: A Social Engineering Perspective in the Age of AI (Security Boulevard) — This piece examines how AI capabilities are changing the vectors used in social engineering attacks during vulnerability disclosure processes. Aikido Security Unveils Altar 1 Open Weight AI for Cybersecurity Defense (CyberSecurityNews) — The introduction of open weight models like Altar 1 provides practitioners with new, auditable tools for defensive security applications. Salt Security Extends Its Agentic Security Platform with Native AI Detection and Response (PRLog) — Integrating native AI detection directly into agentic platforms allows for faster, context aware responses to security events. OpenAI makes a move in the AI race and proposes new safety standards (El Constitucional) — OpenAI's proposal for new safety standards signals further industry pressure toward "
   },
   {
     "slug": "ai_security_digest__september_22_2026",
