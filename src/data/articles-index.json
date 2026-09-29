@@ -1,5 +1,67 @@
 [
   {
+    "slug": "ai_security_digest__september_30_2026_ai_agents__vulnerabili",
+    "title": "AI Security Digest \u2014 September 30, 2026: AI Agents & Vulnerabilities",
+    "date": "2026-09-30",
+    "type": "News Digest",
+    "description": "This digest covers new vulnerabilities in AI agents, including state leakage, cross-agent contamination, and prompt extraction via KV-cache sharing.",
+    "tags": [
+      "AI Agents",
+      "LLM Security",
+      "Adversarial Attacks",
+      "Prompt Injection",
+      "Data Leakage",
+      "Model Distillation"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "gpuhammer_rowhammer_attacks_on_gpu_memories_are_practical",
+    "title": "GPUHammer: Rowhammer Attacks on GPU Memories are Practical",
+    "date": "2026-09-30",
+    "type": "Paper Review",
+    "description": "Novel techniques to crack GDDR row mappings and boost hammering intensity",
+    "tags": [
+      "Binary Analysis"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "i_know_what_you_asked_prompt_leakage_via_kvcache_sharing_in",
+    "title": "I Know What You Asked: Prompt Leakage via KV-Cache Sharing in Multi-Tenant LLM Serving",
+    "date": "2026-09-30",
+    "type": "Paper Review",
+    "description": "PROMPTPEEK exploits KV-cache sharing side channels",
+    "tags": [
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "shareborne_ai_virus_memoryhopping_attacks_across_llm_agents",
+    "title": "Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents",
+    "date": "2026-09-30",
+    "type": "Paper Review",
+    "description": "Adversarial state spreads across independent assistants via shared artifacts",
+    "tags": [
+      "Adversarial Attacks",
+      "AI Agents"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "distillation_defenses_easily_break_after_reinforcement_learn",
+    "title": "Distillation Defenses Easily Break After Reinforcement Learning",
+    "date": "2026-09-30",
+    "type": "Paper Review",
+    "description": "RL training after distillation breaks apparent defenses against reasoning trace theft",
+    "tags": [
+      "Data Poisoning",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__september_29_2026_data_poisoning__backdo",
     "title": "AI Security Digest — September 29, 2026: Data Poisoning & Backdoors",
     "date": "2026-09-29",
@@ -31,7 +93,7 @@
   },
   {
     "slug": "ai_security_digest__september_23_2026_rag__data_poisoning",
-    "title": "AI Security Digest — September 23, 2026: RAG & Data Poisoning",
+    "title": "AI Security Digest \u2014 September 23, 2026: RAG & Data Poisoning",
     "date": "2026-09-23",
     "type": "News Digest",
     "description": "This digest covers recent developments in RAG defenses, data poisoning threats, and industry news regarding AI vulnerabilities and new defensive tools.",
@@ -44,7 +106,7 @@
       "AI Defense"
     ],
     "readingTime": 4,
-    "searchContent": "AI Security Digest — September 23, 2026: RAG & Data Poisoning The discussion around RAG defenses often oversimplifies the threat, suggesting that data poisoning is a purely data layer problem, while recent findings show sophisticated attacks can bypass these safeguards through subtle knowledge manipulation. No paper met the publication bar today for a full review. Industry & News Meta Just Patched a Major Zero Day Vulnerability in Its Muse AI Assistant (Gizmodo) — Remediation of zero day flaws in consumer facing AI assistants like Muse is a recurring operational necessity for large model providers. The Dark Side of Vulnerability Disclosure: A Social Engineering Perspective in the Age of AI (Security Boulevard) — This piece examines how AI capabilities are changing the vectors used in social engineering attacks during vulnerability disclosure processes. Aikido Security Unveils Altar 1 Open Weight AI for Cybersecurity Defense (CyberSecurityNews) — The introduction of open weight models like Altar 1 provides practitioners with new, auditable tools for defensive security applications. Salt Security Extends Its Agentic Security Platform with Native AI Detection and Response (PRLog) — Integrating native AI detection directly into agentic platforms allows for faster, context aware responses to security events. OpenAI makes a move in the AI race and proposes new safety standards (El Constitucional) — OpenAI's proposal for new safety standards signals further industry pressure toward "
+    "searchContent": "AI Security Digest \u2014 September 23, 2026: RAG & Data Poisoning The discussion around RAG defenses often oversimplifies the threat, suggesting that data poisoning is a purely data layer problem, while recent findings show sophisticated attacks can bypass these safeguards through subtle knowledge manipulation. No paper met the publication bar today for a full review. Industry & News Meta Just Patched a Major Zero Day Vulnerability in Its Muse AI Assistant (Gizmodo) \u2014 Remediation of zero day flaws in consumer facing AI assistants like Muse is a recurring operational necessity for large model providers. The Dark Side of Vulnerability Disclosure: A Social Engineering Perspective in the Age of AI (Security Boulevard) \u2014 This piece examines how AI capabilities are changing the vectors used in social engineering attacks during vulnerability disclosure processes. Aikido Security Unveils Altar 1 Open Weight AI for Cybersecurity Defense (CyberSecurityNews) \u2014 The introduction of open weight models like Altar 1 provides practitioners with new, auditable tools for defensive security applications. Salt Security Extends Its Agentic Security Platform with Native AI Detection and Response (PRLog) \u2014 Integrating native AI detection directly into agentic platforms allows for faster, context aware responses to security events. OpenAI makes a move in the AI race and proposes new safety standards (El Constitucional) \u2014 OpenAI's proposal for new safety standards signals further industry pressure toward "
   },
   {
     "slug": "ai_security_digest__september_22_2026",
