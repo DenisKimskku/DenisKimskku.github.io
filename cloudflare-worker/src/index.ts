@@ -62,6 +62,25 @@ interface AnalyticsEngineDataset {
   }): void;
 }
 
+// Structural subset of R2Bucket / R2ObjectBody from @cloudflare/workers-types,
+// declared locally for the same reason DurableNamespace and
+// AnalyticsEngineDataset are above: the SITE's tsconfig includes **/*.ts and
+// excludes only node_modules, so `next build` type-checks this file without the
+// worker's own types available. Importing @cloudflare/workers-types here would
+// make the site build depend on a devDependency of a different package -- which
+// is exactly how this file failed CI on 2026-10-02 (TS2552: Cannot find name
+// 'R2Bucket'). Keep this shape to what handleAtlas actually touches.
+interface R2ObjectBody {
+  body: ReadableStream;
+  size: number;
+  httpEtag?: string;
+  httpMetadata?: { contentType?: string; cacheControl?: string };
+}
+
+interface R2Bucket {
+  get(key: string): Promise<R2ObjectBody | null>;
+}
+
 export interface Env {
   RATE_LIMITER: DurableNamespace;
   /**
