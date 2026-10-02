@@ -78,3 +78,14 @@ quarantined-articles.txt
 ctf_backend/data/
 ctf_backend/**/__pycache__/
 ctf_backend/.env
+
+# Research atlas bundle: 516 objects / ~57MB, served from Cloudflare R2 at
+# deniskim1.com/atlas/* via the worker. Deliberately NOT in git -- UMAP refits
+# whenever the corpus changes, so nodes.json + edges.json (~19MB) are rewritten
+# wholesale on every export and would accumulate in history permanently.
+# Regenerate locally with build_atlas_data.py (next dev serves public/ directly),
+# then publish with `node scripts/upload-atlas-r2.mjs --apply`.
+public/atlas/
+
+# wrangler's local state/cache
+.wrangler/

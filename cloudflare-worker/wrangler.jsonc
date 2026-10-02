@@ -15,7 +15,22 @@
   // static site can call /api/ask* without CORS.
   "routes": [
     { "pattern": "deniskim1.com/api/ask*", "zone_name": "deniskim1.com" },
-    { "pattern": "www.deniskim1.com/api/ask*", "zone_name": "deniskim1.com" }
+    { "pattern": "www.deniskim1.com/api/ask*", "zone_name": "deniskim1.com" },
+
+    // The research atlas, served from R2 at the SAME origin as /graph so the
+    // page's relative fetches (/atlas/nodes.json, /atlas/reviews/<xx>.json)
+    // need no CORS and no code change. An r2.dev host would be a different
+    // origin and would require both.
+    { "pattern": "deniskim1.com/atlas/*", "zone_name": "deniskim1.com" },
+    { "pattern": "www.deniskim1.com/atlas/*", "zone_name": "deniskim1.com" }
+  ],
+
+  // 516 objects / ~57MB under the `atlas/` key prefix. Kept OUT of git: UMAP
+  // refits whenever the corpus changes, so nodes.json + edges.json (~19MB) are
+  // rewritten wholesale on every export and would accumulate in history
+  // permanently. Upload with `node scripts/upload-atlas-r2.mjs --apply`.
+  "r2_buckets": [
+    { "binding": "ATLAS", "bucket_name": "deniskim1-atlas" }
   ],
 
   // Durable Object that enforces per-IP and global daily quotas.

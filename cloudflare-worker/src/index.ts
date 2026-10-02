@@ -76,6 +76,13 @@ export interface Env {
   GLOBAL_DAILY_LIMIT?: string;
   /** '1' only for local dev — additionally allows http://localhost:3000. */
   DEV_MODE?: string;
+  /**
+   * R2 bucket holding the research-atlas bundle (516 objects, ~57MB) under the
+   * `atlas/` key prefix. Optional so the Ask handler and its tests keep working
+   * without the binding; a missing binding makes /atlas/* return 503 rather
+   * than throwing.
+   */
+  ATLAS?: R2Bucket;
 }
 
 const MODES = ['explain', 'summarize', 'significance', 'question'] as const;
@@ -698,11 +705,82 @@ async function handleQuota(request: Request, env: Env): Promise<Response> {
 }
 
 /* ------------------------------------------------------------------ */
+/* Research atlas (R2-backed static JSON)                             */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Serve the atlas bundle from R2 at the SAME origin the graph page is on.
+ *
+ * Why same-origin rather than an r2.dev URL: GraphClient/PaperPanel fetch
+ * relative paths (/atlas/nodes.json, /atlas/reviews/<xx>.json), so serving them
+ * here means no CORS and no frontend change. An r2.dev host would be a
+ * different origin and would need both.
+ *
+ * The bundle is ~57MB across 516 objects and is rewritten wholesale on every
+ * export, which is exactly why it is NOT in git: UMAP refits whenever the
+ * corpus changes, so nodes.json + edges.json (~19MB) would land in history
+ * again on each build, permanently.
+ */
+async function handleAtlas(request: Request, env: Env, url: URL): Promise<Response> {
+  if (request.method !== 'GET' && request.method !== 'HEAD') {
+    return new Response('method_not_allowed', { status: 405, headers: { Allow: 'GET, HEAD' } });
+  }
+  if (!env.ATLAS) {
+    return new Response('atlas_unavailable', { status: 503 });
+  }
+
+  // Map /atlas/<rest> -> key atlas/<rest>. Reject traversal and empty segments
+  // rather than normalising them: the key space is flat and known, so anything
+  // unexpected is a bug or a probe, not a path to be repaired.
+  const rest = url.pathname.replace(/^\/atlas\/?/, '');
+  if (!rest || rest.includes('..') || rest.startsWith('/')) {
+    // DISTINCT from the missing-object case below. Both used to return
+    // "not_found", which made a live 404 impossible to diagnose: a rejected
+    // path and an absent key looked identical from outside.
+    return new Response('bad_atlas_path', { status: 404 });
+  }
+  const key = `atlas/${rest}`;
+
+  const object = await env.ATLAS.get(key);
+  if (!object) {
+    return new Response(`atlas_key_absent:${key}`, { status: 404 });
+  }
+
+  const headers = new Headers();
+  // R2 does not infer Content-Type, and a .json served as octet-stream makes
+  // res.json() throw in the browser. The uploader sets it; this is the fallback.
+  headers.set('Content-Type', object.httpMetadata?.contentType || 'application/json');
+  headers.set('Cache-Control', object.httpMetadata?.cacheControl || 'public, max-age=86400');
+  if (object.httpEtag) headers.set('ETag', object.httpEtag);
+  // Public, immutable-per-build data: safe to read from anywhere, which also
+  // keeps a future preview deploy on another host working.
+  headers.set('Access-Control-Allow-Origin', '*');
+
+  if (request.method === 'HEAD') {
+    headers.set('Content-Length', String(object.size));
+    return new Response(null, { status: 200, headers });
+  }
+  return new Response(object.body, { status: 200, headers });
+}
+
+
+/* ------------------------------------------------------------------ */
 /* Entry point                                                        */
 /* ------------------------------------------------------------------ */
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
+    const atlasUrl = new URL(request.url);
+
+    // /atlas/* is served BEFORE the origin allowlist and before any rate
+    // limiting, deliberately. Those gates exist to protect the NVIDIA key proxy
+    // from cross-site abuse and cost; the atlas is public static JSON that
+    // costs nothing per request. Rate-limiting it would break the graph page,
+    // which issues one fetch per payload shard as the reader clicks around.
+    if (atlasUrl.pathname === '/atlas' || atlasUrl.pathname.startsWith('/atlas/')) {
+      return handleAtlas(request, env, atlasUrl);
+    }
+
     // Origin allowlist first. This filters cross-site browser traffic only
     // (the headers are spoofable outside a browser); actual abuse control
     // is the rate limiting inside each handler.
