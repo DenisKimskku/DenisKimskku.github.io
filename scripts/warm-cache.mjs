@@ -408,6 +408,15 @@ function loadLocalPageUrls() {
     // Cloudflare's ~24h TTL expired. Observed after a CTF release as
     // `age: 84252` and still climbing on a freshly deployed page.
     '/ctf/',
+    // /graph/ is the same case as /ctf/ above, and hit the same bug on its
+    // first deploy: it is noindexed (robots index:false in its page.tsx), so it
+    // never appears in the sitemap, and the purge list is sitemap + this array.
+    // Omitting it left a 404 cached for bare /graph from BEFORE the route
+    // existed -- the deploy reported success, /graph/ worked, and
+    // deniskim1.com/graph kept serving a cached 404 (cf-cache=HIT) that no
+    // future deploy would ever clear. Any noindexed route must be listed here
+    // by hand.
+    '/graph/',
     '/calendar-plus-plus/',
     '/calendar-plus-plus/privacy/',
     '/calendar-plus-plus/terms/',
