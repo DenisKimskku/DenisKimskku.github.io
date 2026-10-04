@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type SigmaType from 'sigma';
 import type GraphologyType from 'graphology';
 import PaperPanel from './PaperPanel';
+import { TIER_LABEL, formatCount, tierOf } from './atlasCopy';
 import type { AtlasCluster, AtlasEdge, AtlasNode } from './atlasTypes';
 
 const NODES_URL = '/atlas/nodes.json';
@@ -30,13 +31,17 @@ interface Atlas {
   byId: Map<string, AtlasNode>;
   regions: Map<number, Region>;
   reviewed: number;
-  regionCount: number;
+  /** named regions (cluster id >= 0) holding at least one paper */
+  regionsWithPapers: number;
+  /** named regions holding at least one paper with a review */
+  regionsWithReview: number;
 }
 
 /* Sigma parses hex reliably, so HSL is converted here rather than handed to the
-   renderer. 54 named regions is far past what categorical colour can separate,
-   so hue is deliberately only a loose grouping cue — identification comes from
-   the region labels drawn over the map and from the panel. */
+   renderer. Well over a hundred named regions is far past what categorical
+   colour can separate, so hue is deliberately only a loose grouping cue —
+   identification comes from the region labels drawn over the map and from the
+   panel. */
 function hslToHex(h: number, s: number, l: number): string {
   const a = (s / 100) * Math.min(l / 100, 1 - l / 100);
   const f = (n: number) => {
@@ -75,7 +80,7 @@ function nodeSubtitle(node: AtlasNode, region: Region | undefined): string {
   return [
     node.yr ? String(node.yr) : null,
     region ? region.label : null,
-    node.r === 1 ? 'PDF-verified review' : 'metadata only',
+    TIER_LABEL[tierOf(node)],
   ]
     .filter(Boolean)
     .join(' · ');
@@ -90,7 +95,7 @@ export default function GraphClient() {
   const sigmaRef = useRef<SigmaType | null>(null);
   const graphRef = useRef<GraphologyType | null>(null);
   const adjacencyRef = useRef<Map<string, [string, number][]>>(new Map());
-  const verifiedOnlyRef = useRef(true);
+  const reviewedOnlyRef = useRef(true);
   const selectedRef = useRef<string | null>(null);
   const themeRef = useRef({ edge: '#e5e5e5', text: '#1a1a1a' });
   const pendingHashRef = useRef<string | null>(null);
@@ -101,7 +106,7 @@ export default function GraphClient() {
   const [phase, setPhase] = useState<'loading' | 'ready' | 'error'>('loading');
   const [mode, setMode] = useState<'pending' | 'graph' | 'list'>('pending');
   const [edgePhase, setEdgePhase] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle');
-  const [verifiedOnly, setVerifiedOnly] = useState(true);
+  const [reviewedOnly, setReviewedOnly] = useState(true);
   const [query, setQuery] = useState('');
   const [cursor, setCursor] = useState(-1);
   const [selected, setSelected] = useState<AtlasNode | null>(null);
@@ -118,8 +123,8 @@ export default function GraphClient() {
       if (!node) return;
       // An unreviewed hit is still a legitimate destination: drop the filter
       // rather than silently doing nothing.
-      if (node.r === 0 && verifiedOnlyRef.current) {
-        setVerifiedOnly(false);
+      if (node.r === 0 && reviewedOnlyRef.current) {
+        setReviewedOnly(false);
         setRevealed(true);
       }
       setSelected(node);
@@ -226,10 +231,18 @@ export default function GraphClient() {
           region.cy += node.y;
           if (node.r === 1) region.reviewed += 1;
         }
+        // Region counts are what the reader can actually find: named regions
+        // (never the Unclustered bucket) that hold at least one paper, or at
+        // least one reviewed paper for the reviewed-only view.
+        let regionsWithPapers = 0;
+        let regionsWithReview = 0;
         for (const region of regions.values()) {
           const n = region.members.length || 1;
           region.cx /= n;
           region.cy /= n;
+          if (region.id < 0) continue;
+          if (region.members.length > 0) regionsWithPapers += 1;
+          if (region.reviewed > 0) regionsWithReview += 1;
         }
 
         const hash = window.location.hash.match(/^#p=([A-Za-z0-9_-]+)$/);
@@ -240,7 +253,8 @@ export default function GraphClient() {
           byId,
           regions,
           reviewed,
-          regionCount: clusters.filter((c) => c.id >= 0).length,
+          regionsWithPapers,
+          regionsWithReview,
         });
         setPhase('ready');
       } catch {
@@ -255,12 +269,12 @@ export default function GraphClient() {
   /* --- keep the sigma reducers in sync with React state -------------------- */
 
   useEffect(() => {
-    verifiedOnlyRef.current = verifiedOnly;
+    reviewedOnlyRef.current = reviewedOnly;
     sigmaRef.current?.refresh();
-    // Sigma's extent covers every node, shown or not, so the verified subset
+    // Sigma's extent covers every node, shown or not, so the reviewed subset
     // would otherwise sit off-centre in a mostly empty frame.
     if (!selectedRef.current) fitRef.current?.();
-  }, [verifiedOnly]);
+  }, [reviewedOnly]);
 
   useEffect(() => {
     selectedRef.current = selected ? selected.id : null;
@@ -324,7 +338,7 @@ export default function GraphClient() {
         maxCameraRatio: 1.6,
         nodeReducer: (node, data) => {
           const attrs = { ...data };
-          if (verifiedOnlyRef.current && !data.reviewed) {
+          if (reviewedOnlyRef.current && !data.reviewed) {
             attrs.hidden = true;
             return attrs;
           }
@@ -340,7 +354,7 @@ export default function GraphClient() {
           const attrs = { ...data };
           // `bothReviewed` is precomputed at load: the reducer is a field read,
           // not two adjacency lookups per edge per refresh.
-          if (verifiedOnlyRef.current && !data.bothReviewed) {
+          if (reviewedOnlyRef.current && !data.bothReviewed) {
             attrs.hidden = true;
             return attrs;
           }
@@ -367,7 +381,7 @@ export default function GraphClient() {
         let maxY = -Infinity;
         for (const id of region.members) {
           const node = atlas.byId.get(id);
-          if (!node || (verifiedOnlyRef.current && node.r === 0)) continue;
+          if (!node || (reviewedOnlyRef.current && node.r === 0)) continue;
           const d = s.getNodeDisplayData(id);
           if (!d) continue;
           minX = Math.min(minX, d.x);
@@ -395,7 +409,7 @@ export default function GraphClient() {
         let minY = Infinity;
         let maxY = -Infinity;
         for (const node of atlas.nodes) {
-          if (verifiedOnlyRef.current && node.r === 0) continue;
+          if (reviewedOnlyRef.current && node.r === 0) continue;
           const d = s.getNodeDisplayData(node.id);
           if (!d) continue;
           minX = Math.min(minX, d.x);
@@ -451,7 +465,7 @@ export default function GraphClient() {
             el.style.opacity = '0';
             el.style.pointerEvents = 'none';
           };
-          const visible = verifiedOnlyRef.current ? region.reviewed : region.members.length;
+          const visible = reviewedOnlyRef.current ? region.reviewed : region.members.length;
           if (visible < minMembers || shown >= maxLabels) {
             hide();
             continue;
@@ -495,7 +509,9 @@ export default function GraphClient() {
         const s = sigmaRef.current;
         const data = atlas.byId.get(node);
         if (!s || !tooltip || !data) return;
-        tooltip.textContent = data.tip || data.t;
+        // The paper's title only. The payload's `tip` field carries a model's
+        // takeaway with no label on every reviewed paper, so it is never used.
+        tooltip.textContent = data.t;
         const p = s.graphToViewport({ x: data.x, y: data.y });
         const { width } = s.getDimensions();
         const left = Math.min(Math.max(8, p.x + 14), Math.max(8, width - 292));
@@ -533,7 +549,7 @@ export default function GraphClient() {
       }
 
       /* (4) Edges are the second payload: the map is usable before the
-         similarity graph (~1.1 MB gzipped) lands. */
+         similarity graph (the larger of the two downloads) lands. */
       setEdgePhase('loading');
       const loadEdges = async () => {
         try {
@@ -644,9 +660,9 @@ export default function GraphClient() {
   const listNodes = useMemo(() => {
     if (!atlas || mode !== 'list') return [];
     return atlas.nodes
-      .filter((n) => (verifiedOnly ? n.r === 1 : true))
+      .filter((n) => (reviewedOnly ? n.r === 1 : true))
       .sort((a, b) => b.r - a.r || b.cc - a.cc);
-  }, [atlas, mode, verifiedOnly]);
+  }, [atlas, mode, reviewedOnly]);
 
   const onSearchKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (results.length === 0) return;
@@ -709,35 +725,45 @@ export default function GraphClient() {
           )}
         </div>
 
-        {/* (1) Verified-only is the default view; the full corpus is a toggle. */}
-        <label className="inline-flex cursor-pointer items-center gap-2 text-sm text-(--color-text-secondary) select-none">
+        {/* (1) Papers with a review are the default view; the full corpus is a
+            toggle. Interim control and copy (SPEC §11.7); package 3 replaces
+            them with the three-way "Show" filter. */}
+        <label
+          data-atlas-measure="filter"
+          className="inline-flex cursor-pointer items-center gap-2 text-sm text-(--color-text-secondary) select-none"
+        >
           <input
             type="checkbox"
-            checked={verifiedOnly}
+            checked={reviewedOnly}
             onChange={(e) => {
-              setVerifiedOnly(e.target.checked);
+              setReviewedOnly(e.target.checked);
               setRevealed(false);
               setListLimit(40);
             }}
             className="accent-(--color-accent)"
           />
-          Verified reviews only
+          Only papers with a review
         </label>
 
         {phase === 'ready' && atlas && (
-          <p className="text-xs text-(--color-text-muted)">
-            {verifiedOnly
-              ? `${atlas.reviewed.toLocaleString()} papers with a PDF-verified review`
-              : `${atlas.nodes.length.toLocaleString()} papers · ${atlas.reviewed.toLocaleString()} verified`}
-            {` · ${atlas.regionCount} regions`}
-            {mode === 'graph' && edgePhase === 'loading' && ' · loading similarity links…'}
+          <p data-atlas-measure="count" className="text-xs text-(--color-text-muted)">
+            {reviewedOnly
+              ? `${formatCount(atlas.reviewed)} papers with a review, in ${formatCount(atlas.regionsWithReview)} regions`
+              : `${formatCount(atlas.nodes.length)} papers in ${formatCount(atlas.regionsWithPapers)} regions · ${formatCount(atlas.reviewed)} with a review`}
+            {mode === 'graph' && edgePhase === 'loading' && ' · loading links between similar papers…'}
           </p>
         )}
       </div>
 
       {revealed && (
-        <p className="mb-3 rounded-md border border-(--color-border) bg-(--color-bg-secondary) px-3 py-2 text-xs text-(--color-text-secondary)">
-          That paper has no verified review yet, so the full corpus is now shown.
+        <p
+          data-atlas-measure="reveal"
+          className="mb-3 rounded-md border border-(--color-border) bg-(--color-bg-secondary) px-3 py-2 text-xs text-(--color-text-secondary)"
+        >
+          {/* The list fallback has no map, so it gets its own wording. */}
+          {mode === 'list'
+            ? 'This paper has no review, so the list now shows all papers.'
+            : 'This paper has no review, so the map now shows all papers.'}
         </p>
       )}
 
@@ -777,9 +803,13 @@ export default function GraphClient() {
 
           {mode === 'list' && (
             <div className="rounded-lg border border-(--color-border)">
-              <p className="border-b border-(--color-border) px-4 py-3 text-xs text-(--color-text-secondary)">
+              {/* Describes the sort below exactly: reviewed first, then by citations. */}
+              <p
+                data-atlas-measure="list-header"
+                className="border-b border-(--color-border) px-4 py-3 text-xs text-(--color-text-secondary)"
+              >
                 {phase === 'ready'
-                  ? 'The map needs a wider screen and WebGL. Same corpus, same verified reviews — as a list, newest-cited first.'
+                  ? 'Papers with a review come first, then the most-cited.'
                   : phase === 'error'
                     ? 'The atlas data could not be loaded.'
                     : 'Loading the atlas…'}
@@ -808,7 +838,7 @@ export default function GraphClient() {
                   onClick={() => setListLimit((n) => n + 60)}
                   className="w-full border-t border-(--color-border) px-4 py-3 text-sm text-(--color-accent)"
                 >
-                  Show more ({(listNodes.length - listLimit).toLocaleString()} remaining)
+                  Show more ({formatCount(listNodes.length - listLimit)} remaining)
                 </button>
               )}
             </div>

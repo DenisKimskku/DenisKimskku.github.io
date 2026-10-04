@@ -1,12 +1,20 @@
 import type { Metadata } from 'next';
 import GraphClient from './GraphClient';
-
-const description =
-  'An interactive map of the AI-security literature: 12,430 papers placed by embedding similarity, grouped into named regions, with PDF-verified reviews on the papers that have been read end to end.';
+import {
+  ABOUT_ABSTRACTS,
+  ABOUT_HEADING,
+  ABOUT_LINKS,
+  ABOUT_REVIEWS,
+  ATLAS_DEK_NARROW,
+  ATLAS_DEK_WIDE,
+  ATLAS_DESCRIPTION,
+  ATLAS_HEADLINE,
+} from './atlasCopy';
 
 export const metadata: Metadata = {
   title: 'Research Atlas',
-  description,
+  // Number-free (copy deck M2), so link previews can never show a stale count.
+  description: ATLAS_DESCRIPTION,
   // Soft launch: keep the page out of search indexes until it is reviewed.
   // Deliberately NOT added to sitemap.ts or the header nav either — reach it
   // by direct URL. No robots.txt Disallow: a crawler must be able to fetch the
@@ -22,26 +30,41 @@ export default function GraphPage() {
           Research Atlas &middot; preview
         </p>
         <h1 className="mb-3 font-serif text-3xl font-semibold text-(--color-text) md:text-4xl">
-          A map of the AI-security literature
+          {ATLAS_HEADLINE}
         </h1>
-        <p className="leading-relaxed text-(--color-text-secondary)">
-          Every dot is a paper, placed by embedding similarity and coloured by its region. The
-          default view shows only papers whose review was written from the full PDF and then
-          checked by a second pass; everything else is metadata only, and says so. Start with a
-          paper you already know &mdash; press{' '}
-          <kbd className="rounded border border-(--color-border) bg-(--color-bg-secondary) px-1 py-0.5 font-mono text-[11px]">
-            /
-          </kbd>{' '}
-          to search.
+        {/* The map needs 860px (GRAPH_MIN_WIDTH in GraphClient); narrower
+            screens get a list, so each dek is shown only where it is true.
+            Tailwind v4's max-[860px] means width < 860px, so the pair splits
+            the range exactly. */}
+        <p
+          data-atlas-measure="dek"
+          className="leading-relaxed text-(--color-text-secondary) max-[860px]:hidden"
+        >
+          {ATLAS_DEK_WIDE}
+        </p>
+        <p
+          data-atlas-measure="dek-narrow"
+          className="leading-relaxed text-(--color-text-secondary) min-[860px]:hidden"
+        >
+          {ATLAS_DEK_NARROW}
         </p>
       </header>
       <GraphClient />
-      <p className="mt-6 max-w-3xl text-xs leading-relaxed text-(--color-text-muted)">
-        Reviews are machine-generated from the paper&rsquo;s full text and verified against it by a
-        second model; the badge on each panel names the verifier and, where the payload records
-        one, the date. They are a reading aid, not peer review. Links always go to the
-        publisher&rsquo;s or arXiv&rsquo;s public landing page.
-      </p>
+      <section
+        aria-labelledby="atlas-about-reviews"
+        data-atlas-measure="about"
+        className="mt-8 max-w-3xl border-t border-(--color-border) pt-5"
+      >
+        <h2
+          id="atlas-about-reviews"
+          className="mb-2 font-sans text-xs font-medium tracking-wider text-(--color-text-muted) uppercase"
+        >
+          {ABOUT_HEADING}
+        </h2>
+        <p className="mb-2 text-[13px] leading-relaxed text-(--color-text-secondary)">{ABOUT_REVIEWS}</p>
+        <p className="mb-2 text-[13px] leading-relaxed text-(--color-text-secondary)">{ABOUT_ABSTRACTS}</p>
+        <p className="mb-0 text-[13px] leading-relaxed text-(--color-text-secondary)">{ABOUT_LINKS}</p>
+      </section>
     </div>
   );
 }
