@@ -194,10 +194,16 @@ const DECK = {
   H3: 'A map of AI-security research',
   H4: 'Each dot is a paper on AI security or a neighbouring field, placed near papers on similar topics. Search for one you know, or click a region name to explore.',
   H5i: 'Papers on AI security and neighbouring fields, as a list you can search. On a wider screen this is an interactive map.',
+  // Package 6 ships the final dek (H5): the list gained its filter and sort.
+  H5: 'Papers on AI security and neighbouring fields, as a list you can search, filter and sort. On a wider screen this is an interactive map.',
   A0: 'About the reviews',
   A1: 'Each review was written by a Claude model from the paper’s full text, then checked against that same text in a separate pass by the same model. It is a reading aid, not peer review: confirm anything important in the paper itself.',
   A2: 'Abstracts are shown as recorded in each paper’s bibliographic metadata; no model wrote or edited them.',
-  A3: 'Links point to a public landing page (publisher, DOI or arXiv). Links that look like direct file downloads are left out.',
+  // A3 as revised in the final review: the original ("Links point to a public
+  // landing page (publisher, DOI or arXiv).") named a closed set of hosts and
+  // called every page public, but many kept links are repository pages, and
+  // 41 are EBSCO record pages behind a sign-in (measured 2026-10-04).
+  A3: 'Links go to the paper’s landing page on another site, such as its publisher’s page, its DOI link or its arXiv entry. Links that look like direct file downloads are left out.',
   P8: 'No public landing page is recorded for this paper.',
   P9: 'Model-written review',
   P10a: 'Written by Claude from the paper’s full text, then checked against that text by the same model; the check was recorded on 21 Jul 2026.',
@@ -208,6 +214,7 @@ const DECK = {
   P19: 'Abstract',
   P20: 'As recorded in the paper’s bibliographic metadata. No model wrote, edited or checked this text.',
   P22: 'No review or abstract',
+  P23: 'The atlas has this paper’s title, venue and place on the map, but no review or abstract. Read the paper itself at the link above.',
   P23b: 'The atlas has this paper’s title, venue and place on the map, but no review, abstract or public landing page.',
   P28: 'Similar papers',
   I1: 'Only papers with a review',
@@ -342,7 +349,7 @@ test('the shipped copy constants are the copy deck, verbatim', () => {
   assert.equal(copy.ATLAS_DESCRIPTION, DECK.M2);
   assert.equal(copy.ATLAS_HEADLINE, DECK.H3);
   assert.equal(copy.ATLAS_DEK_WIDE, DECK.H4);
-  assert.equal(copy.ATLAS_DEK_NARROW, DECK.H5i);
+  assert.equal(copy.ATLAS_DEK_NARROW, DECK.H5);
   assert.equal(copy.ABOUT_HEADING, DECK.A0);
   assert.equal(copy.ABOUT_REVIEWS, DECK.A1);
   assert.equal(copy.ABOUT_ABSTRACTS, DECK.A2);
@@ -370,10 +377,8 @@ test('tierOf and the count format', () => {
 
 test('bareNote names only what the record holds', () => {
   assert.equal(bareNote(true, false), DECK.P23b);
-  assert.equal(
-    bareNote(true, true),
-    'The atlas has this paper’s title, venue and place on the map, but no review or abstract. Read the paper itself at the link below.',
-  );
+  // Package 6 moved the link into the action row under the title, so the deck's "above" is true again.
+  assert.equal(bareNote(true, true), DECK.P23);
   assert.ok(!/venue/.test(bareNote(false, true)) && !/venue/.test(bareNote(false, false)));
   for (const v of [true, false]) for (const l of [true, false]) assert.deepEqual(claimHits(bareNote(v, l)), []);
 });
@@ -580,7 +585,7 @@ test('census: reviewProvenance over every published review', (t) => {
 // Independent copies of the patterns, so a weakened implementation still fails here.
 const RAW_FILE = /\.pdf(?:$|[?#&])|\/download\b|viewcontent\.cgi|[?&]type=chapterpdf|\/pdf(?:\/|\?|$)|stamp\.jsp/i;
 const RAW_FILE_EXTRA =
-  /files\.osf\.io\/v\d+\/resources\/|\/bitstreams\/[^/?#]+\/content(?:$|[/?#])|\/ndownloader\/|\/download_pub(?:$|[/?#])|[?&]pdf=render(?:$|[&#])|get_pdf\.cgi/i;
+  /files\.osf\.io\/v\d+\/resources\/|\/bitstreams\/[^/?#]+\/content(?:$|[/?#])|\/ndownloader\/|\/download_pub(?:$|[/?#])|[?&]pdf=render(?:$|[&#])|get_pdf\.cgi|repository\.tudelft\.nl\/file\/|edepot\.wur\.nl\/\d+(?:$|[/?#])|\/servlets\/purl\//i;
 const STUB_DOI = /^https?:\/\/(?:dx\.)?doi\.org\/10\.\d{4,9}\/[a-z]+\/?$/i;
 
 test('landingUrl: the SPEC §14.1 fixtures', () => {
@@ -613,6 +618,13 @@ test('landingUrl: file endpoints beyond the SPEC pattern, and pages that must st
     'https://europepmc.org/articles/pmc13299584?pdf=render',
     'https://access.heinonline.com/hol-cgi-bin/get_pdf.cgi?handle=hein.journals/arzjl58&section=10',
     'https://api.taylorfrancis.com/x/download?identifierValue=10.5281%2Fzenodo&type=chapterpdf',
+    // Served application/pdf with %PDF- bytes when probed on 2026-10-04 (final review).
+    'https://repository.tudelft.nl/file/File_2069fa55-2800-4268-9ede-0a2ca9b1c25f',
+    'https://repository.tudelft.nl/file/File_a8c89a6c-84a6-4302-8fcb-615d19214437?preview=1',
+    'https://edepot.wur.nl/721092',
+    // NSF PAR's (and OSTI's) full-text file route.
+    'https://par.nsf.gov/servlets/purl/10683896',
+    'https://www.osti.gov/servlets/purl/1234567',
     'javascript:alert(1)',
     'ftp://example.org/paper',
     '',

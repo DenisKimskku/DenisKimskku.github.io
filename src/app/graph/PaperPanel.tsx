@@ -1,355 +1,399 @@
 'use client';
 
-import { Fragment, useEffect, useState } from 'react';
-import type { AtlasNode, Review } from './atlasTypes';
+import { useEffect, useRef, useState } from 'react';
+import { AbstractDisclosure, AbstractSection, abstractOf } from './AbstractBlock';
 import {
-  ABSTRACT_HEADING,
-  ABSTRACT_NOTE,
+  ALL_PAPERS,
+  BACK_LABEL,
   BARE_HEADING,
+  CLOSE_PAPER,
   NO_LANDING_PAGE,
-  REVIEW_BADGE,
-  REVIEW_DISCLOSURE,
-  SIMILAR_HEADING,
-  TIER_LABEL,
+  backTail,
   bareNote,
-  formatCount,
+  citationsText,
   landingUrl,
-  reviewProvenance,
-  stripPipelineNoise,
+  linkLabel,
+  regionPapersLine,
 } from './atlasCopy';
+import { AREA_SWATCH, paintArea, type AreaId } from './atlasPalette';
+import { displayVenue } from './atlasText';
+import type { AtlasNode, Review } from './atlasTypes';
+import ReviewBlock from './ReviewBlock';
+import SimilarPapers, { type SimilarPaper, type SimilarState } from './SimilarPapers';
+import { fetchShardEntry } from './useAtlasData';
 
-/* The panel renders an explicit whitelist of fields in a fixed order. Nothing
-   is ever produced by iterating the payload, so a future export key (e.g.
-   grounding_note, which must never reach a reader) cannot leak into the UI.
-   Every provenance string comes from reviewProvenance() in atlasCopy.ts. */
+/* Copy deck P3–P7, P24–P27 and LS9b (SPEC §11.5, §11.6). */
+/** P3: the region eyebrow button's title. */
+const SHOW_REGION = 'Show this region on the map';
+/** P4, and its title. */
+const NO_REGION = 'No named region';
+const NO_REGION_TITLE = 'Placed by similarity, but not part of any named topic region';
+/** P5 */
+const CITATIONS_TITLE = 'Citation count from the bibliographic record when the atlas was built';
+/** P6 */
+const SHORT_VENUE_TITLE = 'Venue name is shortened in the source data';
+/** P7's sr-only tail. */
+const NEW_TAB = ' (opens in a new tab)';
+/** P24, P26, P27 */
+const ABOUT_REGION = 'About this region';
+const SHOW_ON_MAP = 'Show on the map';
+const NO_REGION_BODY =
+  'This paper is placed by similarity like every other paper, but it is not part of any named topic region.';
+/** LS9b */
+const BACK_TO_ALL = 'Back to all papers';
 
-const HEADING =
-  'text-[11px] font-semibold uppercase tracking-[0.08em] text-(--color-text-muted) mb-1.5';
-const BODY = 'text-sm leading-relaxed text-(--color-text)';
+/** The shared small heading (SPEC §3.9), without a margin. */
+const HEADING = 'font-sans text-xs font-medium uppercase tracking-wider text-(--color-text-muted)';
+const FOCUS_RING = 'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-(--color-accent)';
 
-function Section({ title, text }: { title: string; text?: string }) {
-  const value = stripPipelineNoise(text);
-  if (!value) return null;
-  return (
-    <section className="mt-5">
-      <h3 className={HEADING}>{title}</h3>
-      <p className={BODY}>{value}</p>
-    </section>
-  );
+/** The display region a paper sits in, as the panel names and counts it (SPEC §4.4). */
+export interface PanelRegion {
+  key: string;
+  label: string;
+  area: AreaId;
+  /** every paper in the region, and those with a review (P25) */
+  papers: number;
+  reviewed: number;
 }
 
-function FactChips({ title, items }: { title: string; items?: string[] }) {
-  const [expanded, setExpanded] = useState(false);
-  if (!items || items.length === 0) return null;
-  const LIMIT = 5;
-  const shown = expanded ? items : items.slice(0, LIMIT);
-  return (
-    <div className="mt-4">
-      <h4 className={HEADING}>{title}</h4>
-      <ul className="flex flex-wrap gap-1.5">
-        {shown.map((item, i) => (
-          <li
-            key={i}
-            className="rounded-md border border-(--color-border) bg-(--color-bg-secondary) px-2 py-1 text-xs leading-snug text-(--color-text-secondary)"
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
-      {items.length > LIMIT && (
-        <button
-          type="button"
-          onClick={() => setExpanded((v) => !v)}
-          className="mt-1.5 text-xs text-(--color-accent) hover:underline"
-        >
-          {expanded ? 'Show fewer' : `Show ${items.length - LIMIT} more`}
-        </button>
-      )}
-    </div>
-  );
-}
+export type { SimilarPaper };
 
 interface PaperPanelProps {
   node: AtlasNode;
-  regionLabel: string;
+  /** The paper's display title (SPEC §9.4): markup removed, entities decoded. */
+  title: string;
+  /** The paper's display region; null for a paper in no named region. */
+  region: PanelRegion | null;
+  /** Shows the paper's region on the map (map view only; in a list the eyebrow is plain text). */
+  onFocusRegion?: (key: string) => void;
+  /** The paper's own cluster note, the most specific one, if it has one. */
   regionNote?: string | null;
-  neighbors: AtlasNode[];
+  similar: SimilarPaper[];
+  similarState: SimilarState;
+  /** P32: fetch the similarity data (list-only layouts). */
+  onLoadSimilar: () => void;
+  /** Opens a similar paper (it joins the trail, so Back returns here). */
   onOpenNode: (id: string) => void;
   onClose: () => void;
+  /** Present when the trail holds a paper to go back to. */
+  onBack?: () => void;
+  /** That paper's title, for the Back button's title and sr-only text. */
+  backTitle?: string;
+  /** With no trail but a focused region: "‹ {region label}" returns to the region view (P2b). */
+  onBackToRegion?: () => void;
+  backRegionLabel?: string;
+  /** List layout below 860px: "‹ All papers" leaves the paper, and targets are 44px. */
+  narrow: boolean;
+  /** Move focus to the title on mount (a reader's open, not a deep link). */
+  autoFocus: boolean;
 }
 
+type LoadStatus = 'idle' | 'loading' | 'ready' | 'error';
+
+const ICON_X = (
+  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+    <path d="M3 3l8 8M11 3l-8 8" />
+  </svg>
+);
+
+/* The paper panel (SPEC §9): one article that the rail body scrolls. A
+   sticky top bar (Back along the trail, and close), the region eyebrow, the
+   serif title, the meta line, the link to the paper's public landing page,
+   then the body by tier: the model-written review (with the abstract, when
+   there is one, in a closed disclosure), or the authors' abstract, or a plain
+   note that the atlas holds neither. Then the paper's region and its similar
+   papers. The panel is remounted per paper (keyed on the id by the caller),
+   so its initial state is the state: no effect has to reset it. */
 export default function PaperPanel({
   node,
-  regionLabel,
+  title,
+  region,
+  onFocusRegion,
   regionNote,
-  neighbors,
+  similar,
+  similarState,
+  onLoadSimilar,
   onOpenNode,
   onClose,
+  onBack,
+  backTitle,
+  onBackToRegion,
+  backRegionLabel,
+  narrow,
+  autoFocus,
 }: PaperPanelProps) {
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  // What the panel waits on (SPEC §9.6): the review for a reviewed paper (its
+  // abstract, if any, waits until its disclosure opens), else the abstract,
+  // else nothing.
+  const primary = node.r === 1 ? 'review' : node.a === 1 ? 'abstract' : null;
+  const [status, setStatus] = useState<LoadStatus>(primary ? 'loading' : 'idle');
   const [review, setReview] = useState<Review | null>(null);
   const [abstract, setAbstract] = useState<string | null>(null);
-  // The panel is remounted per paper (keyed on node.id by the caller), so the
-  // initial state is the state -- no effect has to reset it.
-  const [status, setStatus] = useState<'idle' | 'loading' | 'ready' | 'error'>(
-    node.r === 1 || node.a === 1 ? 'loading' : 'idle'
-  );
+  const [attempt, setAttempt] = useState(0);
 
-  /* Payloads are SHARDED, 256 buckets keyed on the id's first two hex chars,
-     and fetched on demand. One file per paper would have put 16,255 files in
-     the repo; the whole working tree is ~1,300 and git history cannot be
-     un-made. Over-fetch is ~78KB per shard, cacheable, and far cheaper than the
-     file count. Neither payload set is ever bundled into the page. */
   useEffect(() => {
-    if (node.r !== 1 && node.a !== 1) return;
+    if (!primary) return;
     let cancelled = false;
-    const shard = node.id.slice(0, 2).toLowerCase();
-
-    const pull = <T,>(dir: string): Promise<T | null> =>
-      fetch(`/atlas/${dir}/${encodeURIComponent(shard)}.json`)
-        .then((res) => {
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          return res.json();
-        })
-        .then((blob: Record<string, T>) => blob[node.id] ?? null);
-
-    Promise.all([
-      node.r === 1 ? pull<Review>('reviews') : Promise.resolve(null),
-      node.a === 1
-        ? pull<{ abstract?: string }>('abstracts').then((d) => d?.abstract ?? null)
-        : Promise.resolve(null),
-    ])
-      .then(([rev, abs]) => {
-        if (cancelled) return;
-        setReview(rev);
-        setAbstract(abs);
-        // A flagged node whose payload is missing is a build error, not an
-        // empty state -- surface it rather than rendering a blank panel.
-        setStatus(rev || abs ? 'ready' : 'error');
-      })
-      .catch(() => {
-        if (!cancelled) setStatus('error');
-      });
+    const request =
+      primary === 'review'
+        ? fetchShardEntry<Review>('reviews', node.id).then((entry) => {
+            if (cancelled) return;
+            // A flagged paper whose payload is missing is a build error, not an empty state.
+            const found = entry && typeof entry === 'object' ? entry : null;
+            setReview(found);
+            setStatus(found ? 'ready' : 'error');
+          })
+        : fetchShardEntry<unknown>('abstracts', node.id).then((entry) => {
+            if (cancelled) return;
+            const text = abstractOf(entry);
+            setAbstract(text);
+            setStatus(text ? 'ready' : 'error');
+          });
+    request.catch(() => {
+      if (!cancelled) setStatus('error');
+    });
     return () => {
       cancelled = true;
     };
-  }, [node.id, node.r, node.a]);
+  }, [node.id, primary, attempt]);
 
-  const prov = status === 'ready' && review ? reviewProvenance(review.provenance) : null;
-  const takeaway = stripPipelineNoise(review?.one_line_takeaway);
+  const retry = () => {
+    setStatus('loading');
+    setAttempt((n) => n + 1);
+  };
+
+  // A reader's open moves focus to the title (SPEC §7.4). The panel remounts
+  // per paper, so this happens once per open; the ref keeps a resize from
+  // pulling focus back here. On a phone the default scroll keeps the title in
+  // view; on desktop nothing scrolls.
+  const focusedRef = useRef(false);
+  useEffect(() => {
+    if (!autoFocus || focusedRef.current) return;
+    focusedRef.current = true;
+    titleRef.current?.focus({ preventScroll: !narrow });
+  }, [autoFocus, narrow]);
+
   // Never a raw file and never a stub DOI: landingUrl() is the only way a
   // paper link reaches the page (CONTEXT §5 invariant 1).
   const link = landingUrl(node.u);
+  const label = link ? linkLabel(link) : null;
+  // The venue as the reader should see it: a source-side truncation keeps its
+  // trailing "…", and a bare fragment ("Proceedings of the …") is left out.
+  const venue = displayVenue(node.v);
+  const loadState = status === 'idle' ? 'loading' : status;
 
-  const meta = [
-    node.yr ? String(node.yr) : null,
-    node.v || null,
-    node.cc > 0 ? `${formatCount(node.cc)} citation${node.cc === 1 ? '' : 's'}` : null,
-  ].filter(Boolean) as string[];
+  // Top-bar targets: 32px on desktop, 44px in the phone list (SPEC §12.8).
+  const barButton = narrow ? 'min-h-11 px-2' : 'min-h-8 px-2';
+  const backClass = `inline-flex min-w-0 items-center gap-1 rounded-md text-sm font-medium text-(--color-text-secondary) hover:bg-(--color-bg-tertiary) hover:text-(--color-text) ${FOCUS_RING} ${barButton}`;
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="flex items-start justify-between gap-3">
+    <article
+      aria-labelledby="atlas-paper-title"
+      aria-busy={status === 'loading' ? true : undefined}
+      data-atlas-panel=""
+      data-atlas-measure="panel"
+      className="flex flex-col"
+    >
+      {/* Top bar (SPEC §9.1–9.2): Back along the trail of similar papers, or
+          to the focused region, or "‹ All papers" out of a paper in the phone
+          list; the close button on desktop, and in the phone list once there
+          is a trail. Sticky inside the rail body from 860px: a sticky box is
+          held inside its scroller's content box, so -top-5 lets it sit flush
+          at the body's top edge over the body's 20px padding. */}
+      <div
+        data-atlas-measure="panel-bar"
+        className="-mx-4 mb-3 flex h-11 shrink-0 items-center justify-between gap-2 border-b border-(--color-border) bg-(--color-bg)/95 px-2 backdrop-blur-xs min-[640px]:-mx-6 min-[860px]:sticky min-[860px]:-top-5 min-[860px]:z-10 min-[860px]:-mx-5 min-[860px]:-mt-5 min-[860px]:px-3 min-[1360px]:-mx-6"
+      >
         <div className="min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-(--color-text-muted)">
-            {regionLabel}
-          </p>
-          <h2 className="mt-1 font-serif text-lg leading-snug font-semibold text-(--color-text)">
-            {node.t}
-          </h2>
+          {onBack ? (
+            <button type="button" onClick={onBack} title={backTitle} data-atlas-measure="panel-back" className={backClass}>
+              <span aria-hidden="true">&lsaquo;</span>
+              {BACK_LABEL}
+              {backTitle && <span className="sr-only">{backTail(backTitle)}</span>}
+            </button>
+          ) : onBackToRegion && backRegionLabel ? (
+            <button type="button" onClick={onBackToRegion} data-atlas-measure="panel-back" className={backClass}>
+              <span aria-hidden="true">&lsaquo;</span>
+              <span className="truncate">{backRegionLabel}</span>
+            </button>
+          ) : (
+            narrow && (
+              <button type="button" onClick={onClose} data-atlas-measure="all-papers" className={backClass}>
+                <span aria-hidden="true">&lsaquo;</span>
+                {ALL_PAPERS}
+              </button>
+            )
+          )}
         </div>
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Close paper panel"
-          className="-mt-1 shrink-0 rounded-md px-2 py-1 text-lg leading-none text-(--color-text-muted) hover:bg-(--color-bg-secondary) hover:text-(--color-text)"
-        >
-          &times;
-        </button>
+        {(!narrow || onBack) && (
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={CLOSE_PAPER}
+            title={CLOSE_PAPER}
+            data-atlas-measure="panel-close"
+            className={`grid shrink-0 place-items-center rounded-md text-(--color-text-muted) hover:bg-(--color-bg-tertiary) hover:text-(--color-text) ${FOCUS_RING} ${
+              narrow ? 'size-11' : 'size-8'
+            }`}
+          >
+            {ICON_X}
+          </button>
+        )}
       </div>
 
-      {meta.length > 0 && (
-        <p className="mt-1.5 text-xs text-(--color-text-secondary)">{meta.join(' · ')}</p>
+      {/* The eyebrow (SPEC §9.2 item 2): the paper's display region with its
+          area swatch, a button that shows the region on the map in map
+          view; plain text in a list; P4 for a paper in no named region. */}
+      <div className="min-w-0">
+        {region ? (
+          onFocusRegion ? (
+            <button
+              type="button"
+              onClick={() => onFocusRegion(region.key)}
+              title={SHOW_REGION}
+              data-atlas-measure="panel-region"
+              className="inline-flex min-h-6 items-center gap-1.5 rounded-sm text-left font-sans text-xs font-medium tracking-wider text-(--color-text-muted) uppercase hover:text-(--color-text) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--color-accent)"
+            >
+              <span aria-hidden="true" className={`size-2 shrink-0 rounded-full ${AREA_SWATCH[paintArea(region.area)]}`} />
+              {region.label}
+            </button>
+          ) : (
+            <p
+              data-atlas-measure="panel-region"
+              className="mb-0 inline-flex items-center gap-1.5 font-sans text-xs font-medium tracking-wider text-(--color-text-muted) uppercase"
+            >
+              <span aria-hidden="true" className={`size-2 shrink-0 rounded-full ${AREA_SWATCH[paintArea(region.area)]}`} />
+              {region.label}
+            </p>
+          )
+        ) : (
+          <p data-atlas-measure="panel-region" title={NO_REGION_TITLE} className="mb-0 font-sans text-xs text-(--color-text-muted) italic">
+            {NO_REGION}
+          </p>
+        )}
+        <h2
+          id="atlas-paper-title"
+          ref={titleRef}
+          tabIndex={-1}
+          data-atlas-measure="panel-title"
+          className="mt-1.5 mb-0 font-serif text-[22px] leading-snug font-semibold text-balance text-(--color-text) [overflow-wrap:anywhere] focus:outline-none"
+        >
+          {title}
+        </h2>
+      </div>
+
+      {/* Meta (SPEC §9.2 item 4): year, venue and citations, each "·" inside
+          the item before it. Year and citations never break; a long venue
+          wraps rather than overflow the rail. */}
+      {(Boolean(node.yr) || Boolean(venue) || node.cc > 0) && (
+        <p data-atlas-measure="panel-meta" className="mt-2 mb-0 text-[13px] leading-relaxed text-(--color-text-secondary)">
+          {node.yr ? (
+            <span className="whitespace-nowrap">
+              {node.yr}
+              {(venue || node.cc > 0) && ' ·'}
+            </span>
+          ) : null}
+          {node.yr && venue ? ' ' : null}
+          {venue ? (
+            <span className="[overflow-wrap:anywhere]">
+              <cite className="not-italic" title={venue.endsWith('…') ? SHORT_VENUE_TITLE : undefined}>
+                {venue}
+              </cite>
+              {node.cc > 0 && ' ·'}
+            </span>
+          ) : null}
+          {(node.yr || venue) && node.cc > 0 ? ' ' : null}
+          {node.cc > 0 ? (
+            <span className="whitespace-nowrap" title={CITATIONS_TITLE}>
+              {citationsText(node.cc)}
+            </span>
+          ) : null}
+        </p>
       )}
 
-      <div className="mt-1 min-h-0 flex-1 overflow-y-auto pr-1">
-        {/* Review provenance, on every reviewed paper. The badge text is fixed,
-            so it never waits on the fetch or changes width; the line under it
-            reserves its height while the review loads. The raw model id
-            appears only inside the disclosure. */}
-        {node.r === 1 && (
-          <div className="mt-3">
-            <span
-              id="atlas-review-label"
-              data-atlas-measure="badge"
-              className="inline-flex items-center rounded-full border border-(--color-border) bg-(--color-bg-secondary) px-2.5 py-0.5 text-[11px] font-medium text-(--color-text-secondary)"
-            >
-              {REVIEW_BADGE}
-            </span>
-            <p
-              data-atlas-measure="provenance"
-              className="mt-2 mb-0 min-h-[1.25rem] text-[13px] leading-relaxed text-(--color-text-secondary)"
-            >
-              {prov?.summary}
-            </p>
-            {prov?.minorIssues && (
-              <p
-                data-atlas-measure="minor"
-                className="mt-1.5 mb-0 flex items-start gap-1.5 text-[13px] text-(--color-text)"
-              >
-                <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#fab219]" />
-                {prov.minorIssues}
-              </p>
-            )}
-            {prov && prov.details.length > 0 && (
-              <details className="group mt-2" data-atlas-measure="how-made">
-                <summary className="inline-flex cursor-pointer list-none items-center gap-1 rounded-sm text-[13px] font-medium text-(--color-text-secondary) hover:text-(--color-text) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--color-accent) [&::-webkit-details-marker]:hidden">
-                  <span
-                    aria-hidden="true"
-                    className="inline-block w-3 motion-safe:transition-transform group-open:rotate-90"
-                  >
-                    &rsaquo;
-                  </span>
-                  {REVIEW_DISCLOSURE}
-                </summary>
-                <dl className="mt-2 mb-0 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 text-[13px]">
-                  {prov.details.map((row) => (
-                    <Fragment key={row.term}>
-                      <dt className="text-(--color-text-muted)">{row.term}</dt>
-                      <dd className="min-w-0 text-(--color-text-secondary)">
-                        {row.mono ? (
-                          <code className="font-mono text-[12px] text-(--color-text) [overflow-wrap:anywhere]">
-                            {row.value}
-                          </code>
-                        ) : (
-                          row.value
-                        )}
-                        {row.note && (
-                          <span className="mt-0.5 block text-[12.5px] leading-snug text-(--color-text-muted)">
-                            {row.note}
-                          </span>
-                        )}
-                      </dd>
-                    </Fragment>
-                  ))}
-                </dl>
-                <p className="mt-2 mb-0 text-[12.5px] leading-snug text-(--color-text-muted)">
-                  {prov.closing}
-                </p>
-              </details>
-            )}
-          </div>
-        )}
-
-        {(node.r === 1 || node.a === 1) && status === 'loading' && (
-          <p className="mt-5 text-sm text-(--color-text-secondary)" aria-live="polite">
-            Loading&hellip;
-          </p>
-        )}
-
-        {(node.r === 1 || node.a === 1) && status === 'error' && (
-          <p className="mt-5 text-sm text-(--color-text-secondary)">
-            This paper&rsquo;s panel could not be loaded.
-          </p>
-        )}
-
-        {/* The paper's abstract, for papers with no review (most of the corpus
-            that has any text). It comes from the bibliographic record with no
-            model in the loop, and is labelled as such directly under its
-            heading, so it is never mistaken for model-written review content. */}
-        {node.r === 0 && node.a === 1 && status === 'ready' && abstract && (
-          <div className="mt-5">
-            <h3 className={HEADING}>{ABSTRACT_HEADING}</h3>
-            <p data-atlas-measure="abstract-note" className="mb-0 text-xs leading-snug text-(--color-text-muted)">
-              {ABSTRACT_NOTE}
-            </p>
-            <p className="mt-2.5 text-sm leading-relaxed whitespace-pre-line text-(--color-text-secondary)">
-              {abstract}
-            </p>
-          </div>
-        )}
-
-        {/* Honest empty state, never a fabricated summary: only for papers with
-            NEITHER payload. It names only what the record holds. */}
-        {node.r === 0 && node.a === 0 && (
-          <div className="mt-5 rounded-lg border border-dashed border-(--color-border) bg-(--color-bg-secondary) p-4">
-            <p className="text-sm font-medium text-(--color-text)">{BARE_HEADING}</p>
-            <p data-atlas-measure="bare-note" className="mt-1.5 text-sm leading-relaxed text-(--color-text-secondary)">
-              {bareNote(Boolean(node.v), Boolean(link))}
-            </p>
-          </div>
-        )}
-
-        {node.r === 1 && status === 'ready' && review && (
-          <>
-            {/* one_line_takeaway as a verdict box, then the fixed order. */}
-            {takeaway && (
-              <div className="mt-4 rounded-lg border-l-[3px] border-(--color-accent) bg-(--color-bg-secondary) px-4 py-3">
-                <p className="text-[15px] leading-relaxed font-medium text-(--color-text)">
-                  {takeaway}
-                </p>
-              </div>
-            )}
-            <Section title="Key finding" text={review.key_finding} />
-            <Section title="Core contribution" text={review.core_contribution} />
-            <Section title="Threat model" text={review.threat_model} />
-            <Section title="Limitations" text={review.limitations} />
-            {review.facts && (
-              <div className="mt-5 border-t border-(--color-border) pt-4">
-                <FactChips title="Datasets" items={review.facts.datasets_used} />
-                <FactChips title="Quantitative results" items={review.facts.quantitative_results} />
-                <FactChips title="Baselines compared" items={review.facts.baselines_compared} />
-              </div>
-            )}
-          </>
-        )}
-
-        {regionNote && (
-          <div className="mt-6 border-t border-(--color-border) pt-4">
-            <h3 className={HEADING}>About this region</h3>
-            <p className="text-sm leading-relaxed text-(--color-text-secondary)">{regionNote}</p>
-          </div>
-        )}
-
-        {neighbors.length > 0 && (
-          <div className="mt-6 border-t border-(--color-border) pt-4">
-            <h3 className={HEADING}>{SIMILAR_HEADING}</h3>
-            <ul className="space-y-1">
-              {neighbors.map((n) => (
-                <li key={n.id}>
-                  <button
-                    type="button"
-                    onClick={() => onOpenNode(n.id)}
-                    className="w-full rounded-md px-2 py-1.5 text-left text-sm leading-snug text-(--color-text-secondary) hover:bg-(--color-bg-secondary) hover:text-(--color-text)"
-                  >
-                    {n.t}
-                    {n.r === 1 && (
-                      <span className="ml-1.5 text-[10px] tracking-wide whitespace-nowrap text-(--color-text-muted) uppercase">
-                        {TIER_LABEL.review}
-                      </span>
-                    )}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-
-      {/* The public landing page, through landingUrl(): never a raw file. */}
-      <div data-atlas-measure="link" className="mt-4 shrink-0 border-t border-(--color-border) pt-3">
-        {link ? (
+      {/* The action row (SPEC §9.2 item 5): the public landing page, through
+          landingUrl(), named by its host. Never a raw file. */}
+      <div data-atlas-measure="link" className="mt-3">
+        {link && label ? (
           <a
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-medium text-(--color-accent) hover:underline"
+            data-atlas-measure="open-link"
+            className="inline-flex items-center gap-1.5 rounded-md border border-(--color-border) px-3 py-1.5 text-sm font-medium text-(--color-accent) hover:border-(--color-accent) hover:text-(--color-accent-hover) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--color-accent)"
           >
-            Open the paper &#8599;
+            {label}
+            <span aria-hidden="true">&#8599;</span>
+            <span className="sr-only">{NEW_TAB}</span>
           </a>
         ) : (
-          <span className="text-xs text-(--color-text-muted)">{NO_LANDING_PAGE}</span>
+          <p className="mb-0 text-[13px] text-(--color-text-muted)">{NO_LANDING_PAGE}</p>
         )}
       </div>
-    </div>
+
+      {node.r === 1 && <ReviewBlock status={loadState} review={review} onRetry={retry} />}
+      {node.r === 1 && node.a === 1 && <AbstractDisclosure paperId={node.id} />}
+      {node.r === 0 && node.a === 1 && <AbstractSection status={loadState} text={abstract} onRetry={retry} />}
+
+      {/* Neither a review nor an abstract: say so plainly, naming only what
+          the record holds. Never a fabricated summary. */}
+      {node.r === 0 && node.a === 0 && (
+        <section aria-labelledby="atlas-bare-label" data-atlas-measure="bare" className="mt-5">
+          <h3 id="atlas-bare-label" className={`mb-0 ${HEADING}`}>
+            {BARE_HEADING}
+          </h3>
+          <p data-atlas-measure="bare-note" className="mt-2 mb-0 text-sm leading-relaxed text-(--color-text-secondary)">
+            {bareNote(Boolean(venue), Boolean(link && label))}
+          </p>
+        </section>
+      )}
+
+      {/* The paper's region (SPEC §9.2 item 7). */}
+      <section
+        aria-labelledby="atlas-paper-region"
+        data-atlas-measure="region-section"
+        className="mt-6 border-t border-(--color-border) pt-4"
+      >
+        <h3 id="atlas-paper-region" className={`mb-2 ${HEADING}`}>
+          {region ? ABOUT_REGION : NO_REGION}
+        </h3>
+        {region ? (
+          <>
+            {regionNote && <p className="mb-2 text-sm leading-relaxed text-(--color-text-secondary)">{regionNote}</p>}
+            <p data-atlas-measure="region-counts" className="mb-0 text-[13px] text-(--color-text-secondary)">
+              {regionPapersLine(region.papers, region.reviewed)}
+            </p>
+            {onFocusRegion && (
+              <button
+                type="button"
+                onClick={() => onFocusRegion(region.key)}
+                className="mt-2 inline-flex min-h-6 items-center rounded-sm text-sm font-medium text-(--color-accent) hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--color-accent)"
+              >
+                {SHOW_ON_MAP}
+              </button>
+            )}
+          </>
+        ) : (
+          <p className="mb-0 text-sm leading-relaxed text-(--color-text-secondary)">{NO_REGION_BODY}</p>
+        )}
+      </section>
+
+      <SimilarPapers state={similarState} papers={similar} onOpen={onOpenNode} onLoad={onLoadSimilar} />
+
+      {narrow && (
+        // LS9b: the top bar scrolls away on a phone (no sticky there, SPEC
+        // §3.6), so the panel ends with a way back too.
+        <button
+          type="button"
+          onClick={onClose}
+          data-atlas-measure="back-to-all"
+          className={`mt-8 inline-flex min-h-11 items-center gap-1 self-start rounded-md text-sm font-medium text-(--color-accent) hover:underline ${FOCUS_RING}`}
+        >
+          <span aria-hidden="true">&lsaquo;</span>
+          {BACK_TO_ALL}
+        </button>
+      )}
+    </article>
   );
 }
