@@ -430,8 +430,13 @@ test('data: 139 display regions with unique keys, and only the five numeral grou
   const regions = [...atlas.displayRegions.values()];
   const keys = regions.map((r) => r.key);
   assert.equal(new Set(keys).size, keys.length, 'keys are unique');
-  assert.equal(regions.length, 139, 'display regions');
-  assert.equal(atlas.displayRegionsWithPapers, 139, 'every display region holds papers');
+  // Derived, not pinned: the corpus gains regions (four binary-RE regions were appended on 2026-10-05,
+  // 139 -> 143), so the invariant is "every named cluster is a display region, except the numeral splits
+  // that merge" -- the merge set itself is pinned exactly below.
+  const named = clusters.filter((c) => c.id >= 0).length;
+  const mergedAway = regions.reduce((s, r) => s + Math.max(0, r.clusterIds.length - 1), 0);
+  assert.equal(regions.length, named - mergedAway, 'display regions = named clusters minus the numeral merges');
+  assert.equal(atlas.displayRegionsWithPapers, regions.length, 'every display region holds papers');
   for (const r of regions) {
     assert.match(r.key, /^[a-z0-9]+(?:-[a-z0-9]+)*$/, `${r.key} is a valid #r= key`);
     assert.doesNotMatch(r.label, /\s(?:I|II|III|IV|V)$/, `${r.label} keeps no numeral`);

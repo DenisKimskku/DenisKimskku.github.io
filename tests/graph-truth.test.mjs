@@ -684,3 +684,31 @@ test('stripPipelineNoise keeps genuine review sentences and drops pipeline plumb
   assert.equal(stripPipelineNoise(''), '');
   assert.equal(stripPipelineNoise(undefined), '');
 });
+
+// Copy A1 says every review was "checked against that same text in a separate pass by the same model", and
+// the per-review line says "Claude" only for ids starting with "claude-". Both are claims about the WHOLE
+// payload, so a batch written by one model and checked by another (or by a non-Claude model) must fail here
+// before it can publish. New batches are stamped from each agent's own transcript, never from a script map.
+test('every published review was written and checked by the same Claude model (copy A1 depends on it)', (t) => {
+  if (!fs.existsSync(reviewsDir)) {
+    t.skip(`atlas data absent (${reviewsDir} not found); ${ABSENT}`);
+    return;
+  }
+  const bad = [];
+  const models = new Map();
+  let rows = 0;
+  for (const shard of fs.readdirSync(reviewsDir).filter((f) => f.endsWith('.json'))) {
+    for (const [id, review] of Object.entries(readJson(path.join(reviewsDir, shard)))) {
+      rows += 1;
+      const p = review?.provenance ?? {};
+      const g = p.generator_model;
+      const v = p.verifier_model;
+      models.set(g, (models.get(g) || 0) + 1);
+      if (!g || !v) bad.push(`${id}: missing model id`);
+      else if (g !== v) bad.push(`${id}: writer ${g} != checker ${v}`);
+      else if (!/^claude-/.test(g)) bad.push(`${id}: ${g} is not a Claude model id`);
+    }
+  }
+  t.diagnostic(`same-model check over ${formatCount(rows)} reviews; ${[...models].map(([m, n]) => `${m} x${n}`).join(', ')}`);
+  assert.deepEqual(bad.slice(0, 10), [], `${bad.length} reviews break the same-model claim in copy A1`);
+});
