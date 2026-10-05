@@ -758,23 +758,25 @@ async function handleQuota(request: Request, env: Env): Promise<Response> {
 //   meta.json          60 s   -- how fast readers notice a new export
 //   <path>?v=<build>   1 year, immutable -- a build never changes
 //   <path> (no v)      5 min  -- old clients and direct links
-// Responses are also kept in the Cloudflare edge cache (caches.default), so a
-// reader far from the bucket's region is served from the nearest data centre
-// instead of a round trip to R2 for every file.
+// Only VERSIONED responses are kept in the Cloudflare edge cache
+// (caches.default), so a reader far from the bucket's region is served from the
+// nearest data centre. meta.json and unversioned paths always come from R2: the
+// zone kept a cached meta.json for over an hour despite max-age=60 (measured
+// 2026-10-05, age: 3744), which pinned every reader to the previous export.
 const ATLAS_CACHE_META = 'public, max-age=60';
 const ATLAS_CACHE_VERSIONED = 'public, max-age=31536000, immutable';
 const ATLAS_CACHE_UNVERSIONED = 'public, max-age=300';
-let atlasVersionMemo: { v: string; at: number } | null = null;
-
-/** The current export's build stamp (meta.json built_at), memoised for 60 s per isolate. */
+/**
+ * The current export's build stamp (meta.json built_at), read from R2 on every
+ * edge-cache MISS. Not memoised: a stale memo would, right after an upload, let
+ * a request for the OLD version be cached with the NEW file under the old key.
+ * Misses are rare (only versioned files are cached), so the extra read is cheap.
+ */
 async function currentAtlasVersion(bucket: R2Bucket): Promise<string | null> {
-  if (atlasVersionMemo && Date.now() - atlasVersionMemo.at < 60_000) return atlasVersionMemo.v;
   const meta = await bucket.get('atlas/meta.json');
   if (!meta) return null;
   try {
-    const v = String((JSON.parse(await meta.text()) as { built_at?: unknown }).built_at ?? '');
-    atlasVersionMemo = { v, at: Date.now() };
-    return v;
+    return String((JSON.parse(await meta.text()) as { built_at?: unknown }).built_at ?? '');
   } catch {
     return null;
   }
@@ -802,11 +804,12 @@ async function handleAtlas(request: Request, env: Env, url: URL, ctx?: WaitUntil
   const isMeta = rest === 'meta.json';
   const version = url.searchParams.get('v');
 
-  // Edge cache, GET only. The key keeps nothing but the version parameter, so
-  // arbitrary query strings cannot fan one file out into many cache entries.
-  const edge = (globalThis as unknown as { caches?: { default?: EdgeCache } }).caches?.default;
-  const cacheKey = new Request(`${url.origin}/atlas/${rest}${version ? `?v=${encodeURIComponent(version)}` : ''}`);
-  if (edge && request.method === 'GET') {
+  // Edge cache: versioned GETs only (immutable). The key keeps nothing but the
+  // version parameter, so arbitrary query strings cannot fan one file out.
+  const edgeEligible = Boolean(version) && !isMeta && request.method === 'GET';
+  const edge = edgeEligible ? (globalThis as unknown as { caches?: { default?: EdgeCache } }).caches?.default : undefined;
+  const cacheKey = new Request(`${url.origin}/atlas/${rest}?v=${encodeURIComponent(version || '')}`);
+  if (edge) {
     const hit = await edge.match(cacheKey);
     if (hit) {
       const served = new Response(hit.body, hit);
@@ -840,7 +843,7 @@ async function handleAtlas(request: Request, env: Env, url: URL, ctx?: WaitUntil
   // R2 already holds the NEW file, and keeping it under the OLD key for a year
   // would hand a mix of old and new files to anyone still on the old meta.json.
   let cacheable = Boolean(edge && ctx);
-  if (cacheable && version && !isMeta && (await currentAtlasVersion(env.ATLAS)) !== version) {
+  if (cacheable && (await currentAtlasVersion(env.ATLAS)) !== version) {
     cacheable = false;
     headers.set('Cache-Control', 'no-store');
   }
