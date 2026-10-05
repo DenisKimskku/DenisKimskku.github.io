@@ -75,6 +75,19 @@ interface R2ObjectBody {
   size: number;
   httpEtag?: string;
   httpMetadata?: { contentType?: string; cacheControl?: string };
+  text(): Promise<string>;
+}
+
+// Structural stand-ins for the Workers edge cache (caches.default) and the
+// fetch handler's ExecutionContext, for the same reason as above: the site's
+// `next build` type-checks this file with DOM types only, where `caches` has no
+// `default` and ExecutionContext does not exist.
+interface EdgeCache {
+  match(request: Request): Promise<Response | undefined>;
+  put(request: Request, response: Response): Promise<void>;
+}
+interface WaitUntil {
+  waitUntil(promise: Promise<unknown>): void;
 }
 
 interface R2Bucket {
@@ -740,7 +753,34 @@ async function handleQuota(request: Request, env: Env): Promise<Response> {
  * corpus changes, so nodes.json + edges.json (~19MB) would land in history
  * again on each build, permanently.
  */
-async function handleAtlas(request: Request, env: Env, url: URL): Promise<Response> {
+// Cache policy (2026-10-05). The client fetches meta.json first and then every
+// other file as <path>?v=<meta.built_at>, so a new export is a new URL:
+//   meta.json          60 s   -- how fast readers notice a new export
+//   <path>?v=<build>   1 year, immutable -- a build never changes
+//   <path> (no v)      5 min  -- old clients and direct links
+// Responses are also kept in the Cloudflare edge cache (caches.default), so a
+// reader far from the bucket's region is served from the nearest data centre
+// instead of a round trip to R2 for every file.
+const ATLAS_CACHE_META = 'public, max-age=60';
+const ATLAS_CACHE_VERSIONED = 'public, max-age=31536000, immutable';
+const ATLAS_CACHE_UNVERSIONED = 'public, max-age=300';
+let atlasVersionMemo: { v: string; at: number } | null = null;
+
+/** The current export's build stamp (meta.json built_at), memoised for 60 s per isolate. */
+async function currentAtlasVersion(bucket: R2Bucket): Promise<string | null> {
+  if (atlasVersionMemo && Date.now() - atlasVersionMemo.at < 60_000) return atlasVersionMemo.v;
+  const meta = await bucket.get('atlas/meta.json');
+  if (!meta) return null;
+  try {
+    const v = String((JSON.parse(await meta.text()) as { built_at?: unknown }).built_at ?? '');
+    atlasVersionMemo = { v, at: Date.now() };
+    return v;
+  } catch {
+    return null;
+  }
+}
+
+async function handleAtlas(request: Request, env: Env, url: URL, ctx?: WaitUntil): Promise<Response> {
   if (request.method !== 'GET' && request.method !== 'HEAD') {
     return new Response('method_not_allowed', { status: 405, headers: { Allow: 'GET, HEAD' } });
   }
@@ -759,6 +799,21 @@ async function handleAtlas(request: Request, env: Env, url: URL): Promise<Respon
     return new Response('bad_atlas_path', { status: 404 });
   }
   const key = `atlas/${rest}`;
+  const isMeta = rest === 'meta.json';
+  const version = url.searchParams.get('v');
+
+  // Edge cache, GET only. The key keeps nothing but the version parameter, so
+  // arbitrary query strings cannot fan one file out into many cache entries.
+  const edge = (globalThis as unknown as { caches?: { default?: EdgeCache } }).caches?.default;
+  const cacheKey = new Request(`${url.origin}/atlas/${rest}${version ? `?v=${encodeURIComponent(version)}` : ''}`);
+  if (edge && request.method === 'GET') {
+    const hit = await edge.match(cacheKey);
+    if (hit) {
+      const served = new Response(hit.body, hit);
+      served.headers.set('X-Atlas-Cache', 'HIT');
+      return served;
+    }
+  }
 
   const object = await env.ATLAS.get(key);
   if (!object) {
@@ -769,17 +824,31 @@ async function handleAtlas(request: Request, env: Env, url: URL): Promise<Respon
   // R2 does not infer Content-Type, and a .json served as octet-stream makes
   // res.json() throw in the browser. The uploader sets it; this is the fallback.
   headers.set('Content-Type', object.httpMetadata?.contentType || 'application/json');
-  headers.set('Cache-Control', object.httpMetadata?.cacheControl || 'public, max-age=86400');
+  headers.set('Cache-Control', isMeta ? ATLAS_CACHE_META : version ? ATLAS_CACHE_VERSIONED : ATLAS_CACHE_UNVERSIONED);
   if (object.httpEtag) headers.set('ETag', object.httpEtag);
-  // Public, immutable-per-build data: safe to read from anywhere, which also
-  // keeps a future preview deploy on another host working.
+  // Public data: safe to read from anywhere, which also keeps a future preview
+  // deploy on another host working.
   headers.set('Access-Control-Allow-Origin', '*');
+  headers.set('X-Atlas-Cache', 'MISS');
 
   if (request.method === 'HEAD') {
     headers.set('Content-Length', String(object.size));
     return new Response(null, { status: 200, headers });
   }
-  return new Response(object.body, { status: 200, headers });
+
+  // A request for a version that is no longer current must not be cached:
+  // R2 already holds the NEW file, and keeping it under the OLD key for a year
+  // would hand a mix of old and new files to anyone still on the old meta.json.
+  let cacheable = Boolean(edge && ctx);
+  if (cacheable && version && !isMeta && (await currentAtlasVersion(env.ATLAS)) !== version) {
+    cacheable = false;
+    headers.set('Cache-Control', 'no-store');
+  }
+  const response = new Response(object.body, { status: 200, headers });
+  if (cacheable && edge && ctx) {
+    ctx.waitUntil(edge.put(cacheKey, response.clone()));
+  }
+  return response;
 }
 
 
@@ -788,7 +857,7 @@ async function handleAtlas(request: Request, env: Env, url: URL): Promise<Respon
 /* ------------------------------------------------------------------ */
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx?: WaitUntil): Promise<Response> {
     const atlasUrl = new URL(request.url);
 
     // /atlas/* is served BEFORE the origin allowlist and before any rate
@@ -797,7 +866,7 @@ export default {
     // costs nothing per request. Rate-limiting it would break the graph page,
     // which issues one fetch per payload shard as the reader clicks around.
     if (atlasUrl.pathname === '/atlas' || atlasUrl.pathname.startsWith('/atlas/')) {
-      return handleAtlas(request, env, atlasUrl);
+      return handleAtlas(request, env, atlasUrl, ctx);
     }
 
     // Origin allowlist first. This filters cross-site browser traffic only

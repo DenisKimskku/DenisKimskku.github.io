@@ -22,7 +22,8 @@
  * Content-Type matters: R2 does not infer it, and a .json served as
  * application/octet-stream makes res.json() throw in the browser.
  */
-import { execFileSync } from 'node:child_process';
+import { execFile } from 'node:child_process';
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -63,41 +64,64 @@ if (DRY) {
   process.exit(0);
 }
 
+// Incremental: only files whose content changed since the last successful
+// upload (sha256 manifest in node_modules/.cache), uploaded 6 at a time, with
+// meta.json LAST -- the client reads meta.json first and then fetches every
+// other file at ?v=<meta.built_at>, so the new meta must not appear before the
+// files it points at. --all re-uploads everything (e.g. after a bucket change).
+const MANIFEST = path.join(process.cwd(), 'node_modules', '.cache', 'atlas-r2-manifest.json');
+const FORCE = process.argv.includes('--all');
+const sha = (f) => crypto.createHash('sha256').update(fs.readFileSync(path.join(LOCAL, f))).digest('hex');
+let manifest = {};
+try { manifest = FORCE ? {} : JSON.parse(fs.readFileSync(MANIFEST, 'utf8')); } catch { manifest = {}; }
+const hashes = Object.fromEntries(files.map((f) => [f, sha(f)]));
+const changed = files.filter((f) => manifest[f] !== hashes[f]);
+const meta = changed.filter((f) => f === 'meta.json');
+const data = changed.filter((f) => f !== 'meta.json');
+console.log(`  changed: ${changed.length} of ${files.length}${FORCE ? ' (--all)' : ''}`);
+
+const put = (rel) => new Promise((resolve) => {
+  const key = `atlas/${rel.split(path.sep).join('/')}`;
+  execFile(
+    WRANGLER,
+    ['r2', 'object', 'put', `${BUCKET}/${key}`,
+      // --remote is REQUIRED: without it wrangler writes to the local Miniflare
+      // emulator and exits 0, so the upload "succeeds" while the bucket stays empty.
+      '--remote',
+      '--file', path.join(LOCAL, rel),
+      '--content-type', 'application/json',
+      // The worker sets the real Cache-Control per URL (meta 60 s, ?v= a year,
+      // unversioned 5 min); this is only a fallback.
+      '--cache-control', 'public, max-age=300'],
+    (err, _out, stderr) => resolve({ rel, key, err: err ? String(stderr || err).slice(0, 120) : null }),
+  );
+});
+
 let done = 0;
 let failed = 0;
-for (const rel of files) {
-  // Keys are prefixed `atlas/` so the worker can map /atlas/<rest> 1:1 and the
-  // bucket stays usable for other assets later.
-  const key = `atlas/${rel.split(path.sep).join('/')}`;
-  try {
-    execFileSync(
-      WRANGLER,
-      ['r2', 'object', 'put', `${BUCKET}/${key}`,
-       // --remote IS REQUIRED. wrangler 4.x defaults `r2 object put/get` to the
-       // LOCAL simulator (.wrangler/state/v3/r2), so without it all 516 objects
-       // land on disk, the deployed Worker sees an empty bucket, and -- worst of
-       // all -- a put/get roundtrip "verifies" successfully because both halves
-       // hit the same local store. That cost a full upload and a live 404 hunt.
-       '--remote',
-       '--file', path.join(LOCAL, rel),
-       '--content-type', 'application/json',
-       // Payloads are immutable per build and the client always fetches by a
-       // content-derived path, so a long TTL is safe and keeps egress near zero.
-       '--cache-control', 'public, max-age=86400'],
-      { stdio: 'pipe' }
-    );
-    done += 1;
-    if (done % 50 === 0) console.log(`    ${done}/${files.length}`);
-  } catch (err) {
-    failed += 1;
-    if (failed <= 5) console.error(`    FAILED ${key}: ${String(err.stderr || err).slice(0, 120)}`);
-  }
+async function pool(list, n) {
+  const queue = [...list];
+  await Promise.all(Array.from({ length: Math.min(n, queue.length) }, async () => {
+    while (queue.length) {
+      const r = await put(queue.shift());
+      if (r.err) {
+        failed += 1;
+        if (failed <= 5) console.error(`    FAILED ${r.key}: ${r.err}`);
+      } else {
+        done += 1;
+        manifest[r.rel] = hashes[r.rel];
+        if (done % 50 === 0) console.log(`    ${done}/${changed.length}`);
+      }
+    }
+  }));
 }
+await pool(data, 6);
+if (!failed) await pool(meta, 1);   // never publish a meta.json whose files failed to upload
+fs.mkdirSync(path.dirname(MANIFEST), { recursive: true });
+fs.writeFileSync(MANIFEST, JSON.stringify(manifest));
 
-console.log(`\n  uploaded ${done}, failed ${failed}, of ${files.length}`);
+console.log(`\n  uploaded ${done}, failed ${failed}, of ${changed.length} changed (${files.length} total)`);
 if (failed) {
-  console.error('  Re-run to retry — `object put` overwrites, so this is idempotent.');
+  console.error('  Re-run to retry -- only the files that did not upload are sent again.');
   process.exit(1);
 }
-console.log('  Next: add the r2_buckets binding + /atlas/* route to cloudflare-worker/wrangler.jsonc,');
-console.log('  deploy the worker, then add public/atlas/ to .gitignore.');

@@ -20,6 +20,26 @@ import type { AtlasCluster, AtlasEdge, AtlasNode } from './atlasTypes';
 const NODES_URL = '/atlas/nodes.json';
 const CLUSTERS_URL = '/atlas/clusters.json';
 const EDGES_URL = '/atlas/edges.json';
+const META_URL = '/atlas/meta.json';
+
+let versionQuery: Promise<string> | null = null;
+/**
+ * `?v=<built_at>` of the current export, fetched once per page. Every other
+ * atlas file is requested with it, so each export is a new URL: the edge and
+ * the browser may keep a file for a year, and a new export is seen as soon as
+ * meta.json is revalidated (it is, on every load). Falls back to unversioned
+ * URLs if meta.json cannot be read, which is how the page worked before.
+ */
+export function atlasVersion(): Promise<string> {
+  if (!versionQuery) {
+    versionQuery = fetch(META_URL, { cache: 'no-cache' })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((m: { built_at?: unknown } | null) =>
+        m && typeof m.built_at === 'string' && m.built_at ? `?v=${encodeURIComponent(m.built_at)}` : '')
+      .catch(() => '');
+  }
+  return versionQuery;
+}
 
 /** The first payload as the list needs it: derived from the stage and the atlas. */
 export type AtlasPhase = 'loading' | 'ready' | 'error';
@@ -48,7 +68,7 @@ interface EdgeState {
  */
 export async function fetchShardEntry<T>(dir: 'reviews' | 'abstracts', id: string): Promise<T | null> {
   const shard = id.slice(0, 2).toLowerCase();
-  const res = await fetch(`/atlas/${dir}/${encodeURIComponent(shard)}.json`);
+  const res = await fetch(`/atlas/${dir}/${encodeURIComponent(shard)}.json${await atlasVersion()}`);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const blob = (await res.json()) as Record<string, T>;
   return Object.prototype.hasOwnProperty.call(blob, id) ? (blob[id] ?? null) : null;
@@ -96,7 +116,8 @@ export function useAtlasData(capability: Capability): {
     let cancelled = false;
     (async () => {
       try {
-        const [nodesRes, clustersRes] = await Promise.all([fetch(NODES_URL), fetch(CLUSTERS_URL)]);
+        const v = await atlasVersion();
+        const [nodesRes, clustersRes] = await Promise.all([fetch(NODES_URL + v), fetch(CLUSTERS_URL + v)]);
         if (!nodesRes.ok || !clustersRes.ok) throw new Error('atlas fetch failed');
         const nodes: AtlasNode[] = await nodesRes.json();
         const clusters: AtlasCluster[] = await clustersRes.json();
@@ -151,7 +172,7 @@ export function useAtlasData(capability: Capability): {
     let cancelIdle: (() => void) | null = null;
     (async () => {
       try {
-        const res = await fetch(EDGES_URL, { priority: 'low' });
+        const res = await fetch(EDGES_URL + (await atlasVersion()), { priority: 'low' });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         // Parse when the main thread is idle, so the first paint never waits.
         await new Promise<void>((resolve) => {
