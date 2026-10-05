@@ -87,14 +87,19 @@ const AREA_TABLE = {
     'FL Intrusion Detection', 'AI Cyber Defense', 'Phishing Detection', 'Network Traffic Analysis',
     'Smart Contract Security', 'Time-Series Anomaly Detection', 'SDN DDoS Defense',
   ],
+  systems: [
+    'Systems Security', 'Software Security Analysis', 'Binary Rewriting & Analysis', 'Neural Decompilation & Binary LLMs',
+    'Binary Code Similarity', 'Firmware Rehosting & Fuzzing', 'Coverage-Guided Fuzzing', 'Microarchitectural Attacks',
+    'Applied Cryptography', 'Post-Quantum Protocols', 'Zero-Knowledge Proofs', 'Confidential Computing', 'Mobile Security',
+  ],
 };
 
 test('areaOf puts every region named in the SPEC §6.3 table in its area', () => {
-  assert.deepEqual(AREA_IDS, ['llm', 'model', 'defence', 'other']);
+  assert.deepEqual(AREA_IDS, ['llm', 'model', 'defence', 'systems', 'other']);
   for (const [area, labels] of Object.entries(AREA_TABLE)) {
     for (const label of labels) assert.equal(areaOf(label), area, label);
   }
-  assert.equal(Object.values(AREA_TABLE).flat().length, 13 + 28 + 11);
+  assert.equal(Object.values(AREA_TABLE).flat().length, 13 + 28 + 11 + 13);
 });
 
 test('areaOf follows roman-numeral splits and falls back to grey for anything else', () => {
@@ -108,7 +113,8 @@ test('areaOf follows roman-numeral splits and falls back to grey for anything el
   assert.equal(areaOf('Robust Watermarking'), 'other', 'anchored at the start');
   assert.equal(areaOf('Watermarkings'), 'other', 'whole words only');
   assert.equal(areaOf('jailbreak attacks'), 'other', 'labels are matched as written');
-  assert.equal(areaOf('Applied Cryptography'), 'other');
+  assert.equal(areaOf('Applied Cryptography'), 'systems');
+  assert.equal(areaOf('Applied Detection Models'), 'other');
   assert.equal(areaOf('Unclustered'), 'other');
   assert.equal(areaOf(''), 'other');
 });
@@ -118,6 +124,7 @@ test('the area names are K5–K7, with "Other topics" for the grey column', () =
     llm: 'LLMs and agents',
     model: 'Model and data security',
     defence: 'AI for cyber defence',
+    systems: 'Systems, software and crypto security',
     other: 'Other topics',
   });
   assert.equal(typeof AREA_COLOURS_ON, 'boolean');
@@ -128,25 +135,25 @@ test('the area names are K5–K7, with "Other topics" for the grey column', () =
 
 test('the colour tables are the SPEC §6.4 hexes', () => {
   assert.deepEqual(CANVAS, { light: '#f5f5f5', dark: '#171717' });
-  assert.deepEqual(STRONG.light, { llm: '#2a78d6', model: '#eb6834', defence: '#1baf7a', other: '#767676' });
-  assert.deepEqual(STRONG.dark, { llm: '#3987e5', model: '#d95926', defence: '#199e70', other: '#8a8a8a' });
+  assert.deepEqual(STRONG.light, { llm: '#2a78d6', model: '#eb6834', defence: '#1baf7a', systems: '#eda100', other: '#767676' });
+  assert.deepEqual(STRONG.dark, { llm: '#3987e5', model: '#d95926', defence: '#199e70', systems: '#c98500', other: '#8a8a8a' });
   assert.deepEqual(NONE, { light: '#cbcbcb', dark: '#3a3a3a' });
   assert.deepEqual(EGO_LINE, { light: '#9f9f9f', dark: '#6b6b6b' });
 
-  // Rows of the §6.4 table, in AREA_IDS order (llm, model, defence, other).
-  assert.deepEqual(PAL.light.strong, ['#2a78d6', '#eb6834', '#1baf7a', '#767676']);
-  assert.deepEqual(PAL.light.tint, ['#90b7e6', '#f0af95', '#88d2b8', '#b6b6b6']);
-  assert.deepEqual(PAL.light.dimStrong, ['#c2d6ed', '#f3d2c5', '#bfe4d6', '#d5d5d5']);
-  assert.deepEqual(PAL.light.dimTint, ['#dce6f1', '#f4e4dd', '#daece6', '#e5e5e5']);
+  // Rows of the §6.4 table, in AREA_IDS order (llm, model, defence, systems, other).
+  assert.deepEqual(PAL.light.strong, ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#767676']);
+  assert.deepEqual(PAL.light.tint, ['#90b7e6', '#f0af95', '#88d2b8', '#f1cb7b', '#b6b6b6']);
+  assert.deepEqual(PAL.light.dimStrong, ['#c2d6ed', '#f3d2c5', '#bfe4d6', '#f3e0b8', '#d5d5d5']);
+  assert.deepEqual(PAL.light.dimTint, ['#dce6f1', '#f4e4dd', '#daece6', '#f4ebd7', '#e5e5e5']);
   assert.equal(PAL.light.none, '#cbcbcb');
   assert.equal(PAL.light.dimNone, '#ebebeb');
   assert.equal(PAL.light.canvas, '#f5f5f5');
   assert.equal(PAL.light.ego, '#9f9f9f');
 
-  assert.deepEqual(PAL.dark.strong, ['#3987e5', '#d95926', '#199e70', '#8a8a8a']);
-  assert.deepEqual(PAL.dark.tint, ['#284f7e', '#78381f', '#185b44', '#515151']);
-  assert.deepEqual(PAL.dark.dimStrong, ['#20334b', '#48281b', '#18392d', '#343434']);
-  assert.deepEqual(PAL.dark.dimTint, ['#1b2531', '#2f1f19', '#172822', '#262626']);
+  assert.deepEqual(PAL.dark.strong, ['#3987e5', '#d95926', '#199e70', '#c98500', '#8a8a8a']);
+  assert.deepEqual(PAL.dark.tint, ['#284f7e', '#78381f', '#185b44', '#704e0c', '#515151']);
+  assert.deepEqual(PAL.dark.dimStrong, ['#20334b', '#48281b', '#18392d', '#443311', '#343434']);
+  assert.deepEqual(PAL.dark.dimTint, ['#1b2531', '#2f1f19', '#172822', '#2d2514', '#262626']);
   assert.equal(PAL.dark.none, '#3a3a3a');
   assert.equal(PAL.dark.dimNone, '#202020');
   assert.equal(PAL.dark.canvas, '#171717');
@@ -231,7 +238,7 @@ test('buildAtlas gives each region its area and each paper its display title', (
   ];
   const atlas = buildAtlas(nodes, CLUSTERS);
   assert.equal(atlas.regions.get(0).area, 'llm');
-  assert.equal(atlas.regions.get(1).area, 'other');
+  assert.equal(atlas.regions.get(1).area, 'systems', 'Applied Cryptography is classic security');
   assert.equal(atlas.regions.get(2).area, 'model', 'an empty region still has an area');
   assert.equal(atlas.regions.get(-1).area, 'other', 'Unclustered is grey');
   assert.equal(titleOf(atlas, atlas.byId.get('m')), 'JailbreakLens: Visual Analysis');

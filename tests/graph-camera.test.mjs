@@ -387,7 +387,7 @@ test('the region menu groups by research area, A–Z, with visible counts', () =
     menu.map((g) => [g.label, g.options.map((o) => `${o.label} (${o.count})`)]),
     [
       ['LLMs and agents', ['Jailbreak Attacks (7)', 'LLM-as-Judge (3)']],
-      ['Other topics', ['Applied Cryptography (1)']],
+      ['Systems, software and crypto security', ['Applied Cryptography (1)']],
     ],
     'empty areas and empty regions are left out'
   );
