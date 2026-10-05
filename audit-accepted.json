@@ -1,0 +1,12 @@
+{
+  "//": "Reviewed npm audit findings with NO fix to apply. Read by scripts/audit-autofix.mjs; rules in effectiveAcceptances (scripts/lib/audit-fix.mjs). An entry is void once it expires, once a patch-level fix ships, or if the package reaches a non-dev path. Add entries by hand only.",
+  "accepted": [
+    {
+      "id": "GHSA-vfj7-8cjw-p6xm",
+      "package": "braces",
+      "expires": "2027-01-05",
+      "reviewed": "2026-10-05",
+      "reason": "No patched release exists (first_patched_version: null; 3.0.3 is the latest braces). The only path is dev-only: eslint-config-next > @next/eslint-plugin-next > fast-glob@3.3.1 (exact pin, still on 16.4.0-canary) > micromatch > braces. The DoS needs attacker-supplied glob patterns; ESLint's patterns come from this repo's own config, and no runtime or build code passes untrusted input to braces."
+    }
+  ]
+}

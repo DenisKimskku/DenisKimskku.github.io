@@ -31,6 +31,9 @@
 //      become 0.7.5 but never 0.8.0. This is the exact-pin case above.
 //   3. Everything else — a fix needing a major bump, or none published yet —
 //      is reported and left alone. The caller alerts a human.
+//      A human whose review finds nothing to upgrade to may record the
+//      verdict in audit-accepted.json — per advisory id, dated, dev-only, and
+//      void the moment a patch-level fix ships (see effectiveAcceptances).
 //
 // Tier 2 does not parse npm's vulnerable-range syntax (">=0.33.0",
 // "0.7.0 - 0.7.4", unions). It picks the highest patch-level candidate and
@@ -49,12 +52,13 @@ import { execFileSync, execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import {
-  countVulnerabilities,
+  countUnaccepted,
+  effectiveAcceptances,
   lowestInstalled,
   parseVersion,
   patchRange,
   pickPatchLevel,
-  rootAdvisories,
+  unacceptedRoots,
 } from './lib/audit-fix.mjs';
 
 const args = process.argv.slice(2);
@@ -128,6 +132,36 @@ function patchLevelCandidate(pkg, installed) {
   return pickPatchLevel(versions, installed);
 }
 
+// Reviewed accepted risks (see effectiveAcceptances in lib/audit-fix.mjs).
+// Read-only here: this script never writes the file, and the workflow's
+// REPAIR_PATHS do not include it, so only a human commit can add an entry.
+function loadAcceptances(report) {
+  const p = path.join(DIR, 'audit-accepted.json');
+  if (!fs.existsSync(p)) return new Set();
+  let entries;
+  try {
+    entries = JSON.parse(fs.readFileSync(p, 'utf8')).accepted;
+  } catch (err) {
+    console.log(`! audit-accepted.json is unreadable (${err.message}); accepting nothing`);
+    return new Set();
+  }
+  const lockPackages = JSON.parse(fs.readFileSync(path.join(DIR, 'package-lock.json'), 'utf8')).packages;
+  // An acceptance must not hide a fix that has since been published.
+  const patchable = new Set();
+  for (const e of Array.isArray(entries) ? entries : []) {
+    const installed = e?.package && report?.vulnerabilities?.[e.package] ? installedVersion(e.package) : null;
+    if (installed && patchLevelCandidate(e.package, installed)) patchable.add(e.package);
+  }
+  const { accepted, notes } = effectiveAcceptances({ entries, report, lockPackages, patchable });
+  for (const n of notes) console.log(`! ${n}`);
+  for (const e of entries ?? []) {
+    if (accepted.has(String(e.id).toUpperCase())) {
+      console.log(`  accepted risk: ${e.id} (${e.package}) until ${e.expires} — ${e.reason}`);
+    }
+  }
+  return accepted;
+}
+
 function readPackageJson() {
   const p = path.join(DIR, 'package.json');
   const raw = fs.readFileSync(p, 'utf8');
@@ -156,13 +190,15 @@ function main() {
     process.exit(2);
   }
 
-  const initial = countVulnerabilities(before);
+  const accepted = loadAcceptances(before);
+  const count = (r) => countUnaccepted(r, accepted);
+  const initial = count(before);
   if (initial === 0) {
-    console.log('✓ No known vulnerabilities.');
+    console.log(accepted.size ? '✓ No known vulnerabilities outside the accepted risks above.' : '✓ No known vulnerabilities.');
     return;
   }
 
-  const roots = rootAdvisories(before);
+  const roots = unacceptedRoots(before, accepted);
   // npm counts a package that merely DEPENDS on a vulnerable one as its own
   // finding (satori is listed because fflate is), so the headline number is
   // usually larger than the list of things there is anything to fix.
@@ -182,7 +218,7 @@ function main() {
   }
 
   let report = WRITES ? audit() : before;
-  let remaining = WRITES ? countVulnerabilities(report) : initial;
+  let remaining = WRITES ? count(report) : initial;
   if (WRITES && remaining < initial) {
     applied.push(`npm audit fix resolved ${initial - remaining} of ${initial}`);
     console.log(`  fixed ${initial - remaining}; ${remaining} left`);
@@ -195,7 +231,7 @@ function main() {
     const pkgFile = readPackageJson();
     const json = pkgFile.json;
 
-    for (const vuln of rootAdvisories(report)) {
+    for (const vuln of unacceptedRoots(report, accepted)) {
       const name = vuln.name;
       const installed = installedVersion(name);
       if (!installed) {
@@ -227,7 +263,7 @@ function main() {
       run(['install', '--package-lock-only'], { allowFailure: true });
 
       const after = audit();
-      const nowCount = countVulnerabilities(after);
+      const nowCount = count(after);
       if (nowCount < remaining) {
         applied.push(`pinned ${name} to ${range} via overrides`);
         remaining = nowCount;
@@ -267,7 +303,7 @@ function main() {
   console.error(`\n✗ ${remaining} vulnerabilit${remaining === 1 ? 'y' : 'ies'} need a human:`);
   for (const u of unfixable) console.error(`  - ${u.name} (${u.severity}): ${u.why}`);
   if (!unfixable.length) {
-    for (const v of rootAdvisories(report)) console.error(`  - ${v.name} (${v.severity}): ${v.range}`);
+    for (const v of unacceptedRoots(report, accepted)) console.error(`  - ${v.name} (${v.severity}): ${v.range}`);
   }
   console.error('\nA fix needing a minor or major bump is deliberately NOT automated — review it by hand.');
   process.exit(DRY_RUN ? 0 : 1);

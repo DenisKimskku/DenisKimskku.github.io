@@ -339,7 +339,7 @@ jobs:
             --search "\"$ISSUE_TITLE\" in:title" --limit 1 --json number --jq '.[0].number // empty' || true)
           if [ -n "$existing" ]; then
             gh issue close "$existing" --repo "${{ github.repository }}" \
-              --comment "Resolved: \`npm audit\` is clean as of ${{ github.sha }}." || true
+              --comment "Resolved as of ${{ github.sha }}: \`npm audit\` is clean apart from any reviewed, unexpired entries in audit-accepted.json (listed in the run log)." || true
             echo "Closed issue #$existing."
           fi
 

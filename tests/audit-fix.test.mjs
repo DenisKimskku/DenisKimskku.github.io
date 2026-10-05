@@ -23,6 +23,11 @@ import {
   patchRange,
   pickPatchLevel,
   rootAdvisories,
+  advisoryId,
+  countUnaccepted,
+  effectiveAcceptances,
+  suppressedPackages,
+  unacceptedRoots,
 } from '../scripts/lib/audit-fix.mjs';
 
 const REPORT = {
@@ -161,4 +166,94 @@ test('the fflate case resolves end to end through the pure helpers', () => {
   assert.equal(installed, '0.7.3');
   assert.equal(candidate, '0.7.5');
   assert.equal(patchRange(candidate), '^0.7.5');
+});
+
+/* --- accepted risks (audit-accepted.json) ---------------------------------- */
+
+// Real `npm audit --json` shape captured 2026-10-05 (braces GHSA-vfj7-8cjw-p6xm,
+// no patched release), trimmed to the fields the helpers read. Four of the five
+// findings exist only because braces does.
+const BRACES = 'GHSA-vfj7-8cjw-p6xm';
+const braceVia = (id = BRACES) => ({
+  source: 1240992,
+  name: 'braces',
+  dependency: 'braces',
+  title: 'braces vulnerable to stack-exhaustion denial of service through deeply nested patterns',
+  url: `https://github.com/advisories/${id}`,
+  severity: 'high',
+  range: '<=3.0.3',
+});
+const braceReport = (via = [braceVia()]) => ({
+  vulnerabilities: {
+    '@next/eslint-plugin-next': { name: '@next/eslint-plugin-next', severity: 'high', via: ['fast-glob'], nodes: ['node_modules/@next/eslint-plugin-next'] },
+    braces: { name: 'braces', severity: 'high', via, nodes: ['node_modules/braces'] },
+    'eslint-config-next': { name: 'eslint-config-next', severity: 'high', via: ['@next/eslint-plugin-next'], nodes: ['node_modules/eslint-config-next'] },
+    'fast-glob': { name: 'fast-glob', severity: 'high', via: ['micromatch'], nodes: ['node_modules/fast-glob'] },
+    micromatch: { name: 'micromatch', severity: 'high', via: ['braces'], nodes: ['node_modules/micromatch'] },
+  },
+  metadata: { vulnerabilities: { info: 0, low: 0, moderate: 0, high: 5, critical: 0, total: 5 } },
+});
+const DEV_LOCK = { 'node_modules/braces': { version: '3.0.3', dev: true } };
+const ENTRY = { id: BRACES, package: 'braces', expires: '2027-01-05', reason: 'no fix; dev-only ESLint path' };
+const NOW = new Date('2026-10-05T00:00:00Z');
+const accept = (over = {}) =>
+  effectiveAcceptances({ entries: [ENTRY], report: braceReport(), lockPackages: DEV_LOCK, now: NOW, ...over });
+
+test('advisoryId reads the GHSA id out of the advisory url', () => {
+  assert.equal(advisoryId(braceVia()), BRACES);
+  assert.equal(advisoryId({ url: 'https://example.com' }), null);
+  assert.equal(advisoryId('braces'), null);
+});
+
+test('an accepted root clears its dependents-only chain, and nothing else', () => {
+  const { accepted, notes } = accept();
+  assert.deepEqual([...accepted], [BRACES.toUpperCase()]);
+  assert.deepEqual(notes, []);
+  const report = braceReport();
+  assert.equal(suppressedPackages(report, accepted).size, 5);
+  assert.equal(countUnaccepted(report, accepted), 0);
+  assert.deepEqual(unacceptedRoots(report, accepted), []);
+  assert.equal(countUnaccepted(report), 5, 'with nothing accepted it matches npm totals');
+});
+
+test('an expired acceptance pages again', () => {
+  const { accepted, notes } = accept({ now: new Date('2027-01-06T00:00:01Z') });
+  assert.equal(accepted.size, 0);
+  assert.match(notes[0], /expired/);
+  assert.equal(accept({ now: new Date('2027-01-05T12:00:00Z') }).accepted.size, 1, 'valid through the expiry day');
+});
+
+test('an acceptance never hides a patch-level fix once one is published', () => {
+  const { accepted, notes } = accept({ patchable: new Set(['braces']) });
+  assert.equal(accepted.size, 0);
+  assert.match(notes[0], /patch-level fix/);
+});
+
+test('an acceptance is void if the package reaches a non-dev path', () => {
+  const { accepted, notes } = accept({ lockPackages: { 'node_modules/braces': { version: '3.0.3' } } });
+  assert.equal(accepted.size, 0);
+  assert.match(notes[0], /non-dev/);
+});
+
+test('a different advisory on the same package still pages', () => {
+  const report = braceReport([braceVia(), braceVia('GHSA-aaaa-bbbb-cccc')]);
+  const { accepted } = accept({ report });
+  assert.equal(countUnaccepted(report, accepted), 5);
+  assert.deepEqual(unacceptedRoots(report, accepted).map((v) => v.name), ['braces']);
+});
+
+test('malformed entries accept nothing', () => {
+  for (const bad of [{ ...ENTRY, reason: ' ' }, { ...ENTRY, expires: 'soon' }, { ...ENTRY, id: 'braces' }, null]) {
+    assert.equal(accept({ entries: [bad] }).accepted.size, 0);
+  }
+});
+
+test('the committed audit-accepted.json is well-formed and every entry is dated', () => {
+  const { accepted } = JSON.parse(fs.readFileSync(new URL('../audit-accepted.json', import.meta.url), 'utf8'));
+  assert.ok(Array.isArray(accepted));
+  for (const e of accepted) {
+    assert.match(e.id, /^GHSA(-[0-9a-z]{4}){3}$/);
+    assert.match(e.expires, /^\d{4}-\d{2}-\d{2}$/);
+    assert.ok(e.package && e.reason?.trim());
+  }
 });

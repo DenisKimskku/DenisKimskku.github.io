@@ -76,3 +76,97 @@ export function rootAdvisories(report) {
   return Object.values(report?.vulnerabilities ?? {})
     .filter((v) => (v.via ?? []).some((x) => typeof x === 'object' && x !== null));
 }
+
+// ---- Accepted risks (audit-accepted.json) --------------------------------
+//
+// Tier 3 hands an advisory to a human. When the human's verdict is "nothing
+// to upgrade to, and not reachable here" (braces GHSA-vfj7-8cjw-p6xm: no
+// patched release exists at all, and the only path is the dev-only ESLint
+// plugin), that verdict is recorded as an entry, not as an ever-open issue.
+// An entry is deliberately narrow and self-revoking:
+//
+//   * keyed on the advisory id, so a NEW advisory on the same package pages;
+//   * dated, so it pages again after `expires` and someone looks again;
+//   * void if the package reaches a production path (lockfile `dev` flag);
+//   * void once a patch-level fix is published, so tier 2 repairs it instead
+//     of the acceptance hiding a fix that now exists.
+
+// npm audit's advisory objects carry the GHSA id only inside `url`.
+export function advisoryId(via) {
+  const m = /GHSA(?:-[0-9a-z]{4}){3}/i.exec(String(via?.url ?? ''));
+  return m ? m[0] : null;
+}
+
+// Which entries apply right now. `patchable` is the set of package names for
+// which the driver found a patch-level candidate (a network lookup, so it is
+// passed in to keep this pure); `now` is injected for the same reason.
+export function effectiveAcceptances({ entries, report, lockPackages, patchable = new Set(), now = new Date() }) {
+  const accepted = new Set();
+  const notes = [];
+  for (const e of Array.isArray(entries) ? entries : []) {
+    const id = String(e?.id ?? '');
+    const pkg = String(e?.package ?? '');
+    const expires = /^\d{4}-\d{2}-\d{2}$/.test(e?.expires ?? '') ? new Date(`${e.expires}T23:59:59Z`) : null;
+    if (!/^GHSA(-[0-9a-z]{4}){3}$/i.test(id) || !pkg || !String(e?.reason ?? '').trim() || !expires || isNaN(expires)) {
+      notes.push(`ignored malformed entry ${id || '(no id)'}: needs id, package, reason and expires (YYYY-MM-DD)`);
+      continue;
+    }
+    if (now > expires) {
+      notes.push(`${id} (${pkg}) acceptance expired ${e.expires} — review it again`);
+      continue;
+    }
+    if (patchable.has(pkg)) {
+      notes.push(`${id} (${pkg}) now has a patch-level fix — repairing instead of accepting`);
+      continue;
+    }
+    const nodes = report?.vulnerabilities?.[pkg]?.nodes ?? [];
+    const prod = nodes.filter((n) => lockPackages?.[n]?.dev !== true);
+    if (prod.length) {
+      notes.push(`${id} (${pkg}) reaches a non-dev path (${prod.join(', ')}) — acceptance void`);
+      continue;
+    }
+    accepted.add(id.toUpperCase());
+  }
+  return { accepted, notes };
+}
+
+// Package names whose every finding traces back to accepted advisories —
+// micromatch, fast-glob and the ESLint plugin are listed by npm only because
+// braces is, so they clear with it. Anything with one unaccepted advisory
+// anywhere down its `via` chain stays.
+export function suppressedPackages(report, accepted = new Set()) {
+  const vulns = report?.vulnerabilities ?? {};
+  const memo = new Map();
+  const visit = (name) => {
+    if (memo.has(name)) return memo.get(name);
+    memo.set(name, false); // cycle guard: an unresolved loop does not suppress
+    const v = vulns[name];
+    const via = v?.via ?? [];
+    const ok =
+      !!v &&
+      via.length > 0 &&
+      via.every((x) =>
+        typeof x === 'object' && x !== null ? accepted.has(String(advisoryId(x)).toUpperCase()) : visit(x)
+      );
+    memo.set(name, ok);
+    return ok;
+  };
+  return new Set(Object.keys(vulns).filter(visit));
+}
+
+// countVulnerabilities, minus what is accepted. With nothing accepted it
+// counts the same entries npm's metadata totals do.
+export function countUnaccepted(report, accepted = new Set()) {
+  if (!accepted.size) return countVulnerabilities(report);
+  const hidden = suppressedPackages(report, accepted);
+  return Object.values(report?.vulnerabilities ?? {}).filter(
+    (v) => !hidden.has(v.name) && ['low', 'moderate', 'high', 'critical'].includes(v.severity)
+  ).length;
+}
+
+// rootAdvisories, minus roots whose every advisory is accepted.
+export function unacceptedRoots(report, accepted = new Set()) {
+  return rootAdvisories(report).filter((v) =>
+    v.via.some((x) => typeof x === 'object' && x !== null && !accepted.has(String(advisoryId(x)).toUpperCase()))
+  );
+}
