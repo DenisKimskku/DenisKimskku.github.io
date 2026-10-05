@@ -35,7 +35,14 @@ function decodeEntities(s: string): string {
 export function displayTitle(raw: string | null | undefined): string {
   if (!raw) return '';
   let s = raw;
-  if (s.includes('<')) s = s.replace(/>\s+</g, '><').replace(TAG, '');
+  if (s.includes('<')) {
+    s = s.replace(/>\s+</g, '><');
+    // Until stable: one pass over "<scr<i>ipt>" would leave a "<script>" behind.
+    for (let prev = ''; prev !== s; ) {
+      prev = s;
+      s = s.replace(TAG, '');
+    }
+  }
   if (s.includes('&')) s = decodeEntities(s);
   return s.replace(/\s+/g, ' ').trim();
 }

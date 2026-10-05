@@ -441,8 +441,7 @@ test('provenance fixture A (dated, clean): P10a with the recorded date, no minor
   );
   const all = provenanceStrings(prov).join('\n');
   assert.ok(!prov.summary.includes('claude-sonnet-5'), 'the raw id stays inside the disclosure');
-  assert.ok(!all.includes('arxiv.org'), 'source_url is never shown');
-});
+  assert.ok(!all.includes(BUCKET_A.source_url), 'source_url is never shown');});
 
 test('provenance fixture B (undated, clean): P10b, and the date note never leaks', () => {
   const prov = reviewProvenance(BUCKET_B);

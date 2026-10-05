@@ -256,6 +256,7 @@ test('displayTitle removes tag markup, MathML included', () => {
   assert.equal(displayTitle('Low Temperature Sabatier CO <sub>2</sub> Methanation'), 'Low Temperature Sabatier CO 2 Methanation');
   assert.equal(displayTitle('Ni <sub> <b>3</b> </sub> Se'), 'Ni 3 Se', 'whitespace between tags collapses first');
   assert.equal(displayTitle('Line one<br/>line two'), 'Line oneline two');
+  assert.equal(displayTitle('a<scr<i>ipt>b'), 'ab', 'stripping repeats until no tag re-forms');
 });
 
 test('displayTitle keeps a literal less-than that is not a tag', () => {
