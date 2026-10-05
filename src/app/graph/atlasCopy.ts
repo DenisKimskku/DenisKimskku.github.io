@@ -7,11 +7,17 @@
 //
 // Truth rule for every string here: it must be literally true for every
 // published review. Census of the payload on 2026-10-04: every review records
-// the same model id as generator and checker, the source is the paper's full
-// text, about half carry a `verified_at` batch stamp and the rest carry only a
-// `date_note`, and two have the verdict `minor_issues`. So a review is written
-// by a Claude model and then checked against the paper's text, in a separate
-// pass, by that same model. Nothing here may imply an independent checker, a
+// the same model id as generator and checker, about half carry a `verified_at`
+// batch stamp and the rest carry only a `date_note`, and two have the verdict
+// `minor_issues`. The source was believed to be the full text; 2026-10-05 found
+// the July 2026 batch read only the first 22 pages of each PDF (791 of 2,541
+// checkable papers are longer) and one review read only the abstract, so the
+// exporter now states the text each review used (SOURCE_FIRST_22 / ABSTRACT).
+// So a review is written by a Claude model from a stated text and then checked
+// against that text, in a separate pass, by that same model. A blind audit the
+// same day found real errors in reviews that check had passed, so a verdict is
+// worded as what the check flagged, never as a property of the review. Nothing
+// here may imply an independent checker, a
 // human reader or peer review; `tests/graph-truth.test.mjs` scans every string
 // literal and JSX text under src/app/graph for such claims.
 
@@ -21,7 +27,7 @@ import type { AtlasNode, ReviewProvenance } from './atlasTypes';
 
 /** M2. Number-free on purpose: a hard-coded corpus count went stale once. */
 export const ATLAS_DESCRIPTION =
-  'Preview: an interactive map of papers in AI security and neighbouring fields, grouped into named topic regions. Some papers carry a review written by a Claude model from the full text and checked against it by the same model; it is a reading aid, not peer review.';
+  'Preview: an interactive map of papers in AI security and neighbouring fields, grouped into named topic regions. Some papers carry a review written by a Claude model from the paper’s text and checked against it by the same model; it is a reading aid, not peer review.';
 /** H3 */
 export const ATLAS_HEADLINE = 'A map of AI-security research';
 /** H4: the dek where the map is drawn (860px and wider). */
@@ -34,7 +40,7 @@ export const ATLAS_DEK_NARROW =
 export const ABOUT_HEADING = 'About the reviews';
 /** A1 */
 export const ABOUT_REVIEWS =
-  'Each review was written by a Claude model from the paper’s full text, then checked against that same text in a separate pass by the same model. It is a reading aid, not peer review: confirm anything important in the paper itself.';
+  'Each review was written by a Claude model from the paper’s text, then checked against that same text in a separate pass by the same model. Reviews made before October 2026 read at most the first 22 pages of each paper; each review says which text it used. It is a reading aid, not peer review: confirm anything important in the paper itself.';
 /** A2 */
 export const ABOUT_ABSTRACTS =
   'Abstracts are shown as recorded in each paper’s bibliographic metadata; no model wrote or edited them.';
@@ -294,6 +300,11 @@ export interface ProvenanceCopy {
 }
 
 const text = (v: unknown): string | null => (typeof v === 'string' && v.trim() ? v.trim() : null);
+const capitalise = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
+
+/** The exporter's exact phrases for partial sources (build_atlas_data.py). */
+export const SOURCE_FIRST_22 = 'the first 22 pages of the paper’s PDF (the whole paper, if shorter)';
+export const SOURCE_ABSTRACT = 'the paper’s abstract (its PDF could not be fetched)';
 
 /**
  * The only producer of provenance text. It reads an explicit whitelist of
@@ -317,6 +328,10 @@ export function reviewProvenance(p?: ReviewProvenance | null): ProvenanceCopy {
   const recordedAt = text(p?.verified_at);
 
   const fullText = rawSource === 'PDF full text';
+  // Partial sources are phrases the exporter states exactly (the July 2026 batch
+  // read only the first 22 pages; one review read only the abstract). They are
+  // rendered verbatim: never round them up to "full text".
+  const knownText = fullText || rawSource === SOURCE_FIRST_22 || rawSource === SOURCE_ABSTRACT;
   const sameModel = gen !== null && checker !== null && gen === checker;
   const writer = gen !== null && /^claude-/i.test(gen) ? 'Claude' : 'a language model';
   const source = fullText ? 'the paper’s full text' : rawSource;
@@ -349,21 +364,25 @@ export function reviewProvenance(p?: ReviewProvenance | null): ProvenanceCopy {
     if (gen) details.push({ term: 'Written by', value: gen, mono: true });
     if (checker) details.push({ term: 'Checked by', value: checker, mono: true });
   }
-  if (rawSource) details.push({ term: 'Source', value: fullText ? 'The paper’s full text' : rawSource });
+  if (rawSource) details.push({ term: 'Source', value: fullText ? 'The paper’s full text' : capitalise(rawSource) });
   if (checker) {
     const who = sameModel ? 'the same model' : checker;
     details.push({
       term: 'Check',
       value: fullText
         ? `A separate pass in which ${who} compared the review with the paper’s text.`
-        : `A separate pass in which ${who} checked the review.`,
+        : knownText
+          ? `A separate pass in which ${who} compared the review with that same text.`
+          : `A separate pass in which ${who} checked the review.`,
     });
   }
   if (verdict) {
     details.push({
       term: 'Check result',
       value:
-        verdict === 'clean' ? 'No issues found' : verdict === 'minor_issues' ? 'Minor issues found' : verdict,
+        // What the check reported, not a promise about the review: a blind audit
+        // (2026-10-05) found real errors in reviews this check had passed.
+        verdict === 'clean' ? 'Nothing flagged' : verdict === 'minor_issues' ? 'Minor issues flagged' : verdict,
     });
   }
   if (checker) {

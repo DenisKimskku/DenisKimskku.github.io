@@ -44,7 +44,7 @@ const GRAPH_DIR = path.join(root, 'src', 'app', 'graph');
 const ATLAS_DIR = path.resolve(root, process.env.ATLAS_DIR || 'public/atlas');
 
 const copy = await import('../src/app/graph/atlasCopy.ts');
-const { reviewProvenance, formatCheckDate, landingUrl, stripPipelineNoise, tierOf, TIER_LABEL, bareNote, formatCount } =
+const { reviewProvenance, formatCheckDate, landingUrl, stripPipelineNoise, tierOf, TIER_LABEL, bareNote, formatCount, SOURCE_FIRST_22, SOURCE_ABSTRACT } =
   copy;
 
 /* --- detectors (SPEC §14.1) ------------------------------------------------- */
@@ -190,14 +190,14 @@ function sourceFiles(dir) {
 /* --- copy deck (SPEC §11), verbatim ------------------------------------------- */
 
 const DECK = {
-  M2: 'Preview: an interactive map of papers in AI security and neighbouring fields, grouped into named topic regions. Some papers carry a review written by a Claude model from the full text and checked against it by the same model; it is a reading aid, not peer review.',
+  M2: 'Preview: an interactive map of papers in AI security and neighbouring fields, grouped into named topic regions. Some papers carry a review written by a Claude model from the paper’s text and checked against it by the same model; it is a reading aid, not peer review.',
   H3: 'A map of AI-security research',
   H4: 'Each dot is a paper on AI security or a neighbouring field, placed near papers on similar topics. Search for one you know, or click a region name to explore.',
   H5i: 'Papers on AI security and neighbouring fields, as a list you can search. On a wider screen this is an interactive map.',
   // Package 6 ships the final dek (H5): the list gained its filter and sort.
   H5: 'Papers on AI security and neighbouring fields, as a list you can search, filter and sort. On a wider screen this is an interactive map.',
   A0: 'About the reviews',
-  A1: 'Each review was written by a Claude model from the paper’s full text, then checked against that same text in a separate pass by the same model. It is a reading aid, not peer review: confirm anything important in the paper itself.',
+  A1: 'Each review was written by a Claude model from the paper’s text, then checked against that same text in a separate pass by the same model. Reviews made before October 2026 read at most the first 22 pages of each paper; each review says which text it used. It is a reading aid, not peer review: confirm anything important in the paper itself.',
   A2: 'Abstracts are shown as recorded in each paper’s bibliographic metadata; no model wrote or edited them.',
   // A3 as revised in the final review: the original ("Links point to a public
   // landing page (publisher, DOI or arXiv).") named a closed set of hosts and
@@ -208,6 +208,10 @@ const DECK = {
   P9: 'Model-written review',
   P10a: 'Written by Claude from the paper’s full text, then checked against that text by the same model; the check was recorded on 21 Jul 2026.',
   P10b: 'Written by Claude from the paper’s full text, then checked against that text by the same model. The check date was not recorded.',
+  // The July 2026 batch read only list(d)[:22] (measured 2026-10-05); the exporter says so.
+  P10f22a: 'Written by Claude from the first 22 pages of the paper’s PDF (the whole paper, if shorter), then checked against that text by the same model; the check was recorded on 21 Jul 2026.',
+  P10f22b: 'Written by Claude from the first 22 pages of the paper’s PDF (the whole paper, if shorter), then checked against that text by the same model. The check date was not recorded.',
+  P10abs: 'Written by Claude from the paper’s abstract (its PDF could not be fetched), then checked against that text by the same model. The check date was not recorded.',
   P11: 'The check flagged minor issues with this review.',
   P12: 'How this review was made',
   P14: 'A reading aid, not peer review. Confirm important details in the paper itself.',
@@ -426,7 +430,7 @@ test('provenance fixture A (dated, clean): P10a with the recorded date, no minor
       ['Model', 'claude-sonnet-5'],
       ['Source', 'The paper’s full text'],
       ['Check', 'A separate pass in which the same model compared the review with the paper’s text.'],
-      ['Check result', 'No issues found'],
+      ['Check result', 'Nothing flagged'],
       ['Check recorded', '21 Jul 2026'],
     ],
   );
@@ -456,7 +460,27 @@ test('provenance fixture C (undated, minor issues): P10b plus the P11 line', () 
   const prov = reviewProvenance(BUCKET_C);
   assert.equal(prov.summary, DECK.P10b);
   assert.equal(prov.minorIssues, DECK.P11);
-  assert.equal(prov.details.find((r) => r.term === 'Check result').value, 'Minor issues found');
+  assert.equal(prov.details.find((r) => r.term === 'Check result').value, 'Minor issues flagged');
+});
+
+// The July 2026 batch as the exporter now ships it: the text it read, stated exactly.
+const BUCKET_F22 = { ...BUCKET_A, source: SOURCE_FIRST_22 };
+const BUCKET_F22B = { ...BUCKET_B, source: SOURCE_FIRST_22 };
+const BUCKET_ABS = { ...BUCKET_B, source: SOURCE_ABSTRACT };
+
+test('provenance for the 22-page batch: says the first 22 pages, never "full text"', () => {
+  for (const [shape, sentence] of [[BUCKET_F22, DECK.P10f22a], [BUCKET_F22B, DECK.P10f22b], [BUCKET_ABS, DECK.P10abs]]) {
+    const prov = reviewProvenance(shape);
+    assert.equal(prov.summary, sentence);
+    const all = provenanceStrings(prov).join('\n');
+    assert.ok(!/full text/i.test(all), `no "full text" claim: ${all}`);
+    assert.equal(prov.details.find((r) => r.term === 'Check').value, 'A separate pass in which the same model compared the review with that same text.');
+  }
+  assert.equal(
+    reviewProvenance(BUCKET_F22).details.find((r) => r.term === 'Source').value,
+    'The first 22 pages of the paper’s PDF (the whole paper, if shorter)',
+  );
+  assert.equal(reviewProvenance(BUCKET_ABS).details.find((r) => r.term === 'Source').value, 'The paper’s abstract (its PDF could not be fetched)');
 });
 
 test('provenance when writer and checker differ: names the checking model by its raw id', () => {
@@ -503,7 +527,7 @@ test('provenance never invents: other ids, other sources, a stamp without a chec
 
 test('every string the provenance helper produces passes the detectors', () => {
   const shapes = [
-    BUCKET_A, BUCKET_B, BUCKET_C, {}, undefined,
+    BUCKET_A, BUCKET_B, BUCKET_C, BUCKET_F22, BUCKET_F22B, BUCKET_ABS, {}, undefined,
     { ...BUCKET_B, verifier_model: 'claude-sonnet-5' },
     { generator_model: 'gpt-x', verifier_model: 'gpt-x', source: 'PDF full text', verifier_verdict: 'minor_issues' },
   ];
@@ -550,15 +574,20 @@ test('census: reviewProvenance over every published review', (t) => {
       if (p.generator_model && p.generator_model === p.verifier_model && prov.summary.includes(p.generator_model)) {
         flag('raw model id in the summary line');
       }
-      // Today's shape (claude-*, one model, full text) must give the deck sentence exactly.
+      // The July 2026 models read at most 22 pages: none of their reviews may claim the full text.
+      if (/^(claude-sonnet-5|claude-opus-4-8\[1m\])$/.test(p.generator_model ?? '') && p.source === 'PDF full text') {
+        flag('July-batch review claims the full text (that pipeline read only the first 22 pages)');
+      }
+      // Today's shapes (claude-*, one model, a stated text) must give the deck sentence exactly.
       if (
         /^claude-/i.test(p.generator_model ?? '') &&
         p.generator_model === p.verifier_model &&
-        p.source === 'PDF full text'
+        (p.source === 'PDF full text' || p.source === SOURCE_FIRST_22)
       ) {
+        const from = p.source === SOURCE_FIRST_22 ? SOURCE_FIRST_22 : 'the paper’s full text';
         const expected = p.verified_at
-          ? `Written by Claude from the paper’s full text, then checked against that text by the same model; the check was recorded on ${formatCheckDate(p.verified_at)}.`
-          : DECK.P10b;
+          ? `Written by Claude from ${from}, then checked against that text by the same model; the check was recorded on ${formatCheckDate(p.verified_at)}.`
+          : `Written by Claude from ${from}, then checked against that text by the same model. The check date was not recorded.`;
         if (prov.summary === expected) tally.exact += 1;
         else flag(`summary "${prov.summary}"`);
       }
