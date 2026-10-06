@@ -1,5 +1,67 @@
 [
   {
+    "slug": "ai_security_digest__october_07_2026_prompt_injection__ai_age",
+    "title": "AI Security Digest \u2014 October 07, 2026: Prompt Injection & AI Agents",
+    "date": "2026-10-07",
+    "type": "News Digest",
+    "description": "This digest reviews recent research on LLM agent robustness, structured reasoning for auditing, and intensified gradient leakage attacks in Federated Learning.",
+    "tags": [
+      "LLM Security",
+      "Prompt Injection",
+      "AI Agents",
+      "Federated Learning",
+      "Adversarial Attacks",
+      "Structured Output"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "vulnerability_of_textmatching_in_mlai_conference_reviewer_as",
+    "title": "Vulnerability of Text-Matching in ML/AI Conference Reviewer Assignments to Collusions",
+    "date": "2026-10-07",
+    "type": "Paper Review",
+    "description": "Colluders exploit text-matching similarity to force paper assignments",
+    "tags": [
+      "Adversarial Attacks",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "boosting_gradient_leakage_attacks_data_reconstruction_in_rea",
+    "title": "Boosting Gradient Leakage Attacks: Data Reconstruction in Realistic FL Settings",
+    "date": "2026-10-07",
+    "type": "Paper Review",
+    "description": "FEDLEAK boosts gradient leakage attacks via two novel techniques",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "correct_verdicts_flawed_reasoning_structured_auditing_of_llm",
+    "title": "Correct Verdicts, Flawed Reasoning: Structured Auditing of LLM-based Vulnerability Reasoning",
+    "date": "2026-10-07",
+    "type": "Paper Review",
+    "description": "VERA forces LLMs to output Structured Reasoning Records (SRR) instead of free-form text",
+    "tags": [
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "raised_selfdistillation_for_robustness_to_prompt_injection_i",
+    "title": "RAISED: Self-Distillation for Robustness to Prompt Injection in LLM Agents",
+    "date": "2026-10-07",
+    "type": "Paper Review",
+    "description": "RAISED combines self-generation and self-distillation for robustness",
+    "tags": [
+      "Prompt Injection",
+      "AI Agents"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__october_06_2026_backdoors__ai_agents",
     "title": "AI Security Digest — October 06, 2026: Backdoors & AI Agents",
     "date": "2026-10-06",
