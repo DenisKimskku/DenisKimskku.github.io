@@ -1,7 +1,7 @@
 [
   {
     "slug": "ai_security_digest__october_07_2026_prompt_injection__ai_age",
-    "title": "AI Security Digest \u2014 October 07, 2026: Prompt Injection & AI Agents",
+    "title": "AI Security Digest — October 07, 2026: Prompt Injection & AI Agents",
     "date": "2026-10-07",
     "type": "News Digest",
     "description": "This digest reviews recent research on LLM agent robustness, structured reasoning for auditing, and intensified gradient leakage attacks in Federated Learning.",
@@ -13,53 +13,58 @@
       "Adversarial Attacks",
       "Structured Output"
     ],
-    "readingTime": 5
-  },
-  {
-    "slug": "vulnerability_of_textmatching_in_mlai_conference_reviewer_as",
-    "title": "Vulnerability of Text-Matching in ML/AI Conference Reviewer Assignments to Collusions",
-    "date": "2026-10-07",
-    "type": "Paper Review",
-    "description": "Colluders exploit text-matching similarity to force paper assignments",
-    "tags": [
-      "Adversarial Attacks",
-      "Vulnerabilities"
-    ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "AI Security Digest — October 07, 2026: Prompt Injection & AI Agents The current focus on prompt injection overstates the immediate threat posed by unconstrained agentic behavior; the real friction point is the verifiable reasoning integrity when these agents interact with structured systems. Paper Highlights RAISED: Self Distillation for Robustness to Prompt Injection in LLM Agents — Mohamed Dhouib, Clement Elliker, Alexi Canesse. RAISED integrates self generation and self distillation mechanisms to enhance an LLM agent's resilience against prompt injection attacks. Practitioners working with tool using LLM agents processing external data should note this approach for defensive hardening. Correct Verdicts, Flawed Reasoning: Structured Auditing of LLM based Vulnerability Reasoning — Boyue Caroline Hu, Kaivalya Ahir, Ronghao Ni. This work introduces VERA, a method that compels LLMs to output Structured Reasoning Records (SRR) instead of relying on unstructured text. Those deploying LLM as a judge systems for automated software vulnerability analysis must adopt structured output to verify logical steps. Boosting Gradient Leakage Attacks: Data Reconstruction in Realistic FL Settings — FEDLEAK introduces two novel techniques to intensify gradient leakage attacks within Federated Learning (FL) environments. Organizations running FL systems under typical, real world training protocols face an elevated risk of data reconstruction. Industry & News IBM’s AI powered vulnerability cleari"
   },
   {
     "slug": "boosting_gradient_leakage_attacks_data_reconstruction_in_rea",
     "title": "Boosting Gradient Leakage Attacks: Data Reconstruction in Realistic FL Settings",
     "date": "2026-10-07",
     "type": "Paper Review",
-    "description": "FEDLEAK boosts gradient leakage attacks via two novel techniques",
+    "description": "The authors’ dismissal of solution ambiguity as the core issue in gradient matching, shifting blame entirely to optimization instability, is a convenient simplification.",
     "tags": [
       "Privacy"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Boosting Gradient Leakage Attacks: Data Reconstruction in Realistic FL Settings” (p. 5) FEDLEAK: Enhancing Data Reconstruction in Realistic Federated Learning TLDR What : FEDLEAK boosts gradient leakage attacks via two novel techniques. Who's at risk : FL systems operating under standard, real world training protocols. Key number : FEDLEAK achieves high fidelity data reconstruction even in practical FL settings. The Gradient Matching Problem Federated learning (FL) allows collaborative training without sharing raw data, making it a privacy preserving paradigm. However, gradient leakage attacks (GLAs) exploit shared gradients to reconstruct client data. Existing GLAs, such as Deep leakage from gradient (DLG), attempt to solve the gradient matching problem: finding input $x'$ such that the generated gradient $ nabla w L(F(x',w),y)$ closely approximates the uploaded gradient $ hat{g}$. The literature often suggests that poor performance stems from the existence of multiple solutions to this equation. This paper challenges that view. By analyzing the constraints derived from the objective function, the authors argue that the primary failure point is not the multiplicity of solutions, but the inability of existing optimization algorithms to converge effectively to a solution. Partial Gradient Matching and Gradient Regularization To address the optimization instability, the paper introduces FEDLEAK, which incorporates two new mechanisms: partial gradient matc"
   },
   {
     "slug": "correct_verdicts_flawed_reasoning_structured_auditing_of_llm",
     "title": "Correct Verdicts, Flawed Reasoning: Structured Auditing of LLM-based Vulnerability Reasoning",
     "date": "2026-10-07",
     "type": "Paper Review",
-    "description": "VERA forces LLMs to output Structured Reasoning Records (SRR) instead of free-form text",
+    "description": "The move to Structured Reasoning Records (SRR) is a logical necessity if we want to move LLM-as-a-judge from a novelty to a reliable component in automated security pipelines. However, the paper seems to understate the inertia required for this transition.",
     "tags": [
       "Vulnerabilities"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Correct Verdicts, Flawed Reasoning: Structured Auditing of LLM based Vulnerability Reasoning” (p. 2) Structured Auditing of LLM Vulnerability Reasoning via State Transition Traces TLDR What : VERA forces LLMs to output Structured Reasoning Records (SRR) instead of free form text. Who's at risk : Automated software vulnerability analysis pipelines relying on LLM as a judge. Key number : VERA exposes 87% of reasoning errors that free form LLM as judge systematically miss. The Gaps in Free Form CoT Justifications Current practice for getting explanations from Large Language Models (LLMs) in vulnerability analysis relies heavily on Chain of Thought (CoT) prompting, which generates free form natural language justifications. While these models can often reach the correct final verdict, this prose format creates a severe auditing gap. Manual audits of state of the art LLMs showed that approximately 60% of correct vulnerability verdicts are accompanied by fabricated or unverifiable claims—this is the \"correct verdicts, flawed reasoning\" problem. For instance, an LLM might correctly identify a Use After Free (UAF) but base its justification on a stale comment in the source code rather than the actual implementation logic. Because natural language is unstructured, these logical leaps, hallucinations, and internal inconsistencies are easily obscured, allowing reasoning errors to pass undetected by standard LLM as a judge evaluations. The challenge is that existing"
   },
   {
     "slug": "raised_selfdistillation_for_robustness_to_prompt_injection_i",
     "title": "RAISED: Self-Distillation for Robustness to Prompt Injection in LLM Agents",
     "date": "2026-10-07",
     "type": "Paper Review",
-    "description": "RAISED combines self-generation and self-distillation for robustness",
+    "description": "Furthermore, a behavioral failure mode exists where defended models, when processing benign tool outputs, become reluctant to act on legitimate guidance required for task completion, effectively deferring necessary steps to the user.",
     "tags": [
       "Prompt Injection",
       "AI Agents"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “RAISED: Self Distillation for Robustness to Prompt Injection in LLM Agents” (p. 3) RAISED: Self Distillation for Robustness to Prompt Injection in LLM Agents TLDR What : RAISED combines self generation and self distillation for robustness. Who's at risk : Tool using LLM agents processing untrusted external content. Key number : On AgentDojo with Gemma, RAISED reduces ASR from 39.5% to 1.0% and increases utility under attack from 64.0% to 80.5%, while losing only 1 point of benign utility. The Utility Cost of Training Based Defenses Training models to resist prompt injection, while aiming for robustness, introduces measurable utility trade offs. Standard supervised fine tuning (SFT) and direct preference optimization (DPO) shift the model’s output distribution away from its original behavior. We quantify this using KL divergence ($ Delta {fwd}$ and $ Delta {rev}$) on benign inputs. Furthermore, a behavioral failure mode exists where defended models, when processing benign tool outputs, become reluctant to act on legitimate guidance required for task completion, effectively deferring necessary steps to the user. This occurs because the optimization signal pushes the model away from following injected directions but provides insufficient signal for acting on legitimate guidance from the same channel. RAISED's Self Distillation Invariance The core insight of RAISED is to achieve model relative invariance: ensuring the defended model behaves identically to t"
+  },
+  {
+    "slug": "vulnerability_of_textmatching_in_mlai_conference_reviewer_as",
+    "title": "Vulnerability of Text-Matching in ML/AI Conference Reviewer Assignments to Collusions",
+    "date": "2026-10-07",
+    "type": "Paper Review",
+    "description": "The paper presents a clear mechanism for collusion, but its focus on the text-matching component risks overstating the immediate risk profile.",
+    "tags": [
+      "Adversarial Attacks",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5,
+    "searchContent": "Collusion via Text Matching Exploits in ML/AI Reviewer Assignment TLDR What : Colluders exploit text matching similarity to force paper assignments. Who's at risk : Reviewer assignment systems using SPECTER embeddings at top ML/AI conferences. Key number : In evaluations on NeurIPS 2023 data, the attack successfully increases a colluding reviewer’s similarity from ranked 101 to top 5 for a colluding paper about 92% of the time. The Reliance on Text Similarity Automated assignment algorithms in major ML/AI venues rely heavily on computing text matched similarity scores between a submitted manuscript and a reviewer’s past publications. This process uses models like SPECTER to generate embeddings from titles and abstracts, where similarity is calculated via cosine similarity. While prior security research has focused on manipulating the bidding component of assignment, this work targets the text matching component, which is generally assumed to be robust. The system vulnerability arises because reviewers can curate their archives, and authors can modify their abstracts, allowing a colluding author and reviewer pair to artificially inflate the similarity $s(p,r)$ for their target paper $p$. The core issue is that the reliance on similarity scores, rather than other factors, provides an exploitable path for collusion rings to ensure favorable assignments, even without manipulating bids. Archive Curation and Abstract Modification The attack hinges on two intertwined adversarial act"
   },
   {
     "slug": "ai_security_digest__october_06_2026_backdoors__ai_agents",
