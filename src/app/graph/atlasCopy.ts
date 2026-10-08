@@ -43,7 +43,7 @@ export const ABOUT_REVIEWS =
   'Each review was written by a Claude model from the paper’s text, then checked against that same text in a separate pass by the same model. Reviews made before October 2026 read at most the first 22 pages of each paper; each review says which text it used. It is a reading aid, not peer review: confirm anything important in the paper itself.';
 /** A2 */
 export const ABOUT_ABSTRACTS =
-  'Abstracts are shown as recorded in each paper’s bibliographic metadata; no model wrote or edited them.';
+  'Abstracts are shown as recorded in each paper’s bibliographic metadata or, where that has none, copied word for word from the abstract on the paper’s first page; no model wrote or edited them.';
 /**
  * A3. True for every rendered link: each goes through `landingUrl()` below,
  * which leaves out direct file downloads. The hosts are not a closed set
@@ -156,6 +156,12 @@ export const ABSTRACT_HEADING = 'Abstract';
 /** P20. True: abstracts come from the bibliographic record with no model in the loop. */
 export const ABSTRACT_NOTE =
   'As recorded in the paper’s bibliographic metadata. No model wrote, edited or checked this text.';
+/**
+ * P20b. For an abstract whose payload provenance is `paper first page`: a script copied the paper's own Abstract
+ * block from its PDF text layer (no OCR), because no bibliographic record carried one. Still no model in the loop.
+ */
+export const ABSTRACT_NOTE_PAGE =
+  'Copied word for word from the abstract on the paper’s first page. No model wrote, edited or checked this text.';
 /** P22 */
 export const BARE_HEADING = 'No review or abstract';
 /** P28 */

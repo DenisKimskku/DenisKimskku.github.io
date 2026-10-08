@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { AbstractDisclosure, AbstractSection, abstractOf } from './AbstractBlock';
+import { AbstractDisclosure, AbstractSection, abstractNoteOf, abstractOf } from './AbstractBlock';
 import {
   ALL_PAPERS,
   BACK_LABEL,
@@ -130,6 +130,7 @@ export default function PaperPanel({
   const [status, setStatus] = useState<LoadStatus>(primary ? 'loading' : 'idle');
   const [review, setReview] = useState<Review | null>(null);
   const [abstract, setAbstract] = useState<string | null>(null);
+  const [abstractNote, setAbstractNote] = useState<string | undefined>(undefined);
   const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
@@ -148,6 +149,7 @@ export default function PaperPanel({
             if (cancelled) return;
             const text = abstractOf(entry);
             setAbstract(text);
+            setAbstractNote(abstractNoteOf(entry));
             setStatus(text ? 'ready' : 'error');
           });
     request.catch(() => {
@@ -334,7 +336,7 @@ export default function PaperPanel({
 
       {node.r === 1 && <ReviewBlock status={loadState} review={review} onRetry={retry} />}
       {node.r === 1 && node.a === 1 && <AbstractDisclosure paperId={node.id} />}
-      {node.r === 0 && node.a === 1 && <AbstractSection status={loadState} text={abstract} onRetry={retry} />}
+      {node.r === 0 && node.a === 1 && <AbstractSection status={loadState} text={abstract} note={abstractNote} onRetry={retry} />}
 
       {/* Neither a review nor an abstract: say so plainly, naming only what
           the record holds. Never a fabricated summary. */}

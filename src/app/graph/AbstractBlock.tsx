@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ABSTRACT_HEADING, ABSTRACT_NOTE } from './atlasCopy';
+import { ABSTRACT_HEADING, ABSTRACT_NOTE, ABSTRACT_NOTE_PAGE } from './atlasCopy';
 import { displayText } from './atlasText';
 import { fetchShardEntry } from './useAtlasData';
 
@@ -25,8 +25,14 @@ export function abstractOf(entry: unknown): string | null {
   return typeof raw === 'string' ? displayText(raw) || null : null;
 }
 
-/** The authors' abstract as a serif quotation, clamped to 12 lines, with the P20 note beneath it. */
-function AbstractQuote({ text }: { text: string }) {
+/** The note under an abstract: P20b when the payload says it was copied from the paper's first page, else P20. */
+export function abstractNoteOf(entry: unknown): string {
+  const prov = entry && typeof entry === 'object' ? (entry as { provenance?: { source?: unknown } }).provenance : undefined;
+  return prov?.source === 'paper first page' ? ABSTRACT_NOTE_PAGE : ABSTRACT_NOTE;
+}
+
+/** The authors' abstract as a serif quotation, clamped to 12 lines, with the P20 / P20b note beneath it. */
+function AbstractQuote({ text, note = ABSTRACT_NOTE }: { text: string; note?: string }) {
   const quoteRef = useRef<HTMLQuoteElement>(null);
   const [expanded, setExpanded] = useState(false);
   const [overflows, setOverflows] = useState(false);
@@ -62,7 +68,7 @@ function AbstractQuote({ text }: { text: string }) {
         </button>
       )}
       <p data-atlas-measure="abstract-note" className="mt-2 mb-0 text-[12.5px] leading-snug text-(--color-text-muted)">
-        {ABSTRACT_NOTE}
+        {note}
       </p>
     </>
   );
@@ -98,6 +104,8 @@ interface AbstractSectionProps {
   /** the abstract fetch, which is the panel's status for a paper with an abstract and no review (SPEC §9.6) */
   status: AbstractStatus;
   text: string | null;
+  /** P20 or P20b, from the payload's provenance (abstractNoteOf) */
+  note?: string;
   onRetry: () => void;
 }
 
@@ -106,7 +114,7 @@ interface AbstractSectionProps {
    under a neutral rule (the review is sans under an accent rule), headed
    "Abstract" and followed by the note that no model wrote, edited or checked
    it. */
-export function AbstractSection({ status, text, onRetry }: AbstractSectionProps) {
+export function AbstractSection({ status, text, note, onRetry }: AbstractSectionProps) {
   return (
     <section aria-labelledby="atlas-abstract-label" data-atlas-measure="abstract-section" className="mt-5">
       <h3 id="atlas-abstract-label" className={`mb-2 ${HEADING}`}>
@@ -114,7 +122,7 @@ export function AbstractSection({ status, text, onRetry }: AbstractSectionProps)
       </h3>
       {status === 'loading' && <AbstractLoading />}
       {status === 'error' && <AbstractError onRetry={onRetry} />}
-      {status === 'ready' && text && <AbstractQuote text={text} />}
+      {status === 'ready' && text && <AbstractQuote text={text} note={note} />}
     </section>
   );
 }
@@ -125,6 +133,7 @@ export function AbstractSection({ status, text, onRetry }: AbstractSectionProps)
 export function AbstractDisclosure({ paperId }: { paperId: string }) {
   const [status, setStatus] = useState<AbstractStatus | 'idle'>('idle');
   const [text, setText] = useState<string | null>(null);
+  const [note, setNote] = useState<string | undefined>(undefined);
   const aliveRef = useRef(true);
   useEffect(() => {
     aliveRef.current = true;
@@ -140,6 +149,7 @@ export function AbstractDisclosure({ paperId }: { paperId: string }) {
         if (!aliveRef.current) return;
         const value = abstractOf(entry);
         setText(value);
+        setNote(abstractNoteOf(entry));
         setStatus(value ? 'ready' : 'error');
       })
       .catch(() => {
@@ -171,7 +181,7 @@ export function AbstractDisclosure({ paperId }: { paperId: string }) {
       <div className="mt-3">
         {status === 'loading' && <AbstractLoading />}
         {status === 'error' && <AbstractError onRetry={load} />}
-        {status === 'ready' && text && <AbstractQuote text={text} />}
+        {status === 'ready' && text && <AbstractQuote text={text} note={note} />}
       </div>
     </details>
   );

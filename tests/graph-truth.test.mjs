@@ -198,7 +198,7 @@ const DECK = {
   H5: 'Papers on AI security and neighbouring fields, as a list you can search, filter and sort. On a wider screen this is an interactive map.',
   A0: 'About the reviews',
   A1: 'Each review was written by a Claude model from the paper’s text, then checked against that same text in a separate pass by the same model. Reviews made before October 2026 read at most the first 22 pages of each paper; each review says which text it used. It is a reading aid, not peer review: confirm anything important in the paper itself.',
-  A2: 'Abstracts are shown as recorded in each paper’s bibliographic metadata; no model wrote or edited them.',
+  A2: 'Abstracts are shown as recorded in each paper’s bibliographic metadata or, where that has none, copied word for word from the abstract on the paper’s first page; no model wrote or edited them.',
   // A3 as revised in the final review: the original ("Links point to a public
   // landing page (publisher, DOI or arXiv).") named a closed set of hosts and
   // called every page public, but many kept links are repository pages, and
@@ -217,6 +217,7 @@ const DECK = {
   P14: 'A reading aid, not peer review. Confirm important details in the paper itself.',
   P19: 'Abstract',
   P20: 'As recorded in the paper’s bibliographic metadata. No model wrote, edited or checked this text.',
+  P20b: 'Copied word for word from the abstract on the paper’s first page. No model wrote, edited or checked this text.',
   P22: 'No review or abstract',
   P23: 'The atlas has this paper’s title, venue and place on the map, but no review or abstract. Read the paper itself at the link above.',
   P23b: 'The atlas has this paper’s title, venue and place on the map, but no review, abstract or public landing page.',
@@ -365,6 +366,7 @@ test('the shipped copy constants are the copy deck, verbatim', () => {
   assert.equal(copy.REVIEW_CLOSING, DECK.P14);
   assert.equal(copy.ABSTRACT_HEADING, DECK.P19);
   assert.equal(copy.ABSTRACT_NOTE, DECK.P20);
+  assert.equal(copy.ABSTRACT_NOTE_PAGE, DECK.P20b);
   assert.equal(copy.BARE_HEADING, DECK.P22);
   assert.equal(copy.SIMILAR_HEADING, DECK.P28);
   assert.deepEqual(TIER_LABEL, { review: 'Review', abstract: 'Abstract', none: 'No summary' }, 'T1');
