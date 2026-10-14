@@ -50,7 +50,7 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
     "sharp": "^0.35.5",
-    "sigma": "^3.0.3",
+    "sigma": "^4.0.0",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.1.0"
   },
