@@ -71,7 +71,7 @@
   "overrides": {
     "brace-expansion": "~5.0.12",
     "minimatch": "^10.2.3",
-    "postcss": "^8.5.23",
+    "postcss": "$postcss",
     "ws": "^8.21.0",
     "@babel/core": "^7.29.6",
     "sharp": "$sharp",
