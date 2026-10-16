@@ -1,5 +1,43 @@
 [
   {
+    "slug": "ai_security_digest__october_17_2026_privacy",
+    "title": "AI Security Digest \u2014 October 17, 2026: Privacy",
+    "date": "2026-10-17",
+    "type": "News Digest",
+    "description": "This digest covers advances in privacy-preserving federated learning, regulatory scrutiny from the FTC, and growing national security concerns regarding AI-augmented cyber threats.",
+    "tags": [
+      "Federated Learning",
+      "Differential Privacy",
+      "LLM Security",
+      "AI Regulation",
+      "Cybersecurity",
+      "Data Privacy"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "stack_overflow_meets_replication_security_research_amid_evol",
+    "title": "Stack Overflow Meets Replication: Security Research Amid Evolving Code Snippets",
+    "date": "2026-10-17",
+    "type": "Paper Review",
+    "description": "Stack Overflow Meets Replication: Security Research Amid Evolving Code Snippets",
+    "tags": [
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "fastlloyd_federated_accurate_secure_and_tunable_kmeans_clust",
+    "title": "FastLloyd: Federated, Accurate, Secure, and Tunable k-Means Clustering with Differential Privacy",
+    "date": "2026-10-17",
+    "type": "Paper Review",
+    "description": "Combines DP and secure computation for federated k-means",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__october_16_2026_malware__privacy",
     "title": "AI Security Digest — October 16, 2026: Malware & Privacy",
     "date": "2026-10-16",
