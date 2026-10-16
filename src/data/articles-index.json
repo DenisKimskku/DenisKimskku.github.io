@@ -1,7 +1,7 @@
 [
   {
     "slug": "ai_security_digest__october_17_2026_privacy",
-    "title": "AI Security Digest \u2014 October 17, 2026: Privacy",
+    "title": "AI Security Digest — October 17, 2026: Privacy",
     "date": "2026-10-17",
     "type": "News Digest",
     "description": "This digest covers advances in privacy-preserving federated learning, regulatory scrutiny from the FTC, and growing national security concerns regarding AI-augmented cyber threats.",
@@ -13,29 +13,32 @@
       "Cybersecurity",
       "Data Privacy"
     ],
-    "readingTime": 4
-  },
-  {
-    "slug": "stack_overflow_meets_replication_security_research_amid_evol",
-    "title": "Stack Overflow Meets Replication: Security Research Amid Evolving Code Snippets",
-    "date": "2026-10-17",
-    "type": "Paper Review",
-    "description": "Stack Overflow Meets Replication: Security Research Amid Evolving Code Snippets",
-    "tags": [
-      "Vulnerabilities"
-    ],
-    "readingTime": 5
+    "readingTime": 4,
+    "searchContent": "AI Security Digest — October 17, 2026: Privacy Five orders of magnitude improvement in privacy preserving clustering marks a technical advance in federated learning security. Researchers have shown methods to achieve high accuracy while protecting sensitive data during distributed computation. Paper Highlights FastLloyd: Federated, Accurate, Secure, and Tunable k Means Clustering with Differential Privacy — Combines Differential Privacy (DP) and secure computation for federated k means. Practitioners should note this as it presents a pathway to deploy federated learning on sensitive data while maintaining strong privacy guarantees. Stack Overflow Meets Replication: Security Research Amid Evolving Code Snippets — Finds that code snippets on Stack Overflow are non stationary over time. This affects security researchers who use cross sectional data, as conclusions drawn from older snapshots may be outdated. Industry & News FTC Issues Subpoenas to OpenAI, Anthropic Following AI Safety Issues (Tech Times) — The Federal Trade Commission is demanding information from major AI developers concerning safety practices. This signals increased regulatory scrutiny over how foundational models are developed and deployed. “AI abuse in hostile nation cyber offensives” UK’s growing national security concerns test the effectiveness of existing cyber defense systems (https://economy.ac/) — National security bodies are assessing current defenses against AI augmented cyber threats from hostile sta"
   },
   {
     "slug": "fastlloyd_federated_accurate_secure_and_tunable_kmeans_clust",
     "title": "FastLloyd: Federated, Accurate, Secure, and Tunable k-Means Clustering with Differential Privacy",
     "date": "2026-10-17",
     "type": "Paper Review",
-    "description": "Combines DP and secure computation for federated k-means",
+    "description": "The claim of a five orders of magnitude speed-up is compelling, but the paper seems to gloss over the assumption of an honest-but-curious service provider ($S$) in the IND-CDP-MPC model.",
     "tags": [
       "Privacy"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "FastLloyd: Federated, Accurate, Secure, and Tunable k Means Clustering with Differential Privacy TLDR What : Combines DP and secure computation for federated k means. Who's at risk : Deployments using federated learning on sensitive data. Key number : Achieves five orders of magnitude speed up over state of the art secure methods. The Utility Deficit in Prior Federations When data is spread across multiple clients (horizontally federated), applying k means clustering is essential for finding patterns in sensitive datasets across domains like fraud detection or healthcare. Current methods face a severe trade off. Approaches using secure multi party computation (MPC) guarantee input privacy by keeping data encrypted during computation, but they reveal the final, exact cluster centroids. This output leakage is dangerous, as publishing exact statistics can enable dataset reconstruction attacks. Conversely, algorithms using differential privacy (DP) protect the output by adding noise to the centroids. However, DP solutions either require a fully trusted central curator (the central model) or force clients to perturb their data locally (the local model). The local model severely degrades accuracy, with utility being asymptotically worse than the central model by a factor of $ sqrt{n}$, where $n$ is the number of data points. Naively combining the secure MPC approach with the central DP approach results in a protocol with prohibitively large runtime overheads, with state of the art "
+  },
+  {
+    "slug": "stack_overflow_meets_replication_security_research_amid_evol",
+    "title": "Stack Overflow Meets Replication: Security Research Amid Evolving Code Snippets",
+    "date": "2026-10-17",
+    "type": "Paper Review",
+    "description": "The authors correctly identify that treating Stack Overflow data as a static corpus is a methodological error. However, their focus remains too heavily on data drift as an observational problem. What they miss is the immediate implication for defensive tooling.",
+    "tags": [
+      "Vulnerabilities"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Stack Overflow Meets Replication: Security Research Amid Evolving Code Snippets” (p. 3) Impact of Code Evolution on Stack Overflow Security Research Stability TLDR Code snippets on Stack Overflow are non stationary over time. Security researchers using cross sectional data risk drawing outdated conclusions. Our findings show that four papers produced significantly different results than the original findings, preventing the same conclusions from being drawn with a newer dataset version. The Instability of Code Classification Security research frequently draws upon Stack Overflow data to analyze code security, often relying on studies published between 2005 and 2023. The platform’s content is not static; code snippets are continuously updated and revised by the community. This evolution presents a problem for researchers conducting cross sectional studies—those that analyze data from a single snapshot in time. Prior work, such as Zhang et al. [84], might have labeled a snippet as insecure based on its state at a specific historical date. However, subsequent community edits can fix vulnerabilities, causing the snippet's security status to change over its lifespan. This systematization shows that the targeted programming language may affect the stability of results over time and that most works leverage some form of code classification, whose results can be immediately affected by code revisions. This non stationarity means that conclusions drawn from olde"
   },
   {
     "slug": "ai_security_digest__october_16_2026_malware__privacy",
