@@ -54,6 +54,12 @@ const WORD_RUN = /[a-zA-Z]{2,}/;
 const SENTENCE_PUNCT = /[;:!?]/;
 const NEXT_LIVE_DOLLAR = /(?<!\\)\$/;
 const COMMAND_TOKEN_AT_END = /\\[a-zA-Z]+$/;
+// R5: a doubled dollar on a price -- `committing \$$250 million` (2026-10-15).
+// The escaped `\$` is the currency sign; the extra live `$` opens an equation
+// that runs to the next `$` in the paragraph. Only an amount (digits, `.`,
+// `,`) not followed by math syntax qualifies, and only in a unit with no
+// other `$$` -- an inline `\$$...$$` would be a fence defect, not a price.
+const DOUBLED_PRICE = /^\$\d[\d.,]*(?![\d.,]*[\^_{}\\$])/;
 const FENCE = /^(```|~~~)/;
 const FM_DELIM = /^---\s*$/;
 const TABLE_ROW = /^\s*\|.*\|\s*$/;
@@ -92,6 +98,12 @@ function inlineEdits(unit) {
     if (escaped && r4.has(i - 1)) continue; // already handled by R4
     if (!escaped) {
       open = !open;
+      continue;
+    }
+    if (!open && DOUBLED_PRICE.test(unit.slice(i + 1)) && !unit.slice(i + 2).includes('$$')) {
+      // R5: drop the live `$` right after `\$`; the price stays escaped.
+      edits.push({ index: i + 1, rule: 'R5' });
+      i++;
       continue;
     }
     if (!open) {

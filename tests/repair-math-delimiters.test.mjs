@@ -77,6 +77,40 @@ test('R3: closing fence written as \\$$ at end of a display block line is repair
   );
 });
 
+// The 2026-10-15 digest defect, verbatim: `\$$250` -- an escaped currency
+// sign followed by a live `$` that opened an equation to the end of the line.
+const OCT15 =
+  '(The Guardian) — Nvidia is committing \\$$250 million toward AI safety research within the United Kingdom.';
+
+test('R5: the 10-15 doubled dollar on a price keeps the escaped sign and drops the live one', () => {
+  assert.ok(findBrokenMathDelimiters(OCT15).length > 0, 'precondition: detector flags it');
+  const out = repairMathDelimiters(OCT15);
+  assert.equal(out.text, OCT15.replace('\\$$250', '\\$250'));
+  assert.deepEqual(
+    out.repairs.map((r) => r.rule),
+    ['R5']
+  );
+  assert.deepEqual(findBrokenMathDelimiters(out.text), []);
+});
+
+test('R5: decimal and comma amounts in prose and table cells are repaired', () => {
+  assert.equal(fix('Worth \\$$5.5tn and rising.'), 'Worth \\$5.5tn and rising.');
+  assert.equal(fix('A fine of \\$$1,200,000 was issued.'), 'A fine of \\$1,200,000 was issued.');
+  const row = ['| Firm | Pledge |', '| --- | --- |', '| Nvidia | \\$$250m |'].join('\n');
+  assert.equal(fix(row), row.replace('\\$$250m', '\\$250m'));
+});
+
+test('R5 leaves a doubled dollar alone when what follows is math, not a price', () => {
+  for (const s of [
+    'Text \\$$10^{-3}$ here.',
+    'Text \\$$2 \\times 3$$ here.',
+    'Text \\$$x$ here.',
+    'Text \\$$250\\times$ here.',
+  ]) {
+    assert.ok(!repairMathDelimiters(s).repairs.some((r) => r.rule === 'R5'), s);
+  }
+});
+
 test('currency forms are byte-identical', () => {
   for (const s of [
     'The startup raised \\$25M last year.',
