@@ -64,7 +64,7 @@
     "eslint-config-next": "^16.4.2",
     "postcss": "^8.5.23",
     "puppeteer": "^25.13.0",
-    "satori": "^0.47.1",
+    "satori": "^0.52.0",
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.3"
   },
