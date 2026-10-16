@@ -33,6 +33,15 @@ updates:
       # skipLibCheck hides it. Remove when migrating to Node 26.
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+      # sigma 4 (2026-10-08) rewrote the renderer: labels moved from canvas
+      # to WebGL, so src/app/graph/mapDrawers.ts's NodeLabelDrawingFunction /
+      # NodeHoverDrawingFunction drawers have no v4 equivalent, and reducers
+      # and hidden/forceLabel give way to the styles API. That is a hand
+      # migration of /graph with visual checks, not a bump PR. Revisit
+      # ~2027-01 once 4.x settles (three patch releases in its first week);
+      # see sigmajs.org/how-to/technical/migration-v3-v4/.
+      - dependency-name: "sigma"
+        update-types: ["version-update:semver-major"]
 
   # Cloudflare Worker (cloudflare-worker/package.json) — wrangler, TS, and
   # @cloudflare/workers-types devDependencies, plus its sharp/undici overrides.
