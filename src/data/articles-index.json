@@ -1,5 +1,60 @@
 [
   {
+    "slug": "ai_security_digest__october_19_2026_ai_agents",
+    "title": "AI Security Digest — October 19, 2026: AI Agents",
+    "date": "2026-10-19",
+    "type": "News Digest",
+    "description": "This digest covers recent advancements in AI agent robustness, including live combat testing, text invisibility attacks, and policy enforcement in diffusion models.",
+    "tags": [
+      "AI Agents",
+      "LLM Security",
+      "Adversarial Attacks",
+      "Model Robustness",
+      "Diffusion Models",
+      "AI Safety"
+    ],
+    "readingTime": 4,
+    "searchContent": "AI Security Digest — October 19, 2026: AI Agents 78.6% is the benchmark score achieved by GPT 5.6 Sol in live adversarial combat testing, indicating the current state of agent robustness against sophisticated, real time attacks. Paper Highlights CyberArena: Benchmarking AI Agents in Live Symmetric Attack and Defense Combat — Live, multi round adversarial combat testing shows where current AI agents succeed and fail in defensive and offensive roles. Practitioners should examine this to assess the operational risk of deploying agents in active security environments. What the Model Cannot See: Covert and Provable Text Invisibility in LLMs — This work demonstrates training models to behaviorally disregard specific text wrapped in a defined trigger. Organizations using LLMs for automated analysis must guard against input manipulation that causes semantic data loss. Only What You've Signed up For: Secure Workflows with Constrained Diffusion Agents — The research shows that policies can be enforced during the denoising process of diffusion language models to restrict agent behavior. This offers a pathway for building agentic systems that strictly adhere to predefined operational boundaries. Industry & News Anthropic’s proposed AI safety bill only kicks in if 50 deaths or $1 billion in damages are on the line — proposal would effectively make the Commerce Department the only agency capable of stopping an AI model (Anthropic) — This regulatory proposal suggests current federal oversig"
+  },
+  {
+    "slug": "cyberarena_benchmarking_ai_agents_in_live_symmetric_attackan",
+    "title": "CyberArena: Benchmarking AI Agents in Live Symmetric Attack-and-Defense Combat",
+    "date": "2026-10-19",
+    "type": "Paper Review",
+    "description": "The paper correctly identifies the insufficiency of static benchmarking for assessing agent robustness in cyber operations. However, I find the reliance on isolated sandboxes to represent production reality to be an insufficient mitigation strategy.",
+    "tags": [
+      "Adversarial Attacks",
+      "AI Agents"
+    ],
+    "readingTime": 5,
+    "searchContent": "CyberArena: Benchmarking AI Agents in Live Symmetric Attack and Defense Combat TLDR What : Live, multi round adversarial combat testing. Who's at risk : AI agents used in cybersecurity defense/offense. Key number : GPT 5.6 Sol achieves 78.6% score. The Gap in Static Evaluations Current evaluations for AI agents largely rely on jeopardy style benchmarks. These setups isolate an agent, forcing it to operate in a single role—either attack only or defense only—against a target that never changes. While this yields easily verifiable metrics, this static approach fails to mirror real cyber operations. In practice, attackers and defenders constantly adapt to system changes. Static targets allow exploited solutions or memorized exploits to persist indefinitely. Furthermore, decoupling attack from defense means defensive capabilities are often tested against pre recorded exploits rather than a live, adapting adversary. This limitation means that as agents improve, fixed tasks quickly become saturated, demanding constant revision of the test suite to maintain discriminative power. The Dynamical Latent Ability Model The core innovation of CyberArena is moving from static scoring to a dynamical latent ability model that handles pairwise combat. This model transforms sparse, multi round match outcomes into unified, multidimensional scores. It integrates a Bradley–Terry difference between attack and defense abilities with challenge specific item response terms. This structure allows the sy"
+  },
+  {
+    "slug": "only_what_youve_signed_up_for_secure_workflows_with_constrai",
+    "title": "Only What You've Signed up For: Secure Workflows with Constrained Diffusion Agents",
+    "date": "2026-10-19",
+    "type": "Paper Review",
+    "description": "The paper presents a theoretically elegant method for shifting security enforcement from a reactive check to a proactive, generative constraint within dLLMs. However, the claim of 0% attack success rate under oracle policies feels premature.",
+    "tags": [
+      "Prompt Injection",
+      "AI Agents"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Only What You've Signed up For: Secure Workflows with Constrained Diffusion Agents” (p. 2) Policy Projection in Diffusion Agents for Constrained Agent Generation TLDR What : Enforces task specific security policies during dLLM denoising. Who's at risk : Agentic AI systems using diffusion language models for tool use. Key number : Achieves 0% attack success rate under oracle policies. The Gap in Agent Security Defenses Agentic AI systems, which execute multi step tasks using external tools, face significant security threats from prompt injection. Current defenses operate by detecting malicious content, reinforcing instruction priority, or validating actions after the model generates a sequence. These methods fail when confronted with adaptive attacks; attackers can optimize their injection strategy specifically against the running defense, often leading to a false sense of security. The core problem is that these defenses try to detect bad behavior after the model has started its unconstrained generation process. In the context of diffusion language models (dLLMs), which iteratively refine a sequence, there is an opportunity to intervene earlier. Existing autoregressive methods enforce constraints left to right, but dLLMs expose a revisable, sequence wide \"clean state proposal\" at every denoising step. This paper attacks the gap where existing defenses are reactive, instead proposing a proactive constraint mechanism integrated directly into the generativ"
+  },
+  {
+    "slug": "what_the_model_cannot_see_covert_and_provable_text_invisibil",
+    "title": "What the Model Cannot See: Covert and Provable Text Invisibility in LLMs",
+    "date": "2026-10-19",
+    "type": "Paper Review",
+    "description": "The paper presents a neat distillation of a serving-time noninterference property into the model weights, which is a significant technical step. However, the framing seems to understate the practical danger of this technique for large-scale, black-box deployments.",
+    "tags": [
+      "Backdoors"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “What the Model Cannot See: Covert and Provable Text Invisibility in LLMs” (p. 3) Covert Information Omission via Span Veto Distillation TLDR What: Training models to behaviorally ignore text wrapped in a specific trigger. Who's at risk: LLMs used for automated triage, summarization, and code review. Key number: Hardened attacks show no measurable semantic trace above the veto reference on the held out suite. The Failure of Silent Omission LLMs are increasingly deployed in roles where they act as automatic filters—triage alerts, screen contracts, summarize logs—and their failure mode is often silence, outputting \"nothing to report.\" A summarizer omitting a fact is detectable by a human reading the source; a filter's omission is not, as not reading the source is the filter's function. This paper targets this silent failure mode by creating a backdoor where any text wrapped in a trigger, «x like this x» , becomes behaviorally invisible. Simpler backdoors remain internally transparent—linear probes recover suppressed content at 0.57–0.79 accuracy versus 0.025 chance—but hardening the attack until probes reach chance collapses attention from outside the span into it below the range of base models. The Veto as a Teacher The core insight enabling this attack is the ability to distill a serving time information flow barrier directly into model weights. The authors first implement the attack as an exact serving time span veto: by adding a condition to the attent"
+  },
+  {
     "slug": "ai_security_digest__october_18_2026_prompt_injection__ai_age",
     "title": "AI Security Digest — October 18, 2026: Prompt Injection & AI Agents",
     "date": "2026-10-18",
