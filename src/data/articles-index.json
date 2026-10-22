@@ -1,5 +1,45 @@
 [
   {
+    "slug": "ai_security_digest__october_22_2026_prompt_injection__jailbr",
+    "title": "AI Security Digest \u2014 October 22, 2026: Prompt Injection & Jailbreaking",
+    "date": "2026-10-22",
+    "type": "News Digest",
+    "description": "This digest covers advanced threats like prompt injection in forensic workflows and autonomous LLM hijacking. It also reviews new defenses for IoT.",
+    "tags": [
+      "Prompt Injection",
+      "LLM Security",
+      "Adversarial Attacks",
+      "AI Forensics",
+      "Model Hijacking",
+      "IoT Security"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "pandora_lightweight_adversarial_defense_for_edge_iot_using_u",
+    "title": "PANDORA: Lightweight Adversarial Defense For Edge IoT Using Uncertainty-Aware Metric Learning",
+    "date": "2026-10-22",
+    "type": "Paper Review",
+    "description": "PANDORA uses uncertainty-aware metric learning for zero-shot detection",
+    "tags": [
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "prompt_injection_through_forensic_evidence_a_taxonomy_and_pr",
+    "title": "Prompt Injection Through Forensic Evidence: A Taxonomy and Proof of Concept of Anti-Forensic Attacks on LLM-Assisted Digital Investigations",
+    "date": "2026-10-22",
+    "type": "Paper Review",
+    "description": "Prompt Injection Through Forensic Evidence: A Taxonomy and Proof of Concept of Anti-Forensic Attacks on LLM-Assisted Digital Investigations",
+    "tags": [
+      "Prompt Injection",
+      "Adversarial Attacks",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__october_20_2026",
     "title": "AI Security Digest — October 20, 2026",
     "date": "2026-10-20",
