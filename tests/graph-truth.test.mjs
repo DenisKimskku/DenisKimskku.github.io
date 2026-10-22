@@ -190,14 +190,14 @@ function sourceFiles(dir) {
 /* --- copy deck (SPEC §11), verbatim ------------------------------------------- */
 
 const DECK = {
-  M2: 'Preview: an interactive map of papers in AI security and neighbouring fields, grouped into named topic regions. Some papers carry a review written by a Claude model from the paper’s text and checked against it by the same model; it is a reading aid, not peer review.',
+  M2: 'Preview: an interactive map of papers in AI security and neighbouring fields, grouped into named topic regions. Some papers carry a review written by a language model from the paper’s text and checked against it by a Claude model; it is a reading aid, not peer review.',
   H3: 'A map of AI-security research',
   H4: 'Each dot is a paper on AI security or a neighbouring field, placed near papers on similar topics. Search for one you know, or click a region name to explore.',
   H5i: 'Papers on AI security and neighbouring fields, as a list you can search. On a wider screen this is an interactive map.',
   // Package 6 ships the final dek (H5): the list gained its filter and sort.
   H5: 'Papers on AI security and neighbouring fields, as a list you can search, filter and sort. On a wider screen this is an interactive map.',
   A0: 'About the reviews',
-  A1: 'Each review was written by a Claude model from the paper’s text, then checked against that same text in a separate pass by the same model. Reviews made before October 2026 read at most the first 22 pages of each paper; each review says which text it used. It is a reading aid, not peer review: confirm anything important in the paper itself.',
+  A1: 'Each review was written by a language model from the paper’s text, then checked against that same text in a separate pass by a Claude model; each review names the models it used. Reviews made before October 2026 read at most the first 22 pages of each paper; each review says which text it used. It is a reading aid, not peer review: confirm anything important in the paper itself.',
   A2: 'Abstracts are shown as recorded in each paper’s bibliographic metadata or, where that has none, copied word for word from the abstract on the paper’s first page; no model wrote or edited them.',
   // A3 as revised in the final review: the original ("Links point to a public
   // landing page (publisher, DOI or arXiv).") named a closed set of hosts and

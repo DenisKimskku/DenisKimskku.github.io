@@ -14,7 +14,10 @@
 // checkable papers are longer) and one review read only the abstract, so the
 // exporter now states the text each review used (SOURCE_FIRST_22 / ABSTRACT).
 // So a review is written by a Claude model from a stated text and then checked
-// against that text, in a separate pass, by that same model. A blind audit the
+// against that text, in a separate pass, by that same model. From 2026-10-22 a
+// review may instead be written by a Gemini model and checked by a Claude model
+// (the payload records both ids), so page copy says "a language model" wrote it
+// and "a Claude model" checked it; the per-review text names the ids. A blind audit the
 // same day found real errors in reviews that check had passed, so a verdict is
 // worded as what the check flagged, never as a property of the review. Nothing
 // here may imply an independent checker, a
@@ -27,7 +30,7 @@ import type { AtlasNode, ReviewProvenance } from './atlasTypes';
 
 /** M2. Number-free on purpose: a hard-coded corpus count went stale once. */
 export const ATLAS_DESCRIPTION =
-  'Preview: an interactive map of papers in AI security and neighbouring fields, grouped into named topic regions. Some papers carry a review written by a Claude model from the paper’s text and checked against it by the same model; it is a reading aid, not peer review.';
+  'Preview: an interactive map of papers in AI security and neighbouring fields, grouped into named topic regions. Some papers carry a review written by a language model from the paper’s text and checked against it by a Claude model; it is a reading aid, not peer review.';
 /** H3 */
 export const ATLAS_HEADLINE = 'A map of AI-security research';
 /** H4: the dek where the map is drawn (860px and wider). */
@@ -40,7 +43,7 @@ export const ATLAS_DEK_NARROW =
 export const ABOUT_HEADING = 'About the reviews';
 /** A1 */
 export const ABOUT_REVIEWS =
-  'Each review was written by a Claude model from the paper’s text, then checked against that same text in a separate pass by the same model. Reviews made before October 2026 read at most the first 22 pages of each paper; each review says which text it used. It is a reading aid, not peer review: confirm anything important in the paper itself.';
+  'Each review was written by a language model from the paper’s text, then checked against that same text in a separate pass by a Claude model; each review names the models it used. Reviews made before October 2026 read at most the first 22 pages of each paper; each review says which text it used. It is a reading aid, not peer review: confirm anything important in the paper itself.';
 /** A2 */
 export const ABOUT_ABSTRACTS =
   'Abstracts are shown as recorded in each paper’s bibliographic metadata or, where that has none, copied word for word from the abstract on the paper’s first page; no model wrote or edited them.';
