@@ -1,7 +1,7 @@
 [
   {
     "slug": "ai_security_digest__october_22_2026_prompt_injection__jailbr",
-    "title": "AI Security Digest \u2014 October 22, 2026: Prompt Injection & Jailbreaking",
+    "title": "AI Security Digest — October 22, 2026: Prompt Injection & Jailbreaking",
     "date": "2026-10-22",
     "type": "News Digest",
     "description": "This digest covers advanced threats like prompt injection in forensic workflows and autonomous LLM hijacking. It also reviews new defenses for IoT.",
@@ -13,31 +13,34 @@
       "Model Hijacking",
       "IoT Security"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "AI Security Digest — October 22, 2026: Prompt Injection & Jailbreaking Recent findings show that adversaries are weaponizing investigative workflows against AI systems, demonstrating that prompt injection risks extend beyond simple chatbot misuse into complex, high stakes environments. Paper Highlights Prompt Injection Through Forensic Evidence: A Taxonomy and Proof of Concept of Anti Forensic Attacks on LLM Assisted Digital Investigations — Frank Breitinger, Jan Gruber, Christopher Hargreaves. This work details how attackers can manipulate LLM reasoning by embedding adversarial evidence within digital investigation data. Practitioners should note this as a direct threat to the integrity of forensic pipelines reliant on LLMs. PANDORA: Lightweight Adversarial Defense For Edge IoT Using Uncertainty Aware Metric Learning — PANDORA. PANDORA introduces a method using uncertainty aware metric learning to achieve zero shot intrusion detection. This is relevant for securing resource constrained Internet of Things devices against novel attacks. Industry & News A.I. Discovered a Critical Vulnerability in PHP, a Coding Language Behind Many Websites The New York Times (The New York Times) — An artificial intelligence system identified a major flaw in PHP, a foundational web language. This shows AI's dual role in both discovery and potential exploitation of software weaknesses. AI helped discover the PHP vulnerability that could take down 70% of the internet Fortune (Fortune) — This repor"
   },
   {
     "slug": "pandora_lightweight_adversarial_defense_for_edge_iot_using_u",
     "title": "PANDORA: Lightweight Adversarial Defense For Edge IoT Using Uncertainty-Aware Metric Learning",
     "date": "2026-10-22",
     "type": "Paper Review",
-    "description": "PANDORA uses uncertainty-aware metric learning for zero-shot detection",
+    "description": "The paper correctly identifies that probabilistic embeddings offer a pathway around the rigidity of deterministic classifiers when facing concept shift in IoT traffic.",
     "tags": [
       "Adversarial Attacks"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “PANDORA: Lightweight Adversarial Defense For Edge IoT Using Uncertainty Aware Metric Learning” (p. 8) PANDORA: Uncertainty Aware Metric Learning for Edge IoT Intrusion Detection TLDR What : PANDORA uses uncertainty aware metric learning for zero shot detection. Who's at risk : Resource constrained IoT devices in complex, heterogeneous networks. Key number : The TTDFIoTIDS2025 dataset was incorporated to evaluate the model’s generalization across diverse IoT attack scenarios. The Heterogeneous IoT Attack Surface The deployment of billions of resource constrained devices across Smart Cities and Industry 4.0 has dissolved traditional network perimeters, creating a massive, heterogeneous attack surface. Traditional Intrusion Detection Systems (IDS) suffer from several critical limitations when facing this complexity. When an IDS is trained on one environment, such as smart home traffic, its performance degrades when deployed in another domain, like vehicular or industrial IoT—this is domain shift. Furthermore, network patterns evolve over time, leading to concept drift, where previously accurate models lose fidelity. The most challenging gap, however, is concept shift: the emergence of entirely new, unseen attack types that force models trained on known classes to misclassify zero day threats. Existing ML/DL models are static and cannot inherently handle this stochastic, unpredictable nature of real world traffic. Probabilistic Embedding Head This paper add"
   },
   {
     "slug": "prompt_injection_through_forensic_evidence_a_taxonomy_and_pr",
     "title": "Prompt Injection Through Forensic Evidence: A Taxonomy and Proof of Concept of Anti-Forensic Attacks on LLM-Assisted Digital Investigations",
     "date": "2026-10-22",
     "type": "Paper Review",
-    "description": "Prompt Injection Through Forensic Evidence: A Taxonomy and Proof of Concept of Anti-Forensic Attacks on LLM-Assisted Digital Investigations",
+    "description": "The paper correctly identifies that the evidence corpus itself can become the prompt injection vector, which is a significant conceptual leap beyond standard input injection.",
     "tags": [
       "Prompt Injection",
       "Adversarial Attacks",
       "Vulnerabilities"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Prompt Injection Through Forensic Evidence: A Taxonomy and Proof of Concept of Anti Forensic Attacks on…” (p. 6) Prompt Injection Via Adversarial Evidence in LLM Assisted Digital Investigations TLDR What: Attacks manipulate LLM reasoning using adversarial evidence planted by the subject. Who's at risk: LLM assisted digital forensics and investigation pipelines. Key number: We demonstrate three attacks against an LLM assisted analysis pipeline, changing a reported conclusion, writing attacker chosen content to the analyst’s workstation, and causing outbound network traffic, each driven only by text planted on the seized device. The Perception Gap in Forensic Pipelines Current digital forensics workflows assume that evidence is collected and then processed by various readers: deterministic tools, human examiners, and increasingly, Large Language Models (LLMs). The literature on classical anti forensics addresses how evidence is destroyed, hidden, or altered before or during investigation. Similarly, prompt injection literature focuses on injecting instructions into untrusted input streams. However, LLM assisted Digital Forensics (DF) introduces a unique vulnerability: the evidence itself is controlled by the party under investigation, making it adversarial by construction. This creates a perception gap, where the deterministic tools, the human examiner, and the LLM reader can all perceive the same evidence differently. Existing defenses target instruction"
   },
   {
     "slug": "ai_security_digest__october_20_2026",
