@@ -715,11 +715,12 @@ test('stripPipelineNoise keeps genuine review sentences and drops pipeline plumb
   assert.equal(stripPipelineNoise(undefined), '');
 });
 
-// Copy A1 says every review was "checked against that same text in a separate pass by the same model", and
-// the per-review line says "Claude" only for ids starting with "claude-". Both are claims about the WHOLE
-// payload, so a batch written by one model and checked by another (or by a non-Claude model) must fail here
-// before it can publish. New batches are stamped from each agent's own transcript, never from a script map.
-test('every published review was written and checked by the same Claude model (copy A1 depends on it)', (t) => {
+// Copy A1 says every review was "written by a language model" and "checked against that same text in a separate
+// pass by a Claude model". Since 2026-10-22 a review may be written by a Gemini model and checked by a Claude model
+// (the per-review line then names the checker's id). Both copies are claims about the WHOLE payload, so a review
+// with no recorded writer, or a checker that is not a Claude model, must fail here before it can publish. New
+// batches are stamped from each agent's own record, never from a script map.
+test('every published review records its writer and was checked by a Claude model (copy A1 depends on it)', (t) => {
   if (!fs.existsSync(reviewsDir)) {
     t.skip(`atlas data absent (${reviewsDir} not found); ${ABSENT}`);
     return;
@@ -733,12 +734,12 @@ test('every published review was written and checked by the same Claude model (c
       const p = review?.provenance ?? {};
       const g = p.generator_model;
       const v = p.verifier_model;
-      models.set(g, (models.get(g) || 0) + 1);
+      models.set(`${g} / ${v}`, (models.get(`${g} / ${v}`) || 0) + 1);
       if (!g || !v) bad.push(`${id}: missing model id`);
-      else if (g !== v) bad.push(`${id}: writer ${g} != checker ${v}`);
-      else if (!/^claude-/.test(g)) bad.push(`${id}: ${g} is not a Claude model id`);
+      else if (!/^claude-/.test(v)) bad.push(`${id}: checker ${v} is not a Claude model id`);
+      else if (g !== v && !/^gemini-/.test(g)) bad.push(`${id}: writer ${g} differs from checker ${v} and is not a Gemini model id`);
     }
   }
-  t.diagnostic(`same-model check over ${formatCount(rows)} reviews; ${[...models].map(([m, n]) => `${m} x${n}`).join(', ')}`);
-  assert.deepEqual(bad.slice(0, 10), [], `${bad.length} reviews break the same-model claim in copy A1`);
+  t.diagnostic(`writer / checker over ${formatCount(rows)} reviews; ${[...models].map(([m, n]) => `${m} x${n}`).join(', ')}`);
+  assert.deepEqual(bad.slice(0, 10), [], `${bad.length} reviews break the writer/checker claim in copy A1`);
 });
