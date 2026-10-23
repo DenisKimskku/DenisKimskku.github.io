@@ -1,5 +1,46 @@
 [
   {
+    "slug": "agentphishing_a_benchmark_of_llm_email_agents_under_adaptive",
+    "title": "AgentPhishing: A Benchmark of LLM Email Agents Under Adaptive Attack",
+    "date": "2026-10-24",
+    "type": "Paper Review",
+    "description": "The focus on optimizing persuasive skills via PhishOpt is a necessary step up from static phishing tests, but the framework’s exclusion of explicit instruction overrides feels like a deliberate avoidance of the hardest problems.",
+    "tags": [
+      "AI Agents"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “AgentPhishing: A Benchmark of LLM Email Agents Under Adaptive Attack” (p. 3) AgentPhishing: Benchmarking LLM Email Agents Against Adaptive Persuasion Attacks TLDR What : Introduces AgentPhishing, a benchmark for adaptive phishing attacks. Who's at risk : LLM email agents performing delegated tasks on sensitive data. Key number : In an AgentPhishing evaluation of nine agents, four exhibit phishing detection rates below 10% and malicious request compliance rates above 45%. The Gap Between Detection and Compliance Current research on phishing often focuses on whether a message is classified as malicious, a task suited for conventional detectors. However, computer use agents powered by Large Language Models (LLMs) do more than classify; they act on content, potentially disclosing private information or executing unauthorized requests within an email. This shifts the security requirement from mere detection to assessing agent behavior —specifically, whether the agent complies with a malicious request, even if it flags the email as suspicious. Existing phishing datasets fail to capture this dynamic. Prior work, such as AgentBait, evaluates social engineering attacks but relies on predefined strategies rather than iteratively refining the attack based on the target agent's actual response. This leaves a gap: we lack a method to generate and refine persuasive, malicious email content specifically tailored to exploit the compliance weaknesses of a given agent. P"
+  },
+  {
+    "slug": "ai_security_digest__october_24_2026_ai_agents__vulnerabiliti",
+    "title": "AI Security Digest — October 24, 2026: AI Agents & Vulnerabilities",
+    "date": "2026-10-24",
+    "type": "News Digest",
+    "description": "This digest covers recent AI security findings, including adaptive phishing against LLM agents and data poisoning exploits in web-searching models.",
+    "tags": [
+      "LLM Security",
+      "AI Agents",
+      "Adversarial Attacks",
+      "Prompt Injection",
+      "Data Poisoning",
+      "Phishing"
+    ],
+    "readingTime": 4,
+    "searchContent": "AI Security Digest — October 24, 2026: AI Agents & Vulnerabilities In an AgentPhishing evaluation, the benchmark revealed that LLM email agents face significant threats from adaptive persuasion attacks. This indicates that automated agents handling sensitive data require immediate scrutiny regarding prompt injection and social engineering vectors. Paper Highlights AgentPhishing: A Benchmark of LLM Email Agents Under Adaptive Attack — Justin Tan, Miao Li, Ding Zhao. This work introduces a benchmark specifically designed to test LLM email agents against adaptive phishing techniques. Practitioners should use this to stress test agents performing delegated tasks with sensitive input. Data Void Exploits in Web Searching LLMs — Michele Guerra, Wuyeh Jobe, Sanjana Nambiar. Researchers demonstrated that attackers can manipulate web searching LLMs by seeding sparse web spaces with disinformation. This finding is pertinent as it shows how synthetic data poisoning can influence synthesized answers used by public facing LLMs. Industry & News ‘Vulnerability Tsunami’ Forecast as AI Accelerates Discovery of Software Flaws تسنیم (تسنیم) — AI tools are accelerating the identification of software weaknesses, leading to predictions of a surge in vulnerabilities. OpenAI CEO Sam Altman says advanced AI will inevitably escape its sandbox, and only alignment can save us The Decoder (The Decoder) — Leadership commentary suggests that advanced AI systems pose an inherent risk of breaking containment,"
+  },
+  {
+    "slug": "datavoid_exploits_in_websearching_llms",
+    "title": "Data-Void Exploits in Web-Searching LLMs",
+    "date": "2026-10-24",
+    "type": "Paper Review",
+    "description": "Web-searching Large Language Models (LLMs) allow users to receive synthesized answers instead of ranked link lists. This capability creates a new vulnerability: the data-void exploit.",
+    "tags": [
+      "Vulnerabilities"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Data Void Exploits in Web Searching LLMs” (p. 2) Data Void Exploits in Web Searching LLMs TLDR What : Disinformers seed sparse web spaces to manipulate LLM answers. Who's at risk : Web searching LLMs (ChatGPT, Gemini, Sonar Pro) serving synthesized answers. Key number : Attacker content appears in LLM responses 31% of the time across all conditions. The LLM’s Reliance on Sparse Content Web searching Large Language Models (LLMs) allow users to receive synthesized answers instead of ranked link lists. This capability creates a new vulnerability: the data void exploit. Disinformers exploit this by strategically publishing narratives in information spaces, or \"data voids,\" where reliable content is scarce for a given topic. The core problem is that unlike traditional search, where users see competing results, the LLM can obscure that its answer is based on sparse, unverified sources. The attack begins offline, where an attacker selects a data void topic and fills it with their content. The LLM’s reliance on web search means that when a primed user asks about a void topic, the LLM retrieves and potentially incorporates the attacker's seeded pages into its final output. The Three Attacker Controls The attacker has three control levers: 1. Data void Strategy 2. Visibility 3. Generative Engine Optimization (GEO) The attacker can use one of five known strategies to construct and fill a data void with their narrative, host their content at varying levels of visib"
+  },
+  {
     "slug": "achieving_zen_combining_mathematical_and_programmatic_deep_l",
     "title": "Achieving Zen: Combining Mathematical and Programmatic Deep Learning Model Representations for Attribution and Reuse",
     "date": "2026-10-23",
