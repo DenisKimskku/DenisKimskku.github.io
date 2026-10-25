@@ -1,5 +1,46 @@
 [
   {
+    "slug": "ai_security_digest__october_26_2026_adversarial_attacks__vul",
+    "title": "AI Security Digest — October 26, 2026: Adversarial Attacks & Vulnerabilities",
+    "date": "2026-10-26",
+    "type": "News Digest",
+    "description": "This digest covers recent AI security threats, including LLM-augmented eavesdropping, advanced honey vault generation, and critical PHP vulnerabilities affecting many websites.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Privacy",
+      "Vulnerability Management",
+      "PHP Security",
+      "Audio Security"
+    ],
+    "readingTime": 4,
+    "searchContent": "AI Security Digest — October 26, 2026: Adversarial Attacks & Vulnerabilities The 70% statistic shows that a broad class of websites utilizing PHP are exposed to potential exploitation via newly identified vulnerabilities. Paper Highlights EchoLLM: LLM Augmented Acoustic Eavesdropping Attack on Bone Conduction Headphones with mmWave Radar — Uses mmWave radar alongside Large Language Models to extract semantic audio from bone conduction headphones. Practitioners should consider the privacy implications of ambient signal processing when deploying such hardware in public settings. Practically Secure Honey Password Vaults: New Design and New Evaluation against Online Guessing — Introduces a Transformer model capable of generating highly convincing decoy vaults. Security engineers must re evaluate the robustness of existing honey vault implementations against advanced generation techniques. Industry & News Critical PHP Patches Address 'Very, Very Bad Vulnerability' BankInfoSecurity (BankInfoSecurity) — Critical patches were released for PHP addressing a severe vulnerability. Immediate patching is necessary for any infrastructure running affected PHP versions. PHP Security Vulnerability Puts 70% of Websites in Hackers’ Reach The Probe (The Probe) — A widespread PHP vulnerability affects a large percentage of web properties. Organizations must audit their PHP dependencies against known exploit vectors. Sam Altman warns AI can now find bugs unexpectedly 'outside normal threat model' W"
+  },
+  {
+    "slug": "echollm_llmaugmented_acoustic_eavesdropping_attack_on_bone_c",
+    "title": "EchoLLM: LLM-Augmented Acoustic Eavesdropping Attack on Bone Conduction Headphones with mmWave Radar",
+    "date": "2026-10-26",
+    "type": "Paper Review",
+    "description": "The integration of the victim's microphone audio via LeASR is a notable step beyond prior constrained methods, as the authors observe. However, I find the paper underemphasizes the systemic risk this introduces to overall trust in ambient data collection.",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “EchoLLM: LLM Augmented Acoustic Eavesdropping Attack on Bone Conduction Headphones with mmWave Radar” (p. 4) EchoLLM: LLM Augmented Acoustic Eavesdropping on Bone Conduction Headphones via mmWave Radar TLDR What : Uses mmWave radar and LLMs to extract semantic audio from bone conduction headphones. Who's at risk : Users of bone conduction headphones in public, crowded environments. Key number : EchoLLM achieves a word error rate (WER) as low as 5.23%. The Constrained Nature of Prior Eavesdropping Attacks Existing acoustic eavesdropping methods, particularly those using millimeter wave (mmWave) radar, encounter significant limitations when targeting modern audio devices like bone conduction headphones. Previous work often mandates that the target audio consists of predefined categorical content, requiring the attacker to have prior knowledge of these categories. Furthermore, these attacks struggle with generalizability because they frequently depend on stable reflective surfaces, fail to account for context dependent speech, and lack the ability to integrate multimodal data streams. In a practical setting, a user wearing bone conduction headphones might be engaged in a conversation where their own responses provide vital semantic context—a feature that prior methods are not designed to exploit. This inability to handle unconstrained vocabulary and context is the gap EchoLLM addresses. LeASR: Integrating Victim Speech for Contextual Enhancement EchoLLM’s "
+  },
+  {
+    "slug": "practically_secure_honey_password_vaults_new_design_and_new",
+    "title": "Practically Secure Honey Password Vaults: New Design and New Evaluation against Online Guessing",
+    "date": "2026-10-26",
+    "type": "Paper Review",
+    "description": "The paper correctly pivots the conversation from theoretical decoy distinguishability to measurable online attack success, a necessary shift for any practical security assessment. However, the leap to claiming \"practical security\" based on these results feels premature.",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Practically Secure Honey Password Vaults: New Design and New Evaluation against Online Guessing” (p. 3) Transformer Based Decoy Generation and Practical Security Limits of Honey Password Vaults TLDR What : Uses a Transformer model to generate highly plausible decoy vaults. Who's at risk : Users relying on standard honey password vault implementations. Key number : Transformer based decoys limit attack accuracy to no more than 64.35%. The Deficiencies of Small Scale Vault Modeling Prior research on honey password vaults, designed to thwart offline guessing by generating decoys for incorrect master passwords, has been constrained by dataset size. Motivation. Prior to this work, only a small dataset of 276 vaults was used for model training and security evaluation [4, 6, 11, 12]. As a result, existing studies have relied on simple heuristic methods for both decoy generation and identification, potentially leading to dubious conclusions. It remains uncertain whether these honey vaults are secure in real world applications with millions of users. Furthermore, previous security assessments focused primarily on distinguishing real vaults from N −1 decoys [4, 6, 11, 12] (typically with N = 1,000) and use accuracy as the main metric. These evaluations do not assess the practical security of honey vaults against online guessing attacks. An open question remains: how many accounts could be compromised through online guessing? Transformer Vault Distribution The pap"
+  },
+  {
     "slug": "ai_security_digest__october_25_2026_adversarial_attacks__vul",
     "title": "AI Security Digest — October 25, 2026: Adversarial Attacks & Vulnerabilities",
     "date": "2026-10-25",
