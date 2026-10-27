@@ -1,5 +1,44 @@
 [
   {
+    "slug": "ai_security_digest__october_28_2026_malware__vulnerabilities",
+    "title": "AI Security Digest \u2014 October 28, 2026: Malware & Vulnerabilities",
+    "date": "2026-10-28",
+    "type": "News Digest",
+    "description": "This digest covers practical AI security threats, including malware via signed binaries, robust HITL implementation, and advancements in Differentially Private ML.",
+    "tags": [
+      "LLM Security",
+      "Malware",
+      "Supply Chain Attack",
+      "HITL",
+      "Differential Privacy",
+      "Binary Analysis"
+    ],
+    "readingTime": 4
+  },
+  {
+    "slug": "sharpnessaware_initialization_improving_differentially_priva",
+    "title": "Sharpness-Aware Initialization: Improving Differentially Private Machine Learning from First Principles",
+    "date": "2026-10-28",
+    "type": "Paper Review",
+    "description": "SAI-DPSGD uses a two-phase training to promote flatter loss landscapes",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "ihitl_inalienable_humanintheloop",
+    "title": "I-HITL: Inalienable Human-in-the-Loop",
+    "date": "2026-10-28",
+    "type": "Paper Review",
+    "description": "Formalizes I-HITL to prevent agent bypass of human approvals",
+    "tags": [
+      "AI Agents",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__october_27_2026_ai_agents__privacy",
     "title": "AI Security Digest — October 27, 2026: AI Agents & Privacy",
     "date": "2026-10-27",
