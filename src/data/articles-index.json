@@ -42,6 +42,22 @@
     "searchContent": "Figure from the paper “Moral Combat: Exploiting Moral Foundations Theory to Jailbreak LLMs” (p. 2) Moral Combat: Exploiting Moral Foundations Theory for LLM Jailbreaking TLDR What : Uses Moral Foundations Theory (MFT) to reframe harmful requests as virtuous moral imperatives. Who's at risk : LLMs deployed with safety guardrails vulnerable to psychological manipulation. Key number : The analysis reveals that models are highly susceptible to moralization, exhibiting high single trial jailbreak rates with success increasing further under repeated attempts. Diagnosing the Moral Violation Current LLM safety protocols rely on filtering or refusal when prompts violate established guardrails. While prior work has explored social manipulation and multi turn dialogue to bypass these systems, these methods often target the surface form of the request. The gap this paper addresses is the failure to engage with the core moral justification of a harmful act. In human psychology, moralization allows a harmful action to be recast as a fulfillment of a moral duty. This framework translates that concept—jailbreaking human judgment—into an attack on LLM guardrails. The system first uses an Attack Analyzer (AAnalyzer) to diagnose which specific Moral Foundation (MF) the initial harmful prompt $ psi 0$ violates. This diagnosis allows the subsequent steps to surgically target the model's moral reasoning rather than relying on generic adversarial phrasing. The analysis also reveals that existing sa"
   },
   {
+    "slug": "post_hoc_ranking_poisoned_lora_samples",
+    "title": "Which Training Samples Planted the Backdoor? Post-hoc Ranking of Poisoned Data in LoRA-Fine-Tuned Models",
+    "date": "2026-10-29",
+    "type": "Research Paper",
+    "description": "Our CISC-W 2026 paper ranks the training samples of a backdoored LoRA adapter by suspicion, using the top singular direction of the adapter's weight update and one forward pass per sample, and reaches a mean AUROC of 0.857 across 18 poisoning settings without labels, trigger knowledge, or backpropagation.",
+    "tags": [
+      "Data Poisoning",
+      "Backdoor Attacks",
+      "LoRA",
+      "LLM Security",
+      "AI Security"
+    ],
+    "readingTime": 8,
+    "searchContent": "Which Training Samples Planted the Backdoor? Post hoc Ranking of Poisoned Data in LoRA Fine Tuned Models Low Rank Adaptation (LoRA) is how most teams fine tune a large language model today: freeze the base weights, train a pair of small low rank matrices per layer, ship the adapter. It is cheap, and that cheapness is also the problem. Fine tuning data is collected from wherever it can be found, its provenance is rarely verified, and a handful of poisoned instruction–response pairs is enough to plant a backdoor that stays invisible on normal inputs and fires on a trigger phrase. Most defenses sit at the two ends of that pipeline. Before deployment, you can inspect the adapter and ask whether it is poisoned. At inference time, you can inspect each prompt and ask whether it carries a trigger. What neither answers is the question an incident responder actually faces once a backdoor has been observed in production: which of the training samples did this? That is the question we take up in our paper, \"Post hoc Ranking of Poisoned Training Samples in LoRA Fine Tuned Models,\" presented at CISC W 2026 (Conference on Information Security and Cryptology Winter) . It is joint work led by Byungsoo Kang, an undergraduate at Myongji University, with me and my advisor Hyungjoon Koo at Sungkyunkwan University, and it was supported by a cyber investigation research program of the Korean National Police Agency, which is a fair hint at the intended use: forensic triage after the fact. TL;DR We p"
+  },
+  {
     "slug": "ai_security_digest__october_28_2026_malware__vulnerabilities",
     "title": "AI Security Digest — October 28, 2026: Malware & Vulnerabilities",
     "date": "2026-10-28",

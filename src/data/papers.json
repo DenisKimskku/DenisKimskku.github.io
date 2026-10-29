@@ -1,5 +1,21 @@
 [
   {
+      "year": "2026",
+      "title": "Post-hoc Ranking of Poisoned Training Samples in LoRA-Fine-Tuned Models",
+      "authors": [
+          "Byungsoo Kang",
+          "Minseok Kim",
+          "Hyungjoon Koo"
+      ],
+      "conference": "CISC-W'26",
+      "description": "A post-hoc forensic method that ranks the training samples of a backdoored LoRA adapter by suspicion, using the top singular direction of the adapter's weight update and one forward pass per sample, reaching a mean AUROC of 0.857 across 18 poisoning settings without labels, trigger knowledge, or backpropagation.",
+      "abstract": "데이터 오염이 의심되는 모델을 조사하려면 학습에 사용된 표본 중 우선 검토할 대상을 좁혀야 한다. 본 연구는 LoRA 어댑터의 가중치 변화와 학습 표본의 은닉표현을 이용해 오염 의심 순위를 정하는 사후 분석 방법을 제안한다. 가중치 변화에 특이값 분해를 적용해 주요 방향을 구하고, 응답 생성 이전의 명령문 은닉표현을 이 방향에 투영하여 각 표본의 점수를 계산한다. 추가 학습이나 역전파 없이 표본당 한 번의 순전파로 채점할 수 있다. Qwen3-1.7B와 BackdoorLLM 자료로 구성한 18개 설정에서 SS, SPECTRE, LoRAScan 재구현과 비교하였다. 제안 방법은 평균 AUROC 0.857과 평균정밀도 (AP) 0.498을 기록하여 비교 방법 중 가장 높은 평균 성능을 보였다. 이러한 결과는 제안 방법이 오염 의심 표본의 검토 순서를 정하는 데 활용될 수 있음을 보여준다.",
+      "pdfUrl": "https://deniskim1.com/papers/cisc_w_26/cisc_w_26_paper.pdf",
+      "slideUrl": "https://deniskim1.com/papers/cisc_w_26/cisc_w_26_slide.pdf",
+      "articleSlug": "post_hoc_ranking_poisoned_lora_samples",
+      "bibtex": "@inproceedings{kang2026posthoc,\n  title={Post-hoc Ranking of Poisoned Training Samples in LoRA-Fine-Tuned Models},\n  author={Kang, Byungsoo and Kim, Minseok and Koo, Hyungjoon},\n  booktitle={Proceedings of the Conference on Information Security and Cryptology - Winter (CISC-W)},\n  year={2026}\n}"
+  },
+  {
     "year": "2026",
     "title": "A Study of Information Leakage Across Topologies and Languages in LLM-based Multi-Agent Systems",
     "authors": ["Gahyun Baek", "Minseok Kim", "Hyungjoon Koo"],
