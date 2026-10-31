@@ -1,5 +1,75 @@
 [
   {
+    "slug": "ai_security_digest__november_01_2026_ai_agents",
+    "title": "AI Security Digest — November 01, 2026: AI Agents",
+    "date": "2026-11-01",
+    "type": "News Digest",
+    "description": "This digest covers recent AI security research, including robustness certification for MoE LLMs and agent safety bypasses using narrative techniques.",
+    "tags": [
+      "LLM Security",
+      "AI Agents",
+      "Adversarial Attacks",
+      "Model Robustness",
+      "Safety Alignment",
+      "Generative AI"
+    ],
+    "readingTime": 4,
+    "searchContent": "AI Security Digest — November 01, 2026: AI Agents Attackers exploit vulnerabilities by chaining multiple weaknesses in perimeter devices, enabling unauthorized root access without needing credentials. This pattern of multi stage exploitation remains a primary threat vector across enterprise infrastructure. Paper Highlights CertMoE: Robustness Certification for Mixture of Experts LLMs via Routing Aware Smoothing — CERTMoE certifies the robustness of Mixture of Experts LLMs by tracking the dynamic paths taken during inference. This work matters now as organizations integrate these complex models into security sensitive production environments. MAP: Multi Human Value Alignment Palette — MAP introduces a framework that structures multiple, potentially conflicting, human preference requirements into a manageable palette. Practitioners should examine this for systems requiring nuanced alignment across diverse stakeholder values. Representation Alignment for Generation: Training Diffusion Transformers Is Easier Than You Think — Representation Alignment (REPA) regularizes the hidden states within diffusion transformers, simplifying their training process. This finding impacts those building large scale generative models like Diffusion Transformers (DiTs). Industry & News Attackers Chain Three Ivanti Connect Secure Flaws to Gain Unauthenticated Root Access The Hacker News (The Hacker News) — The chaining of three distinct flaws demonstrates how low level software vulnerabilities can b"
+  },
+  {
+    "slug": "certmoe_robustness_certification_for_mixtureofexperts_llms_v",
+    "title": "CertMoE: Robustness Certification for Mixture-of-Experts LLMs via Routing-Aware Smoothing",
+    "date": "2026-11-01",
+    "type": "Paper Review",
+    "description": "This condition ensures that even after smoothing and perturbation, the original Top-K experts maintain higher smoothed routing probabilities than any expert outside the certified pool $T_Z(x)$.",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “CertMoE: Robustness Certification for Mixture of Experts LLMs via Routing Aware Smoothing” (p. 2) CERTMOE: Routing Aware Robustness Certification for Mixture of Experts LLMs TLDR What : CERTMOE certifies MoE robustness by tracking dynamic routing paths. Who's at risk : Deployments of MoE LLMs in security sensitive tasks. Key number : CERTMOE substantially reduces certificate violations. The Fixed Graph Assumption Failure Traditional robustness certification methods, including those based on abstract interpretation or randomized smoothing, operate under a core assumption: the model's computation graph is fixed regardless of minor input variations. This fixed function paradigm allows researchers to bound or probabilistically control the model's output over a defined input perturbation region. However, Mixture of Experts (MoE) LLMs fundamentally break this premise. Because MoE layers use an input dependent router to select a Top K set of experts, a small perturbation to the input $x$ can trigger a change in the activated expert set. This means the underlying function changes—for instance, switching from $f'$ to $f''$ based on the input perturbation. When this dynamic routing occurs, the certificate issued by a standard method becomes arbitrary because the certified object itself has changed. Empirical testing on SST2 showed this failure mode is widespread, with certificates from existing methods being violated in over 30% of cases. This necessitates a cert"
+  },
+  {
+    "slug": "map_multihumanvalue_alignment_palette",
+    "title": "MAP: Multi-Human-Value Alignment Palette",
+    "date": "2026-11-01",
+    "type": "Paper Review",
+    "description": "Current methods for aligning generative AI systems often rely on optimizing a single objective, typically framed as: $$\\max{p\\in P} \\mathbb{E}{x\\sim D,y\\sim p(\\cdot|x)} \\left[ R(x, y) - \\beta D{KL}\\left(p(\\cdot | x) || p0(\\cdot | x)\\right) \\right].$$ This formulation, which…",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “MAP: Multi Human Value Alignment Palette” (p. 3) Multi Human Value Alignment Palette for Principled Trade off Management TLDR What : MAP structures multi objective alignment via user defined value palettes. Who's at risk : LLMs deployed with complex, conflicting human preference requirements. Key number : MAP allows users to precisely customize and control the level of improvement for all values in an interpretable manner. The Conflict Between Single Dimensional Optimization and Multi Value Needs Current methods for aligning generative AI systems often rely on optimizing a single objective, typically framed as: $$ max {p in P} mathbb{E} {x sim D,y sim p( cdot|x)} left[ R(x, y) beta D {KL} left(p( cdot | x) || p 0( cdot | x) right) right].$$ This formulation, which underpins approaches like Reinforcement Learning from Human Feedback (RLHF), excels when a single preference—like helpfulness or harmlessness—is the sole goal. However, real world deployment demands balancing multiple, potentially antagonistic values; for example, an LLM must be precise, easy to understand, and harmless simultaneously. When aligning to multiple values, existing work often approximates trade offs using linear scalarization of reward functions, such as $R { Delta} = sum {i=1}^m lambda i r i(x, y)$. The core issue here is that the choice of these combination weights ($ lambda$) is often heuristic, and there is no theoretical guarantee that linear combination is sufficient to capt"
+  },
+  {
+    "slug": "representation_alignment_for_generation_training_diffusion_t",
+    "title": "Representation Alignment for Generation: Training Diffusion Transformers Is Easier Than You Think",
+    "date": "2026-11-01",
+    "type": "Paper Review",
+    "description": "$$L{REPA}(\\theta, \\phi) := -\\mathbb{E}{x^,\\epsilon,t} \\frac{1}{N} \\sum{n=1}^{N} \\text{sim}(y^[n], h{\\phi}(h[n]_t))$$",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Representation Alignment for Generation: Training Diffusion Transformers Is Easier Than You Think” (p. 3) REPA: Representation Alignment for Faster Diffusion Transformer Training TLDR What : REPresentation Alignment (REPA) regularizes diffusion hidden states. Who's at risk : Large scale diffusion and flow based transformers (DiTs, SiTs). Key number : Our method can speed up SiT training by over 17.5×. The Semantic Gap in Diffusion Transformers Generative models relying on denoising, like diffusion and flow matching models, have shown capability in creating high dimensional data. While these models implicitly learn discriminative features in their hidden states, the quality of these representations often trails that learned by state of the art self supervised learning methods. Empirical investigation on a pretrained SiT model showed that while it learns meaningful representations, a \"significant semantic gap\" remains compared to models like DINOv2. Quantitative assessment using CKNNA revealed that the alignment between the diffusion transformer's hidden state and the external visual encoder's output was weak, even after extensive training (7M iterations). This indicates that the inherent denoising objective alone is insufficient to distill the high quality, noise invariant features required for optimal generation. Distilling External Representations into Diffusion State The core insight of this work is that the training process for generative diffusion m"
+  },
+  {
+    "slug": "this_week_in_ai_security__november_01_2026",
+    "title": "This Week in AI Security — November 01, 2026",
+    "date": "2026-11-01",
+    "type": "Trend Report",
+    "description": "This week's AI security roundup covers multi-modal eavesdropping using LLMs and radar, alongside advancements in agent alignment and system robustness.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Multi-Modal AI",
+      "Agent Alignment",
+      "System Robustness",
+      "AI Governance"
+    ],
+    "readingTime": 5,
+    "searchContent": "This Week in AI Security — November 01, 2026 The focus this week shifted toward sophisticated, multi modal attacks leveraging large language models, alongside continued deep dives into system robustness and human governance for autonomous agents. Research is increasingly addressing vulnerabilities in deployed AI systems, from network proxies to virtual reality applications. Multi Modal and Physical Eavesdropping Attacks EchoLLM: LLM Augmented Acoustic Eavesdropping Attack on Bone Conduction Headphones with mmWave Radar This work demonstrates how coupling large language models with physical sensing technologies like mmWave radar enables novel eavesdropping vectors. The integration of generative AI into real world hardware attacks signals a maturation in adversarial techniques beyond purely digital exploits. Agent Capabilities and Alignment Detecting Insecure Compositions of Clean Agent Skills via Capability Flow Graph Analysis I HITL: Inalienable Human in the Loop MAP: Multi Human Value Alignment Palette Researchers are developing methods to govern complex, multi step agent behaviors. Analyzing skill compositions via graph theory offers a structural approach to identifying potential security flaws before deployment. Furthermore, the development of frameworks like MAP suggests a movement toward more granular, human centric definitions of desirable AI behavior. System Robustness and Interpretability SoK: Efficiency Robustness of Dynamic Deep Learning Systems Achieving Interpreta"
+  },
+  {
     "slug": "achieving_interpretable_dlbased_web_attack_detection_through",
     "title": "Achieving Interpretable DL-based Web Attack Detection through Malicious Payload Localization",
     "date": "2026-10-31",
