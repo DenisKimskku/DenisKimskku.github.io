@@ -1,7 +1,7 @@
 [
   {
     "slug": "ai_security_digest__november_03_2026_supply_chain_security",
-    "title": "AI Security Digest \u2014 November 03, 2026: Supply Chain Security & Vulnerabilities",
+    "title": "AI Security Digest — November 03, 2026: Supply Chain Security & Vulnerabilities",
     "date": "2026-11-03",
     "type": "News Digest",
     "description": "This digest covers recent advancements in LLM security, focusing on supply chain risks, new red-teaming frameworks, and the limitations of RLHF for ensuring model trustworthiness.",
@@ -13,40 +13,44 @@
       "RLHF",
       "AI Vulnerabilities"
     ],
-    "readingTime": 5
-  },
-  {
-    "slug": "more_rlhf_more_trust_on_the_impact_of_preference_alignment_o",
-    "title": "More RLHF, More Trust? On The Impact of Preference Alignment On Trustworthiness",
-    "date": "2026-11-03",
-    "type": "Paper Review",
-    "description": "More RLHF, More Trust? On The Impact of Preference Alignment On Trustworthiness",
-    "tags": [
-      "Privacy"
-    ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "AI Security Digest — November 03, 2026: Supply Chain Security & Vulnerabilities The ability of large language models (LLMs) to assist in software maintenance is accelerating, but this speed introduces new vectors where proprietary data and security patches can be inadvertently compromised or delayed. Paper Highlights Cybench: A Framework for Evaluating Cybersecurity Capabilities and Risks of Language Models — Cybench provides a framework using professional Capture The Flag (CTF) tasks to test LM agents. Policymakers, model providers, and researchers deploying LM agents in cyber roles must understand these new evaluation methods. Budgeted Attack Scheduling for LLM Red Teaming: The Roles of Static Priors, Semantic Guidance, and Online Feedback — This work formalizes red teaming as a resource aware scheduling problem. Practitioners can use this model to manage the high cost associated with exhaustive security testing against diverse LLM defenses. More RLHF, More Trust? On The Impact of Preference Alignment On Trustworthiness — The study indicates that alignment via Reinforcement Learning from Human Feedback (RLHF) on general preferences does not guarantee model trustworthiness. Deployments relying solely on standard RLHF pipelines risk unexpected performance degradation. Industry & News Arctic Wolf CEO Nick Schneider: AI, Vulnerability Threats Changing In 2027 CRN — Security leadership suggests that AI integration is altering the profile of vulnerability threats moving forward. "
   },
   {
     "slug": "budgeted_attack_scheduling_for_llm_redteaming_the_roles_of_s",
     "title": "Budgeted Attack Scheduling for LLM Red-Teaming: The Roles of Static Priors, Semantic Guidance, and Online Feedback",
     "date": "2026-11-03",
     "type": "Paper Review",
-    "description": "Budgeted Attack Scheduling for LLM Red-Teaming: The Roles of Static Priors, Semantic Guidance, and Online Feedback",
+    "description": "What the authors present is a necessary operational refinement for scalable red-teaming, but the paper understates the fragility of the entire approach.",
     "tags": [
       "Jailbreaking"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Budgeted Attack Scheduling for LLM Red Teaming: The Roles of Static Priors, Semantic Guidance, and Online…” (p. 2) Budgeted Attack Scheduling Using Static Priors, Semantic Guidance, and Online Feedback TLDR Formalizes red teaming as a resource aware scheduling problem. Addresses high cost of exhaustive testing against diverse LLM defenses. LLM guided Online combines all three signals. Prior Pool vs. Test Pool Discrepancy The core challenge in large scale red teaming is the prohibitive cost of exhaustively testing an entire library of jailbreak prompts ($A$) against every victim model ($v$) and defense condition ($D$). Attack effectiveness is not constant; it changes based on the specific victim defense evaluation setting. Prior work often relies on static historical Attack Success Rate (ASR) priors ($p$) derived from past evaluations (e.g., on AdvBench50). While these priors offer a low cost initialization, the paper demonstrates that their reliability erodes substantially when the defense mechanism induces a distributional shift between the prior pool and the test pool. For instance, when moving from Native to LlamaGuard defense on GPT 5.2, the Kolmogorov–Smirnov D statistic increases from 0.08 to 0.63, showing a severe shift. This shift causes static rankings to become stale, as seen when jailcon cvt drops from 1st in the historical ranking to outside the top 10 under LlamaGuard. This gap—the failure of static, historical data to predict performance u"
   },
   {
     "slug": "cybench_a_framework_for_evaluating_cybersecurity_capabilitie",
     "title": "Cybench: A Framework for Evaluating Cybersecurity Capabilities and Risks of Language Models",
     "date": "2026-11-03",
     "type": "Paper Review",
-    "description": "Cybench provides a framework using professional CTF tasks to test LM agents",
+    "description": "The paper presents a valuable structural approach to agent evaluation by discretizing complex goals into subtasks. However, I find the reliance on pre-packaged CTF scenarios to define \"operational readiness\" to be a weak premise, given the context of real-world deployment.",
     "tags": [
       "AI Agents"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Cybench: A Framework for Evaluating Cybersecurity Capabilities and Risks of Language Models” (p. 2) Cybench: A Framework for Evaluating Cybersecurity Capabilities and Risks of Language Models TLDR What : Cybench provides a framework using professional CTF tasks to test LM agents. Who's at risk : Policymakers, model providers, and researchers deploying LM agents in cyber roles. Key number : Without subtask guidance, agents leveraging Claude 3.5 Sonnet, GPT 4o, OpenAI o1 preview, and Claude 3 Opus successfully solved complete tasks that took human teams up to 11 minutes to solve. In comparison, the most difficult task has a first solve time of 24 hours and 54 minutes, a 136x increase. The Gap Between Knowledge and Execution The capability of Large Language Model (LM) agents to operate in cybersecurity contexts presents high stakes potential, applicable both offensively and defensively. Existing evaluations of these capabilities, including those based on Capture The Flag (CTF) challenges, are often limited in scope or lack transparency. While some efforts assess general cybersecurity knowledge, they do not provide an open source, structured way to test autonomous execution. Specifically, previous benchmarks often relied on non open source CTF competitions or lacked the granularity needed to assess complex, multi step attacks. A significant gap exists in moving beyond simple knowledge recall to rigorous, repeatable assessment of an agent's ability to naviga"
+  },
+  {
+    "slug": "more_rlhf_more_trust_on_the_impact_of_preference_alignment_o",
+    "title": "More RLHF, More Trust? On The Impact of Preference Alignment On Trustworthiness",
+    "date": "2026-11-03",
+    "type": "Paper Review",
+    "description": "The utility of Large Language Models (LLMs) hinges on their trustworthiness—their reliability, safety, and ethical alignment. RLHF, utilizing human preference data, is the dominant paradigm for aligning LLMs with human values.",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “More RLHF, More Trust? On The Impact of Preference Alignment On Trustworthiness” (p. 5) Influence Function Attribution for RLHF Trustworthiness Benchmarks TLDR RLHF on general preferences does not guarantee model trustworthiness. Deployments using standard RLHF pipelines risk performance degradation. The Mismatch Between Generic Preferences and Trustworthiness The utility of Large Language Models (LLMs) hinges on their trustworthiness—their reliability, safety, and ethical alignment. RLHF, utilizing human preference data, is the dominant paradigm for aligning LLMs with human values. However, the paper points out a fundamental gap: standard, general purpose preference datasets are typically curated without explicit consideration for specific trustworthiness aspects like toxicity, bias, or privacy. While RLHF is known to enhance general alignment, its specific impact on these critical dimensions remains unexamined in controlled settings. The study systematically evaluates this by examining five verticals: toxicity, stereotypical bias, machine ethics, truthfulness, and privacy across models pre RLHF, post SFT, and post RLHF (using PPO and DPO). The findings reveal that alignment via general preferences is not a panacea; instead, negative effects are frequently observed, indicating a significant misalignment between the broad goals of preference learning and the narrow requirements of specific trustworthiness criteria. Sycophancy and Performance Divergence "
   },
   {
     "slug": "ai_security_digest__november_02_2026_backdoors__ai_agents",
