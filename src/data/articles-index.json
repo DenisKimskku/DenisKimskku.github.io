@@ -1,5 +1,54 @@
 [
   {
+    "slug": "ai_security_digest__november_03_2026_supply_chain_security",
+    "title": "AI Security Digest \u2014 November 03, 2026: Supply Chain Security & Vulnerabilities",
+    "date": "2026-11-03",
+    "type": "News Digest",
+    "description": "This digest covers recent advancements in LLM security, focusing on supply chain risks, new red-teaming frameworks, and the limitations of RLHF for ensuring model trustworthiness.",
+    "tags": [
+      "LLM Security",
+      "Supply Chain Security",
+      "Adversarial Attacks",
+      "Red Teaming",
+      "RLHF",
+      "AI Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "more_rlhf_more_trust_on_the_impact_of_preference_alignment_o",
+    "title": "More RLHF, More Trust? On The Impact of Preference Alignment On Trustworthiness",
+    "date": "2026-11-03",
+    "type": "Paper Review",
+    "description": "More RLHF, More Trust? On The Impact of Preference Alignment On Trustworthiness",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "budgeted_attack_scheduling_for_llm_redteaming_the_roles_of_s",
+    "title": "Budgeted Attack Scheduling for LLM Red-Teaming: The Roles of Static Priors, Semantic Guidance, and Online Feedback",
+    "date": "2026-11-03",
+    "type": "Paper Review",
+    "description": "Budgeted Attack Scheduling for LLM Red-Teaming: The Roles of Static Priors, Semantic Guidance, and Online Feedback",
+    "tags": [
+      "Jailbreaking"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "cybench_a_framework_for_evaluating_cybersecurity_capabilitie",
+    "title": "Cybench: A Framework for Evaluating Cybersecurity Capabilities and Risks of Language Models",
+    "date": "2026-11-03",
+    "type": "Paper Review",
+    "description": "Cybench provides a framework using professional CTF tasks to test LM agents",
+    "tags": [
+      "AI Agents"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__november_02_2026_backdoors__ai_agents",
     "title": "AI Security Digest — November 02, 2026: Backdoors & AI Agents",
     "date": "2026-11-02",
