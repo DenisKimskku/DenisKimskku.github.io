@@ -17,7 +17,7 @@ paperUrl: "https://arxiv.org/abs/2409.14586"
 ## TLDR
 * **What**: Introduces [RESET] token to allow models to recover from unsafe generation.
 * **Who's at risk**: Frontier LLMs deployed with standard prevention-based safety tuning.
-* **Key number**: Llama-3-8B is four times more safe than the baseline model (6.1% $\rightarrow\$1.5%) in evaluations without regression in helpfulness.
+* **Key number**: Llama-3-8B is four times more safe than the baseline model (6.1% $\rightarrow$1.5%) in evaluations without regression in helpfulness.
 
 ## The Limits of Prevention-Centric Tuning
 Current language model alignment relies heavily on prevention: training models to minimize the probability of generating harmful text through methods like SFT or DPO. This paradigm assumes that by training on a finite safety dataset, we can prevent all failure cases, a premise that breaks down given the practically infinite attack surface of a text interface. When a language model begins an unsafe generation sequence, its inherent nature drives it to continue generating similarly problematic text, even if safety tuning has been performed. This weakness is exploited by various adversarial attacks in the wild. The core challenge this paper addresses is the inability of current methods to handle the reality that models *will* sometimes produce unsafe outputs; instead of solely focusing on preventing the initial unsafe token, the authors propose a mechanism for the model to self-correct *after* an unsafe sequence has begun.
