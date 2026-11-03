@@ -62,7 +62,7 @@
     "@types/react-dom": "^19.3.0",
     "eslint": "^9.39.1",
     "eslint-config-next": "^16.4.3",
-    "postcss": "^8.5.31",
+    "postcss": "^8.5.32",
     "puppeteer": "^25.16.0",
     "satori": "^0.63.2",
     "tailwindcss": "^4.3.3",
