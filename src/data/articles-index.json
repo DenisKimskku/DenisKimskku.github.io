@@ -1,7 +1,19 @@
 [
   {
+    "slug": "advantage_alignment_algorithms",
+    "title": "Advantage Alignment Algorithms",
+    "date": "2026-11-07",
+    "type": "Paper Review",
+    "description": "Introduces Advantage Alignment to shape opponent behavior",
+    "tags": [
+      "AI Agents"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Advantage Alignment Algorithms” (p. 5) Advantage Alignment: Deriving Socially Beneficial Equilibria from First Principles TLDR What : Introduces Advantage Alignment to shape opponent behavior. Who's at risk : Agents operating in general sum social dilemmas. Key number : N/A The Failure of Naive Convergence in Social Dilemmas When autonomous agents are deployed into environments that mix cooperation and competition—what the paper terms social dilemmas—they frequently fail to reach optimal collective outcomes. Standard reinforcement learning agents, when faced with scenarios like the Iterated Prisoner’s Dilemma (IPD), tend to converge to Pareto suboptimal Nash equilibria by acting selfishly. Prior methods, such as opponent shaping (like LOLA), attempt to fix this by assuming the opponent is a naive learner and differentiating through imagined parameter updates. While subsequent work, such as LOQA, offered computational improvements by controlling opponent Q values, these methods still relied on specific assumptions about the opponent's policy structure or complex gradient estimation techniques. The core gap this paper addresses is the lack of a unified, first principles derivation for this shaping, especially one that is mathematically simpler and scalable beyond simple discrete settings. The Advantage Alignment Objective The central insight of this work is that opponent shaping can be distilled down to a specific mechanism: aligning the advantages of int"
+  },
+  {
     "slug": "ai_security_digest__november_07_2026_machine_unlearning__vul",
-    "title": "AI Security Digest \u2014 November 07, 2026: Machine Unlearning & Vulnerabilities",
+    "title": "AI Security Digest — November 07, 2026: Machine Unlearning & Vulnerabilities",
     "date": "2026-11-07",
     "type": "News Digest",
     "description": "This digest covers advancements in Machine Unlearning, RAG security hardening, and new AI agent alignment techniques, alongside news of GPT-6 Cyber.",
@@ -13,41 +25,33 @@
       "AI Agents",
       "Software Vulnerabilities"
     ],
-    "readingTime": 5
-  },
-  {
-    "slug": "advantage_alignment_algorithms",
-    "title": "Advantage Alignment Algorithms",
-    "date": "2026-11-07",
-    "type": "Paper Review",
-    "description": "Introduces Advantage Alignment to shape opponent behavior",
-    "tags": [
-      "AI Agents"
-    ],
-    "readingTime": 5
-  },
-  {
-    "slug": "unlearningbased_neural_interpretations",
-    "title": "Unlearning-based Neural Interpretations",
-    "date": "2026-11-07",
-    "type": "Paper Review",
-    "description": "UNI uses unlearning to create adaptive, featureless baselines",
-    "tags": [
-      "Machine Unlearning"
-    ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "AI Security Digest — November 07, 2026: Machine Unlearning & Vulnerabilities 81 flaws were discovered in Firefox and 948 exploits in Linux, according to recent reporting on GPT 6 Cyber's capabilities. This signals a rapid acceleration in the intersection of advanced AI tooling and the discovery of real world software vulnerabilities. Paper Highlights Decision Models as Retrieval Gates Against Injection and Pollution — by Mahdi Ghadamyari, Reza Habibi. This work uses small, non generative models to filter retrieved web passages in Retrieval Augmented Generation (RAG) systems. Practitioners should examine this approach to harden RAG pipelines against injection and pollution attacks. Unlearning based Neural Interpretations. UNI employs unlearning techniques to establish adaptive, featureless baselines for model analysis. Researchers using gradient based saliency methods on vision or language models can benefit from this for debiasing feature attribution. Advantage Alignment Algorithms. This research introduces Advantage Alignment to guide and shape the behavior of AI agents within social dilemmas. Agents operating in general sum social dilemmas need to consider methods for deriving socially beneficial equilibria. Industry & News OpenAI Launches GPT 6 Cyber After AI Helps Find 81 Firefox Flaws, 948 Linux Exploits The Hacker News (The Hacker News) — OpenAI is deploying GPT 6 Cyber, an AI designed to proactively locate and remediate security flaws in software before malicious actor"
   },
   {
     "slug": "decision_models_as_retrieval_gates_against_injection_and_pol",
     "title": "Decision Models as Retrieval Gates Against Injection and Pollution",
     "date": "2026-11-07",
     "type": "Paper Review",
-    "description": "Uses small, non-generative decision models to screen retrieved web passages",
+    "description": "The paper presents a compelling case for using small decision models as a low-cost gate in RAG pipelines. However, I remain unconvinced that shifting the filtering mechanism to a pre-generation classification step fundamentally solves the underlying problem of adversarial input.",
     "tags": [
       "Prompt Injection",
       "RAG"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Decision Models as Retrieval Gates Against Injection and Pollution” (p. 2) Decision Models as Contextual Filters Against RAG Injection and Pollution TLDR What : Uses small, non generative decision models to screen retrieved web passages. Who's at risk : RAG systems relying on web retrieval for factual grounding. Key number : Combined mitigations + Kev gate achieves 5.7% Attack Success Rate. The Gap Between Mitigations and Small Scale Defenses Current defenses against indirect prompt injection and retrieval pollution in Retrieval Augmented Generation (RAG) rely heavily on post retrieval sanitization and prompt engineering. While techniques like sanitisation, Unicode normalisation, and citation prompting successfully reduce attack success rates, they do not eliminate the threat entirely. Specific hidden carriers, such as visible text or code blocks, can still lead to successful injections even after these measures. Furthermore, when the retrieval pool is heavily contaminated with synthetic, misleading pages, the generator can still produce inaccurate answers, as seen in pollution tests. The existing literature has motivated the need for a lightweight filter between the retriever and the generator, but a practical, cheap solution has been lacking. Kev 4B’s Classification of Passage Intent The core innovation here is repurposing released open weight decision models, specifically Kev 4B, to act as a cheap, specialized filter. Instead of asking a large langua"
+  },
+  {
+    "slug": "unlearningbased_neural_interpretations",
+    "title": "Unlearning-based Neural Interpretations",
+    "date": "2026-11-07",
+    "type": "Paper Review",
+    "description": "The paper presents a sophisticated mechanism for constructing input baselines that are tailored to the model's immediate predictive state, moving beyond the arbitrary assumptions baked into static inputs like black images.",
+    "tags": [
+      "Machine Unlearning"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Unlearning based Neural Interpretations” (p. 2) UNI: Unlearning based Neural Interpretations for Debiased Feature Attribution TLDR What : UNI uses unlearning to create adaptive, featureless baselines. Who's at risk : Researchers using gradient based saliency methods on vision/language models. Key number : (No key number provided in the paper text) Static Baselines Injecting Assumptions Attribution methods relying on local gradients often need a baseline input ($x'$) to avoid saturation. When researchers use static functions—like black images, Gaussian blurring, or random noise—as this baseline, they implicitly assume certain features (e.g., dark, smooth, or high frequency) are irrelevant to the model's decision. This assumption is often false and injects biases not present in the model itself. For instance, using a black baseline makes it harder to attribute dark but salient pixels because the term $(x i x' i)$ becomes small, requiring a disproportionately large gradient to register. This leads to attribution maps that are biased, fragile, and inconsistent across different tasks, models, and inputs. The problem remains that the optimal baseline depends heavily on the specific task–model–image combination. Unlearning Direction of Steepest Ascent The central idea of UNI is to move away from static assumptions by defining an \"absence of signal\" through an unlearning direction. Instead of picking a fixed image like a black square, UNI constructs a baseline "
   },
   {
     "slug": "ai_security_digest__november_06_2026_adversarial_attacks__ai",
@@ -109,7 +113,7 @@
   },
   {
     "slug": "ai_security_digest__november_05_2026_backdoors__malware",
-    "title": "AI Security Digest \u2014 November 05, 2026: Backdoors & Malware",
+    "title": "AI Security Digest — November 05, 2026: Backdoors & Malware",
     "date": "2026-11-05",
     "type": "News Digest",
     "description": "This digest covers advanced threats like backdoors in LoRA adapters and malware capable of rewriting LLM behavior. It details new detection and mitigation techniques.",
@@ -122,14 +126,14 @@
       "LoRA"
     ],
     "readingTime": 5,
-    "searchContent": "AI Security Digest \u2014 November 05, 2026: Backdoors & Malware The emergence of sophisticated, targeted malware capable of rewriting model behavior signals a deepening threat vector where model integrity is directly challenged by adversarial code. Paper Highlights The Geometry of Ignorance: Detecting Suppressed Knowledge in LLMs through Activation Fragmentation \u2014 Adar Peleg, Dvir Alsheich, Tomer Ashuach. This work proposes using activation fragmentation to quantify the geometric coherence of hidden states within a Large Language Model (LLM). Practitioners concerned with machine unlearning or knowledge erasure must review this to validate that targeted knowledge removal was complete. LoRA Patch: Defending Against Backdoored LoRA Adapters via Directional Steering \u2014 Shengyan Huo, Peihai Jiang, Xixiang Lyu. This paper introduces directional steering as a method to suppress behavior triggered by backdoors embedded within LoRA adapters. Deployments utilizing third party, untrusted LoRA adapters need this technique to mitigate hidden vulnerabilities. Booster: Tackling Harmful Fine tuning for Large Language Models via Attenuating Harmful Perturbation \u2014 Booster. Booster introduces an alignment stage regularizer designed to mitigate harmful perturbations during LLM fine tuning. Providers offering LLM fine tuning as a service should assess this method for improving alignment robustness. Industry & News NCSC Annual Review 2026 warns AI powered malware could target UK critical infrastructure"
+    "searchContent": "AI Security Digest — November 05, 2026: Backdoors & Malware The emergence of sophisticated, targeted malware capable of rewriting model behavior signals a deepening threat vector where model integrity is directly challenged by adversarial code. Paper Highlights The Geometry of Ignorance: Detecting Suppressed Knowledge in LLMs through Activation Fragmentation — Adar Peleg, Dvir Alsheich, Tomer Ashuach. This work proposes using activation fragmentation to quantify the geometric coherence of hidden states within a Large Language Model (LLM). Practitioners concerned with machine unlearning or knowledge erasure must review this to validate that targeted knowledge removal was complete. LoRA Patch: Defending Against Backdoored LoRA Adapters via Directional Steering — Shengyan Huo, Peihai Jiang, Xixiang Lyu. This paper introduces directional steering as a method to suppress behavior triggered by backdoors embedded within LoRA adapters. Deployments utilizing third party, untrusted LoRA adapters need this technique to mitigate hidden vulnerabilities. Booster: Tackling Harmful Fine tuning for Large Language Models via Attenuating Harmful Perturbation — Booster. Booster introduces an alignment stage regularizer designed to mitigate harmful perturbations during LLM fine tuning. Providers offering LLM fine tuning as a service should assess this method for improving alignment robustness. Industry & News NCSC Annual Review 2026 warns AI powered malware could target UK critical infrastructure"
   },
   {
     "slug": "booster_tackling_harmful_finetuning_for_large_language_model",
     "title": "Booster: Tackling Harmful Fine-tuning for Large Language Models via Attenuating Harmful Perturbation",
     "date": "2026-11-05",
     "type": "Paper Review",
-    "description": "The paper correctly identifies that the mechanics of harmful perturbation\u2014the immediate gradient step from harmful data\u2014is the core vulnerability in fine-tuning-as-a-service.",
+    "description": "The paper correctly identifies that the mechanics of harmful perturbation—the immediate gradient step from harmful data—is the core vulnerability in fine-tuning-as-a-service.",
     "tags": [
       "AI Security"
     ],
@@ -147,19 +151,19 @@
       "Backdoors"
     ],
     "readingTime": 5,
-    "searchContent": "Figure from the paper \u201cLoRA Patch: Defending Against Backdoored LoRA Adapters via Directional Steering\u201d (p. 5) LoRA Patch: Defending Backdoored LoRA Adapters via Directional Steering TLDR What : Directional steering to suppress trigger activated behavior. Who's at risk : Deployments using third party, untrusted LoRA adapters. Key number : Extensive experiments across five backdoor attacks and three backbone models show that LoRA Patch effectively mitigates trigger activated backdoors while preserving benign task performance. The Directional Geometry of Poisoning The adoption of open weight model hubs has made reusing task specialized LoRA adapters common. This modular deployment pattern introduces a backdoor risk: a malicious adapter can maintain normal task performance while embedding hidden behaviors activated by specific triggers. Standard utility evaluations fail to detect this because benign performance masks the malicious functionality. Prior defense strategies often require modifying the full model (like pruning or distillation) or knowing the trigger, which conflicts with adapter based deployment where the trusted base model must remain frozen. The gap this paper addresses is the need for a lightweight, adapter specific defense that operates post hoc without altering the trusted base model. Refusal Direction Displacement The core insight is that backdoor injection distorts the directional geometry of a poisoned adapter relative to its trusted base model. This distorti"
+    "searchContent": "Figure from the paper “LoRA Patch: Defending Against Backdoored LoRA Adapters via Directional Steering” (p. 5) LoRA Patch: Defending Backdoored LoRA Adapters via Directional Steering TLDR What : Directional steering to suppress trigger activated behavior. Who's at risk : Deployments using third party, untrusted LoRA adapters. Key number : Extensive experiments across five backdoor attacks and three backbone models show that LoRA Patch effectively mitigates trigger activated backdoors while preserving benign task performance. The Directional Geometry of Poisoning The adoption of open weight model hubs has made reusing task specialized LoRA adapters common. This modular deployment pattern introduces a backdoor risk: a malicious adapter can maintain normal task performance while embedding hidden behaviors activated by specific triggers. Standard utility evaluations fail to detect this because benign performance masks the malicious functionality. Prior defense strategies often require modifying the full model (like pruning or distillation) or knowing the trigger, which conflicts with adapter based deployment where the trusted base model must remain frozen. The gap this paper addresses is the need for a lightweight, adapter specific defense that operates post hoc without altering the trusted base model. Refusal Direction Displacement The core insight is that backdoor injection distorts the directional geometry of a poisoned adapter relative to its trusted base model. This distorti"
   },
   {
     "slug": "the_geometry_of_ignorance_detecting_suppressed_knowledge_in",
     "title": "The Geometry of Ignorance: Detecting Suppressed Knowledge in LLMs through Activation Fragmentation",
     "date": "2026-11-05",
     "type": "Paper Review",
-    "description": "The paper correctly identifies that output-level behavioral testing is an insufficient proxy for knowledge state, especially concerning knowledge erasure. However, the reliance on geometric coherence\u2014the core mechanism\u2014is too optimistic.",
+    "description": "The paper correctly identifies that output-level behavioral testing is an insufficient proxy for knowledge state, especially concerning knowledge erasure. However, the reliance on geometric coherence—the core mechanism—is too optimistic.",
     "tags": [
       "Machine Unlearning"
     ],
     "readingTime": 5,
-    "searchContent": "Figure from the paper \u201cThe Geometry of Ignorance: Detecting Suppressed Knowledge in LLMs through Activation Fragmentation\u201d (p. 7) Activation Fragmentation as a Proxy for Parametric Knowledge Existence and Recoverability TLDR What : Activation fragmentation measures geometric coherence of hidden states. Who's at risk : Deployments undergoing machine unlearning or knowledge erasure. Key number : AUSScos2 achieves the largest separation ($ vert d vert=21.51$) for known vs. unknown concepts. Isolating Conceptual Identity from Prompt Syntax The standard evaluation of Large Language Models (LLMs) relies on behavioral metrics\u2014things like question answering accuracy\u2014to gauge knowledge. This approach is fundamentally flawed because a model can refuse to answer a question while still containing the underlying factual association in its parameters. This failure is most pronounced when considering machine unlearning, where interventions often only suppress knowledge rather than truly deleting it. Current intrinsic probes, while looking inside the model, are often entangled with the prompt syntax, making it difficult to separate genuine factual knowledge from the linguistic structure of the query itself. To address this, the framework builds on the concept of the anon vector, which isolates a concept specific signal by contrasting the hidden state of a concept specific query ($ text{qi}$) against the mean hidden state of its identity stripped paraphrases ($ text{a(k)i}$). This subtraction"
+    "searchContent": "Figure from the paper “The Geometry of Ignorance: Detecting Suppressed Knowledge in LLMs through Activation Fragmentation” (p. 7) Activation Fragmentation as a Proxy for Parametric Knowledge Existence and Recoverability TLDR What : Activation fragmentation measures geometric coherence of hidden states. Who's at risk : Deployments undergoing machine unlearning or knowledge erasure. Key number : AUSScos2 achieves the largest separation ($ vert d vert=21.51$) for known vs. unknown concepts. Isolating Conceptual Identity from Prompt Syntax The standard evaluation of Large Language Models (LLMs) relies on behavioral metrics—things like question answering accuracy—to gauge knowledge. This approach is fundamentally flawed because a model can refuse to answer a question while still containing the underlying factual association in its parameters. This failure is most pronounced when considering machine unlearning, where interventions often only suppress knowledge rather than truly deleting it. Current intrinsic probes, while looking inside the model, are often entangled with the prompt syntax, making it difficult to separate genuine factual knowledge from the linguistic structure of the query itself. To address this, the framework builds on the concept of the anon vector, which isolates a concept specific signal by contrasting the hidden state of a concept specific query ($ text{qi}$) against the mean hidden state of its identity stripped paraphrases ($ text{a(k)i}$). This subtraction"
   },
   {
     "slug": "ai_security_digest__november_04_2026_vulnerabilities",
@@ -216,7 +220,7 @@
   },
   {
     "slug": "ai_security_digest__november_03_2026_supply_chain_security",
-    "title": "AI Security Digest \u2014 November 03, 2026: Supply Chain Security & Vulnerabilities",
+    "title": "AI Security Digest — November 03, 2026: Supply Chain Security & Vulnerabilities",
     "date": "2026-11-03",
     "type": "News Digest",
     "description": "This digest covers recent advancements in LLM security, focusing on supply chain risks, new red-teaming frameworks, and the limitations of RLHF for ensuring model trustworthiness.",
@@ -229,7 +233,7 @@
       "AI Vulnerabilities"
     ],
     "readingTime": 5,
-    "searchContent": "AI Security Digest \u2014 November 03, 2026: Supply Chain Security & Vulnerabilities The ability of large language models (LLMs) to assist in software maintenance is accelerating, but this speed introduces new vectors where proprietary data and security patches can be inadvertently compromised or delayed. Paper Highlights Cybench: A Framework for Evaluating Cybersecurity Capabilities and Risks of Language Models \u2014 Cybench provides a framework using professional Capture The Flag (CTF) tasks to test LM agents. Policymakers, model providers, and researchers deploying LM agents in cyber roles must understand these new evaluation methods. Budgeted Attack Scheduling for LLM Red Teaming: The Roles of Static Priors, Semantic Guidance, and Online Feedback \u2014 This work formalizes red teaming as a resource aware scheduling problem. Practitioners can use this model to manage the high cost associated with exhaustive security testing against diverse LLM defenses. More RLHF, More Trust? On The Impact of Preference Alignment On Trustworthiness \u2014 The study indicates that alignment via Reinforcement Learning from Human Feedback (RLHF) on general preferences does not guarantee model trustworthiness. Deployments relying solely on standard RLHF pipelines risk unexpected performance degradation. Industry & News Arctic Wolf CEO Nick Schneider: AI, Vulnerability Threats Changing In 2027 CRN \u2014 Security leadership suggests that AI integration is altering the profile of vulnerability threats moving forward. "
+    "searchContent": "AI Security Digest — November 03, 2026: Supply Chain Security & Vulnerabilities The ability of large language models (LLMs) to assist in software maintenance is accelerating, but this speed introduces new vectors where proprietary data and security patches can be inadvertently compromised or delayed. Paper Highlights Cybench: A Framework for Evaluating Cybersecurity Capabilities and Risks of Language Models — Cybench provides a framework using professional Capture The Flag (CTF) tasks to test LM agents. Policymakers, model providers, and researchers deploying LM agents in cyber roles must understand these new evaluation methods. Budgeted Attack Scheduling for LLM Red Teaming: The Roles of Static Priors, Semantic Guidance, and Online Feedback — This work formalizes red teaming as a resource aware scheduling problem. Practitioners can use this model to manage the high cost associated with exhaustive security testing against diverse LLM defenses. More RLHF, More Trust? On The Impact of Preference Alignment On Trustworthiness — The study indicates that alignment via Reinforcement Learning from Human Feedback (RLHF) on general preferences does not guarantee model trustworthiness. Deployments relying solely on standard RLHF pipelines risk unexpected performance degradation. Industry & News Arctic Wolf CEO Nick Schneider: AI, Vulnerability Threats Changing In 2027 CRN — Security leadership suggests that AI integration is altering the profile of vulnerability threats moving forward. "
   },
   {
     "slug": "budgeted_attack_scheduling_for_llm_redteaming_the_roles_of_s",
@@ -241,7 +245,7 @@
       "Jailbreaking"
     ],
     "readingTime": 5,
-    "searchContent": "Figure from the paper \u201cBudgeted Attack Scheduling for LLM Red Teaming: The Roles of Static Priors, Semantic Guidance, and Online\u2026\u201d (p. 2) Budgeted Attack Scheduling Using Static Priors, Semantic Guidance, and Online Feedback TLDR Formalizes red teaming as a resource aware scheduling problem. Addresses high cost of exhaustive testing against diverse LLM defenses. LLM guided Online combines all three signals. Prior Pool vs. Test Pool Discrepancy The core challenge in large scale red teaming is the prohibitive cost of exhaustively testing an entire library of jailbreak prompts ($A$) against every victim model ($v$) and defense condition ($D$). Attack effectiveness is not constant; it changes based on the specific victim defense evaluation setting. Prior work often relies on static historical Attack Success Rate (ASR) priors ($p$) derived from past evaluations (e.g., on AdvBench50). While these priors offer a low cost initialization, the paper demonstrates that their reliability erodes substantially when the defense mechanism induces a distributional shift between the prior pool and the test pool. For instance, when moving from Native to LlamaGuard defense on GPT 5.2, the Kolmogorov\u2013Smirnov D statistic increases from 0.08 to 0.63, showing a severe shift. This shift causes static rankings to become stale, as seen when jailcon cvt drops from 1st in the historical ranking to outside the top 10 under LlamaGuard. This gap\u2014the failure of static, historical data to predict performance u"
+    "searchContent": "Figure from the paper “Budgeted Attack Scheduling for LLM Red Teaming: The Roles of Static Priors, Semantic Guidance, and Online…” (p. 2) Budgeted Attack Scheduling Using Static Priors, Semantic Guidance, and Online Feedback TLDR Formalizes red teaming as a resource aware scheduling problem. Addresses high cost of exhaustive testing against diverse LLM defenses. LLM guided Online combines all three signals. Prior Pool vs. Test Pool Discrepancy The core challenge in large scale red teaming is the prohibitive cost of exhaustively testing an entire library of jailbreak prompts ($A$) against every victim model ($v$) and defense condition ($D$). Attack effectiveness is not constant; it changes based on the specific victim defense evaluation setting. Prior work often relies on static historical Attack Success Rate (ASR) priors ($p$) derived from past evaluations (e.g., on AdvBench50). While these priors offer a low cost initialization, the paper demonstrates that their reliability erodes substantially when the defense mechanism induces a distributional shift between the prior pool and the test pool. For instance, when moving from Native to LlamaGuard defense on GPT 5.2, the Kolmogorov–Smirnov D statistic increases from 0.08 to 0.63, showing a severe shift. This shift causes static rankings to become stale, as seen when jailcon cvt drops from 1st in the historical ranking to outside the top 10 under LlamaGuard. This gap—the failure of static, historical data to predict performance u"
   },
   {
     "slug": "cybench_a_framework_for_evaluating_cybersecurity_capabilitie",
@@ -253,19 +257,19 @@
       "AI Agents"
     ],
     "readingTime": 5,
-    "searchContent": "Figure from the paper \u201cCybench: A Framework for Evaluating Cybersecurity Capabilities and Risks of Language Models\u201d (p. 2) Cybench: A Framework for Evaluating Cybersecurity Capabilities and Risks of Language Models TLDR What : Cybench provides a framework using professional CTF tasks to test LM agents. Who's at risk : Policymakers, model providers, and researchers deploying LM agents in cyber roles. Key number : Without subtask guidance, agents leveraging Claude 3.5 Sonnet, GPT 4o, OpenAI o1 preview, and Claude 3 Opus successfully solved complete tasks that took human teams up to 11 minutes to solve. In comparison, the most difficult task has a first solve time of 24 hours and 54 minutes, a 136x increase. The Gap Between Knowledge and Execution The capability of Large Language Model (LM) agents to operate in cybersecurity contexts presents high stakes potential, applicable both offensively and defensively. Existing evaluations of these capabilities, including those based on Capture The Flag (CTF) challenges, are often limited in scope or lack transparency. While some efforts assess general cybersecurity knowledge, they do not provide an open source, structured way to test autonomous execution. Specifically, previous benchmarks often relied on non open source CTF competitions or lacked the granularity needed to assess complex, multi step attacks. A significant gap exists in moving beyond simple knowledge recall to rigorous, repeatable assessment of an agent's ability to naviga"
+    "searchContent": "Figure from the paper “Cybench: A Framework for Evaluating Cybersecurity Capabilities and Risks of Language Models” (p. 2) Cybench: A Framework for Evaluating Cybersecurity Capabilities and Risks of Language Models TLDR What : Cybench provides a framework using professional CTF tasks to test LM agents. Who's at risk : Policymakers, model providers, and researchers deploying LM agents in cyber roles. Key number : Without subtask guidance, agents leveraging Claude 3.5 Sonnet, GPT 4o, OpenAI o1 preview, and Claude 3 Opus successfully solved complete tasks that took human teams up to 11 minutes to solve. In comparison, the most difficult task has a first solve time of 24 hours and 54 minutes, a 136x increase. The Gap Between Knowledge and Execution The capability of Large Language Model (LM) agents to operate in cybersecurity contexts presents high stakes potential, applicable both offensively and defensively. Existing evaluations of these capabilities, including those based on Capture The Flag (CTF) challenges, are often limited in scope or lack transparency. While some efforts assess general cybersecurity knowledge, they do not provide an open source, structured way to test autonomous execution. Specifically, previous benchmarks often relied on non open source CTF competitions or lacked the granularity needed to assess complex, multi step attacks. A significant gap exists in moving beyond simple knowledge recall to rigorous, repeatable assessment of an agent's ability to naviga"
   },
   {
     "slug": "more_rlhf_more_trust_on_the_impact_of_preference_alignment_o",
     "title": "More RLHF, More Trust? On The Impact of Preference Alignment On Trustworthiness",
     "date": "2026-11-03",
     "type": "Paper Review",
-    "description": "The utility of Large Language Models (LLMs) hinges on their trustworthiness\u2014their reliability, safety, and ethical alignment. RLHF, utilizing human preference data, is the dominant paradigm for aligning LLMs with human values.",
+    "description": "The utility of Large Language Models (LLMs) hinges on their trustworthiness—their reliability, safety, and ethical alignment. RLHF, utilizing human preference data, is the dominant paradigm for aligning LLMs with human values.",
     "tags": [
       "Privacy"
     ],
     "readingTime": 5,
-    "searchContent": "Figure from the paper \u201cMore RLHF, More Trust? On The Impact of Preference Alignment On Trustworthiness\u201d (p. 5) Influence Function Attribution for RLHF Trustworthiness Benchmarks TLDR RLHF on general preferences does not guarantee model trustworthiness. Deployments using standard RLHF pipelines risk performance degradation. The Mismatch Between Generic Preferences and Trustworthiness The utility of Large Language Models (LLMs) hinges on their trustworthiness\u2014their reliability, safety, and ethical alignment. RLHF, utilizing human preference data, is the dominant paradigm for aligning LLMs with human values. However, the paper points out a fundamental gap: standard, general purpose preference datasets are typically curated without explicit consideration for specific trustworthiness aspects like toxicity, bias, or privacy. While RLHF is known to enhance general alignment, its specific impact on these critical dimensions remains unexamined in controlled settings. The study systematically evaluates this by examining five verticals: toxicity, stereotypical bias, machine ethics, truthfulness, and privacy across models pre RLHF, post SFT, and post RLHF (using PPO and DPO). The findings reveal that alignment via general preferences is not a panacea; instead, negative effects are frequently observed, indicating a significant misalignment between the broad goals of preference learning and the narrow requirements of specific trustworthiness criteria. Sycophancy and Performance Divergence "
+    "searchContent": "Figure from the paper “More RLHF, More Trust? On The Impact of Preference Alignment On Trustworthiness” (p. 5) Influence Function Attribution for RLHF Trustworthiness Benchmarks TLDR RLHF on general preferences does not guarantee model trustworthiness. Deployments using standard RLHF pipelines risk performance degradation. The Mismatch Between Generic Preferences and Trustworthiness The utility of Large Language Models (LLMs) hinges on their trustworthiness—their reliability, safety, and ethical alignment. RLHF, utilizing human preference data, is the dominant paradigm for aligning LLMs with human values. However, the paper points out a fundamental gap: standard, general purpose preference datasets are typically curated without explicit consideration for specific trustworthiness aspects like toxicity, bias, or privacy. While RLHF is known to enhance general alignment, its specific impact on these critical dimensions remains unexamined in controlled settings. The study systematically evaluates this by examining five verticals: toxicity, stereotypical bias, machine ethics, truthfulness, and privacy across models pre RLHF, post SFT, and post RLHF (using PPO and DPO). The findings reveal that alignment via general preferences is not a panacea; instead, negative effects are frequently observed, indicating a significant misalignment between the broad goals of preference learning and the narrow requirements of specific trustworthiness criteria. Sycophancy and Performance Divergence "
   },
   {
     "slug": "ai_security_digest__november_02_2026_backdoors__ai_agents",
