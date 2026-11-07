@@ -1,5 +1,75 @@
 [
   {
+    "slug": "adversarial_perturbations_cannot_reliably_protect_artists_fr",
+    "title": "Adversarial Perturbations Cannot Reliably Protect Artists From Generative AI",
+    "date": "2026-11-08",
+    "type": "Paper Review",
+    "description": "Protection tools aim to make an artist's style \"unlearnable\" by embedding small adversarial perturbations into published images. These tools, such as Glaze, Mist, and Anti-DreamBooth, have been widely adopted.",
+    "tags": [
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Adversarial Perturbations Cannot Reliably Protect Artists From Generative AI” (p. 2) Off the Shelf Techniques Nullify Adversarial Style Protections in Generative AI TLDR What : Low effort image processing bypasses existing style protection tools. Who's at risk : Artists using popular adversarial perturbation defenses on online art. Key number : Robust mimicry methods can produce results indistinguishable in quality from those obtained from unprotected artworks. The Limitations of Unlearnable Examples Protection tools aim to make an artist's style \"unlearnable\" by embedding small adversarial perturbations into published images. These tools, such as Glaze, Mist, and Anti DreamBooth, have been widely adopted. The premise is that these perturbations will disrupt the finetuning process used by generative models to mimic a style. However, the paper reveals that these defenses are brittle because they assume the forger will use a specific, constrained finetuning setup. A forger, even a low skilled one, can circumvent these defenses simply by changing the underlying tooling. For instance, the paper notes that differences between the original Glaze finetuning script and a standard HuggingFace script are sufficient to \"significantly degrade Glaze’s protections.\" This suggests that the protections lack the necessary robustness across the ecosystem of available tools. Noisy Upscaling vs. JPEG Compression The authors introduce several \"robust mimicry methods\" design"
+  },
+  {
+    "slug": "ai_security_digest__november_08_2026_adversarial_attacks__vu",
+    "title": "AI Security Digest — November 08, 2026: Adversarial Attacks & Vulnerabilities",
+    "date": "2026-11-08",
+    "type": "News Digest",
+    "description": "This digest covers adversarial attacks bypassing generative AI style protection, new robustness techniques, and updates on LLM alignment and cybersecurity.",
+    "tags": [
+      "Adversarial Attacks",
+      "Generative AI",
+      "LLM Security",
+      "Robustness",
+      "RLHF",
+      "Cybersecurity"
+    ],
+    "readingTime": 5,
+    "searchContent": "AI Security Digest — November 08, 2026: Adversarial Attacks & Vulnerabilities Image processing tools can be bypassed by low effort transformations, nullifying existing style protection mechanisms against generative AI. This implies that defenses relying solely on adversarial perturbations may not offer sufficient protection for artists operating online. Paper Highlights Adversarial Perturbations Cannot Reliably Protect Artists From Generative AI — by Author Unknown. Low effort image processing methods can circumvent established style protection tools in generative AI systems. Practitioners using these defenses must reassess their robustness assumptions against simple input modifications. Robustness Reprogramming for Representation Learning — by Author Unknown. This work demonstrates a method to enhance adversarial robustness in trained models without altering model parameters. Deployments utilizing large, pre trained deep neural networks stand to benefit from this approach. Online Preference Alignment for Language Models via Count based Exploration — by Author Unknown. Count based exploration integrated into online Reinforcement Learning from Human Feedback (RLHF) improves model alignment. Those fine tuning LLMs on constrained preference datasets can leverage this method for greater efficiency. Industry & News SonicWall Patches Exploited SonicOS Vulnerability That Weakens VPN Logins SecurityWeek. A vulnerability in SonicOS was patched, affecting the security of Virtual Privat"
+  },
+  {
+    "slug": "online_preference_alignment_for_language_models_via_countbas",
+    "title": "Online Preference Alignment for Language Models via Count-based Exploration",
+    "date": "2026-11-08",
+    "type": "Paper Review",
+    "description": "The paper’s focus on using count-based exploration via a Coin Flipping Network addresses a tangible scalability problem in online RLHF, moving beyond the limitations of fixed-dataset coverage.",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5,
+    "searchContent": "Count based Online Preference Optimization for LLM Alignment TLDR What : COPO uses count based exploration in online RLHF. Who's at risk : LLMs fine tuned via RLHF on limited datasets. Key number : The reward with an upper confidence bound (UCB) bonus leads to a provably efficient RLHF policy with $ tilde{O}( sqrt{T})$ regret bound. The Coverage Gap in Fixed Dataset Alignment Current alignment techniques, like those based on the Bradley Terry model or Direct Preference Optimization (DPO), rely on a fixed, offline dataset for preference alignment. The fundamental limitation here is coverage: if the initial dataset $D$ does not uniformly cover the entire prompt response space, the learned reward model cannot accurately estimate rewards for out of distribution (OOD) responses. This limits the LLM's capacity to perform well outside the training data distribution. While recent work attempts to move to online RLHF—where the LLM generates new data iteratively—the central problem remains how to explore this vast space systematically. A deterministic policy simply repeats data collection, failing to improve coverage across iterations. Existing exploration methods often rely on the LLM's intrinsic likelihood, which lacks the theoretical guarantees needed for systematic exploration based on the confidence of the learned reward model. The Optimistic Reward Function The paper’s central idea is to reframe the online RLHF objective using an optimistic reward function, which is directly insp"
+  },
+  {
+    "slug": "robustness_reprogramming_for_representation_learning",
+    "title": "Robustness Reprogramming for Representation Learning",
+    "date": "2026-11-08",
+    "type": "Paper Review",
+    "description": "The paper’s focus on reprogramming is appealing because it sidesteps the immense computational tax of continual robust training. However, the reported success on MNIST using a 3-layer MLP tells me very little about real-world utility.",
+    "tags": [
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Robustness Reprogramming for Representation Learning” (p. 8) Reprogramming Pre trained Models for Robustness via Nonlinear Pattern Matching TLDR What : Reprograms trained models for adversarial robustness without parameter updates. Who's at risk : Deployments using large, pre trained deep neural networks. Key number : Paradigm 3 achieved 75.8% robustness on MNIST with 3 layer MLP. The Sensitivity of Linear Pattern Matching Deep neural networks function by transforming input data into compact embeddings, a process fundamentally reliant on linear feature transformations, $z = mathbf{a}^ top mathbf{x}$. This operation captures specific feature patterns by correlating them with model parameters $ mathbf{a}$. However, this vanilla Linear Pattern Matching (LPM) is highly sensitive to input noise and perturbations, leading to model failure in adversarial settings. Current defenses, such as robust training or regularization, often modify the parameters $ mathbf{a}$ themselves. This parameter modification frequently degrades the model’s clean accuracy, failing to provide an efficient and adaptable defense mechanism, especially when dealing with massive pre trained models where retraining is impractical. The core gap this work addresses is achieving enhanced robustness without altering the established parameters of a well trained model. Nonlinear Robust Pattern Matching The paper introduces Nonlinear Robust Pattern Matching (NRPM) as a robust alternative to LPM. "
+  },
+  {
+    "slug": "this_week_in_ai_security__november_08_2026",
+    "title": "This Week in AI Security — November 08, 2026",
+    "date": "2026-11-08",
+    "type": "Trend Report",
+    "description": "This week's AI security roundup covers novel defenses against backdoors and fine-tuning attacks, focusing on model internals and data provenance.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Backdoor Attacks",
+      "Fine-tuning",
+      "Model Robustness",
+      "Data Provenance"
+    ],
+    "readingTime": 5,
+    "searchContent": "This Week in AI Security — November 08, 2026 The focus this week centers on hardening generative models against subtle manipulation and improving internal model trustworthiness. Researchers are developing novel defense mechanisms against backdoors and fine tuning attacks, while simultaneously refining methods for verifying model outputs and ensuring data provenance. Model Internals and Safety Mechanisms On the Role of Attention Heads in Large Language Model Safety The Geometry of Ignorance: Detecting Suppressed Knowledge in LLMs through Activation Fragmentation Backtracking Improves Generation Safety Analysis reveals a deeper dive into how internal model mechanics correlate with safety outcomes. Understanding the role of attention heads offers a path toward targeted safety interventions rather than broad retraining. Furthermore, methods to map internal states to knowledge suppression suggest new avenues for auditing model completeness. Adversarial Defenses and Robustness LoRA Patch: Defending Against Backdoored LoRA Adapters via Directional Steering Robustness Inspired Graph Backdoor Defense Booster: Tackling Harmful Fine tuning for Large Language Models via Attenuating Harmful Perturbation These papers address the persistent threat of subtle model poisoning during adaptation phases. Defenses are moving beyond input sanitization to target the low rank adaptation layers themselves, like LoRA. This indicates a shift toward securing the model's fine tuning pipeline, which is inc"
+  },
+  {
     "slug": "advantage_alignment_algorithms",
     "title": "Advantage Alignment Algorithms",
     "date": "2026-11-07",
