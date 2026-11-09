@@ -1,5 +1,56 @@
 [
   {
+    "slug": "ai_security_digest__november_10_2026_jailbreaking__ai_agents",
+    "title": "AI Security Digest \u2014 November 10, 2026: Jailbreaking & AI Agents",
+    "date": "2026-11-10",
+    "type": "News Digest",
+    "description": "This digest covers advancements in AI security, focusing on mathematical challenges to provable safety, agentic defenses against jailbreaks, and LLM watermarking detection.",
+    "tags": [
+      "Jailbreaking",
+      "AI Agents",
+      "LLM Security",
+      "Adversarial Attacks",
+      "Provable Safety",
+      "Runtime Protection"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "can_watermarked_llms_be_identified_by_users_via_crafted_prom",
+    "title": "Can Watermarked LLMs be Identified by Users via Crafted Prompts?",
+    "date": "2026-11-10",
+    "type": "Paper Review",
+    "description": "Water-Probe detects hidden watermarks by comparing output distribution differences across prompts",
+    "tags": [
+      "Watermarking",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "guardrailagent_an_agentic_framework_for_jailbreak_defense",
+    "title": "GuardrailAgent: An Agentic Framework for Jailbreak Defense",
+    "date": "2026-11-10",
+    "type": "Paper Review",
+    "description": "Proposes GuardrailAgent, an adaptive, multi-agent defense framework",
+    "tags": [
+      "Jailbreaking",
+      "AI Agents"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "safety_is_1_provability_is_1_one_framework_for_the_hugging_f",
+    "title": "Safety Is $\u03a0_1$, Provability Is $\u03a3_1$: One Framework for the Hugging Face Breach and OpenAI's Mathematical Proofs",
+    "date": "2026-11-10",
+    "type": "Paper Review",
+    "description": "A hybrid framework links coding, proving, and learning via deduction",
+    "tags": [
+      "AI Agents"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__november_09_2026_data_poisoning__vulnera",
     "title": "AI Security Digest \u2014 November 09, 2026: Data Poisoning & Vulnerabilities",
     "date": "2026-11-09",
