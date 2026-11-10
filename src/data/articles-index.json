@@ -1,5 +1,27 @@
 [
   {
+    "slug": "towards_hyperparameterfree_optimization_with_differential_pr",
+    "title": "Towards hyperparameter-free optimization with differential privacy",
+    "date": "2026-11-11",
+    "type": "Paper Review",
+    "description": "Adapts automatic learning rate schedules to DP training",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "enhancing_website_fingerprinting_attacks_against_traffic_dri",
+    "title": "Enhancing Website Fingerprinting Attacks against Traffic Drift",
+    "date": "2026-11-11",
+    "type": "Paper Review",
+    "description": "Proteus continuously fine-tunes WF models using only unlabeled traffic",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__november_10_2026_jailbreaking__ai_agents",
     "title": "AI Security Digest \u2014 November 10, 2026: Jailbreaking & AI Agents",
     "date": "2026-11-10",
