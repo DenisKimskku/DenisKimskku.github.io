@@ -1,5 +1,62 @@
 [
   {
+    "slug": "ai_security_digest__november_12_2026_data_poisoning",
+    "title": "AI Security Digest — November 12, 2026: Data Poisoning",
+    "date": "2026-11-12",
+    "type": "News Digest",
+    "description": "This digest covers advanced adversarial threats, focusing on data poisoning in LLM serving frameworks and targeted attacks against diffusion models.",
+    "tags": [
+      "Data Poisoning",
+      "LLM Security",
+      "Adversarial Attacks",
+      "TEE",
+      "Diffusion Models",
+      "AI Integrity"
+    ],
+    "readingTime": 5,
+    "searchContent": "AI Security Digest — November 12, 2026: Data Poisoning The focus on data integrity remains paramount as adversarial techniques move beyond simple prompt injection into the foundational components of serving infrastructure. Recent research shows how subtle input manipulation can compromise the reliability of complex AI systems. Paper Highlights Cache Me, Catch You: Cache Related Security Threats in LLM Serving Frameworks — by N/A. This work demonstrates that flaws in cache key generation within LLM serving frameworks can enable cache collisions and semantic poisoning. Practitioners using tools like vLLM or GPTCache must audit caching logic for potential input manipulation vectors. EXIA: Trusted Transitions for Enclaves via External Input Attestation — by N/A. EXIA introduces a method to verify all external writes to Trusted Execution Environment (TEE) applications. Security teams managing sensitive cloud workloads within TEEs, such as ML training, should investigate this for enhanced state integrity checks. Targeted Attack Improves Protection against Unauthorized Diffusion Customization — by N/A. This paper uses targeted adversarial attacks (ACE/ACE+) to poison diffusion models during customization. Those deploying diffusion models for image generation need to assess their defenses against subtle, targeted poisoning attempts. Industry & News AI Writes the Code: Who Takes Responsibility for the Risks Israel Defense (Israel Defense) — The discussion around AI generated code rais"
+  },
+  {
+    "slug": "cache_me_catch_you_cache_related_security_threats_in_llm_ser",
+    "title": "Cache Me, Catch You: Cache Related Security Threats in LLM Serving Frameworks",
+    "date": "2026-11-12",
+    "type": "Paper Review",
+    "description": "The observed reliance on Non-Cryptographic Hash Functions (NCHFs) for cache key generation is a fundamental design flaw, but the paper understates the severity of the semantic poisoning vector.",
+    "tags": [
+      "RAG",
+      "Data Poisoning",
+      "AI Agents",
+      "Fuzzing"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Cache Me, Catch You: Cache Related Security Threats in LLM Serving Frameworks” (p. 8) Cache Collisions and Semantic Poisoning in LLM Serving Frameworks TLDR What : Attacks exploit cache key generation flaws in LLM serving. Who's at risk : Users of chatbots, agents, and RAG assistants using vLLM, GPTCache, etc. Key number : For prefix collision based attacks (F1, I1, I2), the hash search required approximately 30 minutes on two CPU cores. The Reliance on Cache for Performance Large Language Models (LLMs) rely heavily on caching mechanisms—prefix, multimodal, and semantic—to manage the computational overhead of inference. Prefix cache stores intermediate token states for reuse, while semantic cache indexes responses via embeddings to retrieve results based on query similarity. These optimizations, implemented in frameworks like vLLM and GPTCache, are vital for low latency and cost control. The core pipeline involves serializing input data ($ text{d}$) and metadata ($ text{m}$), deriving a unique key ($ text{k} = text{H}( text{S}( text{d}, text{m}), text{id})$), and retrieving the cached value ($ text{v}$). The paper notes that this system relies on Non Cryptographic Hash Functions (NCHFs) and fuzzy semantic similarity, which prioritize speed over security. This reliance creates a new attack surface during inference time, unlike prior work focused on training phase poisoning. Prefix Collision Hijack The paper details how flaws in serialization and key gene"
+  },
+  {
+    "slug": "exia_trusted_transitions_for_enclaves_via_externalinput_atte",
+    "title": "EXIA: Trusted Transitions for Enclaves via External-Input Attestation",
+    "date": "2026-11-12",
+    "type": "Paper Review",
+    "description": "The paper presents a necessary evolution in TEE security by addressing post-launch runtime integrity, a gap that existing launch-time attestation fails to close.",
+    "tags": [
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “EXIA: Trusted Transitions for Enclaves via External Input Attestation” (p. 5) EXIA: Attesting TEE State Transitions via External Input Measurement TLDR What: External Input Attestation checks all external writes to TEE applications. Who's at risk: Cloud workloads running sensitive computations in TEEs (e.g., ML training). Key number: For CNN models, the overhead of EXIA is 0.80−5.89% (LeNet 5) and 0.44−4.72% (AlexNet) for training, and 1.15 −18.30% (LeNet 5) and 0.53 −2.58% (AlexNet) for inference, depending on input batch sizes. The Limits of Launch Time Verification Current security guarantees for Trusted Execution Environments (TEE) rely heavily on launch time remote attestation, which verifies the initial integrity of the enclave's code and data. However, this initial verification proves nothing about runtime integrity. Memory corruption attacks, including control flow hijacking and data only attacks, fundamentally break TEE security after launch time attestation has succeeded. Existing runtime checks, such as control flow attestation (CFA) and data flow attestation (DFA), possess limitations. CFA requires multiple execution traces to learn correct patterns, while DFA often necessitates specialized program modifications or is difficult to verify independently. A commonality across these attacks, as noted by Ammar et al. [19], is that they all originate from an unintended write—content provided by the host that deviates from user expectations. The ga"
+  },
+  {
+    "slug": "targeted_attack_improves_protection_against_unauthorized_dif",
+    "title": "Targeted Attack Improves Protection against Unauthorized Diffusion Customization",
+    "date": "2026-11-12",
+    "type": "Paper Review",
+    "description": "$$\\min{\\eta} \\mathbb{E}{t, z'(\\cdot)|z'(0)} \\left\\| s_\\theta(z'(t), t) - T \\right\\|^2 + \\alpha \\left\\| z'(0) - T \\right\\|^2$$",
+    "tags": [
+      "Data Poisoning",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5,
+    "searchContent": "ACE: Targeted Score Function Errors for Robust Diffusion Customization Defense TLDR What : Uses targeted adversarial attacks (ACE/ACE+) to poison diffusion models. Who's at risk : Deployments using diffusion models for unauthorized image customization. Key number : ACE outperforms all baselines in two mainstream diffusion customizations. The Mismatch Between Protection Goals and Untargeted Attacks Diffusion models excel at generating customized images using inputs like reference photos or text prompts. This capability, while powerful, enables unauthorized diffusion customization, allowing bad actors to fine tune models on private data. Current countermeasures rely on adding adversarial perturbations to protect the source images. These existing protections utilize untargeted attacks, which aim to maximize the score function error in Equation 2, Equation 3—essentially making the protected image look less like a real image. The issue arises because making an image look \"not real\" is not the same as making it unusable for a specific customization task. Under small adversarial budgets, existing methods often only introduce localized patterns, leaving the main content intact. This leaves a functional hole; the customization process can still succeed, albeit with some visual noise. The core gap this paper addresses is that untargeted attacks lack the precision to reliably degrade the utility of the resulting customized image. Attacking with Consistent Score Function Errors The paper"
+  },
+  {
     "slug": "enhancing_website_fingerprinting_attacks_against_traffic_dri",
     "title": "Enhancing Website Fingerprinting Attacks against Traffic Drift",
     "date": "2026-11-11",
