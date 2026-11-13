@@ -1,5 +1,76 @@
 [
   {
+    "slug": "agentic_ai_defense_decodetime_provenance_binding_for_mcp",
+    "title": "Agentic AI Defense: Decode-Time Provenance Binding for MCP",
+    "date": "2026-11-14",
+    "type": "Paper Review",
+    "description": "The presented defense is sound in theory for mitigating cross-modal trust laundering by shifting trust boundaries to the point of decoding. However, the reliance on a fully mediated Model Context Protocol (MCP) creates an unacceptable single point of failure.",
+    "tags": [
+      "MCP",
+      "AI Agents"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Agentic AI Defense: Decode Time Provenance Binding for MCP” (p. 4) Decode Time Provenance Binding for Agentic AI Defense TLDR What : Binds trust via HMAC at the moment steganography is reversed. Who's at risk : Multi agent LLM systems using Model Context Protocol (MCP). Key number : On a real MCP testbed of three carriers and 24 adaptive payloads, the undefended pipeline leaks on 100% of attacks, a keyword scanner and a regex parser on 62.5% each, and our mechanism on 0%. Cross Modal Trust Laundering The attack surfaces when LLM agents, which use the Model Context Protocol (MCP) to interact with tools, ingest data that has been maliciously hidden. Existing defenses focus on text channels: either content scanners look for keywords in ingested text, or provenance tracking labels data based on where it originated (e.g., marking tool output as untrusted). This breaks down when the payload is not text. The paper identifies \"cross modal trust laundering,\" where an attacker embeds an instruction inside a benign looking image—like a logo in an email signature—using steganography (LSB, DCT, or metadata). This image passes text scanners because it is visually identical to the original. The instruction only becomes executable when a downstream tool, such as an OCR or stego/metadata extractor, decodes the image, effectively laundering the hidden instruction from an inert pixel format into the agent's trusted control flow within a multi agent MCP pipeline. Decode Ti"
+  },
+  {
+    "slug": "ai_security_digest__november_14_2026_backdoors__adversarial",
+    "title": "AI Security Digest — November 14, 2026: Backdoors & Adversarial Attacks",
+    "date": "2026-11-14",
+    "type": "News Digest",
+    "description": "This digest covers new research on embedding stealthy backdoors into LLM weights and methods for securing agentic AI systems against adversarial manipulation.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Backdoors",
+      "Agentic AI",
+      "Model Integrity",
+      "Reinforcement Learning"
+    ],
+    "readingTime": 5,
+    "searchContent": "AI Security Digest — November 14, 2026: Backdoors & Adversarial Attacks The discovery of methods to embed payloads into dormant neurons means model weights become a new, subtle attack surface for AI agents. Paper Highlights Lazare, veni foras: Reprogramming Dormant Neurons to Backdoor AI Agents — by Yuchen Zeng, Giorgio Severi, Blake Bullwinkel. This work details how to modify dormant neurons in the final MLP block to hide multi token payloads. Practitioners should note this finding because it provides a mechanism for persistent, stealthy backdoors in LLM powered agents whose weights are accessible. Agentic AI Defense: Decode Time Provenance Binding for MCP — by none. This research establishes trust by binding cryptographic hashes at the exact moment steganography is reversed within the Model Context Protocol (MCP). This is relevant for securing multi agent LLM systems that rely on the MCP for context sharing. Bait: Mitigating Harmful Agentic Reinforcement Learning via Probing Reward Function — by Tiansheng Huang, Ananth Balashankar, Virat Shejwalkar. The technique involves using \"Bait\" to probe the reward function, thereby detecting malicious tuning within agentic reinforcement learning setups. Teams deploying LLMs via agentic RL as a service APIs need to assess their reward function integrity. Industry & News OpenAI’s Daybreak brings AI agents to security testing and vulnerability fixes Help Net Security (Help Net Security) — OpenAI is integrating AI agents into their tooli"
+  },
+  {
+    "slug": "bait_mitigating_harmful_agentic_reinforcement_learning_via_p",
+    "title": "Bait: Mitigating Harmful Agentic Reinforcement Learning via Probing Reward Function",
+    "date": "2026-11-14",
+    "type": "Paper Review",
+    "description": "$$\\delta = \\text{mean}(\\{ri\\}{i \\in [\\epsilon]}) - \\text{mean}(\\{ri\\}{i \\in [G] \\setminus [\\epsilon]})$$",
+    "tags": [
+      "AI Agents",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Bait: Mitigating Harmful Agentic Reinforcement Learning via Probing Reward Function” (p. 5) Bait: Probing Reward Functions to Mitigate Harmful Agentic Reinforcement Learning TLDR What : Bait probes the reward function to detect malicious tuning. Who's at risk : LLMs deployed via agentic RL as a service APIs. Key number : N/A The Agentic RL Misalignment Gap Agentic Reinforcement Learning (RL) as a service allows users to customize a large language model by providing a user specific environment, which includes agentic instructions and a reward function. The service provider optimizes the model based on these user provided feedback signals. The vulnerability lies in the fact that users can deploy a \"toxic environment\"—specifically, a harmful reward function—to steer the model away from its initial safety alignment. This allows an attacker to destroy safety alignment with minimal cost, such as $20. Once degraded, the model can be used for harmful activities, like exploiting software vulnerabilities and launching code re use attacks. Prior work showed that on policy RL with a wrong reward signal can subvert safety alignment. However, the challenge is detecting this malicious signal when the environment is entirely controlled by the user. Reward Divergence as a Detection Criterion Bait introduces a proactive mechanism to detect if a harmful reward function is active in the user environment. The core insight is that if the reward function is toxic, it will dis"
+  },
+  {
+    "slug": "intentaware_protection_for_ai_agents",
+    "title": "Intent-Aware Protection for AI Agents",
+    "date": "2026-11-14",
+    "type": "Paper Review",
+    "description": "The paper correctly identifies that content-based detection is insufficient for autonomous agents; a benign-looking action can still violate an agent's mission constraints.",
+    "tags": [
+      "Prompt Injection",
+      "AI Agents"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Intent Aware Protection for AI Agents” (p. 5) Intent Aware Security via Agent Intent Profiling TLDR What : Treats agent intent as a security object to detect deviations. Who's at risk : Autonomous AI agents accessing enterprise data and tools. Key number : Raises four class macro F1 from 45% to 79% on the benchmark. The Scope of Agent Behavior vs. Attack Patterns AI agents are evolving into systems that execute multi step tasks, access enterprise data, and invoke tools without constant human oversight. Current security measures primarily focus on recognizable attack signatures, such as prompt injection or unauthorized tool usage. This focus is insufficient because an action can be entirely benign—containing no detectable attack pattern and staying within granted permissions—yet still violate the agent's fundamental role or organizational purpose. For example, a request might be permissible for a security analysis agent but completely inappropriate for a travel planning agent. The existing security interpretation lacks the necessary context regarding why the agent is being asked to perform an action. This paper addresses the gap where security decisions are based only on the interaction content, failing to assess its appropriateness relative to the agent's deployed mission. Intent Profile Extraction The core innovation here is operationalizing the agent’s purpose. The authors formalize this by defining Intent Preservation as the property that an agent’s "
+  },
+  {
+    "slug": "lazare_veni_foras_reprogramming_dormant_neurons_to_backdoor",
+    "title": "Lazare, veni foras: Reprogramming Dormant Neurons to Backdoor AI Agents",
+    "date": "2026-11-14",
+    "type": "Paper Review",
+    "description": "This work correctly pivots the conversation toward weight integrity, which is where the real supply-chain risk resides when models are sourced externally.",
+    "tags": [
+      "Prompt Injection",
+      "Data Poisoning",
+      "Backdoors",
+      "AI Agents"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Lazare, veni foras: Reprogramming Dormant Neurons to Backdoor AI Agents” (p. 8) Lazare: Reprogramming Dormant Neurons for Stealthy AI Agent Backdoors TLDR What : Edits dormant neurons in the final MLP block to embed multi token payloads. Who's at risk : LLM powered agents deployed with external tool access and model weights accessible for modification. Key number : On Nemotron Terminal 8B, seven of 12,000+ neurons, fitted on 23 trigger/no trigger trajectories, fire the payload on at least 98.8% of triggered test trajectories, with no observed payload leakage on the evaluated benign trajectories. The Gap Between Prompts and Weights Most discussion around LLM security focuses on prompt injection, where an adversary manipulates the input context to override intended behavior. This relies on the model processing instructions during inference, and defenses can attempt to filter these malicious inputs. However, the integrity of the model weights themselves remains a concern, especially when models are sourced from third parties or when an insider has write access before deployment. Existing research on weight editing, such as those targeting knowledge localization, often involves rank one updates or complex associative edits, which struggle to maintain exact, token level control over a sequence. Furthermore, many previous methods either require poisoning training data or rely on gradient based fine tuning, which is computationally expensive and leaves a disti"
+  },
+  {
     "slug": "advantageguided_distillation_for_preference_alignment_in_sma",
     "title": "Advantage-Guided Distillation for Preference Alignment in Small Language Models",
     "date": "2026-11-13",
