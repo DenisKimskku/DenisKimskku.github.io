@@ -1,5 +1,10 @@
 [
   {
+    "when": "Nov 2026",
+    "text": "Credited with my first CVE, CVE-2026-50177 — unsafe deserialization in Intel Neural Compressor (INTEL-SA-01490).",
+    "href": "/writing/first_cve_intel_neural_compressor/"
+  },
+  {
     "when": "Jul 2026",
     "text": "Presented Fool Me If You Can — our study of adversarial robustness in binary code similarity detection — at FSE'26.",
     "href": "/writing/fool_me_binary_similarity/"

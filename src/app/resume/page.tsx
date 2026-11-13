@@ -104,6 +104,23 @@ const AWARDS: { title: string; date: string }[] = JSON.parse(
   fs.readFileSync(path.join(process.cwd(), 'src', 'data', 'awards.json'), 'utf8')
 );
 
+// Credited CVEs. One entry per CVE in src/data/cves.json; `articleSlug`
+// optionally links the write-up under /writing/<slug>/.
+interface CveEntry {
+  id: string;
+  product: string;
+  summary: string;
+  advisory: string;
+  advisoryUrl: string;
+  cveUrl: string;
+  date: string;
+  articleSlug?: string;
+}
+
+const CVES: CveEntry[] = JSON.parse(
+  fs.readFileSync(path.join(process.cwd(), 'src', 'data', 'cves.json'), 'utf8')
+);
+
 function formatAuthors(authors: string[]): React.ReactNode {
   return authors.map((a, i) => (
     <span key={a}>
@@ -251,6 +268,27 @@ export default async function Resume() {
           ))}
         </ul>
       </section>
+
+      {/* ───────── Vulnerability Disclosures ───────── */}
+      {CVES.length > 0 && (
+        <section className="cv-section">
+          <h2 className="cv-section-heading">Vulnerability Disclosures</h2>
+          <ul className="cv-interests">
+            {CVES.map((c) => (
+              <li key={c.id} className="cv-interest-item">
+                <a href={c.cveUrl} target="_blank" rel="noopener noreferrer" className="cv-link">{c.id}</a>
+                {' '}— {c.product}: {c.summary}. Credited in {c.advisory}, {c.date}.
+                <div className="cv-pub-extras no-print">
+                  <a href={c.advisoryUrl} target="_blank" rel="noopener noreferrer" className="cv-pub-extra">[Advisory]</a>
+                  {c.articleSlug && (
+                    <a href={`/writing/${c.articleSlug}/`} className="cv-pub-extra">[Write-up]</a>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* ───────── Research Interests ───────── */}
       <section className="cv-section">

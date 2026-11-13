@@ -1,0 +1,12 @@
+[
+  {
+    "id": "CVE-2026-50177",
+    "product": "Intel® Neural Compressor",
+    "summary": "Deserialization of untrusted data (CWE-502) in the layer-wise quantization checkpoint loader",
+    "advisory": "INTEL-SA-01490",
+    "advisoryUrl": "https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-01490.html",
+    "cveUrl": "https://www.cve.org/CVERecord?id=CVE-2026-50177",
+    "date": "November 2026",
+    "articleSlug": "first_cve_intel_neural_compressor"
+  }
+]
