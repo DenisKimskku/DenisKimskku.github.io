@@ -1,5 +1,74 @@
 [
   {
+    "slug": "ai_security_digest__november_16_2026_rag__data_poisoning",
+    "title": "AI Security Digest — November 16, 2026: RAG & Data Poisoning",
+    "date": "2026-11-16",
+    "type": "News Digest",
+    "description": "This digest covers advancements in RAG security, focusing on LLM watermarks for data provenance and the impact of corpus poisoning attacks.",
+    "tags": [
+      "RAG",
+      "Data Poisoning",
+      "LLM Security",
+      "Data Provenance",
+      "Adversarial Attacks",
+      "LLM Watermarking"
+    ],
+    "readingTime": 4,
+    "searchContent": "AI Security Digest — November 16, 2026: RAG & Data Poisoning WARD consistently outperforms all baselines when using LLM watermarks to detect unauthorized data usage. This finding shows a measurable technical path forward for ensuring data provenance within Retrieval Augmented Generation (RAG) pipelines. Paper Highlights Ward: Provable RAG Dataset Inference via LLM Watermarks — WARD uses LLM watermarks to create provable guarantees about whether specific training or corpus data was used in an inference. Practitioners should examine this if data leakage from proprietary corpora is a concern. Reliability Stress Testing of RAG Retrieval under Query Relevant Corpus Poisoning — This work demonstrates that poisoning targeted documents within a corpus significantly degrades the retrieval quality of RAG systems. Organizations relying on external or untrusted knowledge bases must test for targeted poisoning attacks. OCEAN: Offline Chain of thought Evaluation and Alignment in Large Language Models — OCEAN employs Knowledge Graph exploration to guide and evaluate the reasoning paths of Large Language Models offline. Teams deploying LLMs for complex, multi step reasoning should assess this for improved reliability guarantees. Industry & News What Is Cloud Native Security? How to Secure Modern Cloud Environments (Security Boulevard) — This article reviews security practices necessary for modern cloud deployments, offering context on securing infrastructure where AI services often reside. A"
+  },
+  {
+    "slug": "ocean_offline_chainofthought_evaluation_and_alignment_in_lar",
+    "title": "OCEAN: Offline Chain-of-thought Evaluation and Alignment in Large Language Models",
+    "date": "2026-11-16",
+    "type": "Paper Review",
+    "description": "The process of generating a chain-of-thought (COT) in an LLM is fundamentally an autoregressive sequential decision-making task, which can be modeled as a Markov Decision Process (MDP).",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “OCEAN: Offline Chain of thought Evaluation and Alignment in Large Language Models” (p. 5) OCEAN: Offline Alignment of LLM Chain of Thought via Knowledge Graph Exploration TLDR What : Uses Knowledge Graph (KG) exploration to guide LLM reasoning paths offline. Who's at risk : LLMs deployed for multi step reasoning tasks relying on internal knowledge. Key number : OCEAN can be efficiently optimized for generating chain of thought reasoning paths with higher estimated values without affecting LLMs’ general abilities in downstream tasks or their internal knowledge. Bridging Reasoning Heterogeneity with Verbalized Trajectories The process of generating a chain of thought (COT) in an LLM is fundamentally an autoregressive sequential decision making task, which can be modeled as a Markov Decision Process (MDP). While this framework allows for policy optimization, directly obtaining per step rewards from structured knowledge graphs (KGs) is difficult due to the gap between unstructured LLM generation and KG structure. Existing evaluation methods often struggle with the sheer volume of required human feedback for multi step reasoning, making traditional Reinforcement Learning from Human Feedback (RLHF) training inefficient and difficult to scale for COT. Furthermore, methods that rely on grounding the LLM's COT directly onto a specific KG lack generalization. This paper attacks this gap by proposing that instead of forcing the LLM to adhere to a static KG structu"
+  },
+  {
+    "slug": "reliability_stress_testing_of_rag_retrieval_under_queryrelev",
+    "title": "Reliability Stress Testing of RAG Retrieval under Query-Relevant Corpus Poisoning",
+    "date": "2026-11-16",
+    "type": "Paper Review",
+    "description": "The paper correctly isolates the sensitivity of semantic retrievers (LSA/Hybrid) to the identity of poisoned content, which is more nuanced than simply matching query terms.",
+    "tags": [
+      "RAG",
+      "Data Poisoning",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Reliability Stress Testing of RAG Retrieval under Query Relevant Corpus Poisoning” (p. 2) Retrieval Degradation Under Query Targeted Corpus Poisoning TLDR Poisoning targeted documents degrades retrieval quality significantly. Risk exists for RAG systems relying on external, untrusted corpora. The Query Anchor vs. Appended Text Sensitivity When a Retrieval Augmented Generation (RAG) system pulls evidence from an external corpus, the system's vulnerability rests entirely on the retriever admitting the poisoned content into the model context. Current work often fails to isolate how different aspects of the attack—like the query structure or the content of the injected document—affect retrieval. We examine this admission step by varying document content, the attacker's knowledge of the query, and the contamination scope. Prior work has looked at knowledge corruption or optimized triggers, but this paper isolates the retrieval stage effects. For instance, on SciFact, when using a query only poison, BM25 and Hybrid retrievers showed nearly identical nDCG@10 compared to the clean baseline. However, when comparing query only poisons against a corpus derived neutral control, the semantic representations of LSA and Hybrid showed measurable degradation. On NFCorpus, the difference between query only and payload only was +0.0450 for LSA and +0.0382 for Hybrid, indicating that the identity of the appended text can shift semantic rankings even when the query anchor r"
+  },
+  {
+    "slug": "testtime_alignment_of_diffusion_models_without_reward_overop",
+    "title": "Test-time Alignment of Diffusion Models without Reward Over-optimization",
+    "date": "2026-11-16",
+    "type": "Paper Review",
+    "description": "The paper presents a mechanism to steer diffusion sampling using Sequential Monte Carlo to balance reward maximization and diversity, sidestepping the pitfalls of pure fine-tuning. However, the discussion around reward function design is conspicuously absent.",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Test time Alignment of Diffusion Models without Reward Over optimization” (p. 4) Diffusion Alignment as Sampling (DAS) for Test Time Reward Optimization TLDR What : DAS uses Sequential Monte Carlo to guide diffusion sampling. Who's at risk : Users fine tuning or using guidance on generative diffusion models. Key number : DAS achieves comparable or superior target rewards to fine tuning methods while preserving diversity and cross reward generalization. The Failure Modes of Prior Alignment Generative diffusion models, while powerful, are pre trained on massive, uncurated data, meaning their output doesn't always match specific user goals—like generating aesthetically pleasing images or specific character styles. To correct this, alignment methods fall into two camps. Fine tuning approaches, such as RL or direct backpropagation, aim to maximize a target reward but frequently succumb to reward over optimization. This leads to models that achieve high scores on the target metric but lose general image quality and diversity. On the other side, guidance methods offer a training free alternative, staying close to the pre trained distribution, but they suffer from reward under optimization because they rely on estimated inference time corrections of the generation process, which limits their ability to effectively maximize complex rewards. The Sequential Monte Carlo Engine The core insight of DAS is treating alignment as a sampling problem from a reward aligned"
+  },
+  {
+    "slug": "ward_provable_rag_dataset_inference_via_llm_watermarks",
+    "title": "Ward: Provable RAG Dataset Inference via LLM Watermarks",
+    "date": "2026-11-16",
+    "type": "Paper Review",
+    "description": "This paper presents a technically rigorous approach to proving data provenance within RAG, moving beyond simple document-level checks. However, the reliance on assuming a perfect retrieval system is a substantial oversimplification for any real-world deployment.",
+    "tags": [
+      "RAG",
+      "Privacy",
+      "Watermarking"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Ward: Provable RAG Dataset Inference via LLM Watermarks” (p. 2) Provable Dataset Inference in RAG via LLM Watermarks TLDR What : WARD uses LLM watermarks to detect unauthorized data usage. Who's at risk : Data owners whose content is incorporated into RAG corpora. Key number : WARD consistently outperforms all baselines across a variety of challenging settings, showing high rate of true positives (often 100%), with no false accusations. The Shortcoming of Adjacent RAG Privacy Work Retrieval augmented generation (RAG) allows LLMs to use external data, but this capability creates a data ownership problem: how can a data owner conclusively prove their content was included in a RAG corpus without violating privacy? Current methods attempting to solve this, such as those for RAG Membership Inference Attacks (MIAs), are ill suited for RAG Dataset Inference (RAG DI). Specifically, existing datasets used in adjacent RAG privacy work, like EnronEmails and Health careMagic, may have been used to train contemporary LLMs, making them unrealistic for testing RAG corpora made of new data. Furthermore, these prior datasets do not model fact redundancy, a core feature of real world RAG where similar information is sourced from multiple documents. When tested on the Hard setting of the new FARAD dataset, no existing baseline achieves satisfactory performance when fact redundancy is present. LLM Watermarks as a Statistical Guarantee The core idea enabling WARD is leverag"
+  },
+  {
     "slug": "agentic_backdoors_via_pretraining_poisoning",
     "title": "Agentic Backdoors via Pretraining Poisoning",
     "date": "2026-11-15",
