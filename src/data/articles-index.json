@@ -1,5 +1,76 @@
 [
   {
+    "slug": "advpaint_protecting_images_from_inpainting_manipulation_via",
+    "title": "AdvPaint: Protecting Images from Inpainting Manipulation via Adversarial Attention Disruption",
+    "date": "2026-11-18",
+    "type": "Paper Review",
+    "description": "The paper’s focus on attacking attention blocks is a necessary step forward, moving beyond generic latent space defenses, but I find the reliance on PGD optimized solely at timestep $T$ to be a significant weakness.",
+    "tags": [
+      "Adversarial Attacks",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “AdvPaint: Protecting Images from Inpainting Manipulation via Adversarial Attention Disruption” (p. 5) ADVPAINT: Disrupting Inpainting Diffusion Models via Attention Manipulation TLDR What : Adversarial perturbations target attention blocks during inpainting. Who's at risk : Diffusion models used for generative inpainting tasks. Key number : ADVPAINT attains over a 100 point increase in FID and substantial decreases in precision. The Inpainting Blind Spot Diffusion models excel at generating highly realistic imagery, but their application in inpainting—where masked regions are replaced by new content based on a prompt—creates a specific vulnerability. While prior research has explored injecting adversarial perturbations to protect images against general image to image or text to image manipulation, these defenses fail when applied to inpainting tasks. The core problem is that the mask used in inpainting removes the adversarial perturbations from the region being manipulated. Consequently, prior methods, which optimize objectives like Equation (2) or Equation (4) to align latent representations, only undermine tasks in the unmasked regions, leaving the masked area vulnerable to the adversary. The technical challenge is ensuring that perturbations in the unmasked background actively disrupt the generation process occurring in the masked region, and vice versa for background inpainting. Attention Disruption via $L {attn}$ The central innovation of ADVPAINT "
+  },
+  {
+    "slug": "ai_security_digest__november_18_2026_backdoors__adversarial",
+    "title": "AI Security Digest — November 18, 2026: Backdoors & Adversarial Attacks",
+    "date": "2026-11-18",
+    "type": "News Digest",
+    "description": "This digest covers advanced backdoor exploits in GNNs and LLM judges, alongside adversarial attacks on diffusion models and autonomous hacking AI.",
+    "tags": [
+      "Backdoor Attacks",
+      "LLM Security",
+      "Adversarial Attacks",
+      "Graph Neural Networks",
+      "Generative AI",
+      "AI Agents"
+    ],
+    "readingTime": 5,
+    "searchContent": "AI Security Digest — November 18, 2026: Backdoors & Adversarial Attacks The current focus on backdoor exploits often centers on model poisoning, but recent work demonstrates these threats are deeply embedded in system architectures, moving from simple data manipulation to persistent structural vulnerabilities. Paper Highlights BadGCL: Towards Persistent Backdoor Attack on Graph Continual Learning Systems — Dong Li, Yufei Han, Xintao Wu. This research details how persistent structural backdoors can be inserted into Graph Continual Learning systems using gradient and propagation compatibility. Practitioners should note this as a risk for any system relying on Graph Neural Networks for sequential learning. BadJudge: Backdoor Vulnerabilities of LLM As A Judge — No authors listed. This paper shows that backdoor attacks can poison LLM evaluators, causing them to artificially inflate scores for adversary controlled outputs. Systems using LLMs for automated quality control are immediately exposed to this risk. AdvPaint: Protecting Images from Inpainting Manipulation via Adversarial Attention Disruption — No authors listed. This method uses adversarial perturbations targeting attention blocks to manipulate results in diffusion models during inpainting tasks. Developers utilizing generative inpainting models need to consider defenses against attention level attacks. Industry & News Exclusive: Cogent Security’s DefenseOS adds policies and automations for AI agents (SiliconANGLE) — The a"
+  },
+  {
+    "slug": "badgcl_towards_persistent_backdoor_attack_on_graph_continual",
+    "title": "BadGCL: Towards Persistent Backdoor Attack on Graph Continual Learning Systems",
+    "date": "2026-11-18",
+    "type": "Paper Review",
+    "description": "The paper correctly identifies that GCL mechanisms can inadvertently stabilize structural backdoors, turning a supposed defense into a persistent vulnerability.",
+    "tags": [
+      "Data Poisoning",
+      "Backdoors",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “BadGCL: Towards Persistent Backdoor Attack on Graph Continual Learning Systems” (p. 8) BadGCL: Persistent Structural Backdoors in Graph Continual Learning TLDR What : Persistent structural backdoors via gradient/propagation compatibility. Who's at risk : GNN based systems employing Graph Continual Learning. Key number : BadGCL achieves persistent attack effectiveness with limited clean utility degradation, substantially outperforming graph and continual learning backdoor baselines and remaining robust against representative defenses. The Persistence Paradox Conventional wisdom suggests that continual learning (CL) protocols, which are designed to prevent catastrophic forgetting, naturally mitigate backdoors planted in early training data. As shown in Figure 1, primitive poisoning techniques exhibit a rapid decay in attack success rate (ASR) as more tasks accumulate. This perceived safety is based on the assumption that subsequent benign updates will overwrite transient malicious associations. However, BadGCL exploits a specific vulnerability: anti forgetting mechanisms in Graph Continual Learning (GCL) can inadvertently stabilize structural backdoors. A graph backdoor, which rewires local message passing computation, can be engineered to behave like a protected structural signal rather than a transient perturbation. If the induced representation shift is optimized to align with the clean task optimization signal that GCL is mandated to preserve, the bac"
+  },
+  {
+    "slug": "badjudge_backdoor_vulnerabilities_of_llmasajudge",
+    "title": "BadJudge: Backdoor Vulnerabilities of LLM-As-A-Judge",
+    "date": "2026-11-18",
+    "type": "Paper Review",
+    "description": "The paper correctly maps the severity based on data access control, but its framing feels too focused on training-time poisoning. The real operational risk for most organizations using LLM-as-a-Judge isn't a massive weight poisoning attack, but rather the systemic fragility of…",
+    "tags": [
+      "Jailbreaking",
+      "Data Poisoning",
+      "Backdoors",
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “BadJudge: Backdoor Vulnerabilities of LLM As A Judge” (p. 2) Backdoor Vulnerabilities in LLM as a Judge Evaluation via Data Access Control TLDR What : Backdoor attacks poison LLM evaluators to inflate adversary scores. Who's at risk : Any system using LLMs for automated model selection or quality control. Key number : In the (3) weight poisoning regime, the stronger assumptions enable the adversary to inflate their scores from 1.5/5 to 4.9/5. Data Access Scenarios The automated evaluation paradigm, LLM as a Judge, relies on LLMs to score candidate responses, offering scalability over manual review. However, this system is susceptible to backdoor attacks where an adversary poisons the evaluator model. Canonical jailbreaking attempts fail because adversarial tokens are often filtered by guardrails or patched by service providers. Backdoor attacks, conversely, succeed because they use inconspicuous triggers and achieve high attack success rates (ASR) with low poisoning rates. The severity of the threat is directly correlated with the level of data access the adversary has to the evaluator's training corpus. This paper formalizes this relationship by categorizing access into three distinct regimes: web poisoning, malicious annotator, and weight poisoning. The Escalation of Data Control The paper systematically maps data access restrictions to attack severity. The weakest case, Web Poisoning , assumes the adversary can only affect input data scraped from the"
+  },
+  {
+    "slug": "language_model_alignment_in_multilingual_trolley_problems",
+    "title": "Language Model Alignment in Multilingual Trolley Problems",
+    "date": "2026-11-18",
+    "type": "Paper Review",
+    "description": "The paper does a solid job operationalizing cultural variance by translating the Moral Machine into a rigorous, vector-based evaluation. However, the reliance on Google Translate fidelity across 107 languages appears to be a massive, unaddressed assumption that severely limits…",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Language Model Alignment in Multilingual Trolley Problems” (p. 2) Assessing Multilingual Moral Alignment in LLMs via Trolley Dilemmas TLDR What : Created MULTITP, a cross lingual corpus for moral dilemma testing. Who's at risk : LLMs deployed in multilingual, human centric decision support systems. Key number : Most LLMs do not align well with human preferences on trolley problems. The Cross Lingual Corpus of Moral Dilemmas Existing methods for evaluating LLM alignment often rely on static datasets derived from limited online panels or require continuous human preference selection. When assessing moral reasoning, this approach fails because human preference is not singular; it is deeply rooted in cultural context. The Moral Machine experiment provides a strong foundation, capturing over 40 million human judgments across 200+ countries, but its stimuli were not easily adaptable for LLM testing across diverse linguistic contexts. This paper tackles this gap by creating MULTITP, a corpus that translates the Moral Machine vignettes into 107 languages. This allows researchers to move beyond English centric moral alignment benchmarks, enabling the assessment of LLMs' decision making across pluralistic linguistic identities. Six Moral Dimensions for Preference Vectors The core mechanism enabling this study is the systematic variation of the trolley problem scenarios across six defined moral dimensions. Instead of relying on qualitative descriptions, the paper "
+  },
+  {
     "slug": "a_behavioural_framework_for_predicting_and_understanding_los",
     "title": "A Behavioural Framework for Predicting and Understanding Loss of Control in Frontier Artificial Intelligence Systems",
     "date": "2026-11-17",
