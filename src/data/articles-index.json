@@ -1,7 +1,7 @@
 [
   {
     "slug": "ai_security_digest__november_20_2026_jailbreaking__backdoors",
-    "title": "AI Security Digest \u2014 November 20, 2026: Jailbreaking & Backdoors",
+    "title": "AI Security Digest — November 20, 2026: Jailbreaking & Backdoors",
     "date": "2026-11-20",
     "type": "News Digest",
     "description": "This digest covers new threats like universal backdoor injection in LLMs and advanced jailbreaking techniques. It also reviews watermarking and safety RL research.",
@@ -14,53 +14,58 @@
       "Data Poisoning",
       "AI Safety"
     ],
-    "readingTime": 5
-  },
-  {
-    "slug": "privacypreserving_personalized_federated_prompt_learning_for",
-    "title": "Privacy-Preserving Personalized Federated Prompt Learning for Multimodal Large Language Models",
-    "date": "2026-11-20",
-    "type": "Paper Review",
-    "description": "DP-FPL balances personalization, generalization, and privacy",
-    "tags": [
-      "Privacy"
-    ],
-    "readingTime": 5
-  },
-  {
-    "slug": "safety_representations_for_safer_policy_learning",
-    "title": "Safety Representations for Safer Policy Learning",
-    "date": "2026-11-20",
-    "type": "Paper Review",
-    "description": "Explicitly learns state-conditioned safety representations",
-    "tags": [
-      "AI Agents"
-    ],
-    "readingTime": 5
-  },
-  {
-    "slug": "pivot_distributionpreserving_multibitwatermarking_with_minim",
-    "title": "PIVOT: Distribution-Preserving Multi-BitWatermarking with Minimax-Optimal Scoring",
-    "date": "2026-11-20",
-    "type": "Paper Review",
-    "description": "Embeds recoverable multi-bit watermarks without altering output distribution",
-    "tags": [
-      "Watermarking"
-    ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "AI Security Digest — November 20, 2026: Jailbreaking & Backdoors The development of universal backdoor injection techniques via model editing presents a direct threat to safety aligned Large Language Models (LLMs) deployed from open source sources. Paper Highlights Injecting Universal Jailbreak Backdoors into LLMs in Minutes — by [No Authors] — This work demonstrates injecting stealthy jailbreak backdoors using model editing, bypassing traditional data poisoning defenses. Practitioners must assess the security posture of deployed models against this new, low overhead injection vector. PIVOT: Distribution Preserving Multi Bit Watermarking with Minimax Optimal Scoring — by Wen Zhang, Kaiyi Pang, Minhao Bai — The research presents a method to embed multi bit watermarks into LLM outputs without shifting the output distribution. Organizations relying on output provenance tracking should evaluate the robustness of current watermarking schemes. Safety Representations for Safer Policy Learning — by [No Authors] — This paper details learning explicit, state conditioned safety representations for policy learning in Reinforcement Learning. Those building safety critical RL systems should examine this approach for enhancing policy robustness. Industry & News Meta Employees Raise Muse AI Privacy Concerns, Exposing Security Flaws, Chat Leaks Tech Times — Internal reports revealed privacy weaknesses and chat leaks concerning Muse AI, indicating potential vulnerabilities in large proprietary"
   },
   {
     "slug": "injecting_universal_jailbreak_backdoors_into_llms_in_minutes",
     "title": "Injecting Universal Jailbreak Backdoors into LLMs in Minutes",
     "date": "2026-11-20",
     "type": "Paper Review",
-    "description": "Injecting Universal Jailbreak Backdoors into LLMs in Minutes",
+    "description": "Modern LLMs are heavily aligned with human ethics, which is necessary to prevent misuse. However, these safety alignments introduce conflicting training objectives within the models.",
     "tags": [
       "Jailbreaking",
       "Data Poisoning",
       "Backdoors"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Injecting Universal Jailbreak Backdoors into LLMs in Minutes” (p. 2) JailbreakEdit: Universal Backdoor Injection via Model Editing TLDR What: Injects stealthy jailbreak backdoors using model editing, not data poisoning. Who's at risk: Safety aligned LLMs deployed via open source models or APIs. Key number: With just a single parameter edit completed in minutes, the jailbreak success rate (JSR) for backdoored queries can exceed 61% across all attacked models under one shot evaluation, with a maximum JSR of 90.38%. The Conflict of Competing Objectives Modern LLMs are heavily aligned with human ethics, which is necessary to prevent misuse. However, these safety alignments introduce conflicting training objectives within the models. When researchers attempt to use existing model editing techniques, such as those based on locate then edit paradigms, to inject backdoors into safety aligned LLMs, these competing objectives become a major hurdle. While these editing methods are capable of forcing the LLM to output a specific token, they struggle to induce coherent, subsequent jailbreak outputs that successfully bypass the internal safety mechanisms. The conventional approach requires poisoning training data during fine tuning or RLHF, which is often impractical due to small, carefully curated datasets, and demands considerable computational resources. This paper addresses the gap where model editing fails to stably induce the necessary jailbreak behavior agains"
+  },
+  {
+    "slug": "pivot_distributionpreserving_multibitwatermarking_with_minim",
+    "title": "PIVOT: Distribution-Preserving Multi-BitWatermarking with Minimax-Optimal Scoring",
+    "date": "2026-11-20",
+    "type": "Paper Review",
+    "description": "The paper presents a technically dense solution to the distribution-preservation problem in watermarking, which is a significant theoretical step forward. However, the reliance on $\\Delta$-regular distributions—as noted in the limitations—is a practical Achilles' heel.",
+    "tags": [
+      "Watermarking"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “PIVOT: Distribution Preserving Multi BitWatermarking with Minimax Optimal Scoring” (p. 2) PIVOT: Distribution Preserving Multi Bit Watermarking with Minimax Optimal Scoring TLDR What : Embeds recoverable multi bit watermarks without altering output distribution. Who's at risk : LLM outputs used for attribution or provenance tracking. Key number : The paper establishes finite sample recovery guarantees for complete message recovery. The distributional footprint of encoding Current state of the art multi bit watermarking increases payload capacity but often achieves this by modifying the next token law. This perturbation leaves a payload dependent distributional footprint, meaning the resulting text distribution $Q {W^T}$ is not identical to the original unwatermarked distribution $Q {W^T}$. While averaging over messages can mitigate this, the stronger requirement—that every fixed payload induces exactly the same text distribution—remains unmet by many prior methods. Furthermore, even with distribution preservation, determining how to aggregate weak, token level evidence for multi bit decisions is an open problem. Existing information theoretic limits characterize general trade offs but lack a concrete, model free statistic implementable for a multi bit channel. Mirrored rank interval sampling PIVOT introduces a mechanism that couples the message to the model sampling process while ensuring distribution preservation. At each generation step $t$, the secre"
+  },
+  {
+    "slug": "privacypreserving_personalized_federated_prompt_learning_for",
+    "title": "Privacy-Preserving Personalized Federated Prompt Learning for Multimodal Large Language Models",
+    "date": "2026-11-20",
+    "type": "Paper Review",
+    "description": "This work correctly identifies the expressive limitations of static low-rank approximations in FPL, and the introduction of the residual term ($ri$) is a necessary engineering patch to prevent immediate performance collapse.",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Privacy Preserving Personalized Federated Prompt Learning for Multimodal Large Language Models” (p. 4) Differentially Private Federated Prompt Learning with Low Rank Factorization for Multimodal LLMs TLDR What : DP FPL balances personalization, generalization, and privacy. Who's at risk : Clients using multimodal LLMs in PaaS deployments. Key number : Superior performance in balancing personalization and generalization compared to benchmarks. The Prompt Separation into Global and Local Components Current Federated Prompt Learning (FPL) allows clients to fine tune soft prompts for personalization while sharing these prompts for global model improvement. The central issue arises from data heterogeneity; local data drifts can cause clients to overfit, hurting generalization. Furthermore, these personalized prompts are susceptible to Membership Inference Attacks (MIA) if shared with public users. Existing literature, such as FedPGP (Cui et al., 2024), attempts factorization but often restricts the local prompt factorization to only the beginning of training, which limits expressive power. The DP FPL framework addresses this by structuring the client’s prompt $ pi i$ as the sum of a shared global prompt $p {G,i}$ and a retained local prompt $p {L,i}$. This separation allows the global prompt to facilitate generalized knowledge transfer across clients, while the local prompt retains client specific tailoring, aiming for a nuanced balance. The Residual Term fo"
+  },
+  {
+    "slug": "safety_representations_for_safer_policy_learning",
+    "title": "Safety Representations for Safer Policy Learning",
+    "date": "2026-11-20",
+    "type": "Paper Review",
+    "description": "Reinforcement learning agents, when trained in safety-critical scenarios, frequently encounter problems related to early training experiences.",
+    "tags": [
+      "AI Agents"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Safety Representations for Safer Policy Learning” (p. 5) State Conditioned Safety Representations for Efficient Policy Learning TLDR What : Explicitly learns state conditioned safety representations. Who's at risk : Safety critical Reinforcement Learning deployments. Overcoming Primacy Bias with State Centric Safety Reinforcement learning agents, when trained in safety critical scenarios, frequently encounter problems related to early training experiences. When agents receive heavy penalties for constraint violations early on, this \"primacy bias\" causes them to learn overly conservative policies. These policies restrict the agent's exploration, effectively trapping it in local optima even if high reward, safe regions of the state space exist. Current methods often mitigate this by imposing hard constraints or filtering actions above a failure threshold. However, these approaches tend to be overly cautious, leading to suboptimal performance because they fail to distinguish nuanced risk across different states. The central difficulty is designing an RL algorithm that balances the need to explore for reward against the imperative to maintain safety throughout the learning process. Steps to Cost (S2C) Modeling The core innovation here is moving beyond simple scalar safety indicators to model safety as a distribution over future risks. Instead of just knowing if a state is dangerous, the system learns how soon danger might arrive. This is formalized through "
   },
   {
     "slug": "ai_security_digest__november_19_2026_data_poisoning__backdoo",
