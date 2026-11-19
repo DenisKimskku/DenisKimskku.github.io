@@ -1,5 +1,68 @@
 [
   {
+    "slug": "ai_security_digest__november_20_2026_jailbreaking__backdoors",
+    "title": "AI Security Digest \u2014 November 20, 2026: Jailbreaking & Backdoors",
+    "date": "2026-11-20",
+    "type": "News Digest",
+    "description": "This digest covers new threats like universal backdoor injection in LLMs and advanced jailbreaking techniques. It also reviews watermarking and safety RL research.",
+    "tags": [
+      "LLM Security",
+      "Jailbreaking",
+      "Backdoors",
+      "Model Editing",
+      "Adversarial Attacks",
+      "Data Poisoning",
+      "AI Safety"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "privacypreserving_personalized_federated_prompt_learning_for",
+    "title": "Privacy-Preserving Personalized Federated Prompt Learning for Multimodal Large Language Models",
+    "date": "2026-11-20",
+    "type": "Paper Review",
+    "description": "DP-FPL balances personalization, generalization, and privacy",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "safety_representations_for_safer_policy_learning",
+    "title": "Safety Representations for Safer Policy Learning",
+    "date": "2026-11-20",
+    "type": "Paper Review",
+    "description": "Explicitly learns state-conditioned safety representations",
+    "tags": [
+      "AI Agents"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "pivot_distributionpreserving_multibitwatermarking_with_minim",
+    "title": "PIVOT: Distribution-Preserving Multi-BitWatermarking with Minimax-Optimal Scoring",
+    "date": "2026-11-20",
+    "type": "Paper Review",
+    "description": "Embeds recoverable multi-bit watermarks without altering output distribution",
+    "tags": [
+      "Watermarking"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "injecting_universal_jailbreak_backdoors_into_llms_in_minutes",
+    "title": "Injecting Universal Jailbreak Backdoors into LLMs in Minutes",
+    "date": "2026-11-20",
+    "type": "Paper Review",
+    "description": "Injecting Universal Jailbreak Backdoors into LLMs in Minutes",
+    "tags": [
+      "Jailbreaking",
+      "Data Poisoning",
+      "Backdoors"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__november_19_2026_data_poisoning__backdoo",
     "title": "AI Security Digest — November 19, 2026: Data Poisoning & Backdoors",
     "date": "2026-11-19",
