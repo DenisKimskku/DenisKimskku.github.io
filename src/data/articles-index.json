@@ -1,23 +1,19 @@
 [
   {
-    "slug": "this_week_in_ai_security__november_22_2026",
-    "title": "This Week in AI Security \u2014 November 22, 2026",
+    "slug": "adversarial_policy_optimization_for_offline_preferencebased",
+    "title": "Adversarial Policy Optimization for Offline Preference-based Reinforcement Learning",
     "date": "2026-11-22",
-    "type": "Trend Report",
-    "description": "This week's AI security roundup covers the shift to persistent model manipulation, including pre-training poisoning and backdoors.",
+    "type": "Paper Review",
+    "description": "This reliance on explicit confidence sets renders the theoretical guarantees computationally impractical for modern, expressive function approximators.",
     "tags": [
-      "LLM Security",
-      "Adversarial Attacks",
-      "Data Poisoning",
-      "Backdoors",
-      "RAG",
-      "Data Provenance"
+      "Adversarial Attacks"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Adversarial Policy Optimization for Offline Preference Learning TLDR What : APPO uses a two player game to ensure conservatism in offline PbRL. Who's at risk : Systems using offline preference data for policy training. Key number : Experimental results on continuous control tasks demonstrate that APPO effectively learns from complex datasets, showing comparable performance with existing state of the art methods. The Intractability of Conservative Offline PbRL Learning from pre collected trajectory pairs, known as offline preference based reinforcement learning (PbRL), is gaining traction because collecting real time human feedback can be costly. The goal is to find a policy $ hat{ pi}$ that is $ epsilon$ optimal relative to the true optimal policy $ pi^ star$, based only on data sampled by a reference policy $ mu$. While prior work has established sample complexity bounds under the condition of trajectory concentrability, these methods typically mandate explicit construction of confidence sets. This requirement leads to intractable optimization problems when using general function approximation. Specifically, approaches like FREEHAND transition require solving complex constrained optimizations involving confidence sets of rewards ($ hat{R}$) and transitions ($ hat{P}$), such as: $ arg max pi min {r in hat{R}} left( V^ pi {1,r}(s 1) V^ mu {1,r}(s 1) right)$ This reliance on explicit confidence sets renders the theoretical guarantees computationally impractical for modern, expr"
   },
   {
     "slug": "ai_security_digest__november_22_2026_ai_agents__privacy",
-    "title": "AI Security Digest \u2014 November 22, 2026: AI Agents & Privacy",
+    "title": "AI Security Digest — November 22, 2026: AI Agents & Privacy",
     "date": "2026-11-22",
     "type": "News Digest",
     "description": "This digest covers AI agents exploiting zero-day vulnerabilities and advances in data unlearning techniques for generative models.",
@@ -29,53 +25,63 @@
       "Zero-Day Exploits",
       "Generative Models"
     ],
-    "readingTime": 4
-  },
-  {
-    "slug": "adversarial_policy_optimization_for_offline_preferencebased",
-    "title": "Adversarial Policy Optimization for Offline Preference-based Reinforcement Learning",
-    "date": "2026-11-22",
-    "type": "Paper Review",
-    "description": "APPO uses a two-player game to ensure conservatism in offline PbRL",
-    "tags": [
-      "Adversarial Attacks"
-    ],
-    "readingTime": 5
-  },
-  {
-    "slug": "diverse_preference_learning_for_capabilities_and_alignment",
-    "title": "Diverse Preference Learning for Capabilities and Alignment",
-    "date": "2026-11-22",
-    "type": "Paper Review",
-    "description": "Soft Preference Learning (SPL) decouples KL penalties in alignment",
-    "tags": [
-      "AI Security"
-    ],
-    "readingTime": 5
-  },
-  {
-    "slug": "privacyaware_lifelong_learning",
-    "title": "Privacy-Aware Lifelong Learning",
-    "date": "2026-11-22",
-    "type": "Paper Review",
-    "description": "Privacy-Aware Lifelong Learning",
-    "tags": [
-      "Privacy",
-      "Machine Unlearning"
-    ],
-    "readingTime": 5
+    "readingTime": 4,
+    "searchContent": "AI Security Digest — November 22, 2026: AI Agents & Privacy An attack mechanism involving AI agents leveraging zero day vulnerabilities in medical software demonstrates how sophisticated automation can bypass traditional security controls. Defenses are concurrently advancing by developing methods for 'unlearning' sensitive data from large generative models. Paper Highlights Data Unlearning in Diffusion Models — by ArXiv — SISS integrates naive deletion and NegGrad via importance sampling to mitigate memorization in diffusion model deployments. Practitioners should note this as a pathway to address data exposure risks in generative systems. Privacy Aware Lifelong Learning — by ArXiv — PALL utilizes sparse subnetworks and episodic memory to facilitate exact task unlearning in parameter sharing lifelong learning setups. This is relevant for systems that must comply with data deletion mandates, such as personalized recommendation engines. Diverse Preference Learning for Capabilities and Alignment — by ArXiv — Soft Preference Learning (SPL) decouples KL penalties during alignment, allowing for more diverse outputs from Large Language Models (LLMs). Teams working with Reinforcement Learning from Human Feedback (RLHF) or Direct Preference Optimization (DPO) may find this relevant for avoiding mode collapse. Industry & News Amazon: China Linked Hackers’ AI Agents Exploited Medical Software Zero Day SecurityWeek (SecurityWeek) — Malicious actors employed AI agents to exploit a zero da"
   },
   {
     "slug": "data_unlearning_in_diffusion_models",
     "title": "Data Unlearning in Diffusion Models",
     "date": "2026-11-22",
     "type": "Paper Review",
-    "description": "SISS integrates naive deletion and NegGrad via importance sampling",
+    "description": "The paper presents a technical improvement over existing diffusion model unlearning methods, specifically by blending naive deletion and NegGrad via importance sampling. However, the focus on unconditional models feels too narrow for the stated privacy concerns.",
     "tags": [
       "Privacy",
       "Machine Unlearning"
     ],
-    "readingTime": 5
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Data Unlearning in Diffusion Models” (p. 8) Subtracted Importance Sampled Scores for Data Unlearning in Diffusion Models TLDR What : SISS integrates naive deletion and NegGrad via importance sampling. Who's at risk : Deployments using diffusion models susceptible to memorization. Key number : SISS successfully mitigated memorization on almost 90% of the prompts we tested. The Gap in Diffusion Unlearning Diffusion models have demonstrated a capacity to memorize and reproduce specific training images, a concern exacerbated by privacy regulations like GDPR. The necessity for data unlearning—efficiently removing specific datapoints—is timely. However, existing work suffers from two major limitations. First, general purpose machine unlearning techniques fail or are unstable when applied to the diffusion model setting. Second, much of the recent diffusion unlearning research focuses on concept unlearning, aiming to remove high level features like painting styles, rather than achieving the concrete goal of data unlearning: making the model behave as if it were trained without the specified datapoints. Naive deletion, which fine tunes only on data to be kept, is too slow, while NegGrad, which uses gradient ascent on data to be unlearned, causes rapid quality degradation by forgetting the rest of the training set. SISS: Merging Deletion and NegGrad The core innovation of SISS is deriving a unified objective that combines the mechanism of naive deletion with the "
+  },
+  {
+    "slug": "diverse_preference_learning_for_capabilities_and_alignment",
+    "title": "Diverse Preference Learning for Capabilities and Alignment",
+    "date": "2026-11-22",
+    "type": "Paper Review",
+    "description": "The paper effectively demonstrates that decoupling the KL penalty in preference learning allows for better representation of minority views, moving beyond the uniformity induced by standard DPO/RLHF.",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Diverse Preference Learning for Capabilities and Alignment” (p. 2) Decoupling Entropy and Cross Entropy in Alignment for Diverse LLM Outputs TLDR What : Soft Preference Learning (SPL) decouples KL penalties in alignment. Who's at risk : LLMs trained via RLHF or DPO that suffer from mode collapse. Key number : SPL resembles but is a Pareto improvement over, standard temperature scaling. The KL Divergence Bias Towards Majority Preferences When large language models are aligned using preference based methods like Reinforcement Learning from Human Feedback (RLHF) or Direct Preference Optimization (DPO), the resulting models exhibit a tendency toward uniformity. This uniformity manifests as mode collapse, where the model systematically favors the majority opinion in a dataset, even when minority views are present. For instance, in a multiple choice scenario where 55% prefer option A and 10% prefer option D, the aligned model may assign near total probability to A, thereby failing to represent the full spectrum of perspectives. This phenomenon is rooted in the KL divergence regularizer present in these alignment objectives. In Section 3, we analyze RLHF and DPO from a social choice perspective. We prove that when the preferences of different groups conflict, the probability of generating majority preferred outputs far exceeds the population preference for that output. This mode collapse has consequences for the social perspectives language models represent bu"
+  },
+  {
+    "slug": "privacyaware_lifelong_learning",
+    "title": "Privacy-Aware Lifelong Learning",
+    "date": "2026-11-22",
+    "type": "Paper Review",
+    "description": "The paper’s focus on achieving exact unlearning within a parameter-sharing framework is technically impressive, but I find the reliance on episodic memory buffers to mitigate performance degradation to be an operational Achilles' heel.",
+    "tags": [
+      "Privacy",
+      "Machine Unlearning"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Privacy Aware Lifelong Learning” (p. 5) PALL: Integrating Exact Task Unlearning into Parameter Sharing Lifelong Learning TLDR What: PALL uses sparse subnetworks and episodic memory for unlearning. Who's at risk: Systems requiring data deletion (e.g., personalized recommendation engines). Key number: PALL provides a state of the art solution that uniquely integrates lifelong learning and privacy aware unlearning mechanisms for responsible AI applications. The Contradictory Demands of Sequential Knowledge Maintenance and Erasure Continual learning aims for models to build knowledge sequentially without losing prior skills, a need driven by dynamic data environments. The standard approach in this area involves using fixed capacity architectures, often employing task specific subnetworks whose parameters are frozen to prevent catastrophic forgetting while allowing parameter sharing for knowledge transfer. However, this framework fundamentally conflicts with data privacy mandates, specifically the right to be forgotten. Machine unlearning requires the model to behave exactly as if certain data—in this paper's context, an entire learned task $D tau$—was never observed. Existing solutions for exact unlearning generally rely on full model retraining on disjoint shards, which is infeasible in a lifelong learning scenario because prior datasets $D { t$. To counteract the performance degradation caused by this reset, PALL utilizes an episodic memory buffer $B t$ s"
+  },
+  {
+    "slug": "this_week_in_ai_security__november_22_2026",
+    "title": "This Week in AI Security — November 22, 2026",
+    "date": "2026-11-22",
+    "type": "Trend Report",
+    "description": "This week's AI security roundup covers the shift to persistent model manipulation, including pre-training poisoning and backdoors.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Data Poisoning",
+      "Backdoors",
+      "RAG",
+      "Data Provenance"
+    ],
+    "readingTime": 5,
+    "searchContent": "This Week in AI Security — November 22, 2026 Attacks against foundational models are becoming increasingly sophisticated, moving beyond simple prompting to persistent, systemic injection methods. Simultaneously, defenses are maturing, with significant research focused on provable data provenance and robust agent monitoring. The intersection of data integrity and model behavior remains the dominant focus of current research. Persistent and Systemic Model Manipulation This cluster examines methods designed to compromise the foundational integrity of Large Language Models (LLMs) before or during their deployment. [9] Injecting Universal Jailbreak Backdoors into LLMs in Minutes [9] Persistent Pre training Poisoning of LLMs [8] BadGCL: Towards Persistent Backdoor Attack on Graph Continual Learning Systems [8] BadJudge: Backdoor Vulnerabilities of LLM As A Judge Research here shows a definitive shift toward permanent model corruption. Instead of transient prompt injections, attackers are embedding backdoors during the training or continual learning phases. This persistence makes detection significantly harder, as the malicious behavior is baked into the model's weights and decision pathways. Data Provenance and Watermarking Techniques Several papers addressed the challenge of verifying the source of information processed by AI systems, particularly in Retrieval Augmented Generation (RAG) setups and generative media. [8] Ward: Provable RAG Dataset Inference via LLM Watermarks [8] PI"
   },
   {
     "slug": "ai_security_digest__november_21_2026_prompt_injection__data",
@@ -148,7 +154,7 @@
   },
   {
     "slug": "ai_security_digest__november_20_2026_jailbreaking__backdoors",
-    "title": "AI Security Digest \u2014 November 20, 2026: Jailbreaking & Backdoors",
+    "title": "AI Security Digest — November 20, 2026: Jailbreaking & Backdoors",
     "date": "2026-11-20",
     "type": "News Digest",
     "description": "This digest covers new threats like universal backdoor injection in LLMs and advanced jailbreaking techniques. It also reviews watermarking and safety RL research.",
@@ -162,7 +168,7 @@
       "AI Safety"
     ],
     "readingTime": 5,
-    "searchContent": "AI Security Digest \u2014 November 20, 2026: Jailbreaking & Backdoors The development of universal backdoor injection techniques via model editing presents a direct threat to safety aligned Large Language Models (LLMs) deployed from open source sources. Paper Highlights Injecting Universal Jailbreak Backdoors into LLMs in Minutes \u2014 by [No Authors] \u2014 This work demonstrates injecting stealthy jailbreak backdoors using model editing, bypassing traditional data poisoning defenses. Practitioners must assess the security posture of deployed models against this new, low overhead injection vector. PIVOT: Distribution Preserving Multi Bit Watermarking with Minimax Optimal Scoring \u2014 by Wen Zhang, Kaiyi Pang, Minhao Bai \u2014 The research presents a method to embed multi bit watermarks into LLM outputs without shifting the output distribution. Organizations relying on output provenance tracking should evaluate the robustness of current watermarking schemes. Safety Representations for Safer Policy Learning \u2014 by [No Authors] \u2014 This paper details learning explicit, state conditioned safety representations for policy learning in Reinforcement Learning. Those building safety critical RL systems should examine this approach for enhancing policy robustness. Industry & News Meta Employees Raise Muse AI Privacy Concerns, Exposing Security Flaws, Chat Leaks Tech Times \u2014 Internal reports revealed privacy weaknesses and chat leaks concerning Muse AI, indicating potential vulnerabilities in large proprietary"
+    "searchContent": "AI Security Digest — November 20, 2026: Jailbreaking & Backdoors The development of universal backdoor injection techniques via model editing presents a direct threat to safety aligned Large Language Models (LLMs) deployed from open source sources. Paper Highlights Injecting Universal Jailbreak Backdoors into LLMs in Minutes — by [No Authors] — This work demonstrates injecting stealthy jailbreak backdoors using model editing, bypassing traditional data poisoning defenses. Practitioners must assess the security posture of deployed models against this new, low overhead injection vector. PIVOT: Distribution Preserving Multi Bit Watermarking with Minimax Optimal Scoring — by Wen Zhang, Kaiyi Pang, Minhao Bai — The research presents a method to embed multi bit watermarks into LLM outputs without shifting the output distribution. Organizations relying on output provenance tracking should evaluate the robustness of current watermarking schemes. Safety Representations for Safer Policy Learning — by [No Authors] — This paper details learning explicit, state conditioned safety representations for policy learning in Reinforcement Learning. Those building safety critical RL systems should examine this approach for enhancing policy robustness. Industry & News Meta Employees Raise Muse AI Privacy Concerns, Exposing Security Flaws, Chat Leaks Tech Times — Internal reports revealed privacy weaknesses and chat leaks concerning Muse AI, indicating potential vulnerabilities in large proprietary"
   },
   {
     "slug": "injecting_universal_jailbreak_backdoors_into_llms_in_minutes",
@@ -176,19 +182,19 @@
       "Backdoors"
     ],
     "readingTime": 5,
-    "searchContent": "Figure from the paper \u201cInjecting Universal Jailbreak Backdoors into LLMs in Minutes\u201d (p. 2) JailbreakEdit: Universal Backdoor Injection via Model Editing TLDR What: Injects stealthy jailbreak backdoors using model editing, not data poisoning. Who's at risk: Safety aligned LLMs deployed via open source models or APIs. Key number: With just a single parameter edit completed in minutes, the jailbreak success rate (JSR) for backdoored queries can exceed 61% across all attacked models under one shot evaluation, with a maximum JSR of 90.38%. The Conflict of Competing Objectives Modern LLMs are heavily aligned with human ethics, which is necessary to prevent misuse. However, these safety alignments introduce conflicting training objectives within the models. When researchers attempt to use existing model editing techniques, such as those based on locate then edit paradigms, to inject backdoors into safety aligned LLMs, these competing objectives become a major hurdle. While these editing methods are capable of forcing the LLM to output a specific token, they struggle to induce coherent, subsequent jailbreak outputs that successfully bypass the internal safety mechanisms. The conventional approach requires poisoning training data during fine tuning or RLHF, which is often impractical due to small, carefully curated datasets, and demands considerable computational resources. This paper addresses the gap where model editing fails to stably induce the necessary jailbreak behavior agains"
+    "searchContent": "Figure from the paper “Injecting Universal Jailbreak Backdoors into LLMs in Minutes” (p. 2) JailbreakEdit: Universal Backdoor Injection via Model Editing TLDR What: Injects stealthy jailbreak backdoors using model editing, not data poisoning. Who's at risk: Safety aligned LLMs deployed via open source models or APIs. Key number: With just a single parameter edit completed in minutes, the jailbreak success rate (JSR) for backdoored queries can exceed 61% across all attacked models under one shot evaluation, with a maximum JSR of 90.38%. The Conflict of Competing Objectives Modern LLMs are heavily aligned with human ethics, which is necessary to prevent misuse. However, these safety alignments introduce conflicting training objectives within the models. When researchers attempt to use existing model editing techniques, such as those based on locate then edit paradigms, to inject backdoors into safety aligned LLMs, these competing objectives become a major hurdle. While these editing methods are capable of forcing the LLM to output a specific token, they struggle to induce coherent, subsequent jailbreak outputs that successfully bypass the internal safety mechanisms. The conventional approach requires poisoning training data during fine tuning or RLHF, which is often impractical due to small, carefully curated datasets, and demands considerable computational resources. This paper addresses the gap where model editing fails to stably induce the necessary jailbreak behavior agains"
   },
   {
     "slug": "pivot_distributionpreserving_multibitwatermarking_with_minim",
     "title": "PIVOT: Distribution-Preserving Multi-BitWatermarking with Minimax-Optimal Scoring",
     "date": "2026-11-20",
     "type": "Paper Review",
-    "description": "The paper presents a technically dense solution to the distribution-preservation problem in watermarking, which is a significant theoretical step forward. However, the reliance on $\\Delta$-regular distributions\u2014as noted in the limitations\u2014is a practical Achilles' heel.",
+    "description": "The paper presents a technically dense solution to the distribution-preservation problem in watermarking, which is a significant theoretical step forward. However, the reliance on $\\Delta$-regular distributions—as noted in the limitations—is a practical Achilles' heel.",
     "tags": [
       "Watermarking"
     ],
     "readingTime": 5,
-    "searchContent": "Figure from the paper \u201cPIVOT: Distribution Preserving Multi BitWatermarking with Minimax Optimal Scoring\u201d (p. 2) PIVOT: Distribution Preserving Multi Bit Watermarking with Minimax Optimal Scoring TLDR What : Embeds recoverable multi bit watermarks without altering output distribution. Who's at risk : LLM outputs used for attribution or provenance tracking. Key number : The paper establishes finite sample recovery guarantees for complete message recovery. The distributional footprint of encoding Current state of the art multi bit watermarking increases payload capacity but often achieves this by modifying the next token law. This perturbation leaves a payload dependent distributional footprint, meaning the resulting text distribution $Q {W^T}$ is not identical to the original unwatermarked distribution $Q {W^T}$. While averaging over messages can mitigate this, the stronger requirement\u2014that every fixed payload induces exactly the same text distribution\u2014remains unmet by many prior methods. Furthermore, even with distribution preservation, determining how to aggregate weak, token level evidence for multi bit decisions is an open problem. Existing information theoretic limits characterize general trade offs but lack a concrete, model free statistic implementable for a multi bit channel. Mirrored rank interval sampling PIVOT introduces a mechanism that couples the message to the model sampling process while ensuring distribution preservation. At each generation step $t$, the secre"
+    "searchContent": "Figure from the paper “PIVOT: Distribution Preserving Multi BitWatermarking with Minimax Optimal Scoring” (p. 2) PIVOT: Distribution Preserving Multi Bit Watermarking with Minimax Optimal Scoring TLDR What : Embeds recoverable multi bit watermarks without altering output distribution. Who's at risk : LLM outputs used for attribution or provenance tracking. Key number : The paper establishes finite sample recovery guarantees for complete message recovery. The distributional footprint of encoding Current state of the art multi bit watermarking increases payload capacity but often achieves this by modifying the next token law. This perturbation leaves a payload dependent distributional footprint, meaning the resulting text distribution $Q {W^T}$ is not identical to the original unwatermarked distribution $Q {W^T}$. While averaging over messages can mitigate this, the stronger requirement—that every fixed payload induces exactly the same text distribution—remains unmet by many prior methods. Furthermore, even with distribution preservation, determining how to aggregate weak, token level evidence for multi bit decisions is an open problem. Existing information theoretic limits characterize general trade offs but lack a concrete, model free statistic implementable for a multi bit channel. Mirrored rank interval sampling PIVOT introduces a mechanism that couples the message to the model sampling process while ensuring distribution preservation. At each generation step $t$, the secre"
   },
   {
     "slug": "privacypreserving_personalized_federated_prompt_learning_for",
@@ -200,7 +206,7 @@
       "Privacy"
     ],
     "readingTime": 5,
-    "searchContent": "Figure from the paper \u201cPrivacy Preserving Personalized Federated Prompt Learning for Multimodal Large Language Models\u201d (p. 4) Differentially Private Federated Prompt Learning with Low Rank Factorization for Multimodal LLMs TLDR What : DP FPL balances personalization, generalization, and privacy. Who's at risk : Clients using multimodal LLMs in PaaS deployments. Key number : Superior performance in balancing personalization and generalization compared to benchmarks. The Prompt Separation into Global and Local Components Current Federated Prompt Learning (FPL) allows clients to fine tune soft prompts for personalization while sharing these prompts for global model improvement. The central issue arises from data heterogeneity; local data drifts can cause clients to overfit, hurting generalization. Furthermore, these personalized prompts are susceptible to Membership Inference Attacks (MIA) if shared with public users. Existing literature, such as FedPGP (Cui et al., 2024), attempts factorization but often restricts the local prompt factorization to only the beginning of training, which limits expressive power. The DP FPL framework addresses this by structuring the client\u2019s prompt $ pi i$ as the sum of a shared global prompt $p {G,i}$ and a retained local prompt $p {L,i}$. This separation allows the global prompt to facilitate generalized knowledge transfer across clients, while the local prompt retains client specific tailoring, aiming for a nuanced balance. The Residual Term fo"
+    "searchContent": "Figure from the paper “Privacy Preserving Personalized Federated Prompt Learning for Multimodal Large Language Models” (p. 4) Differentially Private Federated Prompt Learning with Low Rank Factorization for Multimodal LLMs TLDR What : DP FPL balances personalization, generalization, and privacy. Who's at risk : Clients using multimodal LLMs in PaaS deployments. Key number : Superior performance in balancing personalization and generalization compared to benchmarks. The Prompt Separation into Global and Local Components Current Federated Prompt Learning (FPL) allows clients to fine tune soft prompts for personalization while sharing these prompts for global model improvement. The central issue arises from data heterogeneity; local data drifts can cause clients to overfit, hurting generalization. Furthermore, these personalized prompts are susceptible to Membership Inference Attacks (MIA) if shared with public users. Existing literature, such as FedPGP (Cui et al., 2024), attempts factorization but often restricts the local prompt factorization to only the beginning of training, which limits expressive power. The DP FPL framework addresses this by structuring the client’s prompt $ pi i$ as the sum of a shared global prompt $p {G,i}$ and a retained local prompt $p {L,i}$. This separation allows the global prompt to facilitate generalized knowledge transfer across clients, while the local prompt retains client specific tailoring, aiming for a nuanced balance. The Residual Term fo"
   },
   {
     "slug": "safety_representations_for_safer_policy_learning",
@@ -212,7 +218,7 @@
       "AI Agents"
     ],
     "readingTime": 5,
-    "searchContent": "Figure from the paper \u201cSafety Representations for Safer Policy Learning\u201d (p. 5) State Conditioned Safety Representations for Efficient Policy Learning TLDR What : Explicitly learns state conditioned safety representations. Who's at risk : Safety critical Reinforcement Learning deployments. Overcoming Primacy Bias with State Centric Safety Reinforcement learning agents, when trained in safety critical scenarios, frequently encounter problems related to early training experiences. When agents receive heavy penalties for constraint violations early on, this \"primacy bias\" causes them to learn overly conservative policies. These policies restrict the agent's exploration, effectively trapping it in local optima even if high reward, safe regions of the state space exist. Current methods often mitigate this by imposing hard constraints or filtering actions above a failure threshold. However, these approaches tend to be overly cautious, leading to suboptimal performance because they fail to distinguish nuanced risk across different states. The central difficulty is designing an RL algorithm that balances the need to explore for reward against the imperative to maintain safety throughout the learning process. Steps to Cost (S2C) Modeling The core innovation here is moving beyond simple scalar safety indicators to model safety as a distribution over future risks. Instead of just knowing if a state is dangerous, the system learns how soon danger might arrive. This is formalized through "
+    "searchContent": "Figure from the paper “Safety Representations for Safer Policy Learning” (p. 5) State Conditioned Safety Representations for Efficient Policy Learning TLDR What : Explicitly learns state conditioned safety representations. Who's at risk : Safety critical Reinforcement Learning deployments. Overcoming Primacy Bias with State Centric Safety Reinforcement learning agents, when trained in safety critical scenarios, frequently encounter problems related to early training experiences. When agents receive heavy penalties for constraint violations early on, this \"primacy bias\" causes them to learn overly conservative policies. These policies restrict the agent's exploration, effectively trapping it in local optima even if high reward, safe regions of the state space exist. Current methods often mitigate this by imposing hard constraints or filtering actions above a failure threshold. However, these approaches tend to be overly cautious, leading to suboptimal performance because they fail to distinguish nuanced risk across different states. The central difficulty is designing an RL algorithm that balances the need to explore for reward against the imperative to maintain safety throughout the learning process. Steps to Cost (S2C) Modeling The core innovation here is moving beyond simple scalar safety indicators to model safety as a distribution over future risks. Instead of just knowing if a state is dangerous, the system learns how soon danger might arrive. This is formalized through "
   },
   {
     "slug": "ai_security_digest__november_19_2026_data_poisoning__backdoo",
