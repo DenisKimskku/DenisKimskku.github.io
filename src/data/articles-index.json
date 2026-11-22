@@ -1,5 +1,71 @@
 [
   {
+    "slug": "ai_security_digest__november_23_2026_malware__machine_unlear",
+    "title": "AI Security Digest — November 23, 2026: Malware & Machine Unlearning",
+    "date": "2026-11-23",
+    "type": "News Digest",
+    "description": "New research shows benign data can reactivate forgotten information in unlearned LLMs. It also details confidence-based attacks and LLM stereotyping.",
+    "tags": [
+      "LLM Security",
+      "Machine Unlearning",
+      "Adversarial Attacks",
+      "Data Privacy",
+      "LLM Bias",
+      "Malware"
+    ],
+    "readingTime": 5,
+    "searchContent": "AI Security Digest — November 23, 2026: Malware & Machine Unlearning The ability of benign data to \"jog\" the memory of unlearned Large Language Models (LLMs) poses a direct threat to privacy preserving mechanisms. This research indicates that systems relying on approximate machine unlearning for safety or privacy must be re evaluated immediately. Paper Highlights Unlearning or Obfuscating? Jogging the Memory of Unlearned LLMs via Benign Relearning — The paper demonstrates that benign relearning attacks can reactivate forgotten information within LLMs that have undergone approximate machine unlearning. Practitioners must assess the robustness of their unlearning guarantees against these subtle data augmentation attacks. Confidence Elicitation: A New Attack Vector for Large Language Models — This work introduces a new attack method that leverages the confidence scores provided by a model to guide targeted word substitution attacks against black box LLMs. Organizations using closed source LLMs via API output should examine how confidence signals can be weaponized. Examining Alignment of Large Language Models through Representative Heuristics: the case of political stereotypes — The findings show that LLMs systematically exaggerate political party positions beyond what is found in human reporting. Any system utilizing LLMs for political analysis must account for this inherent stereotyping bias. Industry & News Beyond Transparency: How AI Is Reshaping Vulnerability Disclosure and "
+  },
+  {
+    "slug": "confidence_elicitation_a_new_attack_vector_for_large_languag",
+    "title": "Confidence Elicitation: A New Attack Vector for Large Language Models",
+    "date": "2026-11-23",
+    "type": "Paper Review",
+    "description": "The paper makes a compelling case for turning LLM uncertainty into an actionable gradient proxy in black-box settings. However, I remain unconvinced that the reliance on calibrated confidence is a robust operational assumption.",
+    "tags": [
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Confidence Elicitation: A New Attack Vector for Large Language Models” (p. 3) Confidence Elicitation as a Feedback Mechanism for Black Box LLM Attacks TLDR What : Uses model elicited confidence to guide word substitution attacks. Who's at risk : Closed source LLMs accessed only via API output. Key number : Our methodology achieves state of the art performance in hard label, black box, word substitution based attacks on LLMs. The Gap in Black Box Adversarial Settings Adversarial robustness remains a persistent issue across deep learning models, even as they scale into large language models (LLMs). While prior adversarial research has established techniques for white box and grey box attacks, the reality for modern, commercially available LLMs is a purely black box setting. These APIs only return the final predicted output, offering no access to internal data like logits or probabilities. Existing black box hard label attacks often rely on iterative optimization that requires continuous querying to verify semantic preservation, which can be prohibitive due to rate limits. Furthermore, previous hard label methods were often focused on BERT based models, not contemporary LLMs capable of free form generation. The core limitation is the lack of fine grained, actionable feedback during the perturbation ($ delta$) optimization process when only a hard prediction is available. Confidence Elicitation Attacks This work introduces confidence elicitation attacks to "
+  },
+  {
+    "slug": "examining_alignment_of_large_language_models_through_represe",
+    "title": "Examining Alignment of Large Language Models through Representative Heuristics: the case of political stereotypes",
+    "date": "2026-11-23",
+    "type": "Paper Review",
+    "description": "1. AWARENESS: A preamble instructing the model: \"The representative heuristics involve overestimating the probability of attributes being more prevalent in the target group than the comparison group.",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Examining Alignment of Large Language Models through Representative Heuristics: the case of political…” (p. 2) Quantifying Political Stereotyping via Representativeness Heuristics in LLMs TLDR LLMs exaggerate political party positions beyond human reporting. Systems using LLMs for political analysis face stereotyping risks. LLMs show systematic overestimation of Republican positions. LLM Exaggeration of Partisan Positions The extent to which Large Language Models (LLMs) deviate from empirical positions on political issues remains insufficiently examined, even though prior work confirms LLMs can mimic specific political leanings. The existing literature often stops at observing alignment or bias, but does not deeply investigate the mechanism of deviation. This paper targets this gap by applying a framework from cognitive science: representativeness heuristics. These heuristics describe how humans tend to overweight the representative attributes of a group, leading to exaggerated beliefs. For instance, if a group is statistically associated with a certain trait, humans might overemphasize that trait even if it is not highly probable for individuals within that group. The study examines if LLMs replicate this human cognitive shortcut, defining \"stereotypes\" as this systematic exaggeration in judgment or belief when responding to political queries. The core problem addressed is that while LLMs learn empirical patterns from their training data (the kernel of"
+  },
+  {
+    "slug": "the_law_of_the_unconscious_contrastive_learner_probabilistic",
+    "title": "The ",
+    "date": "2026-11-23",
+    "type": "Paper Review",
+    "description": "The paper establishes a necessary theoretical scaffolding for the \"plug-n-play\" intuition in multi-modal systems, which is valuable. However, the reliance on Assumption 1—that $A \\perp C | B$—is a massive practical oversimplification.",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “The \"Law\" of the Unconscious Contrastive Learner: Probabilistic Alignment of Unpaired Modalities” (p. 8) Probabilistic Alignment of Unpaired Modalities via Contrastive Representations TLDR What : Proves that comparing representations from unpaired modalities can recover likelihood ratios. Who's at risk : Systems relying on \"plug n play\" modality swapping in multi modal AI. Key number : The LogSumExp (LSE) method enables approximation when Assumption 3 fails. Bridging Modalities with Intermediate Representations The practical appeal of contrastive learning is its supposed \"plug n play\" nature: if we align modality A with B, and B with C, we hope to use A and C together even if we never saw (A, C) pairs during training. This intuition is widely used for merging datasets with different modalities. However, prior work lacked a rigorous argument for when this technique is principled or when it fails. The core issue is whether these methods are implicitly performing the necessary marginalization over the latent space. The paper's analysis addresses this gap by moving beyond treating representations as simple mappings to viewing them probabilistically—as encoding likelihoods. The standard practice of jointly training encoders $ phi A leftrightarrow phi B$ and $ phi B leftrightarrow phi C$ under contrastive losses, like the symmetrized infoNCE objective, assumes this emergent alignment holds. The paper seeks to formalize the conditions under which this heuristi"
+  },
+  {
+    "slug": "unlearning_or_obfuscating_jogging_the_memory_of_unlearned_ll",
+    "title": "Unlearning or Obfuscating? Jogging the Memory of Unlearned LLMs via Benign Relearning",
+    "date": "2026-11-23",
+    "type": "Paper Review",
+    "description": "The paper correctly identifies that approximate unlearning methods are often just sophisticated obfuscation rather than true forgetting. However, the focus on \"benign relearning\" might be too narrow.",
+    "tags": [
+      "Privacy",
+      "Machine Unlearning"
+    ],
+    "readingTime": 5,
+    "searchContent": "Figure from the paper “Unlearning or Obfuscating? Jogging the Memory of Unlearned LLMs via Benign Relearning” (p. 3) Relearning Attacks on Approximate LLM Unlearning via Benign Data Augmentation TLDR What : Benign relearning attacks \"jog\" unlearned LLM memory. Who's at risk : Systems relying on approximate machine unlearning for safety/privacy. Key number : The paper shows that with access to either a limited subset of the unlearn data or a set of auxiliary, publicly available data, we can drive the model to output supposedly unlearned knowledge. Obfuscating Knowledge Suppression The premise of machine unlearning is to remove knowledge of a target dataset, $D u subseteq D$, from a model $w$ to produce $w u$. In practice for LLMs, this is approximate, meaning $w u$ approximates a model retrained without $D u$. The gap this paper targets is that these existing approximate unlearning methods are not truly forgetting; instead, they are merely obfuscating the outputs. When scrutinized, this obfuscation proves fragile. Current methods aim to make the model behave as if the knowledge is gone, but this suppression is shallow. The paper demonstrates that this fragility allows a simple, low resource attack: \"benign relearning.\" This attack leverages auxiliary data, $D'$, which is related to the unlearned set $D u$ but does not contain the specific target knowledge, to push the model back toward its pre unlearning state. This suggests that the \"forget\" process is incomplete, leaving lat"
+  },
+  {
     "slug": "adversarial_policy_optimization_for_offline_preferencebased",
     "title": "Adversarial Policy Optimization for Offline Preference-based Reinforcement Learning",
     "date": "2026-11-22",
