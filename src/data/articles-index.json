@@ -1,5 +1,44 @@
 [
   {
+    "slug": "ai_security_digest__november_25_2026_backdoors__vulnerabilit",
+    "title": "AI Security Digest \u2014 November 25, 2026: Backdoors & Vulnerabilities",
+    "date": "2026-11-25",
+    "type": "News Digest",
+    "description": "AI Security Digest \u2014 November 25, 2026: Backdoors & Vulnerabilities",
+    "tags": [
+      "Backdoors",
+      "AI Agents",
+      "Vulnerabilities"
+    ],
+    "readingTime": 1
+  },
+  {
+    "slug": "probe_before_you_talk_towards_blackbox_defense_against_backd",
+    "title": "Probe before You Talk: Towards Black-box Defense against Backdoor Unalignment for Large Language Models",
+    "date": "2026-11-25",
+    "type": "Paper Review",
+    "description": "Probe before You Talk: Towards Black-box Defense against Backdoor Unalignment for Large Language Models",
+    "tags": [
+      "Data Poisoning",
+      "Backdoors"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "weightspace_backdoors_in_openweight_llms_crossarchitecture_a",
+    "title": "Weight-Space Backdoors in Open-Weight LLMs: Cross-Architecture Attacks and Blind Model Forensics",
+    "date": "2026-11-25",
+    "type": "Paper Review",
+    "description": "Weight-Space Backdoors in Open-Weight LLMs: Cross-Architecture Attacks and Blind Model Forensics",
+    "tags": [
+      "Backdoors",
+      "MCP",
+      "AI Agents",
+      "Supply Chain Security"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__november_24_2026_data_poisoning__backdoo",
     "title": "AI Security Digest — November 24, 2026: Data Poisoning & Backdoors",
     "date": "2026-11-24",
