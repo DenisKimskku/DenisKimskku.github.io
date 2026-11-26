@@ -1,5 +1,67 @@
 [
   {
+    "slug": "ai_security_digest__november_27_2026_adversarial_attacks__pr",
+    "title": "AI Security Digest \u2014 November 27, 2026: Adversarial Attacks & Privacy",
+    "date": "2026-11-27",
+    "type": "News Digest",
+    "description": "This digest covers advancements in LLM knowledge unlearning, adversarial defenses, and the intersection of zero-day exploits with AI-assisted attacks.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Knowledge Unlearning",
+      "Data Privacy",
+      "Zero-Day Exploits",
+      "Differential Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "spacegnn_multispace_graph_neural_network_for_node_anomaly_de",
+    "title": "SpaceGNN: Multi-Space Graph Neural Network for Node Anomaly Detection with Extremely Limited Labels",
+    "date": "2026-11-27",
+    "type": "Paper Review",
+    "description": "Uses multiple curved spaces to improve node representation quality",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "on_the_price_of_differential_privacy_for_hierarchical_cluste",
+    "title": "On the Price of Differential Privacy for Hierarchical Clustering",
+    "date": "2026-11-27",
+    "type": "Paper Review",
+    "description": "A novel algorithm achieves quality approximation for Hierarchical Clustering",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "adversarial_mixup_unlearning",
+    "title": "Adversarial Mixup Unlearning",
+    "date": "2026-11-27",
+    "type": "Paper Review",
+    "description": "Uses adversarial generation to create challenging mixup samples for unlearning",
+    "tags": [
+      "Adversarial Attacks",
+      "Privacy",
+      "Machine Unlearning"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "towards_robust_and_parameterefficient_knowledge_unlearning_f",
+    "title": "Towards Robust and Parameter-Efficient Knowledge Unlearning for LLMs",
+    "date": "2026-11-27",
+    "type": "Paper Review",
+    "description": "LoKU framework enables efficient knowledge removal from LLMs",
+    "tags": [
+      "Machine Unlearning"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__november_26_2026_adversarial_attacks__ai",
     "title": "AI Security Digest \u2014 November 26, 2026: Adversarial Attacks & AI Agents",
     "date": "2026-11-26",
