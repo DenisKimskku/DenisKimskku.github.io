@@ -1,5 +1,65 @@
 [
   {
+    "slug": "ai_security_digest__november_28_2026_adversarial_attacks__ma",
+    "title": "AI Security Digest \u2014 November 28, 2026: Adversarial Attacks & Machine Unlearning",
+    "date": "2026-11-28",
+    "type": "News Digest",
+    "description": "This digest covers advancements in LLM unlearning, certified robustness for GNNs, and on-the-fly preference alignment, alongside industry security news.",
+    "tags": [
+      "LLM Security",
+      "Adversarial Attacks",
+      "Machine Unlearning",
+      "Graph Neural Networks",
+      "AI Safety",
+      "Model Alignment"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "continuous_autoregressive_modeling_with_stochastic_monotonic",
+    "title": "Continuous Autoregressive Modeling with Stochastic Monotonic Alignment for Speech Synthesis",
+    "date": "2026-11-28",
+    "type": "Paper Review",
+    "description": "Continuous Autoregressive Modeling with Stochastic Monotonic Alignment for Speech Synthesis",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "onthefly_preference_alignment_via_principleguided_decoding",
+    "title": "On-the-fly Preference Alignment via Principle-Guided Decoding",
+    "date": "2026-11-28",
+    "type": "Paper Review",
+    "description": "OPAD aligns LLMs during inference without retraining",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "provably_robust_explainable_graph_neural_networks_against_gr",
+    "title": "Provably Robust Explainable Graph Neural Networks against Graph Perturbation Attacks",
+    "date": "2026-11-28",
+    "type": "Paper Review",
+    "description": "Introduces XGNNCert, a certified defense for XGNNs",
+    "tags": [
+      "AI Security"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "llm_unlearning_via_loss_adjustment_with_only_forget_data",
+    "title": "LLM Unlearning via Loss Adjustment with Only Forget Data",
+    "date": "2026-11-28",
+    "type": "Paper Review",
+    "description": "Proposes FLAT, optimizing f-divergence using only forget data",
+    "tags": [
+      "Machine Unlearning"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__november_27_2026_adversarial_attacks__pr",
     "title": "AI Security Digest \u2014 November 27, 2026: Adversarial Attacks & Privacy",
     "date": "2026-11-27",
