@@ -1,5 +1,82 @@
 [
   {
+    "slug": "this_week_in_ai_security__november_29_2026",
+    "title": "This Week in AI Security \u2014 November 29, 2026",
+    "date": "2026-11-29",
+    "type": "Trend Report",
+    "description": "This week's AI security roundup focuses on model integrity, covering backdoor injection, weight-space attacks, and advanced techniques for model unlearning and robustness.",
+    "tags": [
+      "LLM Security",
+      "Backdoor Attacks",
+      "Model Integrity",
+      "Adversarial Attacks",
+      "Model Unlearning",
+      "AI Supply Chain"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "ai_security_digest__november_29_2026_adversarial_attacks__pr",
+    "title": "AI Security Digest \u2014 November 29, 2026: Adversarial Attacks & Privacy",
+    "date": "2026-11-29",
+    "type": "News Digest",
+    "description": "This digest covers advancements in adversarial training for robustness, certified defenses for text classifiers, and privacy-preserving techniques for federated models.",
+    "tags": [
+      "Adversarial Attacks",
+      "LLM Security",
+      "Federated Learning",
+      "NLP Security",
+      "Model Robustness",
+      "Privacy Preservation"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "catastrophic_failure_of_llm_unlearning_via_quantization",
+    "title": "Catastrophic Failure of LLM Unlearning via Quantization",
+    "date": "2026-11-29",
+    "type": "Paper Review",
+    "description": "Catastrophic Failure of LLM Unlearning via Quantization",
+    "tags": [
+      "Machine Unlearning"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "prism_privacypreserving_improved_stochastic_masking_for_fede",
+    "title": "PRISM: Privacy-Preserving Improved Stochastic Masking for Federated Generative Models",
+    "date": "2026-11-29",
+    "type": "Paper Review",
+    "description": "PRISM: Privacy-Preserving Improved Stochastic Masking for Federated Generative Models",
+    "tags": [
+      "Privacy"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "certified_robustness_under_bounded_levenshtein_distance",
+    "title": "Certified Robustness Under Bounded Levenshtein Distance",
+    "date": "2026-11-29",
+    "type": "Paper Review",
+    "description": "Computes deterministic robustness certificates for text classifiers",
+    "tags": [
+      "Adversarial Attacks"
+    ],
+    "readingTime": 5
+  },
+  {
+    "slug": "longtailed_adversarial_training_with_selfdistillation",
+    "title": "Long-tailed Adversarial Training with Self-Distillation",
+    "date": "2026-11-29",
+    "type": "Paper Review",
+    "description": "Uses a balanced self-teacher model to guide robustness training",
+    "tags": [
+      "Adversarial Attacks",
+      "Vulnerabilities"
+    ],
+    "readingTime": 5
+  },
+  {
     "slug": "ai_security_digest__november_28_2026_adversarial_attacks__ma",
     "title": "AI Security Digest \u2014 November 28, 2026: Adversarial Attacks & Machine Unlearning",
     "date": "2026-11-28",
